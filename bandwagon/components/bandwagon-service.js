@@ -592,6 +592,11 @@ BandwagonService.prototype = {
 
         Bandwagon.Preferences.setPreference(Bandwagon.PREF_AUTH_TOKEN, "");
         Bandwagon.Preferences.setPreference("login", "");
+
+        // The following is a workaround to allow auth-token based
+        // authentication to work when an AMO cookie is also present. Full
+        // description in bug 496612.
+        // XXX. Comment out when bug 496612 is addressed.
         this.deleteAMOCookie();
 
         var internalCallback = function(event)
