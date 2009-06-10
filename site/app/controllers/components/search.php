@@ -186,7 +186,7 @@ class SearchComponent extends Object {
         // now initialize compoents of SQL query
         $_selects = $_orderby = $_joins = $_where = array();
         
-        $_orderby[] = '(LOWER(a.name) =  \''.$terms.'\') DESC'; 
+        $_orderby[] = '(LOWER(a.name) =  \''.$this->controller->Sanitize->sql($terms).'\') DESC'; 
         $_orderby[] = '(a.status='.STATUS_PUBLIC.') DESC'; // show public add-ons first
         $_orderby[] = "(a.name LIKE '%".implode(' ', $_termarray)."%') DESC"; // sort exact name hits first
         
@@ -402,7 +402,7 @@ class SearchComponent extends Object {
         // now initialize compoents of SQL query
         $_selects = $_orderby = $_where = array();
         
-        $_orderby[] = '(LOWER(c.name) =  \''.$terms.'\') DESC'; 
+        $_orderby[] = '(LOWER(c.name) =  \''.$this->controller->Sanitize->sql($terms).'\') DESC'; 
         $_orderby[] = "(c.name LIKE '%".implode(' ', $_termarray)."%') DESC"; // sort exact name hits first
         
         if (!$locale) {
