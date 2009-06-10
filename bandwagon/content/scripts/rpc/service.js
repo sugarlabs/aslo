@@ -279,7 +279,7 @@ Bandwagon.RPC.Service.prototype.authenticate = function(login, password, callbac
 
 Bandwagon.RPC.Service.prototype.getServiceDocument = function(callback)
 {
-	var service = this;
+    var service = this;
 
     this._logger.debug("Bandwagon.RPC.Service.getServiceDocument: getting service document for logged in user");
 
