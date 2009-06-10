@@ -232,9 +232,19 @@ Bandwagon.RPC.Service.prototype.authenticate = function(login, password, callbac
         {
             event.authToken = event.getData().attribute("value");
 
-            service._logger.debug("Bandwagon.RPC.Service.authenticate: have an auth token: " + event.authToken);
+            if (!event.authToken.match(/.*\w.*/))
+            {
+                // invalid auth token (bug 496612)
+                service._logger.error("Bandwagon.RPC.Service.authenticate: invalid auth token: '" + event.authToken + "'");
 
-            service.Bandwagon.Preferences.setPreference(service.Bandwagon.PREF_AUTH_TOKEN, event.authToken);
+                event._result = service.Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_ERROR_UNEXPECTED_XML;
+            }
+            else
+            {
+                service._logger.debug("Bandwagon.RPC.Service.authenticate: have an auth token: " + event.authToken);
+
+                service.Bandwagon.Preferences.setPreference(service.Bandwagon.PREF_AUTH_TOKEN, event.authToken);
+            }
         }
 
         if (callback)

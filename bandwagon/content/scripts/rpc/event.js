@@ -39,16 +39,16 @@ Bandwagon.RPC.Event = function(type, result, response)
 {
     this.Bandwagon = Bandwagon;
 
-	// public instance variables
+    // public instance variables
     this._type = type;
-	this._result = result;
-	this._response = response;
+    this._result = result;
+    this._response = response;
     this.error = null;
 }
 
 Bandwagon.RPC.Event.prototype.isError = function()
 {
-	return this._result != this.Bandwagon.RPC.Constants.BANDWAGON_RPC_NET_SUCCESS;
+    return this._result != this.Bandwagon.RPC.Constants.BANDWAGON_RPC_NET_SUCCESS;
 }
 
 Bandwagon.RPC.Event.prototype.setError = function(error)
