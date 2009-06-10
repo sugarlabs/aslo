@@ -823,7 +823,13 @@ class SharingApiController extends AppController
             )
         );
         $this->Amo->clean($data);
-        $this->ApiAuthToken->save($data);
+
+        if (!$this->ApiAuthToken->save($data)) {
+            return $this->renderStatus(
+                self::STATUS_ERROR, 'error',
+                array('reason' => 'auth_token_generation_failed')
+            );
+        }
 
         $new_token   = $this->ApiAuthToken->findById($this->ApiAuthToken->id);
         $token_value = $new_token['ApiAuthToken']['token'];
