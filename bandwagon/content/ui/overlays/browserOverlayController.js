@@ -64,7 +64,14 @@ Bandwagon.Controller.BrowserOverlay.initBandwagon = function()
         Bandwagon.Logger.error("Error initializing bandwagon: " + e);
     }
 
-    gBrowser.addEventListener("DOMContentLoaded", Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument, true);
+    try
+    {
+        gBrowser.addEventListener("DOMContentLoaded", Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument, true);
+    }
+    catch (e)
+    {
+        Bandwagon.Logger.debug("Error adding subscription refresh event listener to document (probably harmless): " + e);
+    }
 }
 
 Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument = function(event)
