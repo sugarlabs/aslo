@@ -119,7 +119,8 @@ class CollectionsController extends AppController
 
     function editors_picks() {
         $this->set('selected', 'editors_picks');
-        $conditions = array('Collection.collection_type' => Collection::COLLECTION_TYPE_EDITORSPICK);
+        $conditions = array('Collection.collection_type' => Collection::COLLECTION_TYPE_EDITORSPICK,
+                            'Collection.listed' => 1);
         $this->Collection->unbindFully();
         $collections = $this->Collection->findAll($conditions, 'Collection.id');
         $this->_listing($collections);
@@ -128,7 +129,8 @@ class CollectionsController extends AppController
     function popular() {
         $this->set('selected', 'popular');
         $this->Collection->unbindFully();
-        $collections = $this->Collection->findAll(null, 'Collection.id');
+        $collections = $this->Collection->findAll(array('Collection.listed' => 1),
+                                                  'Collection.id');
         $pagination = array('sortBy' => 'subscribers DESC');
         $this->_listing($collections, $pagination);
     }

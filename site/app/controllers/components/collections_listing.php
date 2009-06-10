@@ -84,8 +84,7 @@ class CollectionsListingComponent extends Object {
      * @return array Collections query result
      */
     function fetchPage($ids, $pagination_options=array()) {
-        $conditions = array('Collection.listed' => '1',
-                            'Collection.id' => $ids);
+        $conditions = array('Collection.id' => $ids);
 
         list($sort_opts, $sortby) = $this->sorting();
 
