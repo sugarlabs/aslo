@@ -60,6 +60,13 @@ class CollectionsController extends AppController
         $this->SimpleAuth->enabled = false;
         $this->SimpleAcl->enabled = false;
 
+        // disable query caching so devcp changes are visible immediately
+        if ($this->Session->check('User')) {
+            foreach ($this->uses as $_model) {
+                $this->$_model->caching = false;
+            }
+        }
+
         $this->publish('jsAdd', array('amo2009/collections', 'jquery-ui/jqModal.js'));
     }
 
