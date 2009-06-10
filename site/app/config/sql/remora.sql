@@ -1024,6 +1024,7 @@ CREATE TABLE `collections` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `uuid` char(36) NOT NULL default '',
   `name` int(11) unsigned NOT NULL,
+  `defaultlocale` varchar(10) NOT NULL default 'en-US',
   `collection_type` int(11) unsigned NOT NULL DEFAULT '0',
   `icondata` blob,
   `icontype` varchar(25) NOT NULL default '',

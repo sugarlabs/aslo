@@ -81,12 +81,18 @@ class AppModel extends Model
             // Allow querying for a locale other than currently set
             $lang = $this->getLang();
 
-            // fallback language is usually English. If we are selecting addons however,
-            // we fall back to what's defined for that addon.
-            if ($this->name == 'Addon') {
+            // fallback language is usually English. Some models have special
+            // fallback options, however, so we are handling them here.
+            switch ($this->name) {
+            case 'Addon':
                 $fb_locale = '`Addon`.`defaultlocale`';
-            } else {
+                break;
+            case 'Collection':
+                $fb_locale = '`Collection`.`defaultlocale`';
+                break;
+            default:
                 $fb_locale = "'en-US'";
+                break;
             }
 
             // These parts are separated due to the way the query is built

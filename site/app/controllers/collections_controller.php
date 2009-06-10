@@ -203,6 +203,7 @@ class CollectionsController extends AppController
             $user = $this->Session->read('User');
             $this->data['Collection']['user_id'] = $user['id'];
             $this->data['Collection']['application_id'] = APP_ID; // defaults to current app
+            $this->data['Collection']['defaultlocale'] = LANG; // defaults to current lang
 
             $data = $this->data['Collection'];
             $this->Amo->clean($data);
