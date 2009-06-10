@@ -597,7 +597,7 @@ BandwagonService.prototype = {
         // authentication to work when an AMO cookie is also present. Full
         // description in bug 496612.
         // XXX. Comment out when bug 496612 is addressed.
-        this.deleteAMOCookie();
+        //this.deleteAMOCookie();
 
         var internalCallback = function(event)
         {
