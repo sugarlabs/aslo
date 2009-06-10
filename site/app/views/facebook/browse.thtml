@@ -1,0 +1,88 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+
+<div class="sort_box">
+    <form action="<?=FB_URL?>/browse/type:<?=$current['type']?>" method="get">
+        Sort by:
+        <select name="sort">
+        <?php
+            $sorting = array('popular' => 'Most Popular',
+                               'rated' => 'Highest Rated',
+                               'name' => 'Name');
+            foreach ($sorting as $sortVal => $sortOption) {
+                echo '<option value="'.$sortVal.'"';
+                if ($current['sort'] == $sortVal)
+                    echo ' selected';
+                echo '>'.$sortOption.'</option>';
+            }
+        ?>
+        </select>
+        <span class="pipe">|</span>
+        Category:
+        <select name="cat">
+        <?php
+            foreach ($tags as $tagVal => $tagOption) {
+                echo '<option value="'.$tagVal.'"';
+                if ($tagVal == $current['cat'])
+                    echo ' selected';
+                echo '>'.$tagOption.'</option>';
+            }
+        ?>
+        </select>&nbsp;&nbsp;
+        <input type="submit" value="Update" class="inputbutton">
+    </form>
+</div>
+
+<div class="bar clearfix summary_bar filter_tab_bar">
+    <div>
+        <ul class="tabs">
+            <li<?=($current['type'] == 'none' ? ' class="current"' : '')?>><a href="<?=FB_URL?>/browse/sort:<?=$current['sort']?>/cat:<?=$current['cat']?>">All results</a></li>
+            <?=($count['extensions'] > 0 ? (($count['extensions'] == 1) ? '<li'.($current['type'] == ADDON_EXTENSION ? ' class="current"' : '').'><a href="'.FB_URL.'/browse/sort:'.$current['sort'].'/cat:'.$current['cat'].'/type:'.ADDON_EXTENSION.'">1 extension</a></li>' : '<li'.($current['type'] == ADDON_EXTENSION ? ' class="current"' : '').'><a href="'.FB_URL.'/browse/sort:'.$current['sort'].'/cat:'.$current['cat'].'/type:'.ADDON_EXTENSION.'">'.$count['extensions'].' extensions</a></li>') : '<li class="empty"><span>No extensions</span></li>')?>
+            <?=($count['themes'] > 0 ? (($count['themes'] == 1) ? '<li'.($current['type'] == ADDON_THEME ? ' class="current"' : '').'><a href="'.FB_URL.'/browse/sort:'.$current['sort'].'/cat:'.$current['cat'].'/type:'.ADDON_THEME.'">1 theme</a></li>' : '<li'.($current['type'] == ADDON_THEME ? ' class="current"' : '').'><a href="'.FB_URL.'/browse/sort:'.$current['sort'].'/cat:'.$current['cat'].'/type:'.ADDON_THEME.'">'.$count['themes'].' themes</a></li>') : '<li class="empty"><span>No themes</span></li>')?>
+            <?=($count['friends'] > 0 ? '<li'.($current['type'] == 'friends' ? ' class="current"' : '').'><a href="'.FB_URL.'/browse/sort:'.$current['sort'].'/cat:'.$current['cat'].'/type:friends">'.$count['friends'].' from friends</a></li>' : '<li class="empty"><span>None from friends</span></li>')?>
+        </ul>
+    </div>
+    <?=$facebook->pageNumbers($current, $count)?>
+</div>
+
+<?=$facebook->listAddons($addons)?>
+
+<div class="bar clearfix footer_bar">
+    <?=$facebook->pageNumbers($current, $count)?>
+</div>

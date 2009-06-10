@@ -1,0 +1,172 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+?>
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div class="primary" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+    
+    <h3><?=_('users_info_author_profile')?></h3>
+    <dl>
+        <? if (!empty($profile['User']['firstname']) || !empty($profile['User']['lastname'])): ?>
+        <dt><?=_('users_info_author_name')?></dt>
+        <dd><?=$profile['User']['firstname']?> <?=$profile['User']['lastname']?></dd>
+        <? endif; ?>
+
+        <? if (!empty($profile['User']['nickname'])): ?>
+        <dt><?=_('users_info_nickname')?></dt>
+        <dd><?=$profile['User']['nickname']?></dd>
+        <? endif; ?>
+
+        <? if (!empty($profile['User']['homepage'])): ?>
+        <dt><?=_('users_info_homepage')?></dt>
+        <dd><?=$html->link($profile['User']['homepage'], $profile['User']['homepage'])?></dd>
+        <? endif; ?>
+
+        <? if ($profile['User']['emailhidden'] == 0): ?>
+        <dt><?=_('users_info_email')?></dt>
+        <dd><?=$link->email($profile['User']['email'])?></dd>
+        <? endif; ?>
+
+        <?php if ($profile['Translation']['bio']['string']): ?>
+        <dt><?=___('users_info_aboutme')?></dt>
+        <dd><?=nl2br($profile['Translation']['bio']['string'])?></dd>
+        <?php endif; ?>
+
+        <dt><?=sprintf(_('user_info_usersince'), APP_PRETTYNAME)?></dt>
+        <dd><?=strftime(_('date'), strtotime($profile['User']['created']))?></dd>
+
+    </dl>
+
+<?php
+    if ($this->controller->SimpleAcl->actionAllowed('Admin', 'users', $this->controller->Session->read('User'))) {
+        echo $html->link('Edit User', "/admin/users/{$profile['User']['id']}");
+    }
+?>
+
+<?php
+    if ($profile['User']['firstname'] == '' && $profile['User']['lastname'] == '') {
+        $displayName = $profile['User']['nickname'];
+    } else {
+        $displayName = $profile['User']['firstname'].' '.$profile['User']['lastname'];
+    }
+?>
+
+<?php if (!empty($addons)): ?>
+<div>
+<h3><?=sprintf(_('users_info_addons_by_user'), $displayName)?></h3>
+<dl>
+<? 
+    global $app_shortnames;
+    foreach($addons as &$addon):
+        if (array_key_exists('Tag', $addon) && !empty($addon['Tag'])) {
+            $_application = array_search($addon['Tag'][0]['application_id'], $app_shortnames);
+        } else {
+            $_application = 'firefox';
+        }
+?>
+    <dt><?=$html->linkNoLocaleNoApp($addon['Translation']['name']['string'], '/'.LANG."/{$_application}/addon/{$addon['Addon']['id']}")?></dt>
+    <dd><?=$addon['Translation']['summary']['string']?></dd>
+<? endforeach; ?>
+</dl>
+</div>
+<?php endif; ?>
+
+<?php if (!empty($reviews)): ?>
+<div>
+<h3><?=sprintf(___('users_info_reviews_by_user', 'Reviews by %s'), $displayName)?></h3>
+<dl>
+    <?php
+    global $app_shortnames;
+    foreach ($reviews as &$review):
+        if (!empty($review['Addon']['compatible_apps'])) {
+            $_application = array_search($review['Addon']['compatible_apps'][0]['Application']['application_id'], $app_shortnames);
+        } else {
+            $_application = 'firefox';
+        }
+    ?>
+    <dt><?= $html->linkNoLocaleNoApp($review['Addon']['Translation']['name']['string'],
+        '/'.LANG."/{$_application}/addon/{$review['Addon']['Addon']['id']}"); ?></dt>
+    <dd><?=$review['Translation']['body']['string']?></dd>
+    <? endforeach; ?>
+</dl>
+</div>
+<?php endif; ?>
+
+<?php if (!empty($coll)): ?>
+<div>
+<h3><?=sprintf(___('users_info_collections_by_user'), $displayName)?></h3>
+<dl>
+    <?php
+    global $app_shortnames;
+    foreach ($coll as &$c):
+    ?>
+    <dt><?= $html->linkNoLocaleNoApp($c['Translation']['name']['string'],
+        sprintf('/%s/%s/collection/%s', LANG, array_search($c['Collection']['application_id'], $app_shortnames),
+            empty($c['Collection']['nickname'])?$c['Collection']['uuid']:$c['Collection']['nickname'])); ?>
+    </dt>
+    <dd><?=$c['Translation']['description']['string']?></dd>
+    <? endforeach; ?>
+</dl>
+</div>
+<?php endif; ?>
+
+<?php if (!empty($coll_fav)): ?>
+<div>
+<h3><?=___('users_info_fav_collections_by_user')?></h3>
+<dl>
+    <?php
+    global $app_shortnames;
+    foreach ($coll_fav as &$c):
+    ?>
+    <dt><?= $html->linkNoLocaleNoApp($c['Translation']['name']['string'],
+        sprintf('/%s/%s/collection/%s', LANG, array_search($c['Collection']['application_id'], $app_shortnames),
+            empty($c['Collection']['nickname'])?$c['Collection']['uuid']:$c['Collection']['nickname'])); ?>
+    </dt>
+    <dd><?=$c['Translation']['description']['string']?></dd>
+    <? endforeach; ?>
+</dl>
+</div>
+<?php endif; ?>
+
+</div>
+<!-- /#.primary -->

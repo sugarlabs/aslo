@@ -1,0 +1,1165 @@
+/* General Structure */
+/* copied from Mozilla.com */
+
+body, td, th, input { /* redundant rules for bad browsers  */
+    font-family: verdana, sans-serif;
+    font-size: x-small;
+    voice-family: "\"}\"";
+    voice-family: inherit;
+    font-size: small;
+}
+
+body {
+    background: #fff;
+    color: #333;
+    min-width: 610px;
+    margin: 0 0 1em 0;
+    padding: 0; /* need for Opera */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: arial, verdana, sans-serif;
+    margin: 1em 0 0.2em 0;
+}
+
+li h1, li h2, li h3, li h4, li h5, li h6 {
+    border: none;
+}
+
+img {
+    border: 0;
+}
+
+#header h1 { border: 0; }
+
+h1 { font-size: 160%; font-weight: normal; }
+h2 { font-size: 150%; font-weight: normal; }
+h3 { font-size: 120%; }
+h4 { font-size: 100%; }
+h5 { font-size: 90%; }
+h6 { font-size: 90%; border: 0; }
+
+/* Navigation */
+
+:link { color: #039; }
+:visited { color: #636; }
+:link:hover, :visited:hover { color: #333; }
+:link:active, :link:active { color: #000; }
+
+/* header copied from Mozilla.com */
+
+#header {
+    background: #33415d url("../img/rustico/header/header-background.png") top repeat-x;
+    position: relative;
+    height: 38px;
+    padding: 0 50px;
+    border-bottom: 1px solid #a1a6b1;
+    z-index: 1;
+}
+
+#header div {
+    position: relative;
+    max-width: 900px; 
+    margin: 0 auto;
+}
+
+#header h1 { margin: 0 720px 0 0;    }
+
+#header h1 img {
+    font-weight: bold;
+    color: #7f7c45;
+}
+
+#header ul {
+    position: absolute;
+    top: 0;
+    right: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid #576178;
+    border-right: 1px solid #1f2635;
+} * html #header ul { right: 50px; } 
+
+#header li {
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+#header ul span, #header ul a:link, #header ul a:visited {
+    display: block;
+    float: left;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-right: 1px solid #576178;
+    border-left: 1px solid #1f2635;
+    color: #dee0e5;
+    height: 36px;
+    voice-family: "\"}\"";
+    voice-family: inherit;
+    height: 16px;
+} #ignored {}
+
+#header ul li span,
+#header ul li a.current,
+#header ul li a:hover {
+    background: #475470;
+    color: #fff;
+    text-decoration: underline;
+}
+
+#header ul li span,
+#header ul li a.current {
+    text-decoration: none;
+}
+
+#site_notice {
+    border: 1px dashed salmon;
+    padding: 5px;
+    margin: 2px;
+}
+
+/* page title */
+
+#page-title {
+    background: url("../img/rustico/common/bg-header-thin.jpg") repeat-x 50% 0;
+}
+
+#page-title div, #container {
+    max-width: 900px; 
+    margin: 0 auto;
+    padding: 25px 50px;
+}
+
+#container { padding-top: 0; }
+
+#page-title div {
+    background: url("../img/rustico/common/firefox-addons-hdr.jpg") no-repeat 70% 0;
+    height: 120px;
+} body>#page-title div { height: auto; min-height: 120px; }
+
+#page-title div h2 {
+    margin: 0;
+    padding-top: 0px;
+    border: 0;
+    font-size: 280%;
+    font-weight: bold;
+    color: #bd1d01;
+}
+
+#page-title.thunderbird div h2 {
+    color: #0a4e96;
+}
+
+#page-title div h2 img {
+    border: 0;
+    vertical-align: middle;
+}
+
+#page-title p {
+    font-weight: bold;
+    color: #3C475B;
+    margin: 0 0 10px 61px;
+        padding-left: 1em;
+    width: 50%;
+}
+
+/* Override right margin for rtl langs */
+#page-title div h2, #page-title div p{
+    margin-right:500px;
+}
+
+/* page title for sub-pages */
+
+#page-title.sub-page {
+    background: url("../img/rustico/common/bg-header-small.jpg") repeat-x 50% -5px;
+}
+
+#page-title.sub-page div {
+    background: none;
+    height: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+} body>#page-title.sub-page div { height: auto; min-height: 40px; }
+
+#page-title.sub-page div h2 {
+    font-size: 160%; }
+
+#page-title.sub-page div h2 span {
+    font-weight: normal;
+}
+
+#page-title.sub-page div h2, #page-title.sub-page div p{
+    margin-right:0px; /*rtl fix*/
+}
+
+
+/* content */
+/* content-right -- for use when content is on the right, with sidebar-left */
+
+#content-right,
+#content {
+    color: #3c475b;
+    line-height: 150%;
+    margin-left: 180px;
+}
+
+#content-right hr,
+#content hr {
+    margin: 2em;
+}
+
+#content-right h3,
+#content h3 {
+    font-weight: normal;
+}
+
+
+/* content-left */
+
+#content-left {
+    color: #3c475b;
+    line-height: 150%;
+    margin-right: 180px;
+}
+
+#content-left hr {
+    margin: 2em;
+}
+
+#content-left h3 {
+    font-weight: normal;
+}
+
+/* front page features */
+
+.frontpage-intro {
+    margin-top: 0;
+}
+
+#top-extensions,
+.front-recommended {
+    float: left;
+    width: 45%;
+    margin-right: 4%;
+}
+
+#home-intro h2 {
+        font-weight: bold;
+}
+
+#home-rec-link img {
+    border: none;
+    float: right;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.front-recommended img {
+    float: right;
+    margin: 0 20px;
+}
+
+.newest-extensions h3,
+.top-extensions h3,
+.front-recommended h3 {
+    padding-top: 5px;
+}
+
+.frontpage-welcome {
+    margin: 0 0 1em 0;
+}
+
+/* browse features */
+
+.rss-subscribe {
+float:left;
+margin-top:2px;
+margin-right:5px;
+}
+.secondary-addon {
+  width: 45%;
+}
+.float-right {
+  float: right;
+}
+.float-left {
+  float: left;
+}
+/* addon features */
+
+.divider-bottom,
+.bookmarkaddon-feature {
+    background: url(../img/rustico/addons/firefox-featured-divider.png) no-repeat bottom center;
+    margin-bottom: 1.5em;
+    padding-bottom: 10px;
+}.divider-bottom,
+.bookmarkaddon-feature {
+    background: url(../img/rustico/addons/firefox-featured-divider.png) no-repeat bottom center;
+    margin-bottom: 1.5em;
+    padding-bottom: 10px;
+}
+
+#primary-feature {
+    margin-top: 2em;
+}
+
+.addon-feature h2 {
+    font-weight: bold;
+    margin: 0 0 5px 0;
+}
+
+.eula {
+    font-size: 75%;
+}
+
+.addon-feature h2 span {
+    font-weight: normal;
+    font-size: 80%;
+}
+
+.addon-feature h3,
+.bookmarkaddon-feature h3 {
+    margin: 0 0 10px 0;
+}
+
+.addon-feature h4,
+.bookmarkaddon-feature h4 {
+    margin: 0 0 10px 0;
+}
+
+.addon-feature h4 span,
+.bookmarkaddon-feature h4 span {
+    font-weight: normal;
+}
+
+.addon-feature h1 span {
+    font-size: small;
+}
+
+.addon-feature h1 span.author {
+    font-size: smaller;
+}
+
+.addon-feature .search-result-image {
+    float: right;
+    margin: 10px 0 5px 10px;
+}
+
+.addon-feature .addon-feature-image,
+.bookmarkaddon-feature .addon-feature-image {
+    float: right;
+    margin: 0 0 5px 5px;
+}
+
+.preview-image a {
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    font-size: smaller;
+}
+.preview-image a.hide {
+    display: none; 
+}
+    
+
+.addon-display .preview-image {
+    float: right;
+}
+
+.addon-display .version-and-date {
+    font-size: smaller;
+}
+
+.addon-feature .addon-feature-text {  }
+.bookmarkaddon-feature .addon-feature-text { margin-left: 190px; }
+
+.addon-feature a, .bookmarkaddon-feature a { color: #f7941d; }
+.addon-feature a:visited, .bookmarkaddon-feature a:visited { color: #f7941d; }
+.addon-feature a:hover, .bookmarkaddon-feature a:hover { color: #333; }
+
+.addon-feature .addon-feature-header { min-height: 55px; }
+.addon-feature .addon-feature-header .addon-feature-icon{ float: left; margin-right: 7px; }
+.addon-feature .addon-feature-header .addon-feature-name { margin: 0; padding: 4px 0; }
+.addon-feature .addon-feature-header .addon-feature-developer { margin: 0; padding: 0; }
+.addon-feature .addon-feature-tagline { margin: 0; padding: 0; font-style: italic;}
+
+.recommended a, .recommended a:visited { color: #f7941d; }
+.recommended a:hover { color: #333; }
+
+.bookmarkstitle {
+    background: url(../img/rustico/bookmarks/firefox-bm-puzzle-ico.png) no-repeat top left;
+    height: 27px;
+    padding: 5px 0 0 35px;
+}
+
+/* App compatibility info */
+.app_compat ul {
+    list-style: none;
+    margin: .5em 0;
+    padding: 0 0 0 1em;
+}
+.app_compat .appicon {
+    vertical-align: middle;
+    margin: 0 .5em 0 0;
+}
+
+/* App install info (for thunderbird) */
+.app_install {
+    background-color: #dfd;
+    border: 1px dashed #bdb;
+    margin: 1em;
+    padding: .5em;
+}
+
+/* install button */
+.install-button,
+p.install-button {
+    width: 230px;
+    margin: 0;
+}
+
+span.install-button-text {
+    padding-right: 30px;
+}
+
+.install-button a:link span.install-green-button,
+.install-button a:visited span.install-green-button,
+.install-button a:hover span.install-green-button,
+.install-button a:active span.install-green-button {
+    background: url(../img/rustico/install-button.png) no-repeat bottom left;
+    display: block;
+    min-height: 20px;
+    padding: 10px;
+} 
+* html .install-button a:link span.install-green-button,
+* html .install-button a:visited span.install-green-button,
+* html .install-button a:hover span.install-green-button,
+* html .install-button a:active span.install-green-button { height: 20px; }
+
+.install-button a:link,
+.install-button a:visited,
+.install-button a:hover,
+.install-button a:active {
+    background: #a8ed2d url(../img/rustico/install-button.png) no-repeat top left;
+    display: block;
+    color: #005825;
+    text-decoration: none;
+}
+
+.install-button a:hover span.install-green-button,
+.install-button a:active span.install-green-button {
+    background: url(../img/rustico/install-button.png) no-repeat bottom right;
+}
+
+.install-button a:hover,
+.install-button a:active {
+    background: #89dc29 url(../img/rustico/install-button.png) no-repeat top right;
+    color: #000;
+    cursor: pointer;
+}
+
+/* corner box */
+
+.corner-box {
+    background: url(../img/rustico/left-top-corner-box.jpg) top left no-repeat;
+    margin: 0 0 10px 0;
+    padding: 12px 0 12px 15px;
+}
+
+.corner-box h2, h3 {
+    margin-top: 0;
+}
+
+/* search box */
+
+.search-container img {
+    float: left;
+}
+
+.search-container h3 {
+    margin-left: 40px;
+    padding-top: 5px;
+}
+
+#extensions-search {
+    margin-top: 1.5em;
+}
+
+#extensions-search .keywords {
+    width: 40%;
+}
+
+#hide-search-options,
+#search-options {
+    display: none;
+}
+
+#search-results .desc p {
+    margin-bottom: 0px;
+}
+
+#search-results h2 {
+    font-weight: bold;
+}
+
+#search-results h2 span {
+    font-weight: normal;
+    font-size: 80%;
+}
+
+#pages #next-page {
+    float: right;
+}
+
+/* various lists */
+
+.category-block {
+    overflow: hidden;
+}
+
+.category-list {
+    margin-top: 1em;
+    padding: 0 1em;
+    min-width: 150px;
+    border-left: 1px solid #eee;
+    font-weight: bold;
+    font-size: .9em;
+    float: left;
+}
+
+.compact-list {
+    font-size: 80%;
+    font-weight: bold;
+    min-width: 40%;
+    float: left;
+}
+
+.category-list ul,
+.compact-list ul {
+    margin: 0;
+    padding: 0;
+}
+
+.category-list ul li,
+.compact-list ul li {
+    list-style: none;
+}
+                
+.category-list a:link,
+.category-list a:visited,
+.compact-list a:link,
+.compact-list a:visited {
+    text-decoration: none;
+}
+
+.compact-list span {
+    font-size: smaller;
+}
+
+/* menu box */
+
+.menu-box {
+    background: url(../img/rustico/menu-box/menu-box-top.png) top left no-repeat;
+    font-weight: bold;
+    margin-bottom: 15px;
+    width: 160px;
+}
+
+.menu-box ul {
+    background: url(../img/rustico/menu-box/menu-box-bottom.png) bottom left no-repeat;
+    list-style-type: none;
+    margin: 0;
+    padding: 4px 0;
+}
+
+.menu-box ul li a:link,
+.menu-box ul li a:visited,
+.menu-box ul li span,
+.menu-box ul.allmenu li {
+    display: block;
+    width: 136px;
+    margin: 0;
+    padding: 8px 12px;
+    text-decoration: none;
+}
+
+.menu-box ul li {
+    background: url(../img/rustico/menu-box/menu-box-background.png) 0 0 no-repeat;
+}
+
+.menu-box ul li span,
+.menu-box ul li.selected {
+    background: url(../img/rustico/menu-box/menu-box-background.png) -400px 0 no-repeat;
+}
+
+.menu-box ul li a:hover,
+.menu-box ul li a:active,
+.menu-box ul li.error {
+    background: url(../img/rustico/menu-box/menu-box-background.png) -200px 0 no-repeat;
+}
+
+.menu-box ul li.indented {
+    text-indent: 1em;
+}
+
+/* footer */
+
+#doc-links a,
+#switch-links a,
+#tool-links a {
+    padding: 0 1em;
+}
+
+#footer {
+    background: url(../img/rustico/footer/disclaimer.png) top repeat-x;
+    clear: both;
+    color: #888;
+    font-size: smaller;
+    margin: 0;
+    padding: 11px 0;
+    text-align: center;
+}
+
+#footer-contents {
+    margin: 0 auto;
+    width: 850px;
+}
+
+#footer ul {
+    margin: 1.5em 0;
+}
+
+#footer ul li {
+    display: inline;
+    margin: 0 0.5em;
+}
+
+#footer-addons-menu {
+    font-size: 110%;
+    padding: 0;
+}
+
+#footer-addons-menu li {
+    white-space: nowrap;
+    padding: 10px 0 5px 25px;
+}
+
+#footer-addons-menu li.firefox { background: url(../img/rustico/footer/footer-icon-firefox.png) no-repeat center left; }
+#footer-addons-menu li.thunderbird { background: url(../img/rustico/footer/footer-icon-thunderbird.png) no-repeat center left; }
+#footer-addons-menu li.mozilla { background: url(../img/rustico/footer/footer-icon-mozilla.png) no-repeat center left; }
+
+#footer-disclaimer {
+    clear: both;
+    padding-top: 10px;
+}
+
+#footer-contents form {
+    float: right;
+}
+
+#footer-contents form select {
+    font-size: inherit;
+}
+
+#footer-legal {
+    float: left;
+    text-align: left;
+}
+
+#footer-legal p {
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+
+.clearfix {display: block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+/* fixes clears for right-floats only.
+ * use in a div that contains right floats
+ * that doesn't have to clear the left sidebar.
+ */
+.clearfix-right:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: right; 
+    visibility: hidden;
+}
+
+.clearfix-right {display: inline-block;}
+
+/* Hides from IE-mac \*/
+* html .clearfix-right {height: 1%;}
+.clearfix-right {display: block;}
+/* End hide from IE-mac */
+
+table {
+    border-collapse: collapse;
+    border: none;
+    margin: 1em 0;
+}
+
+table.dalvay-table {
+    border-collapse: separate;
+}
+
+table.dalvay-table thead th {
+    background: none;
+}
+
+table.dalvay-table thead td,
+table.dalvay-table thead th {
+    background: #f9fafa url(../img/dalvay/table/header.png) top repeat-x;
+    border: 0;
+}
+
+table.dalvay-table thead .top-left {
+    background: url(../img/dalvay/table/top-left.png) top left no-repeat;
+}
+
+table.dalvay-table thead .top-right {
+    background: url(../img/dalvay/table/top-right.png) top right no-repeat;
+}
+
+td.left  { border-left:  1px solid #d7d7d7; }
+td.right { border-right: 1px solid #d7d7d7; }
+
+table.dalvay-table tfoot td {
+    background: #f9fafa url(../img/dalvay/table/footer.png) bottom repeat-x;
+    border: 0;
+}
+
+table.dalvay-table tfoot .bottom-left {
+    background: url(../img/dalvay/table/bottom-left.png) bottom left no-repeat;
+}
+
+table.dalvay-table tfoot .bottom-right {
+    background: url(../img/dalvay/table/bottom-right.png) bottom right no-repeat;
+}
+
+table.dalvay-table tfoot td { height: 12px; }
+
+
+table.dalvay-table tr.odd td { background: #fff; }
+table.dalvay-table tr.even td { background: #eee; }
+table.dalvay-table tr:target td { background: yellow; }
+table.dalvay-table td.curVersion { font-weight: bold; }
+table.dalvay-table td.nya { text-align: center; }
+
+table.dalvay-table td,
+table.dalvay-table th {
+    margin: 0;
+    padding: 0.5em;
+}
+
+table.dalvay-table td.dl,
+table.dalvay-table th.dl {
+  white-space: nowrap;
+}
+
+table.dalvay-table th {
+  text-align: left;
+}
+
+/* search engines */
+
+.front-section {
+    width: 220px;
+    padding: 5px 0 5px 25px;
+    float: left;
+    color: #666;
+}
+
+#switch-links {
+    text-align: right;
+    padding-left: 5em;
+}
+
+#switch-links .switch-tb, 
+#switch-links .switch-suite  {
+    padding: 1px 0 1px 30px;
+    font-size: 100%;
+    background: #fff 9px 0 no-repeat;
+}
+
+/* ported from cavendish */
+
+.item {
+    border: #D2D6D6 1px solid;
+    padding-left: 5px;
+    padding-right: 6px;
+    MARGIN-bottom: 10px;
+    -moz-border-radius: 10px;
+}
+
+.item a {
+    color: #00129c;
+    text-decoration: none;
+}
+.item a:visited {
+    color: #00129c;
+    text-decoration: none;
+}
+.item a:hover {
+    color: #fc5900;
+}
+
+.item h2 {
+    margin-top: 0.2em;
+}
+
+.iconbar {
+    padding-right: 15px;
+    float: left;
+    width: auto;
+    height: 34px;
+}
+
+.iconbar img {
+    float:left;
+}
+
+.iconbar a {
+    text-decoration: none;
+}
+
+/* user comments */
+
+div.averagerating {
+    float:right;
+    font-size:85%;
+    font-weight:bold;
+}
+
+div.usercomment {
+    border-top: 1px solid #eee;
+}
+
+p.commenttext {
+    margin-left: 2em;
+}
+
+p.commentmeta {
+    font-size: smaller;
+}
+
+.pages {
+    color: #999;
+    font-weight: bold;
+    height: 2em;
+}
+
+.next {
+    border-left: 1px solid #000;
+    display: inline;
+    padding-left: 5px;
+}
+
+.prev {
+    display: inline;
+}
+
+#comments-sort {
+    float: right;
+}
+
+/* breadcrumbs */
+
+#breadcrumbs { padding: 0 50px; }
+#breadcrumbs #breadcrumbs_container { max-width: 900px; margin: 0 auto; }
+#breadcrumbs {
+    background: #F7F8F8 url("../img/template/breadcrumbs-background.png") bottom repeat-x;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    font-size: 85%;
+    color: #999;
+}
+
+#breadcrumbs a:link, 
+#breadcrumbs a:visited {
+    color: #666;
+}
+
+#breadcrumbs a:hover,
+#breadcrumbs a:active {
+    color: #333;
+}
+
+#breadcrumbs form.searchbox {
+    display: inline;
+    vertical-align: top;
+    font-size: inherit;
+}
+
+#breadcrumbs form.searchbox input.query {
+    width: 10em;
+    font-size: inherit;
+    border-width: 1px;
+}
+#breadcrumbs form.searchbox input.submit {
+    font-size: inherit;
+    border-width: 1px;
+}
+
+
+/* rss */
+
+.rss-link-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.rss-link {
+    margin: .4em 10px .8em 0;
+    padding-left: 16px;
+    background: url(../img/tinyRss.png) no-repeat left;
+    float: left;
+}
+.rss-container img {
+    float: left;
+}
+.rss-container h3 {
+    margin-left: 28px;
+    padding-top: 1px;
+}
+
+/* reviews in addon display sidebar */
+
+div.review {
+    clear:right;
+    overflow:auto;
+    width:240px;
+    margin-bottom:15px;
+    font-size:11px;
+    color:#666;
+}
+
+div.review div.score {
+    float:left;
+    clear:left;
+    padding:3px 5px 1px 5px;
+    margin-right:8px;
+    font-size:20px;
+    color:#555;
+    background-color:#ddd;
+}
+
+div.review div.score span {
+    color:#aaa;
+}
+
+div.review span.review {
+    display:block;
+    width:150px;
+    float:left;
+    clear:right;
+}
+
+div.review a {
+  font-size:13px;
+  color:#666;
+  font-weight:bold;
+}
+
+div.review a.profileLink {
+  font-size:11px;
+  color:#666;
+  font-weight:normal;
+}
+
+a.reviewLink {
+  margin-left:45px;
+}
+
+div.reviewed-on {
+    font-size: .8em;
+    margin: .4em 0;
+}
+
+/* hr as suggested in http://www.sovavsiti.cz/css/hr.html */
+
+.divider {
+    height: 15px;
+    background: #fff url(../img/divider.gif) no-repeat scroll center;
+    border: 0;
+    clear: both;
+    margin: 0 0 10px 0;
+}
+.divider hr {
+    display: none;
+}
+
+/* addons display page: reviews part */
+
+.reviews {
+    font-size: .9em;
+    float: left;
+    min-width: 45%;
+}
+
+.reviews ul {
+    padding: 0 0 0 2em;
+}
+
+.review {
+    display: block;
+    margin: 0 0 1em .5em;
+}
+
+.review a {
+    font-weight: bold;
+}
+
+.review .reviewtitle {
+    font-weight: bold;
+}
+
+/* reviews page */
+div.review-reply {
+    margin-left: 3em;
+}
+
+/* sidebar (left) */
+#sidebar-left,
+#sidebar {
+    float: left;
+    font-size: 80%;
+    width: 160px;
+}
+
+#sidebar-left .corner-box ul,
+#sidebar .corner-box ul {
+    margin: 0;
+    padding: 0 12px;
+}
+
+/* sidebar right */
+#sidebar-right {
+    float: right;
+    font-size: 80%;
+    width: 160px;
+}
+
+#sidebar-right .corner-box ul {
+    margin: 0;
+    padding: 0 12px;
+}
+
+/* addons as listitems (search etc) */
+
+.addon-listitem {
+    margin: 0 0 1em 0;
+}
+
+.addon-listitem .icon {
+    float: left;
+    margin-right: .6em;
+}
+
+.addon-listitem .preview-image {
+    float: right;
+}
+
+.addon-listitem .version-simple {
+    display: none;
+}
+
+.addon-listitem .addon-titleby {
+    margin: 0 0 7px 0;
+}
+
+.addon-listitem .addon-titleby h2.addonname {
+    font-weight: bold;
+    padding: 4px 0 0 0;
+}
+
+.addon-listitem .addon-titleby .developer {
+}
+
+.addon-listitem .addon-desc .tagline {
+    margin: 5px 0 7px 0;
+}
+
+.addon-listitem .addon-desc .version {
+    font-size: .9em;
+    background: url(../img/version.png) no-repeat left;
+    line-height: 16px;
+    padding-left: 20px;
+}
+
+.addon-listitems-options {
+    margin: 0 0 1em 0;
+    padding: 0;
+    width: 100%;
+}
+
+.addon-listitems-options span {
+    margin: 0 .3em;
+}
+
+.addon-listitems-options span.selected {
+    font-weight: bold;
+}
+
+/* error page */
+.error-notice {
+    margin: 0 auto;
+    padding: 10px 80px 20px 80px;
+    background: url(../img/warning.png) 20px 20px no-repeat;
+    min-height: 48px; /* So the image will show completely, even if the error is short*/
+}
+
+/* policies */
+
+.policy-area {
+    width: 100%;
+    height: 30em;
+}
+
+/* styles for js actions */
+
+.js-action {
+    color: #f7941d;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* search page styles */
+
+.addon-search-message {
+    padding-bottom: .5em; 
+}
+
+.addon-search-message span {
+    font-weight: bold;
+}
+
+/* pages/submissionhelp */
+ul.submissionHelp li span.required {
+    font-weight: bold;
+}
+ul.submissionHelp li span.optional {
+    font-style: italic;
+}
+
+#extendfirefox {
+    margin-bottom: 15px;
+}
+
+#extendfirefox a {
+    text-decoration: none;
+}

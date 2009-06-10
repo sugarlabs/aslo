@@ -1,0 +1,147 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div class="favorites">
+    <div class='subtabs clearfix'>
+        <div class="tab<?=($action == 'mine' ? '' : ' unselected')?>"><a href="<?=FB_URL?>/favorites/mine">My Favorites</a></div>
+        <div class="tab<?=($action == 'friends' ? ' selected' : ' unselected')?>"><a href="<?=FB_URL?>/favorites/friends">Friend Favorites</a></div>
+        <? /* <div class="tab<?=($action == 'networks' ? '' : ' unselected')?>"><a href="<?=FB_URL?>/favorites/networks">Network Favorites</a></div> */ ?>
+        <?=($action == 'addon' ? '<div class="tab"><a href="'.FB_URL.'/favorites/addon/'.$addon['Addon']['id'].'">Add-on Details</a></div>' : '')?>
+        <?=($action == 'user' ? '<div class="tab"><a href="'.FB_URL.'/favorites/user/'.$user_id.'">User Favorites</a></div>' : '')?>
+    </div>
+
+    <?php
+        if (!empty($addons)) {
+            if ($action == 'mine') {
+                echo '<div style="padding: 0 25px;"><table class="myfavorites" cellspacing=0 cellpadding=0>';
+                foreach ($addons as $addon) {
+                    echo '<tr>';
+                        echo '<td class="info"><a href="'.FB_URL.'/view/'.$addon['addons']['id'].'">'.$addon['translations']['name'].'</a></td>';
+                        echo '<td class="imported">'.($addon['facebook_favorites']['imported'] == 1 ? 'Imported' : '').'</td>';
+                ?>
+                        <td class="remove">
+                            <a href="<?=FB_URL.'/favorite/remove/'.$addon['addons']['id']?>" onClick="removeFavorite(this, '<?=$addon['addons']['id']?>'); return false;">Remove</a>
+                        </td>
+                    </tr>
+                <?php
+                }
+                echo '</table></div>';
+            ?>
+            <script>
+            <!--
+                var addon_id = 0;
+                
+                function removeFavorite(link, id) {
+                    addon_id = id;
+                    new Dialog(Dialog.DIALOG_CONTEXTUAL).
+                        setContext(link).
+                        showChoice('Remove Favorite?', 'Are you sure you wish to remove this add-on from your list of favorites?', 'Yes, remove it.', 'No, keep it.').
+                        onconfirm = function() { document.setLocation('<?=FB_URL.'/favorite/remove/'?>' + addon_id); };
+                }
+            //-->
+            </script>
+            <?php
+            }
+            elseif ($action == 'friends') {
+                echo '<div class="bar clearfix summary_bar" style="padding-top: 0px;">';
+                $start = ($current['page'] - 1) * RESULTS_PER_PAGE + 1;
+                $end = $start + RESULTS_PER_PAGE - 1;
+                if ($end > $count['total'])
+                    $end = $count['total'];
+                echo "<div class=\"summary\">Displaying results <b>{$start}-{$end}</b> of <b>{$count['total']}</b></div>";
+                echo $facebook->pageNumbers($current, $count, 'favorites/friends');
+                echo '</div>';
+                echo $facebook->listAddonsOfFriends($addons);
+                echo '<div class="bar clearfix footer_bar">';
+                echo $facebook->pageNumbers($current, $count, 'favorites/friends');
+                echo '</div>';
+            }
+            elseif ($action == 'user') {
+                echo '<div class="bar clearfix summary_bar">';
+                $start = ($current['page'] - 1) * RESULTS_PER_PAGE + 1;
+                $end = $start + RESULTS_PER_PAGE - 1;
+                if ($end > $count['total'])
+                    $end = $count['total'];
+                echo '<div class="summary">';
+                echo "Displaying results <b>{$start}-{$end}</b> of <b>{$count['total']}</b>";
+                echo '<span class="pipe">|</span>';
+                echo '<a href="http://www.facebook.com/profile.php?id='.$user_id.'">Back to <fb:name uid="'.$user_id.'" possessive="true" linked="false" /> profile</a>';
+                echo '</div>';
+                echo $facebook->pageNumbers($current, $count, 'favorites/user/'.$user_id);
+                echo '</div>';
+                echo $facebook->listAddonsOfFriends($addons);
+                echo '<div class="bar clearfix footer_bar">';
+                echo $facebook->pageNumbers($current, $count, 'favorites/user/'.$user_id);
+                echo '</div>';
+            }
+        }
+        elseif ($action == 'addon') {
+            echo '<div style="padding: 5px 20px;"><a href="'.FB_URL.'/view/'.$addon['Addon']['id'].'">Back to '.$addon['Translation']['name']['string'].'</a></div>';
+            echo '<div style="padding: 0px 20px;">';
+            if ($view == 'all') {
+                echo $facebook->peopleBox($friends, 600, 1, array(
+                                'title' => "Friends That Recommend {$addon['Translation']['name']['string']}",
+                                'addon_id' => $addon['Addon']['id'],
+                                'showFriendCount' => true,
+                                'friendCount' => count($friends),
+                                'seeAllURL' => FB_URL.'/favorites/addon/'.$addon['Addon']['id'].'/friends'
+                            ));
+                echo '<br>';
+                echo $facebook->peopleBox($all, 600, 2, array(
+                                'title' => "Everyone That Recommends {$addon['Translation']['name']['string']}",
+                                'addon_id' => $addon['Addon']['id'],
+                                'showAllCount' => true,
+                                'allCount' => count($all),
+                            ));
+            }
+            elseif ($view == 'friends') {
+                echo $facebook->peopleBox($friends, 600, 100, array(
+                                'title' => "All Friends That Recommend {$addon['Translation']['name']['string']}",
+                                'addon_id' => $addon['Addon']['id'],
+                                'showFriendCount' => true,
+                                'friendCount' => count($friends),
+                            ));
+            }
+            echo '</div>';
+            echo '<div style="padding: 5px 20px;"><a href="'.FB_URL.'/view/'.$addon['Addon']['id'].'">Back to '.$addon['Translation']['name']['string'].'</a></div>';
+        }
+        else {
+            echo '<div class="nofavorites">No favorites yet!</div>';
+        }
+    ?>
+</div>

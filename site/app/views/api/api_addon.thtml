@@ -1,0 +1,167 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Laura Thomson <lthomson@mozilla.com> (Original Author)
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+  if (empty($addonIconPath)) {
+      $addonIconPath = ($addon['Addon']['addontype_id'] == ADDON_THEME ? $html->urlImage(DEFAULT_THEME_ICON) : $html->urlImage(DEFAULT_ADDON_ICON));
+    }
+
+    $amo = 'https://addons.mozilla.org';
+?>
+<addon>
+    <?php 
+        // Allow some additional content to be injected into the addon element by
+        // the including template.
+        if (isset($addon_pre)) echo $addon_pre; 
+    ?>
+    <name><?php echo $addon['Translation']['name']['string']; ?></name>
+    <type id='<?php echo $addon['Addon']['addontype_id']; ?>'><?php echo Addontype::getName($addon['Addon']['addontype_id']); ?></type>
+    <guid><?php echo $addon['Addon']['guid']; ?></guid>
+    <version><?php echo $addon['install_version']; ?></version>
+    <status id='<?php echo $addon['Addon']['status']; ?>'><?php if ($addon['Addon']['status'] ==  STATUS_PUBLIC) {
+                    echo rtrim(_('a_header_public'));  
+                  } else {
+                    echo rtrim(_('a_header_sandbox'));  
+                  }
+            ?></status>
+    <authors>
+<?php
+    foreach ($addon['User'] as $author) {
+        $authorName = (!empty($author['nickname'])) ? $author['nickname'] : $author['firstname'].' '.$author['lastname'];
+?>
+          <author><?php echo $authorName; ?></author>
+<?php
+    }
+?>    </authors>      
+    <summary><?php echo $addon['Translation']['summary']['string']; ?></summary>
+    <description><?php echo $addon['Translation']['description']['string']; ?></description>
+    <icon><?php if (isset($addon['Icon']))  {
+                    echo $amo.$addon['Icon'];
+                } else {
+                    $addonIconPath = ($addon['Addon']['addontype_id'] == ADDON_THEME ? $html->urlImage(DEFAULT_THEME_ICON) : $html->urlImage(DEFAULT_ADDON_ICON));     
+                    echo $amo.$addonIconPath;
+                } ?></icon>
+    <compatible_applications>
+<?php
+    foreach ($addon['Compatible_apps'] as $app) {
+        $name =  $app_names[$app['Application']['application_id']];
+?>
+        <application>
+            <name><?php echo $name; ?></name>
+            <application_id><?php echo $app['Application']['application_id']; ?></application_id>
+            <min_version><?php echo $app['Min_Version']['version']; ?></min_version>
+            <max_version><?php echo $app['Max_Version']['version']; ?></max_version>
+<?php 
+     if ($api_version > 1) { ?>
+            <appID><?php echo $guids[$name]; ?></appID>
+     <?php  } ?>
+        </application>
+     <?php  
+    }
+?>    </compatible_applications>      
+<?php if ($api_version >0 ) { ?>
+        <all_compatible_os>
+            <?php foreach ($addon['all_compatible_os'] as $os) {
+                      ?><os><?php
+                      echo 
+                         $os_translation[$os['Translation']['name']['string']]; 
+                      ?></os><?php
+                  }
+            ?>
+        </all_compatible_os>
+    <?php } else  { ?>
+        <compatible_os><?php echo $addon['Platforms']['Translation']['name']['string']; ?></compatible_os>
+    <?php } ?>
+    <eula><?php echo $addon['Translation']['eula']['string'];?></eula>
+    <thumbnail><?php echo $amo.$addon['Thumbnail']; ?></thumbnail>
+    <rating><?php
+              $rating ='';  
+              if (isset($addon['Addon']['averagerating'])) {
+                   $rating = $addon['Addon']['averagerating']; 
+                   if ($api_version < 1) {
+                       // we need to double the rating since the addons mgr expects it to
+                       // be out of 10 and we have halved everything in the db 
+                       $rating *= 2; 
+                   } 
+                   // round rating to match stars in AMO
+                   $rating = ceil($rating);
+               }
+              echo $rating; 
+    ?></rating>
+<?php 
+// get rid of reviews for now
+/*
+    <reviews url='<?php echo $amo
+                   .'/reviews/display/'.$addon['Addon']['id']; ?>'>
+    <?php
+         if (count($addon['Reviews'])) {
+             foreach($addon['Reviews'] as $review) { ?>
+     <review>
+           <id><?php echo $review['Review']['id'];?></id>
+           <version_id><?php echo $review['Review']['version_id'];?></version_id>
+           <created><?php echo $review['Review']['created'];?></created>
+           <rating><?php echo $review['Review']['rating'];?></rating>
+           <user>
+               <id><?php echo $review['User']['id'];?></id>
+               <nickname><?php echo $review['User']['nickname'];?></nickname>
+               <firstname><?php echo $review['User']['firstname'];?></firstname>
+               <lastname><?php echo $review['User']['lastname'];?></lastname>
+           </user> 
+           <title locale='<?php echo $review['Translation']['title']['locale'];?>'><?php echo $review['Translation']['title']['string'];?></title>
+           <body locale='<?php echo $review['Translation']['body']['locale'];?>'><?php echo $review['Translation']['body']['string'];?></body> 
+         </review> 
+     <?php   } 
+          }?>
+    </reviews>
+*/ ?>
+    <learnmore><?php echo $amo.'/addon/'.$addon['Addon']['id']; ?>?src=api</learnmore>
+<?php if ($api_version > 0 ) { 
+         foreach($addon['fileinfo'] as $file) {?>
+             <install hash='<?php echo $file['File']['hash'];?>'
+              os='<?php echo $os_translation[$file['Platform']['apiname']]; ?>'><?php
+              echo $amo.'/downloads/file/'.$file['File']['id'].'/'
+                   .$file['File']['filename']; ?></install>          
+         <?php } 
+      } else { ?>
+    <install hash='<?php echo $addon['File']['hash'];?>'><?php echo $amo.'/downloads/file/'.$addon['File']['id'].'/'.$addon['File']['filename']; ?>?src=api</install>
+<?php
+} ?>
+<?php 
+    // Allow some additional content to be injected into the addon element by
+    // the including template.
+    if (isset($addon_post)) echo $addon_post; 
+?>
+</addon>

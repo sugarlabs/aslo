@@ -1,0 +1,216 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+
+
+/* Prepare translation box element */
+// Retrieve language arrays from bootstrap.
+global $valid_languages, $native_languages;
+foreach (array_keys($valid_languages) as $key) {
+    $languages[$key] = $native_languages[$key]['native'];
+}
+ksort($languages);
+$this->translationBox = array(
+    'defaultLocale' => LANG,
+    'languages' => $languages,
+    'table' => 'User',
+    'loaded' => false
+);
+?>
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div class="primary" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+
+<?php
+// show confirmation message?
+if (isset($confirmation_page) && $confirmation_page):
+?>
+
+    <?echo $this->renderElement('notification', array('type' => 'success', 'msg' => $confirmation_message))?>
+    
+    <?php if (isset($newemail) && $newemail): ?>
+        <?echo $this->renderElement('notification', array('type' => 'success', 'description' => sprintf(___('user_edit_confirm_email_sent'), $newemail)));?>
+    <?php endif; ?>
+
+    <p><?=$html->link(___('link_return_to_front_page'), '/')?></p>
+
+<?php
+else:
+// show "edit" form
+?>
+<?php if(isset($errorMessage)): ?>
+    <?echo $this->renderElement('notification', array('type' => 'error', 'msg' => _('error_formerrors')));?>
+<p></p>
+<?php endif; ?>
+
+
+<h1><?php printf(_('user_form_editprofile'), $this->data['User']['email']); ?></h1>
+
+<form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
+    <?=$html->hiddenSession() ?>
+    
+<div id="tabbed-editor" class="flora">
+    <ul class="tabs-nav">
+        <li><a href="#profile-user"><span><?=___('user_tab_profile', 'User Profile');?></span></a></li>
+        <li><a href="#profile-collections"><span><?=___('user_tab_collections');?></span></a></li>
+        <li><a href="#profile-notifications"><span><?=___('user_tab_notifications');?></span></a></li>
+        <li><a href="#profile-change-pw-email"><span><?=_('user_change_password_or_email'); ?></span></a></li>
+        <li><a href="#profile-other"><span><?=___('user_form_otheractions');?></span></a></li>
+    </ul>
+    
+    <div id="profile-user">
+        <h3 class="hidden"><?=___('user_tab_profile', 'User Profile');?></h3>
+        <div class="line">
+            <label class="amo-label-large" for="UserFirstname"><?=_('user_form_firstname')?></label>
+            <?=$html->input('User/firstname') ?>
+            <?=$html->tagErrorMsg('User/firstname', _('error_field_required'))?>
+            <?=___('user_required_firstlast_or_nickname', 'A first name, last name or nickname is required.')?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserLastname"><?=_('user_form_lastname')?></label>
+            <?=$html->input('User/lastname') ?>
+            <?=$html->tagErrorMsg('User/lastname', _('error_field_required'))?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserNickname"><?=_('user_form_nickname')?></label>
+            <?=$html->input('User/nickname') ?>
+            <?=$html->tagErrorMsg('User/nickname', _('error_user_nickname_notunique'))?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
+            <?=$html->checkBox('User/emailhidden') ?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserHomepage"><?=_('user_form_homepage')?></label>
+            <?=$html->input('User/homepage') ?>
+            <?=$html->tagErrorMsg('User/homepage', _('error_invalid_url'))?>
+        </div>
+        <div class="line">
+            <?php
+            echo $this->renderElement('translationbox', array(
+                'field' => 'bio',
+                'translations' => $translations['bio'],
+                'height' => '100',
+                'maxLength' => '500',
+                'displayName' => ___('user_form_bio'),
+                'description' => ___('user_form_bio_description'),
+            ));
+            ?>
+        </div>
+    </div>
+    
+    <div id="profile-collections">
+        <h3 class="hidden"><?=___('user_tab_collections');?></h3>
+        <div class="line">
+            <?=$html->checkbox('User/display_collections') ?>
+            <label for="UserDisplayCollections"><?=___('user_form_display_collections')?></label>
+        </div>
+        <div class="line">
+            <?=$html->checkbox('User/display_collections_fav') ?>
+            <label for="UserDisplayCollectionsFav"><?=___('user_form_display_collections_fav')?></label>
+        </div>
+    </div>
+
+    <div id="profile-notifications">
+        <h3 class="hidden"><?=___('user_tab_notifications', 'Notifications');?></h3>
+        <?php if (empty($userAddons)): ?>
+            <p><?=___('user_notifications_none_available', 'There are currently no notifications available for you to configure.')?></p>
+        <?php else: ?>
+            <p><?=___('user_notifications_select_topics', 'From time to time, Mozilla may send you email about upcoming releases and add-on events. Please select the topics you are interested in below:')?></p>
+            <ul>
+                <li><label for="UserNotifycompat"><?=$html->checkbox('User/notifycompat')?>&nbsp;<?=___('user_notifications_item_compat', 'Add-on Compatibility (strongly recommended)')?></label></li>
+                <li><label for="UserNotifyevents"><?=$html->checkbox('User/notifyevents')?>&nbsp;<?=___('user_notifications_item_events', 'Upcoming events and contests')?></li>
+            </ul>
+            
+            <p><?=___('user_notifications_specific_contact', 'Mozilla reserves the right to contact you individually about specific concerns with your hosted add-ons.')?></p>
+        <?php endif; ?>
+    </div>
+
+    <div id="profile-change-pw-email">
+        <h3><?=_('user_change_password'); ?></h3>
+        <div class="line">
+            <label class="amo-label-large" for="UserPassword"><?=_('user_form_oldpassword')?></label>
+            <?=$html->password('User/password', array('autocomplete'=>'off')) ?>
+            <?=$html->tagErrorMsg('User/password', _('error_wrong_password'))?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserNewpassword"><?=_('user_form_newpassword')?></label>
+            <?=$html->password('User/newpassword', array('autocomplete'=>'off')) ?>
+            <?=$html->tagErrorMsg('User/newpassword', 'error_field_required')?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserConfirmpw"><?=_('user_form_confirmpassword')?></label>
+            <?=$html->password('User/confirmpw', array('autocomplete'=>'off')) ?>
+            <?=$html->tagErrorMsg('User/confirmpw', _('error_user_confirmpw_nomatch'))?>
+        </div>
+        <h3><?=___('user_change_email', 'Change Email Address');?></h3>
+        <div class="line">
+            <label class="amo-label-large" for="UserEmail"><?=_('user_form_email')?></label>
+            <?=$html->input('User/email') ?>
+            <?php if (isset($error_email_notunique))
+                    echo '<div class="error_message">'._('error_user_email_notunique').'</div>';
+                elseif (isset($error_email_empty))
+                    echo '<div class="error_message">'._('error_field_required').'</div>';
+                else
+                    echo $html->tagErrorMsg('User/email', _('error_email_invalid'));
+            ?>
+        </div>
+    </div>
+    
+    <div id="profile-other">
+        <h3 class="hidden"><?=___('user_form_otheractions', 'Other Actions');?></h3>
+        <p><?=$html->link(___('user_edit_delete_user', 'Delete user account'), '/users/delete');?></p>
+    </div>
+</div>
+
+    <?=$html->submit(_('user_form_submit_edit'), array('class'=>'amo-submit')); ?>
+</form>
+
+<?php endif; /* end of form vs. confirmation */ ?>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#tabbed-editor > ul").tabs();
+    });
+</script>

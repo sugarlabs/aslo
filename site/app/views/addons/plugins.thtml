@@ -1,0 +1,141 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *     Mike Morgan <morgamic@mozilla.com> (Original Author) 
+ *     Wil Clouser <clouserw@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+/**
+ * @TODO l10n for text -- holding off to see if this is the final design.
+ * We will most likely move to a dynamic version of this page pulling from the database.
+ */
+
+$this->layout='amo2009';
+
+?>
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div class="primary" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+    
+    <div class="featured listing">
+      <div class="featured-inner">
+        <div class="listing-header">
+            <p><?=_('addons_plugins_main_description')?></p>
+        </div> <!-- listing-header -->
+
+<div class="item">
+    <h2><a href="http://www.adobe.com/products/reader/">Adobe Reader</a></h2>
+    <p><?=_('addons_plugins_by')?> <a href="http://www.adobe.com/">Adobe</a></p>
+    <p>For viewing and printing Adobe Portable Document Format (PDF)</p>
+    <div class="install install-container"><p class="install-button">
+        <a class="button positive" href="http://www.adobe.com/products/acrobat/readstep2.html"> <img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=sprintf(_('a_download'),'')?></a></p>
+    </div>
+    <div class="baseline"><p><img src="<?=$html->url('/img/plugins/faq_small.png',false,false,false)?>" class="faq" height="16" width="16" alt="" ><?=_('addons_plugins_support_documentation')?> <a href="http://plugindoc.mozdev.org/windows.html#Acrobat">Windows</a>, <a href="http://plugindoc.mozdev.org/linux.html#Acrobat">Linux</a>, <a href="http://plugindoc.mozdev.org/OSX.html#Acrobat">Mac OS X</a> | <a href="http://plugindoc.mozdev.org/faqs/acroread.html">Acrobat Reader FAQ</a></p></div>
+</div>
+
+<div class="item">
+    <h2><a href="http://www.adobe.com/products/flashplayer/">Adobe Flash Player</a></h2>
+    <p><?=_('addons_plugins_by')?> <a href="http://www.adobe.com/">Adobe</a></p>
+    <p>Adobe Flash Player is the universal rich client for delivering effective Adobe Flash experiences across desktops and devices.</p>
+    <div class="install install-container"><p class="install-button">
+        <a class="button positive" href="http://www.adobe.com/go/getflashplayer"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=sprintf(_('a_download'),'')?></a></p>
+    </div>
+    <div class="baseline"><p><img src="<?=$html->url('/img/plugins/faq_small.png',false,false,false)?>" class="faq" height="16" width="16" alt="" ><?=_('addons_plugins_support_documentation')?> <a href="http://plugindoc.mozdev.org/windows.html#Flash">Windows</a>, <a href="http://plugindoc.mozdev.org/linux.html#Flash">Linux</a>, <a href="http://plugindoc.mozdev.org/OSX.html#Flash">Mac OS X</a> | <a href="http://plugindoc.mozdev.org/faqs/flash.html">Flash Player FAQ</a></p></div>
+</div>
+
+<div class="item">
+    <h2><a href="http://www.java.com/en/about/">Java</a></h2>
+    <p><?=_('addons_plugins_by')?> <a href="http://www.sun.com/">Sun Microsystems</a></p>
+    <p>The Java Runtime Environment enables your computer to run applications and applets that use Java technology.</p>
+    <div class="install install-container"><p class="install-button">
+        <a class="button positive" href="http://www.java.com/en/download/"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=sprintf(_('a_download'),'')?></a></p>
+    </div>
+    <div class="baseline"><p><img src="<?=$html->url('/img/plugins/faq_small.png',false,false,false)?>" class="faq" height="16" width="16" alt="" ><?=_('addons_plugins_support_documentation')?> <a href="http://plugindoc.mozdev.org/windows.html#Java">Windows</a>, <a href="http://plugindoc.mozdev.org/linux.html#Java">Linux</a>, <a href="http://plugindoc.mozdev.org/OSX.html#Java">Mac OS X</a> | <a href="http://plugindoc.mozdev.org/faqs/java.html">Java Plugin FAQ</a></p></div>
+</div>
+
+<div class="item">
+    <h2><a href="http://www.apple.com/quicktime/">QuickTime</a></h2>
+    <p><?=_('addons_plugins_by')?> <a href="http://www.apple.com/">Apple</a></p>
+    <p>QuickTime Player is an easy-to-use application for playing, interacting with or viewing video, audio, VR or graphics files.</p>
+    <div class="install install-container"><p class="install-button">
+        <a class="button positive" href="http://www.apple.com/quicktime/download/"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=sprintf(_('a_download'),'')?></a></p>
+    </div>
+    <div class="baseline"><p><img src="<?=$html->url('/img/plugins/faq_small.png',false,false,false)?>" class="faq" height="16" width="16" alt="" ><?=_('addons_plugins_support_documentation')?> <a href="http://plugindoc.mozdev.org/windows.html#Quicktime">Windows</a>, <a href="http://plugindoc.mozdev.org/OSX.html#Quicktime">Mac OS X</a></p></div>
+</div>
+
+<div class="item">
+    <h2><a href="http://www.real.com/player/">RealPlayer</a></h2>
+    <p><?=_('addons_plugins_by')?> <a href="http://www.realnetworks.com/">Real Networks</a></p>
+    <p>RealPlayer enables your computer to play streaming RealVideo and RealAudio.</p>
+    <div class="install install-container">
+        <p class="install-button"><a class="button positive" href="http://www.real.com/R/RC.040104freeplayer.def...R/forms.real.com/real/realone/realone.html?type=eva1&amp;rppr=rnwk&amp;src=040104freeplayer"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=_('addons_plugins_for_windows')?> Version 11</a></p>
+        <p class="install-button"><a class="button positive" href="http://www.real.com/linux/"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=_('addons_plugins_for_linux')?> Version 10</a></p>
+        <p class="install-button"><a class="button positive" href="http://www.real.com/R/RC.040104freeplayer.def...R/forms.real.com/real/realone/mac.html?rppr=rnwk&amp;src=040104freeplayer"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=_('addons_plugins_for_macosx')?> Version 10</a></p>
+    </div>
+    <div class="baseline"><p><img src="<?=$html->url('/img/plugins/faq_small.png',false,false,false)?>" class="faq" height="16" width="16" alt="" ><?=_('addons_plugins_support_documentation')?> <a href="http://plugindoc.mozdev.org/windows.html#RealOne">Windows</a>, <a href="http://plugindoc.mozdev.org/linux.html#RealPlayer">Linux</a>, <a href="http://plugindoc.mozdev.org/OSX.html#RealOne">Mac OS X</a></p></div>
+</div>
+
+
+<div class="item">
+    <h2><a href="http://www.adobe.com/products/shockwaveplayer/">Shockwave</a></h2>
+    <p><?=_('addons_plugins_by')?> <a href="http://www.adobe.com/">Adobe</a></p>
+    <p>Shockwave Player displays Web content that has been created by Adobe Director.</p>
+    <div class="install install-container"><p class="install-button">
+        <a class="button positive" href="http://www.adobe.com/shockwave/download/"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=sprintf(_('a_download'),'')?></a></p>
+    </div>
+    <div class="baseline"><p><img src="<?=$html->url('/img/plugins/faq_small.png',false,false,false)?>" class="faq" height="16" width="16" alt="" ><?=_('addons_plugins_support_documentation')?> <a href="http://plugindoc.mozdev.org/windows.html#Shockwave">Windows</a>, <a href="http://plugindoc.mozdev.org/OSX.html#Shockwave">Mac OS X</a></p></div>
+</div>
+
+<div class="item">
+    <h2><a href="http://www.microsoft.com/windows/windowsmedia/default.aspx">Windows Media Player</a></h2>
+    <p><?=_('addons_plugins_by')?> <a href="http://www.microsoft.com/">Microsoft</a></p>
+    <p>Windows Media Player lets you play streaming audio, video, animations, and multimedia presentations on the web.</p>
+    <div class="install install-container">
+        <p class="install-button"><a class="button positive" href="http://port25.technet.com/pages/windows-media-player-firefox-plugin-download.aspx"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=_('addons_plugins_for_windows')?> Vers. 11 (XP, Vista)</a></p> 
+        <p class="install-button"><a class="button positive" href="http://www.microsoft.com/windows/windowsmedia/9series/player.aspx"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=_('addons_plugins_for_windows')?> Vers. 9 (98 SE, ME, 2000)</a></p>
+        <p class="install-button"><a class="button positive" href="http://www.microsoft.com/windows/windowsmedia/player/mac/default.aspx"><img src="/remora/site/img/amo2009/icons/buttons/plus-green-8x9.gif" alt=""><?=_('addons_plugins_for_macosx')?> Version 9 or QuickTime Components</a></p>
+    </div>
+    <div class="baseline"><p><img src="<?=$html->url('/img/plugins/faq_small.png',false,false,false)?>" class="faq" height="16" width="16" alt="" ><?=_('addons_plugins_support_documentation')?> <a href="http://plugindoc.mozdev.org/windows.html#WMP">Windows</a>, <a href="http://plugindoc.mozdev.org/OSX.html#WMP">Mac OS X</a></p></div>
+</div>
+
+      </div> <!-- featured-inner -->
+<h2><?=_('addons_plugins_looking_for_plugin')?></h2>
+
+<p><?=sprintf(_('addons_plugins_looking_for_more'),'<a href="http://plugindoc.mozdev.org">PluginDoc</a>')?></p>
+    </div> <!-- featured listing -->
+  </div> <!-- primary -->

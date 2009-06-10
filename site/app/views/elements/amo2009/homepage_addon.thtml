@@ -1,0 +1,130 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Mike Morgan <morgamic@mozilla.com> (Original Author)
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   l.m.orchard <lorchard@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<?php
+$addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']);
+$addonThumbPath = $this->controller->Image->getHighlightedPreviewURL($addon['Addon']['id']);
+$addonName = $addon['Translation']['name']['string'];
+$addonSummary = $addon['Translation']['summary']['string'];
+$addonId = $addon['Addon']['id'];
+$addonFiles = $addon['File'];
+$addonEULA = $addon['Translation']['eula']['string'];
+$addonStatus = $addon['Addon']['status'];
+$addonAuthors = $addon['User'];
+$addonTags = $addon['Tag'];
+$addonWeeklyDownloads = $addon['Addon']['weeklydownloads'];
+$allPlatforms = $platforms;
+$compatible_apps = $addon['compatible_apps'];
+$addonType = $addon['Addon']['addontype_id'];
+$addonRating = $addon['Addon']['averagerating'];
+$addonReviews = $addon['Addon']['totalreviews'];
+$addonVersionCreated = $addon['Version'][0]['created'];
+
+// Bug 444817: limit length of addon descriptions in feature elements.
+$desc_limit = 250;
+if (mb_strlen($addonSummary) > $desc_limit) {
+    // If the addon summary exceeds the display limit, cut it off before the
+    // last space-delimited word in the string and add an ellipsis linking to
+    // the full detail page.  Would use TextHelper::truncate() here, but need
+    // mb_* string functions.  
+
+    // mb_substr is used twice here, because mb_strrpos doesn't support 
+    // offset in PHP 5.1.6 - first chop down to char limit, then chop down
+    // to end of last space-delimited word.
+    $addonSummary = mb_substr($addonSummary, 0, $desc_limit);
+    $addonSummary = mb_substr($addonSummary, 0, mb_strrpos($addonSummary, ' ')) .
+        ' <a href="'.$html->url("/addon/{$addonId}").'">...</a>';
+}
+
+// prepare alt and title text for preview image
+$_alt = sprintf(_('img_preview_of'), $addonName);
+
+$flags = array($html->byStatus($addon, array('experimental' => 'experimental',
+                                       'recommended'  => 'recommended',
+                                       'default'      => 'default')));
+$group = isset($group) ? $group : '';
+if (!empty($group)) {
+    $flags[] = $group;
+}
+
+// is addon experimental?
+global $experimental_status;
+if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
+    $flags[] = 'experimental';
+}
+?>
+<div class="<?=join(' ', $flags)?> item">
+    <?=$this->renderElement('amo2009/install', array(
+        'flags' => $flags, 
+        'addon' => $addon
+    ))?>
+    <h3>
+        <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><?=$addonName?></a>
+        <span title="<?=___('addons_author_tooltip') ?>"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></span>
+    </h3>
+    <img src="<?=$addonIconPath?>" width="32" height="32" alt="<?=$_alt?>" title="<?=$_alt?>" class="icon"/>
+    <blockquote cite="#"><p><?=$addonSummary?></p></blockquote>
+    <div class="meta">
+        <?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?>
+        <span class="downloads"><strong><?=$html->number_format($addonWeeklyDownloads, 0)?></strong> <?=___('addon_downloads_weekly')?></span>
+    </div>
+</div>
+
+<?php if (false): ?>
+<? if (!empty($flag)) echo '<h6 class="flag">'.$flag.'</h6>'; ?>
+<?php if (isset($addonFiles)): ?>
+
+<p class="updated">
+    <?php echo sprintf(___('addon_detail_last_updated'), strftime(_('date'), strtotime($addonVersionCreated))); ?>
+</p>
+
+<?=$this->renderElement('install',array(
+    'addonType' => $addonType
+))?>
+<?php else: ?>
+<p class="learn-more"><?=$html->link(_('feature_learnmore'), "/addon/{$addonId}",
+    array('class'=>'view', 'title'=>sprintf(_('feature_learnmore_about_addon'), $addonName)))?></p>
+<?php endif; ?>
+
+<?php if(!empty($addonTags)): ?>
+<p class="more-from"><?=_('feature_view_more_from_category')?> <a href="<?=$html->url('/browse/type:'.$addonType.'/cat:'.$addonTags[0]['Tag']['id'])?>" class="view"><?=$addonTags[0]['Translation']['name']['string']?></a></p>
+<?php endif; ?>
+
+<?php endif ?>

@@ -1,0 +1,23 @@
+<?php
+$recommendation_url = 'https://addons.mozilla.org'.$html->url('/addon/'.$addon['Addon']['id']);
+
+?>
+<?=$senderemail?> wants you to know about the <?=$addon['Translation']['name']['string']?> add-on for Mozilla Firefox.
+
+<?php if (!empty($message)): ?>
+Comments from sender: <?=$message?>
+
+<?php endif; ?>
+
+Information about <?=$addon['Translation']['name']['string']?>:
+<?=$addon['Translation']['summary']['string']?> 
+
+<?=$recommendation_url?> 
+
+---
+
+Add-ons are third party enhancements to Firefox that add new features or modify existing functionality. You can learn more about add-ons at the Firefox Add-ons website: https://addons.mozilla.org .
+
+---
+
+Sent by Firefox Add-ons on behalf of <?=$senderemail?>

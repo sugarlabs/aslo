@@ -1,0 +1,238 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+
+if ($loggedin) {
+    $_review_flag_this = ___('review_flag_this', 'Report this review');
+    $_review_flag_this_titletip = ___('review_flag_this_titletip', 'Is this review inappropriate, inaccurate or spam? Click here to flag it for editor review.');
+}
+$bare = isset($_GET['bare']) ? ( $_GET['bare'] == 1 ) : FALSE;
+?>
+<?php if (!$bare): ?>
+<?php $this->layout = 'amo2009'; ?>
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+    
+<div id="content-main" class="primary" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+    
+<h2><?=sprintf(_('reviews_header'), $addon['Translation']['name']['string']);?></h2>
+<?php else: ?>
+<div class="other-reviews">
+<?php endif ?>
+
+<?php
+foreach ($reviews as $review):
+    $review_id = $review['Review']['id'];
+    $review['Translation'] = (array_key_exists(LANG, $review['Translation']) ?
+        $review['Translation'][LANG] : current($review['Translation']));
+?>
+    <div class="item review" id="review-<?=$review['Review']['id']?>">
+    <h3><?=$review['Translation']['title']['string']?></h3>
+    
+    <div class="reviewed-on">
+        <?=$this->renderElement('amo2009/stars',array('rating' => $review['Review']['rating']))?>	
+        <?php
+            echo sprintf(___('addon_reviewed_by_u_on_d'),
+                     $html->linkUserFromModel($review['User']),
+                     strftime(_('date'), strtotime($review['Review']['created'])));
+        ?>
+        <?=($isAuthor || $isAdmin) ? '['.$html->link(_('addon_review_author_reply_link'), "/reviews/reply/{$review['Review']['id']}").']' : '' ?>
+        <?=($canDelete) ? '['.$html->link(_('addon_review_admin_delete'), "/reviews/delete/{$review['Review']['id']}").']' : ''?>
+
+        <?php /* Show either the review moderation form, or display a 
+                 thank you message if this user already has flagged this review. */ ?>
+        <?php if ($loggedin): ?>
+            <?php
+                $review_flag_name = isset($reviews_flagged[$review_id]) ?
+                    $reviews_flagged[$review_id]['flag_name'] : '';
+            ?>
+            <?php if ($review_flag_name): ?>
+
+                <?php /* If there's already a flag for this review from this 
+                        user, re-display the thank you message without a flag 
+                        form. */ ?>
+                <p class="flag-thanks"><?php echo ___('review_flag_success', 
+                    'Thanks; this review has been flagged for editor approval.') ?></p>
+
+            <?php else: ?>
+
+                <?php echo $html->formTag('/reviews/flag', 'post',
+                        array('id' => "flag-{$review['Review']['id']}",
+                              'class' => 'flag')); ?>
+                    <span class="reason">
+                        <span class="error"></span>
+                        <select id="data[ReviewsModerationFlag][flag_name]" 
+                                name="data[ReviewsModerationFlag][flag_name]">
+                            <option value=""> - <?php echo _('review_flag_reason_instructions') ?> - </option>
+                            <?php foreach ($review_flag_reasons as $reason=>$label): ?> 
+                                <option value="<?php echo $reason ?>"><?php echo $label ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </span>
+                    <?php
+                        echo $html->hidden('Review/id', 
+                            array('value'=>$review_id, 'class'=>'ReviewId'));
+                        echo $html->input('ReviewsModerationFlag/flag_notes', 
+                            array('type'=>'text', 'size'=>'50', 'maxsize'=>'100', 'value'=>'', 'class'=>'FlagNotes hide-with-js'));
+                        echo $html->submit($_review_flag_this, 
+                            array('title'=>$_review_flag_this_titletip, 'class'=>'FlagSubmit hide-with-js'));
+                    ?>
+                </form>
+
+            <?php endif; ?>
+        <?php endif; ?>
+
+    </div>
+    <?=nl2br($review['Translation']['body']['string'])?>
+    
+    <?php if ($other_count = @($reviews_others_counts[$review['Review']['id']])): ?>
+        <?php /* Construct the link to reveal previous reviews by this user. */ ?>
+        <div class="others-by-user" id="others-by-user-<?=$review['Review']['id']?>">
+            <?php $r_user = $review['User'] ?>
+            <?=$html->link(
+                sprintf(
+                    ngettext('addon_review_others_by_user',
+                        'addon_review_others_by_user', $other_count), 
+                    $other_count,
+                    $r_user['nickname'] ? $r_user['nickname'] : 
+                        $r_user['firstname'] . ' ' . $r_user['lastname'] 
+                ), 
+                '/reviews/display/'.$addon['Addon']['id'].'?user_id='.$review['User']['id']
+            ) ?>
+        </div>
+    <?php endif ?>
+
+    </div>
+    
+    <? if ($other_count = @($reviews_others_counts[$review['Review']['id']])): ?>
+        <div class="others-by-user-load" id="others-by-user-load-<?=$review['Review']['id']?>">
+        </div>
+    <? endif ?>
+
+    <? // developer reply?
+    if (!empty($review['Review']['reply'])):
+    $reply = $review['Review']['reply'];
+    $reply['Translation'] = (array_key_exists(LANG, $reply['Translation']) ?
+        $reply['Translation'][LANG] : current($reply['Translation']));
+    $reply_id = $reply['Review']['id'];
+    ?>
+        <div class="review review-reply" id="review-<?=$reply['Review']['id']?>">
+        <h3><?=_('addon_review_reply_prefix') .' '. $reply['Translation']['title']['string']?></h3>
+        
+        <div class="reviewed-on">
+            <?=sprintf(_('addon_review_reply_on_x_by_y'), $html->linkUserFromModel($reply['User']), strftime(_('date'), strtotime($reply['Review']['created']))) ?> 
+            <?=($canDelete) ? '['.$html->link(_('addon_review_admin_delete'), "/reviews/delete/{$reply['Review']['id']}").']' : ''?>
+
+            <?php /* Show either the review moderation form, or display a 
+                     thank you message if this user already has flagged this review. */ ?>
+            <?php if ($loggedin): ?>
+                <?php
+                    $review_flag_name = isset($reviews_flagged[$reply_id]) ?
+                        $reviews_flagged[$reply_id]['flag_name'] : '';
+                ?>
+                <?php if ($review_flag_name): ?>
+
+                    <?php /* If there's already a flag for this review from this 
+                            user, re-display the thank you message without a flag 
+                            form. */ ?>
+                    <p class="flag-thanks"><?php echo ___('review_flag_success', 
+                        'Thanks; this review has been flagged for editor approval.') ?></p>
+
+                <?php else: ?>
+
+                    <?php echo $html->formTag('/reviews/flag', 'post',
+                            array('id' => "flag-{$reply_id}", 'class' => 'flag')); ?>
+                        <span class="reason">
+                            <span class="error"></span>
+                            <select id="data[ReviewsModerationFlag][flag_name]" 
+                                    name="data[ReviewsModerationFlag][flag_name]">
+                                <option value=""> - <?php echo _('review_flag_reason_instructions') ?> - </option>
+                                <?php foreach ($review_flag_reasons as $reason=>$label): ?> 
+                                    <option value="<?php echo $reason ?>"><?php echo $label ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </span>
+                        <?php
+                            echo $html->hidden('Review/id', 
+                                array('value'=>$reply_id, 'class'=>'ReviewId'));
+                            echo $html->input('ReviewsModerationFlag/flag_notes', 
+                                array('type'=>'text', 'size'=>'50', 'maxsize'=>'100', 'value'=>'', 'class'=>'FlagNotes hide-with-js'));
+                            echo $html->submit($_review_flag_this, 
+                                array('title'=>$_review_flag_this_titletip, 'class'=>'FlagSubmit hide-with-js'));
+                        ?>
+                    </form>
+
+                <?php endif; ?>
+            <?php endif; ?>
+
+        </div>
+        <?=nl2br($reply['Translation']['body']['string'])?>
+        </div>
+    <? endif; ?>
+<? endforeach; ?>
+
+<?php if (!$bare): ?>
+<? if (!empty($reviews)) echo $this->renderElement('amo2009/pagination');?>
+<div class="clearboth"> <hr /> </div>
+
+<ul>
+    <li><?=$html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
+    <?
+    if (empty($isAuthor)) {
+        if (!empty($hasreview)) {
+            $add_or_edit = _('addons_display_edit_review');
+        } else {
+            $add_or_edit = _('addons_display_add_review');
+        }
+        echo '<li>'.$html->link($add_or_edit, '/reviews/add/'.$addon['Addon']['id']).'</li>';
+    }
+    ?>
+</ul>
+
+<?php /* reviews javascript for ajax actions and the like */ ?>
+<script type="text/javascript">
+var flagurl = '<?=$html->url('/reviews/flag')?>';
+</script>
+<?php echo $javascript->link('reviews')."\n"; ?>
+    </div>
+</div>
+<?php else: ?>
+</div>
+<?php endif ?>

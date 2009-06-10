@@ -1,0 +1,149 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+if (!$is_ajax):
+?>
+<div id="content" class="collections">
+<div id="content-main">
+
+<p class="amo-plug">
+    Want even more add-ons?<br/>
+    <?=$html->link('Check out all Firefox Add-ons', '/');?>
+</p>
+
+<h1>Fashion my Firefox</h1>
+<h2>You asked to install the following items:</h2>
+<?php else: // AJAX action  ?>
+<h2>You asked to install the following items:</h2>
+<h2 style="display:none">The following add-ons that you have selected have license agreements:</h2>
+<?php endif; ?>
+
+<form action="" method="post" id="installform">
+<ul class="addon-listing addon-install-listing">
+    <?php
+    foreach ($addons as $val) {
+        $iconPath = $this->controller->Image->getAddonIconURL($val['Addon']['id']);
+        echo $this->renderElement('collections_install_item', array(
+            'addon'             => $val,
+            'addonIconPath'     => $iconPath
+            ));
+    }
+    ?>
+</ul>
+<div class="installsubmit"><input type="submit" value="Cancel" class="cancel"/><input type="submit" value="Next" class="submit"/></div>
+</form>
+
+<?php if (!$is_ajax): ?>
+</div><!-- /#content-main -->
+</div><!-- /#content -->
+<?php endif; ?>
+
+<script type="text/javascript">
+// <![CDATA[
+    $(document).ready(function() {
+        var platform = getPlatformName();
+        $('li.inst-addon .desc').children('p,input').filter(':not(.platform-ALL,.platform-'+platform+')').remove();
+        
+        var showEULAs = function() {return ($('li.inst-addon.eula input.install:checked').length>0);};
+        $('input.install').attr('checked', 'true')
+            .change(function(){
+                $('.installsubmit input.submit').attr('disabled', ($('input.install:checked').length == 0))
+                                                .attr('value', showEULAs()?'Next':'Install');
+                })
+            .change();
+        
+        $('#installform .installsubmit input.submit').click(function() {
+            if (!showEULAs()) return true;
+            $('#installdialog > h2').toggle();
+            $('input.install:not(:checked)').each(function(){$('#addon-'+$(this).attr('value')).hide();});
+            $('li.inst-addon.noeula').hide();
+            $('li.inst-addon div.eula').show()
+                                       .siblings().hide();
+            $('.installsubmit input.submit').attr('value', 'Install')
+                                            .unbind();
+            return false;
+        });
+        
+        $('#installform').submit(function() {
+            var installcount = 0; var signedcount = 0;
+            var unsigned = {}; var signed = {};
+            var installed = new Array();
+            $('input.install:checked').each(function() {
+                var id = $(this).attr('value');
+                var addon = $('#addon-'+id);
+                
+                if (addon.find('.eula input[type=radio][value=no]').attr('checked')==true) return true;
+                
+                installed[installcount] = id;
+                
+                var name = addon.find('h4').text();
+                var url = addon.find('.desc p').text();
+                var icon = addon.find('img.icon').attr('src');
+                var hash = addon.find('input[name=hash]').attr('value');
+                
+                var newaddon = {
+                    URL: url,
+                    IconURL: icon,
+                    Hash: hash,
+                    toString: function() { return this.URL; }
+                };
+                if ($(this).hasClass('unsigned') || signedcount++ == 0) {
+                    // unsigned and first signed one in one batch
+                    unsigned[name] = newaddon;
+                } else {
+                    // all other signed ones in separate batch
+                    signed[name] = newaddon;
+                }
+                installcount++;
+            });
+            if (installcount > 0) {
+                InstallTrigger.install(unsigned, function(url,status){
+                    if (status==0) window.location = '<?=$html->url('success')?>?i='+installed.join(',');return true;});
+                if (signedcount > 1) {
+                    for (k in signed) {
+                        var instaddon = {};
+                        instaddon[k] = signed[k];
+                        InstallTrigger.install(instaddon);
+                    }
+                }
+            }
+            return false;
+        });
+    });
+// ]]>
+</script>

@@ -1,0 +1,96 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Wil Clouser <clouserw@gmail.com>
+ *      Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <h3>Flagged Add-ons</h3>
+<?php
+    if (!empty($unflagged))
+        echo '<div class="greenNotice"><b>'.$unflagged.'</b> add-ons unflagged.</div>';
+    echo $html->formTag('/admin/flagged');
+?>
+<table width="100%" id="flagged">
+    <tr class="queueHeader">
+        <td>&nbsp;</td>
+        <td><?=_('editors_th_addon')?></td>
+        <td>Review</td>
+        <td>Flagged on</td>
+        <td>Flagged by</td>
+        <td>Comments</td>
+    </tr>
+<?php
+if (!empty($addons)):
+    $i = 0;
+    foreach ($addons as &$addon):
+?>
+    <tr<?=(++$i % 2 ? '' : ' class="even"')?>>
+        <td><input type="checkbox" name="data[Addon][unflag][]" value="<?=$addon['Addon']['id']?>"/></td>
+        <td><?=sprintf('%1$s %2$s', $html->link($addon['Translation']['name']['string'], '/admin/addons/status/'.$addon['Addon']['id'])
+            , (!empty($addon['Version'])?' '.$addon['Version']['version']:''))?></td>
+        
+        <?php if (!empty($addon['Version'])): ?>
+        <td><?=$html->link($html->image('developers/admin_review.png', 'width="16" height="16" alt="review version"'),
+            '/editors/review/'.$addon['Version']['id'], array('title'=>'review flagged add-on version'))?></td>
+        <?php else: ?>
+        <td>&nbsp;</td>
+        <?php endif; ?>
+        
+        <?php if (!empty($addon['Approval'])): ?>
+        <td><?=$addon['Approval']['created']?></td>
+        <td><?=$addon['User']['firstname'].' '.$addon['User']['lastname']?></td>
+        <td><?=$addon['Approval']['comments']?></td>
+        <?php else: ?>
+        <td colspan="3">&nbsp;</td>
+        <?php endif; ?>
+    </tr>
+<?php endforeach; ?>
+</table>
+<p><input type="submit" value="Unflag Selected Add-ons"/></p>
+
+<?php else: ?>
+    <tr><td colspan=8 class="emptyQueue"><?=_('editors_notice_none_found')?></td></tr>
+</table>
+
+<?php endif; ?>
+
+    </form>
+    </div> <!-- corner-box -->
+</div> <!-- content-right -->

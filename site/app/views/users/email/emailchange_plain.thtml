@@ -1,0 +1,7 @@
+<?php
+$confirmurl = SITE_URL.$html->url('/users/emailchange/'.$userid.'?code='
+    .urlencode($changecode), true);
+
+echo $html->lineBreaks(sprintf(___('user_email_confirm_emailchange'), $confirmurl, APP_PRETTYNAME));
+
+?>

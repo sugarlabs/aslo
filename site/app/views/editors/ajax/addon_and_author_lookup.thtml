@@ -1,0 +1,12 @@
+<?php
+header('Content-type: text/plain');
+if (!defined('NO_MICROTIME')) {
+    define('NO_MICROTIME', true);
+}
+
+if (count($addonsAndEmails) > 0) {
+    foreach ($addonsAndEmails as $row) {
+        echo str_replace('|', '&#124;', $row)."\n";
+    }
+}
+?>

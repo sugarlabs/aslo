@@ -1,0 +1,271 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+
+echo '<div id="content">';
+    if ($this->controller->Config->getValue('stats_updating')) {
+        echo '<div class="warning"><div>'._('statistics_notice_data_updating').'</div></div>';
+    }
+    if (isset($_GET['settings'])) {
+        echo '<div class="notice-updated">'._('statistics_notice_settings_updated').'</div>';
+    }
+?>
+    <div class="article">
+    <div class="bluebox-tr"><div class="bluebox-tl">
+        <div id="statistics-header">
+            <div id="statistics-controls">
+                <?php
+                if (!empty($all_addons)) {
+                    echo _('statistics_addon_switch').':';
+                    echo $html->selectTag('Addon/id', $all_addons, $addon_id, array('onChange' => 'changeAddon(this);'), null, false).'<br>';
+                }
+                ?>
+                <span id="statistics-links">
+                    <?=$html->link(_('statistics_addon_developertools_link'), '/developers')?> |
+                    <?=$html->link(_('statistics_addon_dashboard_link'), '/statistics')?> |
+                    <a href="#" onclick="$('#helpbox').toggle(); return false;"><?=_('statistics_help_link')?></a>
+                </span>
+            </div>
+            <div>
+                <img id="addon-icon" src="<?=$addonIcon?>" alt="<?=$addon_name?> Icon">
+                <h3 id="addon-title"><?=sprintf(_('statistics_title_addon_stats'), $addon_name)?></h3>
+            </div>
+        </div>
+        
+        <div id="helpbox" style="display: none;">
+            <?=$localization->includeLocalPage('statistics_help')?>
+            <a href="#" onclick="$('#helpbox').hide(); return false;"><?=_('statistics_help_close_link')?></a>
+        </div>
+        
+        <?php if ($stats['totaldownloads'] > 0): ?>
+        <div id="plot-options" style="display: none;">
+            <div id="plot-selector-area"></div>
+            <div id="plot-selection">
+                <div id="weeks-legend">
+                    <div class="plot-legend">
+                        <div class="colorbox" style="background-color: #CC6666;"></div>
+                        <div id="week1-selection" class="plot-name"><select class="template">
+                            <option>--</option>
+                        </select></div>
+                    </div>
+                    <div class="plot-legend">
+                        <div class="colorbox" style="background-color: #6666CC;"></div>
+                        <div id="week2-selection" class="plot-name"><select class="template">
+                            <option>--</option>
+                        </select></div>
+                    </div>
+                </div>
+                <div id="summary-legend">
+                    <div class="plot-legend">
+                        <div class="colorbox" style="background-color: #33AAFF;"></div>
+                        <div class="plot-name"><?=_('statistics_plot_legend_downloads')?></div>
+                    </div>
+                    <div class="plot-legend">
+                        <div class="colorbox" style="background-color: #EE3322;"></div>
+                        <div class="plot-name"><?=_('statistics_plot_legend_adu')?></div>
+                    </div>
+                </div>
+            </div>
+            <div id="options-area">
+                <?=$html->image('stats/cog.png', array('id' => 'options-cog', 'style' => 'display: none;', 'alt' => ''));?>
+                <div id="summary-options">
+                    <div id="zoom-in" class="zoom-button" onclick="Plots.summary.zoomIn();" title="<?=_('statistics_plot_options_zoomin_title')?>">
+                        <?=$html->image('stats/zoom_in.png', array('alt' => _('statistics_plot_options_zoomin_alt')))?>
+                    </div>
+                    <div id="zoom-out" class="zoom-button" onclick="Plots.summary.zoomOut();" title="<?=_('statistics_plot_options_zoomout_title')?>">
+                        <?=$html->image('stats/zoom_out.png', array('alt' => _('statistics_plot_options_zoomout_alt')))?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="timeplot-container">
+            <div id="not-enough-data" class="warning" style="display: none;"><div>
+                <?=_('statistics_notice_data_insufficient')?>
+            </div></div>
+            
+            <noscript>
+                <div class="warning"><div>
+                    <?=_('statistics_notice_nojavascript')?>
+                </div></div>
+            </noscript>
+        </div>
+        
+        <?php elseif (!$this->controller->Config->getValue('stats_disabled')): ?>
+            <div class="warning"><div>
+                <?=_('statistics_notice_data_none')?>
+            </div></div>
+        <?php endif; ?>
+        
+        <?php if ($this->controller->Config->getValue('stats_disabled')): ?>
+            <div class="warning"><div>
+                <?=_('statistics_notice_disabled')?>
+            </div></div>
+        <?php endif; ?>
+        
+        <div class="bluebox-br"><div class="bluebox-bl"></div></div>
+    </div></div></div>
+
+<br />
+
+<?php if (!$this->controller->Config->getValue('stats_disabled') || $this->controller->SimpleAcl->actionAllowed('*', '*', $this->controller->Session->read('User'))): ?>
+<div class="greenbox-tr"><div class="greenbox-tl">
+    <div id="stats-table-container">
+        <table width="100%" cellpadding="5" id="stats_overview">
+            <tr>
+                <td class="biglabel" valign="middle" style="width: 30%;">
+                    <?=_('statistics_summary_downloads_total')?>
+                    <div class="date"><?=sprintf(_('statistics_summary_downloads_total_sincedate'), strftime(_('statistics_date_shortmonthwithyear'), strtotime($addon['Addon']['created'])))?></div>
+                </td>
+                <td class="bigvalue" style="width: 19%;"><?=$statistics->number_format($stats, 'totaldownloads')?></td>
+                <td class="spacer" style="width: 2%;"></td>
+                <td class="biglabel" valign="middle" style="width: 30%;">
+                    <?=_('statistics_summary_updatepings_total')?>
+                    <div class="date">
+                        <?php
+                        if (!empty($stats['last_updatepings_date']))
+                            echo sprintf(_('statistics_summary_updatepings_total_ondate'), strftime(_('statistics_date_weekdayshortmonth'), strtotime($stats['last_updatepings_date'])));
+                        else
+                            echo _('statistics_summary_nodata');
+                        ?>
+                    </div>
+                </td>
+                <td class="bigvalue" style="width: 19%;"><?=$statistics->number_format($stats, 'last_updatepings')?></td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <?=_('statistics_summary_downloads_lastcount')?>
+                    <div class="date"><?=(!empty($stats['last_downloads_date']) ? strftime(_('statistics_date_weekdayshortmonth'), strtotime($stats['last_downloads_date'])) : '')?></div>
+                </td>
+                <td class="value"><?=$statistics->number_format($stats, 'last_downloads')?></td>
+                <td class="spacer"></td>
+                <td class="label">
+                    <?=_('statistics_summary_updatepings_changefromprevious')?>
+                    <div class="date">
+                        <?php
+                        if (!empty($stats['previous_updatepings']))
+                            echo sprintf(_('statistics_summary_updatepings_changefromprevious_ondate'), $html->number_format($stats['previous_updatepings'], 0), strftime(_('statistics_date_shortmonth'), strtotime($stats['previous_updatepings_date'])));
+                        else
+                            echo _('statistics_summary_nodata');
+                        ?>
+                    </div>
+                </td>
+                <td class="value">
+                    <?=$statistics->colored_percentage($stats, 'updateping_change')?>
+                </td>
+            </tr>
+            <tr>
+                <td class="label"><?=_('statistics_summary_downloads_average')?></td>
+                <td class="value"><?=$statistics->number_format($stats, 'avg_downloads')?></td>
+                <td class="spacer"></td>
+                <td class="label"><?=_('statistics_summary_updatepings_average')?></td>
+                <td class="value"><?=$statistics->number_format($stats, 'avg_updatepings')?></td>
+            </tr>
+            <tr>
+                <td class="label"><?=_('statistics_summary_downloads_lastweek')?></td>
+                <td class="value"><?=$statistics->number_format($stats, 'weeklydownloads')?></td>
+                <td class="spacer"></td>
+                <td class="label">
+                    <?=___('statistics_summary_updatepings_weekly_average')?>
+                    <div class="date">
+                        <?=sprintf(___('statistics_summary_updatepings_weekly_change'),
+                                   $statistics->colored_percentage($stats, 'weekly_updatepings_change'))
+                        ?>
+                    </div>
+                </td>
+                <td class="value">
+                    <?=$statistics->number_format($stats, 'weekly_updatepings')?>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="greenbox-br"><div class="greenbox-bl"></div></div>
+</div></div>
+<?php endif; ?>
+
+<div id="stats-table">
+
+    <a href="#" class="download"><? echo ___('statistics_js_download_csv', 'View this table in CSV format') ?></a>
+
+    <table class="template">
+        <thead>
+            <tr class="header">
+                <th>--</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="row">
+                <td class="col"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+    <div id="settings">
+    <?php
+        if ($addon['Addon']['publicstats'] == 1) {
+            echo _('statistics_settings_currently_public');
+            echo '&nbsp;'.$html->image('stats/lock_open.png', array('alt' => _('statistics_settings_unlocked_alt')));
+        }
+        else {
+            echo _('statistics_settings_currently_private');
+            echo '&nbsp;'.$html->image('stats/lock.png', array('alt' => _('statistics_settings_locked_alt')));
+        }
+        
+        echo '<br>';
+        if ($this->controller->Amo->checkOwnership($addon_id, null, true))
+            echo $html->link(_('statistics_settings_change_link'), '/statistics/settings/'.$addon_id);
+        elseif ($addon['Addon']['publicstats'] != 1)
+            echo '<span class="confidential">'._('statistics_settings_confidential').'</span>';
+    ?>
+    </div>
+
+</div>
+<script type="text/javascript">
+    var addonID = '<?=$addon_id?>';
+    var addonName = '<?=$addon_name?>';
+    var statsURL = '<?=$html->url('/statistics/')?>';
+
+    <?php if ($stats['totaldownloads'] > 0): ?>
+    $(document).ready(function() {
+        $('#plot-options').show();
+        plotSelection.loadSummary();
+        plotSelection.addPlotSelector();
+        plotSelection.addGroupBySelector();
+    });
+    <?php endif; ?>
+</script>

@@ -1,0 +1,177 @@
+/* remora-specific changes to focalcurve CSS */
+
+/* Listing items */
+#addon-listing .rating { display: inline; vertical-align: middle; }
+#addon-listing .addon-cats { display: inline; }
+
+/* Search page */
+#content.search p.addon-search-message { margin-top:2em; color: #777777; font-size: 180%; font-weight: bold; text-align:center; }
+
+/* Sidebar item indentation */
+#sidebar ul li.indented, .sidebar-right ul li.indented { text-indent: 10px; }
+
+/* Sidebar items without links need love too */
+#cat-list span { display: block; padding: .5em 10px; }
+
+/* Sidebar item selection */
+#cat-list li.selected { background-color: #99CC66; }
+#cat-list li.selected a { background: #99CC66; }
+
+/* Add-on Summary */
+#addon-summary .stats { position: absolute; left: 20px; top: 19em; margin: 1em 0; text-align: center; }
+#addon-summary .privacypolicy { clear: both; padding-top: .5em; }
+
+/* Details Page */
+#addon-info h4.version-link { margin: 2em 0; }
+
+#addon-info h4.version-link a.view { background: transparent url("../img/sprite.png?20090430") 100% -387px no-repeat; }
+.html-ltr #addon-info h4.version-link a.view:hover { background-position: 100% -437px; }
+.html-rtl #addon-info h4.version-link a.view { background-position: 100% -597px; }
+.html-rtl #addon-info h4.version-link a.view:hover { background-position: 100% -647px; }
+#addon-info h4.version-link a.view { padding-right: 30px; padding-bottom: 2px; text-decoration: none; }
+
+/* Install Box Outer */
+.sub div.install-container { padding: 0; margin: 0; }
+.sub div.secondary-container { background: transparent url("../img/sprite.png?20090430") left -1256px no-repeat; }
+
+/* Footer */
+ul#nav-legal { margin:0; }
+
+/* Make h1 and h2 in content-main actually useful */
+#content-main h1, #content-main h2, #content h1, #content h2 { color: #2D3B58; font-size: 140%; font-weight: bold; margin: 5px 0; }
+#content-main h2, #content h2 { font-size: 120%; }
+
+/* error page */
+.error-notice { margin: 0 auto; padding: 10px 80px 20px 80px; background: url(../img/warning.png) 20px 20px no-repeat; min-height: 48px; }
+
+/* right sidebar */
+.sidebar-content h3 { margin: 0 -1px; padding-left: 6px; font-size: 120%; background: #79be1b url("../img/sprite.png?20090430") -217px -106px no-repeat; border-bottom: 1px solid #abe071; }
+.sidebar-content h3 span { display: block; padding: 8px 4px; color: #426a13; background: transparent url("../img/sprite.png?20090430") -342px -106px no-repeat; }
+.sidebar-content { margin-bottom: 1em; position: relative; z-index: 5; padding-bottom: 6px; background-color: #f6f6f6; border: 1px solid #d8dcdf; border-width: 0 1px 1px; }
+.sidebar-content { -moz-border-radius-bottomright: 6px; -moz-border-radius-bottomleft: 6px; -webkit-border-bottom-right-radius: 6px; -webkit-border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; }
+.sidebar-list { margin-left: 0; list-style: none; border-top: 1px solid #e8e6e6; }
+.sidebar-list li { padding-right: 1px; border-bottom: 3px double #e8e6e6; }
+.sidebar-list a { display: block; padding: .5em 10px; background: #f4f2f2 url("../img/cat-link.png") top repeat-x; }
+.sidebar-content a:link { color: #4e4e4e; text-decoration: none; }
+.sidebar-content a:visited { color: #777; text-decoration: none; }
+.sidebar-content a:hover, .sidebar-content a:active, .sidebar-content a:focus { color: #1d587f; background: #f1f0f0 url("../img/cat-linkhover.png") top repeat-x; }
+.sidebar-right { float: right; width: 18%; }
+
+/* rss */
+.rss-link { padding-left: 16px; background: url(../img/tinyRss.png) no-repeat left; }
+.rss-container img { float: left; }
+
+/* addon policy pages */
+#addon-summary.addon-policy { padding-left: 0; }
+div#content-policy { margin: 0 0 2em 44px; }
+.policy-area { margin-bottom: 2em ;}
+#policy-tl  { position: absolute; left: -1px; top: 0; padding: 18px 0 0 20px; background: transparent url("../img/sprite.png?20090430") left -1256px no-repeat; height: 10px; width: 10px; }
+
+/* options bar on listing pages */
+#form-listcontrol #options-submit { position: absolute; top:15px; right:-30px; }
+
+/* Search box */
+#search-form #search-submit { position: absolute; top: 25px; right:-30px; }
+
+/* corner box */
+html[dir='rtl'] .corner-box {
+    background: url(../img/rustico/right-top-corner-box.jpg) top right no-repeat;
+    margin: 0 0 10px 0;
+    padding: 12px 12px 12px 15px;
+}
+
+html[dir='ltr'] .corner-box {
+    background: url(../img/rustico/left-top-corner-box.jpg) top left no-repeat;
+    margin: 0 0 10px 0;
+    padding: 12px 0 12px 15px;
+}
+
+.corner-box h2, h3 {
+    margin-top: 0;
+}
+
+/* reviews pages */
+.corner-box.review-reply { margin-left: 2em; }
+form.flag { display: inline; }
+
+#addon-listing .addon-cats {
+    display: block;
+    margin: .2em 0 .5em 0;
+}
+
+.naked {
+    list-style-type: none;
+    margin-left: .5em;
+}
+
+.clear {
+    clear: both;
+}
+
+/* anti-CSRF hidden session code */
+div.hsession { display: none; }
+
+/* Edit user profile tabs */
+#tabbed-editor ul,
+#tabbed-editor li {
+    margin: 0;
+}
+#profile-notifications ul {
+    margin: 0 0 1.5em 2em;
+}
+#tabbed-editor .ui-tabs-nav,
+#tabbed-editor .ui-tabs-panel {
+    font-family: inherit;
+    font-size: inherit;
+}
+#tabbed-editor .line {
+    margin: 10px 0;
+}
+#tabbed-editor .tabs-nav {
+    display: none;
+}
+#tabbed-editor .ui-tabs-nav {
+    display: block;
+}
+
+
+/* FAQ styling */
+
+dl.faq dt {
+    margin: 1em 0 0 0;
+}
+
+dl.faq dd {
+    margin-top: 0.5em;
+}
+
+dl.faq dt:target {
+    color: #df731b;
+}
+
+
+/* Developer Agreement */
+#dev-agreement ul {
+  list-style-type: disc;
+}
+
+/* Version License */
+#version-license {
+    background-color: #EEE;
+    border: 1px solid #AAA;
+    max-width: 600px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+/* Get Satisfaction */
+div#gsfn_list_widget img { border: none; }
+div#gsfn_list_widget { float:right; font-size: 12px; width: 250px; border: 6px solid #DDD; padding: 5px 5px 25px 20px; margin: 5px 5px 10px 10px;}
+div#gsfn_list_widget a.widget_title { color: #000; display: block; margin-bottom: 10px; font-weight: bold; }
+div#gsfn_list_widget .powered_by { margin-top: 8px; padding-top: 8px; border-top: 1px solid #DDD; }
+div#gsfn_list_widget .powered_by a { color: #333; font-size: 90%; }
+div#gsfn_list_widget div#gsfn_content { }
+div#gsfn_list_widget div#gsfn_content li { text-align:left; margin-bottom:6px; }
+div#gsfn_list_widget div#gsfn_content a.gsfn_link { line-height: 1; }
+div#gsfn_list_widget div#gsfn_content span.time { font-size: 90%; padding-left: 3px; }
+div#gsfn_list_widget div#gsfn_content p.gsfn_summary { margin-top: 2px }

@@ -1,0 +1,130 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Wil Clouser <wclouser@mozilla.com> (Original Developer)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <h3>Feature Manager</h3>
+        <?php
+        if (!empty($errors['main'])) {
+            echo '<div class="error">'.$errors['main'].'</div>';
+        }
+
+        // Filter form
+        echo '<div>';
+            echo $html->formTag('/admin/features', 'get');
+
+                echo '<label for="locale">Locale:</label>';
+                echo '<select id="userlang" name="userlang">';
+                echo '<option value="Unspecified">Unspecified</option>';
+                foreach ($locales as $locale => $code) {
+                    $_selected = ($locale == USERLANG) ? ' selected="yes" ' : '';
+                    echo "<option value=\"{$locale}\" {$_selected}>{$locale}</option>";
+                }
+                echo '</select>';
+
+                echo '<label for="applications">Application:</label>';
+                echo '<select id="userapp" name="userapp">';
+                foreach ($applications as $application) {
+                    $_selected = ($application['Application']['id'] == USERAPP) ? ' selected="yes" ' : '';
+                    echo "<option value=\"{$application['Application']['id']}\" {$_selected}>{$application['Translation']['name']['string']}</option>";
+                }
+                echo '</select>';
+
+                echo $html->submit('Filter', array('name' => 'filter'));
+
+            echo '</form>';
+        echo '</div>';
+        
+        // Features list
+        if (!empty($features)) {
+            foreach ($features as $feature) {
+
+                $fid = $feature['Feature']['id'];
+                echo '<div class="groupItem">';
+                    echo $html->formTag('/admin/features/update/'.$fid);
+                    echo '<h3>'.$html->link($feature['Addon']['name'], '/addon/'.$feature['Feature']['addon_id']).'</h3>';
+                    echo '<div>';
+                        echo '<label for="feature'.$fid.'_startdate">Start Date:</label>';
+                        echo '<input type="text" id="feature'.$fid.'_startdate" name="feature'.$fid.'_startdate" value="'.$feature['Feature']['start'].'"><br />';
+                        echo '<label for="feature'.$fid.'_enddate">End Date:</label>';
+                        echo '<input type="text" id="feature'.$fid.'_enddate" name="feature'.$fid.'_enddate" value="'.$feature['Feature']['end'].'"><br />';
+                        echo $html->submit('Save', array('name' => 'save'));
+                        echo $html->submit('Remove', array('name' => 'remove'));
+                    echo '</div>';
+                    echo '</form>';
+                echo "</div>\n";
+            }
+        }
+        ?>    
+
+        <div>
+            <h3>Create Feature</h3>
+            <?php echo $html->formTag('/admin/features/create'); ?>
+            <div id="developersForm">
+                <div>
+                    <label for="addon-name">Add-on Name</label>
+                    <input type="text" name="q" id="addon-name">
+                    <p><i>Enter at least 4 characters or an add-on id in brackets, eg. [2848].</i></p>
+                </div>
+                <div>
+                    <label for="FeatureStart">Start Date</label>
+                    <?=$html->input('Feature/start', array('size' => '50'))?>
+                    <p><i>(yyyy-mm-dd or blank for NOW())</i></p>
+                </div>
+                <div>
+                    <label for="FeatureEnd">End Date (yyyy-mm-dd)</label>
+                    <?=$html->input('Feature/end', array('size' => '50'))?>
+                    <p><i>(yyyy-mm-dd or blank for NOW()+6 months)</i></p>
+                </div>
+                <script language="JavaScript" type="text/javascript">
+                    $(document).ready(function() {
+                        $('#addon-name').autocomplete("<?=$html->url('/admin/addonLookup?s=4')?>",
+                            {
+                                minChars: 4,
+                                formatItem: function(row) { return '<b>' + row[0] + '</b><br><i>' + row[1] + '</i>'; },
+                                formatResult: function(row) { return row[2]; }
+                            });
+                    });
+                </script>
+                <?=$html->submit('Add', array('name' => 'add'))?>
+            </div>
+            </form>
+        </div>
+        
+    </div>
+</div>

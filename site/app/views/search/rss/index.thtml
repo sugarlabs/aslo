@@ -1,0 +1,26 @@
+<?php
+foreach ($search_results as $var => $val):
+    // prepare version string
+    if (!empty($val['Version']))
+        $version = $val['Version'][0]['version'] .' - '. strftime(_('date'), strtotime($val['Version'][0]['created']));
+    else
+        $version = '';
+
+    // prepare absolute url of addons
+    $absurl = 'http'.(!empty($_SERVER['HTTPS'])?'s':'').'://'.$_SERVER['SERVER_NAME'].$html->url('/addon/'.$val['Addon']['id']);
+
+    // prepare publication timestamp
+    $pubdate = (!empty($val['Version'])) ? $time->toRss($val['Version']['0']['created']) : '';
+?>
+
+<item>
+    <title><?=$val['Translation']['name']['string'].' '.$version ?></title>
+    <link><?=$absurl ?></link>
+    <description><?=$this->controller->Sanitize->html($val['Translation']['summary']['string'])?></description>
+    <author><?=$val['User'][0]['firstname'].' '.$val['User'][0]['lastname']?></author>
+    <pubDate><?=$pubdate ?></pubDate>
+</item>
+
+<?php
+endforeach;
+?>

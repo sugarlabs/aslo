@@ -1,0 +1,125 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <h3>Admin Summary</h3>
+        <table class="stats">
+            <tr>
+                <td class="heading" colspan=2>Most Translations</td>
+            </tr>
+    <?php
+        foreach ($topLocales as $topLocale) {
+            echo '<tr>';
+                echo '<td class="title">'.$topLocale['translations']['locale'].'</td>';
+                echo '<td class="value">'.$topLocale[0]['total'].'</td>';
+            echo '</tr>';
+        }
+    ?>
+        </table>
+        
+        <table class="stats">
+            <tr>
+                <td class="heading" colspan=2>Last 24 Hours</td>
+            </tr>
+            <tr>
+                <td class="title">New Add-ons</td>
+                <td class="value"><?=$last24['newAddons'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">Updated Add-ons</td>
+                <td class="value"><?=$last24['updatedAddons'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">New Versions</td>
+                <td class="value"><?=$last24['versions'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">New Users</td>
+                <td class="value"><?=$last24['users'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">New Reviews</td>
+                <td class="value"><?=$last24['reviews'][0][0]['COUNT(*)']?></td>
+            </tr>
+        </table>
+        
+        <table class="stats">
+            <tr>
+                <td class="heading" colspan=2>Total Counts</td>
+            </tr>
+            <tr>
+                <td class="title">Extensions</td>
+                <td class="value"><?=$count['extensions'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">Themes</td>
+                <td class="value"><?=$count['themes'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">Dictionaries</td>
+                <td class="value"><?=$count['dictionaries'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">Search Plugins</td>
+                <td class="value"><?=$count['searchengines'][0][0]['COUNT(*)']?></td>
+            </tr>
+            <tr>
+                <td class="title">Current Sessions</td>
+                <td class="value"><?=$count['activeSessions'][0][0]['COUNT(*)']?></td>
+            </tr>
+        </table>
+        <br>
+        <table width="100%" class="log">
+            <tr>
+                <td class="heading" colspan=2>Recent Admin Activity</td>
+            </tr>
+            <?php
+            if (!empty($logs)) {
+                foreach ($logs as $log) {
+                    echo '<tr>';
+                    echo '<td class="value" style="font-size: 80%;">'.$log['time'].'</td>';
+                    echo '<td class="title">'.$log['entry'].'</td>';
+                    echo '</tr>';
+                }
+            }
+            ?>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
+ *   Mike Shaver <shaver@mozilla.com>
+ *   Mike Morgan <morgamic@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+
+/**
+ * This element uses the following local variables:
+ * - $addon (Addon model-style array, containing 'Addon' and
+ *   (optionally) 'Version', 'File', 'Tag' sub-arrays)
+ * - $addonIconPath (optional)
+ * - $addonPreviewPath (optional)
+ */
+
+$addonID = $addon['Addon']['id'];
+$addonName = $addon['Translation']['name']['string'];
+$addonEULA = $addon['Translation']['eula']['string'];
+$hasEULA = (!empty($addonEULA));
+
+// prepare icon
+if (isset($addonIconPath) && !empty($addonIconPath))
+    $icon = '<img src="'.$addonIconPath.'" class="icon" alt=""/>';
+else
+    $icon = '';
+
+?>
+
+<li class="list-addon inst-addon <?=($hasEULA?'eula':'noeula')?>" id="addon-<?=$addonID?>">
+    <?=$icon?>
+    <div class="desc">
+        <h4><?=$addonName?></h4>
+<?php
+    // display filename for each platform
+    foreach ($addon['File'] as $file) {
+        if (!($_platform_name = $platforms[$file['platform_id']])) continue;
+        $_class_platform_string = "platform-{$_platform_name}";
+        echo '<p class="'.$_class_platform_string.'">'.$html->urlFile($file['id'], $file['filename'])."</p>\n";
+        echo '<input class="'.$_class_platform_string.'" type="hidden" name="hash" value="'.$file['hash'].'"/>'."\n";
+    }
+?>
+    </div>
+    <div class="add-button">
+        <input id="inst-check-<?=$addonID?>" type="checkbox" value="<?=$addonID?>" name="addon[]" class="install <?=($addon['Addon']['signed_xpi']?'signed':'unsigned')?>"/>
+        <label class="add" for="inst-check-<?=$addonID?>">Include in install</label>
+    </div>
+    <div class="eula" style="display:none">
+        <p><strong><?=$addonName?>:</strong> <a href="#" onclick="$('#addon-<?=$addonID?> .eula-text').toggle();return false;">Read License Agreement</a></p>
+        <p class="eula-text" style="display:none"><?=nl2br($addonEULA)?></p>
+        <input type="radio" name="eula-<?=$addonID?>" id="eula-yes-<?=$addonID?>" value="yes" checked/> <label for="eula-yes-<?=$addonID?>">I accept the terms of the license agreement.</label><br/>
+        <input type="radio" name="eula-<?=$addonID?>" id="eula-no-<?=$addonID?>" value="no"/> <label for="eula-no-<?=$addonID?>">I do NOT accept the terms of the license agreement.</label>
+    </div>
+</li>

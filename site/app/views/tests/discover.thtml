@@ -1,0 +1,11 @@
+<?php
+
+echo '<?xml version="1.0" ?><cases>';
+
+$testlist = TestManager::getTestCaseList();
+foreach ($testlist as $k=>$testcase) {
+    echo "  <case>{$testcase}</case>\n";
+}
+
+echo '</cases>';
+?>

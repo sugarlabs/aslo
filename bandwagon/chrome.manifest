@@ -1,0 +1,51 @@
+content bandwagon   jar:chrome/bandwagon.jar!/content/
+
+#locale  bandwagon   ar   	jar:chrome/bandwagon.jar!/locale/ar/
+locale  bandwagon   ca   	jar:chrome/bandwagon.jar!/locale/ca/
+locale  bandwagon   cs   	jar:chrome/bandwagon.jar!/locale/cs/
+locale  bandwagon   da   	jar:chrome/bandwagon.jar!/locale/da/
+locale  bandwagon   de   	jar:chrome/bandwagon.jar!/locale/de/
+locale  bandwagon   el-GR       jar:chrome/bandwagon.jar!/locale/el-GR/
+locale  bandwagon   en-US	jar:chrome/bandwagon.jar!/locale/en-US/
+locale  bandwagon   es-ES       jar:chrome/bandwagon.jar!/locale/es-ES/
+locale  bandwagon   fa   	jar:chrome/bandwagon.jar!/locale/fa/
+locale  bandwagon   fr   	jar:chrome/bandwagon.jar!/locale/fr/
+locale  bandwagon   fy-NL       jar:chrome/bandwagon.jar!/locale/fy-NL/
+locale  bandwagon   he   	jar:chrome/bandwagon.jar!/locale/he/
+locale  bandwagon   id          jar:chrome/bandwagon.jar!/locale/id/
+locale  bandwagon   it          jar:chrome/bandwagon.jar!/locale/it/
+#locale  bandwagon   ja   	jar:chrome/bandwagon.jar!/locale/ja/
+locale  bandwagon   nl          jar:chrome/bandwagon.jar!/locale/nl/
+locale	bandwagon   pl		jar:chrome/bandwagon.jar!/locale/pl/
+locale  bandwagon   pt-BR   	jar:chrome/bandwagon.jar!/locale/pt-BR/
+locale  bandwagon   pt-PT   	jar:chrome/bandwagon.jar!/locale/pt-PT/
+locale  bandwagon   ro   	jar:chrome/bandwagon.jar!/locale/ro/
+locale  bandwagon   ru   	jar:chrome/bandwagon.jar!/locale/ru/
+locale  bandwagon   sk          jar:chrome/bandwagon.jar!/locale/sk/
+locale  bandwagon   sq   	jar:chrome/bandwagon.jar!/locale/sq/
+locale  bandwagon   sv-SE   	jar:chrome/bandwagon.jar!/locale/sv-SE/
+#locale  bandwagon   uk   	jar:chrome/bandwagon.jar!/locale/uk/
+locale  bandwagon   vi          jar:chrome/bandwagon.jar!/locale/vi/
+locale  bandwagon   zh-CN       jar:chrome/bandwagon.jar!/locale/zh-CN/
+locale  bandwagon   zh-TW       jar:chrome/bandwagon.jar!/locale/zh-TW/
+
+skin    bandwagon   classic/1.0 jar:chrome/bandwagon.jar!/skin/
+
+overlay chrome://browser/content/browser.xul    chrome://bandwagon/content/ui/overlays/browserOverlay.xul
+overlay chrome://mozapps/content/extensions/extensions.xul chrome://bandwagon/content/ui/overlays/extensionsOverlay.xul
+style   chrome://global/content/customizeToolbar.xul   chrome://bandwagon/skin/browserOverlay.css
+
+override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/linux/browserOverlay.css os=Linux
+override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/mac/browserOverlay.css os=Darwin
+override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/xp/browserOverlay.css os=WINNT osversion<=5.1
+override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/vista/browserOverlay.css os=WINNT osversion>=6
+
+override  chrome://bandwagon/skin/settingsIcons.css   chrome://bandwagon/skin/platform/linux/settingsIcons.css os=Linux
+override  chrome://bandwagon/skin/settingsIcons.css    chrome://bandwagon/skin/platform/mac/settingsIcons.css os=Darwin
+override  chrome://bandwagon/skin/settingsIcons.css   chrome://bandwagon/skin/platform/xp/settingsIcons.css os=WINNT osversion<=5.1
+override  chrome://bandwagon/skin/settingsIcons.css   chrome://bandwagon/skin/platform/vista/settingsIcons.css os=WINNT osversion>=6
+
+override  chrome://bandwagon/skin/extensionsOverlayIcons.css   chrome://bandwagon/skin/platform/linux/extensionsOverlayIcons.css os=Linux
+override  chrome://bandwagon/skin/extensionsOverlayIcons.css    chrome://bandwagon/skin/platform/mac/extensionsOverlayIcons.css os=Darwin
+override  chrome://bandwagon/skin/extensionsOverlayIcons.css   chrome://bandwagon/skin/platform/xp/extensionsOverlayIcons.css os=WINNT osversion<=5.1
+override  chrome://bandwagon/skin/extensionsOverlayIcons.css   chrome://bandwagon/skin/platform/vista/extensionsOverlayIcons.css os=WINNT osversion>=6

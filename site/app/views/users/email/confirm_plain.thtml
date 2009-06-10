@@ -1,0 +1,8 @@
+<?
+$confirmurl = SITE_URL.$html->url('/users/verify/'.$userid.'/'
+    .$data['User']['confirmationcode'], true);
+
+// the whole email is localized.
+echo $html->lineBreaks(sprintf(_('user_email_confirm_account_nopass'),
+    $confirmurl, APP_PRETTYNAME));
+?>

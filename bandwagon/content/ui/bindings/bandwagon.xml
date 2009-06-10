@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ***** BEGIN LICENSE BLOCK *****
+  -   Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  -
+  - The contents of this file are subject to the Mozilla Public License Version
+  - 1.1 (the "License"); you may not use this file except in compliance with
+  - the License. You may obtain a copy of the License at
+  - http://www.mozilla.org/MPL/
+  - 
+  - Software distributed under the License is distributed on an "AS IS" basis,
+  - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  - for the specific language governing rights and limitations under the
+  - License.
+  -
+  - The Original Code is bandwagon.
+  -
+  - The Initial Developer of the Original Code is
+  - Mozilla Corporation.
+  - Portions created by the Initial Developer are Copyright (C) 2008
+  - the Initial Developer. All Rights Reserved.
+  -
+  - Contributor(s): David McNamara
+  -                 Brian King
+  -
+  - Alternatively, the contents of this file may be used under the terms of
+  - either the GNU General Public License Version 2 or later (the "GPL"), or
+  - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  - in which case the provisions of the GPL or the LGPL are applicable instead
+  - of those above. If you wish to allow use of your version of this file only
+  - under the terms of either the GPL or the LGPL, and not to allow others to
+  - use your version of this file under the terms of the MPL, indicate your
+  - decision by deleting the provisions above and replace them with the notice
+  - and other provisions required by the GPL or the LGPL. If you do not delete
+  - the provisions above, a recipient may use your version of this file under
+  - the terms of any one of the MPL, the GPL or the LGPL.
+  - 
+  - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE bindings SYSTEM "chrome://bandwagon/locale/extensionsOverlay.dtd">
+
+<bindings id="bandwagon-bindings"
+    xmlns="http://www.mozilla.org/xbl"
+    xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    xmlns:xbl="http://www.mozilla.org/xbl"
+    xmlns:html="http://www.w3.org/1999/xhtml">
+
+    <binding id="bandwagon-collection" extends="chrome://global/content/bindings/richlistbox.xml#richlistitem">
+
+        <resources>
+            <stylesheet src="chrome://bandwagon/skin/extensionsOverlay.css"/>
+            <stylesheet src="chrome://bandwagon/skin/extensionsOverlayIcons.css"/>
+        </resources>
+
+        <content orient="vertical">
+            <xul:vbox flex="1"> <!-- Needed to constrain the list so that it does not horizontally scroll - Bug 488403-->
+                <xul:hbox align="center">
+                    <xul:image anonid="star" src="chrome://bandwagon/skin/images/star.png" style="width: 1em; height: 1em;" collapsed="true"/>
+                    <xul:label anonid="name" crop="center" flex="1"/>
+                    <xul:label anonid="unread" collapsed="true"/>
+                    <xul:image anonid="localautopub" class="autopubimg" collapsed="true"/>
+                </xul:hbox>
+            </xul:vbox>
+        </content>
+
+        <implementation>
+            <field name="collection"/>
+            <field name="controller"/>
+
+            <constructor>
+            <![CDATA[
+               if (this.collection)
+                   this.setCollection(this.collection);
+
+               setTimeout(this.controller.bindingsReady, 100);
+
+               if (this.styleWithSeparator)
+                   this.setAttribute("styleWithSeparator", "true")
+            ]]>
+            </constructor>
+
+            <property name="name"
+                onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'name').value"
+                onset="document.getAnonymousElementByAttribute(this, 'anonid', 'name').value = val; this.setAttribute('label', val);"
+                />
+
+            <property name="url"
+                onget="return this.getAttribute('value')"
+                onset="this.setAttribute('value', val);"
+                />
+
+            <property name="preview"
+                onget="return this.getAttribute('preview')"
+                onset="this.setAttribute('preview', val);"
+                />
+
+            <property name="writable"
+                onget="return !document.getAnonymousElementByAttribute(this, 'anonid', 'star').collapsed;"
+                onset="document.getAnonymousElementByAttribute(this, 'anonid', 'star').collapsed = !val;"
+                />
+
+            <property name="localautopub"
+                onget="return !document.getAnonymousElementByAttribute(this, 'anonid', 'localautopub').collapsed;"
+                onset="document.getAnonymousElementByAttribute(this, 'anonid', 'localautopub').collapsed = !val;"
+                />
+
+            <property name="unread"
+                onget="return !document.getAnonymousElementByAttribute(this, 'anonid', 'unread').value"
+                onset="document.getAnonymousElementByAttribute(this, 'anonid', 'unread').value = val; document.getAnonymousElementByAttribute(this, 'anonid', 'unread').collapsed = (val == 0);"
+                />
+
+            <property name="type"
+                onget="return this.getAttribute('type')"
+                onset="this.setAttribute('type', val);"
+                />
+
+            <method name="setCollection">
+                <parameter name="collection"/>
+                <body>
+                <![CDATA[
+                    this.collection = collection;
+                    this.name = (collection.name && collection.name !=""?collection.name:collection.resourceURL);
+                    this.url = collection.resourceURL;
+                    this.preview = collection.preview;
+                    this.writable = collection.writable;
+                    this.unread = collection.getUnreadAddons().length;
+                    this.type = collection.type;
+                    this.localautopub = collection.isLocalAutoPublisher();
+                ]]>
+                </body>
+            </method>
+
+        </implementation>
+    </binding>
+
+
+    <binding id="bandwagon-addon" extends="chrome://global/content/bindings/richlistbox.xml#richlistitem">
+
+        <resources>
+            <stylesheet src="chrome://bandwagon/skin/extensionsOverlay.css"/>
+            <stylesheet src="chrome://bandwagon/skin/extensionsOverlayIcons.css"/>
+        </resources>
+
+        <content>
+            <xul:stringbundle src="chrome://bandwagon/locale/bandwagonAddon.properties"
+                anonid="stringbundle"/>
+
+            <xul:hbox flex="1">
+                <xul:vbox class="addonIcon">
+                    <xul:image anonid="icon" class="icon"/>
+                </xul:vbox>
+                <xul:vbox flex="1" class="addonTextBox">
+                    <xul:hbox flex="1">
+                        <xul:vbox flex="1">
+                            <xul:hbox flex="1">
+                                <xul:label anonid="name" class="name"/>
+                                <xul:spacer flex="1"/>
+                                <xul:hbox align="center">
+                                    <xul:image anonid="commenticon" class="comment-icon"/>
+                                    <xul:label anonid="dateadded"/>
+                                </xul:hbox>
+                            </xul:hbox>
+                            <xul:label anonid="summary" crop="end"/>
+                        </xul:vbox>
+                    </xul:hbox>
+                </xul:vbox>
+            </xul:hbox>
+        </content>
+
+        <implementation>
+            <field name="addon"/>
+            <field name="_stringBundle">document.getAnonymousElementByAttribute(this, "anonid", "stringbundle");</field>
+
+            <constructor>
+            <![CDATA[
+                if (this.addon)
+                    this.setAddon(this.addon);
+            ]]>
+            </constructor>
+
+            <property name="name"
+                onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'name').value"
+                onset="document.getAnonymousElementByAttribute(this, 'anonid', 'name').value = val; this.setAttribute('label', val);"
+                />
+
+            <property name="guid"
+                onget="return this.getAttribute('value')"
+                onset="this.setAttribute('value', val);"
+                />
+
+            <property name="summary"
+                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'summary')?document.getAnonymousElementByAttribute(this, 'anonid', 'summary').value:'')"
+                onset="if (document.getAnonymousElementByAttribute(this, 'anonid', 'summary')) document.getAnonymousElementByAttribute(this, 'anonid', 'summary').value = val"
+                />
+
+            <property name="iconURL"
+                onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'icon').src"
+                onset="document.getAnonymousElementByAttribute(this, 'anonid', 'icon').src = val"
+                />
+
+            <property name="description"
+                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'description')?document.getAnonymousElementByAttribute(this, 'anonid', 'description').firstChild.nodeValue:'')"
+                onset="if (document.getAnonymousElementByAttribute(this, 'anonid', 'description')) document.getAnonymousElementByAttribute(this, 'anonid', 'description').firstChild.nodeValue = val"
+                />
+
+            <property name="thumbnailURL"
+                onget="return (document.getAnonymousElementByAttribute(this, 'class', 'thumbnail')?document.getAnonymousElementByAttribute(this, 'class', 'thumbnail').src:'')">
+                <setter>
+                <![CDATA[
+                    if (this._thumbnail)
+                    {
+                        var thumbnailURL = (val!=null&&val!=""?val:this._thumbnailMissingPlaceholder);
+
+                        var self = this;
+
+                        var image = new Image();
+                        image.onload = function() { if (self._imageLoaded) { self._imageLoaded(image); } };
+                        image.src = thumbnailURL; 
+                    }
+                ]]>
+                </setter>
+            </property>
+
+            <property name="authors"
+                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'author')?document.getAnonymousElementByAttribute(this, 'anonid', 'author').value:'')">
+                <setter>
+                <![CDATA[
+                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'authors'))
+                    {
+                        var authors = "";
+
+                        if (!val || val.length == 0)
+                        {
+                            authors = "?";
+                        }
+                        else
+                        {
+                            for each (var item in val)
+                            {
+                                authors += item + ", ";
+                            }
+
+                            if (authors.substring(authors.length-2) == ", ")
+                            {
+                                authors = authors.substring(0, authors.length-2);
+                            }
+                        }
+
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'authors').value = this._stringBundle.getFormattedString('bandwagon.addon.author', [authors]);
+                    }
+                ]]>
+                </setter>
+            </property>
+
+            <property name="read"
+                onget="return this.getAttribute('read')"
+                onset="this.setAttribute('read', val);"
+                />
+
+            <property name="dateAdded" onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'dateadded').value">
+                <setter>
+                <![CDATA[
+                    // val is a js date
+                    // make it a pretty relative date e.g. "2 days ago"
+
+                    var now = new Date();
+                    var diff = (now.getTime() - val.getTime()) / 1000;
+
+                    var sbString = "";
+                    var sbVal = 0;
+
+                    if (diff < 60)
+                    {
+                        sbString = "bandwagon.addon.added.justnow";
+                    }
+                    else if (diff < 60 * 60)
+                    {
+                        sbString = "bandwagon.addon.added.minute";
+                        sbVal = Math.ceil(diff/60);
+                    }
+                    else if (diff < 60 * 60 * 24)
+                    {
+                        sbString = "bandwagon.addon.added.hour";
+                        sbVal = Math.floor(diff/60/60);
+                    }
+                    else if (diff < 60 * 60 * 24 * 7)
+                    {
+                        sbString = "bandwagon.addon.added.day";
+                        sbVal = Math.floor(diff/60/60/24);
+                    }
+                    else if (diff < 60 * 60 * 24 * 30)
+                    {
+                        sbString = "bandwagon.addon.added.week";
+                        sbVal = Math.floor(diff/60/60/24/7);
+                    }
+                    else if (diff < 60 * 60 * 24 * 365)
+                    {
+                        sbString = "bandwagon.addon.added.month";
+                        sbVal = Math.floor(diff/60/60/24/30);
+                    }
+                    else
+                    {
+                        sbString = "bandwagon.addon.added.year";
+                        sbVal = Math.floor(diff/60/60/24/365);
+                    }
+
+                    Components.utils.import("resource://gre/modules/PluralForm.jsm");
+                    let [get, numForms] = PluralForm.makeGetter(this._stringBundle.getString("bandwagon.addon.pluralRule"));
+                    var datestr = get(sbVal, this._stringBundle.getFormattedString(sbString, [sbVal]));
+
+                    document.getAnonymousElementByAttribute(this, 'anonid', 'dateadded').value = datestr;
+                ]]>
+                </setter>
+            </property>
+
+            <property name="comment"
+                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'commentdesc')?document.getAnonymousElementByAttribute(this, 'anonid', 'commentdesc').textContent : '')"
+                >
+                <setter>
+                <![CDATA[
+                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentdesc'))
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'commentdesc').textContent = this._stringBundle.getFormattedString('bandwagon.addon.comment.description', [val.comment]);
+                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentauthor'))
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'commentauthor').value = this._stringBundle.getFormattedString('bandwagon.addon.comment.author', [val.author]);
+                ]]>
+                </setter>
+            </property>
+
+            <property name="addedBy"
+                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'addedby')?document.getAnonymousElementByAttribute(this, 'anonid', 'addedby').value:'')"
+                >
+                <setter>
+                <![CDATA[
+                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'addedby')) document.getAnonymousElementByAttribute(this, 'anonid', 'addedby').value = this._stringBundle.getFormattedString('bandwagon.addon.addedby', [val]);
+                ]]>
+                </setter>
+            </property>
+
+            <method name="setAddon">
+                <parameter name="addon"/>
+                <body>
+                <![CDATA[
+                    this.addon = addon;
+                    this.name = addon.name;
+                    this.guid = addon.guid;
+                    this.summary = addon.summary;
+                    this.description = addon.summary; // Use summary and not description
+                    this.iconURL = addon.icon;
+                    this.thumbnailURL = addon.thumbnail;
+                    this.authors = addon.authors;
+                    this.dateAdded = addon.dateAdded;
+                    this.read = addon.read;
+
+                    if (addon.comments.length > 0)
+                    {
+                        if (addon.comments[0].comment.match(/\w/))
+                        {
+                            this.comment = addon.comments[0];
+                        }
+
+                        this.addedBy = addon.comments[0].author;
+                        if (addon.comments[0].comment == "")  // it seems each addon will have an empty comment if none was made
+                        {
+                            document.getAnonymousElementByAttribute(this, 'anonid', 'commenticon').setAttribute("collapsed", true);
+                            if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox')) // expanded only
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox').setAttribute("collapsed", true);
+                        }
+                    }
+                    else
+                    {
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'commenticon').setAttribute("collapsed", true);
+                        if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox')) // expanded only
+                            document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox').setAttribute("collapsed", true);
+                    }
+
+                    this.invalidateCompatibilityCheck();
+                    this.invalidatePublishButton();
+                ]]>
+                </body>
+            </method>
+
+            <method name="invalidateCompatibilityCheck">
+                <body>
+                <![CDATA[
+                    if (this.addon)
+                    {
+                        var canInstall = this.addon.canInstall(Bandwagon.Util.getHostEnvironmentInfo());
+                        var requiredVersion = Bandwagon.Util.getUserFacingOSName(canInstall.requiredVersion);
+
+                        this.showVersionHelper(canInstall.type, requiredVersion);
+                    }
+                ]]>
+                </body>
+            </method>
+
+            <method name="invalidatePublishButton">
+                <body>
+                <![CDATA[
+                    var publishButton = document.getAnonymousElementByAttribute(this, 'anonid', 'publish');
+
+                    if (publishButton)
+                    {
+                        publishButton.emailAddresses = Bandwagon.Controller.ExtensionsOverlay._getEmailAddresses();
+                        publishButton.writableCollections = Bandwagon.Controller.ExtensionsOverlay._getWritableCollections();
+                        publishButton.invalidate();
+                    }
+                ]]>
+                </body>
+            </method>
+
+            <method name="showVersionHelper">
+                <parameter name="type"/>
+                <parameter name="version"/>
+                <body>
+                <![CDATA[
+                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox')
+                        && document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning'))
+                    {
+                        var container = document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning');
+
+                        while (container.hasChildNodes())
+                        {
+                            container.removeChild(container.firstChild);
+                        }
+
+                        if (type == Bandwagon.Model.Addon.INSTALL_YES)
+                        {
+                            document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').disabled = false;
+                            document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').collapsed = true;
+                        }
+                        else
+                        {
+                            if (type == Bandwagon.Model.Addon.INSTALL_NO_IS_EXPERIMENTAL)
+                            {
+                                var msg;
+
+                                try
+                                {
+                                    msg = this._stringBundle.getString("bandwagon.addon.isexperimental");
+                                }
+                                catch (e)
+                                {
+                                    msg = this._stringBundle.getString("bandwagon.addon.olderversionsoffirefox");
+                                }
+
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
+                                    document.createTextNode(msg));
+                            }
+                            else if (type == Bandwagon.Model.Addon.INSTALL_NO_ADDON_IS_FOR_OLDER_VERSION)
+                            {
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
+                                    document.createTextNode(this._stringBundle.getString("bandwagon.addon.olderversionsoffirefox")));
+                            }
+                            else if (type == Bandwagon.Model.Addon.INSTALL_NO_UPGRADE_TO_USE_THIS_VERSION)
+                            {
+                                var atffwl = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "xul:label");
+                                atffwl.className = "text-link";
+                                atffwl.setAttribute("value", this._stringBundle.getFormattedString("bandwagon.addon.upgradetofirefoxn1", [version]));
+                                atffwl.addEventListener("click", function() { Bandwagon.Controller.CollectionsPane.doUpgradeToFirefoxN(version); }, true);
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(atffwl);
+
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
+                                    document.createTextNode(this._stringBundle.getString("bandwagon.addon.upgradetofirefoxn2")));
+                            }
+                            else if (type == Bandwagon.Model.Addon.INSTALL_NO_MUST_DOWNLOAD_BETA)
+                            {
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
+                                    document.createTextNode(this._stringBundle.getFormattedString("bandwagon.addon.requiresfirefoxbeta1", [version])));
+
+                                var atffwl = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "xul:label");
+                                atffwl.className = "text-link";
+                                atffwl.setAttribute("value", this._stringBundle.getFormattedString("bandwagon.addon.requiresfirefoxbeta2", [version]));
+                                atffwl.addEventListener("click", function() { Bandwagon.Controller.CollectionsPane.doDownloadFirefoxNBeta(version); }, true);
+
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(atffwl);
+                            }
+                            else if (type == Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS)
+                            {
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
+                                    document.createTextNode(this._stringBundle.getFormattedString("bandwagon.addon.notcompatible", [version])));
+                            }
+
+                            document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').collapsed = false;
+
+                            var isExtensionsCheckCompatibility = Bandwagon.Preferences.getGlobalPreference("extensions.checkCompatibility", true);
+                            var isAllowIncompatibleInstall = Bandwagon.Preferences.getPreference("allow.incompatible.install");
+
+                            if ((isExtensionsCheckCompatibility != null && isExtensionsCheckCompatibility == false)
+                                && (isAllowIncompatibleInstall != null && isAllowIncompatibleInstall == true)
+                                && (this.addon.getInstaller(Bandwagon.Util.getHostEnvironmentInfo().os))
+                                )
+                            {
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').disabled = false;
+                            }
+                            else
+                            {
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').disabled = true;
+                            }
+                        }
+                    }
+                ]]>
+                </body>
+            </method>
+
+            <method name="_imageLoaded">
+                <parameter name="image"/>
+                <body>
+                <![CDATA[
+                    //Bandwagon.Logger.debug("Thumbnail image loaded, dimensions are " + image.width + "x" + image.height);
+
+                    var thumbnail = this._thumbnail;
+
+                    if (thumbnail)
+                    {
+                        var maxWidth = this._maxThumbnailWidth;
+                        var maxHeight = this._maxThumbnailHeight;
+
+                        var width = image.width;
+                        var height = image.height;
+
+                        if ((maxWidth >= image.width) &&
+                                (maxHeight >= image.height))
+                        {
+                            width = image.width;
+                            height = image.height;
+                        }
+                        else if (image.width > image.height)
+                        {
+                            width = maxWidth;
+                            height = (maxHeight / image.width) * image.height;
+                        }
+                        else
+                        {
+                            height = maxHeight;
+                            width = (maxWidth / image.height) * image.width;
+                        }
+
+                        //Bandwagon.Logger.debug("Setting thumbnail dimensions to " + width + "x" + height);
+
+                        thumbnail.style.width = width + "px";
+                        thumbnail.style.height = height + "px";
+                        thumbnail.src = image.src;
+                    }
+                ]]>
+                </body>
+            </method>
+        </implementation>
+    </binding>
+
+    <binding id="bandwagon-addon-expanded" extends="chrome://bandwagon/content/ui/bindings/bandwagon.xml#bandwagon-addon">
+
+        <content>
+            <xul:stringbundle src="chrome://bandwagon/locale/bandwagonAddon.properties"
+                anonid="stringbundle"/>
+
+            <xul:hbox flex="1">
+                <xul:vbox class="addonIcon">
+                    <xul:image anonid="icon" class="icon"/>
+                </xul:vbox>
+                <xul:vbox flex="1" class="addonTextBox">
+                    <xul:hbox flex="1">
+                        <xul:vbox flex="1">
+                            <xul:hbox flex="1" align="center">
+                                <xul:label anonid="name" class="name"/>
+                                <xul:spacer flex="1"/>
+                                <xul:vbox align="end">
+                                    <xul:hbox align="center">
+                                        <xul:image anonid="commenticon" class="comment-icon"/>
+                                        <xul:label anonid="dateadded"/>
+                                    </xul:hbox>
+                                    <xul:label anonid="addedby"/>
+                                </xul:vbox>
+                            </xul:hbox>
+                            <xul:hbox anonid="byline" flex="1">
+                                <xul:label anonid="authors"/>
+                                <xul:spacer flex="1"/>
+                            </xul:hbox>
+                        </xul:vbox>
+                    </xul:hbox>
+                    <xul:vbox anonid="commentbox" flex="1" class="comments unindent">
+                        <xul:hbox align="center">
+                            <xul:label anonid="commentauthor" flex="1"/>
+                        </xul:hbox>
+                        <xul:description anonid="commentdesc" flex="1"/>
+                    </xul:vbox>
+                    <xul:hbox align="stretch"
+                              anonid="fulldesc"
+                              class="collection-item-details unindent"
+                              flex="1">
+                        <xul:vbox pack="start">
+                            <xul:hbox anonid="bandwagonThumbnailContainer"
+                                      class="bandwagonThumbnailContainer">
+                                <xul:vbox flex="1" align="center" pack="center">
+                                    <xul:image anonid="thumbnail" class="thumbnail" src="chrome://global/skin/icons/loading_16.png"/>
+                                </xul:vbox>
+                            </xul:hbox>
+                        </xul:vbox>
+                        <xul:vbox flex="1">
+                            <xul:description anonid="description">
+                                <xul:label anonid="learnmore" class="text-link" value="&addon.moreinfo;" onclick="Bandwagon.Controller.CollectionsPane.doMoreInfo()"/>
+                            </xul:description>
+                            <xul:spacer flex="1"/>
+                            <xul:hbox pack="end" class="publishButton">
+                                <xul:bandwagonPublishButton anonid="publish" label="&publishto.label;"/>
+                                <xul:button anonid="addtofirefox" label="&addon.addtofirefox;" oncommand="Bandwagon.Controller.CollectionsPane.doAddToFirefox()"/>
+                            </xul:hbox>
+                            <xul:description anonid="addtofirefoxwarning" class="right">
+                            </xul:description>
+                        </xul:vbox>
+                    </xul:hbox>
+                </xul:vbox>
+            </xul:hbox>
+        </content>
+
+        <implementation implements="nsIAccessibleProvider">
+            <field name="_thumbnailContainer">
+                document.getAnonymousElementByAttribute(this, 'anonid', 'bandwagonThumbnailContainer');
+            </field>
+
+            <field name="_thumbnail">
+                document.getAnonymousElementByAttribute(this, 'anonid', 'thumbnail');
+            </field>
+
+            <field name="_maxThumbnailWidth">125</field>
+            <field name="_maxThumbnailHeight">120</field>
+            <field name="_thumbnailMissingPlaceholder">"chrome://bandwagon/skin/images/missing-thumbnail.png"</field>
+
+        </implementation>
+    </binding>
+
+
+    <binding id="bandwagon-publish-button">
+
+        <resources>
+            <stylesheet src="chrome://bandwagon/skin/extensionsOverlay.css"/>
+            <stylesheet src="chrome://bandwagon/skin/extensionsOverlayIcons.css"/>
+        </resources>
+
+        <content>
+            <xul:button label="&publishto.label;"
+                        type="menu"
+                        anonid="publishButton"
+                        class="publishButton"
+                        collapsed="true">
+                <xul:menupopup anonid="writableCollections">
+                    <!-- writable collections go here -->
+                    <xul:menuitem label="&new.collection.label;" oncommand="Bandwagon.Controller.ExtensionsOverlay.doNewCollection();" anonid="newCollection"/>
+                    <xul:menuseparator anonid="writableCollectionSeparator"/>
+                    <xul:menu label="&email.address.label;" anonid="emailAddressMenu">
+                        <xul:menupopup anonid="emailAddresses">
+                            <!-- email addresses go here -->
+                            <xul:menuseparator anonid="emailAddressSeparator"/>
+                            <xul:menuitem label="&new.email.address.label;" oncommand="Bandwagon.Controller.ExtensionsOverlay.doAddNewShareEmail();"/>
+                        </xul:menupopup>
+                    </xul:menu>
+                 </xul:menupopup>
+            </xul:button>
+
+        </content>
+
+        <implementation>
+            <field name="emailAddresses"/>
+            <field name="writableCollections"/>
+
+            <constructor>
+            <![CDATA[
+                if (this.emailAddresses && this.writableCollections)
+                {
+                    this.invalidate();
+                }
+            ]]>
+            </constructor>
+
+            <method name="invalidate">
+                <body>
+                <![CDATA[
+                    const XULNS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
+
+                    var elemWritableCollectionsPopup = document.getAnonymousElementByAttribute(this, "anonid", "writableCollections");
+                    var elemWritableCollectionSeparator = document.getAnonymousElementByAttribute(this, "anonid", "writableCollectionSeparator");
+                    var elemEmailAddressesPopup = document.getAnonymousElementByAttribute(this, "anonid", "emailAddresses");
+                    var elemEmailAddressSeparator = document.getAnonymousElementByAttribute(this, "anonid", "emailAddressSeparator");
+                    var elemEmailAddressMenu = document.getAnonymousElementByAttribute(this, "anonid", "emailAddressMenu");
+                    var elemPublishButton = document.getAnonymousElementByAttribute(this, "anonid", "publishButton");
+                    var elemNewCollection = document.getAnonymousElementByAttribute(this, "anonid", "newCollection");
+
+                    // populate the email address menu
+
+                    var activeEmailMenu = elemEmailAddressesPopup;
+                    var activeEmailAddressSeparator = elemEmailAddressSeparator;
+
+                    if (this.emailAddresses.length)
+                    {
+                        for (var i=0; i<this.emailAddresses.length; i++)
+                        {
+                            var email = this.emailAddresses[i];
+
+                            if (document.getAnonymousElementByAttribute(this, "anonid", "bandwagon-email-" + email))
+                                continue;
+
+                            var callback = new Function("Bandwagon.Controller.ExtensionsOverlay.doShareToEmail('" + email + "')");
+
+                            var elemEmailMenuItem = document.createElementNS(XULNS, "menuitem");
+                            elemEmailMenuItem.setAttribute("label", email);
+                            elemEmailMenuItem.setAttribute("anonid", "bandwagon-email-" + email);
+                            elemEmailMenuItem.addEventListener("command", callback, true);
+
+                            activeEmailMenu.insertBefore(elemEmailMenuItem, activeEmailAddressSeparator);
+                        }
+
+                        activeEmailAddressSeparator.collapsed = false;
+                    }
+                    else
+                    {
+                        // don't show the separator if there are no email addresses
+                        activeEmailAddressSeparator.collapsed = true;
+                    }
+
+                    // populate the collections menu
+
+                    function createAddToCollectionCallbackFunction(collection)
+                    {
+                        return function() { Bandwagon.Controller.ExtensionsOverlay.doPublishToCollection(collection); }
+                    }
+
+                    function createRemoveFromCollectionCallbackFunction(collection)
+                    {
+                        return function() { Bandwagon.Controller.ExtensionsOverlay.doRemoveFromCollection(collection); }
+                    }
+
+                    for (var i=0; i<this.writableCollections.length; i++)
+                    {
+                        var collection = this.writableCollections[i];
+
+                        if (document.getAnonymousElementByAttribute(this, "anonid", "bandwagon-collection-" + collection.resourceURL))
+                            continue;
+
+                        var callbackAdd = createAddToCollectionCallbackFunction(collection);
+                        var callbackRemove = createRemoveFromCollectionCallbackFunction(collection);
+
+                        var elemWritableCollection = document.createElementNS(XULNS, "menuitem");
+                        elemWritableCollection.setAttribute("label", (collection.name?collection.name:collection.resourceURL));
+                        elemWritableCollection.setAttribute("anonid", "bandwagon-collection-" + collection.resourceURL);
+
+                        if (collection.__containsCurrentlySelectedExtension)
+                        {
+                            elemWritableCollection.setAttribute("type", "checkbox");
+                            elemWritableCollection.setAttribute("checked", "true");
+                            elemWritableCollection.setAttribute("autocheck", "false");
+                            elemWritableCollection.addEventListener("command", callbackRemove, true);
+                        }
+                        else 
+                        {
+                            elemWritableCollection.addEventListener("command", callbackAdd, true);
+                        }
+
+                        elemWritableCollectionsPopup.insertBefore(elemWritableCollection, elemNewCollection);
+                    }
+
+                    elemPublishButton.collapsed = false;
+                ]]>
+                </body>
+            </method>
+        </implementation>
+    </binding>
+
+</bindings>

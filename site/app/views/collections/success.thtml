@@ -1,0 +1,108 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="page">
+<div id="content" class="collections">
+<div id="content-main" class="full">
+
+<div id="successpage">
+    <h1><img src="<?=$html->urlImage('fyf/addonguy-success.png')?>" alt="Add-on Guy" /><img src="<?=$html->urlImage('fyf/fashioned.png')?>" alt="You've Fashioned Your Firefox!" /></h1>
+    
+    <p>After a quick re-start of your Firefox browser, you'll be ready to start using the add-ons you've selected.</p>
+</div>
+
+<div id="firstrun">
+    <div class="welcome">
+        <h1>Welcome to</h1>
+        <img src="<?=$html->urlImage('fyf/fyf_header.png')?>" alt="Fashion Your Firefox" />
+    </div>
+    
+    <p>Thanks for trying the Fashion Your Fox collection! Now your Firefox is tailored exactly to your needs and interests.</p>
+
+    <?php
+    if (!empty($addons)):
+    ?>
+    <div class="box">
+        <h3>Your Add-ons</h3>
+        <p>You've successfully installed the following add-ons:</p>
+        <ul>
+            <?php foreach ($addons as $addon): ?>
+            <li><?=$addon['Translation']['name']['string'];?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <?php endif; ?>
+    <div class="box">
+        <h3>Getting started</h3>
+        <p>Your add-ons will appear in different places around the, bottom,
+        or even the Tools menu of your browser. Some may open a new tab with
+        useful information... just close it after you've had a look.</p>
+    </div>
+    <div class="box">
+        <h3>Need help?</h3>
+        <p>For more information about how Fashion Your Firefox works, visit the
+        <?=$html->link('FAQ', '/pages/fashionyourfirefox_faq');?>. You can also
+        <?=$html->link('search the main add-ons site', '/');?> for details on a
+        specific add-on, or
+        <?=$html->link('visit our support site', 'http://support.mozilla.com/en-US/kb/Customizing+Firefox+with+add-ons')?>
+        for more about add-ons in general.
+        </p>
+    </div>
+</div>
+
+</div><!-- /#content-main -->
+</div><!-- /#content -->
+</div><!-- /#page -->
+
+<script type="text/javascript">
+// <![CDATA[
+    $(document).ready(function() {
+        if (document.cookie.indexOf('coll_restarted=yes') == -1) {
+            // pre-restart
+            var date = new Date();
+            date.setTime(date.getTime()+(24*60*60*1000)); // one day
+            $('#firstrun').hide();
+            document.cookie = 'coll_restarted=yes; expires='+date.toUTCString();
+        } else {
+            // post-restart
+            $('#successpage').hide();
+            document.cookie = 'coll_restarted=yes;';
+        }
+    });
+// ]]>
+</script>

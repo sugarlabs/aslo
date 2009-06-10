@@ -1,0 +1,265 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content" class="clearfix">
+    <div class="grayheader clearfix">
+        <div class="left_side">
+            <?php if (!empty($addon['Addon']['icontype'])): ?>
+            <img src="<?=FB_IMAGE_SITE?>/images/addon_icon/<?=$addon['Addon']['id']?>" width=32 height=32 style="float: left; padding-right: 10px;">
+            <?php endif; ?>
+            <h2><?=$addon['Translation']['name']['string'].' '.$addon['Version'][0]['version']?></h2>
+            <p>by <?=implode($addon_authors, ', ')?></p>
+        </div>
+        <div class="right_side" style="width: inherit;">
+        <?php if ($isFavorite): ?>
+            <div style="float: left;">
+                <a href="<?=FB_URL?>/favorites/mine"><img src="<?=FB_IMAGE_SITE?>/img/facebook/medal.png" border=0 alt="Favorite Add-on" title="Favorite Add-on. Click to manage favorites."></a>
+            </div>
+        <?php else: ?>
+            <div class="dh_new_media_shell" style="float: left;"><a href="<?=FB_URL?>/favorite/add/<?=$addon['Addon']['id']?>/addon" class="dh_new_media"><div class="tr"><div class="bl"><div class="br"><span>Add to Favorites</span></div></div></div></a></div>
+        <?php endif; ?>
+        </div>
+    </div>
+    <div class="two_column profile clearfix">
+        <div class="left">
+            <?php if (!empty($addon['Translation']['privacypolicy']['string'])): ?>
+            <div id="privacypolicy" class="red" style="display: none;">
+                <div class="header"><div style="float: right;"><a href="#" clicktohide="privacypolicy">hide</a></div><h2>Privacy Policy</h2></div>
+                <div class="box clearfix description"><?=nl2br($addon['Translation']['privacypolicy']['string'])?></div>
+            </div>
+            <?php endif; ?>
+            <div class="header"><h2>Summary</h2></div>
+            <div class="box clearfix description"><?=nl2br($addon['Translation']['summary']['string'])?></div>
+            <div class="header"><h2>Description</h2></div>
+            <div class="box clearfix description"><?=nl2br($addon['Translation']['description']['string'])?></div>
+            <?php if (!empty($addon['Translation']['developercomments']['string'])): ?>
+            <div class="header"><h2>Developer Comments</h2></div>
+            <div class="box clearfix description"><?=nl2br($addon['Translation']['developercomments']['string'])?></div>
+            <?php endif;
+            if (!empty($version['Translation']['releasenotes']['string'])): ?>
+            <div class="header"><h2>Version Notes</h2></div>
+            <div class="box clearfix description"><?=nl2br($version['Translation']['releasenotes']['string'])?></div>
+            <?php endif; ?>
+        </div>
+        <div class="right">
+            <div class="picture" style="text-align: center;">
+            <?php
+                if ($previewCount > 0) {
+            ?>
+                <a href="#" onclick="var dialog = new Dialog().showMessage(preview_dialog_header, preview_dialog, 'Close'); resetDialog(); return false;">
+                <img src="<?=FB_IMAGE_SITE.'/images/addon_preview/'.$addon['Addon']['id']?>/1" alt="<?=htmlentities($addon['Translation']['name']['string'])?>" title="Click for more previews">
+                </a>
+                <img src="<?=FB_IMAGE_SITE?>/img/ajax_loading.gif" style="display: none;">
+                <fb:js-string var="preview_dialog">
+                    <div style="text-align: center;">
+                    <img id="preview_image" src="<?=FB_IMAGE_SITE.'/images/preview/'.$addon['Addon']['id']?>/1" style="max-width: 420px;" alt="<?=htmlentities($addon['Translation']['name']['string'])?>">
+                    <div id="preview_caption"><?=$previewCaptions[0][0]['caption']?></div>
+                    </div>
+                </fb:js-string>
+                <fb:js-string var="preview_dialog_header">
+                    <div><?=$addon['Translation']['name']['string']?></div>
+                    <table width="100%"><tr>
+                    <td width="50%">Preview <span id="preview_counter" style="padding: 0; display: inline;">1</span> of <?=$previewCount?></td>
+                    <td width="50%" align="right" style="text-align: right;">
+                        <a href="#" style="display: none; color: white;" id="preview_previous" onClick="previousPreview(); return false;">&laquo; Previous</a>
+                        <span id="preview_pipe" style="padding: 0; display: none;">&nbsp;|&nbsp;</span>
+                        <a href="#" style="color: white;" id="preview_next" onClick="nextPreview(); return false;">Next &raquo;</a>
+                    </td>
+                    </tr></table>
+                </fb:js-string>
+                <script>
+                <!--
+                    var currentPreview = 1;
+                    var totalPreviews = <?=$previewCount?>;
+                    var previewCaptions = {
+                        <?php
+                        if (!empty($previewCaptions)) {
+                            $p = 1;
+                            foreach ($previewCaptions as $previewCaption) {
+                                echo "{$p}: '".addslashes($previewCaption[0]['caption'])."',\n";
+                                $p++;
+                            }
+                        }
+                        ?>
+                    };
+                    
+                    // Advance to next preview
+                    function nextPreview() {
+                        if (currentPreview != totalPreviews) {
+                            currentPreview++;
+                            updatePreview();
+                            updateControls();
+                        }
+                    }
+                    
+                    // Go to previous preview
+                    function previousPreview() {
+                        if (currentPreview != 1) {
+                            currentPreview--;
+                            updatePreview();
+                            updateControls();
+                        }
+                    }
+                    
+                    // Update preview counter, image src, and caption to current preview
+                    function updatePreview() {
+                        document.getElementById('preview_image').setSrc('<?=FB_IMAGE_SITE?>/img/ajax_loading.gif');
+                        document.getElementById('preview_counter').setTextValue('' + currentPreview + '');
+                        document.getElementById('preview_image').setSrc('<?=FB_IMAGE_SITE.'/images/preview/'.$addon['Addon']['id']?>/' + currentPreview);
+                        document.getElementById('preview_caption').setTextValue(previewCaptions[currentPreview]);
+                    }
+                    
+                    // Update the next/previous links and pipe appropriately
+                    function updateControls() {
+                        document.getElementById('preview_pipe').setStyle('display', 'inline');
+                        
+                        if (currentPreview == totalPreviews) {
+                            document.getElementById('preview_next').setStyle('display', 'none');
+                            document.getElementById('preview_pipe').setStyle('display', 'none');
+                        }
+                        else
+                            document.getElementById('preview_next').setStyle('display', '');
+                            
+                        if (currentPreview == 1) {
+                            document.getElementById('preview_previous').setStyle('display', 'none');
+                            document.getElementById('preview_pipe').setStyle('display', 'none');
+                        }
+                        else
+                            document.getElementById('preview_previous').setStyle('display', '');
+                    }
+                    
+                    // Reset dialog to first preview
+                    function resetDialog() {
+                        currentPreview = 1;
+                        updatePreview();
+                        updateControls();
+                    }
+                //-->
+                </script>
+            <?php
+                }
+                else
+                    echo '<img src="'.FB_IMAGE_SITE.'/img/facebook/no-preview.png" alt="'.htmlentities($addon['Translation']['name']['string']).'">';
+            ?>
+            </div>
+            <?php   
+                if (!$this->controller->_usingSupportedBrowser()) {
+                    echo '<div style="text-align: center;"><a href="http://www.mozilla.com/en-US/firefox/?ref=facebookapp"><img src="'.SITE_URL.'/img/facebook/non-firefox-box.png" border=0></a></div>';
+                }
+                else {
+                    if (strpos($_SERVER['HTTP_USER_AGENT'], 'Win') !== false)
+                        $platform = PLATFORM_WIN;
+                    elseif (strpos($_SERVER['HTTP_USER_AGENT'], 'Mac') !== false)
+                        $platform = PLATFORM_MAC;
+                    else
+                        $platform = PLATFORM_LINUX;
+                    
+                    // Go through each file and if the platform is supported, use it
+                    if (!empty($version['File'])) {
+                        foreach ($version['File'] as $file) {
+                            if ($file['platform_id'] == PLATFORM_ALL || $file['platform_id'] == $platform) {
+                                $file_id = $file['id'];
+                            }
+                        }
+                        
+                        if (!empty($file_id)) {
+            ?>
+                            <div class="installbox">
+                                <div id="confirm_button" class="confirm_button" style="margin: 0 auto;">
+                                    <a href="<?=FB_INSTALL_SITE?>/facebookinstall/install/<?=$file_id?>"><div><div><div><span>Install Now</span></div></div></div></a>
+                                </div>
+                            </div>
+            <?php
+                        }
+                        else {
+                            echo '<div style="text-align: center;">Not available for this platform.</div>';
+                        }
+                    }
+                }
+            ?>
+            <br>
+            <div class="profileActions clearfix">
+                <?=(!empty($addon['Translation']['privacypolicy']['string']) ? '<a href="#" clicktotoggle="privacypolicy">Privacy Policy</a>' : '')?>
+                <?=(!empty($addon['Translation']['homepage']['string']) ? '<a href="'.$addon['Translation']['homepage']['string'].'" target="_blank">Add-on Homepage</a>' : '')?>
+                <a href="https://addons.mozilla.org/addon/<?=$addon['Addon']['id']?>">Mozilla Add-ons Listing</a>
+            </div>
+            
+            <div class="header"><h2>Recommended By</h2></div>
+            <?php
+            if (!empty($addon['allRecommended'])) {
+                echo '<div class="box_subhead">';
+                    echo '<div class="box_subtitle">';
+                        echo '<a href="'.FB_URL.'/favorites/addon/'.$addon['Addon']['id'].'/all">'.count($addon['allRecommended']).' '.(count($addon['allRecommended']) == 1 ? 'person' : 'people').'</a>, ';
+                        echo '<a href="'.FB_URL.'/favorites/addon/'.$addon['Addon']['id'].'/friends">'.$addon['friendRecommended'].' '.($addon['friendRecommended'] == 1 ? 'friend' : 'friends').'</a>';
+                    echo '</div>';
+                    echo '<div class="box_actions"><a href="'.FB_URL.'/favorites/addon/'.$addon['Addon']['id'].'">See All</a></div>';
+                echo '</div>';
+            }
+            else {
+                echo '<div class="box_nopeople">No one yet. <a href="'.FB_URL.'/favorite/add/'.$addon['Addon']['id'].'">Be the first!</a></div>';
+            }
+            ?>
+            <div class="guests clearfix">
+                <table class="people_table" cellspacing="2" cellpadding="0" border="0" height="100%">
+                    <tr>
+                    <?php
+                        for ($i = 0; $i < 3; $i++) {
+                            if (!empty($addon['allRecommended'][$i])) {
+                                echo '<td width="34%"><fb:profile-pic uid="'.$addon['allRecommended'][$i]['FacebookFavorite']['fb_user'].'" linked="yes"/><br><fb:if-can-see uid="'.$addon['allRecommended'][$i]['FacebookFavorite']['fb_user'].'"><fb:userlink uid="'.$addon['allRecommended'][$i]['FacebookFavorite']['fb_user'].'" /><fb:else>Anonymous</fb:else></fb:if-can-see></td>';
+                            }
+                        }
+                    ?>
+                    </tr>
+                </table>
+            </div>
+            <div style="text-align: center; padding: 10px;">
+            <fb:share-button class="meta">
+                <meta name="title" content="<?=htmlentities($addon['Translation']['name']['string'])?>" />
+                <meta name="description" content="<?=htmlentities($addon['Translation']['summary']['string'])?>" />
+                <link rel="target_url" href="<?=FB_URL?>/view/<?=$addon['Addon']['id']?>" />
+                <?php
+                for ($p = 1; $p <= $previewCount; $p++) {
+                    echo '<link rel="image_src" href="'.FB_IMAGE_SITE.'/images/addon_preview/'.$addon['Addon']['id'].'/'.$p.'" />';
+                }
+                ?>
+            </fb:share-button>
+            </div>
+            <br>
+        </div> <!-- right -->
+    </div> <!-- two column -->
+</div> <!-- content -->

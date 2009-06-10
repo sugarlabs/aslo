@@ -1,0 +1,148 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+
+/* Prepare translation box element */
+// Retrieve language arrays from bootstrap.
+global $valid_languages, $native_languages;
+foreach (array_keys($valid_languages) as $key) {
+    $languages[$key] = $native_languages[$key]['native'];
+}
+ksort($languages);
+$this->translationBox = array(
+    'defaultLocale' => LANG,
+    'languages' => $languages,
+    'table' => 'User',
+    'loaded' => false
+);
+?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <h3>Edit User '<?=$user['User']['email']?>'</h3>
+        <?php
+        if (!empty($errors['main'])) {
+            echo '<div class="error">'.$errors['main'].'</div>';
+        }
+        echo $html->formTag('/admin/users/'.$user['User']['id']);
+        ?>
+        <div id="developersForm">
+            <div>
+                <label>User ID</label>
+                <?=$html->link($user['User']['id'], "/user/{$user['User']['id']}")?>
+            </div>
+            <div>
+                <label for="UserEmail">E-mail Address</label>
+                <?=$html->input('User/email', array('value' => $user['User']['email']))?>
+            </div>
+            <div>
+                <label for="UserFirstname"><?=_('user_form_firstname')?></label>
+                <?=$html->input('User/firstname', array('value' => $user['User']['firstname'])) ?>
+                <?=$html->tagErrorMsg('User/firstname', _('error_field_required'))?>
+            </div>
+            <div>
+                <label for="UserLastname"><?=_('user_form_lastname')?></label>
+                <?=$html->input('User/lastname', array('value' => $user['User']['lastname'])) ?>
+                <?=$html->tagErrorMsg('User/lastname', _('error_field_required'))?>
+            </div>
+            <div>
+                <label for="UserNickname"><?=_('user_form_nickname')?></label>
+                <?=$html->input('User/nickname', array('value' => $user['User']['nickname'])) ?>
+                <?=$html->tagErrorMsg('User/nickname', _('error_user_nickname_notunique'))?>
+            </div>
+            <div>
+                <label for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
+                <?=$html->checkBox('User/emailhidden', null, array('checked' => ($user['User']['emailhidden'] ? 'checked' : false), 'value' => 1)) ?>
+            </div>
+                <div>
+                <label for="UserSandboxshown"><?=_('user_form_showsandbox')?></label>
+                <?=$html->checkBox('User/sandboxshown', null, array('checked' => ($user['User']['sandboxshown'] ? 'checked' : false), 'value' => 1)) ?>
+            </div>
+            <div>
+                <label for="UserHomepage"><?=_('user_form_homepage')?></label>
+                <?=$html->input('User/homepage', array('value' => $user['User']['homepage'])) ?>
+                <?=$html->tagErrorMsg('User/homepage', _('error_invalid_url'))?>
+            </div>
+            
+            <div>
+            <?php
+            echo $this->renderElement('translationbox', array(
+                'field' => 'bio',
+                'translations' => $translations['bio'],
+                'height' => '100',
+                'maxLength' => '500',
+                'displayName' => ___('user_form_bio'),
+                'description' => ___('user_form_bio_description'),
+            ));
+            ?>
+            </div>
+
+            <div>
+                <label for="UserConfirmationCode">Confirmation Code</label>
+                <?=$html->input('User/confirmationcode', array('value' => $user['User']['confirmationcode'])) ?>
+            </div>
+            
+            <div>
+                <label for="UserNotes">Notes</label>
+                <?=$html->textarea('User/notes', array('value' => $user['User']['notes'], 'cols' => 60, 'rows' => 3)) ?>
+            </div>
+            
+            <div class="buttonBox">
+                <?=$html->submit('Update User')?>
+            </div>
+        </div>
+        </form>
+
+        <div class="corner-box">
+        <h3>Delete User '<?=$user['User']['email']?>'</h3>
+        <?=$html->formTag('/admin/users/'.$user['User']['id'].'/delete');?>
+        <div class="amo-form">
+            <p>
+                <input type="radio" name="deletetype" value="all" id="deletetype_all" />&nbsp;<label for="deletetype_all"><strong>Delete</strong> user and <strong>remove</strong> all their reviews/ratings (must not be an add-on author)</label><br/>
+                <input type="radio" name="deletetype" value="anon" id="deletetype_anon" />&nbsp;<label for="deletetype_anon">Make user <strong>anonymous</strong> and <strong>keep</strong> their reviews/ratings</label>
+            </p>
+            <p><?=$html->submit('Delete user account now'); ?></p>
+        </div>
+        </form>
+        </div>
+        
+        <p><?=$html->link('Back to User Manager', '/admin/users')?></p>
+    </div>
+</div>

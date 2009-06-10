@@ -1,0 +1,165 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *      Wil Clouser <wclouser@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse';
+
+?>
+<div id="content" class="primary prose" style="min-height: 400px;">
+    <div id="compat-home-nav">
+        <a href="#" onclick="compatibility.viewHome(); return false;"><?=___('compatibility_dashboard_main_link', 'Back to Main')?></a>
+    </div>
+    <div class="compat-box">
+        <div id="compat-intro">
+            <h2><?=$html->image('wordmarks/firefox-'.$version.'.png', array('alt' => APP_PRETTYNAME." {$version}"))?><br /><?=___('compatibility_dashboard_center_header', 'Add-on Compatibility Center')?></h2>
+            <p><?=sprintf(___('compatibility_dashboard_intro', 'Be prepared for the release of %1$s with the tools and information available for the %2$s Add-ons community found below.'), APP_PRETTYNAME." {$version}", APP_PRETTYNAME)?></p>
+            <ul>
+                <li id="nav-report"><a href="<?=$html->url('/compatibility/report/'.$version)?>" onclick="compatibility.viewReport(); return false;"><?=___('compatibility_view_report', 'View Compatibility Report')?></a></li>
+                <li id="nav-developers"><a href="<?=$html->url('/compatibility/developers/'.$version)?>" onclick="compatibility.viewDeveloperInfo(); return false;"><?=___('compatibility_developer_info', 'Information for Add-on Developers')?></a></li>
+                <li id="nav-users"><a href="<?=$html->url('/compatibility/users/'.$version)?>" onclick="compatibility.viewEndUserInfo(); return false;"><?=___('compatibility_user_info', 'Information for Add-on Users')?></a></li>
+            </ul>
+            
+        </div>
+    
+        <div id="report-intro">
+            <div class="header">
+                <div class="title">
+                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('compatibility_report_title', 'Add-on Compatibility Report')?>
+                </div>
+            </div>
+            <p class="intro"><?=sprintf(___('compatibility_report_intro', 'Of the %1$s add-ons that make up 95&#37; of add-on usage known to Mozilla, <b>%2$s&#37;</b> are currently considered compatible with the latest builds of %3$s.'), $html->number_format($totals['addons95']), round($percentages[COMPAT_LATEST]), APP_PRETTYNAME." {$version}")?></p>
+            <div id="overall-compat">
+                <div id="overall-compat-bar">
+                    <div class="compat-other" style="width: <?=$percentages[COMPAT_OTHER]?>%;"><?=($percentages[COMPAT_OTHER] >= 5 ? round($percentages[COMPAT_OTHER]).'%': '')?></div>
+                    <div class="compat-alpha" style="width: <?=$percentages[COMPAT_ALPHA]?>%;"><?=($percentages[COMPAT_ALPHA] >= 5 ? round($percentages[COMPAT_ALPHA]).'%': '')?></div>
+                    <div class="compat-beta" style="width: <?=$percentages[COMPAT_BETA]?>%;"><?=($percentages[COMPAT_BETA] >= 5 ? round($percentages[COMPAT_BETA]).'%': '')?></div>
+                    <div class="compat-latest" style="width: <?=$percentages[COMPAT_LATEST]?>%;"><?=($percentages[COMPAT_LATEST] >= 5 ? round($percentages[COMPAT_LATEST]).'%': '')?></div>
+                </div>
+                
+                <div id="overall-compat-legend">
+                    <div class="legend-box">
+                        <div class="color-square compat-other"></div>
+                        <p><b><?=___('compatibility_report_legend_other', 'Other Versions')?></b><br /><?=sprintf(___('compatibility_report_legend_other_description', 'Add-ons not compatible with any version of %1$s'), APP_PRETTYNAME." {$version}")?></p>
+                    </div>
+                    <div class="legend-box">
+                        <div class="color-square compat-alpha"></div>
+                        <p><b><?=___('compatibility_report_legend_alpha', 'Alpha Versions')?></b><br /><?=sprintf(___('compatibility_report_legend_alpha_description', 'Add-ons compatible with an alpha version of %1$s'), APP_PRETTYNAME." {$version}")?></p>
+                    </div>
+                    <div class="legend-box">
+                        <div class="color-square compat-beta"></div>
+                        <p><b><?=___('compatibility_report_legend_beta', 'Beta Versions')?></b><br /><?=sprintf(___('compatibility_report_legend_beta_description', 'Add-ons compatible with a beta version or release candidate of %1$s'), APP_PRETTYNAME." {$version}")?></p>
+                    </div>
+                    <div class="legend-box">
+                        <div class="color-square compat-latest"></div>
+                        <p><b><?=___('compatibility_report_legend_latest', 'Latest Version')?></b><br /><?=sprintf(___('compatibility_report_legend_latest_description', 'Add-ons up-to-date with the latest builds of %1$s'), APP_PRETTYNAME." {$version}")?></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="details-link"><a href="#" onclick="compatibility.viewReportDetails();"><?=___('compatibility_report_detailed_link', 'View Detailed Report')?></a></div>
+        </div>
+        
+        <div id="report-details">
+            <div class="header">
+                <div class="title">
+                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('compatibility_dashboard_report', 'Add-on Compatibility Report')?>
+                </div>
+            </div>
+            <div class="loading"><?=___('compatibility_dashboard_loading', 'Loading data...')?></div>
+            <div id="report-details-data"></div>
+        </div>
+        
+        <div id="developers-intro">
+            <div class="header">
+                <div class="title">
+                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('compatibility_developer_info', 'Information for Add-on Developers')?>
+                </div>
+            </div>
+            <br />
+            <a href="https://developer.mozilla.org/En/Updating_extensions_for_<?=APP_PRETTYNAME." {$version}"?>"><?=$html->image('mdc-logo.png', array('class' => 'rightalign', 'alt' => ___('compatibility_developers_mdclogo_alt', 'Mozilla Developer Center Logo')))?></a>
+            <?=$localization->includeLocalPage('compatibility_developer_tips', array(
+                    APP_PRETTYNAME." {$version}",
+                    APP_PRETTYNAME."_{$version}",
+                    APP_PRETTYNAME." {$version}",
+                    APP_PRETTYNAME."_{$version}",
+                    $html->url('/developers')
+                ))?>
+            
+            <?php if ($loggedin): ?>
+                <div class="details-link"><a href="#" onclick="compatibility.viewDeveloperDetails();"><?=___('compatibility_developers_check_status', 'Check Status of My Add-ons')?></a></div>
+            <?php else: ?>
+                <p class="login"><?=sprintf(___('compatibility_developers_login_first', 'If you have add-ons hosted on Mozilla Add-ons, <a href="%1$s">please login</a> to analyze the status of your add-ons for %2$s.'), $html->url($html->login_url()), APP_PRETTYNAME." {$version}")?></p>
+            <?php endif; ?>
+        </div>
+        
+        <div id="developers-details">
+            <div class="header">
+                <div class="title">
+                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('compatibility_developers_results', 'Add-on Status Check Results')?>
+                </div>
+            </div>
+            
+            <div class="loading"><?=___('compatibility_developers_retrieving', 'Retrieving status of hosted add-ons...')?></div>
+            <div id="developers-details-data"></div>
+        </div>
+        
+        <div id="users-intro">
+            <div class="header">
+                <div class="title">
+                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('compatibility_user_info', 'Information for Add-on Users')?>
+                </div>
+            </div>
+            <br />
+                <?=$localization->includeLocalPage('compatibility_user_tips', array(
+                    APP_PRETTYNAME." {$version}",
+                    APP_PRETTYNAME,
+                    APP_PRETTYNAME,
+                    APP_PRETTYNAME." {$version}",
+                    APP_PRETTYNAME." {$version}",
+                    $html->url('/'),
+                    APP_PRETTYNAME
+                ))?>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+var detailsURL = '<?=$html->url('/compatibility/report/'.$version.'/ajax')?>';
+var developerStatusURL = '<?=$html->url('/compatibility/developers/'.$version.'/ajax')?>';
+var version = '<?=$version?>';
+</script>

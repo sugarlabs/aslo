@@ -1,0 +1,156 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Scott McCammon <smccammon@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/editorsmenu');?>
+
+    <div id="content-main">
+        <?=$this->renderElement('developers/performanceheader');?>
+
+        <h3 class="performanceHeader collapsible expanded"><span><?=___('editorcp_performance_month_activity', 'Activity By Month')?></span></h3>
+        <div id="byMonthChart" style="width:600px;height:300px"></div>
+
+        <h3 class="performanceHeader collapsible expanded"><span><?=___('editorcp_performance_category_breakdown', 'Category Breakdown')?></span></h3>
+        <div>
+            <form id="performanceFilter" action="<?=$html->url()?>" method="get">
+            <div>
+                <select name="month">
+                <?php foreach ($monthSelect as $key=>$val): ?>
+                    <option value="<?=$key?>"<?=($key == $month ? ' selected="selected"' : '')?>><?=$val?></option>
+                <?php endforeach;?>
+                </select>
+                <select name="year">
+                <?php for ($i=0; $i<5; $i++): $val = date('Y') - $i; ?>
+                    <option value="<?=$val?>"<?=($val == $year ? ' selected="selected"' : '')?>><?=$val?></option>
+                <?php endfor;?>
+                </select>
+                <?php if ($showUserLookup): ?>
+                <input type="hidden" name="user" value="<?=$user['User']['email']?>" />
+                <?php endif; ?>
+                <?=$html->submit(_('editorcp_reviewlog_button_filter'))?>
+            </div>
+            </form>
+            <h4><?=$userName?> - <?=$pieTitleDate?></h4>
+            <div class="performancePieContainer">
+                <div id="byCatUserChart"></div>
+                <div id="performanceUserLegend"></div>
+            </div>
+            <h4><?=___('editorcp_performance_column_teamaverage', 'Team Average')?> - <?=$pieTitleDate?></h4>
+            <div class="performancePieContainer">
+                <div id="byCatTeamChart"></div>
+                <div id="performanceTeamLegend"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+// <![CDATA[
+    $(document).ready(function() {
+        editors_performance.init();
+
+        var ticks = [<?=$monthlyTicksJS?>];
+        var d1 = [<?=$monthlyUserPointsJS?>];
+        var d2 = [<?=$monthlyTeamPointsJS?>];
+
+        $.plot($('#byMonthChart'), [
+            { label: '<?=$userName?>',  data: d1, color:'#0066cc'},
+            { label: '<?=___('editorcp_performance_column_teamaverage', 'Team Average')?>',  data: d2, color:'#cc3333'}
+        ], {
+            lines: { show: true },
+            points: { show: true },
+            xaxis: { ticks: ticks },
+            grid: { backgroundColor: "#fffaff", hoverable: true }
+        });
+
+        var previousPoint = null;
+        $('#byMonthChart').bind('plothover', function (event, pos, item) {
+            if (item) {
+                if (previousPoint != item.datapoint) {
+                    previousPoint = item.datapoint;
+                    $('#chartTip').remove();
+                    var y = item.datapoint[1].toFixed(2);
+                    editors_performance.showChartTooltip(item.pageX, item.pageY, '' + y);
+                }
+            }
+            else {
+                $('#chartTip').remove();
+                previousPoint = null;            
+            }
+        });
+
+        // pie chart data
+        var sliceColors = [<?=$sliceColorsJS?>];
+        var sliceLabels = [<?=$sliceLabelsJS?>];
+        var userPieData = [<?=$userPieDataJS?>];
+        var teamPieData = [<?=$teamPieDataJS?>];
+
+        // draw user pie chart
+        $('#byCatUserChart').sparkline(userPieData, {
+            type:'pie',
+            height:200,
+            sliceColors:sliceColors
+        });
+
+        // draw team pie chart
+        $('#byCatTeamChart').sparkline(teamPieData, {
+            type:'pie',
+            height:200,
+            sliceColors:sliceColors
+        });
+
+        // sums for legend percentage calculations
+        var userSum = 0;
+        $.each(userPieData, function(i, val) {
+            userSum += val;
+        });
+        var teamSum = 0;
+        $.each(teamPieData, function(i, val) {
+            teamSum += val;
+        });
+
+        // create legend for each pie chart
+        $.each(sliceLabels, function(i, val) {
+            $('#performanceUserLegend').append(editors_performance.pieLegendEntry(
+                sliceColors[i], val, userPieData[i], userSum, 'userSlice'+i)); 
+            $('#performanceTeamLegend').append(editors_performance.pieLegendEntry(
+                sliceColors[i], val, teamPieData[i], teamSum, 'teamSlice'+i)); 
+        });
+    });
+// ]]>
+</script>

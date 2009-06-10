@@ -1,0 +1,370 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Justin Scott <fligtar@gmail.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   Brian Krausz <brian@nerdlife.net>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+// Using revision # in url in production to prevent the file from being cached
+// forever
+if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'staging')) {
+    $jsParams = '?'.JS_REVISION;
+    $cssParams = '?'.CSS_REVISION;
+} else {
+    //To prevent caching in development, change the url on each request
+    $jsParams = '?'.time();
+    $cssParams = '?'.time();
+}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?=LANG?>" dir="<?=TEXTDIR?>"
+    class="html-<?=TEXTDIR?> <?=APP_SHORTNAME?>">
+<head>
+    <title><?=$html->entities($title_for_layout)?></title>
+
+    <link rel="shortcut icon" type="image/x-icon"
+        href="<?=$html->url('/img/favicon.ico', null, false, false)?>" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="MSSmartTagsPreventParsing" content="true"/>
+    <meta name="Copyright" content="(c) 2005-<?php echo date('Y'); ?> Mozilla. All rights reserved."/>
+    <meta http-equiv="imagetoolbar" content="no"/>
+    <meta name="Rating" content="General"/>
+
+    <link rel="search" type="application/opensearchdescription+xml" title="Mozilla Add-ons"
+        href="<?=$html->url('/AMOSearch.xml', null, false, false)?>" />
+
+    <?php if (isset($addon['Addon']['addontype_id']) && ($addon['Addon']['addontype_id'] == ADDON_SEARCH)) : ?>
+        <link rel="search" type="application/opensearchdescription+xml"
+            href="<?=$html->urlFile($addon['Version'][0]['File'][0]['id'], $addon['Version'][0]['File'][0]['filename'])?>"
+            locale="<?=$addon['Translation']['name']['locale']?>" title="<?=$addon['Translation']['name']['string']?>"/>
+    <?php endif ?>
+
+    <?php if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'staging')): ?>
+        <?= str_replace('.css','.css'.$cssParams,$html->css('amo2009/style.min', 'stylesheet', array('media'=>'all'), true)) ?>
+    <?php else: ?>
+        <?= $html->css('amo2009/main', 'stylesheet', array('media'=>'screen,projection,tv')) ?>
+        <?= $html->css('amo2009/slimbox2', 'stylesheet', array('media'=>'screen,projection,tv')) ?>
+        <?= $html->css('amo2009/main-mozilla', 'stylesheet', array('media'=>'screen,projection,tv')) ?>
+        <?= $html->css('amo2009/legacy', 'stylesheet', array('media'=>'screen,projection,tv')) ?>
+    <?php endif ?>
+
+    <!--[if IE]>
+        <?= $html->css('amo2009/ie', 'stylesheet', array('media'=>'screen,projection,tv')) ?>
+    <![endif]-->
+    <!--[if IE 7]>
+        <?= $html->css('amo2009/ie7', 'stylesheet', array('media'=>'screen,projection,tv')) ?>
+    <![endif]-->
+    <!--[if IE 6]>
+        <?= $html->css('amo2009/ie6', 'stylesheet', array('media'=>'screen,projection,tv')) ?>
+    <![endif]-->
+
+    <?php
+    if (!empty($cssAdd)) {
+        foreach ($cssAdd as $css) {
+            $url = $html->css($css);
+            echo "{$url}\n";
+        }
+    }
+    ?>
+
+    <?php
+        if (!empty($rssAdd)) foreach ($rssAdd as $rss) {
+            if (is_array($rss)) {
+                $rssurl = $rss[0];
+                $rsstitle = $rss[1];
+            } else {
+                $rssurl = $rss;
+                $rsstitle = 'RSS';
+            }
+            echo '<link rel="alternate" type="application/rss+xml" title="'.$rsstitle.'" href="'.$html->url($rssurl).'"/>'."\n";
+        }
+
+        // Pre-script-inclusion JS
+        if (!empty($prescriptJS)) { ?>
+            <script type="text/javascript"><?=$prescriptJS?></script>
+        <?php }
+
+        if (empty($suppressUrchin)) {
+            echo $javascript->link('__utm.js');
+        }
+
+        echo $javascript->linkOut($html->url('/pages/js_constants'))."\n";
+
+        if (!isset($suppressJQuery) || !$suppressJQuery) {
+            if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'staging')) {
+                echo $javascript->link('amo2009/amo2009.min.js'.$jsParams)."\n";
+            } else {
+                // TODO: Stick this list somewhere shared with bin/build.py?
+                echo $javascript->link('jquery-compressed.js')."\n";
+                echo $javascript->link('jquery.cookie.js')."\n";
+                echo $javascript->link('amo2009/global.js')."\n";
+                echo $javascript->link('amo2009/slimbox2.js')."\n";
+                echo $javascript->link('amo2009/addons.js');
+                echo $javascript->link('amo2009/global-mozilla.js')."\n";
+            }
+        }
+
+        if (!empty($jsAdd)) {
+            foreach ($jsAdd as $js) {
+                $js = $js;
+                $jslink = $javascript->link($js);
+                echo "{$jslink}\n";
+            }
+        }
+
+        if (!empty($jsLocalization) && is_object($localization)) {
+            echo $localization->jsLocalization($jsLocalization);
+        }
+
+       if ($this->controller->name  == 'Addons' && $this->action == 'display') {
+            ?>
+                <script type="text/javascript">
+                // <![CDATA[
+                $(document).ready(function() {
+                    var etiquette_box = $("#addons-display-review-etiquette").hide();
+                    $("#short-review").focus(function() { etiquette_box.show("fast"); } );
+                });
+
+                // This function toggles an element\'s text between two values
+                jQuery.fn.textToggle = function(text1, text2) {
+                    jQuery(this).text( ( jQuery(this).text() == text1 ? text2 : text1 ) );
+                };
+
+                // ]]>
+                </script>
+            <?php
+        }
+    ?>
+    <script type="text/javascript">// <![CDATA[
+    $(document).ready(function() {
+        $(".hidden").hide(); // hide anything that should be hidden
+
+        if (typeof __utmSetVar == 'function') {
+            <?php if ($this->controller->Session->check('User')): ?>
+                __utmSetVar("Loggedin");
+            <?php else: ?>
+                __utmSetVar("Loggedout");
+            <?php endif; ?>
+        }
+    });
+    // ]]></script>
+
+    <?php if (isset($head_extra)) echo $head_extra; ?>
+    <?php if($advancedSearch): ?>
+        <style type="text/css" media="screen">
+            .expanded-search-form .advanced {
+                display: block;
+            }
+        </style>
+    <?php endif; ?>
+</head>
+
+<body id="mozilla-com" class="html-<?=TEXTDIR?> <?=APP_SHORTNAME?> <?= ($this->controller->Session->check('User')) ? 'user-login' : 'user-anon' ?><?= isset($bodyclass) ? ' ' . $bodyclass : '' ?>">
+
+    <ul id="nav-access" role="navigation">
+        <li><a href="#content"><?=___('header_navaccess_main_content', 'Skip to main content')?></a></li>
+        <li><a href="#search-form"><?=___('header_navaccess_search_form', 'Skip to search form')?></a></li>
+        <li><a href="#categories"><?=___('header_navaccess_categories_menu', 'Skip to categories menu')?></a></li>
+        <li><a href="#other-apps"><?=___('header_navaccess_applications_menu', 'Skip to other applications menu')?></a></li>
+    </ul>
+
+    <?php if (is_object($this->controller->Config) && $this->controller->Config->getValue('site_notice') != ''): ?>
+        <div id="site-notice"><p><?= $this->controller->Config->getValue('site_notice') ?></p></div>
+    <?php endif ?>
+
+    <div class="section">
+        <div id="header" role="banner">
+            <?php
+                switch (APP_SHORTNAME) {
+                    case 'firefox':
+                        $main_header = sprintf(
+                            ___('header_main_firefox_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Firefox" /> Firefox'),
+                            $html->url('/img/amo2009/app-icons/firefox.png', null, false, false)
+                        );
+                        break;
+                    case 'seamonkey':
+                        $main_header = sprintf(
+                            ___('header_main_seamonkey_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Seamonkey" /> Seamonkey'),
+                            $html->url('/img/amo2009/app-icons/seamonkey.png', null, false, false)
+                        );
+                        break;
+                    case 'sunbird':
+                        $main_header = sprintf(
+                            ___('header_main_sunbird_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Sunbird" /> Sunbird'),
+                            $html->url('/img/amo2009/app-icons/sunbird.png', null, false, false)
+                        );
+                        break;
+                    case 'thunderbird':
+                        $main_header = sprintf(
+                            ___('header_main_thunderbird_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Thunderbird" /> Thunderbird'),
+                            $html->url('/img/amo2009/app-icons/thunderbird.png', null, false, false)
+                        );
+                        break;
+                    default:
+                        $main_header = sprintf(
+                            ___('header_main_header_with_logo', 'Add-ons <img src="%1$s" alt="Add-ons" />'),
+                            $html->url('/img/amo2009/app-icons/generic.png', null, false, false)
+                        );
+                        break;
+                }
+            ?>
+            <p id="title"><a href="<?=$html->url('/')?>" title="<?=sprintf(_('header_home_tooltip'), APP_PRETTYNAME)?>"><?= $main_header ?></a></p>
+            <p id="brand"><a href="http://www.mozilla.com/<?=LANG?>/" title="<?=___('header_brand_name', 'Mozilla')?>" accesskey="1"><?=___('header_brand_name', 'Mozilla')?></a></p>
+
+            <?php if (isset($header_extra)) echo $header_extra ?>
+
+            <div id="aux-nav" role="navigation">
+
+                <ul id="other-apps" class="change" title="<?=___('other_apps_tooltip');?>">
+                    <li>
+                        <a href="#" class="controller"><?=_('addons_home_other_applications')?></a>
+                        <ul><?php
+                            global $app_shortnames, $app_prettynames;
+                            $applist = array();
+                            foreach (array_keys($app_shortnames) as $_app) {
+                                // pulling fennec from app_chooser until it has proper support for the web site
+                                if ($app_shortnames[$_app] == APP_ID || $app_shortnames[$_app] == APP_FENNEC)
+                                    continue; // don't show current app or fennec
+                                ?>
+                                    <li id="app-<?=$_app?>" class="<?=$_app?>">
+                                        <a href="<?=$html->url("/$_app/",false,true,false)?>"><?=$app_prettynames[$_app]?></a>
+                                    </li>
+                                <?php
+                            }
+                        ?></ul>
+                    </li>
+                </ul>
+
+                <?php if (!$this->controller->Session->check('User')): ?>
+                    <p class="context">
+                        <?= sprintf(
+                            ___('header_navlink_register_or_login', '<a href="%1$s">Register</a> or <a href="%2$s">Log in</a>'),
+                            $html->url('/users/register', false), $html->url($html->login_url())
+                        ) ?>
+                    </p>
+                <?php
+                else:
+                    $tools_links = array();
+                    $user = $this->controller->Session->read('User');
+                    $tools_links[] = $html->link(_('sidebar_navlink_developer_tools'), '/developers');
+                    if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User')))
+                        $tools_links[] = $html->link(_('sidebar_navlink_editor_tools'), '/editors');
+                    if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User')))
+                        $tools_links[] = $html->link('Localizer Tools', '/localizers');
+                    if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User')))
+                        $tools_links[] = $html->link(_('sidebar_navlink_admin_tools'), '/admin');
+
+                    if (count($tools_links) > 1):
+                    ?>
+                    <ul class="tools">
+                        <li>
+                        <a href="#" class="controller"><?=___('header_navlink_tools', 'Tools')?></a>
+                            <ul>
+                                <?php foreach ($tools_links as $_tl): ?>
+                                <li><?=$_tl?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </li>
+                    </ul>
+                    <?php else: ?>
+                    <p class="context">
+                        <?=$tools_links[0]?>
+                    </p>
+                    <?php endif; // more than one tools link ?>
+                    <p class="context">
+                        <span class="greeting"><?=(!empty($welcomeName) ? sprintf(_('sidebar_navlink_welcome_name'), $welcomeName) : _('sidebar_navlink_welcome'))?></span>
+                        <?= $html->link(_('header_navlink_myaccount'), '/users/edit', array('class'=>'settings','title' => $user['email'])) ?>
+                        <?= $html->link(_('header_navlink_logout'), $html->logout_url()) ?>
+                    </p>
+                <?php endif; // logged in ?>
+
+            </div>
+        </div>
+
+    <?=$content_for_layout ?>
+
+</div> <!-- /.container -->
+
+<div id="footer" role="contentinfo">
+    <div class="section">
+        <div class="primary">
+
+        <?php if (!isset($suppressLanguageSelector) || !$suppressLanguageSelector): ?>
+            <form class="languages" method="get" action="">
+                <label for="language"><?=_('footer_other_languages')?></label>
+                <select id="language" name="lang" dir="ltr" onchange="this.form.submit()">
+                <?php
+                // Retrieve language arrays from bootstrap.
+                global $supported_languages, $native_languages;
+                foreach (array_keys($supported_languages) as $key) {
+                    echo '<option value="'.$key.'" '.($key == LANG ? 'selected="selected"' : '').'>'
+                        .$native_languages[$key]['native'].'</option>'."\n";
+                }
+                ?>
+                </select>
+                <button><?=_('footer_lang_form_lang_submit_go')?></button>
+            </form>
+        <?php endif; ?>
+
+        <p><strong><?=_('footer_copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla.</strong> <?=_('footer_all_rights_reserved')?></p>
+        <ul>
+            <li><?=$html->link(_('footer_privacy_policy'), '/pages/privacy');?></li>
+            <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=_('footer_legal_notices')?></a></li>
+            <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(_('footer_credits'), '/pages/credits')?></li><?php endif; ?>
+            <li><?=$html->link(___('footer_a_about'), '/pages/about')?></li>
+            <li><?=$html->link('<abbr title="'.___('footer_abbr_faq').'">'.___('footer_a_faq').'</abbr>', '/pages/faq')?></li>
+            <li><a href="http://blog.mozilla.com/addons"><?=___('footer_a_blog')?></a></li>
+        </ul>
+
+        <p class="disclaimer"><?=_('footer_disclaimer')?></p>
+        </div>
+        <div class="secondary">
+            <img src="<?=$html->url('/img/amo2009/illustrations/logo-add-ons-half.png', null, false, false)?>" alt="" />
+        </div>
+    </div> <!-- /.section -->
+</div> <!-- /#footer -->
+
+<?php
+if(defined('REVISION')) {
+    echo '<!-- r'.REVISION.' -->';
+}
+?>
+    </body>
+</html>

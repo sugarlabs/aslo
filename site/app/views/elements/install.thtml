@@ -1,0 +1,303 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+?>
+<?php
+/**
+ * This element uses the following local variables:
+ * - $addonIconPath
+ * - $addonName
+ * - $addonId
+ * - $addonFiles
+ * - $is_latest -- link to "download/latest" shortcut (default false)
+ * - $addonEULA
+ * - $addonStatus
+ * - $allPlatforms - There should only be one platform in the list when this is used on the eula view.
+ * - $addonType - default ADDON_EXTENSION
+ * - $collection_uuid - if this add-on download is collection related, this will set a tracking code in the download ID. default null
+ * - $buttonMessage - default 'a_install'
+ * - $showInstructions - Show install instructions for Thunderbird or Seamonkey, defaults to true
+ */
+global $browser_apps, $experimental_status, $valid_status;
+
+/* prepare add-on type */
+if (!isset($addonType)) $addonType = ADDON_EXTENSION;
+
+if (!isset($showInstructions)) $showInstructions = true;
+
+/* logged in users can install experimental add-ons */
+$loggedin = $this->controller->Session->check('User');
+
+/* use "latest public file" permalink if this is the latest version. Defaults to false. */
+if (!isset($is_latest)) $is_latest = false;
+
+/* "Install" for browser apps, "Download" for non-browser apps */
+if (!isset($buttonMessage)) {
+    if (!in_array(APP_ID, $browser_apps)) {
+        $buttonMessage = _('a_download');
+    } else {
+        $buttonMessage = sprintf(_('install_button_text'), APP_PRETTYNAME, "%s");
+    }
+}
+
+
+/* Prepare addon icons */
+if (empty($addonIconPath)) {
+    switch ($addonType) {
+    case ADDON_THEME:
+        $addonIconPath = $html->urlImage(DEFAULT_THEME_ICON);
+        break;
+    default:
+        $addonIconPath = $html->urlImage(DEFAULT_ADDON_ICON);
+        break;
+    }
+}
+    
+if (count($addonFiles) < 1) {
+    // This should never happen - this would mean the file didn't exist.
+    echo '<p class="install-button">'._('install_error_addon_not_found').'</p>';
+
+} else {
+    
+    $versionId = $addonFiles[0]['version_id'];
+    
+    // If we're looking at thunderbird pages, and there is no EULA, show the TB
+    // install instructions.  Bug 401272 fixed the button so it downloads instead of
+    // installs, but it doesn't hurt to have these instructions still.
+    if (APP_ID == APP_THUNDERBIRD && empty($addonEULA) && $showInstructions) {
+        echo '<div class="app_install">';
+        echo '<h3>'._('addons_install_in_thunderbird_title').'</h3>';
+        echo _('addons_install_in_thunderbird');
+        echo '</div>';
+    }
+    if (APP_ID == APP_SUNBIRD && empty($addonEULA) && $showInstructions) {
+        echo '<div class="app_install">';
+        echo '<h3>'._('addons_install_in_sunbird_title').'</h3>';
+        echo _('addons_install_in_sunbird');
+        echo '</div>';
+    }
+    
+    echo '<div id="install-'.$versionId.'" class="install-container">';
+    foreach ($addonFiles as $file) {
+        // never display files with invalid statuses (bug 427176)
+        if (!in_array($file['status'], $valid_status)) continue;
+    
+        // Used for echoing values in our loop
+        $_platform_name           = '';
+        $_class_platform_string   = '';
+        $_install_platform_string = '';
+
+        // ugh...
+        foreach ($platforms as $platform) {
+            // We found a matching platform
+            if ($platform['Platform']['id'] == $file['platform_id']) {
+                $_platform_name = $platform['Translation']['name']['string'];
+            }
+        }
+
+        if (!empty($_platform_name)) {
+            $_class_platform_string   = "platform-{$_platform_name}";
+            if ($_platform_name != "ALL") {// special case
+                $_install_platform_string = "($_platform_name)";
+            }
+        }
+    
+        // run the right javascript action for the addon type in question
+        $installTriggerName = "installTrigger" . $file['id'];
+        
+        if ($addonType != ADDON_SEARCH) {
+            /* install for search  */
+            if (in_array(APP_ID, $browser_apps)) {
+                // prepare link options for browser apps
+                $linkOptions = array(
+                    'id' => $installTriggerName,
+                    'title'     => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME),
+                    'addonName' => $addonName,
+                    'addonIcon' => $addonIconPath,
+                    'addonHash' => $file['hash'], 
+                    'jsInstallMethod' => 'browser_app_addon_install',
+                    );
+            } else {
+                // prepare link options for non-browser apps
+                $linkOptions = array('id' => $installTriggerName, 
+                    'title'=>sprintf(_('install_download'),$addonName));
+            }
+        } else {
+            /* prepare link options for search engines */
+            $linkOptions = array(
+                'id'        => $installTriggerName,
+                'title'     => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME),
+                'engineURL' => FULL_BASE_URL . $html->urlFile($file['id'], $file['filename'], @$collection_uuid),
+                // search engines use a special install method
+                'jsInstallMethod' => 'search_engine_install',
+                );
+        }
+        ?>
+
+        <?php
+        $install_button_html = '';
+        if (empty($addonEULA)) {
+            // wipe disallowed characters off the displayed filename
+            $addon_filename = $html->entities(preg_replace(
+                INVALID_FILENAME_CHARS, '_', $html->unsanitize($file['filename'])));
+                
+            // if this is the latest public version, use perma-URL. Otherwise, link directly to file.
+            $linktitle = '<span><span><span><strong>'.sprintf(_('a_download'),$_install_platform_string).'</strong></span></span></span>';
+            if ($is_latest && $file['status'] == STATUS_PUBLIC) {
+                $latest_permalink = "/downloads/latest/{$addonId}";
+                if ($file['platform_id'] != PLATFORM_ALL) $latest_permalink .= "/platform:{$file['platform_id']}";
+
+                $file_id = $this->controller->File->getLatestFileByAddonId($addonId);
+                $file_data = $this->controller->File->findById($file_id);
+                $path_info = pathinfo($file_data['File']['filename']);
+
+                $latest_permalink .= "/addon-${addonId}-latest.".$path_info['extension'];
+
+                if (!empty($collection_uuid)) $latest_permalink .= "?collection_id={$collection_uuid}";
+
+                $install_button_html .= $html->link($linktitle, $latest_permalink, $linkOptions);
+            } else {
+                $install_button_html .= $html->linkFile($file['id'], $linktitle, null,
+                    $linkOptions, false, $addon_filename, @$collection_uuid);
+            }
+        } else {
+            $eula_attributes = array('id' => $installTriggerName,
+                'addonName' => $addonName,
+                'title' => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME),
+                'isEULAPageLink' => 'true');
+            $install_button_html .= $html->link('<span><span><span><strong>'
+                .sprintf(_('a_download'),$_install_platform_string)
+                .'</strong></span></span></span>',
+                "/addons/policy/0/{$addonId}/{$file['id']}",
+                $eula_attributes, false, false);
+        }
+
+        /**
+         * For logged-in users or public add-ons, show the standard install button.
+         */
+        if ($loggedin || !in_array($file['status'], $experimental_status) || (isset($is_eula_page) && isset($_GET['confirmed']))):
+        ?>
+            <p class="install-button <?=$_class_platform_string?>">
+                <?= $install_button_html ?>
+            </p>
+        <?php
+        /**
+         * For sandbox add-ons, show a frozen version of the standard install button.
+         * Users unfreeze the button client-side by checking a confirmation box.
+         * Non-JS users must unfreeze by logging in.
+         */
+        else: 
+        ?>
+            <div class="exp-loggedout install">
+                <div class="exp-confirm-install" style="display: none">
+                    <input type="checkbox" name="confirm-<?= $addonId ?>" />
+                    <div class="exp-desc">
+                    <label for="exp-confirm-install-checkbox-<?=$addonId?>"></label>
+                    <span><?= sprintf(___('install_button_confirm_exp_install'), $html->url('/pages/faq#experimental-addons')) ?></span>
+                    </div>
+                </div>
+
+                <p class="install-button <?=$_class_platform_string?>" style="display: none">
+                <?= $install_button_html ?>
+                </p>
+
+                <noscript>
+                <p class="install-button <?=$_class_platform_string?>">
+                <?php
+                $login_url = $html->login_url('/'.LANG.'/'.APP_SHORTNAME."/addon/{$addonId}", false);
+                $attributes = array('id' => $installTriggerName,
+                    'addonName' => $addonName,
+                    'title' => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME));
+                echo $html->link('<span><span><span><strong>'
+                    .sprintf(_('a_download'),$_install_platform_string)
+                    .'</strong></span></span></span>',
+                    $login_url, $attributes, false, false);
+
+                $exp_addon_url = "/pages/faq#experimental-addons";
+                ?>
+                </p>
+                <?= sprintf(___('install_a_login_to_install'), $html->url($login_url), $html->url($exp_addon_url)); ?>
+                </noscript>
+            </div>
+        <?php endif; ?>
+	<script type="text/javascript">
+        installVersusDownloadCheck("<?=$installTriggerName?>", "<?=sprintf($buttonMessage, $_install_platform_string) ?>", "<?=sprintf(_('a_download'), $_install_platform_string)?>");
+	</script>		
+    <?php
+    }
+    echo "</div>";
+
+    // show all add-on versions for all platforms on the
+    // "all versions" page
+    // This script will detect which install button should show, and hide the rest
+    echo '<script type="text/javascript">'.
+         'setTimeout(function() {'; 
+    echo "initExpConfirm('{$versionId}');";
+    $versionsPage = false;	  
+    if (!($this->name == 'Addons' && $this->action == 'versions')) {
+        echo "fixPlatformLinks('{$versionId}', document.getElementById('{$installTriggerName}').getAttribute('addonName'));";
+    } else {
+        $versionsPage = true;
+    }		
+		
+    // show add-on compatibility hints for Firefox
+    if (APP_ID == APP_FIREFOX && !empty($compatible_apps)) {
+        $fromVer = $toVer = null;
+        foreach ($compatible_apps as $app) {
+            if ($app['Application']['application_id'] == APP_FIREFOX) {
+                $fromVer = $app['Min_Version']['version'];
+                $toVer = $app['Max_Version']['version'];
+            }
+        }
+        if ($fromVer && $toVer) { 
+            // show "ignore" link for logged in users only
+            $_loggedin = $this->controller->Session->check('User');
+            echo "addCompatibilityHints('{$addonId}', '{$versionId}', "
+                ."'{$fromVer}', '{$toVer}', '{$_loggedin}', '{$versionsPage}');";
+        }
+
+    }
+    echo "},0);".
+         '</script>';
+    ?>
+
+
+<?php
+}
+?>

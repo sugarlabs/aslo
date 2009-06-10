@@ -1,0 +1,98 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+if (!empty($step)) {
+    echo '<div id="translationBox">';
+}
+else {
+    echo '<div class="breaklessDivider"></div>';
+    echo '<div id="translationBox">';
+        echo '<h3>'._('devcp_localebox_header_localizedfields').'</h3>';
+}
+?>
+    <div id="localeIntro">
+        <?=sprintf(_('devcp_localebox_intro'), $localebox['defaultLocale'])?>
+    </div>
+
+    <div id="locale-box">
+    <?php
+        foreach ($localebox['languages'] as $locale => $language) {
+            echo '<span onClick="showLocale(\''.str_replace('-', '_', $locale).'\', this);" title="'.$language.'"'.
+                 (($locale == $localebox['defaultLocale']) ? 'id="defaultLocaleSpan" class="selected"' : '').'>'.$locale.'</span>';
+        }
+    ?>
+    </div>
+
+<?php
+    foreach ($localebox['languages'] as $locale => $language) {
+        $localeClass = str_replace('-', '_', $locale);
+?>
+    <div id="locale_<?=$localeClass?>" <?=($locale != $localebox['defaultLocale']) ? 'style="display: none;"' : ''?>>
+        <input type="hidden" name="data[Locales][]" value="<?=$locale?>">
+        <h3><?=html_entity_decode($language).' ['.$locale.']'?></h3>
+    <?php
+        foreach ($localebox['localizedFields'] as $localizedField) {
+            $field = $localizedField['model'].'/'.$localizedField['field'].'][';
+            $id = $localizedField['model'].ucwords($localizedField['field']).'_'.$localeClass;
+            $localizedField['attributes']['value'] = (!empty($localebox['info'][$locale][$localizedField['field']]) ? $localebox['info'][$locale][$localizedField['field']] : '');
+            $localizedField['attributes']['id'] = $id;
+
+            echo '<div>';
+            switch ($localizedField['type']) {
+                case 'textarea':
+                    echo '<label for="'.$id.'">'.$localizedField['display'].'</label>';
+                    echo $html->textarea($field, $localizedField['attributes']);
+                    break;
+                case 'input':
+                    $localizedField['attributes']['value'] = htmlentities($localizedField['attributes']['value'], ENT_QUOTES, 'UTF-8');
+                    echo '<label for="'.$id.'">'.$localizedField['display'].'</label>';
+                    echo $html->input($field, $localizedField['attributes']);
+                    break;
+            }
+            echo '</div>';
+        }
+    ?>
+    </div>
+<?php
+    }
+?>
+</div>
+
+<script language="JavaScript" style="text/javascript">
+    var previousLocale = '<?=str_replace('-', '_', $localebox['defaultLocale'])?>';
+    var previousSpan = document.getElementById('defaultLocaleSpan');
+</script>

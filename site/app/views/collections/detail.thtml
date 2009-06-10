@@ -1,0 +1,205 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Jeff Balogh <jbalogh@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+
+ * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
+
+$c = $collection['Collection'];
+?>
+
+<div class="section">
+  <div class="stand-alone-options">
+    <?=$this->renderElement('amo2009/categories')?>
+    <?=$this->renderElement('amo2009/search')?>
+  </div>
+  <div class="primary" role="main">
+    <?=$this->renderElement('amo2009/breadcrumbs')?>
+    <h2>
+      <img class="icon" alt=""
+           src="<?=$this->controller->Image->getCollectionIconUrl($c['id'])?>" />
+      <?=$collection['Translation']['name']['string']?>
+    </h2>
+    <?php
+    $uuid = $collection['Collection']['uuid'];
+    if (!empty($collection_created)) {
+        echo $this->renderElement('notification', array(
+            'msg' => ___('collections_detail_created_msg'),
+            'description' => sprintf(___('collections_detail_created_desc'),
+                                     $html->url('/collections/edit/'.$uuid),
+                                     $html->link(SITE_URL.$html->rootUrl('/collection/'.$uuid),
+                                                 '/collection/'.$uuid)),
+            'type' => 'success'
+        ));
+    }
+    ?>
+    <div class="featured">
+      <div class="featured-inner object-lead">
+        <div class="meta">
+          <ul>
+            <?php if ($this->controller->Session->check('User')): ?>
+              <li>
+                <?php
+                $params = array('collection' => $collection,
+                                'is_subscribed' => $is_subscribed,
+                                'buttonClass' => 'neutral prominent',
+                                'withImage' => true);
+                ?>
+                <?=$this->renderElement('amo2009/collection_add_form', $params)?>
+              </li>
+              <script type="text/javascript">
+                <?=$this->renderElement('amo2009/collections_js_init')?>
+              </script>
+              </li>
+            <?php else: ?>
+              <li>
+                <?=sprintf(___('collections_detail_login'),
+                           $html->url($html->login_url()))?>
+              </li>
+            <?php endif; ?>
+            <li class="subscribers">
+              <?php $subscribers = $c['subscribers']; ?>
+              <?=sprintf(n___('addons_home_collections_subscribers',
+                              'addons_home_collections_subscribers',
+                              $subscribers),
+                         $subscribers);?>
+            </li>
+            <li>
+              <?php if ($atleast_manager): ?>
+                <a href="<?=$html->url('/collections/edit/'.$c['uuid'])?>">
+                  <?=sprintf(___('collections_detail_manage'))?>
+                </a>
+              <?php endif; ?>
+          </ul>
+        </div> <!-- meta -->
+        <h3><?=___('collections_detail_header_about')?></h3>
+        <p><?=$collection['Translation']['description']['string']?></p>
+        <div class="object-info">
+          <p>
+            <?=sprintf(___('collections_detail_info_created'),
+                       $html->linkUsersFromModel($collection['Users']))?>
+          </p>
+          <p>
+            <?=___('collections_detail_info_updated')?>
+            <?=strftime(___('date'), strtotime($c['modified']))?>
+          </p>
+        </div>
+      </div> <!-- featured-inner -->
+    </div> <!-- featured -->
+    <div class="separated-listing">
+      <h3>
+        <?php $count = count($collection['Addon']); ?>
+        <?=sprintf(n___('collections_detail_header_count', 'collections_detail_header_count',
+                         $count),
+                   $count)?>
+      </h3>
+      <form class="item-sort" method="get" action="">
+        <div>
+          <label for="sortby"><?=___('collections_index_label_sortby')?></label>
+          <select id="sortby" name="sortby">
+            <?php foreach($sort_options as $value => $text): ?>
+              <?php $selected = ($value == $sortby) ? 'selected="selected"' : ''; ?>
+              <option value="<?=$value?>" <?=$selected?>><?=$text?></option>
+            <?php endforeach; ?>
+          </select>
+          <button><?=___('collections_index_button_go')?></button>
+        </div>
+      </form>
+      <?php foreach ($addons as $addon): ?>
+        <?php $a = $addon['Addon']; ?>
+        <div class="item">
+          <!-- TODO: a11y ordering -->
+          <h4>
+            <a href="<?=$html->url('/addon/'.$a['id'])?>">
+              <?=$addon['Translation']['name']['string']?>
+            </a>
+            <span>
+              <?=sprintf(___('collections_index_header_created'),
+                 $html->linkUsersFromModel($addon['User']))?>
+            </span>
+          </h4>
+          <div class="item-info">
+            <?php
+            $params = array(
+                'addon' => $addon,
+                'buttonClass' => 'auxillary',
+                'collection_uuid' => $c['uuid']
+            );
+            ?>
+            <?=$this->renderElement('amo2009/install', $params)?>
+            <p class="downloads">
+              <?php $downloads = $a['weeklydownloads']; ?>
+              <?=sprintf(n___('collections_detail_weekly_downloads',
+                              'collections_detail_weekly_downloads',
+                              $downloads),
+                         '<strong>'.$html->number_format($downloads).'</strong>')?>
+            </p>
+            <p class="review">
+              <?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?>
+            </p>
+          </div> <!-- item-info -->
+          <a href="<?=$html->url('/addon/'.$a['id'])?>">
+            <img class="icon" alt=""
+                 src="<?=$this->controller->Image->getAddonIconUrl($a['id'])?>" />
+          </a>
+          <blockquote>
+            <p>
+              <?=$addon['Translation']['summary']['string']?>
+            </p>
+            <p>
+              <a href="<?=$html->url('/addon/'.$a['id'])?>">
+                <?=___('collections_detail_a_learn')?>
+              </a>
+            </p>
+            <?php
+            if (!empty($a['comment'])) {
+                echo '<blockquote class="publisher-comment">';
+                echo '<p>'.nl2br($a['comment']).'</p>';
+                echo '<p class="by">'.sprintf(___('addon_reviewed_by_u_on_d'),
+                    $html->linkUserFromModel($a['publisher']),
+                    strftime(_('date'), strtotime($a['dateadded']))).'</p>';
+                echo '</blockquote>';
+            }
+            ?>
+          </blockquote>
+        </div> <!-- item -->
+      <?php endforeach; ?>
+    </div> <!-- separated-listing -->
+    <?=$this->renderElement('amo2009/pagination');?>
+  </div> <!-- primary -->
+  <?=$this->renderElement('amo2009/collector_info_secondary')?>
+</div>

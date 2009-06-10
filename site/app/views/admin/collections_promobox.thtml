@@ -1,0 +1,112 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Wil Clouser <wclouser@mozilla.com> (Original Developer)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+    global $app_shortnames;
+
+    foreach ($titles_and_taglines as $num => $tnt) {
+        $formatted_taglines[$num] = $tnt['title'];
+    }
+
+?>
+
+<script type="text/javascript">
+    var autocompleteurl = '<?php echo $html->url('/admin/collectionLookup?s=4'); ?>';
+</script>
+
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <noscript><div class="error-notice">You must enable JavaScript to use this page.</div></noscript>
+
+        <h3>Collections PromoBox Manager</h3>
+        <p>This page manages the collections that appear in the promotion box on the front page of the site.  A maximum of 6 collections
+            will be shown on the front page, if more exist for a locale they will be randomly chosen.  Collections specified for a locale
+            are given priority over collections specified for all locales.</p>
+
+        <? if (!empty($errors['main'])): ?>
+            <?echo $this->renderElement('notification', array('msg' => $errors['main'], 'type' => 'error')); ?>
+        <? endif; ?>
+
+        <? if (isset($changeSuccess) && $changeSuccess): ?>
+            <?echo $this->renderElement('notification', array('msg' => 'Changes Saved', 'type' => 'success')); ?>
+        <? endif; ?>
+
+        <h4>Add a New Collection</h4>
+        <?=$html->formTag('/admin/collections/promobox', 'post', array('id' => 'collection-promobox-add-form-all')); ?>
+            <?=$html->input('Collection/name', array('id' => 'collection-new', 'size' => 40));?>
+            <?=$html->simpleSelectTag('locale', $locales, null, array(), array(), false);?>
+            <?=$html->simpleSelectTag('titletagline', $formatted_taglines, null, array(), array(), false);?>
+            <input type="hidden" name="action" value="add" />
+            <?=$html->submit('Add Collection');?>
+        </form>
+
+        <hr />
+
+        <? foreach ($locales as $locale => $english_name): ?>
+            <? if (array_key_exists($locale, $promoted_collections)): ?>
+                <h4><?=$english_name?> (<?=$locale?>)</h4>
+                <ul>
+                    <? foreach ($promoted_collections[$locale] as $tnt => $collections): ?>
+                        <? foreach ($collections as $collection_id => $collection): ?>
+                            <li>
+                                <?=$html->formTag('/admin/collections/promobox', 'post', array('id' => 'collection-promobox-delete-form-all')); ?>
+                                    <?echo $html->submitImage('developers/delete.png', array('title'=> 'Remove', 'alt' => 'Remove')); ?>
+                                    <?=$html->image("developers/".array_search($collection['application_id'], $app_shortnames).".png")?>
+                                    (<?=$titles_and_taglines[$tnt]['title']?>) <?=$collection['name']?>
+                                    <input type="hidden" name="target" value="<?=$collection_id?>--<?=$tnt?>--<?=$locale?>" />
+                                    <input type="hidden" name="action" value="delete" />
+                                </form>
+                            </li>
+                        <? endforeach; ?>
+                    <? endforeach; ?>
+                </ul>
+            <? endif; ?>
+        <? endforeach; ?>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                function formatItem(row) {
+                    return '<b>' + row[0] + '</b> (' + row[2].substr(5) + ')<br><i>' + row[1] + '</i>';
+                }
+                function formatResult(row) {
+                    return row[0] + ' [' + row[1].substr(4) + ']';
+                }
+                $('#collection-new').autocomplete("<?=$html->url('/admin/collectionLookup')?>", { minChars: 4, formatItem: formatItem, formatResult: formatResult });
+            });
+        </script>
+    </div>
+</div>

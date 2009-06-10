@@ -1,0 +1,91 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<style>
+    .body {
+        padding: 10px;
+    }
+    h1 {
+        border-bottom: 1px solid #d8dfea;
+        margin: 5px 10px;
+        padding-bottom: 2px;
+        font-size: 13px;
+        color: #333333;
+    }
+    .info {
+        margin: 0px 20px;
+        margin-top: 10px;
+    }
+    .info p {
+        font-size: 110%;
+    }
+    .detect {
+        font-weight: bold;
+        font-size: 14px;
+        padding: 5px;
+    }
+    .disabled {
+        color: gray;
+    }
+    .unsupported {
+        color: red;
+        padding: 5px;
+    }
+</style>
+
+<div class="body">
+    <h1>Import Add-ons</h1>
+    
+    <div class="info">
+        <p>If you have add-ons already installed in Firefox, now it's easy to automatically detect and import them to your favorite add-ons list.
+        By following 3 simple steps, you'll be able to see a list of your installed add-ons and select your favorites.
+        After you've imported them, anytime you install new add-ons you can simply come back and re-scan for your new add-ons.</p>
+        
+        <p>Get started by clicking Detect My Add-ons below!</p>
+        
+        <div style="text-align: center;">
+        <?php if ($this->controller->_usingSupportedBrowser()): ?>
+            <div class="detect"><a href="<?=FB_INSTALL_SITE.$html->url('/facebookinstall/import/'.$key)?>">Detect My Add-ons</a></div>
+        <?php else: ?>
+            <div class="detect disabled">Detect My Add-ons</div>
+            <div class="unsupported">This ability is only available to Firefox users. You are using an unsupported browser.</div>
+        <?php endif; ?>
+            <div><a href="<?=FB_URL?>/home">Back to home</a></div>
+        </div>
+    </div>
+</div>

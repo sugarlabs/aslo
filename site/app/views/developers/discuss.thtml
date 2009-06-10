@@ -1,0 +1,85 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/e
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Frederic Wenzel <fwenzel@mozilla.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons));?>
+    
+    <div id="content-main">
+        
+        <h3><?=sprintf(___('devcp_discuss_pagetitle', 'Provide More Information For the Add-on Review of %1$s'), $addonName)?></h3>
+        
+        
+        <p><?=sprintf(___('devcp_discuss_intro', 'A Mozilla Add-ons Editor requested further '
+            .'information from you regarding version %2$s of your add-on %1$s.'), $addonName, $versionno)?></p>
+        
+        <div class="corner-box">
+        <p><?=$inforequest['Approval']['comments']?></p>
+        <cite>
+            <?=sprintf(___('devcp_discuss_writtenby', 'written by %1$s on %2$s'), $html->linkUserFromModel($inforequest['User']), strftime(_('datetime'), strtotime($inforequest['Approval']['created'])))?>
+        </cite>
+        </div>
+          
+        <?php if (!empty($replies)): ?>
+        <h4><?=___('devcp_discuss_allreplies_header', 'Replies')?></h4>
+        <?php foreach ($replies as &$reply): ?>
+            <div class="corner-box">
+            <p><?=$reply['Approval']['comments']?></p>
+            <cite>
+                <?=sprintf(___('devcp_discuss_writtenby', 'written by %1$s on %2$s'), $html->linkUserFromModel($reply['User']), strftime(_('datetime'), strtotime($reply['Approval']['created'])))?>
+            </cite>
+            </div>
+        <?php endforeach; ?>
+        <?php endif; ?>
+        
+        <h4><?=___('devcp_discuss_addreply_header', 'Add Reply')?></h4>
+        <?php if (!empty($error)): ?>
+        <div class="error-notice"><p><?=sprintf(___('devcp_discuss_error_notice', 'There was an error saving your reply. Please contact %1$s about the issue.'), $link->email('amo-editors@mozilla.org'))?></p></div>
+        <?php elseif (!empty($success)): ?>
+        <div><p><?=___('devcp_discuss_success_message', 'Your reply was successfully saved. The other participants of the discussion will be notified by email.')?></p></div>
+        <?php else: ?>
+        <?=$html->formTag()?>
+            <div id="commentsbox">
+            <?=$html->textarea('Approval/comments', array('cols' => '70', 'rows' => '5', 'id' => 'comments', 'class' => 'input'))?>
+            </div>
+            <div id="finish">
+            <?=$html->submit(___('devcp_discuss_submit_reply', 'Submit Reply'), array('id' => 'submit'))?>
+            </div>
+        </form>
+        <?php endif; ?>
+        
+    </div> <!-- content-main -->
+</div> <!-- content -->

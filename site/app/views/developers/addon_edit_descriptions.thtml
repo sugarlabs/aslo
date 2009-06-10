@@ -1,0 +1,119 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *      Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
+    <div id="content-main"  class="edit-addon <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?php
+            if (!empty($success)) {
+                echo '<div class="notice-success rounded">'.___('devcp_notice_changes_saved').'</div>';
+            }
+        ?>
+        
+        <h2><?=___('devcp_edit_descriptions_header')?></h2>
+        <?=$this->renderElement('noscript')?>
+        <?=$this->renderElement('developers/rolecheck')?>
+        <form id="addon-edit-descriptions-form" action="" method="post">
+        <?=$html->hiddenSession();?>
+        <?php
+            // Retrieve language arrays from bootstrap.
+            global $valid_languages, $native_languages;
+            foreach (array_keys($valid_languages) as $key) {
+                $languages[$key] = $native_languages[$key]['native'];
+            }
+            ksort($languages);
+            
+            $this->translationBox = array(
+                                'defaultLocale' => $addon['Addon']['defaultlocale'],
+                                'languages' => $languages,
+                                'table' => 'Addon',
+                                'loaded' => false
+                            );
+        
+        // Summary
+        echo $this->renderElement('translationbox', array(
+                    'field' => 'summary',
+                    'translations' => $translations['summary'],
+                    'height' => '60',
+                    'maxLength' => '250',
+                    'displayName' => ___('devcp_edit_descriptions_transbox_summary_name'),
+                    'description' => ___('devcp_edit_descriptions_transbox_summary_description'),
+                ));
+        
+        // Description
+        echo $this->renderElement('translationbox', array(
+                    'field' => 'description',
+                    'translations' => $translations['description'],
+                    'displayName' => ___('devcp_edit_descriptions_transbox_description_name'),
+                    'description' => ___('devcp_edit_descriptions_transbox_description_description'),
+                ));
+        
+        // Developer Comments
+        echo $this->renderElement('translationbox', array(
+                    'field' => 'developercomments',
+                    'translations' => $translations['developercomments'],
+                    'displayName' => ___('devcp_edit_descriptions_transbox_comments_name'),
+                    'description' => ___('devcp_edit_descriptions_transbox_comments_description'),
+                ));
+        
+        // EULA
+        echo $this->renderElement('translationbox', array(
+                    'field' => 'eula',
+                    'translations' => $translations['eula'],
+                    'height' => '200',
+                    'displayName' => ___('devcp_edit_descriptions_transbox_eula_name'),
+                    'description' => ___('devcp_edit_descriptions_transbox_eula_description'),
+                ));
+        
+        // Privacy Policy
+        echo $this->renderElement('translationbox', array(
+                    'field' => 'privacypolicy',
+                    'translations' => $translations['privacypolicy'],
+                    'height' => '200',
+                    'displayName' => ___('devcp_edit_descriptions_transbox_privacy_name'),
+                    'description' => ___('devcp_edit_descriptions_transbox_privacy_description'),
+                ));
+        ?>
+        <div id="edit-error" class="error" style="display: none;"><?=___('devcp_edit_description_correct_error')?></div>
+        <div class="action-button-container centered" style="width: 600px;"><a href="#" onclick="addon_edit_descriptions.save(); return false;" class="action-button rounded"><?=___('devcp_edit_description_button_update')?></a></div>
+        </form>
+    </div>
+</div>

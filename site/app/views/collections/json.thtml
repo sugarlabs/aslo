@@ -1,0 +1,14 @@
+<?php
+if (!defined('NO_MICROTIME'))
+    define('NO_MICROTIME', true);
+
+if (!empty($encapsulate)) {
+    echo '<div id="json">';
+    $listing->json($json, null, true);
+    echo '</div>';
+}
+else {
+    header('Content-type: text/plain');
+    $listing->json($json, null);
+}
+?>

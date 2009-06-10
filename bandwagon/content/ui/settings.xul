@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+  -   Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  -
+  - The contents of this file are subject to the Mozilla Public License Version
+  - 1.1 (the "License"); you may not use this file except in compliance with
+  - the License. You may obtain a copy of the License at
+  - http://www.mozilla.org/MPL/
+  - 
+  - Software distributed under the License is distributed on an "AS IS" basis,
+  - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  - for the specific language governing rights and limitations under the
+  - License.
+  -
+  - The Original Code is bandwagon.
+  -
+  - The Initial Developer of the Original Code is
+  - Mozilla Corporation.
+  - Portions created by the Initial Developer are Copyright (C) 2008
+  - the Initial Developer. All Rights Reserved.
+  -
+  - Contributor(s): David McNamara
+  -                 Brian King <brian (at) briks (dot) si>
+  -
+  - Alternatively, the contents of this file may be used under the terms of
+  - either the GNU General Public License Version 2 or later (the "GPL"), or
+  - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  - in which case the provisions of the GPL or the LGPL are applicable instead
+  - of those above. If you wish to allow use of your version of this file only
+  - under the terms of either the GPL or the LGPL, and not to allow others to
+  - use your version of this file under the terms of the MPL, indicate your
+  - decision by deleting the provisions above and replace them with the notice
+  - and other provisions required by the GPL or the LGPL. If you do not delete
+  - the provisions above, a recipient may use your version of this file under
+  - the terms of any one of the MPL, the GPL or the LGPL.
+  - 
+  - ***** END LICENSE BLOCK ***** -->
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://browser/skin/preferences/preferences.css"?>
+<?xml-stylesheet href="chrome://bandwagon/skin/settings.css" type="text/css"?>
+<?xml-stylesheet href="chrome://bandwagon/skin/settingsIcons.css" type="text/css"?>
+<?xml-stylesheet href="chrome://bandwagon/content/ui/bindings/bandwagon.css" type="text/css"?>
+
+<!DOCTYPE prefwindow SYSTEM "chrome://bandwagon/locale/settings.dtd">
+
+<prefwindow id="bandwagon-settings"
+            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+            title="&window.title;"
+            ondialogaccept="return Bandwagon.Controller.Settings.doAccept();"
+            ondialogcancel="return Bandwagon.Controller.Settings.doCancel();"
+            persist="lastSelected screenX screenY">
+
+    <prefpane id="paneManage"
+              label="&manage.label;"
+              flex="1">
+        <hbox flex="1">
+            <vbox>
+                <label id="collections-list-header" crop="end" value="&subscriptions.header;"/>
+                <richlistbox id="collections-list" flex="1"/>
+            </vbox>
+            <vbox flex="1">
+                <!-- Update Interval Settings -->
+                <groupbox>
+                    <caption label="&frequency.label;"/>
+                    <radiogroup id="updates-group">
+                        <radio id="updates-default" label="&default.label;"/>
+                        <hbox align="center">
+                            <radio id="updates-custom" label="&custom.label;"/>
+                            <label id="checkbox-updateinterval-percollection" value="&updatesingle.label;"/>
+                            <textbox id="textbox-updateinterval-quantity-percollection"
+                                     type="number"
+                                     min="1"
+                                     size="3"
+                                     maxlength="3"
+                                     value=""/>
+                            <menulist id="menulist-updateinterval-units-percollection"
+                                      class=""
+                                      crop="none">
+                                <menupopup>
+                                    <menuitem label="&minutes.label;" value="1"/>
+                                    <menuitem label="&hours.label;" value="2"/>
+                                    <menuitem label="&days.label;" value="3"/>
+                                </menupopup>
+                            </menulist>
+                        </hbox>
+                    </radiogroup>
+                </groupbox>
+
+                <!-- Show Notification Settings -->
+                <groupbox>
+                    <caption label="&notifications.label;"/>
+                    <radiogroup id="notifications-group">
+                        <radio id="notifications-default" label="&default.label;"/>
+                        <hbox>
+                            <radio id="notifications-custom" label="&custom.label;"/>
+                            <radiogroup id="checkbox-shownotifications-percollection"
+                                        orient="horizontal">
+                                <radio id="shownotifications-percollection-on" label="&on.label;"/>
+                                <radio id="shownotifications-percollection-off" label="&off.label;"/>
+                            </radiogroup>
+                        </hbox>
+                    </radiogroup>
+                </groupbox>
+
+                <!-- Add-ons Per Page Settings -->
+                <groupbox id="pagination-box">
+                    <caption label="&perpage.label;"/>
+                    <radiogroup id="perpage-group">
+                        <radio id="perpage-default" label="&default.label;"/>
+                        <hbox align="center">
+                            <radio id="perpage-custom" label="&custom.label;"/>
+                            <label id="label-addonsshow-percollection"> &addonsleadin.label;</label>
+                            <textbox id="textbox-addonsperpage-percollection"
+                                     type="number"
+                                     size="3"/>
+                            <label id="label-addonsperpage-percollection"> &addonsperpage.label;</label>
+                        </hbox>
+                    </radiogroup>
+                </groupbox>
+
+                <hbox align="center" pack="end">
+                    <button id="remove-button"
+                            label="&remove.label;"
+                            oncommand="Bandwagon.Controller.Settings.doUnsubscribe();"/>
+                </hbox>
+            </vbox>
+        </hbox>
+
+    </prefpane>
+
+    <prefpane id="paneGeneral"
+              label="&general.label;">
+        <preferences>
+            <preference id="extensions.bandwagon.global.addonsperpage"
+                        name="extensions.bandwagon.global.addonsperpage"
+                        type="int"/>
+            <preference id="extensions.bandwagon.global.update.interval"
+                        name="extensions.bandwagon.global.update.interval"
+                        type="int"/>
+            <preference id="extensions.bandwagon.global.update.units"
+                        name="extensions.bandwagon.global.update.units"
+                        type="int"/>
+            <preference id="extensions.bandwagon.global.notify.enabled"
+                        name="extensions.bandwagon.global.notify.enabled"
+                        type="bool"/>
+            <preference id="extensions.bandwagon.allow.incompatible.install"
+                        name="extensions.bandwagon.allow.incompatible.install"
+                        type="bool"/>
+        </preferences>
+        <groupbox>
+            <caption label="&subscriptions.label;"/>
+            <hbox align="center">
+                <label id="updateinterval-all" value="&updateall.label;"/>
+                <textbox id="textbox-updateinterval-quantity"
+                         type="number"
+                         min="1"
+                         size="3"
+                         maxlength="3"
+                         value=""
+                         onkeypress=""
+                         onchange=""
+                         preference="extensions.bandwagon.global.update.interval"/>
+                <menulist id="menulist-updateinterval-units" class="" crop="none" preference="extensions.bandwagon.global.update.units">
+                    <menupopup>
+                        <menuitem label="&minutes.label;" value="1"/>
+                        <menuitem label="&hours.label;" value="2"/>
+                        <menuitem label="&days.label;" value="3"/>
+                    </menupopup>
+                </menulist>
+            </hbox>
+            <hbox align="center">
+                <label id="notify-all" value="&notifyglobal.label;"/>
+                <radiogroup id="notify-all-group" orient="horizontal" preference="extensions.bandwagon.global.notify.enabled">
+                    <radio id="notify-all-on" label="&on.label;" value="true"/>
+                    <radio id="notify-all-off" label="&off.label;" value="false"/>
+                </radiogroup>
+            </hbox>
+            <hbox align="center" id="global-pagination-box">
+                <label id="label-addonsshow"> &addonsleadin.label;</label>
+                <textbox id="textbox-addonsperpage-global"
+                         type="number"
+                         size="3"
+                         preference="extensions.bandwagon.global.addonsperpage"/>
+                <label id="label-addonsperpage"> &addonsperpage.label;</label>
+            </hbox>
+        </groupbox>
+
+        <groupbox>
+            <caption label="&data.label;"/>
+            <hbox align="center" pack="start">
+                <label id="clear-emails-text" value="" />
+                <button id="clear-emails-button"
+                        label="&clearemails.label;"
+                        oncommand="Bandwagon.Controller.Settings.doClearEmails();"/>
+            </hbox>
+            <hbox align="center" pack="start">
+                <label id="login-status-text" value="" />
+                <button id="login-button"
+                        label="&login.label;"
+                        oncommand="Bandwagon.Controller.Settings.doLogin();"/>
+                <button id="logout-button"
+                        label="&logout.label;"
+                        oncommand="Bandwagon.Controller.Settings.doLogout();"
+                        collapsed="true"/>
+            </hbox>
+        </groupbox>
+
+        <groupbox id="section-enable-on-checkcompatibilty-pref" collapsed="true">
+            <caption label="&misc.label;"/>
+            <checkbox id="allow-incompatible-install" label="&allowincompatibleinstall.label;" preference="extensions.bandwagon.allow.incompatible.install"/>
+        </groupbox>
+    </prefpane>
+
+    <prefpane id="paneAuto"
+              label="&pub.label;">
+        <preferences>
+            <preference id="extensions.bandwagon.local.autopublisher.publish.extensions"
+                        name="extensions.bandwagon.local.autopublisher.publish.extensions"
+                        type="bool"/>
+            <preference id="extensions.bandwagon.local.autopublisher.publish.themes"
+                        name="extensions.bandwagon.local.autopublisher.publish.themes"
+                        type="bool"/>
+            <preference id="extensions.bandwagon.local.autopublisher.publish.dictionaries"
+                        name="extensions.bandwagon.local.autopublisher.publish.dictionaries"
+                        type="bool"/>
+            <preference id="extensions.bandwagon.local.autopublisher.publish.language.packs"
+                        name="extensions.bandwagon.local.autopublisher.publish.language.packs"
+                        type="bool"/>
+            <preference id="extensions.bandwagon.local.autopublisher.only.publish.enabled"
+                        name="extensions.bandwagon.local.autopublisher.only.publish.enabled"
+                        type="bool"/>
+        </preferences>
+        <groupbox>
+            <caption label="&auto.label;"/>
+            <description>&autoleadin.label;</description>
+            <separator class="thin"/>
+            <grid>
+              <columns>
+                <column/>
+                <column/>
+              </columns>
+              <rows>
+                <row align="center">
+                  <label value="&name.label;"/>
+                  <textbox id="auto-name"/>
+                </row>
+                <row align="center">
+                  <spacer/>
+                  <checkbox id="auto-list" label="&list.label;" checked="true"/>
+                </row>
+              </rows>
+            </grid>
+            <separator class="thin"/>
+            <grid>
+              <columns>
+                <column/>
+                <column/>
+                <column/>
+              </columns>
+              <rows>
+                <row align="center">
+                  <label value="&types.label;"/>
+                  <checkbox id="auto-type-extensions" label="&type.extensions.label;" preference="extensions.bandwagon.local.autopublisher.publish.extensions"/>
+                  <checkbox id="auto-type-themes" label="&type.themes.label;" preference="extensions.bandwagon.local.autopublisher.publish.themes"/>
+                </row>
+                <row align="center">
+                  <spacer/>
+                  <checkbox id="auto-type-dicts" label="&type.dicts.label;" preference="extensions.bandwagon.local.autopublisher.publish.dictionaries"/>
+                  <checkbox id="auto-type-langpacks" label="&type.langpacks.label;" preference="extensions.bandwagon.local.autopublisher.publish.language.packs"/>
+                </row>
+              </rows>
+            </grid>
+            <separator class="thin"/>
+            <checkbox id="auto-only-publish-enabled" label="&onlypublishenabledaddons.label;" preference="extensions.bandwagon.local.autopublisher.only.publish.enabled"/>
+        </groupbox>
+        <hbox class="bottomBox" pack="center">
+            <groupbox id="auto-groupbox" orient="horizontal">
+                <button id="auto-create-button"
+                        label="&createauto.label;"
+                        oncommand="Bandwagon.Controller.Settings.doCreateAutoPublisher();"/>
+                <button id="auto-update-button"
+                        label="&updateauto.label;"
+                        oncommand="Bandwagon.Controller.Settings.doUpdateAutoPublisher();"
+                        collapsed="true"/>
+                <button id="auto-delete-button"
+                        label="&deleteauto.label;"
+                        oncommand="Bandwagon.Controller.Settings.doDeleteAutoPublisher();"
+                        collapsed="true"/>
+                <vbox pack="center">
+                    <image id="auto-spinner" src="chrome://bandwagon/skin/images/spinner-small.gif" collapsed="true"/>
+                </vbox>
+            </groupbox>
+        </hbox>
+        <label id="auto-error" style="color: red;" value=""/>
+    </prefpane>
+
+    <stringbundle id="bandwagon-strings" src="chrome://bandwagon/locale/settings.properties"/>
+    <stringbundle id="bandwagon-strings2" src="chrome://bandwagon/locale/extensionOverlay.properties"/>
+
+    <script type="application/x-javascript" src="chrome://bandwagon/content/ui/dialog.js"/>
+    <script type="application/x-javascript" src="chrome://bandwagon/content/ui/settingsController.js"/>
+
+</prefwindow>

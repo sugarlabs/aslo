@@ -1,0 +1,158 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+/**
+ * Translation Box
+ * Element for rendering a translation box with tabs for the locales. Requires
+ * $this->translationBox be set with defaultLocale, languages, table, and loaded.
+ *
+ * See app/views/developers/addon_edit_descriptions.thtml for sample usage
+ *
+ * Required parameters:
+ *    - $field - name of the field
+ *    - $translations - array in form of 'en-US' => 'Translation'
+ *
+ * Optional parameters:
+ *    - $id - the db id of the object if multiple will be on the same page
+ *    - $type - type of field - textbox or textarea (default)
+ *    - $width - width of the field, defaults to 600px
+ *    - $height - height of the field, defaults to 20 for textboxes and 100 for textareas
+ *    - $maxLength - maximum number of characters for a field
+ *    - $displayName - the name of the field for the header
+ *    - $description - description of the field
+ *    - $graybox - whether to display in a graybox
+ *    - $extraclass - extra content for the class attribute of the enclosing div
+ */
+
+if (!isset($graybox) || $graybox === true) {
+    echo '<div class="translation-box graybox rounded spaced" style="width: '.(!empty($width) ? $width : '600px').';">';
+} else {
+    echo '<div class="translation-box'.(isset($extraclass)?' '.$extraclass:'').'">';
+}
+    echo (!empty($displayName) ? '<h4><a href="#" title="'.___('devcp_transbox_a_title_help').'" onclick="translation_box.showHelp(this); return false;">'.$html->image('developers/help.png', array('alt' => ___('devcp_transbox_alt_help'))).'</a>'.$displayName.'  </h4>' : '');
+    echo (!empty($description) ? "<p>{$description}</p>" : '');
+    ?>
+    <div class="translation-row">
+        <div class="translation-tabs">
+        <?php
+            // Make sure default locale is present
+            if (!array_key_exists($this->translationBox['defaultLocale'], $translations)) {
+                $translations[$this->translationBox['defaultLocale']] = '';
+            }
+
+            foreach ($translations as $locale => $translation) {
+                echo '<div class="translation-tab'.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'" onclick="translation_box.switchLocale(this, \''.$locale.'\');" title="'.$this->translationBox['languages'][$locale].'">';
+                echo $locale.'</div>';
+            }
+        ?>
+        </div>
+        <div class="translation-button"><?=$html->image('developers/tab_add.png', array('onclick' => 'translation_box.addTab(this);', 'alt' => ___('devcp_transbox_img_add_trans'), 'title' => ___('devcp_transbox_img_add_trans')))?></div>
+        <div class="translation-button remove" style="display: none;"><?=$html->image('developers/tab_delete.png', array('onclick' => 'translation_box.confirmRemove(this);', 'alt' => ___('devcp_transbox_img_remove_trans'), 'title' => ___('devcp_transbox_img_remove_trans')))?></div>
+    </div>
+    <div class="translation-area" table="<?=$this->translationBox['table']?>" field="<?=$field?>" defaultLocale="<?=$this->translationBox['defaultLocale']?>"<?=(!empty($id) ? ' itemID="'.$id.'"' : '')?>>
+    <?php
+        foreach ($translations as $locale => $translation) {
+            $fieldName = "data[{$this->translationBox['table']}]".(!empty($id) ? "[{$id}]" : '')."[{$field}][{$locale}]";
+
+            if (empty($type) || $type == 'textarea') {
+                echo '<textarea class="input '.$locale.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'" name="'.$fieldName.'" cols="" rows="" style="height: '.(!empty($height) ? $height : '100').'px;"'.(!empty($maxLength) ? ' maxlength="'.$maxLength.'" onkeyup="translation_box.checkLength(this, '.$maxLength.');"  onchange="translation_box.checkLength(this, '.$maxLength.');"' : '').'>'.$translation.'</textarea>';
+            }
+            elseif ($type == 'textbox') {
+                echo '<input type="text" class="input '.$locale.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'" name="'.$fieldName.'" value="'.$html->entities($translation).'" style="height: '.(!empty($height) ? $height : '20').'px;" '.(!empty($maxLength) ? ' maxlength="'.$maxLength.'"' : '').' />';
+            }
+
+            if (!empty($maxLength)) {
+                echo '<div class="translation-maxlength '.$locale.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'">'.$html->image('developers/exclamation.png', array('alt' => '')).sprintf(___('devcp_transbox_chars_used'), '<span>'.strlen($translation).'</span>', $maxLength).'</div>';
+            }
+        }
+    ?>
+    </div>
+
+</div>
+
+<?php if (!$this->translationBox['loaded']): ?>
+<div class="translation-newlocale-container">
+    <div class="translation-newlocale new selected">
+        <div class="padded">
+            <?=___('devcp_transbox_select_locale')?>
+            <select>
+            <?php
+                foreach ($this->translationBox['languages'] as $code => $name) {
+                    echo '<option value="'.$code.'">'.$name.' ('.$code.')</option>';
+                }
+            ?>
+            </select>
+            <div class="buttons">
+                <input type="button" value="<?=___('devcp_transbox_input_add_locale')?>" onclick="translation_box.addLocale(this, false);" />
+                <input type="button" value="<?=___('devcp_transbox_input_add_all')?>" onclick="translation_box.addLocale(this, true);" />
+                <input type="button" value="<?=___('devcp_transbox_input_cancel')?>" onclick="translation_box.cancelAdd(this);" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="translation-deletelocale-container">
+    <div class="translation-deletelocale">
+        <div class="padded">
+            <?=___('devcp_transbox_delete_sure')?>
+            <div class="buttons">
+                <input type="button" value="<?=___('devcp_transbox_input_delete')?>" onclick="translation_box.removeLocale(this);" />
+                <input type="button" value="<?=___('devcp_transbox_input_cancel')?>" onclick="translation_box.cancelRemove(this);" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="translation-help-container">
+    <div class="translation-help bluebox-tr"><div class="bluebox-tl">
+        <div class="padded">
+            <h4><?=sprintf(___('devcp_transbox_help_header_tabs'), $this->translationBox['defaultLocale'])?></h4>
+            <p><?=___('devcp_transbox_help_transbox')?></p>
+            <h4><?=___('devcp_transbox_help_header_what')?></h4>
+            <p><?=___('devcp_transbox_help_if')?>
+            <div style="text-align: right;"><a href="#" onclick="translation_box.hideHelp(this); return false;"><?=___('devcp_transbox_help_hide')?></a></div>
+        </div>
+        <div class="bluebox-br"><div class="bluebox-bl"></div></div>
+    </div></div>
+</div>
+<div class="translation-error-container">
+    <div class="translation-error error-message rounded"></div>
+</div>
+<?php
+    $this->translationBox['loaded'] = true;
+    endif;
+?>

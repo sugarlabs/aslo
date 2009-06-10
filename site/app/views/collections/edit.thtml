@@ -1,0 +1,347 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Ryan Doherty <rdoherty@mozilla.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+
+/* Prepare translation box element */
+// Retrieve language arrays from bootstrap.
+global $valid_languages, $native_languages;
+foreach (array_keys($valid_languages) as $key) {
+    $languages[$key] = $native_languages[$key]['native'];
+}
+ksort($languages);
+$this->translationBox = array(
+    'defaultLocale' => LANG,
+    'languages' => $languages,
+    'table' => 'Collection',
+    'loaded' => false
+);
+
+?>
+<div class="section">
+    <div class="stand-alone-options">
+        <?=$this->renderElement('amo2009/search');?>
+        <?=$this->renderElement('amo2009/categories');?>
+    </div>
+
+    <div id="collections-edit" class="primary" role="main">
+        <?=$this->renderElement('amo2009/breadcrumbs')?>
+
+        <form action="<?=$html->entities($html->url())?>" method="post" id="collections" enctype="multipart/form-data">
+        <?=$html->hiddenSession()?>
+
+        <h2><?=sprintf(___('collections_edit_header'), $this->data['Collection']['Translation']['name']['string'])?></h2>
+
+        <?php
+        if (!empty($collection_saved)) {
+            echo $this->renderElement('notification', array(
+                'type' => 'success',
+                'msg' => ___('collections_edit_saved_success'),
+                'description' => ___('collections_edit_saved_nextstep').' '
+                    .$html->link(SITE_URL.$html->url($collection_url), $collection_url),
+                'htmlattributes' => array('id' => 'saved_success')
+            ));
+            echo <<<JS
+            <script type="text/javascript">/* <![CDATA[ */
+                $(document).ready(function() {
+                    bandwagonRefreshEvent();
+                });
+            /* ]]> */</script>
+JS;
+        } elseif (!empty($form_errors)) {
+            echo $this->renderElement('notification', array(
+                'type' => 'error',
+                'msg' => ___('error_formerrors')
+            ));
+        }
+        echo $this->renderElement('notification', array(
+            'type' => 'warning',
+            'msg' => ___('collections_edit_delete_warning'),
+            'description' => sprintf(___('collections_edit_delete_upon_submit'),
+                    ___('collections_edit_submit_deletecollection'),
+                    ___('collections_edit_tabheader_advanced')),
+            'htmlattributes' => array(
+                'id' => 'delete-warning',
+                'style' => 'display:none'
+                )
+        ));
+        ?>
+
+        <div id="coll-edit" class="flora">
+            <ul class="tabs-nav">
+                <?php if ($atleast_manager): ?>
+                <li><a href="#details"><span><?=___('collections_edit_tabheader_details')?></span></a></li>
+                <li><a href="#permissions"><span><?=___('collections_edit_tabheader_permissions')?></span></a></li>
+                <?php endif; ?>
+                <li><a href="#addons"><span><?=___('collections_edit_tabheader_addons')?></span></a></li>
+                <?php if ($atleast_manager): ?>
+                <li><a href="#advanced"><span><?=___('collections_edit_tabheader_advanced')?></span></a></li>
+                <?php endif; ?>
+            </ul>
+
+            <?php if ($atleast_manager): ?>
+            <div id="details">
+                <div>
+                <?php
+                echo $this->renderElement('translationbox', array(
+                    'field' => 'name',
+                    'translations' => $translations['name'],
+                    'height' => '25',
+                    'maxLength' => '50',
+                    'displayName' => ___('collections_edit_formfield_name'),
+                    'description' => ___('collections_edit_formfield_name_description'),
+                ));
+                ?>
+                <?=$html->tagErrorMsg('Collection/name', ___('collections_edit_form_error_name')) ?>
+                </div>
+
+                <div>
+                <?php
+                echo $this->renderElement('translationbox', array(
+                    'field' => 'description',
+                    'translations' => $translations['description'],
+                    'height' => '100',
+                    'maxLength' => '200',
+                    'displayName' => ___('collections_edit_formfield_description'),
+                    'description' => ___('collections_edit_formfield_description_description'),
+                ));
+                ?>
+                <?=$html->tagErrorMsg('Collection/description', ___('collections_edit_form_error_description')) ?>
+                </div>
+
+                <div>
+                <h4><label for="CollectionNickname"><?=___('collections_edit_formfield_nickname')?></label></h4>
+                <p><?=___('collections_edit_formfield_nickname_description')?></p>
+                <p>
+                    <?=SITE_URL.$html->url('/collection/', true, false, false)
+                        .$html->input('Collection/nickname', array('maxlength'=>30, 'value'=>$this->data['Collection']['Collection']['nickname']));?>
+                    <input type="button" value="<?=___('collections_edit_check_nickname')?>" style="display:none" id="nick-avail" />
+                    <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
+                    <span class="available" style="display:none"><?=___('collections_edit_nickname_available')?></span>
+                    <span class="taken error_message" style="display:none"><?=___('collections_edit_nickname_taken')?></span>
+                </p>
+                <?=$html->tagErrorMsg('Collection/nickname', ___('collections_edit_form_error_nickname')) ?>
+                </div>
+
+                <div id="icon">
+                <h4><label for="CollectionIcon"><?=___('collections_edit_formfield_icon')?></label></h4>
+                <p><?=___('collections_edit_formfield_icon_description')?></p>
+
+                <?php if (!empty($this->data['Collection']['Collection']['icontype'])): ?>
+                <img src="<?=$iconurl?>" alt="Icon"/>
+                <?php endif;?>
+                <input id="CollectionIcon" type="file" name="icon"/>
+                <span class="toberemoved" style="display:none"><?=sprintf(___('collections_edit_icon_toberemoved'), ___('collections_edit_submit'))?></span>
+                <a href="#" class="cancel" style="display:none"><?=___('collections_edit_icon_cancel')?></a>
+
+                <noscript>
+                    <p>
+                        <input id="IconDeleteNoScript" type="checkbox" name="data[Icon][delete]"/> <label for="IconDeleteNoScript"><?=___('collections_edit_icon_delete')?></label>
+                    </p>
+                </noscript>
+                <span class="replaceremove" style="display:none">
+                    <a href="#" id="icon_replace"><?=___('collections_edit_icon_replace')?></a> |
+                    <a href="#" id="icon_remove"><?=___('collections_edit_icon_delete')?></a>
+                </span>
+                <?=$html->tagErrorMsg('Collection/icon', ___('collections_edit_form_error_icon')) ?>
+                </div>
+            </div>
+
+            <div id="permissions">
+            <noscript><h3><?=___('collections_edit_header_permissions')?></h3></noscript>
+                <div>
+                <fieldset>
+                <h4><?=___('collections_edit_formfield_listed')?></h4>
+                <p><?=___('collections_edit_formfield_listed_description')?></p>
+                <?=$html->radio('Collection/listed', array(
+                    true => '<label for="listed_1">'.___('collections_edit_formfield_listed_true').'</label>',
+                    false => '<label for="listed_0">'.___('collections_edit_formfield_listed_false').'</label>'
+                    ), '<br/>', array('value'=>$this->data['Collection']['Collection']['listed']));
+                ?>
+                </fieldset>
+                </div>
+
+                <div>
+                <fieldset>
+                <h4><?=___('collections_edit_formfield_publishers')?></h4>
+                <p><?=___('collections_edit_formfield_publishers_description')?></p>
+                <?=$html->radio('Publishers/p_onlyme', array(
+                    true => '<label for="p_onlyme_1">'.___('collections_edit_formfield_users_onlyme').'</label>',
+                    false => '<label for="p_onlyme_0">'.___('collections_edit_formfield_users_otherusers').'</label>'
+                    ), '<br/>', array('value'=>(int)empty($publishers_noscript)));
+                ?>
+                <div id="publishers" class="jsonly">
+                    <ul></ul>
+                    <label for="PublishersAdd"><?=___('collections_edit_formfield_users_add')?></label><br/>
+                    <?=$html->input('Publishers/add')?> <input type="button" value="<?=___('collections_edit_formfield_users_submit')?>" />
+                    <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
+                </div>
+                <noscript><div>
+                    <?=$html->input('Publishers/new')?> <label for="PublishersNew"><?=___('collections_edit_formfield_users_new_noscript')?></label><br/>
+                    <?=$html->selectTag('Publishers/delete', $publishers_noscript, null, array('size'=>3, 'multiple'=>'multiple'), null, false)?> <label for="PublishersDelete"><?=___('collections_edit_formfield_users_delete_noscript')?></label>
+                </div></noscript>
+                </fieldset>
+                </div>
+
+                <div>
+                <fieldset>
+                <h4><?=___('collections_edit_formfield_managers')?></h4>
+                <p><?=___('collections_edit_formfield_managers_description')?></p>
+                <?=$html->radio('Managers/m_onlyme', array(
+                    true => '<label for="m_onlyme_1">'.___('collections_edit_formfield_users_onlyme').'</label>',
+                    false => '<label for="m_onlyme_0">'.___('collections_edit_formfield_users_otherusers').'</label>'
+                    ), '<br/>', array('value'=>(int)empty($managers_noscript)));
+                ?>
+                <div id="managers" class="jsonly">
+                    <ul></ul>
+                    <label for="ManagersAdd"><?=___('collections_edit_formfield_users_add')?></label><br/>
+                    <?=$html->input('Managers/add')?> <input type="button" value="<?=___('collections_edit_formfield_users_submit')?>" />
+                    <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
+                </div>
+                <noscript><div>
+                    <?=$html->input('Managers/new')?> <label for="ManagersNew"><?=___('collections_edit_formfield_users_new_noscript')?></label><br/>
+                    <?=$html->selectTag('Managers/delete', $managers_noscript, null, array('size'=>3, 'multiple'=>'multiple'), null, false)?> <label for="ManagersDelete"><?=___('collections_edit_formfield_users_delete_noscript')?></label>
+                </div></noscript>
+                </fieldset>
+                </div>
+            </div>
+            <?php endif; // at least manager ?>
+
+            <div id="addons">
+            <noscript><h3><?=___('collections_edit_header_addons')?></h3></noscript>
+            <p class="jsonly"><?=___('collections_edit_addons_description')?> <?=___('collections_edit_addons_description_publish_detailspage')?></p>
+            <noscript><p><?=___('collections_edit_addons_description_noscript')?> <?=___('collections_edit_addons_description_publish_detailspage')?></p></noscript>
+            <label for="addonname" class="jsonly"><?=___('collections_edit_formfield_addons')?></label> <input type="text" name="q" id="addonname"/>
+            <input type="button" onclick="return false;" value="<?=___('collections_edit_addons_submit')?>" id="addon-add"  class="jsonly" />
+            <hr/>
+            <noscript><div>
+                <h3><?=___('collections_edit_header_addons_current')?></h3>
+                <?=$html->selectTag('Addons/delete', $addons_noscript, null, array('size'=>6, 'multiple'=>'multiple'), null, false)?>
+                <label for="AddonsDelete"><?=___('collections_edit_addons_delete_noscript')?></label>
+            </div></noscript>
+            <div id="currentaddons"  class="jsonly">
+                <h3><?=___('collections_edit_header_addons_current')?></h3>
+                <div class="coll-addon" id="addon-new" style="display:none">
+                    <p><img src="" alt=""/><span class="name"></span><span class="added"><?=___('collections_edit_addons_listitem_added')?></span></p>
+                    <a href="#" class="removeaddon"><?=___('collections_edit_addons_listitem_remove')?></a>
+                    <blockquote title="publishercomment"></blockquote>
+                    <a href="#" class="addlink"><?=___('collections_edit_addons_listitem_comment_add')?></a>
+                    <div class="editdelete">
+                        <a href="#" class="editlink"><?=___('collections_edit_addons_listitem_comment_edit')?></a> |
+                        <a href="#" class="deletelink"><?=___('collections_edit_addons_listitem_comment_delete')?></a>
+                    </div>
+                    <div class="editbox">
+                        <textarea cols="50" rows="5"></textarea>
+                        <input type="button" value="<?=___('collections_edit_addons_listitem_comment_submit')?>"/>
+                        <p><?=___('collections_edit_addons_listitem_comment_note')?></p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <?php if ($atleast_manager): ?>
+            <div id="advanced">
+            <noscript><h3><?=___('collections_edit_header_advanced')?></h3></noscript>
+            <fieldset>
+                <h4><?=___('collections_edit_formfield_application')?></h4>
+                <p><?=___('collections_edit_formfield_application_description')?></p>
+                <?=$html->selectTag('Collection/application_id', $appoptions, $this->data['Collection']['Collection']['application_id'], null, null, false);?>
+            </fieldset>
+
+            <?php if ($isadmin): ?>
+            <fieldset>
+                <h4><?=___('collections_edit_formfield_collectiontype')?></h4>
+                <?=$html->selectTag('Collection/collection_type', $collection_types, $this->data['Collection']['Collection']['collection_type'], null, null, false);?>
+            </fieldset>
+            <?php endif; ?>
+
+            <?php if ($atleast_owner): ?>
+            <fieldset>
+                <h4><?=___('collections_edit_formfield_deletecollection')?></h4>
+                <p><?=___('collections_edit_formfield_deletecollection_description')?></p>
+                <input id="delete-coll" type="button" class="jsonly" name="data[action]" value="<?=___('collections_edit_submit_deletecollection')?>"/>
+                <div id="delete-confirm">
+                    <div><input id="delete-coll-noscript" type="checkbox" name="data[action]" value="delete-coll"/> <label for="delete-coll-noscript"><?=___('collections_edit_confirm_deletecollection')?></label></div>
+                    <p><?=sprintf(___('collections_edit_confirm_deletecollection_description'), ___('collections_edit_submit'))?></p>
+                </div>
+            </fieldset>
+            <?php endif; // at least owner ?>
+            </div>
+            <?php endif; // at least manager ?>
+
+        </div><!-- /tabs -->
+        <div><input type="submit" id="submitbutton" value="<?=___('collections_edit_submit')?>"/></div>
+        </form>
+
+        <script type="text/javascript">
+        //<![CDATA[
+            var collURL = '<?=$html->url('/collections')?>'
+            var jsonURL = '<?=$html->url('/collections/json')?>';
+            var imageURL = '<?=$html->url('/img', true, false, false)?>';
+            var collection_id = <?=$this->data['Collection']['Collection']['id']?>;
+            $(document).ready(function() {
+                collections_edit.init();
+                <?php
+                foreach ($addons as &$addon) {
+                    echo sprintf("collections_edit.addon_show('%s','%s','%s','%s','%s','%s', %s, %s);\n",
+                        $addon['AddonCollection']['addon_id'], // id
+                        addslashes($html->unsanitize($addon['Addon']['Translation']['name']['string'])), // name
+                        $this->controller->Image->getAddonIconURL($addon['AddonCollection']['addon_id']), // iconurl
+                        strftime(_('date'), strtotime($html->unsanitize($addon['AddonCollection']['added']))), // add date
+                        $html->linkUserFromModel($addon['User']), // publisher
+                        preg_replace('/\n/', '<br/>', $addon['Translation']['comments']['string']), // comment
+                        (($atleast_manager || $addon['User']['id'] == $user['id']) ? 1 : 0), // editable
+                        0 // insert at the end
+                        );
+                }
+                foreach (array('publishers', 'managers') as $role) {
+                    $rolearray = "{$role}_noscript";
+                    foreach ($$rolearray as $id => &$user) {
+                        echo sprintf("collections_edit.user_add('%s','%s','%s');\n",
+                            $role, $id, $user);
+                    }
+                }
+                ?>
+            });
+        //]]>
+        </script>
+    </div><!-- /main -->
+
+    <?=$this->renderElement('amo2009/collector_info_secondary', array('showCreateLink' => false, 'showSecondBox' => false));?>
+
+</div>

@@ -1,0 +1,122 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Wil Clouser <clouserw@gmail.com>
+ *      Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/editorsmenu');?>
+    <?=$this->renderElement('developers/editorsqueue');?>
+    
+<div class="reviews">
+<?php
+    if (!empty($reviews)) {
+        echo $html->formTag('/editors/queue/reviews');
+        
+        foreach ($reviews as $review) {
+            $review['Translation'] = (array_key_exists(LANG, $review['Translation']) ?
+                $review['Translation'][LANG] : current($review['Translation']));
+?>
+    <div class="corner-box">
+        <h3><?=$html->link($review['Addon']['Translation']['name']['string'], '/addons/display/'.$review['Addon']['Addon']['id']).
+                ': '.$review['Translation']['title']['string']?> (<?=$review['Translation']['title']['locale']?>)</h3>
+    
+        <div class="reviewed-on"><?= sprintf(_('addon_reviewed_on_x_rated_y'), $html->linkUserFromModel($review['User']), strftime(_('date'), strtotime($review['Review']['created'])), $review['Review']['rating'])?></div>
+        <?=nl2br($review['Translation']['body']['string'])?>
+
+        <? /* Developer reply? */
+        if (!empty($review['Review']['reply_to'])):
+            $replyto = $review['Review']['reply_to'];
+            $replyto['Translation'] = (array_key_exists(LANG, $replyto['Translation']) ?
+                $replyto['Translation'][LANG] : current($replyto['Translation']));
+        ?>
+        <div class="review-reply">
+            <h3><?=_('editors_reviews_in_reply_to')?> <?=$replyto['Translation']['title']['string']?></h3>
+            <div class="reviewed-on"><?= sprintf(_('addon_reviewed_on_x_rated_y'), $html->linkUserFromModel($replyto['User']), strftime(_('date'), strtotime($replyto['Review']['created'])), $replyto['Review']['rating'])?></div>
+            <?=nl2br($replyto['Translation']['body']['string'])?>
+        </div>
+        <? endif; ?>
+
+        <?php /* List out the review flags selected by users */ ?>
+        <?php if ($flags = @$reviews_flags[$review['Review']['id']]): ?>
+            <ul class="review-flags">
+
+                <?php foreach ($flags as $flag_name => $count): ?>
+                    <?php /* Skip the 'other' flag until the end */ ?>
+                    <?php if ($flag_name == 'review_flag_reason_other') continue ?>
+                    <li><?php echo $review_flag_reasons[$flag_name] ?></li>
+                <?php endforeach ?>
+
+                <?php /* If there are 'other' flags, list out the freeform notes supplied by users */ ?>
+                <?php if ($notes = @$reviews_flags_notes[$review['Review']['id']]): ?>
+                    <li>
+                        <span><?php echo $review_flag_reasons['review_flag_reason_other'] ?></span>
+                        <ul class="review-flags-notes">
+                            <?php foreach ($notes as $note): ?>
+                                <li><span class="note"><?php echo $note ?></span></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+
+            </ul>
+        <? endif; ?>
+
+        </ul>
+        <div class="reviewAction">
+            <b><?=_('editors_reviews_header_action')?></b>:&nbsp;
+            <input type="radio" name="data[Reviews][review<?=$review['Review']['id']?>]" value="skip" checked id="skip<?=$review['Review']['id']?>">
+            <label for="skip<?=$review['Review']['id']?>"><?=_('editors_reviews_action_skip')?></label>
+            <input type="radio" name="data[Reviews][review<?=$review['Review']['id']?>]" value="approve" id="approve<?=$review['Review']['id']?>">
+            <label for="approve<?=$review['Review']['id']?>"><?=___('editors_reviews_action_keep', 'Remove flags; keep review')?></label>
+            <input type="radio" name="data[Reviews][review<?=$review['Review']['id']?>]" value="delete" id="deny<?=$review['Review']['id']?>">
+            <label for="deny<?=$review['Review']['id']?>"><?=___('editors_reviews_action_delete_review', 'Delete review')?></label>
+        </div>
+    </div>
+<?
+        }
+        echo $html->submit(_('editors_reviews_submit_process_reviews'));
+        echo '</form>';
+        
+        echo $this->renderElement('pagination');
+    }
+    else {
+        echo '<div class="emptyQueue">'._('editors_reviews_queue_empty').'</div>';
+    }
+?>
+</div>
+
+</div>

@@ -1,0 +1,82 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *      Wil Clouser <wclouser@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+if ($format != 'ajax') {
+$this->viewVars['bodyclass'] = 'inverse';
+?>
+<div id="content" class="primary prose" style="min-height: 400px;">
+    <h2><?=___('compatibility_developer_info', 'Information for Add-on Developers')?></h2>
+    <?=$localization->includeLocalPage('compatibility_developer_tips', array(
+            APP_PRETTYNAME." {$version}",
+            APP_PRETTYNAME."_{$version}",
+            APP_PRETTYNAME." {$version}",
+            APP_PRETTYNAME."_{$version}",
+            $html->url('/developers')
+        ))?>
+<?php
+}
+if ($loggedin) {
+    if ($format != 'ajax') {
+        echo '<h2>'.___('compatibility_developers_results', 'Add-on Status Check Results').'</h2>';
+    }
+    
+    if (!empty($addons)) {
+        echo '<ul class="developer-addons">';
+        foreach ($addons as $addon_id => $addon) {
+            echo '<li>';
+            echo '<div class="appversion compat-'.$addon['grade'].'">'.$addon['appversion'].'</div>';
+            echo '<div class="addon-details">';
+            echo '<span class="name">'.$addon['name'].'</span>';
+            echo '<span class="details">'.sprintf(___('compatibility_developers_user_count', '%1$s %2$s users (%3$s&#37; of total)'), $html->number_format($addon['versionCount'], 0), APP_PRETTYNAME." {$version}", $addon['percentage']);
+            echo '&nbsp;&middot;&nbsp;<a href="'.$html->url('/developers/versions/edit/'.$addon['latestVersion']).'">'.___('compatibility_developers_adjust_maxversion', 'Adjust maxVersion without uploading').'</a></span>';
+            echo '</div>';
+            echo '</li>';
+        }
+        echo '</ul>';
+    }
+    else {
+        echo '<p class="login">'.___('compatibility_developers_no_addons', 'You do not have any add-ons hosted on Mozilla Add-ons.').'</p>';
+    }
+}
+else {
+    echo '<p class="login">'.sprintf(__('compatibility_developers_login_first', 'If you have add-ons hosted on Mozilla Add-ons, <a href="%1$s">please login</a> to analyze the status of your add-ons for %2$s.'), $html->url($html->login_url()), APP_PRETTYNAME." {$version}").'</p>';
+}
+?>
+<?php if ($format != 'ajax'): ?>
+</div>
+<?php endif; ?>

@@ -1,0 +1,191 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Wil Clouser <clouserw@gmail.com>
+ *      Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+<?=$this->renderElement('developers/editorsmenu');?>
+<?=$this->renderElement('developers/editorsqueue');?>
+
+<div id="filterBox">
+<?=$html->formTag("/editors/queue/{$mode}", 'post');?>
+    <div id="filterHeader">&darr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=_('editors_filter_queue')?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;</div>
+    <?php if ($filtered == true) { ?><div id="sessionNotice"><?=_('editors_notice_filter_session')?></div><?php } ?>
+    <div id="filterTable" <?=($filterChanged == false ? ' style="display: none;"' : '')?>>
+        <div class="group left">
+            <div>
+                <label for="FilterAddonOrAuthor"><?=___('editors_queue_filter_label_addon', 'Add-on or Author Email')?></label>
+                <?=$html->input('Filter/AddonOrAuthor', array('value'=>$addonOrAuthor))?>
+            </div>
+
+            <div>
+                <label for="FilterApplication"><?=___('editors_queue_filter_label_application', 'Application')?></label>
+                <?=$html->selectTag('Filter/Application', $applications, $selected['Application'], null, null, true)?>
+            </div>
+
+            <div>
+                <label for="FilterMaxVersion"><?=___('editors_queue_filter_label_maxversion', 'Max. Version')?></label>
+                <?=$html->selectTag('Filter/MaxVersion', $maxVersions, $selected['MaxVersion'], null, null, true)?>
+            </div>
+
+            <div>
+                <label for="FilterSubmissionAge"><?=___('editors_queue_filter_label_submissionage', 'Age of Submission (days)')?></label>
+                <?=$html->selectTag('Filter/SubmissionAge', $submissionAges, $selected['SubmissionAge'], null, null, true)?>
+            </div>
+        </div>
+        <div class="group">
+            <div>
+                <label for="FilterAddontype"><?=___('editors_queue_filter_label_addontypes', 'Add-on Types')?></label><br/>
+                <?=$html->selectTag('Filter/Addontype', $addontypes, $selected['Addontype'], array('multiple' => 'multiple', 'size' => 5), null, false)?>
+            </div>
+        </div>
+        <div class="group">
+            <div>
+                <label for="FilterPlatform"><?=___('editors_queue_filter_label_platforms', 'Platforms')?></label><br/>
+                <?=$html->selectTag('Filter/Platform', $platforms, $selected['Platform'], array('multiple' => 'multiple', 'size' => 5), null, false)?>
+            </div>
+        </div>
+        <div class="buttons">
+            <?=$html->submit(_('editors_queue_submit_filter'), array('name' => 'filter'));?>
+            <?=$html->submit(_('editors_queue_submit_clean'), array('name' => 'clear'))?>
+        </div>
+    </div>
+</form>
+<?php if ($filtered): ?>
+    <div>
+        <?=sprintf(n___('editors_queue_filter_result_count','editors_queue_filter_result_count', $filteredCount, 'Results of Your Filtered Search: <strong>%d</strong> Add-ons'), $filteredCount)?>
+    </div>
+<?php endif; ?>
+</div>
+<table width="100%">
+    <tr class="queueHeader">
+        <td><?php
+            $sorturl = "/editors/queue/{$mode}?sort=name";
+            $sortimg = '';
+            if ($sortBy == 'name') {
+                if ($sortDir == 'ASC') {
+                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('editors_th_sort_ascending', 'ascending sort')));
+                    $sorturl .= '&dir=desc';
+
+                } else {
+                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('editors_th_sort_descending', 'descending sort')));
+                    $sorturl .= '&dir=asc';
+                }
+            }
+            echo $html->link(___('editors_th_addon'), $sorturl);
+            echo $sortimg;
+        ?></td>
+        <td><?php
+            $sorturl = "/editors/queue/{$mode}?sort=type";
+            $sortimg = '';
+            if ($sortBy == 'type') {
+                if ($sortDir == 'ASC') {
+                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('editors_th_sort_ascending', 'ascending sort')));
+                    $sorturl .= '&dir=desc';
+
+                } else {
+                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('editors_th_sort_descending', 'descending sort')));
+                    $sorturl .= '&dir=asc';
+                }
+            }
+            echo $html->link(___('editors_th_addontype'), $sorturl);
+            echo $sortimg;
+        ?></td>
+    <?php
+        $apps = array('Firefox', 'Thunderbird', 'Mozilla', 'SeaMonkey', 'Sunbird');
+        foreach ($apps as $app) {
+            echo '<td>'.$html->image('developers/'.strtolower($app).'.png', array('title' => sprintf(_('editors_queue_app_compatibility'), $app))).'</td>';
+        }
+    ?>
+        <td><?php
+            $sorturl = "/editors/queue/{$mode}?sort=age";
+            $sortimg = '';
+            if ($sortBy == 'age') {
+                if ($sortDir == 'ASC') {
+                    // age sort is actually on a timestamp, so age direction is opposite
+                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('editors_th_sort_descending', 'descending sort')));
+                    $sorturl .= '&dir=desc';
+
+                } else {
+                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('editors_th_sort_ascending', 'ascending sort')));
+                    $sorturl .= '&dir=asc';
+                }
+            }
+            echo $html->link(___('editors_th_nomination_age'), $sorturl);
+            echo $sortimg;
+        ?></td>
+        <td><?=_('editors_th_additional_info')?></td>
+    </tr>
+<?php
+    if (!empty($addons)) {
+        $num = (($paging['page']-1) * $paging['show']) + 1;
+        foreach ($addons as $addon) {
+            echo '<tr'.($num % 2 == 1 ? ' bgcolor="#eeeeff"' : '').'>';
+                echo '<td>'.$html->link($addon['Translation']['name']['string'].' '.$addon['Version']['version'], "/editors/review/{$addon['Version']['id']}?num={$num}").'</td>';
+                echo '<td>'.$addontypes[$addon['Addon']['addontype_id']].'</td>';
+                foreach ($apps as $app) {
+                    if (!empty($addon['targetApps'][$app])) {
+                        echo '<td>'.$html->image('developers/'.strtolower($app).'.png', array('title' => $app.' '.$addon['targetApps'][$app]['min'].' - '.$addon['targetApps'][$app]['max'])).'</td>';
+                    }
+                    else {
+                        echo '<td>&nbsp;</td>';
+                    }
+                }
+                echo '<td>'.(($mode == 'nominated') ? $addon['nominationage'] : $addon['age']).'</td>';
+                echo '<td>'.(!empty($addon['notes']) ? implode('; ', $addon['notes']) : '').'</td>';
+            echo '</tr>';
+            $num++;
+        }
+        echo '</table>';
+        echo $this->renderElement('pagination');
+    }
+    else {
+        echo '<tr><td colspan=8 class="emptyQueue">'._('editors_notice_none_found').'</td></tr>';
+        echo '</table>';
+    }
+?>
+<div id="helpfulLinks">
+<?=_('editors_helpful_links').': '.$html->link(_('editors_link_policy'), '/pages/policy').' | '.$html->link(_('editors_link_guide'), 'http://wiki.mozilla.org/Update:Editors')?>
+</div>
+</div>
+<script type="text/javascript">
+// <![CDATA[
+    var addonAutocompleteUrl = '<?=$html->url("/editors/addonAndAuthorLookup/{$mode}")?>';
+    var appversionLookupUrl = '<?=$html->url('/editors/appversionLookup/')?>';
+    $(document).ready(function() { editors_queue.init(); });
+// ]]>
+</script>

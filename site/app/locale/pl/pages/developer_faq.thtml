@@ -1,0 +1,226 @@
+<h1>Tworzenie dodatków – FAQ</h1>
+
+<h2>Tworzenie dodatku</h2>
+<dl>
+<dt>Jak można stworzyć dodatek?</dt>
+<dd>
+<p>Mozilla udostępnia dokumentację dotyczącą budowy dodatków na stronach Mozilla Developer Center (MDC). Przewodnik <a href="https://developer.mozilla.org/En/Building_an_Extension">Tworzenie rozszerzenia</a> wyjaśnia, jak stworzyć środowisko pracy i dodatek.</p> 
+<p>Inne źródła informacji:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/En/Firefox_addons_dev_guide">Podręcznik twórcy dodatków do Firefoksa</a></li>
+<li><a href="http://blog.mozilla.com/addons/2009/01/28/how-to-develop-a-firefox-extension/">Artykuł Roberta Nymana "Jak stworzyć rozszerzenie do Firefoksa"</a></li>
+<li><a href="http://blog.mozilla.com/addons/2009/03/18/video-tutorial-extensions-bootcamp-zero-to-hello-world-in-45-minutes/">Wideo-przewodnik Myka Meleza "Video Tutorial - Extensions Bootcamp: Zero to „Hello World” in 45 Minutes"</a></li>
+</ul>
+</dd>
+
+<dt>Jakie narzędzia są potrzebne, aby stworzyć dodatek?</dt>
+<dd>
+<p>Aby stworzyć dodatek, trzeba mieć zainstalowany program Mozilli, do którego dodatek będzie tworzony, i edytor kodu według uznania twórcy. Dodatki mogą być tworzone dla wszystkich programów Mozilli, ale są przede wszystkim przeznaczone dla:</p>
+<ul>
+<li><a href="http://www.mozilla.com/en-US/firefox/">Firefoksa</a></li>
+<li><a href="http://www.mozillamessaging.com/en-US/thunderbird/">Thunderbirda</a></li>
+<li><a href="http://www.seamonkey-project.org/">SeaMonkey</a></li>
+<li><a href="http://www.mozilla.org/projects/calendar/sunbird/">Sunbirda</a></li>
+</ul>
+<p>Popularne edytory kodu:</p>
+<ul>
+<li><a href="http://www.activestate.com/komodo_edit/">Komodo Edit</a></li>
+<li><a href="http://macromates.com/">TextMate</a></li>
+<li><a href="http://notepad-plus.sourceforge.net/uk/site.htm">Notepad++</a></li>
+<li><a href="http://www.eclipse.org/">Eclipse IDE</a></li>
+</ul>
+<p>Więcej na temat środowiska pracy twórcy dodatków można dowiedzieć się z artykułu <a href="https://developer.mozilla.org/en/Setting_up_extension_development_environment">Określanie środowiska pracy twórcy rozszerzeń</a>, zamieszczonego w MDC.</p>
+</dd>
+
+<dt>Gdzie można znaleźć dokumentację na temat tworzenia dodatków?</dt>
+<dd>Cała dokumentacja Mozilli na temat tworzenia dodatków, włącznie z przewodnikami i interfejsem programowania aplikacji (API – Application Programming Interface), znajduje się na stronach <a href="https://developer.mozilla.org/En">Mozilla Developer Center</a>.</dd>
+
+<dt>Co to jest plik „.xpi”?</dt>
+<dd>Rozszerzenia są spakowane i dystrybuowane w plikach lub paczkach ZIP z rozszerzeniem pliku XPI (wymawianym „zippy”).</dd>
+
+<dt>Co to jest XUL?</dt>
+<dd>XUL – rozszerzalny język interfejsu użytkownika (XML User Interface Language) – jest bazującym na języku XML (eXtensible Markup Language) językiem Mozilli, umożliwiającym budowanie bogatych w funkcje programów działających na wielu platformach systemowych. Język ten umożliwia tworzenie różnych elementów interfejsu, takich jak przyciski, menu, paski narzędzi, drzewa itp. Elementy te mogą być używane do tworzenia dodatków modyfikujących interfejs programu, dla którego są tworzone.</dd>
+
+<dt>Co to jest plik „install.rdf” i do czego jest używany?</dt>
+<dd>Plik ten, zwany <a href="https://developer.mozilla.org/en/Install_Manifests">manifestem instalacji</a>, jest używany przez aplikacje XUL, których instalację nadzoruje Menedżer dodatków, do określenia informacji o sposobie instalacji dodatku. Zawiera on metadane identyfikujące dodatek, informacje o twórcach, stronie domowej dodatku, z jakimi programami i wersjami tych programów jest kompatybilny, jak powinien być aktualizowany itp. Jest on w formacie RDF/XML.</dd>
+
+<dt>Co oznacza „maxVersion”?</dt>
+<dd>Ten parametr określa maksymalną wersję programu, z którą dodatek współpracuje. Nie należy określać wersji wyższej niż najnowsza, dostępna wersja programu!</dd>
+
+<dt>Czy dodatek może zawierać komponenty binarne?</dt>
+<dd>Tak. Można zastosować <a href="https://developer.mozilla.org/en/XPCOM"> komponenty XPCOM Mozilli</a>. Komponenty XPCOM są używane i zaimplementowane w językach JavaScript, Java, Python oprócz C++.</dd>
+
+<dt>Czy do budowy dodatków można używać bibliotek JavaScript, takich jak jQuery, MooTools?</dt>
+<dd>Tak, jest to możliwe, ale niektóre funkcjonalności, oferowane przez te biblioteki, są dostępne poprzez XPCOM, XUL i JS 1.8. Niemniej autorzy powinni zachować ostrożność, jeśli biblioteki modyfikują podstawowe prototypy obiektów (String.prototype, Date.prototype itp.) lub definiują globalne funkcje (np. funkcję $). Mogą one powodować konflikty z innymi dodatkami – w szczególności, gdy dodatki używają różnych wersji bibliotek. Używając tych bibliotek, autorzy dodatków muszą zachować szczególną ostrożność. Mozilla nie dostarcza dokumentacji dotyczącej używania tych bibliotek do budowy dodatków.</dd>
+
+<dt>Jak można wykonać testy dodatku?</dt>
+<dd>Szczegółowe dane dotyczące testowania dodatków są zawarte w sekcjach <a href="https://developer.mozilla.org/en/Building_an_Extension#Test">Testowanie</a> i <a href="https://developer.mozilla.org/en/Building_an_Extension#Debugging_Extensions">Wykrywanie i usuwanie usterek</a> przewodnika <a href="https://developer.mozilla.org/en/Building_an_Extension">Tworzenie rozszerzenia</a>.</dd>
+
+<dt>Jak można wykonać test kompatybilności z najnowszą wersją programu?</dt>
+<dd>Aby zapewnić kompatybilność dodatku z najnowszą wersją programu, należy zawsze przeprowadzać testy z najnowszą wersją oprogramowania. W tym celu należy pobrać i zainstalować dostępne aktualizacje i dopiero wówczas sprawdzić, czy dodatek działa poprawnie. Najlepiej jest zastosować procedurę określoną w przewodniku <a href="https://developer.mozilla.org/en/Building_an_Extension">Tworzenie rozszerzenia</a> w sekcji <a href="https://developer.mozilla.org/en/Building_an_Extension#Test">Testowanie</a>. Często najnowsza wersja programu, z którym współpracuje dodatek, może być wydaniem „beta”. Ponieważ te wydania często poddawane są zmianom architektury, zmiany te mogą mieć wpływ na funkcjonowanie dodatku. Autor dodatku powinien bacznie śledzić proces tworzenia nowej wersji programu i dostosować do niej swój dodatek, aby użytkownicy dodatku nie byli negatywnie zaskoczeni po wydaniu nowej wersji programu.</dd>
+
+<dt>Co to jest testowanie wycieków pamięci?</dt>
+<dd>Wycieki pamięci są typowymi błędami w kodzie źródłowym użytym do budowy programu, które pochłaniają pamięć systemową bez prawidłowego jej zwalniania po zakończeniu programu. Test wycieków pozwala ustalić, która część kodu powoduje wycieki pamięci. Ta <a href="https://wiki.mozilla.org/Performance:Leak_Tools">publikacja</a> jest dobrym przewodnikiem, aby znaleźć narzędzia i sposób, który pomoże przeprowadzić testy wycieków pamięci.  Na stronach Mozilla wiki znajduje się świetny artykuł na temat, jak <a href="https://wiki.mozilla.org/QA:Home_Page:Firefox_3.0_TestPlan:Leaks:LeakTesting-How-To">testować wycieki pamięci w Firefoksie</a>.</dd>
+
+<dt>Czy dodatek może zawierać wiele wersji językowych?</dt>
+<dd>Tak. Dokładne dane, jak zlokalizować dodatek, znajdują się w przewodniku <a href="https://developer.mozilla.org/en/Building_an_Extension#Localization">Tworzenie rozszerzenia</a>, a także na stronie <a href="https://developer.mozilla.org/en/Localization">Mozilla Developer Center Localization</a>.  Także projekt <a href="http://www.babelzilla.org/">BabelZilla</a> jest świetnym źródłem wiedzy o lokalizacji i wolontariacie pomagającym tłumaczyć dodatki.</dd>
+</dl>
+
+<h2>Źródła pomocy</h2>
+<dl>
+<dt>Potrzebuję porady przy tworzeniu dodatku. Gdzie mogę znaleźć pomoc?</dt>
+<dd><p>Mozilla oferuje twórcom rozszerzeń następujące opcje pomocy:</p>
+<ul>
+<li>irc://irc.mozilla.org/
+  <ul>
+    <li>#extdev (pomoc w zakresie tworzenia dodatków)</li>
+    <li>#amo (pomoc w zakresie przechowywania dodatków na witrynie AMO)</li>
+  </ul>
+</li>
+<li><a href="https://lists.mozilla.org/listinfo/dev-extensions">Lista mailingowa</a></li>
+<li><a href="news://news.mozilla.org/mozilla.dev.extensions">Grupy dyskusyjne</a></li>
+<li><a href="http://groups.google.com/group/mozilla.dev.extensions">Grupy dyskusyjne Google</a></li>
+</ul>
+</dd>
+
+<dt>Czy Mozilla oferuje usługi tworzenia dodatków?</dt>
+<dd>Nie.</dd>
+
+<dt>Czy są twórcy, którzy mogą stworzyć dla mnie dodatek?</dt>
+<dd>Tak. Można znaleźć takich twórców za pośrednictwem listy <a href="http://www.mozilla.org/community/developer-forums.html#projectwide-forums">mozilla.jobs</a>, forum <a href="http://forums.mozillazine.org/">mozillaZine</a> lub <a href="http://consultants.mozdev.org/">MozDev</a>. Mozilla nie rekomenduje żadnych twórców.</dd>
+</dl>
+
+<h2>Wsparcie dla dodatków</h2>
+<dl>
+<dt>Czy mogę przechowywać i udostępniać swój dodatek?</dt>
+<dd>Tak. Wielu twórców wybiera ten sposób, jednakże przechowywanie dodatku na witrynie Mozilli AMO (<a href="https://addons.mozilla.org">https://addons.mozilla.org</a>) pozwala go lepiej wyeksponować, ponieważ odwiedza ją bardzo dużo osób. Witryna <a href="http://mozdev.org/">mozdev.org</a> oferuje darmowe przechowywanie projektów dodatków i programów Mozilli, dostarczając ich autorom narzędzi i pomocy w zarządzaniu kodem źródłowym, system kontroli wersji, śledzenia błędów i dokumentację.</dd>
+
+<dt>Czy Mozilla może przechowywać mój dodatek?</dt>
+<dd>Tak. Można przechowywać dodatek na witrynie Mozilli AMO (<a href="https://addons.mozilla.org">https://addons.mozilla.org</a>).</dd>
+
+<dt>Co to jest AMO?</dt>
+<dd>AMO (<a href="https://addons.mozilla.org">https://addons.mozilla.org</a>) jest inkubatorem, który pomaga autorom tworzyć, dystrybuować i wspierać fantastyczne produkty tworzone przez Mozillę. Udostępnia narzędzia i infrastrukturę niezbędną do zarządzania, przechowywania i eksponowania dodatków ogromnej rzeszy użytkowników programów Mozilli.</dd>
+
+<dt>Czy moje dane udostępnione Mozilli są bezpieczne?</dt>
+<dd>Tak. Nasza <a href="https://addons.mozilla.org/en-US/firefox/pages/privacy">Polityka prywatności</a> określa, w jaki sposób Mozilla zarządza powierzonymi jej informacjami.</dd>
+
+<dt>Co to są „Narzędzia programisty” istniejące na witrynie AMO?</dt>
+<dd>Panel „Narzędzi programisty” jest miejscem, gdzie znajdują się narzędzia do zarządzania dodatkami autora. Znajdują się tam funkcje niezbędne do wysłania dodatków na AMO, zarządzania informacjami o dodatku i statystyki recenzji.</dd>
+
+<dt>Czy Mozilla ma określone warunki, jakie powinien spełniać wysyłany dodatek?</dt>
+<dd>Tak. <a href="https://addons.mozilla.org/en-US/firefox/pages/policy">Polityka dodatków</a> Mozilli określa te warunki. Warunki te mogą być zmieniane bez powiadamiania. Ponadto zespół edytorów AMO stosuje <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">Instrukcję recenzji</a>, aby sprawdzić i zapewnić, że dodatek spełnia określone warunki funkcjonalności i bezpieczeństwa.</dd>
+
+<dt>Jak można wysłać dodatek do zrecenzowania?</dt>
+<dd>Panel narzędzi programisty umożliwia wysyłanie dodatków na AMO i kierowanie ich do recenzji. Aby wysłać dodatek, trzeba być zarejestrowanym użytkownikiem AMO. Przed skierowaniem dodatku do recenzji, należy zapoznać się z <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">Instrukcją recenzji</a>, aby upewnić się, że dodatek spełnia wytyczne stosowane przez edytorów do oceny dodatków.</dd>
+
+<dt>Jaki system operacyjny wybrać dla dodatku?</dt>
+<dd>Należy wybrać system operacyjny, na którym dodatek pracuje prawidłowo.</dd>
+
+<dt>Jaką kategorię dodatku wybrać?</dt>
+<dd>Wybór kategorii dodatku jest zależny od typu odbiorcy, do jakiego jest skierowany i funkcji dodatku. Jeśli nie masz pewności, do jakiej kategorii przypisać dodatek, wybierz „Różne”. Zespół AMO może zmienić kategorię dodatku, jeśli uzna, że lepiej pasuje inna kategoria.</dd>
+
+<dt>Co oznacza „nominowanie” dodatku?</dt>
+<dd>Nominowane dodatki, to nowe dodatki, które za pomocą Narzędzi programisty zostały nominowane przez autora do upublicznienia.</dd>
+
+<dt>Czy można określić rodzaj licencji na używanie dodatku?</dt>
+<dd>Tak. Podczas wysyłania dodatku można określić umowę licencyjną. Można także po dodaniu dodatku, z poziomu panelu narzędzi programisty, dodać lub zaktualizować umowę licencyjną.</dd>
+
+<dt>Czy można dołączyć do dodatku własną politykę prywatności?</dt>
+<dd>Tak. Podczas wysyłania dodatku można określić politykę prywatności. Można także po dodaniu dodatku, z poziomu panelu narzędzi programisty, dodać lub zaktualizować politykę prywatności.</dd>
+</dl>
+
+<h2>Proces recenzji dodatków</h2>
+<dl>
+<dt>Dlaczego dodatek musi przejść proces recenzji?</dt>
+<dd>Wszystkie wysłane dodatki, zarówno nowe, jak i zaktualizowane, są recenzowane, aby zapewnić użytkownikom programów Mozilli stabilne i bezpieczne używanie jej produktów. Wszystkie wysłane dodatki są recenzowane z zastosowaniem wytycznych zawartych w <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">Instrukcji recenzji</a>.</dd>
+
+<dt>Kto recenzuje dodatki?</dt>
+<dd>Dodatki są recenzowane przez edytorów AMO – grupę utalentowanych twórców, którzy na ochotnika pomagają Mozilli, recenzując dodatki, aby zapewnić użytkownikom programów Mozilli stabilne i bezpieczne używanie jej produktów. Kontaktując się z edytorem, zachowaj grzeczność, cierpliwość i szacunek, ponieważ pracują oni ciężko, aby zapewnić prawidłową konfigurację dodatków i sprawdzić, czy spełniają one kryteria zawarte w <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">Instrukcji recenzji</a>.</dd>
+
+<dt>Co to jest „piaskownica”?</dt>
+<dd>Pełne wyjaśnienie, czym jest <a href="https://addons.mozilla.org/en-US/firefox/pages/sandbox">piaskownica AMO</a>, znajduje się <a href="https://addons.mozilla.org/en-US/firefox/pages/sandbox">tutaj</a>.</dd>
+
+<dt>Dlaczego dodatek jest oznaczony jako „eksperymentalny”?</dt>
+<dd>Nowe i nominowane dodatki są oznaczone jako „eksperymentalne” do czasu zakończenia procesu recenzowania przez edytorów. Takie oznaczenie zapewnia, że użytkownicy przed zainstalowaniem dodatku są świadomi statusu tego dodatku, który oznacza, że dodatek nie przeszedł jeszcze pełnego procesu recenzji.</dd>
+
+<dt>Jakie kryteria są stosowane podczas recenzji dodatku?</dt>
+<dd>Zanim dodatek zostanie upubliczniony na AMO, musi przejść proces testowania dodatku przez zespół edytorów, który przebiega zgodnie z kryteriami określonymi w <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">Instrukcji recenzji</a>. Bardzo ważne jest, aby autorzy dodatku zapoznali się z tymi kryteriami przed skierowaniem dodatku do recenzji i upewnili się, że ich dodatek je spełnia – w znacznym stopniu przyspieszy to proces recenzji.</dd>
+
+<dt>Jak długo trwa proces recenzji dodatku?</dt>
+<dd><p>Nie można określić przybliżonego czasu oczekiwania na recenzję. Wiele czynników ma wpływ na ten czas:</p>
+<ul>
+<li>liczba dodatków skierowanych do recenzji</li>
+<li>stopień skomplikowania kodu dodatku</li>
+<li>liczba ujawnionych problemów</li>
+</ul>
+<p>Właśnie dlatego tak ważne jest, aby autor zapoznał się z <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">Instrukcją recenzji</a>, by upewnić się, że dodatek jest skonfigurowany zgodnie z oczekiwaniami. Zaleca się także zapoznać z wpisem na blogu <a href="http://blog.mozilla.com/addons/2009/01/14/successfully-getting-your-addon-reviewed/">Successfully Getting your Addon Reviewed</a>, który dostarcza świetnych informacji na temat, jak bezproblemowo przejść przez proces recenzji.</p></dd>
+</dl>
+
+<h2>Zarządzanie dodatkiem</h2>
+<dl>
+<dt>Czy można sprawdzić, ile razy dodatek był pobierany?</dt>
+<dd>Panel statystyk znajdujący się w Panelu narzędzi programisty dostarcza informacje, które mogą pomóc określić, ile razy dany dodatek został pobrany od czasu umieszczenia go na witrynie AMO.</dd>
+
+<dt>Czy można sprawdzić, ilu aktywnych użytkowników korzysta z dodatku?</dt>
+<dd>Panel statystyk znajdujący się w Panelu narzędzi programisty dostarcza informacje, które mogą pomóc określić, ilu użytkowników aktywnie używa danego dodatku od czasu umieszczenia go na witrynie AMO.</dd>
+
+<dt>W jaki sposób można wysłać aktualizację dodatku?</dt>
+<dd>Aktualizację dodatku można wysłać z poziomu panelu narzędzi programisty, wybierając opcję „Wyślij nową wersję” i wysłać na AMO nowy plik .xpi dodatku.</dd>
+
+<dt>Czy aktualizacja musi być recenzowana przez edytorów?</dt>
+<dd>To zależy… Jeśli np. zostaje zmieniony tylko opis dodatku lub zaktualizowany parametr „maxVersion”, aby zapewnić kompatybilność z aktualizacją programu Mozilli, dodatek nie musi być ponownie recenzowany. Jeśli jednak został wysłany nowy zaktualizowany plik, aktualizacja dodatku musi być sprawdzona przez edytora.</dd>
+</dl>
+
+<h2>Status „Polecane”</h2>
+<dl>
+<dt>Co to są polecane listy?</dt>
+<dd>Polecane listy są ważnym elementem eksponowania odwiedzającym witrynę AMO użytecznych i fascynujących dodatków za pomocą małych, aktywnych list. Pozwala to nam polecać dodatki, które tworzą wyjątkowe lub interesujące ulepszenia programów Mozilli i zwiększają zainteresowanie tysiącami dodatków przechowywanych na AMO. Listy są podzielone na dwie kategorie: Polecane i Polecane kategorie. Formatka jest wyświetlana na stronie głównej AMO i zazwyczaj zawiera 40 polecanych dodatków. Dalej znajduję się listy dodatków polecanych w poszczególnych kategoriach. Jedyną różnicą pomiędzy tymi dwoma listami jest to, że dodatki polecane w kategoriach nie są polecane na stronie głównej. Poza tym na obu listach są dostępne informacje o autorach i ich osiągnięciach.</dd>
+
+<dt>Co to są polecane dodatki?</dt>
+<dd>Główna strona AMO, tak samo, jak główna strona każdej kategorii, zawiera trzy okienka, które są używane do wyświetlania zestawu polecanych dodatków. Nazwy tych dodatków są pobierane odpowiednio z listy polecanych dodatków i list polecanych dodatków w każdej kategorii. Dodatki te podlegają okresowej rotacji, tak jak opisano to w artykule <a href="https://wiki.mozilla.org/AMO:Editors/Featured_and_Recommended#Featured_Add-Ons">Polecane dodatki – FAQ</a>. Działanie to ma na celu wyeksponowanie polecanych dodatków użytkownikom. Aby zapobiec utracie atrakcyjności, polecane dodatki są regularnie zmieniane.</dd>
+
+<dt>W jaki sposób dodatek może być wyświetlany jako polecany?</dt>
+<dd>Następujący <a href="http://blog.mozilla.com/addons/2009/03/10/the-hows-whys-of-the-amo-recommended-rotation/">wpis na blogu</a> opisuje proces, według którego listy polecanych dodatków są zarządzane.</dd>
+
+<dt>Czy można zapłacić za to, aby dodatek był wyświetlany na liście polecanych dodatków?</dt>
+<dd>Nie.</dd>
+
+<dt>Dlaczego dodatek nie jest już wyświetlany jako polecany?</dt>
+<dd>Następujący <a href="http://blog.mozilla.com/addons/2009/03/10/the-hows-whys-of-the-amo-recommended-rotation/">wpis na blogu</a> opisuje proces, według którego listy polecanych dodatków są zarządzane.</dd>
+</dl>
+
+<h2>Recenzje użytkowników</h2>
+<dl>
+<dt>Jak można odpowiedzieć użytkownikowi, który wystawił dodatkowi negatywną recenzję?</dt>
+<dd><p>Autorzy dodatków mogą odpowiadać na każdą recenzję wystawioną ich dodatkom tak długo, jak są zalogowani na AMO. Ponadto każdy użytkownik może oznaczyć recenzję jako:</p>
+<ul>
+<li>spam lub niecenzuralna treść</li>
+<li>niewłaściwy język/dialogg</li>
+<li>niewłaściwie umieszczona prośba o pomoc lub raport o błędzie</li>
+<li>inny (wyświetla okienko z prośbą o podanie informacji)</li>
+</ul>
+
+<p>Obecnie AMO nie ma mechanizmu do bezpośredniej komunikacji z recenzentem, ale funkcja ta jest badana i rozważana do wprowadzenia jej w przyszłości.</p>
+</dd>
+
+<dt>Czy można prosić, aby negatywna recenzja została usunięta?</dt>
+<dd>Nie. Nie usuwamy z dodatków negatywnych recenzji, nawet jeśli są one nieprawdziwe.</dd>
+
+<dt>Czy można prosić, aby nieścisła recenzja została usunięta?</dt>
+<dd>Jeśli autor skontaktuje się z nami i poprosi o usunięcie nieprawdziwej lub nieścisłej recenzji, sprawdzimy wpis i rozważymy jego usunięcie.</dd>
+</dl>
+
+<h2>Publikacje dotyczące licencji otwartego dostępu do kodu źródłowego</h2>
+<p>Potrzebujesz więcej informacji o licencjach otwartego dostępu do kodu źródłowego programu? Nie wiesz, którą licencję wybrać? Jakich praw udziela dana licencja? Choć nic nie zastąpi zapoznania się z pełnymi postanowieniami licencji, poniżej znajduje się kilka adresów witryn, na których znajdują się informacje o kluczowych licencjach otwartego dostępu do kodu źródłowego, które mogą pomóc poznać różnice pomiędzy nimi. Te witryny stanowią jedynie pomoc i służą jako punkt odniesienia. Zasoby te nie są źródłem porad prawnych ani też nie powinny być używane jako równoważnik takich porad. Mozilla nie gwarantuje ani nie odpowiada za treść znajdującą się na tych witrynach, ani za zaufanie do znajdujących się tam treści, jakim obdarza je czytelnik.</p>
+<dl>
+<dt><a href="http://www.mozilla.org/MPL/">http://www.mozilla.org/MPL/</a></dt>
+<dd>Osobom, które chcą używać i dystrybuować kod na licencji Mozilla Public License (&#8222;MPL&#8221;), witryna ta, oprócz pełnego tekstu licencji, dostarcza wersję MPL z komentarzami i odpowiedzi na często zadawane pytania <abbr title="Frequently Asked Questions">FAQ</abbr>.</dd>
+<dt><a href="http://developer.kde.org/documentation/licensing/licenses_summary.html">http://developer.kde.org/documentation/licensing/licenses_summary.html</a></dt>
+<dd>Na tej witrynie znajduje się tabela podsumowująca i porównująca, jak niektóre kluczowe licencje otwartego dostępu do kodu źródłowego odnoszą się do dystrybucji, odwołań do oprogramowania o kodzie zamkniętym i redystrybucji zmienionego kodu.</dd>
+<dt><a href="http://www.fsf.org/licensing/licenses/">http://www.fsf.org/licensing/licenses/</a></dt>
+<dd>Fundacja Wolnego Oprogramowania (Free Software Foundation) udostępnia krótkie podsumowania kluczowych licencji otwartego dostępu do kodu źródłowego łącznie z tym, czy licencja zalicza się do licencji wolnego oprogramowania, czy jest to licencja niewprowadzająca ograniczeń praw autorskich. Zawiera także dyskusję o tym, co stanowi licencję otwartego dostępu do kodu źródłowego, a co licencję bez ograniczeń praw autorskich – Copyleft (np. czy licencja Copyleft jest ogólną metodą wytworzenia programu lub innego utworu jako wolnego i czy wymaga, aby wszystkie zmodyfikowane i rozbudowane wersje były także wolne od ograniczeń).</dd>
+<dt><a href="http://www.opensource.org/licenses/category">http://www.opensource.org/licenses/category</a></dt>
+<dd>Inicjatywa Otwartego Kodu Źródłowego (Open Source Initiative) udostępnia pełne teksty niektórych kluczowych licencji otwartego dostępu do kodu źródłowego programu.</dd>
+<dt><a href="http://en.wikipedia.org/wiki/Open_source_license">http://en.wikipedia.org/wiki/Open_source_license</a></dt>
+<dd>Dyskusja na Wikipedii o licencjach Open Source Definition (OSD).</dd>
+</dl>

@@ -1,0 +1,327 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/editorsmenu');?>
+    <?php if ($queueRank): ?>
+    <div class="reviewnav">
+        <?php
+            if ($filtered) {
+                echo sprintf(___('editors_review_rank_in_queue_filtered', '<strong># %1$s</strong> of %2$s in queue (filtered)'), $queueRank, $filteredCount);
+            } else {
+                echo sprintf(___('editors_review_rank_in_queue'), $queueRank, $filteredCount);
+            }
+        ?><br/>
+        <?php if ($queueRank > 1) echo $html->link(___('editors_review_previous_link'), "/editors/queue/{$reviewType}?num=".($queueRank-1)); ?>
+        <?php if ($queueRank < $count[$reviewType]) echo $html->link(___('editors_review_next_link'), "/editors/queue/{$reviewType}?num=".($queueRank+1)); ?>
+    </div>
+    <?php endif; ?>
+    
+<a name="top"></a>
+<h3 class="reviewheader"><?=sprintf(_('editors_review_header_review'), $addon['Translation']['name']['string'].' '.$version['Version']['version'])?></h3>
+<?php
+    if (!empty($errors['main'])) {
+        echo '<div class="error">'.$errors['main'].'</div>';
+    }
+?>
+<div id="headerbox">
+    <div id="header1" class="headerboxes">
+        <div>
+            <span class="sectionTitle"><?=_('editors_review_header_authors')?></span>
+            <ul id="authors">
+            <?php
+                if (!empty($addon['User'])) {
+                    foreach ($addon['User'] as $user) {
+                        echo '<li>'.$html->linkUserFromModel($user).'</li>';
+                    }
+                }
+            ?>
+            </ul>
+        </div>
+    </div>
+    <div id="header2" class="headerboxes">
+        <div>
+            <span class="sectionTitle"><?=_('editors_review_header_categories')?></span>
+            <ul id="categorylist">
+            <?php
+                if (!empty($addon['Tags'])) {
+                    foreach ($addon['Tags'] as $tag) {
+                        echo '<li '.$tag['Translation']['name']['locale_html'].'>'.$tag['Translation']['name']['string'].'</li>';
+                    }
+                }
+            ?>
+            </ul>
+        </div>
+    </div>
+    <div id="header3" class="headerboxes">
+        <span class="sectionTitle"><?=_('editors_review_header_compatibility')?></span>
+        <ul id="compatibility">
+        <?php
+            if (!empty($addon['targetApps'])) {
+                $apps = array('Firefox', 'Thunderbird', 'Mozilla', 'Sunbird');
+                foreach ($addon['targetApps'] as $app => $val) {
+                    echo '<li>';
+                    if (in_array($app, $apps)) {
+                        echo $html->image('developers/'.strtolower($app).'.png');
+                    }
+                    else {
+                        echo $html->image('developers/spacer.png');
+                    }
+                    echo "{$app} {$val['min']} - {$val['max']}</li>";
+                }
+            }
+        ?>
+        </ul>
+    </div>
+</div>
+<br class="clear">
+<?=$html->formTag('/editors/review/'.$version['Version']['id'], 'post')?>
+<div id="filesbox">
+    <span id="filesTitle"><?=_('editors_review_header_files')?></span>
+    <ul id="files">
+    <?php
+        if (!empty($version['File'])) {
+            foreach ($version['File'] as $file) {
+                if ($version['pendingCount'] == 1) {
+                    $checked = 'checked';
+                }
+                else {
+                    $checked = 'false';
+                }
+
+                echo '<li>';
+                echo $html->checkbox('Approval/File][', null, array('value' => $file['id'], 'class' => 'fileCheckbox', 'checked' => $checked, 'disabled' => $file['disabled'], 'onClick' => 'selectedFile();'));
+                echo '&nbsp;<b>'.$html->link($platforms[$file['platform_id']], '/downloads/file/'.$file['id'].'/'.$file['filename'], array('onClick' => $this->controller->Amo->installTrigger($addon['Addon']['addontype_id'], FULL_BASE_URL.$html->url('/downloads/file/'.$file['id'].'/'.$file['filename']), $addon['Translation']['name']['string'].' '.$version['Version']['version'], '', $file['hash']).' return false;')).'</b>';
+                echo ' - '.$approval[$file['status']].' ('.$file['created'].')';
+                echo ' - '.$html->link(_('editors_review_file_viewcontents_link'), '/files/browse/'.$file['id'].'/1');
+                if ($has_public && $addontype != ADDON_SEARCH) {
+		        //if (count($addon['Version']) > 1) {
+                	echo ' - '.$html->link(_('editors_review_file_diff_link'), '/files/diff/'.$file['id'].'/');
+		        }
+                echo '</li>';
+            }
+        }
+    ?>
+    </ul>
+    <span id="multipleNotice" style="display: none;"><?=___('editors_review_mulitple_notice')?></span>
+</div>
+<br class="clear">
+<div id="links">
+    <span id="overview_link"><?=$html->link(___('editors_review_a_item_overview'), '/addon/'.$addon['Addon']['id'])?></span>
+    <span id="history_link"><a href="#history"><?=___('editors_review_a_item_history')?></a></span>
+    <span id="previews_link"><a href="#previews"><?=___('editors_review_a_previews')?></a></span>
+    <?=(!empty($addon['Addon']['homepage'])) ? '<span id="homepage_link">'.$html->link(___('editors_review_a_item_homepage'), $addon['Addon']['homepage']).'</span>' : ''?>
+    <?=($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $this->controller->Session->read('User'))) ? '<span id="edit_link">'.$html->link(___('editors_review_a_edit_item'), '/developers/edit/'.$addon['Addon']['id']).'</span>' : ''?>
+</div>
+<div id="form">
+    <?php
+        echo $html->hidden('Approval/ActionField', array('id' => 'actionField'));
+        echo $html->hidden('Approval/Type', array('value' => $reviewType));
+    ?>
+    <div id="actionbox">
+        <span id="public" class="action_color" onClick="selectAction('public');"><?=$html->image('developers/public-bw.png', array('id' => 'publicIcon')).' '._('editors_review_action_public')?></span>
+        <span id="sandbox" class="action_color" onClick="selectAction('sandbox');"><?=$html->image('developers/sandbox-bw.png', array('id' => 'sandboxIcon')).' '._('editors_review_action_sandbox')?></span>
+        <span id="info" class="action_color" onClick="selectAction('info');"><?=$html->image('developers/info-bw.png', array('id' => 'infoIcon')).' '.___('editors_review_action_info')?></span>
+        <span id="superreview" class="action_color" onClick="selectAction('superreview');"><?=$html->image('developers/superreview-bw.png', array('id' => 'superreviewIcon')).' '._('editors_review_action_request_superreview')?></span>
+    </div>
+    <div id="actiondetails">
+    <?php
+        if ($reviewType == 'pending') {
+            echo '<div id="details-public" style="display: none;">';
+            echo _('editors_review_details_pending_public');
+            echo '</div>';
+            echo '<div id="details-sandbox" style="display: none;">';
+            echo _('editors_review_details_pending_sandbox');
+            echo '</div>';
+        }
+        elseif ($reviewType == 'nominated') {
+            echo '<div id="details-public" style="display: none;">';
+            echo _('editors_review_details_nominated_public');
+            echo '</div>';
+            echo '<div id="details-sandbox" style="display: none;">';
+            echo _('editors_review_details_nominated_sandbox');
+            echo '</div>';
+        }
+    ?>
+        <div id="details-info" style="display: none;">
+        <?=___('editors_review_details_info_request')?>
+        </div>
+        <div id="details-superreview" style="display: none;">
+        <?=_('editors_review_details_superreview');?>
+        </div>
+    </div>
+    <div id="subform" style="display: none;">
+        <div id="commentsbox">
+            <?=_('editors_review_label_comments')?>
+            <?=$html->textarea('Approval/comments', array('cols' => '70', 'rows' => '5', 'id' => 'comments', 'class' => 'input'))?>
+        </div>
+        <?php
+            if (!empty($cannedresponses)) {
+                echo '<div id="canned">';
+                echo _('editors_review_label_cannedresponse').' ';
+                echo $html->selectTag('Approval/CannedResponse', $cannedresponses, null, array("onChange" => "document.getElementById('comments').value = this.value;", 'class' => 'input'));
+                echo '</div>';
+            }
+            if ($reviewType == 'pending') {
+        ?>
+        <div id="testing">
+            <div id="os">
+                <?=_('editors_review_label_operating_systems')?>
+                <?=$html->input('Approval/os', array('class' => 'input', 'size' => '30'))?>
+            </div>
+            <div id="apps">
+                <?=_('editors_review_label_applications')?>     
+                <?=$html->input('Approval/applications', array('class' => 'input', 'size' => '30'))?>
+            </div>
+        </div>
+        <?
+            }
+        ?>
+        <div id="subscribe">
+            <?php
+            $_subscribetext = ___('editors_review_update_notify_once');
+            echo $html->checkbox('Approval/subscribe', $_subscribetext);
+            ?>
+            <label for="ApprovalSubscribe"><?=$_subscribetext?></label>
+        </div>
+        <div id="finish">
+            <?=$html->submit(_('editors_review_submit_process_action'), array('id' => 'process', 'onClick' => 'return validateReview(\''.$reviewType.'\');'))?>
+        </div>
+    </div>
+</div>
+</form>
+<div id="notes">
+<?php
+if (!empty($addon['Addon']['nominationmessage'])) {
+    echo '<div class="highlighted">';
+    echo '<h3>'._('editors_review_header_nominationmessage').'</h3>';
+    echo '<div id="nominationMessage">';
+        echo nl2br($addon['Addon']['nominationmessage']);
+    echo '</div>';
+    echo '</div>';
+}
+if (!empty($version['Version']['approvalnotes'])) {
+    echo '<h3>'._('editors_review_header_reviewernotes').'</h3>';
+    echo '<div id="reviewNotes">';
+        echo nl2br($version['Version']['approvalnotes']);
+    echo '</div>';
+}
+if (!empty($addon['Translation']['summary']['string'])) {
+    echo '<h3>'._('editors_review_header_summary').'</h3>';
+    echo '<div id="summary" '.$addon['Translation']['summary']['locale_html'].'>';
+        echo nl2br($addon['Translation']['summary']['string']);
+    echo '</div>';
+}
+if (!empty($addon['Translation']['description']['string'])) {
+    echo '<h3>'._('editors_review_header_description').'</h3>';
+    echo '<div id="description" '.$addon['Translation']['description']['locale_html'].'>';
+        echo nl2br($addon['Translation']['description']['string']);
+    echo '</div>';
+}
+if (!empty($version['Translation']['releasenotes']['string'])) {
+    echo '<h3>'._('editors_review_header_versionnotes').'</h3>';
+    echo '<div id="versionNotes" '.$version['Translation']['releasenotes']['locale_html'].'>';
+        echo nl2br($version['Translation']['releasenotes']['string']);
+    echo '</div>';
+}
+if (!empty($addon['Translation']['eula']['string'])) {
+    echo '<h3>'._('editors_review_header_eula').'</h3>';
+    echo '<div id="EULA" '.$addon['Translation']['eula']['locale_html'].'>';
+        echo nl2br($addon['Translation']['eula']['string']);
+    echo '</div>';
+}
+if (!empty($addon['Translation']['privacypolicy']['string'])) {
+    echo '<h3>'._('editors_review_header_privacy').'</h3>';
+    echo '<div id="privacyPolicy" '.$addon['Translation']['privacypolicy']['locale_html'].'>';
+        echo nl2br($addon['Translation']['privacypolicy']['string']);
+    echo '</div>';
+}
+if (!empty($addon['Translation']['developercomments']['string'])) {
+    echo '<h3>'._('editors_review_header_devcomments').'</h3>';
+    echo '<div id="developerComments" '.$addon['Translation']['developercomments']['locale_html'].'>';
+        echo nl2br($addon['Translation']['developercomments']['string']);
+    echo '</div>';
+}
+?>
+</div>
+<div id="history">
+    <div class="sectionHeader">
+        <div class="name"><a name="history"></a><?=_('editors_review_header_itemhistory')?></div>
+        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+    </div>
+    <br class="clear">
+    <table id="historyTable">
+        <tr id="headerRow">
+            <td><?=_('editors_review_th_version_file')?></td>
+            <td><?=_('editors_review_th_date')?></td>
+            <td><?=_('editors_review_th_reviewer')?></td>
+            <td><?=_('editors_review_th_action')?></td>
+            <td><?=_('editors_review_th_comments')?></td>
+        </tr>
+    <?php
+        if (!empty($history)) {
+            foreach ($history as &$hist) {
+                echo $this->renderElement('developers/editors_review_history_item', array('hist'=>$hist));
+            }
+        }
+        else {
+            echo '<tr><td id="notFound" colspan="5">'._('editors_review_history_nonefound').'</td></tr>';
+        }
+    ?>
+    </table>
+</div>
+<br class="clear">
+<div id="previews">
+    <div class="sectionHeader">
+        <div class="name"><a name="previews"></a><?=_('editors_review_header_previews')?></div>
+        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+    </div>
+    <br class="clear">
+    <?php
+        if (!empty($addon['Preview'])) {
+            foreach ($addon['Preview'] as $preview) {
+                $previewUrl = $this->controller->Image->getPreviewURL($preview['id']);
+                echo '<img src="'.$previewUrl.'" border=0>&nbsp;&nbsp;';
+            }
+        } else {
+            echo _('editors_review_previews_notfound');
+        }
+    ?>
+</div>
+
+</div>

@@ -1,0 +1,178 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com> 
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse category_landing';
+$this->layout = 'amo2009';
+
+$curr_tag_name = $this_tag['Translation']['name']['string'];
+$curr_tag_desc = $this_tag['Translation']['description']['string'];
+
+$nameLimit = 40;
+$summaryLimit = 70; 
+?>
+<div class="stand-alone-options">
+    <?=$this->renderElement('amo2009/categories')?>
+    <?=$this->renderElement('amo2009/search')?>
+</div>
+
+<div class="primary" role="main">
+
+    <h2><?php echo $curr_tag_name ?></h2>
+
+    <div id="featured_addons" class="clearfix">
+        <ul>
+            <?php foreach ($featured_addons as $addon): ?>
+               
+                <li class="addon_block_wrapper">
+                    <div class="addon_block item">
+                        <h4 class="name"><a href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><?php echo $html->truncateChars(28, $addon['Translation']['name']['string'], true) ?></a></h4>
+                        <p class="authors"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addon['User'], 2,"/addon/{$addon['Addon']['id']}#authors" );?></p>
+                        <p class="summary"><?php echo $html->truncateChars($summaryLimit, $addon['Translation']['summary']['string'], true) ?></p>
+                        <div class="preview"><a href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><img src="<?php echo $this->controller->Image->getHighlightedPreviewURL($addon['Addon']['id']);?>" alt="" /></a></div>
+                        <p class="rating"><?=$this->renderElement('amo2009/stars',array('rating' => $addon['Addon']['averagerating']))?></p>
+                        <?php
+                            $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']);
+                            $addonID = $addon['Addon']['id'];
+                            $addonName = $addon['Translation']['name']['string'];
+                            $hasVersion = (isset($addon['Version']) && !empty($addon['Version']));
+                            $addonVersion = ($hasVersion ? $addon['Version'][0]['version'] : '');
+                            $hasFiles = ($hasVersion && !empty($addon['File']));
+                            if ($hasFiles) {
+                                $addonFiles = $addon['File'];
+                                $addonEULA = $addon['Translation']['eula']['string'];
+                                
+                                
+                                $addonCreators = $addon['User'];
+                                $addonSummary = $addon['Translation']['summary']['string'];
+
+                                // prepare preview image
+                                if (isset($addonPreviewPath) && !empty($addonPreviewPath)) {
+                                    $_alt = sprintf(_('img_preview_of'),$addonName);
+                                    $previmg = '<img src="'.$addonPreviewPath.'" '
+                                        .'alt="'.$_alt.'" title="'.$_alt.'"/>';
+                                    $previmg = '<p class="preview-img">'
+                                        .$html->link($previmg, "/addon/{$addonID}").'</p>';
+                                } else
+                                    $previmg = '';
+                                // prepare icon
+                                if (isset($addonIconPath) && !empty($addonIconPath))
+                                    $icon = '<img src="'.$addonIconPath.'" class="icon" alt=""/>';
+                                else
+                                    $icon = '';
+
+                                // prepare categories
+                                if (!empty($addon['Tag'])) {
+                                    $categories = $this->renderElement('addon_categories', array('tags' => $addon['Tag']));
+                                } else
+                                    $categories = '';
+
+                                // prepare summary
+                                if (!isset($addonSummary) || empty($addonSummary))
+                                    $addonSummary = '&nbsp;';
+
+                                $_install_render_options = array(
+                                    'addonIconPath' => $addonIconPath, 
+                                    'addonName'     => $addonName,
+                                    'addonId'       => $addonID,
+                                    'addonFiles'    => $addonFiles,
+                                    'addonEULA'     => $addonEULA,
+                                    'addonStatus'   => $addon['Addon']['status'],
+                                    'is_latest'     => ($addon['Addon']['status'] == STATUS_PUBLIC),
+                                    'addonType'     => $addon['Addon']['addontype_id'],
+                                    'compatible_apps' => $addon['compatible_apps'],
+                                    'allPlatforms'  => $platforms,
+                                    'buttonType'    => 'small',
+                                    'showInstructions' => false
+                                	);
+                                echo $this->renderElement('amo2009/install', $_install_render_options);
+                                
+                            } 
+                        ?>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        </ul>        
+    </div>
+
+    <div id="new_addons" class="addons_column clearfix">
+        <h3><span><?= ___('addons_recently_added') ?></span></h3>
+        <ul>
+            <?php foreach ($new_addons as $idx=>$addon): ?>
+                <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
+                    <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
+                    <span class="name"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
+                    <span class="meta created">
+                        added <?php echo strftime('%m/%d/%Y', strtotime($addon['created'])) ?>
+                    </span>
+                </a></li>
+            <?php endforeach ?>
+        </ul>
+        <p class="view-all"><?=$html->link(___('view_recently_added').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=newest")?></p>     
+    </div>
+
+    <div id="popular_addons" class="addons_column clearfix">
+        <h3><span><?=___('addons_top_downloads') ?></span></h3>
+        <ul>
+            <?php foreach ($popular_addons as $idx=>$addon): ?>
+                <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
+                    <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
+                    <span class="name"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
+                    <span class="meta downloads"><?php echo $html->number_format($addon['weeklydownloads']) ?> <?= _('addon_downloads_weekly') ?></span>
+                </a></li>
+            <?php endforeach ?>
+        </ul>
+        <p class="view-all"><?=$html->link(___('view_top_downloads').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=popular")?></p>       
+    </div>
+
+    <div id="updated_addons" class="addons_column last clearfix">
+        <h3><span><?=___('addons_top_rated') ?></span></h3>
+        <ul>
+            <?php foreach ($updated_addons as $idx=>$addon): ?>
+                <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
+                    <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
+                    <span class="name"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
+                    <span class="meta rating"><?=$this->renderElement('amo2009/stars',array('rating' => $addon['averagerating']))?></span>
+                </a></li>
+            <?php endforeach ?>
+        </ul>
+        <p class="view-all"><?=$html->link(___('view_top_rated').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=rated")?></p>
+    </div>
+
+</div>

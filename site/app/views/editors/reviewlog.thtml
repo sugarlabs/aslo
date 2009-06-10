@@ -1,0 +1,114 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/editorsmenu');?>
+    
+    <div id="content-main">
+        <h3><?=_('editorcp_reviewlog_page_heading')?></h3>
+        <form action="<?=$html->url()?>" method="get">
+        <?php
+        echo sprintf(_('editorcp_reviewlog_entries_between'),
+            '<input type="text" id="start" name="start" value="'.$startdate.'" size="11" onFocus="clearInput(this)"/>',
+            '<input type="text" id="end" name="end" value="'.$enddate.'" size="11" onFocus="clearInput(this)"/>');
+        echo '&nbsp;&nbsp;';
+        echo $html->submit(_('editorcp_reviewlog_button_filter'));
+        ?>
+        </form>
+    
+        <table id="historyTable">
+            <tr id="headerRow">
+                <td><?=_('editorcp_reviewlog_column_date')?></td>
+                <td><?=_('editorcp_reviewlog_column_addon')?></td>
+                <td><?=_('editorcp_reviewlog_column_editor')?></td>
+                <td><?=_('editorcp_reviewlog_column_action')?></td>
+                <td>&nbsp;</td>
+            </tr>
+        <?php
+        if (!empty($approvals)) {
+            foreach ($approvals as $k => $approval) {
+                echo '<tr id="reviewEntry_'.$k.'">';
+                    echo "<td>{$approval['Approval']['created']}</td>";
+                    echo '<td>'.$html->link($approval['Addon']['Translation']['name']['string'], '/editors/review/'.$approval['File']['version_id']).'</td>';
+                    echo "<td>{$approval['User']['firstname']} {$approval['User']['lastname']}</td>";
+                    echo '<td>';
+                    if ($approval['Approval']['reviewtype'] == 'nominated') {
+                        if ($approval['Approval']['action'] == STATUS_PUBLIC) {
+                            echo _('editors_review_history_nominated_approved');
+                        }
+                        elseif ($approval['Approval']['action'] == STATUS_SANDBOX) {
+                            echo _('editors_review_history_nominated_denied');
+                        }
+                        elseif ($approval['Approval']['action'] == STATUS_NOMINATED) {
+                            echo _('editors_review_history_nominated_adminreview');
+                        }
+                    }
+                    elseif ($approval['Approval']['reviewtype'] == 'pending') {
+                        if ($approval['Approval']['action'] == STATUS_PUBLIC) {
+                            echo _('editors_review_history_pending_approved');
+                        }
+                        elseif ($approval['Approval']['action'] == STATUS_SANDBOX) {
+                            echo _('editors_review_history_pending_denied');
+                        }
+                        elseif ($approval['Approval']['action'] == STATUS_PENDING) {
+                            echo _('editors_review_history_pending_adminreview');
+                        }
+                    }
+                    echo '</td>';
+                    echo '<td>';
+                        echo $html->link(_('editorcp_reviewlog_comments_show'), 'javascript:void(0);', array('onClick' => 'showComments('.$k.');', 'id' => 'reviewShow_'.$k));
+                        echo $html->link(_('editorcp_reviewlog_comments_hide'), 'javascript:void(0);', array('onClick' => 'hideComments('.$k.');', 'style' => 'display: none;', 'id' => 'reviewHide_'.$k));
+                    echo '</td>';
+                echo '</tr>';
+                echo '<tr id="reviewComment_'.$k.'" style="display: none;">';
+                    echo '<td class="reviewComment" colspan=5>'.nl2br($approval['Approval']['comments']).'</td>';
+                echo '</tr>';
+            }
+        }
+        else {
+            echo '<tr>';
+                echo '<td colspan=4 align="center">'._('editorcp_reviewlog_none_found').'</td>';
+            echo '</tr>';
+        }
+        //pr($approvals);
+        
+        ?>
+        </table>
+        
+        <? if (!empty($approvals)) echo $this->renderElement('pagination');?>
+    </div>
+</div>

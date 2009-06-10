@@ -1,0 +1,180 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Wil Clouser <clouserw@mozilla.com>
+ *   l.m.orchard <lorchard@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+// Pass a CSS class for the body tag up to the layout.
+$this->viewVars['bodyclass'] = 'home';
+?>
+
+<?php ob_start() ?>
+    <?= $javascript->link('amo2009/home.js') ?>
+<?php $this->viewVars['head_extra'] = ob_get_clean() ?>
+
+<?php /* Display locale-formatted site stats, if available (bug 492998). */ ?>
+<?php ob_start() ?>
+    <?php $lc = localeconv(); ?>
+    <ul class="stats">
+        <?php if (!empty($stats_downloaded)): ?>
+            <li><?=sprintf(
+                n___('addons_home_stats_downloaded', 'addons_home_stats_downloaded', $stats_downloaded),
+                $html->number_format($stats_downloaded, 0)
+            )?></li>
+        <?php endif ?>
+        <?php if (!empty($stats_inuse)): ?>
+            <li><?=sprintf(
+                n___('addons_home_stats_inuse', 'addons_home_stats_inuse', $stats_inuse),
+                $html->number_format($stats_inuse, 0)
+            )?></li>
+        <?php endif ?>
+    </ul>
+<?php $this->viewVars['header_extra'] = ob_get_clean() ?>
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories', array('clickable_header'=>FALSE))?>
+
+    <?php /*
+        TODO: Enable this when there's content for developer center, leaving it for
+        the markup example
+    */ ?>
+    <?php if (false): ?>
+    <div class="highlight">
+        <h3>Create a Firefox Add-on</h3>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+        <p><strong><a href="#">Visit the Developer Center</a></strong></p>
+    </div>
+    <?php endif ?>
+
+</div>
+
+<div class="primary" role="main">
+
+    <?=$this->renderElement('amo2009/search')?>
+
+    <? if(APP_ID == APP_FIREFOX): ?>
+        <?=$this->renderElement('amo2009/teaser_collections', array(
+            'teaser_collection_promos' => $teaser_collection_promos,
+            'promoted_collections'  => $promoted_collections
+        ))?>
+    <? endif; ?>
+
+    <h2><?=___('addons_home_browse_title', 'Browse Add-ons')?></h2>
+    <div class="primary">
+        <div class="featured show-<?=$featured_type?> listing" id="featured">
+            <div class="featured-inner">
+                <div class="listing-header">
+                    <ul>
+                        <li<?= ('recommended'==$featured_type) ? ' class="selected"' : '' ?>>
+                            <a href="?featured=recommended#featured"><?=___('addons_home_browse_recommended', 'Recommended')?></a></li>
+                        <li<?= ('popular'==$featured_type) ? ' class="selected"' : '' ?>>
+                            <a href="?featured=popular#featured"><?=___('addons_home_browse_popular', 'Popular')?></a></li>
+                        <li<?= ('added'==$featured_type) ? ' class="selected"' : '' ?>>
+                            <a href="?featured=added#featured"><?=___('addons_home_browse_new', 'Just Added')?></a></li>
+                        <li<?= ('updated'==$featured_type) ? ' class="selected"' : '' ?>>
+                            <a href="?featured=updated#featured"><?=___('addons_home_browse_updated', 'Updated')?></a></li>
+                    </ul>
+                </div>
+                <div class="addon-listing">
+                  <?=$this->renderElement('amo2009/homepage_addon_listing')?>
+                </div>
+                <script type="text/javascript">
+                $(document).ready(function(){
+                    $('.listing-header a').click(function(e){
+                        e.preventDefault();
+                        var link = $(this);
+                        link.addClass('loading');
+                        $('.listing-header .selected').removeClass('selected');
+                        link.parent().addClass('selected');
+                        $.get('<?=$html->url('/addons/ajaxy')?>' + link.attr('href'),
+                              function(content){
+                                  $('.addon-listing').html(content);
+                                  link.removeClass('loading');
+                       });
+                    });
+                });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div class="secondary">
+        <img class="pull-right" src="<?=$html->url('/img/amo2009/illustrations/logo-collections-100x125.png', null, false, false)?>" alt=""/>
+        <h3><a href="<?=$html->url('/collections')?>"><?=___('addons_home_collections','Collections')?></a>
+            <span class="new indicator"><?=___('addons_home_new_indicator', 'NEW!')?></span></h3>
+        <p><?=___('addons_home_collections_intro', '
+            Collections are a way for you to categorize, mix, match and mingle
+            add-ons.  Subscribe to collections created by other users or create your
+            own.
+        ')?></p>
+
+        <?php if (!empty($popular_collections)): ?>
+        <h4><?=___('addons_home_collection_popular_title', 'Popular Collections')?></h4>
+        <?php foreach ($popular_collections as $c): ?>
+            <div class="item">
+                <h5>
+                    <img class="icon" src="<?=$c['icon_url']?>" width="32" height="32" alt="<?=$c['name']?>"/>
+                    <?=$link->collection(array(
+                        'Collection'  => array('uuid'=>$c['uuid'], 'nickname'=>$c['nickname']),
+                        'Translation' => array('name'=>array('string'=>$c['name']))
+                    ))?>
+                    <span><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($c['authors'], null);?></span>
+                </h5>
+                <blockquote cite="#">
+                    <p><?=$html->truncateChars(200, $c['description'])?></p>
+                </blockquote>
+                <div class="meta">
+                    <span class="addons"><?=sprintf(
+                        n___('addons_home_collections_addon_count','addons_home_collections_addon_count',$c['addons_count']),
+                        $c['addons_count']
+                    )?></span>
+                    <span class="subscribers"><?=sprintf(
+                        n___('addons_home_collections_subscribers','addons_home_collections_subscribers',$c['subscribers']),
+                        $c['subscribers'])
+                    ?></span>
+                </div>
+            </div>
+        <?php endforeach ?>
+        <?php endif ?>
+        <p><a class="more-info" href="<?=$html->url('/collections')?>"><?=___('addons_home_collections_all', 'View All Collections')?></a></p>
+    </div>
+</div>

@@ -1,0 +1,245 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<script language="JavaScript" type="text/javascript" src="../../../../js/__utm.js"></script>
+<style type="text/css">
+    body, table, td, div {
+        font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+        font-size: 11px;
+    }
+    .dialog {
+        width: 600px;
+        margin: 0 auto;
+        border: 10px solid #d8dfea;
+    }
+    #content p {
+        text-align: center;
+    }
+    .dialog .frame {
+        border: 1px solid #3b5998;
+        padding: 10px;
+    }
+    .dialog h1 {
+        border-bottom: 1px solid #d8dfea;
+        margin: 5px 10px;
+        padding-bottom: 2px;
+        font-size: 13px;
+        color: #333333;
+    }
+    .pipe {
+        color: gray;
+    }
+    a {
+        color: #3b5998;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    #actions {
+        text-align: center;
+    }
+    .dh_new_media_shell {
+        background: url('<?=FB_IMAGE_SITE?>/img/facebook/new_media_button_active.gif') no-repeat bottom -30px;
+        margin: 5px 200px;
+    }
+    .dh_new_media {
+        float: left;
+        display: block;
+        color: #777;
+        text-decoration: none;
+        background: url('<?=FB_IMAGE_SITE?>/img/facebook/new_media_button.gif') no-repeat;
+    }
+    .dh_new_media .tr {
+        background: url('<?=FB_IMAGE_SITE?>/img/facebook/new_media_button.gif') no-repeat top right;
+    }
+    .dh_new_media .bl {
+        background: url('<?=FB_IMAGE_SITE?>/img/facebook/new_media_button.gif') no-repeat bottom left;
+    }
+    .dh_new_media .br {
+        background: url('<?=FB_IMAGE_SITE?>/img/facebook/new_media_button.gif') no-repeat bottom right;
+    }
+    .dh_new_media span {
+        color: #333;
+        font-size: 11px;
+        font-weight: bold; 
+        display: block;
+        padding: 3px 9px 5px 22px;
+        text-shadow: white 0px 1px 1px;
+        background: url('<?=FB_IMAGE_SITE?>/img/facebook/new_media_button_plus.gif') no-repeat 9px center;
+    }
+    .dh_new_media:hover {
+        text-decoration: underline;
+    }
+    .dh_new_media:active,
+    .dh_new_media:active .tr,
+    .dh_new_media:active .bl,
+    .dh_new_media:active .br {
+        background-image: url('<?=FB_IMAGE_SITE?>/img/facebook/new_media_button_active.gif');
+    }
+    #addons {
+        margin: 0px 20px;
+    }
+    #addons .disabled {
+        color: gray;
+    }
+    .inputbutton {
+        border-top: 1px solid #d9dfea;
+        border-left: 1px solid #d9dfea;
+        border-right: 1px solid #0e1f5b;
+        border-bottom: 1px solid #0e1f5b;
+        color: #ffffff;
+        font-size: 11px;
+        font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+        text-align: center;
+        background-color: #3b5998;
+    }
+    .step {
+        clear: both;
+        border-left: 2px solid lightgray;
+        border-bottom: 1px solid lightgray;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 25px;
+        margin-top: 10px;
+    }
+    .step h2 {
+        margin: 5px 10px;
+        padding-bottom: 2px;
+        font-size: 12px;
+        color: #3b5998;
+        margin-left: -10px;
+    }
+    #step1 {
+        height: 130px;
+    }
+    #step2 {
+        height: 241px;
+    }
+    #continue {
+        text-align: center;
+        padding: 15px;
+    }
+</style>
+    
+<?php
+if ($action == 'results') {
+    if (!empty($detected)) {
+?>
+    <div id="content" class="dialog">
+    <div class="frame">
+        <h1>Detect Installed Add-ons</h1>
+        <p>Select the add-ons below that you'd like to add to your list of favorite add-ons.<br><a href="#" onClick="document.getElementById('missing-addons').style.display=''; this.style.display='none';">Why are some of my add-ons missing?</a></p>
+        <p id="missing-addons" style="display: none;">If some of your installed add-ons aren't detected, it's probably because they are not hosted on <a href="http://addons.mozilla.org">Mozilla Add-ons</a>. Only add-ons hosted on <a href="http://addons.mozilla.org">Mozilla Add-ons</a> can be detected and listed in Rock Your Firefox.</p>
+        <form action="<?=SITE_URL.$html->url('/facebookinstall/import/'.$fbUserSession.'/favorites')?>" method="post" id="form">
+        <table id="addons" width="100%">
+        <tr><td width="50%" valign="top">
+        <?php
+            $i = 0;
+            $firstColumn = ceil(count($detected) / 2);
+            foreach ($detected as $addon) {
+                if ($i == $firstColumn)
+                    echo '</td><td width="50%" valign="top">';
+                echo '<div class="item'.($addon['facebook_detected']['disabled'] == 1 ? ' disabled' : '').'">';
+                echo '<label><input type="checkbox" name="addons['.$addon['addons']['id'].']" value="1"';
+                if ($addon['facebook_detected']['disabled'] != 1)
+                    echo ' checked';
+                if ($this->controller->FacebookFavorite->isFavorite($fbUser, $addon['addons']['id'], true))
+                    echo ' disabled="disabled"';
+                echo '>';
+                echo "<b>{$addon['translations']['localized_string']}</b>";
+                if ($addon['facebook_detected']['disabled'] == 1)
+                    echo ' (Disabled in Browser)';
+                if ($this->controller->FacebookFavorite->isFavorite($fbUser, $addon['addons']['id'], true))
+                    echo ' (Already Added)';
+                echo '</label></div>';
+                $i++;
+            }
+        ?>
+        </td></tr>
+        </table>
+        <div id="actions">
+            <div class="dh_new_media_shell"><a href="#" onClick="document.getElementById('form').submit();" class="dh_new_media"><div class="tr"><div class="bl"><div class="br"><span>Add Selected to Favorites</span></div></div></div></a></div>
+            <br><br>
+            <a href="<?=FB_URL?>">Cancel</a> <span class="pipe">|</span>
+            <a href="<?=SITE_URL.$html->url('/facebookinstall/import/'.$fbUserSession)?>">Re-scan</a>
+        </div>
+        </form>
+    </div>
+    </div>
+<?php } else { ?>
+    <div id="content" class="dialog">
+    <div class="frame">
+        <h1>Detect Installed Add-ons</h1>
+        <p>No installed add-ons could be detected. If you have add-ons installed, please make sure cookies are enabled and go back to <a href="<?=SITE_URL.$html->url('/facebookinstall/import/'.$fbUserSession)?>">follow the steps again</a>.</p>
+    </div>
+    </div>
+<?php
+    }
+}
+else {
+?>
+    <div id="content" class="dialog">
+    <div class="frame">
+        <h1>Detect Installed Add-ons</h1>
+        <p>Rock Your Firefox can attempt to detect add-ons currently installed in your browser. Just follow the steps below to provide the necessary information.
+        <br><a href="#" onClick="document.getElementById('how-it-works').style.display=''; this.style.display='none';">How does this work?</a></p>
+        <p id="how-it-works" style="display: none;">A cookie has been placed on your computer that will be read when you check your add-ons for updates and record the add-ons that you check for updates.</p>
+        <div id="step1" class="step">
+            <img src="<?=FB_IMAGE_SITE?>/img/facebook/detect-step1.png" align="right">
+            <h2>Step 1</h2>
+            <div>In Firefox, open the <b>Tools</b> menu and click <b>Add-ons</b> to open the Add-on Manager.</div>
+        </div>
+        <div id="step2" class="step">
+            <img src="<?=FB_IMAGE_SITE?>/img/facebook/detect-step2.png" align="right">
+            <h2>Step 2</h2>
+            <div>Click <b>Find Updates</b> in the bottom left. If you'd also like to detect installed themes, switch to the Themes panel and click Find Updates there as well.</div>
+        </div>
+        <div id"step3" class="step">
+            <h2>Step 3</h2>
+            When Firefox is finished checking for updates, close the Add-ons Manager and click <b>Continue</b> below.
+            <div id="continue">
+                <input type="button" class="inputbutton" onClick="window.location='<?=SITE_URL.'/facebookinstall/import/'.$fbUserSession.'/results'?>';" value="Continue"><br>
+                <a href="<?=FB_URL?>">Cancel</a>
+            </div>
+        </div>
+    </div>
+    </div>
+<?php
+}
+?>

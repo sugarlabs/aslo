@@ -1,0 +1,23 @@
+<?php
+if (!defined('NO_MICROTIME'))
+    define('NO_MICROTIME', true);
+header('Content-type: text/plain');
+
+echo "#    addons.mozilla.org Statistics for add-on {$addon_id}\n";
+echo "#\n";
+echo "#    Generated ".date('r')."\n";
+echo "#    from ".SITE_URL.$html->url("/statistics/csv/{$addon_id}/{$plot}")."\n";
+echo "#\n";
+echo "#    This data is provided \"AS IS\" and is subject to Mozilla's Legal Disclaimers\n";
+echo "#    and Limitations policy, available at http://www.mozilla.com/en-US/about/legal.html.\n";
+echo "#\n";
+
+if (!empty($csv)) {
+    $heading = implode(array_keys($csv[0]), ';');
+    echo "# Fields: [{$heading}]";
+    foreach ($csv as $values) {
+        echo "\n".implode($values, ',');
+    }
+}
+
+?>

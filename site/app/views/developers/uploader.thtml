@@ -1,0 +1,186 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?php
+    $params = array('addons' => $all_addons);
+    if ($type != 'new') {
+        $params['extra'] = 'developers/editbox';
+    }
+    echo $this->renderElement('developers/sidebar', $params);
+
+    echo '<div id="content-main" class="'.($type != 'new' && $author_role < AUTHOR_ROLE_DEV ? 'no-privs' : 'privs').'">';
+    
+    if ($type == 'new') {
+        $title = ___('devcp_uploader_title_submit');
+        $addon_id = 0;
+    }
+    elseif ($type == 'update') {
+        $title = sprintf(___('devcp_uploader_title_update'), $addon_name);
+    }
+    elseif ($type == 'file') {
+        $title = sprintf(___('devcp_uploader_title_file'), $addon_name, $version);
+    }
+    echo $this->renderElement('developers/addonheader', array('title' => $title, 'addon_id' => $addon_id));
+    ?>
+    <?=$this->renderElement('noscript')?>
+    <?=$this->renderElement('developers/rolecheck')?>
+    <div id="submission-area" class="rounded graybox">
+    <?php if ($type == 'new'): ?>
+        <div id="step-intro">
+            <h3><?=___('devcp_uploader_header_how')?></h3>
+            <?=___('devcp_uploader_how')?>
+            <div style="text-align: center;"><a href="#" onclick="upload.showAgreement(); return false;" class="action-button rounded"><?=___('devcp_uploader_a_start')?></a></div>
+        </div> <!-- /#step-intro -->
+    <?php endif; ?>
+    <?php $showAgreement = ($type == 'new' || !$hasAgreement); ?>
+    <?php if ($showAgreement): ?>
+        <div id="step-agreement" <?=($type != 'new' ? 'style="display:block"' : '')?>>
+            <p><?=_('devcp_review_agreement_please')?></p>
+            <?=$localization->includeLocalPage('developer_agreement',array($html->url('/pages/developer_faq')))?>
+
+            <?php
+            list($licenses, $trans) = $this->controller->Developers->getLicenses();
+            echo $this->renderElement('developers/license_picker',
+                                      array('licenses' => $licenses));
+            ?>
+            <input type="button" value="<?=___('devcp_uploader_button_agree')?>"
+                id="accept-agreement" disabled="true" onclick="upload.acceptAgreement()"/>
+            <?php
+            // Retrieve language arrays from bootstrap.
+            global $valid_languages, $native_languages;
+            foreach (array_keys($valid_languages) as $key) {
+                $languages[$key] = $native_languages[$key]['native'];
+            }
+            ksort($languages);
+
+            $this->translationBox = array(
+                                'defaultLocale' => LANG,
+                                'languages' => $languages,
+                                'table' => 'License',
+                                'loaded' => false
+                            );
+            echo $this->renderElement('developers/license_translationbox',
+                                      array('translations' => $trans,
+                                            'fieldname' => 'text'));
+            ?>
+            <script type="text/javascript">
+            $(document).ready(function($){
+                $('#license-name').change(function() {
+                    if ($('#license-name').val() == 'null')
+                        $('#accept-agreement').attr('disabled', 'true');
+                    else
+                        $('#accept-agreement').removeAttr('disabled');
+                });
+                $('#license-name').change();
+            });
+            </script>
+        </div> <!-- /#step-agreement -->
+    <?php endif; ?>
+
+        <div id="file-upload"<?=($showAgreement ? ' style="display: none;"' : '')?>>
+            <h3><?=___('devcp_uploader_header_upload')?></h3>
+            <p><?=___('devcp_uploader_p_upload')?>
+            <br />
+            <form id="upload-form" method="post" enctype="multipart/form-data" action="<?=$html->url('/developers/json/fileupload/'.$type)?>" target="upload-frame" onsubmit="return upload.uploadFile();">
+            <?=$html->hiddenSession();?>
+            <?=(!empty($addon_id) ? '<input type="hidden" name="data[Addon][id]" value="'.$addon_id.'" />' : '')?>
+            <?=(!empty($version_id) ? '<input type="hidden" name="data[Version][id]" value="'.$version_id.'" />' : '')?>
+            <label><?=___('devcp_uploader_label_upload_field')?><input id="upload-field" type="file" name="file" /></label><br />
+        <?=___('devcp_uploader_label_platformtype')?>&nbsp;&nbsp;<label><input type="radio" name="platformtype" onclick="upload.platformAll();" checked />&nbsp;<?=___('devcp_uploader_platformtype_all')?></label>&nbsp;&nbsp;
+            <label><input type="radio" name="platformtype" onclick="upload.platformSpecific();" />&nbsp;<?=___('devcp_uploader_platformtype_specific')?></label>
+            <?php
+            $platforms = $this->controller->Platform->getNames();
+            foreach ($platforms as $platform_id => $platform_name) {
+                if ($platform_id == PLATFORM_ALL) continue;
+                echo '&nbsp;&nbsp;<label class="specific-platforms disabled"><input type="checkbox" name="data[File][platform_id][]" value="'.$platform_id.'" disabled="disabled" />'.$platform_name.'</label>';
+            }
+            ?>
+            <div class="submit">
+                <input type="submit" value="<?=___('devcp_input_upload_file')?>" class="require-privs" />
+            </div>
+            <div id="upload-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('devcp_uploader_ajax_loading')?></div>
+            </form>
+            <div id="upload-error" class="redbox-tr"><div class="redbox-tl">
+                <div id="upload-error-content">
+                    <h4><?=___('devcp_uploader_header_error')?></h4>
+                    <p id="upload-error-text" class="smallmargin"></p>
+                    <p class="smallmargin"><?=___('devcp_uploader_error_correct')?></p>
+                </div>
+                <div class="redbox-br"><div class="redbox-bl"></div></div>
+            </div></div>
+        </div><!-- /#file-upload -->
+        
+    </div><!-- /#submission-area -->
+    
+    <div id="upload-success" class="greenbox-tr"><div class="greenbox-tl">
+    <?php if ($type == 'new'): ?>
+        <div id="addon-created-content">
+            <h3><?=___('devcp_uploader_header_created')?>
+            <div id="created-results">
+                <?=sprintf(___('devcp_uploader_created_results'), 'href="'.$html->url('/developers/addon/status/').'" id="status-link"')?>
+                <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/addon/edit/')?>" class="action-button rounded"><?=___('devcp_uploader_button_edit')?></a></div>
+                <div style="text-align: center;"><a href="<?=$html->url('/developers')?>"><?=___('devcp_uploader_button_later')?></a></div>
+            </div>
+        </div><!-- /#addon-created-content -->
+    <?php elseif ($type == 'update'): ?>
+        <div id="version-created-content">
+            <h3><?=sprintf(___('devcp_uploader_header_update_created'), '<span id="new-version-number"></span>')?></h3>
+            <div id="created-results">
+                <p><?=sprintf(___('devcp_uploader_p_update_created'), '<span id="new-file-status"></span>')?></p>
+                <p id="pending-message"><?=sprintf(___('devcp_uploader_p_pending_version'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
+                <p><?=sprintf(___('devcp_uploader_p_update_version'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
+                <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/versions/edit/')?>" class="action-button rounded"><?=___('devcp_uploader_button_release')?></a></div>
+            </div>
+        </div><!-- /#version-created-content -->
+    <?php elseif ($type == 'file'): ?>
+        <div id="file-created-content">
+            <h3><?=___('devcp_uploader_header_file_added')?></h3>
+            <div id="created-results">
+                <p><?=sprintf(___('devcp_uploader_file_created'), $version, '<span id="new-file-status"></span>')?></p>
+                <p id="pending-message"><?=sprintf(___('devcp_uploader_p_pending_file'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
+                <p><?=sprintf(___('devcp_uploader_p_update_file'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
+            </div>
+        </div><!-- /#file-created-content -->
+    <?php endif; ?>
+        <div class="greenbox-br"><div class="greenbox-bl"></div></div>
+    </div></div><!-- /#addon-created -->
+</div><!-- /#content-main -->
+</div><!-- /#content -->
+
+<iframe id="upload-frame" name="upload-frame" src="" onload="iframeLoaded();" style="display: none;"></iframe>

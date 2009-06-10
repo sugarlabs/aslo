@@ -1,0 +1,97 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <h3>Log Viewer</h3>
+        <?=$html->formTag('/admin/logs')?>
+        Filter by type/action:
+        <select name="data[Eventlog][filter]">
+            <option value=""></option>
+            <option>admin:*</option>
+            <option>admin:addon_status</option>
+            <option>admin:addontype_edit</option>
+            <option>admin:application_create</option>
+            <option>admin:application_edit</option>
+            <option>admin:appversion_create</option>
+            <option>admin:appversion_delete</option>
+            <option>admin:file_recalchash</option>
+            <option>admin:group_create</option>
+            <option>admin:group_delete</option>
+            <option>admin:group_edit</option>
+            <option>admin:group_addmember</option>
+            <option>admin:group_removemember</option>
+            <option>admin:platform_create</option>
+            <option>admin:platform_delete</option>
+            <option>admin:platform_edit</option>
+            <option>admin:response_create</option>
+            <option>admin:response_delete</option>
+            <option>admin:response_edit</option>
+            <option>admin:tag_create</option>
+            <option>admin:tag_delete</option>
+            <option>admin:tag_edit</option>
+            <option>admin:user_edit</option>
+            <option>editor:*</option>
+            <option>editor:review_approve</option>
+            <option>editor:review_delete</option>
+            <option>l10n:*</option>
+            <option>l10n:update_addontypes</option>
+            <option>l10n:update_applications</option>
+            <option>l10n:update_platforms</option>
+            <option>l10n:update_tags</option>
+            <option>security:*</option>
+            <option>security:modify_locked_group</option>
+            <option>security:modify_other_locale</option>
+            <option>security:reauthentication_failure</option>
+            <option>user:*</option>
+            <option>user:group_associated</option>
+        </select>
+        <?=$html->submit('Filter')?>
+        </form>
+        <?php
+        if (!empty($logs)) {
+            echo '<ul>';
+            foreach ($logs as $log) {
+                echo "<li>[{$log['time']}] {$log['entry']}</li>";
+            }
+            echo '</ul>';
+        }
+        ?>
+    </div>
+</div>

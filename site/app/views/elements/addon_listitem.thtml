@@ -1,0 +1,129 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
+ *   Mike Shaver <shaver@mozilla.com>
+ *   Mike Morgan <morgamic@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+
+/**
+ * This element uses the following local variables:
+ * - $addon (Addon model-style array, containing 'Addon' and
+ *   (optionally) 'Version', 'File', 'Tag' sub-arrays)
+ * - $addonIconPath (optional)
+ * - $addonPreviewPath (optional)
+ */
+
+$addonID = $addon['Addon']['id'];
+$addonName = $addon['Translation']['name']['string'];
+$hasVersion = (isset($addon['Version']) && !empty($addon['Version']));
+$addonVersion = ($hasVersion ? $addon['Version'][0]['version'] : '');
+$hasFiles = ($hasVersion && !empty($addon['File']));
+if ($hasFiles) {
+    $addonFiles = $addon['File'];
+    $addonEULA = $addon['Translation']['eula']['string'];
+} else {
+    return;
+}
+
+$addonCreators = $addon['User'];
+$addonSummary = $addon['Translation']['summary']['string'];
+
+// prepare preview image
+if (isset($addonPreviewPath) && !empty($addonPreviewPath)) {
+    $_alt = sprintf(_('img_preview_of'),$addonName);
+    $previmg = '<img src="'.$addonPreviewPath.'" '
+        .'alt="'.$_alt.'" title="'.$_alt.'"/>';
+    $previmg = '<p class="preview-img">'
+        .$html->link($previmg, "/addon/{$addonID}").'</p>';
+} else
+    $previmg = '';
+// prepare icon
+if (isset($addonIconPath) && !empty($addonIconPath))
+    $icon = '<img src="'.$addonIconPath.'" class="icon" alt=""/>';
+else
+    $icon = '';
+
+// prepare categories
+if (!empty($addon['Tag'])) {
+    $categories = $this->renderElement('addon_categories', array('tags' => $addon['Tag']));
+} else
+    $categories = '';
+
+// prepare summary
+if (!isset($addonSummary) || empty($addonSummary))
+    $addonSummary = '&nbsp;';
+
+$_install_render_options = array(
+    'addonIconPath' => $addonIconPath, 
+    'addonName'     => $addonName,
+    'addonId'       => $addonID,
+    'addonFiles'    => $addonFiles,
+    'addonEULA'     => $addonEULA,
+    'addonStatus'   => $addon['Addon']['status'],
+    'is_latest'     => ($addon['Addon']['status'] == STATUS_PUBLIC),
+    'addonType'     => $addon['Addon']['addontype_id'],
+    'compatible_apps' => $addon['compatible_apps'],
+    'allPlatforms'  => $platforms,
+	);
+$installbutton = $this->renderElement('install', $_install_render_options);
+
+?>
+
+<li class="addon <?=$html->extraClass($addon)?>">
+    <div class="irk">
+        <h3 class="name"><?=$html->link("$icon $addonName", "/addon/{$addonID}");?></h3>
+        <h4 class="author"> <?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonCreators, null, "/addon/{$addonID}#authors")?></h4>
+        <?=$html->flag($addon)?>
+        <?=$previmg ?>
+        <p class="rating"><?=$this->renderElement('stars',array('rating' => $addon['Addon']['averagerating']))?><?php if ($addon['Addon']['totalreviews'] > 0) { ?> <a href="<?=$html->url('/addon/'.$addon['Addon']['id'].'#reviews')?>"><?=sprintf(ngettext('feature_reviews','feature_reviews', $addon['Addon']['totalreviews']), $addon['Addon']['totalreviews'])?></a><?php } ?></p>
+        <span class="stats">
+            <em><?=$html->number_format($addon['Addon']['weeklydownloads'], 0)?></em>
+            <?php echo ___('addon_downloads_weekly'); ?>
+        </span>
+        <?=$categories?>
+        <p class="desc"><?=$addonSummary?></p>
+        <?=$installbutton?>
+        <p class="updated">
+            <?php
+            $_update_string = ___('addon_detail_last_updated');
+            $_version_date = (isset($addon['Addon']['datestatuschanged']) ? $addon['Addon']['datestatuschanged'] : $addon['Version'][0]['created']);
+            echo sprintf($_update_string, strftime(_('date'), strtotime($_version_date)));
+            ?>
+        </p>
+    </div>
+    <div class="vex"><span><!-- bottom edge --></span></div>
+</li>

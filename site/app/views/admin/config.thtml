@@ -1,0 +1,142 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <h3>Site Config</h3>
+        <?php        
+        if (!empty($errors['main'])) {
+            echo '<div class="error">'.$errors['main'].'</div>';
+        }
+        echo $html->formTag('/admin/config');
+        echo $html->hidden('Session/rand', array('value' => $rand));
+        ?>
+        <div id="developersForm">
+            <h4>General</h4>
+            <div>
+                <label>Site Notice</label>
+                <div class="description">Banner that will appear at the top of every page. Default: Empty</div>
+                <?=$html->textarea('Config/site_notice', array('cols' => 50, 'rows' => 3, 'value' => $config['site_notice']))?>
+            </div>
+            
+            <h4>Disable Functionality</h4>
+            <div>
+                <label>Submissions Disabled</label>
+                <div class="description">Disable add-on uploads/submissions. Default: No</div>
+                <label class="normal">
+                    <input type="radio" name="data[Config][submissions_disabled]" value="0"<?=($config['submissions_disabled'] == 0) ? ' checked="checked"' : ''?>>
+                    &nbsp;No
+                </label>
+                <label class="normal">
+                    <input type="radio" name="data[Config][submissions_disabled]" value="1"<?=($config['submissions_disabled'] == 1) ? ' checked="checked"' : ''?>>
+                    &nbsp;Yes
+                </label>
+            </div>
+            <div>
+                <label>Queues Disabled</label>
+                <div class="description">Disable all review queues. Default: No</div>
+                <label class="normal">
+                    <input type="radio" name="data[Config][queues_disabled]" value="0"<?=($config['queues_disabled'] == 0) ? ' checked="checked"' : ''?>>
+                    &nbsp;No
+                </label>
+                <label class="normal">
+                    <input type="radio" name="data[Config][queues_disabled]" value="1"<?=($config['queues_disabled'] == 1) ? ' checked="checked"' : ''?>>
+                    &nbsp;Yes
+                </label>
+            </div>
+            <div>
+                <label>Search Disabled</label>
+                <div class="description">Disable searching the site. Default: No</div>
+                <label class="normal">
+                    <input type="radio" name="data[Config][search_disabled]" value="0"<?=($config['search_disabled'] == 0) ? ' checked="checked"' : ''?>>
+                    &nbsp;No
+                </label>
+                <label class="normal">
+                    <input type="radio" name="data[Config][search_disabled]" value="1"<?=($config['search_disabled'] == 1) ? ' checked="checked"' : ''?>>
+                    &nbsp;Yes
+                </label>
+            </div>
+            <div>
+                <label>Statistics Disabled</label>
+                <div class="description">Disable the Statistics Dashboard. Default: No</div>
+                <label class="normal">
+                    <input type="radio" name="data[Config][stats_disabled]" value="0"<?=($config['stats_disabled'] == 0) ? ' checked="checked"' : ''?>>
+                    &nbsp;No
+                </label>
+                <label class="normal">
+                    <input type="radio" name="data[Config][stats_disabled]" value="1"<?=($config['stats_disabled'] == 1) ? ' checked="checked"' : ''?>>
+                    &nbsp;Yes
+                </label>
+            </div>
+            <div>
+                <label>API Disabled</label>
+                <div class="description">Disable the API. Default: No</div>
+                <label class="normal">
+                    <input type="radio" name="data[Config][api_disabled]" value="0" <?=($config['api_disabled'] == 0) ? 'checked="checked"' : ''?>>
+                    &nbsp;No
+                </label>
+                <label class="normal">
+                    <input type="radio" name="data[Config][api_disabled]" value="1" <?=($config['api_disabled'] == 1) ? 'checked="checked"' : ''?>>
+                    &nbsp;Yes
+                </label>
+            </div>
+
+            
+            <h4>Special Events</h4>
+            <div>
+                <label>Firefox Notice Version</label>
+                <div class="description">If an add-on is submitted with a Firefox maxVersion lower than this, a notice will be displayed. Default: Empty</div>
+                <label class="normal">
+                    <input type="text" name="data[Config][firefox_notice_version]" value="<?=$config['firefox_notice_version']?>">
+                </label>
+            </div>
+            <div>
+                <label>Firefox Notice URL</label>
+                <div class="description">URL displayed in the Firefox Version Notice text. Default: Empty</div>
+                <label class="normal">
+                    <input type="text" name="data[Config][firefox_notice_url]" value="<?=$config['firefox_notice_url']?>">
+                </label>
+            </div>
+            <div class="buttonBox">
+                <?=$html->submit('Update Config')?>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>

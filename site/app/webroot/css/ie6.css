@@ -1,0 +1,125 @@
+/*----------------------------------------------------------------------------
+CSS file for IE6 for Addons.mozilla.org
+Created by Craig Cook - focalcurve.com
+				on November 20, 2007
+-----------------------------------------------------------------------------*/
+
+/* I can hasLayout */
+#branding, #page-title h1, div.error-notice { zoom: 1; }
+#other-apps.js #nav-apps li { zoom: 1; }
+#content, #content-main, #content-extra, #recommended, #secondaries, #form-listcontrol { zoom: 1; }
+.addon, .install-button, .install-button a { zoom: 1; }
+#addon-info, #addon-advanced, #form-review, .latest-version { zoom: 1; }
+
+/* There are various icky bugs related to padding with percentages. Avoid this  
+	by removing the padding and shifting the box outside of its parent. */
+#content.main-page #content-main, 
+#content.detail-page #content-main, 
+#content.detail-page #content-main.full,
+#content.reviews-page #content-main,  
+#content.reviews-page #content-main.full,
+#content.versions-page #content-main,  
+#content.versions-page #content-main.full { padding-right: 0; }
+#content-main #content-extra { right: -33%; }
+
+/* More percentage padding bugs, so the side-by-side liquid floats fail badly. Degrading to the natural layout instead. */
+#content.wide #recommended .addon { padding-left: 240px; width: auto; }
+#content.wide #recommended .addon .name { width: auto; }
+#content.wide #recommended .addon .preview-img { width: auto; overflow: visible; }
+#content #recommended .addon .vex, 
+#content.wide #recommended .addon .vex { position: absolute; right: -260px; padding-left: 0; left: 0; width: auto; margin: 0; }
+#content #recommended .addon .vex span, 
+#content.wide #recommended .addon .vex span { padding-left: 0; margin-left: 0; left: -1px; width: auto; }
+#content.wide #recommended #feature1 { float: none; margin-bottom: 1em; } 
+#content.wide #recommended #feature2 { float: none; }
+
+/* Alternative 8-bit images since IE6 doesn't support alpha-transparent 24-bit PNGs. */
+h4#moz a { background-image: url("../img/moz-tab-ie.png"); }
+div.error-notice { background-image: url("../img/warning-ie.png"); }
+
+/* Aaron Gustafson's Image Image Replacement - Inline image is replaced by background. See http://old.easy-designs.net/articles/iIR/ */
+#page-title h1 img { display: block; text-indent: -999em; padding-top: 105px; width: 110px; height: 0; overflow: hidden; background-repeat: no-repeat; }
+#page-title.firefox h1 img { background-image: url("../img/app-icons/firefox-ie.png"); }
+#page-title.thunderbird h1 img { background-image: url("../img/app-icons/thunderbird-ie.png"); }
+#page-title.sunbird h1 img { background-image: url("../img/app-icons/sunbird-ie.png"); }
+#page-title.seamonkey h1 img { background-image: url("../img/app-icons/seamonkey-ie.png"); }
+
+/* Bottom edges - IE7 needs different rules than IE6 so we'll override the previous style sheets */
+.addon .vex { padding: 0; }
+.addon .vex span { margin-left: 0; }
+#addon-listing .addon .vex, #addon-summary .vex, .main .vex { padding: 0; }
+#addon-listing .addon .vex span, .main .vex span { margin-left: 0; }
+#addon-summary .vex span, .main .vex span { margin-left: 1px; }
+.sub .vex { padding: 0; left: 1px; }
+.sub .vex span { margin-left: 0; }
+
+.main .vex { width: 100%; position: absolute; padding: 0; margin: 0; }
+.main .vex span { position: relative; left: 0; }
+
+#addon-summary .vex { width: 100%; left: -1px; bottom: 0; padding: 0; margin: 0; }
+#addon-summary .vex span { position: relative; left: -1px; }
+
+#addon-listing .addon .vex { width: 100%; left: -1px; padding: 0 220px; margin: 0; }
+#addon-listing .addon .vex span { position: relative; left: -220px; }
+
+/* IE6 doesn't shrinkwrap the float, so removing the border makes it look better */
+#addon-summary .exp-loggedout,
+#addon-summary .exp-confirmed { border: 0; padding: 0; }
+
+/* Lose the left border because IE6 doesn't support :first-child */
+#nav-user li, .addon-cats li, #addon-listing .more li { border: 0; padding-left: 0; }
+
+/* Fix weird positioning */
+.sub .flag { margin-left: 20px; }
+
+#content.landing.browse #secondaries #feature2 { margin-right: 0; }
+#content.landing.languages #secondaries #feature3 { margin-right: 0; }
+
+#content.landing.languages #secondaries { margin-bottom: 1.5em; }
+
+/* Color adjustments */
+.exp-loggedout .install-button a:hover,
+.exp-confirmed .install-button a:hover { color: #aaa; }
+
+/* Position and margin adjustments */
+.sub .irk, .addon .vex span { margin-left: 0; position: relative; left: -1px; }
+.main .vex span, #addon-listing .vex span { left: 0; }
+.addon .vex { margin-left: -1px; margin-bottom: -1px; }
+#other-apps.js #nav-apps { margin-top: 10px; }
+#content.landing #secondaries #feature5 { margin-right: 0; }
+#content.landing-with-slider #secondaries .addon { width: 28%; }
+#content.landing #secondaries .sub .flag { left: -20px; }
+#content.landing-with-slider #content-extra { width: 24%; margin-right: .25%; float: right; }
+#content.landing #content-extra { width: 22%; margin-right: .25%; float: right; }
+#form-listcontrol #per-page.hidden { left: -999em; }
+.addon .name img { left: -44px; }
+#form-review #review-submit { margin-bottom: 0; }
+#recommended { float: none; zoom: 1; }
+
+/* Size and padding adjustements */
+#content { height: 800px; } /* acts like min-height */
+.addon { height: 170px; } /* acts like min-height */
+#page-title div { padding-left: 120px; }
+#content-extra { width: 29%; }
+#search-form { height: 54px; }
+#content #sidebar { width: 17.5%; }
+#categories.collapsed #cat-list a:active { width: 150px; }
+.main .vex, #addon-listing .addon .vex, #addon-summary .vex { padding-right: 261px; }
+#categories.collapsed #cat-list.visible { width: auto; margin: 0; }
+
+#recommended { padding: 0 10px 10px; width: auto; }
+#addon-summary, #recommended .addon { height: 220px; }
+.sub .preview-img { width: 100%; }
+#content.landing #secondaries .sub .irk { padding-top: 2.2em; }
+#order-by button { padding: 4px 2px; }
+#form-listcontrol { padding: 8px 200px; width: auto; }
+#form-review { padding-bottom: 0; }
+#content.landing.browse #content-extra { width: 47%; }
+
+#thumb-subcategories { width: 17.5% }
+#thumb-subcategories ul li a, #thumb-subcategories ul li span { zoom: 1; }
+#thumb-browser #form-listcontrol { padding:8px 12% 8px 14%; }
+#thumb-browser #order-by button { font-size: 98% }
+#thumb-browser .thumbs { list-style-type:none; margin-left: 20%; }
+#thumb-browser .thumbs li.thumb .vex { height: 8px; margin-top: -10px }
+#thumb-browser .thumbs li.thumb .vex span { height: 8px; margin-left:0px; }

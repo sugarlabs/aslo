@@ -1,0 +1,98 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+if (empty($page)) {
+    $page = '';
+}
+?>
+<fb:ref url="<?=SITE_URL?>/css/facebook.php" />
+
+<div class="page">
+    <div class="page-header">
+        <img src="<?=FB_IMAGE_SITE?>/img/facebook/rockyourfirefox-header.png" height="80" width="646" alt="Rock Your Firefox">
+    </div>
+    
+<?php
+    if (!empty($errorMessage)) {
+        echo "<fb:error><fb:message>{$errorTitle}</fb:message>{$errorMessage}</fb:error>";
+    }
+    if (!empty($successMessage)) {
+        echo "<fb:success><fb:message>{$successTitle}</fb:message>{$successMessage}</fb:success>";
+    }
+?>
+    <div class="search">
+        <form action="<?=FB_URL?>/search" method="get">
+            <span>Search Add-ons:</span>&nbsp;
+            <input class="inputtext inputsearch" type="search" name="q">
+        </form>
+    </div>      
+
+    <fb:tabs>
+        <fb:tab-item title="Home" href="<?=FB_URL?>/home" <?=($page == 'home' ? 'selected="true" ' : '')?>/>
+        <fb:tab-item title="Browse Add-ons" href="<?=FB_URL?>/browse" <?=($page == 'browse' ? 'selected="true" ' : '')?>/>
+        <fb:tab-item title="Favorite Add-ons" href="<?=FB_URL?>/favorites" <?=($page == 'favorites' ? 'selected="true" ' : '')?>/>
+        <?php if ($page == 'search'): ?>
+            <fb:tab-item title="Search Results" href="<?=FB_URL?>/search" selected="true" />
+        <?php endif;
+        if ($page == 'view'): ?>
+            <fb:tab-item title="Add-on Details" href="<?=FB_URL?>/view/<?=$id?>" selected="true" />
+        <?php endif;
+        if ($page == 'faq'): ?>
+            <fb:tab-item title="FAQ" href="<?=FB_URL?>/faq" selected="true" />
+        <?php endif;
+        if ($page == 'updatenotes'): ?>
+            <fb:tab-item title="Update Notes" href="<?=FB_URL?>/updatenotes" selected="true" />
+        <?php endif;
+        if ($page == 'wallpaper'): ?>
+            <fb:tab-item title="Wallpaper" href="<?=FB_URL?>/wallpaper" selected="true" />
+        <?php endif;
+        if ($page == 'import'): ?>
+            <fb:tab-item title="Import" href="<?=FB_URL?>/import" selected="true" />
+        <?php endif; ?>
+    </fb:tabs>
+
+    <div class="content">
+        <?=$content_for_layout?>
+    </div>
+    
+    <div class="page-footer">
+        Mozilla is providing links to these applications as a courtesy, and makes no representations regarding the applications or any information related there to.
+        <span title="<?=php_uname('n')?>">Use</span> of this service is subject to the Mozilla <a href="https://addons.mozilla.org/en-US/firefox/pages/privacy">Privacy Policy</a> and <a href="http://www.mozilla.com/en-US/about/legal.html">Legal Notices</a>.
+    </div>
+    
+</div>
+

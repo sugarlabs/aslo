@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ***** BEGIN LICENSE BLOCK *****
+  -   Version: MPL 1.1/GPL 2.0/LGPL 2.1
+  -
+  - The contents of this file are subject to the Mozilla Public License Version
+  - 1.1 (the "License"); you may not use this file except in compliance with
+  - the License. You may obtain a copy of the License at
+  - http://www.mozilla.org/MPL/
+  - 
+  - Software distributed under the License is distributed on an "AS IS" basis,
+  - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+  - for the specific language governing rights and limitations under the
+  - License.
+  -
+  - The Original Code is bandwagon.
+  -
+  - The Initial Developer of the Original Code is
+  - Mozilla Corporation.
+  - Portions created by the Initial Developer are Copyright (C) 2008
+  - the Initial Developer. All Rights Reserved.
+  -
+  - Contributor(s): David McNamara
+  -                 Brian King <brian (at) briks (dot) si>
+  -
+  - Alternatively, the contents of this file may be used under the terms of
+  - either the GNU General Public License Version 2 or later (the "GPL"), or
+  - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+  - in which case the provisions of the GPL or the LGPL are applicable instead
+  - of those above. If you wish to allow use of your version of this file only
+  - under the terms of either the GPL or the LGPL, and not to allow others to
+  - use your version of this file under the terms of the MPL, indicate your
+  - decision by deleting the provisions above and replace them with the notice
+  - and other provisions required by the GPL or the LGPL. If you do not delete
+  - the provisions above, a recipient may use your version of this file under
+  - the terms of any one of the MPL, the GPL or the LGPL.
+  - 
+  - ***** END LICENSE BLOCK ***** -->
+
+<!DOCTYPE overlay SYSTEM "chrome://bandwagon/locale/extensionsOverlay.dtd" >
+
+<?xml-stylesheet href="chrome://bandwagon/skin/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://bandwagon/skin/extensionsOverlay.css" type="text/css"?>
+<?xml-stylesheet href="chrome://bandwagon/skin/extensionsOverlayIcons.css" type="text/css"?>
+<?xml-stylesheet href="chrome://bandwagon/content/ui/bindings/bandwagon.css" type="text/css"?>
+
+<overlay id="bandwagon-extensions-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <script src="chrome://bandwagon/content/ui/dialog.js"/>
+    <script src="chrome://bandwagon/content/ui/overlays/extensionsOverlayController.js"/>
+    <script src="chrome://bandwagon/content/ui/collectionsPaneController.js"/>
+
+    <stringbundleset>
+        <stringbundle id="bandwagon-strings" src="chrome://bandwagon/locale/extensionOverlay.properties"/>
+    </stringbundleset>
+
+
+    <stack id="topStackBar">
+        <radiogroup id="viewGroup">
+            <radio id="bandwagon-collections-view"
+                   label="&collections.label;"
+                   insertbefore="extensions-view"
+                   oncommand="showView('bandwagon-collections');"
+                   persist="last-selected"/>
+            <radio id="search-view"
+                   label="&search.label.bandwagon;"
+                   insertbefore="updates-view"
+                   oncommand="showView('search');"
+                   persist="last-selected"/>
+        </radiogroup>
+    </stack>
+
+    <vbox id="extensionsBox">
+        <vbox id="bandwagon-collections-panel" hidden="true" flex="1">
+            <deck id="bandwagon-extensions-deck" flex="1">
+                <hbox id="bandwagon-subscriptions-panel" flex="1">
+                    <vbox id="bandwagon-collections-list-box" persist="width">
+                        <richlistbox id="bandwagon-collections-list"
+                                     seltype="single"
+                                     style="min-width: 14em; width: 16em; max-width: 36em;"
+                                     flex="1"/>
+                        <toolbox class="bandwagon-collections-toolbox">
+                            <toolbar pack="start"
+                                     align="center">
+                                <toolbarbutton id="bandwagon-button-subscribe"
+                                               tooltiptext="&subscribe.label;"
+                                               oncommand="Bandwagon.Controller.CollectionsPane.doSubscribe();"/>
+                                <toolbarbutton id="bandwagon-button-update-all"
+                                               tooltiptext="&reload.label;"
+                                               oncommand="Bandwagon.Controller.CollectionsPane.doUpdateAll();"/>
+                                <toolbarbutton id="bandwagon-button-settings"
+                                               tooltiptext="&settings.label;"
+                                               oncommand="Bandwagon.Controller.CollectionsPane.doSettings();"/>
+                            </toolbar>
+                        </toolbox>
+                    </vbox>
+                    <splitter id="bandwagon-sidebar-splitter" />
+                    <notificationbox flex="1" id="bandwagon-collections-notification">
+                        <hbox align="center">
+                            <vbox>
+                                <description id="bandwagon-collection-title"/>
+                            </vbox>
+                            <spacer flex="1"/>
+                            <hbox pack="end">
+                                <label id="bandwagon-button-viewsite"
+                                       value="&view.label;"
+                                       class="text-link"
+                                       onclick="Bandwagon.Controller.CollectionsPane.doViewSite();"/>
+                                <separator id="bandwagon-link-splitter"/>
+                                <label id="bandwagon-button-remove"
+                                       value="&unsubscribe.label;"
+                                       class="text-link"
+                                       onclick="Bandwagon.Controller.CollectionsPane.doUnsubscribe();"/>
+                            </hbox>
+                        </hbox>
+                        <vbox>
+                            <description id="bandwagon-collection-description"/>
+                        </vbox>
+                        <deck id="bandwagon-collection-deck" selectedIndex="0" flex="1">
+                            <hbox flex="1">
+                                <richlistbox id="bandwagon-addons-list"
+                                             seltype="single"
+                                             flex="1"
+                                             ondragenter="nsDragAndDrop.dragEnter(event, gExtensionsDNDObserver);"
+                                             ondragover="nsDragAndDrop.dragOver(event, gExtensionsDNDObserver);"
+                                             ondragdrop="nsDragAndDrop.drop(event, gExtensionsDNDObserver);"
+                                             />
+                            </hbox>
+                            <vbox flex="1" align="center" pack="center">
+                                <label class="usercollectionback" value="&collectionisloading.label;"/>
+                                <image src="chrome://bandwagon/skin/images/spinner.gif"/>
+                            </vbox>
+                            <vbox flex="1" align="center" pack="center">
+                                <image src="chrome://bandwagon/skin/images/information.png"/>
+                                <label class="usercollectionback" value="&collectionhasnoitems.label;"/>
+                            </vbox>
+                             <vbox flex="1" align="center" pack="center">
+                                <image src="chrome://bandwagon/skin/images/error.png"/>
+                                <label class="usercollectionback"  value="&collectionhaserror.label;"/>
+                            </vbox>
+                        </deck>
+                    </notificationbox>
+                </hbox>
+                <vbox id="nosubs-box" class="fs-info-panel" flex="1" >
+                    <label id="nosubs-header" class="fs-info-panel-header" value="&nocollectionstitle.label;"/>
+                    <separator/>
+                    <description class="fs-info-panel-text">&nocollectionssubscribed.label;</description>
+                    <separator/>
+                    <hbox pack="center">
+                        <button label="&clicktosubscribe.label;"
+                                oncommand="Bandwagon.Controller.CollectionsPane.doSubscribe();"/>
+                    </hbox>
+                </vbox>
+                <vbox id="no-amo-auth-box" class="fs-info-panel" flex="1">
+                    <vbox align="start">
+                        <label id="no-amo-auth-header" class="fs-info-panel-header" value="&nocollectionstitle.label;"/>
+                        <separator/>
+                        <description class="fs-info-panel-text">&noamoauth.label;</description>
+                        <separator/>
+                    </vbox>
+
+                    <hbox>
+                        <hbox align="start" pack="center">
+                            <image src="chrome://bandwagon/skin/images/logo-login.png"/>
+                        </hbox>
+                        <vbox align="center">
+                            <description class="bold-text">
+                                &loginheading.label;
+                            </description>
+                            <separator class="thin"/>
+                            <grid>
+                                <columns>
+                                    <column/>
+                                    <column/>
+                                </columns>
+        
+                                <rows>
+                                    <row align="center">
+                                        <label value="&username.label;" style="text-align:right;"/>
+                                            <textbox id="login"
+                                                     onkeypress="if ((event.keyCode == KeyEvent.DOM_VK_RETURN) ||
+                                                            (event.keyCode == KeyEvent.DOM_VK_ENTER)) Bandwagon.Controller.CollectionsPane.doLogin();"/>
+                                    </row>
+                                    <row align="center">
+                                        <label value="&password.label;" style="text-align:right;"/>
+                                            <textbox id="password"
+                                                     type="password"
+                                                     onkeypress="if ((event.keyCode == KeyEvent.DOM_VK_RETURN) ||
+                                                            (event.keyCode == KeyEvent.DOM_VK_ENTER)) Bandwagon.Controller.CollectionsPane.doLogin();"/>
+                                    </row>
+                                    <row>
+                                        <hbox/>
+                                        <hbox>
+                                            <button id="auth-button" label="&clicktologin.label;"
+                                                    oncommand="Bandwagon.Controller.CollectionsPane.doLogin();"/>
+                                            <vbox pack="center">
+                                                <image id="auth-spinner" src="chrome://bandwagon/skin/images/spinner-small.gif" style="visibility: hidden"/>
+                                            </vbox>
+                                        </hbox>
+                                    </row>
+                                </rows>
+                            </grid>
+                            <separator class="thin"/>
+                            <label value="&createaccount.label;"
+                                   class="text-link"
+                                   onclick="Bandwagon.Controller.ExtensionsOverlay.doCreateAccount();"/>
+                            <separator class="thin"/>
+                            <hbox pack="center" align="start">
+                                <description id="auth-error" class="error-text" collapsed="true"/>
+                            </hbox>
+                        </vbox>
+                    </hbox>
+
+                </vbox>
+            </deck>
+        </vbox>
+    </vbox>
+
+</overlay>

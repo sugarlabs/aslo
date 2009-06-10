@@ -1,0 +1,521 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   Justin Scott <fligtar@gmail.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+
+<?php
+    if (empty($addonIconPath))
+        $addonIconPath = ($addon['Addon']['addontype_id'] == ADDON_THEME ? $html->urlImage(DEFAULT_THEME_ICON) : $html->urlImage(DEFAULT_ADDON_ICON));
+?>
+
+<div class="stand-alone-options">
+
+    <?=$this->renderElement('amo2009/categories')?>
+
+    <?=$this->renderElement('amo2009/search')?>
+
+  </div>
+
+<div class="primary" role="main">
+    <?php
+    if (!empty($coll_addon_added)) {
+        echo $this->renderElement('notification', array(
+            'type' => 'success',
+            'msg' => sprintf(___('addons_display_collection_publish_success'),
+                $addon['Translation']['name']['string'],
+                $html->link($coll_addon_added['Translation']['name']['string'],
+                    "/collection/{$coll_addon_added['Collection']['uuid']}")
+                )
+        ));
+    }
+    ?>
+    <h2 <?=$addon['Translation']['name']['locale_html']?> class="addon"><img src="<?=$addonIconPath?>" class="icon" alt="" /><span><?=$addon['Translation']['name']['string']?> <?=($hasversion?$addon['Version'][0]['Version']['version']:'')?></span></h2>
+    <h4 class="author"><?=_('addons_home_by')?> <?= $html->linkUsersFromModel($addon['User'], 0); ?></h4>
+    <div id="addon-summary" class="addon <?=$html->extraClass($addon)?>">
+    
+
+    <?php if (count($previews) > 0) {
+        $shown = 0;
+        $_js_string = '';
+        
+        $thumb = $this->controller->Image->getPreviewURL($previews[0]['Preview']['id']);
+        $full = $this->controller->Image->getPreviewURL($previews[0]['Preview']['id'], 'full');
+        $caption = $previews[0]['Translation']['caption']['string'];
+        // Lightbox supports HTML in their captions, but we strip it
+        // out in the dev cp.
+    ?>
+
+    <p class="preview-img">
+      <a class="screenshot" rel="jquery-lightbox" href="<?=$full?>" title="<?=$caption?>">
+        <img src="<?=$thumb?>" alt=""/>
+      </a>
+    </p>
+    <?php } else { ?>
+    <p class="preview-img">
+      <img src="<?=$html->urlImage('no-preview.png')?>" alt="" width="200" height="150" />
+    </p>
+    <?php } ?>
+<p class="desc"<?=$addon['Translation']['summary']['locale_html']?>><?=nl2br($addon['Translation']['summary']['string'])?> </p>
+
+
+    <h4 class="hidden"><?=_('addons_display_categories')?></h4>
+    <?=$this->renderElement('addon_categories', array('tags' => $relatedTags)); ?>
+
+    <? if ($hasversion): ?>
+    <p class="updated">
+        <?php
+        echo sprintf(___('addon_detail_last_updated'), strftime(_('date'), strtotime($addon['Version'][0]['Version']['created'])));
+        ?>
+    </p>
+    <? endif; ?>
+
+    <?php
+       if ($hasversion) {
+
+           $flags = array($html->byStatus($addon, array('experimental' => 'experimental',
+                                                   'recommended'  => 'recommended',
+                                                   'default'      => 'default')));
+
+           global $experimental_status;
+           if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
+               $flags[] = 'experimental';
+           }
+           
+           $addon['File'] = $addon['Version'][0]['File']; //install.thtml expects this
+           
+           echo $this->renderElement('amo2009/install', array(
+               'flags' => $flags,
+               'buttonClass' => 'significant', 
+               'buttonSize'  => '16x16',
+               'addon' => $addon
+           ));
+
+           if (!empty($addon['Translation']['privacypolicy']['string'])) {
+               echo '<div class="privacypolicy">';
+               echo $html->link(_('addons_display_has_privacy'), "/addons/policy/0/{$addon['Addon']['id']}");
+               echo '</div>';
+           }
+       }
+       ?>
+
+       
+    <p class="rating">
+      <?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?>
+    </p>
+
+    
+    <p class="stats">
+        <?php
+            echo '<em>'.$html->number_format($addon['Addon']['weeklydownloads'], 0).'</em> '.___('addon_downloads_weekly');
+            echo '<br /><em>'.$html->number_format($addon['Addon']['totaldownloads'], 0).'</em> '._('addon_downloads_total');
+        ?>
+    </p>
+
+
+    <div class="share-this">
+                <a class="share button" href="#">
+                    <?php echo ___('addons_share_button_text', 'Share this') ?>
+                </a>
+
+        <div class="share-networks">
+            <ul>
+                <?php foreach ($link_sharing_services as $l_name => $l_details) :?>
+                    <li class="<?= $l_name ?>"><p>
+                        <?php $share_url = str_replace('/addon/', '/addon/share/', $_SERVER['REQUEST_URI']) ?>
+                        <a class="uniquify" target="_blank" href="<?php echo $share_url . '?service=' . $l_name ?>"><?php 
+                            // Escaping here because these details came via set()
+                            echo htmlentities($l_details['label'], ENT_COMPAT, 'UTF-8')
+                        ?></a>
+                    </p></li>
+                <?php endforeach ?>
+            </ul>   
+    </div>
+
+  </div>
+  </div>
+  <div id="addon-info" class="featured listing">
+      <div class="featured-inner">
+    
+      <? if (count($previews) > 1): // Only show this if there are 2 or more images. ?>
+      <div class="item">
+          <h5><?=_('addons_display_more_images')?></h5>
+
+            <?php
+                $shown = 0;
+                $_js_string = '';
+
+                foreach ($previews as $preview):
+
+                    // Skip the first one, which is the preview.
+                    if ($shown < 1) {
+                        $shown++;
+                        continue;
+                    }
+
+                    $thumb = $this->controller->Image->getPreviewURL($preview['Preview']['id']);
+                    $full = $this->controller->Image->getPreviewURL($preview['Preview']['id'], 'full');
+                    $caption = $preview['Translation']['caption']['string'];
+                    // Lightbox supports HTML in their captions, but we strip it
+                    // out in the dev cp.
+                    $_js_string .= empty($_js_string) ? "['{$full}','{$caption}']" : ", ['{$full}','{$caption}']";
+                    $shown++;
+            ?>
+
+              <a class="screenshot thumbnail" rel="jquery-lightbox" href="<?=$full?>" title="<?=$caption?>"><img src="<?=$thumb?>" alt="" /></a>
+
+                <? endforeach; ?>
+                </div>
+            <? endif; ?>
+      
+      
+
+      <div class="item">
+          <h5><?=_('addons_display_long_description')?></h5>
+            <p<?=$addon['Translation']['description']['locale_html']?>><?=nl2br($addon['Translation']['description']['string'])?></p>
+      </div>
+      <div class="item">
+          <?=$this->renderElement('app_compatibility', array('compatible_apps' => $compatible_apps)) ?>
+
+          <div id="addon_app_compatibility" ><?php
+          // link to complete version history
+          if ($hasversion) {
+              echo $html->link(___('addons_display_see_all_versions'),
+                  "/addons/versions/{$addon['Addon']['id']}", array('class'=>'view'));
+          }
+          ?></div>
+      </div>
+            
+
+            <?php 
+            /* Homepage URL link */
+            if (!empty($addon['Translation']['homepage']['string'])): ?>
+                <div class="item">
+                    <?php echo '<h5 id="homepage">'.___('addons_display_header_homepage').'</h5>'; ?>
+                    <p><?=$html->link($addon['Translation']['homepage']['string'])?></p>
+                </div>
+                
+
+            <?php endif; // h4:Homepage ?>
+
+            <?php  /* License */
+            if ($hasversion && isset($addon['Version'][0]['Version']['license_id'])):
+                $license_id = $addon['Version'][0]['Version']['license_id'];
+                $version_id = $addon['Version'][0]['Version']['id'];
+                $license_name = $this->controller->License->getName($license_id);
+                $license_link = $html->link($license_name,
+                                            '/versions/license/'.$version_id);
+             ?>
+                <div class="item">
+                    <h5 id="license">
+                        <?=___('addons_display_header_license')?>
+                        <a href="<?=$html->url('/pages/developer_faq')?>">
+                          <?=___('addons_display_a_license_what')?>
+                        </a>
+                    </h5>
+                    <p><?=$license_link?></p>
+                </div>
+            <?php endif; ?>
+
+            <?php
+            $has_supportemail = !empty($addon['Translation']['supportemail']['string']);
+            $has_supporturl = !empty($addon['Translation']['supporturl']['string']);
+            if ($has_supportemail || $has_supporturl): ?>
+                <div class="item">
+                     <?php echo '<h5 id="support">'.___('addons_display_header_support').'</h5>'; ?>
+
+                        <?php
+                        /* Support email/URL link */
+                        if ($has_supportemail && $has_supporturl) {
+                            // both support email and support URL present
+                        ?>
+                        <p>
+                            <?=sprintf(_('addons_display_paragraph_supportinfoemailurl'),
+                                $html->link($addon['Translation']['supporturl']['string']),
+                                $link->email($addon['Translation']['supportemail']['string']));?>
+                        </p>
+                        <?php
+                        } else if ($has_supporturl) {
+                            // support URL only
+                        ?>
+                        <p>
+                            <?=sprintf(_('addons_display_paragraph_supportinfourl'),
+                                $html->link($addon['Translation']['supporturl']['string']));?>
+                        </p>
+                        <?php
+                        } else if ($has_supportemail) {
+                            // support email only
+                        ?>
+                        <p>
+                            <?=sprintf(_('addons_display_paragraph_supportinfoemail'),
+                                $link->email($addon['Translation']['supportemail']['string']));?>
+                        </p>
+                        <?php } ?>
+                </div>
+            <?php endif; // h4:Support ?>
+    
+      <div id="addon-advanced" class="item">
+        <h5><?=_('addons_display_advanced_details')?></h5>
+
+        <?php if (!empty($addon['Translation']['developercomments']['string'])) { ?>
+        <h5><?=_('addons_display_header_developer_comments')?></h5>
+        <p<?=$addon['Translation']['developercomments']['locale_html']?>>
+          <?=nl2br($addon['Translation']['developercomments']['string'])?>
+        </p>
+        <?php } ?>
+
+        <?php if ($hasversion):
+            $_version_data = array(
+                'addonid' => $addon['Addon']['id'],
+                'version' => $addon['Version'][0]['Version']['version'],
+                'created' => $addon['Version'][0]['Version']['created'],
+                'fileSize' => $addon['Version'][0]['File'][0]['size'] 
+            );
+        ?>
+        <h5 id="version-detail">
+          <?=$this->renderElement('addon_version_detail', $_version_data)?>
+        </h5>
+        <p id="release-notes" <?=$addon['Version'][0]['Translation']['releasenotes']['locale_html']?>>
+          <?=nl2br($addon['Version'][0]['Translation']['releasenotes']['string'])?>
+        </p>
+        <p>
+        <?php
+            $additionalLinks = array();
+            if ($addon['Addon']['viewsource'] == 1 && $this->controller->Session->check('User')) {
+              $additionalLinks[] = $html->link(_('addons_display_view_source'), "/files/browse/{$addon['Version'][0]['File'][0]['id']}");
+            }
+            if ($addon['Addon']['publicstats'] == 1) {
+              $additionalLinks[] = $html->link(_('addons_display_view_stats'), "/statistics/addon/{$addon['Addon']['id']}");
+            }
+
+            if (!empty($additionalLinks)) {
+              echo implode($additionalLinks, ' | ');
+            }
+        ?>
+        </p>
+        <? endif; ?>
+</div>
+      </div></div>
+      
+        <?php if (!empty($reviews)): ?>
+            <h3 id="reviews"><?=_('addons_display_header_reviews')?></h3>
+            <div class="article">
+                
+            <?php
+                foreach ($reviews as $rev_no => $review):
+                    $review['Translation'] = (array_key_exists(LANG, $review['Translation']) ?
+                        $review['Translation'][LANG] : current($review['Translation']));
+            ?>
+        
+            <div id="review-<?=$rev_no?>" class="hreview">
+                <?php if (!empty($review['Translation']['title']['string'])): ?>
+                    <h5><?=$review['Translation']['title']['string']?></h5>
+                <?php endif; ?>
+                <p class="description"><?=$review['Translation']['body']['string']?></p>
+                <p>
+                    <?=$this->renderElement('amo2009/stars',array('rating' => $review['Review']['rating']));?>
+                    <?php
+                        echo sprintf(___('addon_reviewed_by_u_on_d'),
+                            $html->linkUserFromModel($review['User']),
+                            strftime(_('date'), strtotime($review['Review']['created'])));
+                    ?>
+                </p>
+            </div>
+            
+        <?php
+            endforeach;
+        ?>
+         <? echo '<p>'.$html->link(sprintf(_('addons_display_see_all_reviews'), $review_count), '/reviews/display/'.$addon['Addon']['id'], array('class'=>'more-info')).'</p>'; ?>
+         
+        </div>
+      <?php endif; ?>
+      
+</div>
+<div class="secondary" role="secondary">
+    
+        <?php if(empty($isAuthor)) { ?>
+            <div class="highlight">
+          <form id="form-review" action="<?=$html->url('/reviews/add/'.$addon['Addon']['id'])?>" method="post">
+            <?=$html->hiddenSession() ?>       
+            <h3><?=_('addons_display_what_do_you_think')?></h3>
+            <?php if(!$loggedIn) { ?>
+                <p class="login">(<?php echo $html->link(_('header_navlink_login'), $html->login_url());?>)</p>
+            <?php } ?>
+            <p><input type="hidden" name="data[Review][id]"  value="" id="ReviewId"/></p>
+            <p><input type="hidden" name="data[Review][title]"  value=" " id="ReviewTitle"/></p>
+
+                <h4><?=_('addons_display_rate_it')?></h4>
+                
+                 <?php if(!$loggedIn) { ?>
+                        <p class="stars stars-0">&nbsp;</p>
+                <?php } else {?>
+                
+                <select id="review-rating" name="data[Review][rating]">
+                		<option></option>
+                			<option value="1" class="worst">*</option>
+        					<option value="2" class="bad">**</option>
+
+        					<option value="3" class="fair">***</option>
+        					<option value="4" class="good">****</option>
+        					<option value="5" class="best">*****</option>
+        				</select>
+                <?php } ?>
+                
+                <?=$html->tagErrorMsg('Review/rating', _('error_review_rating_required')) ?>
+            <p><textarea name="data[Review][body]"  cols="30" rows="6" id="short-review" <?php if(!$loggedIn) { ?>disabled="disabled" class="disabled" <?php } ?>></textarea></p>
+            <p>
+                <a href="<?=$html->url('/reviews/add/'.$addon['Addon']['id'])?>"><?=_('addons_display_detailed_review')?></a>
+                <button <?php if(!$loggedIn) { ?>disabled="disabled" <?php } ?> ><?=___('addons_display_review_submit')?></button>
+            </p>
+            
+             
+                <div id="addons-display-review-etiquette">
+                    <p>
+                        <?php echo ___('addons_display_review_etiquette'); ?>
+                    </p>
+                    <?php
+                    if ($has_supportemail || $has_supporturl) {
+                        echo '<p>'.sprintf(___('addons_display_review_see_support'), '#support').'</p>';
+                    }
+                    ?>
+                    <p><?=sprintf(___('addons_display_review_guidelines_link', '<a href="%s">Review Guidelines</a>'), $html->url('/pages/review_guide')) ?></p>
+                </div>
+          </form> 
+          </div>
+          <?php } ?>
+    
+  
+
+<div class="highlight">
+
+  <?php 
+  if (is_array($relatedTags)) {
+      foreach ($relatedTags as $tag) {
+          echo $html->link(sprintf(_('addons_display_see_all_addons'),$tag['Translation']['name']['string']), '/browse/' . "type:" . $tag['Tag']['addontype_id'] . '/' . "cat:" . $tag['Tag']['id'], array('class' => 'more-info')) . "\n";
+      }
+  }
+  ?>
+
+ <?php if (count($authorAddons) > 1): ?>
+ <h4 class="other-author-addons"><?=sprintf(n___('addons_display_other_addons_by', 'addons_display_other_addons_by', count($addon['User'])),
+                $html->linkUsersFromModel($addon['User'], 0));?>
+ </h4>
+ <div class="prose">
+     <ul>
+      <?php
+         if (count($authorAddons) > 3) {
+             echo '<form id="addons-author-addons" method="get" action="">';
+             echo '<select id="addons-author-addons-select" name="addons-author-addons-select" onchange="this.form.submit()">';
+             echo $this->renderElement('addon_author_addons', array('tag' => 'option'));
+             echo '</select>';
+             echo '<input class="hidden" type="submit" value="'._('addons_author_addons_submit').'"/>';
+             echo '</form>';
+         } else {
+             echo $this->renderElement('addon_author_addons', array('tag' => 'li'));
+         }
+      ?>
+      </ul>
+ </div>
+ 
+ <?php endif; ?>
+
+</div>
+<!-- /#more-addons-->
+
+    <div class="highlight collections-add prose">
+        <h3><?=___('addons_display_header_collections')?></h3>
+
+        <?php if (empty($pop_collections)): ?>
+            <p><?=___('addons_display_nocollections')?></p>
+        <?php else: ?>
+            <ul>
+                <?php foreach($pop_collections as &$_coll): ?>
+                    <li><?=$link->collection($_coll)?></li>
+                <?php endforeach; ?>
+            <?php if (($_othercolls = $collection_count - count($pop_collections)) > 0): ?>
+                <li>
+                    <?=sprintf(n___('addons_display_collections_more', 'addons_display_collections_more', $_othercolls), $_othercolls)?>
+                </li>
+        
+        <?php endif; ?>
+        </ul>
+        <?php endif; ?>        
+        <?php if ($loggedIn): ?>
+        <form action="<?= $html->url('/collections/addtocollection') ?>" method="post" id="coll_publish">
+            <div>
+            <h3><label for="publish_to"><?=___('addons_display_collection_add')?></label></h3>
+            <?=$html->link(___('addons_display_collection_whatsthis'), '/collections/')?>
+            <?=$html->hiddenSession() ?>
+            <input name="data[addon_id]" type="hidden" value="<?= $addon['Addon']['id'] ?>" />
+            <select name="data[collection_uuid]" id="publish_to">
+                <option value="" selected="selected"><?=___('addons_display_collection_add_select_one')?></option>
+                <?php foreach ($userCollections as $collection): ?>
+                <option value="<?=$collection['Collection']['uuid'] ?>"><?=$collection['Translation']['name']['string'] ?></option>
+                <?php endforeach; ?>
+                <option value="new"><?=___('addons_display_collection_add_new')?></option>
+            </select>
+            <button><?=___('addons_display_collection_add_submit')?></button>
+            </div>
+        </form>
+        <?php endif; ?>
+    </div>
+
+
+</div>
+<script type="text/javascript" charset="utf-8">
+    $(function(){
+        addons_display.init({
+            jsonURL: '<?=$html->url('/collections/json')?>',
+            collViewURL: '<?=$html->url('/collection/')?>',
+            loggedIn: <?=(int)$loggedIn?>
+            });
+            $("a[rel=jquery-lightbox]").lightBox({
+                overlayOpacity: 0.6,
+                imageBlank: "<?= $html->urlImage('jquery-lightbox/lightbox-blank.gif') ?>",
+                imageLoading: "<?= $html->urlImage('jquery-lightbox/lightbox-ico-loading.gif')?>",
+                imageBtnClose: "<?= $html->urlImage('jquery-lightbox/close.png')?>",
+                imageBtnPrev: "<?= $html->urlImage('jquery-lightbox/goleft.png')?>",
+                imageBtnNext: "<?= $html->urlImage('jquery-lightbox/goright.png')?>",
+                containerResizeSpeed: 350
+            });
+        
+    });
+</script>
+<!-- /#content -->
+

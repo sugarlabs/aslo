@@ -1,0 +1,87 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Justin Scott <fligtar@gmail.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" version="-//W3C//DTD XHTML 1.1//EN" xml:lang="<?=LANG?>" lang="<?=LANG?>" dir="<?=TEXTDIR?>">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <base target="_top">
+    <?=$html->css('rustico')?>
+    <link rel="search" type="application/opensearchdescription+xml" href="<?=$html->url('/AMOSearch.xml', null, false)?>" title="Mozilla Add-ons" />
+    <link rel="shortcut icon" href="<?=$html->url('/img/favicon.ico', null, false)?>" type="image/x-icon" />
+    <?php
+        if (!empty($cssAdd)) {
+            foreach ($cssAdd as $css) {
+                $url = $html->css($css);
+                echo "{$url}\n";
+            }
+        }
+        if (!empty($rssAdd)) {
+            foreach ($rssAdd as $rss) {
+                if (is_array($rss)) {
+                    $rssurl = $rss[0];
+                    $rsstitle = $rss[1];
+                } else {
+                    $rssurl = $rss;
+                    $rsstitle = 'RSS';
+                }
+                echo '<link rel="alternate" type="application/rss+xml" title="'.$rsstitle.'" href="'.$html->url($rssurl).'"/>'."\n";
+            }
+        }
+        if (!empty($jsAdd)) {
+            foreach ($jsAdd as $js) {
+                $jslink = $javascript->link($js);
+                echo "{$jslink}\n";
+            }
+        }
+        if (!empty($jsLocalization) && is_object($localization)) {
+            echo $localization->jsLocalization($jsLocalization);
+        }
+    ?>
+	<title><?=$title_for_layout?></title>
+</head>
+
+<body id="mozilla-com">
+
+<?=$content_for_layout ?>
+
+</body>
+</html>

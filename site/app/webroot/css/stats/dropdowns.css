@@ -1,0 +1,408 @@
+.plot-dropdown {
+    border: 2px solid #D8DCDF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    float: left;
+    height: 12px;
+    width: 153px;
+    padding: 2px;
+    z-index: 12;
+    margin: 2px 5px;
+}
+.html-rtl .plot-dropdown {
+    float: right;
+}
+.plot-dropdown.menu-open {
+    -moz-border-radius-bottomright: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+}
+.plot-dropdown a {
+    text-decoration: none;
+    color: #333333;
+    cursor: pointer;
+}
+.plot-dropdown .colorbox,
+.plot-legend .colorbox {
+    width: 10px;
+    height: 10px;
+    background: #ddddff;
+    border: 1px solid gray;
+    float: left;
+}
+.html-rtl .plot-dropdown .colorbox,
+.html-rtl .plot-legend .colorbox {
+    float: right;
+}
+.plot-dropdown .colorbox.removable:hover {
+    background: gray url('../../img/stats/x.png') no-repeat top left !important;
+}
+.plot-dropdown:hover,
+.plot-dropdown ul:hover {
+    border-color: #99CC99;
+}
+.plot-dropdown .selected {
+    background: transparent url('../../img/arr-otherapps-open.png') no-repeat 98% 50%;
+    float: left;
+    width: 92%;
+    margin-top: -3px;
+    height: 18px;
+}
+.html-rtl .plot-dropdown .selected {
+    float: right;
+    background-position: 2% 50%;
+}
+.plot-dropdown .selected .selected-text {
+    float: left;
+    padding-left: 5px;
+    width: 85%;
+    overflow: hidden;
+    height: 17px;
+}
+.html-rtl .plot-dropdown .selected .selected-text {
+    float: right;
+    padding-left: auto;
+    padding-right: 5px;
+}
+.plot-dropdown .selected .selected-prefix {
+    font-size: 10px;
+    color: #006600;
+}
+.plot-dropdown .selected .selected-name {
+    padding-left: 2px;
+}
+.html-rtl .plot-dropdown .selected .selected-name {
+    padding-left: 0;
+    padding-right: 2px;
+}
+.plot-dropdown ul {
+    display: none;
+    position: absolute;
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0 13px;
+    background-color: #FFFFFF;
+    border: 2px solid #D8DCDF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    width: 140px;
+    z-index: 1100;
+}
+.plot-dropdown ul.scrolling {
+    max-height: 250px;
+    overflow: auto;
+}
+.plot-dropdown ul.level1 {
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 0px;
+    -webkit-border-top-left-radius: 0px;
+    -webkit-border-top-right-radius: 0px;
+}
+.plot-dropdown ul.level2 {
+    margin-left: 155px;
+    margin-top: 30px;
+}
+.plot-dropdown ul.level3 {
+    margin-left: 297px;
+    margin-top: 47px;
+}
+.plot-dropdown ul li a {
+    display: block;
+    overflow: hidden;
+    padding-left: 2px;
+}
+.plot-dropdown ul li a.active-item {
+    background-color: #D8DCDF;
+}
+.plot-dropdown ul li a:hover {
+    background-color: #D8DCDF;
+}
+.plot-dropdown .none {
+    color: #D8DCDF;
+}
+.plot-dropdown a:hover .none {
+    color: #FFFFFF;
+}
+.plot-dropdown .submenu a {
+    background: transparent url('../../img/arr-otherapps-closed.png') 128px 50% no-repeat;
+}
+.plot-dropdown .menu-divider {
+    border: 1px solid #D8DCDF;
+}
+.plot-dropdown ul:hover .menu-divider {
+    border: 1px solid #99CC99;
+}
+
+
+.plot-dropdown.toggle ul {
+    margin-left: -4px;
+    width: 157px;
+}
+.plot-dropdown.toggle ul li a {
+    min-height: 18px;
+}
+.plot-dropdown.toggle ul a .item-toggle-icon {
+    float: left;
+    width: 20px;
+    height: 18px;
+}
+.plot-dropdown.toggle ul a .item-name {
+    padding-left: 22px;
+    display: block;
+}
+.plot-dropdown.toggle ul li.checked a .item-toggle-icon {
+    background: url('../../img/stats/tick.png') center center no-repeat;
+}
+
+.plot-dropdown.toggle ul li.count a .item-toggle-icon {
+    width: 10px;
+    height: 10px;
+    border: 1px solid gray;
+    background: none;
+    margin: 4px;
+}
+.plot-dropdown.toggle ul li.checked.count a .item-toggle-icon {
+    background: #000000;
+}
+
+.plot-dropdown.toggle ul li.events-firefox a .item-toggle-icon {
+    background: url('../../img/developers/firefox.png') center center no-repeat;
+    opacity: .3;
+}
+.plot-dropdown.toggle ul li.checked.events-firefox a .item-toggle-icon {
+    opacity: 1;
+}
+.plot-dropdown.toggle ul li.events-thunderbird a .item-toggle-icon {
+    background: url('../../img/developers/thunderbird.png') center center no-repeat;
+    opacity: .3;
+}
+.plot-dropdown.toggle ul li.checked.events-thunderbird a .item-toggle-icon {
+    opacity: 1;
+}
+.plot-dropdown.toggle ul li.events-addon a .item-toggle-icon {
+    opacity: .3;
+    background: none;
+    text-align: center;
+}
+.plot-dropdown.toggle ul li.checked.events-addon a .item-toggle-icon {
+    opacity: 1;
+    background: none;
+}
+.plot-dropdown.toggle ul li.add-plot a .item-toggle-icon {
+    background: url('../../img/stats/chart_curve_add.png') center center no-repeat;
+}
+.plot-dropdown.toggle ul li.resize a .item-toggle-icon {
+    background: transparent url('../../img/icn-expand.png') 4px 3px no-repeat;
+}
+.plot-dropdown.toggle ul li.checked.resize a .item-toggle-icon {
+    background: transparent url('../../img/icn-collapse.png') 4px 3px no-repeat;
+}
+.plot-dropdown.toggle ul li.rss a .item-toggle-icon {
+    background: url('../../img/stats/rss16x16.png') center center no-repeat;
+}
+.plot-dropdown.toggle ul li.csv a .item-toggle-icon {
+    background: url('../../img/stats/page_white_go.png') center center no-repeat;
+}
+
+
+.plot-dropdown.big-menu {
+    height: 20px;
+    font-size: 15px;
+    width: 165px;
+}
+.plot-dropdown.big-menu.menu-open,
+.plot-dropdown.toggle.menu-open {
+    -moz-border-radius-bottomright: 0px;
+    -moz-border-radius-bottomleft: 0px;
+    -webkit-border-bottom-right-radius: 0px;
+    -webkit-border-bottom-left-radius: 0px;
+}
+.plot-dropdown.big-menu .selected {
+    width: 100%;
+    margin-top: -1px;
+    height: 23px;
+}
+.plot-dropdown.big-menu .selected .selected-text {
+    height: 22px;
+}
+.plot-dropdown.big-menu ul {
+    width: 169px;
+    margin: 22px 0 0 -4px;
+}
+.html-rtl .plot-dropdown.big-menu ul {
+    margin-left: 0;
+    margin-right: -4px;
+}
+.plot-dropdown.big-menu ul li a {
+    padding-left: 8px;
+}
+.html-rtl .plot-dropdown.big-menu ul li a {
+    padding-left: 0;
+    padding-right: 8px;
+}
+.plot-dropdown.big-menu ul li.indented a {
+    padding-left: 23px;
+}
+.html-rtl .plot-dropdown.big-menu ul li.indented a {
+    padding-left: 0;
+    padding-right: 23px;
+}
+
+#options.plot-dropdown {
+    width: 35px;
+    padding: 4px;
+}
+#options.plot-dropdown .selected .selected-text {
+    padding: 0;
+}
+#options.plot-dropdown .selected {
+    width: 96%;
+}
+#options.plot-dropdown ul {
+    margin-left: -120px;
+}
+
+#group-by-selector {
+    width: 163px;
+    white-space: nowrap;
+}
+#group-by-selector .selected {
+    width: 98%;
+}
+#group-by-selector_group-by-selection-menu {
+    padding: 0 0.5em 0 0.5em;
+    width: auto;
+}
+
+
+#plot-options #plot-selector-area {
+    width: 180px;
+    float: left;
+}
+.html-rtl #plot-options #plot-selector-area {
+    float: right;
+}
+#plot-options #options-area {
+    width: 100px;
+    float: right;
+}
+.html-rtl #plot-options #options-area {
+    float: left;
+}
+#plot-options #plot-selection {
+    width: 620px;
+    float: left;
+}
+.html-rtl #plot-options #plot-selection {
+    float: right;
+}
+
+#plot-options .options {
+    float: right;
+}
+
+#weeks-legend {
+    display: none;
+    border: 2px solid #D8DCDF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    float: left;
+    margin-left: 160px;
+}
+
+#summary-legend {
+    border: 2px solid #D8DCDF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    float: left;
+    margin-left: 120px;
+}
+.html-rtl #summary-legend {
+    float: right;
+    margin-left: auto;
+    margin-right: 120px;
+}
+.plot-legend .colorbox {
+    margin: 2px;
+}
+.plot-legend {
+    float: left;
+    padding: 2px;
+}
+.html-rtl .plot-legend {
+    float: right;
+}
+.plot-legend .plot-name {
+    float: left;
+    margin: -2px 10px 0 2px;
+}
+.html-rtl .plot-legend .plot-name {
+    float: right;
+    margin-left: 10px;
+    margin-right: 2px;
+}
+
+#summary-options {
+    border: 2px solid #D8DCDF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    float: right;
+}
+.html-rtl #summary-options {
+    float: left;
+}
+.zoom-button {
+    float: left;
+    width: 16px;
+    height: 16px;
+    background-color: #EEEEEE;
+    padding: 2px 3px;
+    cursor: pointer;
+}
+.zoom-button:hover {
+    background-color: #99CC99;
+}
+.zoom-button.disabled {
+    opacity: .2;
+    cursor: default;
+}
+.zoom-button.disabled:hover {
+    background-color: #EEEEEE;
+}
+#zoom-in {
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-right: 1px solid #D8DCDF;
+}
+#zoom-out {
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+}
+
+.plot-button {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background-color: #D8DCDF;
+    float: left;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+.plot-button:hover {
+    background-color: #99CC99 !important;
+}
+
+#timeplot-container {
+    min-height: 174px;
+    clear: both;
+}
+.timeplot-container {
+    height: 150px;
+}
+.timeplot {
+    height: 150px;
+    border: none !important;
+}
+

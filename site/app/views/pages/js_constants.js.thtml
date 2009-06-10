@@ -1,0 +1,108 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+// Used for firefox version numbers
+vendor('product-details/firefoxDetails.class');
+
+/**
+ * Java Script Constants to be imported into javascript files
+ * to be used for things like paths, not isAdmin ;)
+ */
+header('Content-Type: application/x-javascript');
+$this->layout = null; // no layout!
+
+?>
+var BASEDIR = "<?=$html->url('/', null, false, false) ?>";
+var LANG = "<?=LANG?>";
+var APP_ID = "<?=APP_ID?>";
+var APP_SHORTNAME = "<?=APP_SHORTNAME?>";
+var APP_PRETTYNAME = "<?=APP_PRETTYNAME?>";
+var LATEST_FIREFOX_VERSION = '<?=LATEST_FIREFOX_VERSION?>';
+var LATEST_FIREFOX_DEVEL_VERSION = '<?=LATEST_FIREFOX_DEVEL_VERSION?>';
+var APP_FIREFOX = '<?=APP_FIREFOX?>';
+var APP_SEAMONKEY = '<?=APP_SEAMONKEY?>';
+var APP_THUNDERBIRD = '<?=APP_THUNDERBIRD?>';
+var APP_SUNBIRD = '<?=APP_SUNBIRD?>';
+var APP_FENNEC = '<?=APP_FENNEC?>';
+<?php /* generic constants */ ?>
+var KEYCODE_ENTER = 13;
+<?php
+$constants = array(
+    'addOnNotAvailableForPlatform' => ___('addon_not_available_for_platform'),
+    'error_opensearch_unsupported' => ___('addons_searchengines_error_mozilla_browser_required'),
+
+    /* Fallback from 3/19/08 */
+    'app_compat_update_firefox' => ___('app_compat_update_firefox'),
+    'app_compat_try_old_version' => ___('app_compat_try_old_version'),
+    'app_compat_older_firefox_only' => ___('app_compat_older_firefox_only'),
+    'app_compat_unreleased_version' => ___('app_compat_unreleased_version'),
+    'app_compat_older_version_or_ignore_check' => ___('app_compat_older_version_or_ignore_check'),
+
+    /* developers.js */
+    'devcp_js_upload_alert' => ___('devcp_js_upload_alert'),
+    'addons_status_public' => ___('addons_status_public'),
+    'addons_status_sandbox' => ___('addons_status_sandbox'),
+    'addons_status_pending' => ___('addons_status_pending'),
+    'devcp_js_img_move_down' => ___('devcp_js_img_move_down'),
+    'devcp_js_img_move_up' => ___('devcp_js_img_move_up'),
+    'devcp_js_option_owner' => ___('devcp_js_option_owner'),
+    'devcp_js_option_developer' => ___('devcp_js_option_developer'),
+    'devcp_js_option_viewer' => ___('devcp_js_option_viewer'),
+    'devcp_js_input_list_author' => ___('devcp_js_input_list_author'),
+    'devcp_js_sure_remove' => ___('devcp_js_sure_remove'),
+    'devcp_js_remove_author' => ___('devcp_js_remove_author'),
+    'devcp_js_a_cancel' => ___('devcp_js_a_cancel'),
+    'devcp_js_add_email' => ___('devcp_js_add_email'),
+    'devcp_js_img_remove_compat' => ___('devcp_js_img_remove_compat'),
+    'devcp_js_license_select' => ___('devcp_js_license_select'),
+    'devcp_js_license_text' => ___('devcp_js_license_text'),
+
+    /* Fallback from 4/14/08 */
+    'app_compat_ignore_check' => ___('app_compat_ignore_check'),
+
+    // collections
+    'collections_edit_submit' => ___('collections_edit_submit'),
+    'collections_edit_submit_deletecollection' => ___('collections_edit_submit_deletecollection'),
+
+    /* addons display page */
+    'addons_display_collection_publish_success' => ___('addons_display_collection_publish_success')
+);
+
+foreach ($constants as $var_name => $l10n_string) {
+    echo sprintf('var %s = "%s";'."\n", $var_name, addslashes($l10n_string));
+}

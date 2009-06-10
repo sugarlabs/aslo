@@ -1,0 +1,122 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+
+if (empty($policy))
+    $policy_index = 'eula';
+else
+    $policy_index = 'privacypolicy';
+?>
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div id="content" class="primary prose" role="main">
+
+  <h2 class="name"<?=$addon['Translation']['name']['locale_html']?>>
+    <?=$addon['Translation']['name']['string']?><?php if (empty($policy)) {?> <?=$addon['Version'][0]['Version']['version']?><? }?>
+  </h2>
+
+  <h3 class="author"> <?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addon['User'], 0);?></h3>
+
+  <?php if (empty($policy)) {?>
+      <div class="addon-policy-tagline">
+      <p<?=$addon['Translation']['name']['locale_html']?>><?=sprintf(_('addons_policy_eula_require'), $addon['Translation']['name']['string']);?></p> 
+      </div>
+  <?php }?>
+
+  <textarea readonly="readonly" cols="80" rows="20"<?=$addon['Translation'][$policy_index]['locale_html']?>><?=$addon['Translation'][$policy_index]['string']?></textarea>
+
+  <?php if (empty($policy)): ?>
+    <div id="addon-summary" class="condensed <?=$html->extraClass($addon)?>">
+    <?
+      global $browser_apps;
+      if (!in_array(APP_ID, $browser_apps)) {
+          $buttonMessage = ___('a_eula_download');
+      } else {
+          $buttonMessage = _('a_eula_install');
+      }
+      if (array_key_exists('collection_id', $_GET) && $this->controller->Collection->isValidUUID($_GET['collection_id'])) {
+          $_collection_uuid = $_GET['collection_id'];
+      } else {
+          $_collection_uuid = '';
+      }
+
+      $_install_render_options = array(
+                                  'addon'           => $addon,
+                                  'addonFiles'      => $addon['Version'][0]['File'],
+                                  'compatible_apps' => array(),
+                                  'collection_uuid' => $_collection_uuid,
+                                  'addonEULA'       => '', // override a EULA if it exists since this page is pulling double duty
+                                  'is_latest'       => $is_latest,
+                                  'platforms'       => $platforms,
+                                  'buttonMessage'   => $buttonMessage,
+                                  'is_eula_page'    => true
+                              );
+      echo $this->renderElement('amo2009/install', $_install_render_options);
+      ?>
+      </div>
+      <!-- /.addon-summary -->
+      
+      <p class="policy-link"><?=$html->link(_('a_cancel_installation'), "/addon/{$addon['Addon']['id']}");?></p>
+  <?php endif;?>
+
+  <p class="policy-link"><?=$html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></p>
+</div>
+<!-- /#primary -->
+
+<script type="text/javascript">
+$( function() {
+      if (window.location.href.match(/confirmed/)) {
+        var bt = $("div#content").find('.install-button a');
+        var href = $(bt).attr('href');
+          if (href)
+              if (href.match(/collection_id/)) {
+                  $(bt).attr('href', href + "&confirmed");
+              } else {
+                  $(bt).attr('href', href + "?confirmed");
+              }
+
+        var onclick = $(bt).attr('onclick');
+          if (onclick && onclick.match(/\.xml'\);$/))
+              $(bt).attr('onclick', onclick.replace(/\.xml'\);$/, ".xml?confirmed');"));
+      }
+   });
+</script>

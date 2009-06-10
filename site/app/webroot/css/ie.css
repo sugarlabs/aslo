@@ -1,0 +1,64 @@
+/*----------------------------------------------------------------------------
+CSS file for all versions of IE for Addons.mozilla.org
+Created by Craig Cook - focalcurve.com
+				on November 20, 2007
+-----------------------------------------------------------------------------*/
+
+/* I can hasLayout */
+#content-main, .addon .vex, .addon .secondary-container { zoom: 1; }
+#categories h3, #categories h3 span { zoom: 1; }
+#categories a, #categories p { zoom: 1; }
+#addon-info, #addon-advanced { zoom: 1; }
+.install-button, .pagination, .addon-reviews, .addon-versions { zoom: 1; }
+.browse-list a, #dictionaries { zoom: 1; }
+.collections li.coll-addon { zoom: 1; }
+
+/* Conflicts with container padding in spite of being positioned out of normal flow. */
+.main .vex { width: 100%; position: static; padding: 0 20px 0 240px; margin: 0 -20px -10px -240px; }
+.main .vex span { position: relative; left: -240px; }
+.sub .vex { padding: 0 20px; left: -1px; }
+.sub .vex span { margin-left: -20px; }
+
+#addon-summary .vex { width: 100%; left: 240px; bottom: 0; padding: 0 20px 0 240px; margin: 0 -20px 0 -240px; }
+#addon-summary .vex span { position: relative; left: -240px; }
+
+#addon-listing .addon .vex { width: 100%; left: 0; padding: 0 240px; margin: 0 -240px 0 0; }
+#addon-listing .addon .vex span { position: relative; left: -240px; }
+
+/* Some special rules for the side-by-side floats. */
+#content.wide #recommended .addon { padding-left: 25%; width: 22%; }
+#content.wide #recommended .addon .name { width: 80%; }
+#content.wide #recommended .addon .vex { padding: 0; }
+#content.wide #recommended .addon .vex span { left: 0; margin-right: 10px; }
+
+/* Size adjustements */
+.html-ltr #search-element {left: 18%}
+#search-form #search-submit { width: 4em; }
+#addon-listing .exp .exp-loggedout,
+#addon-listing .exp .exp-confirmed { width: 160px; }
+#rate-it legend span { left: -6px; }
+
+#content.landing #content-extra { width: 21%; }
+#content.landing-with-slider #content-extra { width: 24%; }
+.browse-list { padding-bottom: 15px; }
+#content.landing.browse #content-extra { width: 48%; }
+#content.landing-with-slider #secondaries .sub { width: 31.0%; margin-right: 2.5%; }
+
+/* Position adjustments */
+.html-ltr #search-form { left: 18%; }
+#advanced-search-toggle { top: -5px; }
+#advanced-search-toggle div { position: relative; top: 2px; height: 4px }
+#advanced-search-toggle #toggle-inner { background-position-y: -88px; padding-left: 0; }
+#page-title { z-index: 1; }
+#nav-user { position: relative; }
+#nav-access { z-index: 99; }
+#order-by #order-label { float: left; }
+
+/* Padding adjustments */
+#order-by button { padding: 4px 2px; }
+#order-by #order-label { padding: 8px 2px; }
+
+/* Type adjustments */
+#language { font-size: 95%; }
+
+.install-button a strong { cursor: pointer; }

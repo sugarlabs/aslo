@@ -1,0 +1,15 @@
+<?php
+if (!defined('NO_MICROTIME'))
+    define('NO_MICROTIME', true);
+header('Content-type: text/xml');
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+echo '<data>';
+
+if (!empty($xml)) {
+    echo implode($xml, "\n");
+}
+
+echo '</data>';
+
+?>

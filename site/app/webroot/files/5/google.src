@@ -1,0 +1,48 @@
+# Mycroft Search Plugin for Mozilla, Firebird, Netscape 6+, Beonix browsers 
+# Mycroft Homepage: http://mycroft.mozdev.org
+
+# SearchSite: Google  (www.google.com)
+# Based on GoogleUK originally written by amitp@google.com, wolfgang.schroedl@gmx.net &  juliusross@mac.com 
+# Status: Working Full
+#
+# Country: WW
+# Language: en
+# Category: General
+#
+# Original Author: amitp+mozilla@google.com
+# Last updated December 14, 2005 (CC, TIDY)
+
+<search 
+  version = "7.1"
+  name="Google US"
+  description="Google Search"
+  method="GET"
+  action="http://www.google.com/search"
+  searchform="http://www.google.com"
+  queryCharset="UTF-8"
+>
+
+<input name="q" user>
+<input name="le" value="en">
+<input name="btnG" value="Google+Search">
+<input name="sourceid" value="Mozilla-search">
+
+<inputnext name="start" factor="20">
+<inputprev>
+
+<interpret 
+  browserResultType="result" 
+  charset = "UTF-8"
+  resultListStart="<!--a-->" 
+  resultListEnd="<!--z-->" 
+  resultItemStart="<!--m-->" 
+  resultItemEnd="<!--n-->"
+>
+
+</search>
+
+<BROWSER
+  update="http://mycroft.mozdev.org/update.php/id2/google.src" 
+  updateIcon="http://mycroft.mozdev.org/update.php/id2/google.gif"
+  updateCheckDays="7"
+>

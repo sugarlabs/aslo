@@ -1,0 +1,276 @@
+/* ***** BEGIN LICENSE BLOCK *****
+ *   Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is bandwagon.
+ *
+ * The Initial Developer of the Original Code is
+ * Mozilla Corporation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s): David McNamara
+ *                 Brian King
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+#bandwagon-link-splitter {
+  border-left: 1px solid #7A8490;
+  border-right: 1px solid #FEFEFE;
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
+
+#bandwagon-sidebar-splitter {
+  -moz-border-start: none;
+  -moz-border-end: 1px solid #404040;
+  min-width: 1px;
+  width: 1px;
+  background-image: none !important;
+}
+
+#bandwagon-collections-list {
+  margin-top: 0;
+  margin-left: 0;
+}
+
+#bandwagon-addons-list {
+  border: 2px solid;
+  border-left: 0px !important;
+  -moz-border-top-colors: ThreeDShadow ThreeDDarkShadow;
+  -moz-border-right-colors: ThreeDHighlight ThreeDLightShadow;
+  -moz-border-bottom-colors: ThreeDHighlight ThreeDLightShadow;
+  margin: 0;
+  /*overflow: auto;*/
+}
+
+#bandwagon-collection-title {
+  font-size: 150%;
+}
+
+#bandwagon-collections-notification {
+  padding-top: 0.5em;
+}
+
+#bandwagon-collection-description {
+  margin-bottom: 5px;
+}
+
+#bandwagon-collection-title,
+#bandwagon-collection-description {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+bandwagonCollection {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  -moz-padding-start: 7px;
+  -moz-padding-end: 7px;
+  min-height: 25px;
+}
+
+bandwagonCollection[view="settings"] {
+  padding-top: 0;
+  padding-bottom: 0;
+  -moz-padding-start: 0;
+  -moz-padding-end: 0;
+  min-height: 0;
+}
+
+bandwagonCollection[selected="true"] {
+  background-color: -moz-cellhighlight;
+  color: -moz-cellhighlighttext;
+}
+
+bandwagonCollection[preview="true"] label[anonid="name"] {
+  font-style: italic;
+}
+
+bandwagonCollection[type="autopublisher"] {
+    /* TODO */
+}
+
+bandwagonCollection[styleWithSeparator="true"] {
+  border-top: 2px dashed black;
+}
+
+bandwagonCollection image[anonid="star"] {
+    /* to enable star on writable images comment following */
+    display: none;
+}
+
+richlistbox:focus > bandwagonCollection[selected="true"] {
+  background-color: Highlight;
+  color: HighlightText;
+}
+
+bandwagonCollection label[anonid="unread"] {
+  background-color: blue;
+  color: white;
+  min-width: 1.7em;
+  text-align: center;
+  -moz-border-radius: 40%;
+}
+
+bandwagonCollection[view="settings"] label[anonid="unread"] {
+  display: none;
+}
+
+bandwagonAddon,
+bandwagonAddonExpanded {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  -moz-padding-start: 7px;
+  -moz-padding-end: 7px;
+  min-height: 25px;
+  border-bottom: 1px dotted #C0C0C0;
+}
+
+bandwagonAddonExpanded {
+  background-color: -moz-cellhighlight;
+  color: -moz-cellhighlighttext;
+}
+
+richlistbox:focus > bandwagonAddonExpanded {
+  background-color: Highlight;
+  color: HighlightText;
+}
+
+bandwagonAddon[read="false"] {
+  background-color: #fdf2ab;
+  color: #585620;
+}
+
+bandwagonAddon .right, 
+bandwagonAddonExpanded .right { 
+  text-align: right;
+}
+
+bandwagonAddon .icon,
+bandwagonAddonExpanded .icon {
+  width: 32px;
+  height: 32px;
+  max-width: 32px;
+  max-height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+bandwagonAddon .name,
+bandwagonAddonExpanded .name {
+  font-size: 130%;
+}
+
+description[anonid="commentdesc"]
+{
+  font-style: italic;
+}
+
+label[anonid="dateadded"],
+label[anonid="addedby"]
+{
+  font-size: 90%;
+}
+
+bandwagonAddonExpanded .unindent {
+  margin-left: -1em;
+}
+
+bandwagonAddonExpanded .comments {
+  margin-top: 1em;
+}
+
+.addonIcon {
+  -moz-margin-end: 2px;
+  width: 32px;
+  height: 32px;
+}
+
+.addon-details {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  -moz-margin-start: 6px;
+  -moz-margin-end: 0;
+}
+
+.bandwagonThumbnailContainer {
+  background: window;
+  padding: 5px;
+  border: 2px solid ActiveBorder;
+  width: 135px;
+  min-height: 104px;
+  -moz-margin-end: 5px;
+}
+
+/*
+.bandwagonAddonThrobber {
+  -moz-margin-start: 5px;
+  width: 16px;
+  height: 16px;
+  list-style-image: url("chrome://global/skin/icons/loading_16.png");
+}
+*/
+
+.publishButton,
+[anonid="addtofirefox"]
+{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.userfeedback
+{
+  font-size: 150%;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.fs-info-panel
+{
+  margin: 20px;
+  overflow: auto;
+}
+
+.fs-info-panel-header
+{
+  margin-left: 0px;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.fs-info-panel-text
+{
+  margin-left: 0px;
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.error-text {
+  color: red;
+  width: 20em;
+}

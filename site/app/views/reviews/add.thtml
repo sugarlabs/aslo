@@ -1,0 +1,121 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+
+$this->viewVars['bodyclass'] = 'review_add';
+$this->layout = 'amo2009';
+?>
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div class="primary prose" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+    
+    <div id="content-main">
+    
+<h2><?=sprintf((@$this->data['Review']['id'] > 0) ? _('addon_review_edit_title') : _('addon_review_add_title'), $addon['Translation']['name']['string']); ?></h2>
+<? $reviewRating = @$this->data['Review']['rating']; ?>
+<?php echo sprintf(___('review_guidelines_short'), $html->url("/addon/{$addon['Addon']['id']}#support"), $html->url('/pages/review_guide')); ?>
+
+<? // if this is a developer reply, show the original review
+if (!empty($reply_to)) {
+    echo "<p>"._('addon_review_in_reply_to')."</p>";
+    ?>
+    <div class="corner-box">
+    <h3><?=$reply_to['Translation']['title']['string']?></h3>
+    
+    <div class="reviewed-on">
+        <?= sprintf(_('addon_reviewed_on_x_rated_y'), $html->linkUserFromModel($reply_to['User']), strftime(_('date'), strtotime($reply_to['Review']['created'])), $reply_to['Review']['rating'])?>
+    </div>
+    <?=nl2br($reply_to['Translation']['body']['string'])?>
+    </div>
+<? } ?>
+
+<? if (isset($errorMessage)):?>
+<div class="amo-form-error"><?= _('error_formerrors')?></div>
+<p></p>
+<? endif;?>
+
+<form action="<?=$html->entities($html->url())?>" method="post" class="amo-form corner-box" id="long-review">
+    <?=$html->hiddenSession() ?>       
+    <?=$html->hidden('Review/id'); ?>
+    <div>
+        <label class="amo-label-large" for="ReviewTitle"><?=_('addon_review_add_title_field')?></label>
+        <?=$html->input('Review/title');?>
+        <?=$html->tagErrorMsg('Review/title', _('error_field_required'))?>
+    </div>
+    <? if (empty($reply_to)): ?>
+    <div>
+        
+        <label class="amo-label-large rating" for="ReviewRating"><?=_('addon_review_add_rating_field')?></label>
+		<div class="stars degrade">
+            <p><input class="star" type="radio" name="data[Review][rating]" value="1" title="<?=_('addons_display_hate_it')?>" 
+            <?php if($reviewRating == 1) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_hate_it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="2" title="<?=_('addons_display_dont_like_it')?>"  
+            <?php if($reviewRating == 2) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_dont_like_it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="3" title="<?=_('addons_display_like_it')?>"  
+            <?php if($reviewRating == 3) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_like_it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="4" title="<?=_('addons_display_really_like_it')?>"
+            <?php if($reviewRating == 4) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_really_like_it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="5" title="<?=_('addons_display_love_it')?>" 
+            <?php if($reviewRating == 5) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_love_it')?></p>
+		</div>
+        <?=$html->tagErrorMsg('Review/rating', _('error_review_rating_required'))?>
+    </div>
+    <? endif; ?>
+    <div>
+        <label class="amo-label-large" for="ReviewBody"><?=_('addon_review_add_review_field')?></label>
+        <?=$html->textarea('Review/body', array('cols'=>50, 'rows'=>5));?>
+        <?=$html->tagErrorMsg('Review/body', _('error_field_required'))?>
+    </div>
+    <p></p>
+    <?=$html->submit(_('addon_review_add_submit'), array('class'=>'amo-submit'))?>
+</form>
+
+<div class="divider"><hr></div>
+
+<ul>
+    <li><?= $html->link(sprintf(_('addon_review_a_back_to_reviews'), $addon['Translation']['name']['string']), '/reviews/display/'.$addon['Addon']['id']); ?></li>
+    <li><?= $html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
+</ul>
+
+     </div>
+ </div>
+ <script type="text/javascript" charset="utf-8">
+ 	$(function(){ $('.stars').rating(); });
+ </script>

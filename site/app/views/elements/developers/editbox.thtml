@@ -1,0 +1,62 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div class="pitch">
+    <h4><?=$html->link($addon_name, '/developers/dashboard#addon-'.$addon_id)?></h4>
+    <ul class="actionbar">
+        <li class="displaypage"><?=$html->link(___('devcp_editbox_view_listing'), "/addon/{$addon_id}/")?></li>
+        <li class="edit<?=($action == 'edit' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_edit_addon'), "/developers/addon/edit/{$addon_id}/")?></li>
+        <?php if ($action == 'edit'): ?>
+        <li class="container"><ul>
+        <li class="edit-authors<?=($subaction == 'authors' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_authors'), "/developers/addon/edit/{$addon_id}/authors")?></li>
+        <li class="edit-categories<?=($subaction == 'categories' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_categories'), "/developers/addon/edit/{$addon_id}/categories")?></li>
+        <li class="edit-descriptions<?=($subaction == 'descriptions' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></li>
+        <li class="edit-properties<?=($subaction == 'properties' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_properties'), "/developers/addon/edit/{$addon_id}/properties")?></li>
+        </ul></li>
+        <?php endif; ?>
+        <li class="status<?=($action == 'status' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_change_status'), "/developers/addon/status/{$addon_id}/")?></li>
+        <li class="statistics"><?=$html->link(___('devcp_editbox_statistics_dashboard'), "/statistics/addon/{$addon_id}/")?></li>
+        <li class="versions<?=($action == 'versions' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_versions'), "/developers/versions/{$addon_id}/")?></li>
+        <?php if ($action == 'versions'): ?>
+        <li class="container"><ul>
+        <li class="versions-add<?=($subaction == 'add' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_new_version'), "/developers/versions/add/{$addon_id}")?></li>
+        </ul></li>
+        <?php endif; ?>
+        <li class="previews<?=($action == 'previews' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_screenshots'), "/developers/previews/{$addon_id}/")?></li>
+    </ul>
+</div>

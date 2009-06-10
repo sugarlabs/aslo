@@ -1,0 +1,122 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   l.m.orchard <lorchard@mozilla.com> (Original Author)
+ *   Ryan Doherty <rdoherty@mozilla.com>
+ *   
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+
+<div class="section-teaser featured">
+    <div class="featured-inner">
+        <div class="teaser-header">
+            <ol>
+                <li><a href="#t-introduction"><?=___('addons_home_introduction_name','Introduction')?></a></li>
+                <?php foreach($teaser_collections_categories as $id => $tc): ?>
+                    <?php if(isset($teaser_collection_promos[$id])): ?>
+                        <li><a href="#t-<?=$tc['title']?>"><?=$tc['title']?></a></li>
+                    <?php endif; ?>
+                <?php endforeach ?>
+            </ol>
+        </div>
+        <ol class="teaser-items">
+            <li id="t-introduction">
+            <h2><?=___('addons_home_introduction_header','What are Add-ons?')?></h2>
+                
+                <div class="column-wrapper">
+                    <div class="first column">
+                        <h3><img src="<?=$html->url('/img/amo2009/illustrations/extras.gif', null, false, false)?>" alt="Extras" /></h3>
+                        <p><?=___('addons_home_introduction_extras',
+                            '<strong>Over 5000 free extras</strong> that let you to customize and extend Firefox to meet your needs.')?></p>
+                    </div>
+                
+                    <div class="column">
+                        <h3><img src="<?=$html->url('/img/amo2009/illustrations/themes.gif', null, false, false)?>" alt="Themes" /></h3>
+                        <p><?=___('addons_home_introduction_themes',
+                            'Toolbars, themes and search providers that <strong>help you perform common tasks.</strong>')?></p>
+                    </div>
+                
+                    <div class="column">
+                        <h3><img src="<?=$html->url('/img/amo2009/illustrations/install.gif', null, false, false)?>" alt="Install" /></h3>
+                        <p><?=___('addons_home_introduction_install',
+                            '<strong>Easy to install</strong>, get notified when updates are available.')?></p>
+                    </div>
+                </div>
+                
+            </li>
+
+            <?php foreach($teaser_collections_categories as $id => $tc): ?>
+                <?php if(isset($teaser_collection_promos[$id])): ?>
+                    <li id="t-<?=$tc['title']?>" class="addon-view">
+                        <h2><?=$tc['tagline']?></h2>
+
+                        <?php foreach ($teaser_collection_promos[$id] as $idx=>$addon): ?>
+                            <?php if ($idx>=3) break; ?>
+                            <?  $flags = array($html->byStatus($addon, array('experimental' => 'experimental', 'recommended' => 'recommended', 'default' => 'default'))); ?>
+                            <div class="<?=(0==$idx)?'first ':''?>column">
+                                <div class="column-inner item <?=join(' ', $flags)?>">
+                                <img src="<?=$this->controller->Image->getAddonIconURL($addon['Addon']['id'])?>" 
+                                        alt="<?=$addon['Translation']['name']['string']?>" 
+                                        width="32" height="32" class="icon" />
+                                    <h3><a title="<?=___('addons_title_tooltip') ?>" 
+                                        href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><?=$addon['Translation']['name']['string']?></a></h3>
+                                    <p><?=$html->truncateChars(80, $addon['Translation']['summary']['string'], true)?></p>
+                                    <p>
+                                        <?=$this->renderElement('amo2009/install', array(
+                                            'flags' => $flags, 
+                                            'addon' => $addon
+                                        ))?>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endforeach ?>
+                        
+                        <?php if (!empty($promoted_collections[$id]['Collection']['uuid'])): ?>
+                            <?php $collection = $promoted_collections[$id];?>
+                            <p class="lead"><?=sprintf(
+                                ___('addons_home_introduction_collection_link', 
+                                    'Like these? Find more add-ons in %1$s.'),
+                                $link->collection(array(
+                                    'Collection'  => array('uuid'=>$collection['Collection']['uuid'], 'nickname'=>$collection['Collection']['nickname']),
+                                    'Translation' => array('name'=>array('string'=>$collection['Translation']['name']['string']))
+                                ))
+                            )?></p>
+                        <?php endif; ?>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach ?>
+
+        </ol>
+    </div>
+</div>

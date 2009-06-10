@@ -1,0 +1,105 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+?>
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div class="primary" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+    
+<?php
+    //banner warning messages for display
+    if(isset($_GET['m'])) {
+        switch ($_GET['m']) {
+            case 1:
+            $warn_msg = sprintf(_('users_login_sandbox_display_warning'), '/pages/policy');
+            break;
+            case 2:
+            $warn_msg = sprintf(_('users_login_sandbox_page_warning'), '/pages/policy');
+            break;
+            default:
+            $warn_msg = null;
+        }
+    }
+    if (!empty($warn_msg))
+        echo $this->renderElement('notification', array('type' => 'info', 'description' => $warn_msg));
+?>
+
+<?php if ($loginerror)
+        echo $this->renderElement('notification', array('type' => 'error', 'description' => _('error_username_or_pw_wrong')));
+?>
+<p></p>
+<form action="<?=$html->entities($html->url())?>" method="post" class="amo-form highlight">
+    <?=$html->hiddenSession() ?>       
+    <div>
+        <? 
+        $redir = (isset($_GET['to'])) ? urldecode($_GET['to']) : urldecode(@$this->data['Login']['referer']);
+        $redir = $html->entities($redir);
+        $redir = html_entity_decode($redir);
+        echo $html->hidden('Login/referer', array('value' => $redir));
+        ?>
+    </div>
+    <div class="container">
+        <label class="amo-label-large" for="LoginEmail"><?=_('user_form_email')?></label>
+        <?=$html->input('Login/email') ?>
+    </div>
+    <div class="container">
+        <label class="amo-label-large" for="LoginPassword"><?=_('user_form_password')?></label>
+        <?=$html->password('Login/password') ?>
+    </div>
+    <div class="container">
+        <?=$html->input('Login/remember', array('type' => 'checkbox', 'value' => '1', 'class' => 'amo-remember'))?>
+        <label for="LoginRemember"><?=___('user_form_remember_me')?></label>
+    </div>
+    <div class="container">
+        <?=$html->submit(_('user_form_submit_login'), array('class'=>'amo-submit')); ?>
+    </div>
+</form>
+<script type="text/javascript" charset="utf-8">
+    // focus email field
+    $(document).ready(function() { $('#LoginEmail').focus(); });
+</script>
+
+<ul>
+    <li><?= $html->link(_('user_login_register_link'), '/users/register'); ?></li>
+    <li><?= $html->link(_('user_pwreset_link'), '/users/pwreset',null,null,false); ?></li>
+</ul>
+</div><!-- /.primary -->

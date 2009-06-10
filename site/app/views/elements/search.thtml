@@ -1,0 +1,325 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Mike Morgan <morgamic@mozilla.com> (Original Author)
+ *   Cameron Roy <licensing@justcameron.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   Chris Pollett <cpollett@gmail.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<?php
+/**
+ * This element uses the following local variables:
+ * $query: query string to be displayed in the text box, defaults to "search for add-ons"
+ * $category: category ID to be selected
+ */
+
+// set-up arrays for advance search select tags
+// also set-up default values (or use previous search params) for each advance-search field
+global $app_shortnames, $app_prettynames;
+$applications = array();
+foreach ($app_shortnames as $name => $key) {
+    $applications[$key] =  $app_prettynames[$name];
+}
+if (!isset($appid)) {    
+    $appid = APP_ID;
+} 
+
+$min_display_version_by_app = array( // eventually this information should be kept in DB
+    APP_FIREFOX => "1.0",
+    APP_THUNDERBIRD => "1.0",
+    APP_SEAMONKEY => "1.0",
+    APP_SUNBIRD => "0.2"
+);
+
+$new_versions = array();
+foreach ($app_shortnames as $n => $k) {
+// AmoVersions is from controller->beforeRender()
+    if (!empty($AmoVersions[$k])) foreach ($AmoVersions[$k] as $version) {
+        $versions_parts = explode(".", $version);
+        $second_part = (isset($versions_parts[1])) ? ".".intval($versions_parts[1]) : "";
+        if (!isset($min_display_version_by_app[$k])
+            || $min_display_version_by_app[$k] <= $versions_parts[0].$second_part ) {
+            
+            if ($k != APP_FIREFOX || !in_array($versions_parts[0].$second_part, array('1.4','3.1'))) { // yuck. Baz didn't like FF 1.4.  Nick didn't like FF 3.1.
+                $new_versions[$k][] = $versions_parts[0].$second_part;  
+            }
+        }
+    }
+    if (!empty($new_versions[$k]))
+        $new_versions[$k] = array_unique($new_versions[$k]);
+}
+$versions = $new_versions;
+
+if(!isset($lver)) {
+    $lver = "";
+}
+
+if(!isset($hver)) {
+    $hver = "";
+}
+
+// AmoPlatforms is from controller->beforeRender()
+array_shift($AmoPlatforms); // get rid of PLATFORM_ALL
+$platforms = array_merge(array(PLATFORM_ANY => ___('advanced_search_form_any_type')), $AmoPlatforms); //add semantically happy PLATFORM_ANY
+$pid = 0;
+if (isset($this->params['url']['pid'])
+    && in_array($this->params['url']['pid'], array_keys($platforms))) {
+    
+    $pid = $this->params['url']['pid'];
+}
+
+// AmoAddonTypes is from controller->beforeRender()
+// for now we want to get rid of Plugin and Language packs since the former
+// goes to a static page and the latter is empty
+array_pop($AmoAddonTypes);
+array_pop($AmoAddonTypes);
+$addon_types = array_merge(array(ADDON_ANY => ___('advanced_search_form_any_type')), $AmoAddonTypes);
+if (!isset($atype)) {    
+    $atype = ADDON_ANY;
+}
+
+$page_arr = $this->controller->Pagination->resultsPerPage;
+$pages = array();
+foreach ($page_arr as $page) {
+    $pages[$page] = $page;
+}
+
+if (!isset($pp)) {
+    $pp = $this->controller->Pagination->show;
+}
+
+$updates = array(
+    "" => ___('advanced_search_form_any_time'),
+    '- INTERVAL 1 DAY' => ___('advanced_search_form_past_day'), 
+    '- INTERVAL 1 WEEK' => ___('advanced_search_form_past_week'),
+    '- INTERVAL 1 MONTH' => ___('advanced_search_form_past_month'),
+    '- INTERVAL 3 MONTH' => ___('advanced_search_form_past_3_months'),
+    '- INTERVAL 6 MONTH' => ___('advanced_search_form_past_6_months'),
+    '- INTERVAL 1 YEAR' => ___('advanced_search_form_past_year')
+);
+
+$lup = "";
+if (isset($this->params['url']['lup'])
+    && in_array($this->params['url']['lup'], array_keys($updates))) {
+    
+    $lup = $this->params['url']['lup'];
+}
+
+$sort_orders = array( 
+    '' => ___('advanced_search_form_keyword_match'),
+    'newest' => ___('advanced_search_form_newest'),
+    'name' => ___('advanced_search_form_name'),
+    'averagerating' => ___('advanced_search_form_rating'),
+    'weeklydownloads' => ___('advanced_search_form_popularity')
+);
+if (!isset($sort)) {    
+    $sort = "";
+}
+
+
+// handles toggling advanced search form when JS not enabled
+
+$toggle_uri = $_SERVER['REQUEST_URI'];
+
+if (isset($this->params['url']['adv']) || isset($this->params['url']['as'])) {
+    $toggle_uri = str_replace("adv=", "nor=", $toggle_uri);
+    $toggle_uri = str_replace("as=", "nor=", $toggle_uri);
+    $two_form = "";
+} else {
+    $toggle_uri = str_replace("nor=", "adv=", $toggle_uri);
+    $delim = (stristr($toggle_uri,"?")) ? "&" : "?";
+    if(!stristr($toggle_uri, "adv=")) { $toggle_uri .= "{$delim}adv=true"; }
+    $two_form = "</form><form method=\"get\" action=\"\" id=\"hidden-form\" class=\"asclosed\">";   
+}
+$toggle_uri = htmlspecialchars($toggle_uri);
+
+// prepare query string
+if (!isset($query) || !is_string($query))
+    $query = _('search_form_default_text');
+
+// prepare selected category, "all" if not set
+if (!isset($category)) $category = array(0, 0);
+?>
+<div id="search-element">
+<div id="search-bubble-outer">
+<div id="search-bubble-inner"></div>
+<form id="search-form" method="get" action="<?=$html->url("/search")?>">
+    <fieldset id="standard-search">
+    <legend>Standard Search</legend>
+
+    <span id="search-query"><label  for="query" title="<?=___('search_form_tooltip')?>"><?=___('search_form_default_text')?></label> 
+            <input type="text" id="query" name="q" value="<?=$query?>"/></span>
+    <label for="category"><?=___('search_form_within')?></label> 
+            <select id="category" name="cat">
+            <option value="all"<?=($category[0]==0 ? ' selected="selected"' : '')?>><?=_('search_form_all_addons')?></option>
+            <?php
+            // AmoVersions is from controller->beforeRender()
+            foreach ($AmoTags as $tag):
+                // skip "plugins" as it is a static page at the moment and thus
+                // cannot be searched here
+                if ($tag['type'] == ADDON_PLUGIN) continue;
+                
+                if ($category[0] == $tag['type'] && ($category[1]==$tag['cat'] || $tag['cat']==0))
+                    $sel = ' selected="selected"';
+                else
+                    $sel = '';
+            ?>
+            <option value="<?=$tag['type'].','.$tag['cat']?>"<?=$sel?>><?=$html->entities($tag['name'])?></option>
+            <?php endforeach; ?>
+            </select><?=$html->submit(" ", array('id'=>'my-submit', 'title' => ___('search_form_submit_tooltip'))); ?>
+    </fieldset>
+    <?=$two_form; ?>   
+    <fieldset id="advanced-search" >
+        <legend>Advanced Search</legend>
+        <fieldset id="search-application">
+            <input type="hidden" name="as" value="true" />
+            <input type="hidden" id="vfuz" name="vfuz" value="false" />
+            <table>
+            <tr>
+                <td><?=___('advanced_search_form_application'); ?>:</td>
+                <td><?php $html->simpleSelectTag('appid', $applications, $appid, array(), array(), false)?></td>
+                <td><?=___('advanced_search_form_version'); ?></td><td id="lver-td">
+                <input name="lver" type="text" size="5" maxlength="10" value="<?=$lver ?>" /></td>
+                <td><?=___('advanced_search_form_to'); ?></td><td id="hver-td">
+                <input name="hver" type="text" size="5" maxlength="10" value="<?=$hver ?>" /></td>
+            </tr>
+            </table>
+        </fieldset>
+        <fieldset id="search-platform">
+            <table>
+            <tr><td><?=___('advanced_search_form_type'); ?>:</td><td><?php $html->simpleSelectTag('atype', $addon_types, $atype, array(), array(), false); ?></td></tr>
+            <tr><td><?=___('advanced_search_form_platform'); ?>:</td><td><?php $html->simpleSelectTag('pid', $platforms, $pid, array(), array(), false); ?></td></tr>
+            <tr><td><?=___('advanced_search_form_lastupdate'); ?>:</td><td><?php $html->simpleSelectTag('lup', $updates, $lup, array(), array(), false); ?></td></tr>
+            </table>
+        </fieldset>
+        <fieldset id="search-output">
+            <table>
+            <tr><td><?=___('advanced_search_form_perpage'); ?>:</td><td><?php $html->simpleSelectTag('pp', $pages, $pp, array(), array(), false); ?></td></tr>
+            <tr><td><?=___('advanced_search_form_sortby'); ?>:</td><td><?php $html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false); ?></td></tr>
+            </table>
+        </fieldset>
+   </fieldset>
+</form>
+</div>
+<div id="advanced-search-toggle" title="<?=___('advanced_search_form_toggle_tooltip');?>">
+   <div></div>
+   <span id="toggle-outer"><span id="toggle-inner"><!--[if IE]>&nbsp;<![endif]--></span><a id="advanced-search-toggle-link" href="<?=$toggle_uri; ?>" class="asclosed"><?php echo ___('advanced_search_form'); ?></a></span>
+</div>
+</div>
+<script type="text/javascript">
+// <![CDATA[
+
+<?php
+    echo "versions = new Array();\n";
+    foreach($versions as $application_id => $ver_array) {
+        echo "versions[{$application_id}] = {";
+        foreach ($ver_array as $version) {
+            if($version !="") {
+                echo "\"{$version}\": \"{$version}\", ";
+            }
+        }
+        echo "'".___('advanced_search_form_any_version')."' : 'any' };\n";
+    }
+
+   // to get default version value set up correctly needed to do after $appid, $lver and $hver set-up above in this element 
+   // that's why this code is not in mozilla.thtml
+
+   //we re-set these up for the JS case (originally did non-JS case)
+
+    $oldver = $lver;
+    $lver = ($lver == "") ? "'any'" : '"'.$lver.'"' ;
+    $hver = ($hver == "") ? "'any'" : '"'.$hver.'"' ;
+
+    // JS to do browser detection to determine default low range to be current browser if applicable
+?>
+
+    var current_app_id = 0;
+    var uapattern = /Mozilla.*(?:Firefox|Minefield|Shiretoko|GranParadiso|BonEcho|Iceweasel)\/([^\s]*).*$/;
+    var ua = navigator.userAgent;
+    var uamatch = uapattern.exec(ua);
+    if (uamatch != null) {
+        version = uamatch[1].split(".");
+        low_appversion = version[0]+"."+parseInt(version[1]);
+        current_app_id = <?=APP_FIREFOX ?>;
+    }
+
+    uapattern = /Mozilla.*(?:SeaMonkey|Iceape)\/([^\s]*).*$/;
+    ua = navigator.userAgent;
+    uamatch = uapattern.exec(ua);
+    if (uamatch != null) {
+        version = uamatch[1].split(".");
+        low_appversion = version[0]+"."+parseInt(version[1]);
+        current_app_id = <?=APP_SEAMONKEY ?>;
+    }
+    
+    default_low = ('<?=$oldver ?>' == '' && current_app_id == <?=APP_ID; ?>) ? low_appversion : <?=$lver ?>;      
+ 
+    <?php
+        /* 
+            Replace the non-JS textfields with select's. Since we only approximately list version names in the dropdown, we want to use fuzzy version
+            matching on server. Add a hidden field to indicate this. 
+        */
+    ?> 
+
+    $("#lver-td input").remove();
+    $("#hver-td input").remove();
+
+    var verArr =  versions[<?= $appid ?>];
+    
+    $("#vfuz").val(true);
+    
+    var lverSel = document.createElement("select");
+    lverSel.id = "lver";
+    lverSel.name = "lver";
+    $("#lver-td").append(lverSel);
+    replaceOptions("#lver", verArr, default_low);        
+    
+    var hverSel = document.createElement("select");
+    hverSel.id = "hver";
+    hverSel.name = "hver";
+    $("#hver-td").append(hverSel);
+    replaceOptions("#hver", verArr, <?=$hver ?>);        
+
+    $("#appid").change(function () {
+            selected_app_id = $("#appid option:selected").attr("value");
+            default_low = (selected_app_id == current_app_id) ? low_appversion : 'any';
+            verArr =  versions[selected_app_id];
+            replaceOptions("#lver", verArr, default_low);        
+            replaceOptions("#hver", verArr, 'any');        
+        });
+
+  // ]]>
+</script>

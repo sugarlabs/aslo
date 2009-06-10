@@ -1,0 +1,94 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
+    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?php
+        if (!empty($deleteSuccess)) {
+            echo '<div class="notice-success rounded"><span>'.sprintf(___('devcp_versions_notice_success'), $deletedVersion).'</span></div>';
+        }
+        ?>
+        <h2><?=___('devcp_versions_header_manage')?></h2>
+        <?=$this->renderElement('noscript')?>
+        <?=$this->renderElement('developers/rolecheck')?>
+        <div class="graybox spaced rounded">
+            <table id="versions-table" class="pretty-table">
+            <?php
+                echo '<tr>';
+                echo '<th style="width: 25%;">'.___('devcp_versions_th_version').'</th>';
+                echo '<th style="width: 30%;">'.___('devcp_versions_th_status').'</th>';
+                echo '<th style="width: 30%;">'.___('devcp_versions_th_created').'</th>';
+                echo '<th style="width: 15%;"></th>';
+                echo '</tr>';
+                if (!empty($versions)) {
+                    $i = 0;
+                    foreach ($versions as $version) {
+                        echo '<tr'.($i % 2 == 0 ? ' class="alt"' : '').'>';
+                        echo '<td><a href="'.$html->url('/developers/versions/edit/'.$version['Version']['id']).'">'.sprintf(_('devcp_details_version'), $version['Version']['version']).'</a></td>';
+                        echo '<td>'.$this->controller->Amo->describeVersionStatus($version['File']).'</td>';
+                        echo '<td>'.strftime(_('date'), strtotime($version['Version']['created'])).'</td>';
+                        echo '<td class="delete-area version-delete-area">';
+                        if (empty($version['File'])) {
+                            echo '<div class="inline-delete-button uses-button">';
+                            echo '<a href="#" onclick="versions.deleteVersion(this); return false;" class="remove-button rounded trigger">'.___('devcp_versions_a_remove').'</a>';
+                            echo '<div class="inline-delete-box">';
+                            echo '<p>'.___('devcp_versions_p_remove').'</p><br />';
+                            echo '<p><a href="'.$html->url('/developers/versions/delete/'.$version['Version']['id']).'"  class="remove-button rounded">'.___('devcp_versions_a_empty').'</a>&nbsp;&nbsp;';
+                            echo '<a href="#" onclick="versions.cancelDelete(this); return false;" class="button rounded">'.___('devcp_versions_a_cancel').'</a></p>';
+                            echo '</div></div>';
+                        }
+                        else {
+                            echo '<a href="'.$html->url('/developers/versions/delete/'.$version['Version']['id']).'">'.$html->image('developers/delete.png', array('alt' => ___('devcp_versions_a_delete'), 'title' => ___('devcp_versions_a_delete'))).'</a>';
+                        }
+                        echo '</td>';
+                        echo '</tr>';
+                        $i++;
+                    }
+                }
+                else {
+                    echo '<tr><td colspan="3" style="text-align: center;"><i>'.___('devcp_versions_no_versions').'</i></td></tr>';
+                }
+            ?>
+            </table>
+<div class="add-button-container"><a href="<?=$html->url("/developers/versions/add/{$addon_id}")?>" class="add-button rounded"><?=___('devcp_versions_add')?></a></div>
+        </div>
+    </div>
+</div>

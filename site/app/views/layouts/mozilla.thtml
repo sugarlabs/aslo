@@ -1,0 +1,349 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Justin Scott <fligtar@gmail.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   Brian Krausz <brian@nerdlife.net>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="<?=LANG?>" dir="<?=TEXTDIR?>" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="MSSmartTagsPreventParsing" content="true"/>
+    <meta name="Copyright" content="(c) 2005-<?php echo date('Y'); ?> Mozilla. All rights reserved."/>
+    <meta http-equiv="imagetoolbar" content="no"/>
+    <meta name="Rating" content="General"/>
+
+<?php
+
+  //Using revision # in url in production to prevent the file from being cached forever
+  if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'staging')) {
+      $jsParams = '?'.JS_REVISION;
+      $cssParams = '?'.CSS_REVISION;
+  } else {
+      //To prevent caching in development, change the url on each request
+      $jsParams = '?'.time();
+      $cssParams = '?'.time();
+  }
+
+
+  if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'staging')) {
+    echo str_replace('.css','.css'.$cssParams,$html->css('style.min', 'stylesheet', array('media'=>'all'), true))."\n"; 
+  }
+  else {
+    echo $html->css('type', 'stylesheet', array('media'=>'all'))."\n";
+    echo $html->css('color', 'stylesheet', array('media'=>'all'))."\n";
+    echo $html->css('screen', 'stylesheet', array('media'=>'screen,projection'))."\n";
+    echo $html->css('print', 'stylesheet', array('media'=>'print'))."\n";
+  }
+  
+  echo '<!--[if IE]>'.$html->css('ie', 'stylesheet', array('media'=>'screen,projection'))."<![endif]-->\n";
+    echo '<!--[if lte IE 6]>'.$html->css('ie6', 'stylesheet', array('media'=>'screen,projection'))."<![endif]-->\n";
+    echo $html->css('remora', 'stylesheet', array('media'=>'screen,projection'))."\n";
+    if (!empty($cssAdd)) {
+        foreach ($cssAdd as $css) {
+            $url = $html->css($css);
+            echo "{$url}\n";
+        }
+    }
+?>
+    
+    <link rel="search" type="application/opensearchdescription+xml" href="<?=$html->url('/AMOSearch.xml', null, false, false)?>" title="Mozilla Add-ons"/>
+    <?php if (isset($addon) && ($addon['Addon']['addontype_id'] == ADDON_SEARCH)) : ?>
+        <link rel="search" type="application/opensearchdescription+xml" href="<?=$html->urlFile($addon['Version'][0]['File'][0]['id'], $addon['Version'][0]['File'][0]['filename'])?>" locale="<?=$addon['Translation']['name']['locale']?>" title="<?=$addon['Translation']['name']['string']?>"/>
+    <?php endif; ?>
+    <link rel="shortcut icon" href="<?=$html->url('/img/favicon.ico', null, false, false)?>" type="image/x-icon"/>
+    <?php
+        
+        if (!empty($rssAdd)) {
+            foreach ($rssAdd as $rss) {
+                if (is_array($rss)) {
+                    $rssurl = $rss[0];
+                    $rsstitle = $rss[1];
+                } else {
+                    $rssurl = $rss;
+                    $rsstitle = 'RSS';
+                }
+                echo '<link rel="alternate" type="application/rss+xml" title="'.$rsstitle.'" href="'.$html->url($rssurl).'"/>'."\n";
+            }
+        }
+        // Pre-script-inclusion JS
+        if (!empty($prescriptJS)) {
+            echo '<script type="text/javascript">'.$prescriptJS.'</script>';
+        }
+        
+        if (empty($suppressUrchin)) {
+            echo $javascript->link('__utm.js');
+        }
+        
+       
+        echo $javascript->linkOut($html->url('/pages/js_constants'))."\n";
+        
+        if (!isset($suppressJQuery) || !$suppressJQuery) {
+            if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'staging')) {
+                echo $javascript->link('jquery.addons.min.js'.$jsParams)."\n";
+            } else {
+                echo $javascript->link('jquery-compressed.js');
+                echo $javascript->link('addons.js');
+            }
+            
+            if (isset($includeSlimbox) && $includeSlimbox) {
+                echo $html->css('slimbox/slimbox');
+                echo $javascript->link('mootools/mootools-release-1.11.js'). "\n";
+                echo $javascript->link('slimbox/slimbox.js') . "\n";
+            }
+        }
+        
+        if (!empty($jsAdd)) {
+            foreach ($jsAdd as $js) {
+                $js = $js;
+                $jslink = $javascript->link($js);
+                echo "{$jslink}\n";
+            }
+        }
+        
+        if (!empty($jsLocalization) && is_object($localization)) {
+            echo $localization->jsLocalization($jsLocalization);
+        }
+        
+        
+       if ($this->controller->name  == 'Addons' && $this->action == 'display') {
+
+           echo $javascript->link('jquery-ui/ui.lightbox.js') . "\n";
+           echo $html->css('jquery-lightbox', 'stylesheet', array('media'=>'screen,projection'))."\n";
+          
+          echo '<script type="text/javascript">
+          // <![CDATA[
+
+            $(document).ready(function() {
+                $("a[rel*=jquery-lightbox]").lightBox({
+                    overlayOpacity: 0.6,
+                    imageBlank: "'.$html->url('/img/jquery-lightbox/lightbox-blank.gif', null, false, false).'",
+                    imageLoading: "'.$html->url('/img/jquery-lightbox/lightbox-ico-loading.gif', null, false, false).'",
+                    imageBtnClose: "'.$html->url('/img/jquery-lightbox/close.png', null, false, false).'",
+                    imageBtnPrev: "'.$html->url('/img/jquery-lightbox/goleft.png', null, false, false).'",
+                    imageBtnNext: "'.$html->url('/img/jquery-lightbox/goright.png', null, false, false).'",
+                    containerResizeSpeed: 350
+                });
+
+                var etiquette_box = $("#addons-display-review-etiquette").hide();
+                $("#short-review").focus(function() { etiquette_box.show("fast"); } );
+            });
+
+            // This function toggles an element\'s text between two values
+            jQuery.fn.textToggle = function(text1, text2) {
+                jQuery(this).text( ( jQuery(this).text() == text1 ? text2 : text1 ) );
+            };
+
+          // ]]>
+          </script>';
+        }
+
+    ?>
+  <script type="text/javascript">
+  // <![CDATA[
+
+    $(document).ready(function() {
+        $(".hidden").hide(); // hide anything that should be hidden
+        $("#other-apps").addClass("collapsed js"); // collapse other apps menu
+
+        var q = $("#query");
+        var l = $("#search-query label");
+        l.show();
+        if ( q.val() == "<?=_('search_form_default_text')?>"){ //initially q is set to search add-ons text for javascriptless browsing
+		  q.val('');
+		}
+        if ( q.val() != "") { // if field has any value...
+            l.hide(); // hide the label
+        };
+        l.click(function() { // for browsers with unclickable labels
+            q.focus();
+        });
+        q.focus(function() { // when field gains focus...
+            l.hide(); // hide the label
+        });
+        q.blur(function() { // when field loses focus...
+            if ( q.val() == "" ) { // if field is empty...
+                l.show(); // show the label again, else do nothing (label remains hidden)
+            };
+        });
+        
+        // JS for toggling advanced versus normal search.
+        var adv = $("#advanced-search");
+        var advLink = $("#advanced-search-toggle a");
+	      	advLink.isHidden = true;
+        $('#advanced-search-toggle-link').attr('href', '#');   // for ie6-7				
+        advLink.click(function() {           
+            if(advLink.isHidden == true) {
+               adv.appendTo("#search-form");
+               advLink.addClass("asopen");
+               advLink.removeClass("asclosed");
+               advLink.isHidden = false;
+            } else {
+               adv.appendTo("#hidden-form");
+               advLink.addClass("asclosed");
+               advLink.removeClass("asopen");
+               advLink.isHidden = true;
+            }
+            return false;
+        }); 
+																        
+        <?php //to handle js-less case when a advanced query is sent there is one form, so have to add back hidden 
+              // form for js-aware case.
+        if(isset($this->params['url']['as'])) { ?>
+            hiddenForm = document.createElement("form");
+            hiddenForm.id = "hidden-form";
+            var searchBubble = document.getElementById("search-bubble-inner");
+            searchBubble.appendChild(hiddenForm);
+            $("#hidden-form").addClass("asclosed");
+            $("#advanced-search").appendTo("#hidden-form");
+            advLink.click();
+        <?php } ?>
+
+        if (typeof __utmSetVar == 'function') {
+<?php if ($this->controller->Session->check('User')): ?>
+        __utmSetVar("Loggedin");
+<?php else: ?>
+        __utmSetVar("Loggedout");
+<?php endif; ?>
+        }
+				
+<?php if(isset($content_wide) && $content_wide): ?>
+        if ( $(window).width() > 1000 ) {
+                $("#content").addClass("wide");
+            };
+        
+        $(window).resize(function() { 
+                if ( $(window).width() > 1000 ) {
+                    $("#content").addClass("wide");
+                }
+                else if ( $(window).width() < 1000 ) {
+                    $("#content").removeClass("wide");
+                }
+        });
+<?php endif; ?>
+
+        $("#other-apps h3").click(function() {
+            $("#other-apps").toggleClass("collapsed");
+            $(this).blur();
+            $(document).click(function(e) {
+                // Prevent weird delay when clicking on the links
+                var node = e.target;
+                while (node && !node.id) {
+                    node = node.offsetParent;
+                }
+                
+                if (!node || node.id != 'other-apps') {
+                    $("#other-apps").addClass("collapsed");
+                }
+            });
+            return false;
+        });
+      
+    }); // end dom ready
+  
+<?php if (!empty($collapse_categories) && $collapse_categories == true): ?>
+    // Without JS, content leaves space for the category menu.
+    // With JS, the category menu collapses and the content spreads.
+    $(document).ready(function() {
+        $("#categories").addClass("collapsed"); // collapse categories menu
+        $("#content-main").addClass("full"); // make the content spread to the full width
+        $("#categories.collapsed h3").click(function() { 
+            $("#cat-list").toggleClass("visible");
+            $(this).toggleClass("open");
+            $(document).click(function(e) {
+                var node = e.target;
+                while (node && !node.id) {
+                    node = node.offsetParent;
+                }
+                if (!node || (node.id != 'categories' && node.id != 'cat-list')) {
+                    $("#cat-list").removeClass("visible");
+                    $("#categories.collapsed h3").removeClass("open");
+                }
+            });
+        });
+    });
+<?php endif; ?>
+
+  // ]]>
+  </script>
+
+
+
+  
+    <title><?=$html->entities($title_for_layout)?></title>
+</head>
+
+
+<body id="mozilla-com" class="<?="html-".TEXTDIR?>">
+
+<?php
+if (is_object($this->controller->Config) && $this->controller->Config->getValue('site_notice') != '') {
+    echo '<div id="site-notice"><p>'.$this->controller->Config->getValue('site_notice').'</p></div>';
+}
+
+if (!(isset($suppressHeader) && $suppressHeader))
+    echo $this->renderElement('header');
+?>
+
+<?=$content_for_layout ?>
+
+<?php
+echo $this->renderElement('footer');
+
+if(defined('REVISION')) { 	 
+    echo '<!-- r'.REVISION.' -->';
+}
+?>
+
+<?php if ($this->controller->name  == 'Addons' && 
+    (in_array($this->action, array('home', 'browse', 'category_landing'))) ): ?>
+<script type="text/javascript">
+    if ($('.slider_widget').length > 0) {
+        $('.slider_widget').slider({ 
+            'prev_img_src': '<?=$html->urlImage("slider-prev.gif")?>',
+            'prev_disabled_img_src': '<?=$html->urlImage("slider-prev-disabled.gif")?>',
+            'next_img_src': '<?=$html->urlImage("slider-next.gif")?>',
+            'next_disabled_img_src': '<?=$html->urlImage("slider-next-disabled.gif")?>'
+        });
+    }
+</script>
+<?php endif; ?>
+
+</body>
+</html>

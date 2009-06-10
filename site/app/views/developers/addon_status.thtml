@@ -1,0 +1,196 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
+    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_addon_status_title'), $addon_name), 'addon_id' => $addon_id));?>
+        <?php
+        if (!empty($success)) {
+            echo '<div class="notice-success rounded"><span>'.___('devcp_notice_changes_saved').'</div>';
+        }
+        if (!empty($errors)) {
+            echo '<div class="notice-error rounded"><span>'.___('devcp_notice_changes_error').'</div>';
+        }
+        ?>
+        <?=$this->renderElement('noscript')?>
+        <?=$this->renderElement('developers/rolecheck')?>
+        <form id="status-form" action="" method="post" enctype="multipart/form-data">
+        <?=$html->hiddenSession();?>
+        
+        <div class="field graybox rounded spaced">
+            <h4 class="status"><?=sprintf(___('devcp_addon_status_header'), '<span class="status-'.$addon['Addon']['status'].'">'.$statuses[$addon['Addon']['status']].'</span>')?></h4>
+            <p>
+                <?php
+                    function status_span($i, $status) { return '<span class="status-'.$i.'">'.$status.'</span>'; }
+                    // Add-on Status
+                    $sandbox = status_span(STATUS_SANDBOX, ___('devcp_addon_status_sandbox'));
+                    $public = status_span(STATUS_PUBLIC, ___('devcp_addon_status_public'));
+                    switch ($addon['Addon']['status']) {
+                    case STATUS_NULL:
+                        echo ___('devcp_addon_status_switch_incomplete');
+                        break;
+
+                    case STATUS_SANDBOX:
+                        ___('devcp_addon_status_switch_sandbox');
+                        break;
+                        
+                    case STATUS_NOMINATED:
+                        ___('devcp_addon_status_switch_sandbox');
+                        echo '</p><p>';
+                        echo sprintf(___('devcp_addon_status_switch_nominated'), $nominationCount);
+                        break;
+                        
+                    case STATUS_PENDING:
+                        echo sprintf(___('devcp_addon_status_switch_pending'), 'amo-editors@mozilla.org');
+                        break;
+
+                    case STATUS_PUBLIC:
+                        ___('devcp_addon_status_switch_public');
+                        break;
+                        
+                    case STATUS_DISABLED:
+                        echo sprintf(___('devcp_addon_status_switch_disabled'), 'amo-admins@mozilla.org');
+                        break;
+                    }
+                ?>
+            </p>
+            
+            <?php
+            if ($addon['Addon']['status'] == STATUS_NULL) {
+                echo '<h5>'.___('devcp_addon_status_header_criteria').'</h5>';
+                echo '<ul class="criteria">';
+                echo '<li class="'.($criteria['name'] ? 'pass' : 'fail').'">'.___('devcp_addon_status_criteria_name').'</li>';
+                echo '<li class="'.($criteria['summary'] ? 'pass' : 'fail').'">'.___('devcp_addon_status_criteria_summary').'</li>';
+                echo '<li class="'.($criteria['description'] ? 'pass' : 'fail').'">'.___('devcp_addon_status_criteria_description').'</li>';
+                echo '<li class="'.($criteria['category'] ? 'pass' : 'fail').'">'.___('devcp_addon_status_criteria_category').'</li>';
+                echo '</ul>';
+                
+                $completionEnabled = false;
+                if ($criteria['name'] && $criteria['summary'] && $criteria['description'] && $criteria['category']) {
+                    $completionEnabled = true;
+                    echo '<p>'.sprintf(___('devcp_addon_status_completion_enabled'), $sandbox).'</p>';
+                }
+                else {
+                    echo '<p>'.sprintf(___('devcp_addon_status_completion_disabled'), $sandbox).'</p>';
+                }
+            }
+            
+            $nominationEnabled = false;
+            if ($addon['Addon']['status'] == STATUS_SANDBOX || $addon['Addon']['higheststatus'] < STATUS_PUBLIC) {
+                echo '<h5>'.___('devcp_addon_status_header_nomination').'</h5>';
+                echo '<ul class="criteria">';
+                echo '<li class="'.($criteria['previews'] ? 'pass' : 'fail').'">'.___('devcp_addon_status_criteria_preview').'</li>';
+                echo '<li class="'.($criteria['prerelease'] ? 'pass' : 'fail').'">'.___('devcp_addon_status_criteria_prerelease').'</li>';
+                echo '</ul>';
+                
+                if ((!in_array($addon['Addon']['addontype_id'], array(ADDON_EXTENSION, ADDON_THEME)) || $criteria['previews']) && $criteria['prerelease']) {
+                    $nominationEnabled = true;
+                    echo '<p>'.___('devcp_addon_status_nominate_enabled').'</p>';
+                }
+                else {
+                    echo '<p>'.___('devcp_addon_status_nominate_disabled').'</p>';
+                }
+            }
+            
+            // Actions
+            $actions = '';
+            if ($addon['Addon']['status'] == STATUS_NULL && $completionEnabled === true) {
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/complete").'" class="complete add-button rounded">'.___('devcp_addon_status_action_complete').'</a></td>';
+                $actions .= '<td class="description">'.___('devcp_addon_status_action_complete_description').'</td></tr>';
+            }
+            if ($addon['Addon']['status'] == STATUS_SANDBOX && $nominationEnabled === true) {
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/nominate").'" class="nominate add-button rounded">'.___('devcp_addon_status_action_nominate').'</a></td>';
+                $actions .= '<td class="description">'.___('devcp_addon_status_action_nominate_description').'</td></tr>';
+            }
+            if ($addon['Addon']['status'] == STATUS_PUBLIC) {
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/sandbox").'" class="to-sandbox add-button rounded">'.___('devcp_addon_status_action_move').'</a></td>';
+                $actions .= '<td class="description">'.___('devcp_addon_status_action_move_description').'</td></tr>';
+            }
+            if ($addon['Addon']['status'] == STATUS_SANDBOX && $addon['Addon']['higheststatus'] == STATUS_PUBLIC) {
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/public").'" class="to-public add-button rounded">'.___('devcp_addon_status_action_public').'</a></td>';
+                $actions .= '<td class="description">'.___('devcp_addon_status_action_public_description').'</td></tr>';
+            }
+            
+            if (!empty($actions)) {
+                echo '<h5>'.___('devcp_addon_status_header_actions').'</h5>';
+                echo '<table class="actions"><tbody>';
+                echo $actions;
+                echo '</tbody></table>';
+            }
+            ?>
+        </div>
+        
+        <div class="field graybox rounded spaced">
+            <p>
+            <?php
+            if ($addon['Addon']['inactive'] == 1) {
+                echo '<h4 class="status">'.___('devcp_addon_status_header_inactive').'</h4>';
+                echo ___('devcp_addon_status_inactive');
+            }
+            else {
+                echo '<h4 class="status">'.___('devcp_addon_status_header_active').'</h4>';
+                echo ___('devcp_addon_status_active');
+            }
+            ?>
+            </p>
+            <h5><?=___('devcp_addon_status_header_actions')?></h5>
+            <table class="actions"><tbody>
+            <?php
+            if ($addon['Addon']['inactive'] == 1) {
+                echo '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/active").'" class="make-active add-button rounded">'.___('devcp_addon_status_action_activate').'</a></td>';
+                echo '<td class="description">'.___('devcp_addon_status_action_activate_description').'</tr>';
+            }
+            else {
+                echo '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/inactive").'" class="make-inactive add-button rounded">'.___('devcp_addon_status_action_deactivate').'</td>';
+                echo '<td class="description">'.___('devcp_addon_status_action_deactivate_description').'</tr>';
+            }
+            ?>
+            </tbody></table>
+        </div>
+        
+        <?php if ($addon['Addon']['trusted'] == 1): ?>
+            <div class="field graybox rounded spaced">
+                <h4 class="status"><?=___('devcp_addon_status_header_trusted')?></h4>
+                <p><?=___('devcp_addon_status_trusted')?></p>
+            </div>
+        <?php endif; ?>
+        </form>
+    </div>
+</div>

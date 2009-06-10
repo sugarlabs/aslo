@@ -1,0 +1,113 @@
+#! /usr/bin/perl -w
+
+# ***** BEGIN LICENSE BLOCK *****
+# Version: MPL 1.1/GPL 2.0/LGPL 2.1
+#
+# The contents of this file are subject to the Mozilla Public License Version
+# 1.1 (the "License"); you may not use this file except in compliance with
+# the License. You may obtain a copy of the License at
+# http://www.mozilla.org/MPL/
+#
+# Software distributed under the License is distributed on an "AS IS" basis,
+# WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+# for the specific language governing rights and limitations under the
+# License.
+#
+# The Original Code is addons.mozilla.org site.
+#
+# The Initial Developer of the Original Code is
+# The Mozilla Foundation.
+# Portions created by the Initial Developer are Copyright (C) 2006
+# the Initial Developer. All Rights Reserved.
+#
+# Contributor(s):
+#   Wil Clouser <clouserw@mozilla.com> (Original Author)
+#
+# Alternatively, the contents of this file may be used under the terms of
+# either the GNU General Public License Version 2 or later (the "GPL"), or
+# the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+# in which case the provisions of the GPL or the LGPL are applicable instead
+# of those above. If you wish to allow use of your version of this file only
+# under the terms of either the GPL or the LGPL, and not to allow others to
+# use your version of this file under the terms of the MPL, indicate your
+# decision by deleting the provisions above and replace them with the notice
+# and other provisions required by the GPL or the LGPL. If you do not delete
+# the provisions above, a recipient may use your version of this file under
+# the terms of any one of the MPL, the GPL or the LGPL.
+#
+# ***** END LICENSE BLOCK *****
+
+# This script is for the staging version of AMO 3 (remora). It will reset the
+# database and files to the defaults for our alpha version (a specific selection of
+# addons)
+# 
+
+use DBI;
+use File::Path;
+
+sub fail_with_error;
+
+# Fill in the database information for $default from ../../site/app/config/database.php
+my $db_database = "";
+my $db_host     = "";
+my $db_user     = "";
+my $db_pass     = "";
+
+# Other local variables - you shouldn't have to touch any of this.
+my $sql_file         = "../../site/app/config/sql/remora_alpha_release.sql";
+my $addons_archive   = "../../site/app/config/data/remora_alpha_addons.tar.gz";
+my $addons_directory = "../../site/app/webroot/files";
+
+# Sanity checks
+if (! -r $sql_file) {
+    fail_with_error("Couldn't read the sql file: $sql_file");
+}
+if (! -r $addons_archive) {
+    fail_with_error("Couldn't read the addons archive: $addons_archive");
+}
+if (! -w $addons_directory) {
+    fail_with_error("Couldn't write to the addon's directory: $addons_directory");
+}
+my $dbh = DBI->connect("dbi:mysql:$db_database:$db_host", "$db_user", "$db_pass")
+    or fail_with_error("Couldn't connect to database: $DBI::errstr");
+
+
+# Reset the database.  We can't use Perl::DBI here because the "source" commands are
+# mysql specific, and will result in a parse error here. If putting the user/pass on
+# the command line is too big of a security risk, we'll open the file and walk
+# through it running the lines with Perl::DBI.
+my $sql_command = "mysql --user=$db_user --password=$db_pass --host=$db_host $db_database < $sql_file";
+if (system($sql_command) != 0) {
+    fail_with_error("Error replacing database: $?");
+}
+
+# Clear out all the files.  We're walking through the directory this way because we
+# only want to remove the addon's directories, not anything else.
+opendir(ADDONS,$addons_directory);
+
+while(defined ($filename = readdir(ADDONS))) {
+    if ($filename =~ /(\d+)/) {
+        rmtree("$addons_directory/$filename");
+    }
+}
+
+closedir(ADDONS);
+
+# Untar default addons
+my $tar_command = "tar --extract --gunzip --directory $addons_directory --file $addons_archive";
+
+if (system($tar_command) != 0) {
+    fail_with_error("Error extracting addons: $?");
+}
+
+# done
+exit 0;
+
+
+# If something goes (fatally) wrong, call this subroutine with a helpful message.
+sub fail_with_error() {
+    my $message = shift;
+    print "$message\n";
+    print "Aborting.\n";
+    exit 1;
+}

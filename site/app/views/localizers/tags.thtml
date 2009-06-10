@@ -1,0 +1,74 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific USERLANGuage governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/localizermenu');?>
+
+    <div id="content-main">
+        <h3>Tag Localization for <?=USERLANG?></h3>
+        <?php
+        if (!$writeAccess) {
+            echo '<div class="error">You do not have write access to this locale. You can look, but won\'t be able to make any changes.</div>';
+        }
+        echo $html->formTag('/localizers/tags');
+        if (!empty($tags)) {
+            foreach ($tags['en-US'] as $k => $tag) {
+                $id = $tags['en-US'][$k]['Tag']['id'];
+                echo '<table class="translatedSection">';
+                    echo '<tr>';
+                        echo '<th width="5%">ID '.$id.'</th>';
+                        echo '<th width="50%">en-US</th>';
+                        echo '<th width="45%">'.USERLANG.'</th>';
+                    echo '</tr>';
+                    echo '<tr>';
+                        echo '<td class="field">Name</td>';
+                        echo '<td class="enus">'.$tags['en-US'][$k]['Translation']['name']['string'].'</td>';
+                        echo '<td class="localized">'.$html->input("Tag/{$id}][name", array('value' => ($tags[USERLANG][$k]['Translation']['name']['locale'] != 'en-US' ? $tags[USERLANG][$k]['Translation']['name']['string'] : ''), 'size' => 40)).'</td>';
+                    echo '</tr>';
+                    echo '<tr>';
+                        echo '<td class="field">Description</td>';
+                        echo '<td class="enus">'.$tags['en-US'][$k]['Translation']['description']['string'].'</td>';
+                        echo '<td class="localized">'.$html->textarea("Tag/{$id}][description", array('value' => ($tags[USERLANG][$k]['Translation']['description']['locale'] != 'en-US' ? $tags[USERLANG][$k]['Translation']['description']['string'] : ''), 'cols' => 34, 'rows' => 3)).'</td>';
+                    echo '</tr>';
+                echo '</table>';
+            }
+        }
+        echo $html->submit('Update Translations');
+        ?>
+        </form>
+    </div>
+</div>

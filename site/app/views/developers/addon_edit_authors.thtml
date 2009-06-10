@@ -1,0 +1,118 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *      Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
+    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_OWNER ? 'privs' : 'no-privs')?>">
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?php
+            if (!empty($success)) {
+                echo '<div class="notice-success rounded">'.___('devcp_notice_changes_saved').'</div>';
+            }
+        ?>
+        <h2><?=___('devcp_edit_authors_header_manage')?></h2>
+        
+        <?=$this->renderElement('noscript')?>
+        <?=$this->renderElement('developers/rolecheck')?>
+        <form id="addon-edit-authors-form" action="" method="post">
+        <?=$html->hiddenSession();?>
+        
+        <div class="graybox field rounded spaced">
+            <h4><?=___('devcp_edit_authors_header_current')?></h4>
+            <table id="author-table" class="pretty-table">
+                <thead><tr>
+                    <th></th>
+                    <th><?=___('devcp_edit_authors_th_author')?></th>
+                    <th><?=___('devcp_edit_authors_th_role')?></th>
+                    <th><?=___('devcp_edit_authors_th_listed')?></th>
+                    <th></th>
+                </tr></thead>
+                <tbody></tbody>
+            </table>
+            <div class="save-changes rounded">
+                <strong><?=___('devcp_notice_unsaved_changes')?></strong> <?=___('devcp_edit_authors_click_save')?>
+            </div>
+            <div class="add-button-container"><a href="#add-author" onclick="addon_edit_authors.showAddForm();" class="add-button rounded"><?=___('devcp_edit_authors_add_author')?></a></div>
+        </div>
+        </form>
+        
+        <div id="empty-authors" class="notice-error rounded" style="display:none"><span><?=___('devcp_error_empty_authors', 'Your add-on must have at least one owner.')?></span></div>
+        <div class="action-button-container centered"><a href="#" id="submit" onclick="addon_edit_authors.save(); return false;" class="action-button rounded"><?=___('devcp_edit_authors_update_author')?></a></div>
+        <br />
+        
+        <div id="add-author" class="graybox rounded spaced field" style="display: none;">
+            <h4><?=___('devcp_edit_authors_add_author')?></h4>
+            <br />
+            <p><label><?=___('devcp_edit_authors_add_email')?> <input id="add-email" type="text" size="40" /></label></p>
+            <div id="add-error" class="rounded"></div>
+            
+            <p><?=___('devcp_edit_authors_select_role')?></p>
+            <ul>
+                <li><label><input id="add-role-owner" type="radio" name="role" checked="checked" />&nbsp;</strong><?=___('devcp_edit_authors_label_owner')?></label></li>
+                <li><label><input id="add-role-developer" type="radio" name="role" />&nbsp;</strong><?=___('devcp_edit_authors_label_developer')?></label></li>
+                <li><label><input id="add-role-viewer" type="radio" name="role" />&nbsp;</strong><?=___('devcp_edit_authors_label_viewer')?></label></li>
+            </ul>
+            
+            <p><label><input id="add-listed" type="checkbox" checked="checked" />&nbsp;<?=___('devcp_edit_authors_label_add_listed')?></label></p>
+            
+            <table><tr><td>
+                <div id="add-author-button" class="add-button-container"><a href="#author-table" onclick="return addon_edit_authors.checkAddForm();" class="add-button rounded bigger"><?=___('devcp_edit_authors_add_author_button')?></a></div>
+            </td><td valign="middle">
+                <div id="add-loading"><?=$html->image('ajax_loading.gif', array('alt' => 'Loading'))?>&nbsp;<?=___('devcp_edit_authors_add_loading')?></div>
+            </td></tr></table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+var jsonURL = '<?=$html->url('/developers/json')?>';
+var imageURL = '<?=$html->url('/img', true, false, false)?>';
+var profileURL = '<?=$html->url('/user')?>';
+
+$(document).ready(function() {
+<?php
+    if (!empty($authors)) {
+        foreach ($authors as $author) {
+            echo "addon_edit_authors.addAuthor({$author['User']['id']}, '{$author['User']['firstname']} {$author['User']['lastname']} ({$author['User']['email']})', {$author['addons_users']['role']}, ".($author['addons_users']['listed'] == 1 ? 'true' : 'false').");\n";
+        }
+    }
+?>
+
+});
+</script>

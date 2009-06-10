@@ -1,0 +1,148 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass']  = 'browse_thumbs';
+$this->layout = 'amo2009';
+?>
+
+<div class="stand-alone-options">
+    <?=$this->renderElement('amo2009/categories')?>
+    <?php
+    if (!empty($type) && !empty($this_tag) && array_key_exists('Tag', $this_tag))
+        echo $this->renderElement('amo2009/search', array('category' =>
+            array($type, $this_tag['Tag']['id'])));
+    else
+        echo $this->renderElement('amo2009/search');
+    ?>
+</div>
+
+<div class="secondary">
+    <div class="highlight" id="thumb-subcategories">
+        <h3><?=___('general_addontype_theme_plural', 'Themes')?></h3>
+        <ul class="subcategories">
+            <li<?= ($this_tag == FALSE) ? ' class="selected"' : '' ?>><?=$html->link( 
+                    'All',
+                    "/browse/type:{$type}/cat:all?sort={$sort_by}"
+                )?>
+                <span class="items"><?=$all_total?></span>
+            </li>
+            <?php foreach ($subcats as $subcat): ?>
+                <?php
+                    $params = 'sort=' . $sort_by;
+                    if ($show_exp) 
+                        $params .= '&exp=on';
+                    if ($show_limit) 
+                        $params .= '&show=' . $show_limit;
+                ?>
+                <li class="sub<?= ($this_tag['Tag']['id'] == $subcat['Tag']['id']) ? ' selected' : '' ?>"><?=$html->link( 
+                    $subcat['Translation']['name']['string'],
+                    "/browse/type:{$subcat['Tag']['addontype_id']}/cat:{$subcat['Tag']['id']}?{$params}"
+                    )?>
+                    <span class="items"><?=(isset($subcat_totals[$subcat['Tag']['id']]) ? $subcat_totals[$subcat['Tag']['id']] : 0) ?></span>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+
+<div class="primary" role="main">
+
+    <?php if ( empty($this_tag)): ?>
+        <h2><?=___('themes_landing_browse_themes', 'Browse Themes')?></h2>
+    <?php else: ?>
+        <h2><?=$this_tag['Translation']['name']['string']?></h2>
+    <?php endif ?>
+
+    <h3><?=sprintf(ngettext('addon_list_category_totalcount',
+        'addon_list_category_totalcount', $paging['total']),
+        $paging['total'])?></h3>
+    <div class="featured listing" id="addon-listing">
+        <?= $this->renderElement('amo2009/addon_list_options', array('paging' => $paging)) ?>
+
+            <ul class="thumbs clearfix">
+            <?php
+            foreach ($addons as $addon) {
+                $addonID   = $addon['Addon']['id'];
+                $addonName = $addon['Translation']['name']['string'];
+
+                $prevPath  = $this->controller->Image->getHighlightedPreviewURL($addon['Addon']['id']);
+                $iconPath  = $this->controller->Image->getAddonIconURL($addon['Addon']['id']);
+
+                $_alt = sprintf(_('img_preview_of'),$addonName);
+                $previmg = '<img src="'.$prevPath.'" alt="'.$_alt.'" title="'.$_alt.'"/>';
+                $previmg = $html->link($previmg, "/addon/{$addonID}");
+                ?>
+                    <li class="thumb <?=$html->extraClass($addon)?>">
+                        <div class="thumb_item">
+                            <div class="img"><?=$previmg?></div>
+                            <h4 class="name"><?=$html->link("$addonName", "/addon/{$addonID}");?></h4>
+                            <?=$html->flag($addon)?>
+                            <p class="meta">
+                                <?php if ($sort_by == 'updated'): ?>
+                                    <?php
+                                    $_update_string = (_('addon_detail_last_updated') == 'addon_detail_last_updated') ? 'Updated %s' : _('addon_detail_last_updated');
+                                    $_version_date = (isset($addon['Addon']['datestatuschanged']) ? $addon['Addon']['datestatuschanged'] : $addon['Version'][0]['created']);
+                                    echo sprintf($_update_string, strftime(_('date'), strtotime($_version_date)));
+                                    ?>
+                                <?php elseif ($sort_by == 'popular'): ?>
+                                    <em><?=$html->number_format($addon['Addon']['weeklydownloads'], 0)?></em>
+                                    <?php 
+                                    echo ___('addon_downloads_weekly', _('addon_downloads'));
+                                    ?>
+                                <?php else: ?>
+                                    <?=$this->renderElement('stars',array('rating' => $addon['Addon']['averagerating']))?>
+                                    <?php if ($addon['Addon']['totalreviews'] > 0): ?> 
+                                        <a href="<?= $html->url('/addon/'.$addon['Addon']['id'].'#reviews') ?>"><?=
+                                            sprintf(ngettext('feature_reviews','feature_reviews', 
+                                                $addon['Addon']['totalreviews']), $addon['Addon']['totalreviews'])
+                                        ?></a>
+                                    <?php endif ?>
+                                <?php endif ?>
+                            </p>
+                        </div>
+                    </li>
+                <?php
+            }
+            ?>
+            </ul>
+
+    </div>
+
+    <?=$this->renderElement('amo2009/pagination');?>
+
+</div><!-- /primary -->

@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" version="-//W3C//DTD XHTML 1.1//EN" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>AMO Tests</title>
+    <?=$html->css('tests')?>
+    <?=$html->css('admin')?>
+    <?=$javascript->link('jquery-compressed.js')?>
+    <?=$javascript->link('jquery.autocomplete.pack.js')?>
+    <?=$javascript->link('listing')?>
+</head>
+<body>
+    <div class="menu">
+        <span class="title">AMO 'Project Remora' Test Suite</span>
+        <span class="items">
+            <?=$html->link('Tests Main', '/tests')?> | 
+            <?=$html->link('Run All Tests', '/tests/all')?> | 
+            <?php
+                $tests = $this->controller->Session->read('Tests');
+                $referer = urlencode(str_replace('url=', '', $_SERVER['QUERY_STRING']));
+                $referer = str_replace(LANG, '', $referer);
+                $referer = str_replace(APP_SHORTNAME, '', $referer);
+                $referer = str_replace('//', '/', $referer);
+                if ($tests['Passes'] === false) {
+                    echo $html->link('Turn Passes ON', '/tests/passes/on/?r='.$referer);
+                }
+                else {
+                    echo $html->link('Turn Passes OFF', '/tests/passes/off/?r='.$referer);
+                }
+            ?>
+            <?=(!empty($svn)) ? ' | '.$svn : ''?>
+        </span>
+    </div>
+    <?php echo $content_for_layout; ?>
+</body>
+</html>

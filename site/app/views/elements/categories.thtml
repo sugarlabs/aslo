@@ -1,0 +1,99 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Mike Morgan <morgamic@mozilla.com> (Original Developer)
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+/**
+ * This element uses the following local variables:
+ * - $highlight: category to be highlighted. Format: array(addontype_id, cat_id)
+ *               a cat_id of 0 means "no sub-category"=global landing page.
+ */
+
+global $hybrid_categories;
+?>
+
+<div id="categories">
+    <h3 title="<?=_('categories_header_title')?>"><span><?=_('categories_header')?></span></h3>
+    
+    <?php
+    if (isset($highlight) && !empty($highlight)) {
+        // find current category in category list
+        $highlight_cat = array();
+        foreach ($AmoTags as $_tag) {
+            if ($_tag['type'] == $highlight[0] &&
+                ($_tag['cat'] == $highlight[1] || $_tag['cat'] == 0)) {
+                $highlight_cat = $_tag;
+                break;
+            }
+        }
+        
+        // if found, show top-level category highlight
+        if (!empty($highlight_cat)) {
+            
+            echo "<p>";
+            $_url = "/browse/type:{$highlight_cat['type']}";
+            if ($highlight_cat['cat'] != 0) // category not empty
+                $_url .= "/cat:{$highlight_cat['cat']}";
+            
+            echo $html->link($highlight_cat['name'], $_url,
+                array('title'=>_('categories_current_title')));
+            
+            // when appropriate, show sub-category
+            if ($highlight_cat['cat'] == 0 && $highlight[1] != 0
+                && isset($this_tag)) {
+                echo "<br/>&lfloor;&nbsp;"; // sub-category marker
+                
+                echo $html->link($this_tag['Translation']['name']['string'],
+                    $_url."/cat:{$this_tag['Tag']['id']}",
+                    array('title'=>_('categories_current_title')));
+            }
+            echo "</p>";
+        }
+        
+    }
+    ?>
+
+    <ul id='cat-list'>
+    <?php
+    
+    foreach ($AmoTags as $_tag) {
+        $_url = "/browse/type:{$_tag['type']}".($_tag['cat']!=0 ? "/cat:{$_tag['cat']}" : '');
+        echo '<li>'.$html->link($html->entities($_tag['name']), $_url)."</li>\n";
+    }
+    ?>
+    </ul>
+</div>

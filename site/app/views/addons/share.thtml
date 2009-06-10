@@ -1,0 +1,24 @@
+<?php
+
+        $url = FULL_BASE_URL . $html->url("/addon/{$addon_id}");
+
+        $description = $html->truncateChars(250, $description);
+
+        $title = $share_title;
+
+        // Grab the URL template for the link sharing service and fill in the 
+        // placeholders with the strings composed above.
+        $link_data = compact('url', 'title', 'description');
+        foreach ($link_data as $name => $value) {
+            $service_url = str_replace(
+                '{'.strtoupper($name).'}', 
+                rawurlencode($value), 
+                $service_url
+            );
+        }
+
+        // Finally, bounce the user off to the populated sharing URL.
+        header('HTTP/1.1 302 Found');
+        header('Location: ' . $service_url);
+        exit;
+?>

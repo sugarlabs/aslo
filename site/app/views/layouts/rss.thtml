@@ -1,0 +1,15 @@
+<?php header('Content-type: text/xml'); ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title><?=$rss_title?></title>
+        <link><?='http'.(!empty($_SERVER['HTTPS'])?'s':'').'://'.$_SERVER['SERVER_NAME'].$html->url('/');?></link>
+        <description><?=$rss_description ?></description>
+        <language><?=strtolower(LANG) ?></language>
+        <pubDate><?=$time->toRss(gmmktime()) ?></pubDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>Mozilla Add-ons</generator>
+        
+        <?php echo $content_for_layout; ?>
+
+    </channel>
+</rss>

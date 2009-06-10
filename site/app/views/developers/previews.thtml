@@ -1,0 +1,129 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *      Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
+    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+     <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_previews_title'), $addon_name), 'addon_id' => $addon_id));?>
+        <?php
+        if (!empty($messages['success'])) {
+            echo '<div class="notice-success rounded"><span>'.___('devcp_previews_notice_success').'</span><br /><ul><li>'.implode('</li><li>', $messages['success']).'</li></ul></div>';
+        }
+        if (!empty($messages['errors'])) {
+            echo '<div class="notice-error rounded"><span>'.___('devcp_previews_notice_error').'</span><br /><ul><li>'.implode('</li><li>', $messages['errors']).'</li></ul></div>';
+        }
+        
+        echo $this->renderElement('noscript');
+        echo $this->renderElement('developers/rolecheck');
+        echo '<form id="previews-form" action="" method="post" enctype="multipart/form-data">';
+        echo $html->hiddenSession();
+        
+        if (!empty($previews)) {
+            echo '<p>'.___('devcp_previews_p_screenshots').'</p>';
+            // Retrieve language arrays from bootstrap.
+            global $valid_languages, $native_languages;
+            foreach (array_keys($valid_languages) as $key) {
+                $languages[$key] = $native_languages[$key]['native'];
+            }
+            ksort($languages);
+            $this->controller->Image->getHighlightedPreviewURL(2848);
+            $this->translationBox = array(
+                                'defaultLocale' => $addon['Addon']['defaultlocale'],
+                                'languages' => $languages,
+                                'table' => 'Preview',
+                                'loaded' => false
+                            );
+            
+            foreach ($previews as &$preview) {
+            ?>
+                <div class="preview-box graybox rounded spaced field">
+                <table style="width: 100%;"><tr><td style="width: 200px; text-align: center; vertical-align: top;">
+                <img src="<?=$this->controller->Image->getPreviewURL($preview['Preview']['id'])?>/0" alt="<?=___('devcp_previews_thumbnail')?>" />
+                </td><td style="vertical-align: top;">
+                <h5 style="margin-top: 0; margin-bottom: 2px;"><?=___('devcp_previews_header_caption')?></h5>
+                <?php
+                echo $this->renderElement('translationbox', array(
+                    'field' => 'caption',
+                    'id' => $preview['Preview']['id'],
+                    'translations' => !empty($translations[$preview['Preview']['id']]['caption']) ? $translations[$preview['Preview']['id']]['caption'] : array(),
+                    'height' => '60',
+                    'graybox' => false
+                ));
+                ?>
+                
+                <table style="width: 100%; padding-top: 10px;"><tr><td>
+                <label><input type="radio" name="data[Preview][highlight]" value="<?=$preview['Preview']['id']?>" style="vertical-align: top;"<?=($preview['Preview']['highlight'] == 1 ? ' checked="checked"' : '')?>/>
+                <?=___('devcp_previews_label_default')?></label>
+                </td><td class="preview-buttons">
+                <a href="#" onclick="previews.showReplaceBox(this); return false;" class="edit-button rounded"><?=___('devcp_previews_a_replace')?></a>&nbsp;
+                <a href="#" onclick="previews.deletePreview(this); return false;" class="remove-button rounded"><?=___('devcp_previews_a_delete')?></a>
+                </td></tr></table>
+                
+                <div class="replace-preview" style="display: none;">
+                <label><?=___('devcp_previews_label_new')?>
+                <input type="file" name="data[Preview][New][<?=$preview['Preview']['id']?>]" /></label>
+                <p><?=sprintf(___('devcp_previews_click_update'), 'href="#" onclick="previews.cancelReplace(this); return false;"')?></p>
+                </div>
+                
+                </td></tr></table>
+                <input type="hidden" class="delete" name="data[Preview][Delete][<?=$preview['Preview']['id']?>]" value="false" />
+                <div class="error-message"><?=sprintf(___('devcp_previews_error_message'), 'href="#" onclick="previews.cancelDelete(this); return false;"')?></div>
+                </div>
+        <?php
+            }
+        }
+        ?>
+        
+        <div id="add-preview-box" class="graybox rounded spaced field" style="<?=(!empty($previews) ? 'display: none;' : '')?>">
+            <h4><?=___('devcp_previews_add_new')?></h4>
+            <p><?=sprintf(___('devcp_previews_add_select'), implode(', ', $this->controller->Developers->imageExtensions))?></p>
+            <div id="new-preview-container">
+                <label class="new-preview"><?=___('devcp_previews_label_upload')?><input type="file" name="data[Preview][New][]" size="40" /></label>
+            </div>
+            <div class="add-button-container"><a href="#" onclick="previews.addUploadBox(); return false;" class="add-button rounded"><?=___('devcp_previews_a_another')?></a></div>
+            <div class="preview-add-button-description"><?=___('devcp_previews_click_below')?></div>
+        </div>
+        
+        <div class="add-button-container" style="<?=(empty($previews) ? 'display: none;' : '')?>"><a href="#add-preview-box" onclick="previews.showAddBox(this);" class="add-button rounded"><?=___('devcp_previews_add_new')?></a></div>
+        
+        <div class="action-button-container centered"><a href="#" onclick="previews.save(); return false;" class="action-button rounded"><?=___('devcp_previews_a_update')?></a></div>
+        </form>
+    </div>
+</div>

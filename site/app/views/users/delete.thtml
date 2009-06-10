@@ -1,0 +1,139 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+?>
+
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div class="primary" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+    
+<?php if (isset($success) && $success): ?>
+<?=$this->renderElement('notification', array('type' => 'success', 
+'msg' => ___('user_del_header_farewell', 'Farewell!'),
+'description' => sprintf(___('user_del_account_deleted', 'Your user account %1$s '
+        .'has been successfully deleted. If you want to come back some time, '
+        .'you can re-register on the <a href="%2$s">user registration page</a>.')
+        , $useremail, $html->url('/users/register')))); ?>
+    <p><?=$html->link(_('link_return_to_front_page'), '/');?></p>
+
+<?php else: ?>
+    <?php if (!empty($deleteerror)){
+        switch ($deleteerror) {
+        case 'addons':
+            echo '<p>';
+            echo $this->renderElement('notification', 
+                array('type' => 'error', 
+                'description' => sprintf(___('user_del_error_addons', 'You cannot delete your '
+                .'account if you are listed as an <a href="%1$s"> author of any '
+                .'add-ons</a>. To delete your account, please have another person '
+                .'in your development group delete you from the list of authors '
+                .'for your add-ons. Afterwards you will be able to delete your account '
+                .'here.'), $html->url("/user/{$userid}"))));
+            echo '</p>';
+            echo sprintf(___('user_del_error_addons_more_questions', 'If you '
+                .'have additional questions, please contact %1$s for assistance.'),
+                $link->email('amo-editors@mozilla.org'));
+            break;
+        case 'checkbox':
+            echo $this->renderElement('notification', 
+                array('type' => 'error', 
+                'description' => ___('user_del_error_checkbox', 'You need to check the box "I '
+                .'understand..." before we can delete your account.')));
+            break;
+        case 'password':
+            echo $this->renderElement('notification', 
+                array('type' => 'error', 
+                'description' => ___('user_del_error_password', 'Please enter your password '
+                .'correctly in order to perform this step.')));
+            break;
+        case 'unknown':
+        default:
+            echo $this->renderElement('notification', 
+                array('type' => 'error', 
+                'description' => sprintf(___('user_del_error_unknown', 'An unknown error occured '
+                .'deleting your account. Please contact %1$s with the issue and '
+                .'we will delete it for you. We apologize for the inconvenience.'),
+                $link->email('amo-admins@mozilla.org'))));
+            break;
+        }
+    }
+    ?>
+    
+    <h1><?php echo sprintf(___('user_del_header_delete_account', 'Delete User Account %s'), $useremail)?></h1>
+    
+    <p><?=___('user_del_community_sad', 'The Mozilla Add-ons community is sad to see you go.')?></p>
+    
+    <p><?php sprintf(___('user_del_specific_problem_editors', 'If you have a '
+    .'specific problem we may help you with, please do not delete your account '
+    .'now, but contact us at %1$s and we will do our best to assist you in '
+    .'solving it.'), $link->email('amo-editors@mozilla.org'))?></p>
+    
+    <div class="highlight">
+    <h2><?=___('user_del_header_confirm_deletion', 'Confirm account deletion')?></h2>
+    
+    <p><?=___('user_del_permanently_removed_means', 'By clicking "delete" your '
+        .'account is going to be <strong>permanently removed</strong>. That means:')?>
+    <ul>
+        <li><?=___('user_del_nologin', 'You will not be able to log into Mozilla Add-ons anymore.')?></li>
+        <li><?=___('user_del_reviews_anonymized', 'Your reviews and ratings will '
+            .'not be deleted, but they will no longer be associated with you.')?></li>
+    </ul>
+    </p>
+    <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
+        <?=$html->hiddenSession() ?>
+        <div>
+            <label class="amo-label-large" for="UserPassword"><?=___('user_del_confirm_password', 'Confirm Password')?></label>
+            <?=$html->password('User/password', array('autocomplete'=>'off')) ?>
+            <?=$html->tagErrorMsg('User/password', _('error_wrong_password'))?>
+        </div>
+        
+        <p>
+        <?=$html->checkBox('User/reallydelete') ?>
+        <label for="UserReallydelete"><?=___('user_del_understand_permanent',
+            'I understand that this step cannot be undone.')?></label>
+        </p>
+        
+        <p><?=$html->submit(___('user_del_deletenow', 'Delete my user account now')); ?></p>
+    </form>
+    </div>
+    <p><?=$html->link(_('link_return_to_front_page'), '/');?></p>
+<?php endif; ?>
+</div>

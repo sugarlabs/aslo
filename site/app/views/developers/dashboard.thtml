@@ -1,0 +1,118 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<div id="content">
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons));?>
+    
+    <div id="content-main">
+        <h3><?= ___('devcp_dashboard_header_main') ?></h3>
+        
+        <div id="summary">
+        <?php
+        if (!empty($addons)) {
+            foreach ($addons as $addon) {
+                $addon_id = $addon['Addon']['id'];
+                $addonIconPath = $this->controller->Image->getAddonIconURL($addon_id);
+        ?>
+            <div id="addon-<?=$addon_id?>" class="addon sub">
+            <div class="addon-container">
+            <?php
+            echo '<h4><a href="'.$html->url('/addon/'.$addon_id).'">';
+            echo '<img src="'.$addonIconPath.'" alt="'.$addon['Translation']['name']['string'].'" />';
+            echo $addon['Translation']['name']['string'].'</a></h4>';
+            
+            if ($addon['Addon']['status'] != STATUS_DISABLED) {
+                $latestVersion = !empty($addon['Version'][0]) ? $addon['Version'][0] : 0;
+                
+                echo '<ul class="actionbar index-actions">';
+                    // Edit Add-on
+                    echo '<li class="edit"><a href="'.$html->url('/developers/addon/edit/'.$addon_id).'" class="view">'._('devcp_actionbar_link_edit').'</a>';
+                    echo '<span class="action-details">'.sprintf(___('devcp_dashboard_last_edited'), strftime(_('date'), strtotime($addon['Addon']['modified']))).'</span></li>';
+                    // Change Status
+                    echo '<li class="status"><a href="'.$html->url('/developers/addon/status/'.$addon_id).'" class="view">'.___('devcp_dashboard_change_status').'</a>';
+                    $active = $addon['Addon']['inactive'] == 1 ? ___('devcp_dashboard_inactive') : ___('devcp_dashboard_active');
+                    echo '<span class="action-details">'.sprintf(___('devcp_dashboard_addontype_status'), $addontypes[$addon['Addon']['addontype_id']],
+                                                                 '<span class="inactive-'.$addon['Addon']['inactive'].'">'.$active.'</span>',
+                                                                 '<span class="status-'.$addon['Addon']['status'].'">'.$statuses[$addon['Addon']['status']].'</span>').'</span></li>';
+                    // Statistics Dashboard
+                    echo '<li class="statistics"><a href="'.$html->url('/statistics/addon/'.$addon_id).'" class="view">'._('devcp_actionbar_link_stats').'</a>';
+                    echo '<span class="action-details stats">';
+                    echo sprintf(_('devcp_statsbar_total_downloads'), $html->number_format($addon['Addon']['totaldownloads'], 0));
+                    echo '&nbsp;&middot;&nbsp;';
+                    echo sprintf(_('devcp_statsbar_weekly_downloads'), $html->number_format($addon['Addon']['weeklydownloads'], 0));
+                    echo '&nbsp;&middot;&nbsp;';
+                    echo sprintf(_('devcp_statsbar_adu'), $html->number_format($addon['Addon']['updatepings'], 0));
+                    echo '</span></li>';
+                    // Versions and Files
+                    echo '<li class="versions"><a href="'.$html->url('/developers/versions/'.$addon_id).'" class="view">'.___('devcp_dashboard_versions').'</a>';
+                    echo '<span class="action-details">';
+                    if (!empty($latestVersion)) {
+                        echo _('devcp_summary_lastversion').' '.$html->link($latestVersion['version'], '/developers/versions/edit/'.$latestVersion['id']).' ('.$this->controller->Amo->describeVersionStatus($latestVersion['File']).')';
+                        if ($addon['Addon']['inactive'] != 1) {
+                            echo '&nbsp;&middot;&nbsp;';
+                        }
+                    }
+                    if ($addon['Addon']['inactive'] != 1) {
+                        echo '<a href="'.$html->url('/developers/versions/add/'.$addon_id).'">'.___('devcp_dashboard_versions_new').'</a>';
+                    }
+                    echo '</span></li>';
+                echo '</ul>';
+            }
+            else {
+                // Admin Disabled Add-on
+                echo '<p>'.sprintf(___('devcp_dashboard_disabled_status'), '<span class ="'.STATUS_DISABLED.'">'.$statuses[STATUS_DISABLED].'</span>').'</p>';
+                echo '<p>'.sprintf(___('devcp_dashboard_disabled_questions'), 'amo-admins@mozilla.org').'</p>';
+            }
+            ?>
+            </div>
+                <div class="vex"><span><!-- bottom edge --></span></div>
+            </div>
+        <?php
+            }
+        }
+        else {
+            echo '<div class="graybox rounded">';
+            echo '<h4>'.___('devcp_dashboard_header_welcome').'</h4>';
+            echo '<p>'.___('devcp_dashboard_learn').'</p>';
+            echo '<div style="text-align: center;"><a href="'.$html->url('/developers/addon/submit').'" class="action-button rounded">'.___('devcp_dashboard_start').'</a></div>';
+            echo '</div>';
+        }
+        ?>
+        </div>
+    </div> <!-- content-main -->
+</div> <!-- content -->

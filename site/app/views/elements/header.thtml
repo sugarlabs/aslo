@@ -1,0 +1,165 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2006
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Mike Morgan <morgamic@mozilla.com>
+ *   Justin Scott <fligtar@gmail.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   Wil Clouser <clouserw@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */ 
+?>
+<ul id="nav-access">
+  <li><a href="#content">Skip to main content</a></li>
+  <li><a href="#search-form">Skip to search form</a></li>
+  <li><a href="#categories">Skip to categories menu</a></li>
+  <li><a href="#other-apps">Skip to other applications menu</a></li>
+</ul>
+
+
+<?php
+    if (empty($addonStatus))
+        $addonStatus = STATUS_PUBLIC;
+    if ($this->controller->name == "Search")
+        $url_format = "?status=%s";
+    else
+        $url_format = "/status:%s";
+    if (isset($addonStatus) && $addonStatus == STATUS_SANDBOX) {
+        $homeText = _('a_header_sandbox');
+        $homeLink = "/addons/home/status:" . STATUS_SANDBOX;
+    }
+    else {
+        $homeText = _('header_navlink_addons');
+        $homeLink = "/";
+    }
+        
+    $publicUrl = $this->action;
+    if (isset($this->params['pass']) && is_array($this->params['pass'])) {
+        foreach ($this->params['pass'] as $arg) {
+            $parts = explode(':', $arg);
+            if (low($parts[0]) != "status")
+                $publicUrl = $publicUrl . "/{$arg}";
+        }
+    }
+    $sandboxUrl = $publicUrl . sprintf($url_format, STATUS_SANDBOX);
+    $sandboxUrl = $html->link(_('a_header_sandbox'), $sandboxUrl);
+    $publicUrl = $html->link(_('a_header_public'), $publicUrl);
+        
+    if(isset($sandboxAccess) && $sandboxAccess && $this->controller->action != 'display') {
+        if ($addonStatus == STATUS_SANDBOX)
+            $sandboxLink = "$publicUrl | "._('a_header_sandbox');
+        else
+            $sandboxLink = _('a_header_public')." | $sandboxUrl";
+    }
+
+    switch (APP_SHORTNAME) {
+        case 'firefox':
+            $main_header = _('header_main_firefox_header');
+            break;
+        case 'seamonkey':
+            $main_header = _('header_main_seamonkey_header');
+            break;
+        case 'sunbird':
+            $main_header = _('header_main_sunbird_header');
+            break;
+        case 'thunderbird':
+            $main_header = _('header_main_thunderbird_header');
+            break;
+        default:
+            $main_header = _('header_main_header');
+            break;
+    }
+?>
+
+<div id="branding">
+  <h4 id="moz"><a href="http://www.mozilla.com/<?=LANG?>/" title="mozilla.com" accesskey="1"><?=$html->image('template/moz-com-logo.png', array('alt' => 'Mozilla Corporation', 'title' => 'Mozilla Corporation', 'height' => '38', 'width' => '89'))?></a></h4>
+  
+<?php if (isset($bigHeader) && $bigHeader) { ?>
+    <div id="page-title" class="<?=APP_SHORTNAME?>">
+        <!-- Default header -->
+        <div>
+            <h1><a href="<?=$html->url('/')?>" title="<?=sprintf(_('header_home_tooltip'), APP_PRETTYNAME)?>">
+            <?php echo $html->image('app-icons/'.APP_SHORTNAME.'.png', array('alt' => $main_header)); ?>
+            <?=$main_header?></a></h1>
+            <p class="page-intro"><?=$bigHeaderText?></p>
+        </div>
+    </div>
+<?php } else { ?>
+
+    <div id="page-title" class="sub-page <?=LAYOUT_NAME?>">
+        <!-- Header for sub-pages -->
+        <div>
+            <h1><a href="<?=$html->url('/')?>" title="<?=sprintf(_('header_home_tooltip'), APP_PRETTYNAME)?>">
+            <?php echo $html->image('app-icons/'.LAYOUT_NAME.'.png', array('alt' => $main_header)); ?>
+            <?php
+            if (LAYOUT_NAME == 'generic' || LAYOUT_NAME == 'developers') {
+                echo 'Mozilla Add-ons</a></h1>';
+                if (!empty($subpagetitle)) {
+                    echo '<h2>'.$subpagetitle.'</h2>';
+                }
+            }
+            else {
+                // Not perfect l10n, but better than hardcoded English
+                echo $main_header.(isset($subpagetitle) ? ": <span>{$subpagetitle}</span>" : '').'</a></h1>';
+            }
+            ?>
+        </div>
+    </div>
+
+<?php } ?>
+
+  <ul id="nav-user">
+    <?php 
+    if ($this->controller->Session->check('User')) {
+        $user = $this->controller->Session->read('User');
+        echo '<li>' . $html->link(_('header_navlink_myaccount'), '/users/edit', array('title' => $user['email'])) . '</li>' . "\n";
+        echo '<li>' . $html->link(_('sidebar_navlink_developer_tools'), '/developers') . '</li>' . "\n";
+        if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User'))) {
+            echo '<li>' . $html->link(_('sidebar_navlink_editor_tools'), '/editors') .'</li>' . "\n";
+        }
+        if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User'))) {
+            echo '<li>' . $html->link('Localizer Tools', '/localizers') . '</li>' . "\n";
+        }
+        if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User'))) {
+            echo '<li>' . $html->link(_('sidebar_navlink_admin_tools'), '/admin') . '</li>' . "\n";
+        }
+        echo '<li>' . $html->link(_('header_navlink_logout'), $html->logout_url()) . '</li>' . "\n";
+    } else {
+        echo '<li>' . $html->link(_('header_navlink_register'), '/users/register') . '</li> ' . "\n";
+        echo '<li>' . $html->link(_('header_navlink_login'), $html->login_url()) .  '</li>' . "\n";
+    }
+    ?>
+  </ul>
+  
+</div><!-- /#branding -->
+

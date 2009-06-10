@@ -1,0 +1,134 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2008
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Wil Clouser <clouserw@mozilla.com> (Original Author)
+ *   Frederic Wenzel <fwenzel@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+// This is some ugly view code
+?>
+<script type="text/javascript">
+    // Need to generate outside of a .js file so cake/ajax can use it
+    var autocompleteurl = '<?php echo $html->url('/admin/addonLookup?s=4'); ?>';
+    var featuredurl     = '<?php echo $html->url('/editors/featured'); ?>';
+    var addonurl        = '<?php echo $html->url('/addon'); ?>';
+    var imageurl        = '<?php echo $html->urlImage(''); ?>';
+
+    var featureaddfailure    = '<?php echo _('editors_featured_addon_add_failure'); ?>';
+    var featureeditfailure   = '<?php echo _('editors_featured_addon_edit_failure'); ?>';
+    var featureeditsuccess   = '<?php echo _('editors_featured_addon_edit_success'); ?>';
+    var featureremovefailure = '<?php echo _('editors_featured_addon_remove_failure'); ?>';
+    var addedinvalidlocale   = '<?php echo _('editors_featured_addon_invalid_locale'); ?>';
+    var featureeditsubmit    = '<?php echo _('editors_featured_edit_feature_submit'); ?>';
+</script>
+
+<div id="content">
+    <?=$this->renderElement('developers/editorsmenu');?>
+    
+    <div id="content-main">
+        <table width="100%" id="features">
+            <tr class="queueHeader">
+                <td><?=_('editors_th_addon')?></td>
+                <td><?=_('editors_th_locales')?></td>
+            </tr>
+<?php
+    $current_type = 0;
+    foreach ($tags as $tag) :
+       
+        if ($tag['Tag']['addontype_id'] != $current_type) {
+            echo '<tr class="featureTypeHeader '.preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$tag['Tag']['addontype_id']])).'"><th colspan="2">'.$html->image('developers/'.strtolower($applications[$tag['Tag']['application_id']]).'.png', array('title' => $applications[$tag['Tag']['application_id']])).' '.$addontypes[$tag['Tag']['addontype_id']].'</th></tr>';
+            $current_type = $tag['Tag']['addontype_id'];
+        }
+
+        echo '<tr class="featureHeader '.preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$tag['Tag']['addontype_id']])).'"><th colspan="2"><span lang="'.$tag['Translation']['name']['locale'].'">'.$tag['Translation']['name']['string'].'</span></th></tr>';
+
+        $_class = preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$tag['Tag']['addontype_id']]));
+        if (array_key_exists($tag['Tag']['id'], $addons_by_tag) && !empty($addons_by_tag[$tag['Tag']['id']])) {
+            $zebra = 0;
+            foreach ($addons_by_tag[$tag['Tag']['id']] as $addon):
+                $_evenodd = ($zebra++ % 2 == 0 ? ' even' : ' odd');
+                ?>
+                <tr class="<?=$_class.$_evenodd?>" id="feature-<?=$tag['Tag']['id']?>-<?=$addon['Addon']['id']?>">
+                    <td>
+                        <?php
+                        echo $html->formTag('/editors/featured/remove', 'post',
+                            array('id' => 'feature-remove-form-'.$tag['Tag']['id'].'-'.$addon['Addon']['id'],
+                                  'onsubmit' => 'removeFeature('.$tag['Tag']['id'].','.$addon['Addon']['id'].'); return false;'));
+                        echo $html->submitImage('/developers/delete.png',
+                            array('title'=>_('editors_featured_remove_feature'),
+                                  'alt' => _('editors_featured_remove_feature'),
+                                  'class' => 'featureremove',
+                                  'id' => 'delete-'.$tag['Tag']['id'].'-'.$addon['Addon']['id']));
+                        echo $html->hidden('Tag/id', array('value' => $tag['Tag']['id']));
+                        echo $html->hidden('Addon/id', array('value' => $addon['Addon']['id']));
+                        echo '&nbsp;';
+                        echo $html->link($addon['Translation']['name']['string'], '/addon/'.$addon['Addon']['id']);
+                        ?>
+                        </form>
+                    </td>    
+                    <td>
+                        <?php
+                        echo $html->formTag('/editors/featured/edit', 'post', array('id' => 'feature-edit-form-'.$tag['Tag']['id'].'-'.$addon['Addon']['id'], 'onsubmit' => 'editFeatureSubmit('.$tag['Tag']['id'].','.$addon['Addon']['id'].'); return false;'));
+                        echo $html->hidden('Tag/id', array('value' => $tag['Tag']['id']));
+                        echo $html->hidden('Addon/id', array('value' => $addon['Addon']['id']));
+                        echo $html->input('AddonTag/feature_locales', array('id' => "edit-addon-locales-{$tag['Tag']['id']}-{$addon['Addon']['id']}", 'size' => 40, 'value' => $addon['AddonTag'][0]['feature_locales']));
+                        echo $html->submit(_('editors_featured_edit_feature_submit'), array('id' => 'edit-feature-submit-'.$tag['Tag']['id'].'-'.$addon['Addon']['id']));
+                        ?>
+                        </form>
+                    </td>
+                </tr>
+            <?php
+            endforeach;
+        }
+
+        echo '<tr class="'.$_class.' even" id="feature-add-tr-form-'.$tag['Tag']['id'].'"><td>';
+        echo $html->formTag('/editors/featured/add', 'post', array('id' => 'feature-add-form-'.$tag['Tag']['id'], 'onsubmit' => 'addFeatureSubmit('.$tag['Tag']['id'].'); return false;'));
+        echo $html->hidden('Tag/id', array('value' => $tag['Tag']['id']));
+        echo $html->submitImage('developers/add.png',
+            array('title' => _('editors_featured_add_feature'),
+                  'alt' => _('editors_featured_add_feature'),
+                  'class' => 'featureadd',
+                  'id' => 'add-'.$tag['Tag']['id'],
+                  )).'&nbsp;';
+        echo '<input type="text" name="data[Addon][id]" id="new-addon-id-'.$tag['Tag']['id'].'" onfocus="prepAutocomplete('.$tag['Tag']['id'].');" size="40" />';
+        echo '<noscript>'.$html->submit(_('editors_featured_add_feature_submit'), array('id' => 'new-feature-submit-'.$tag['Tag']['id'])).'</noscript>';
+        echo '</form></td>';
+        echo '<td><span id="edit-feature-message-'.$tag['Tag']['id'].'"></span></td></tr>'; // use the extra space for messages
+
+    endforeach;
+?>
+        </table>
+    </div>
+</div>

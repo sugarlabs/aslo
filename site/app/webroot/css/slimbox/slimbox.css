@@ -1,0 +1,108 @@
+/* SLIMBOX */
+
+#lbOverlay {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	background-color: #000;
+	cursor: pointer;
+}
+
+#lbCenter, #lbBottomContainer {
+	position: absolute;
+	left: 50%;
+	overflow: hidden;
+	background-color: #aaa;
+}
+
+.lbLoading {
+	background: #fff url(loading.gif) no-repeat center;
+}
+
+#lbImage {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-repeat: no-repeat;
+    background-position: center;
+    padding: 0px;
+}
+
+#lbPrevLink, #lbNextLink {
+	display: block;
+	position: absolute;
+	top: 0;
+	width: 50%;
+	outline: none;
+}
+
+#lbPrevLink {
+	left: 0;
+}
+
+#lbPrevLink:hover {
+	background: transparent url(goleft.png) no-repeat 0% 48%;
+}
+
+#lbNextLink {
+	right: 0;
+}
+
+#lbNextLink:hover {
+	background: transparent url(goright.png) no-repeat 100% 48%;
+}
+
+#lbBottom {
+	font-family: Verdana, Arial, Geneva, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #666;
+	line-height: 1.4em;
+	text-align: left;
+    padding: 0px;
+    padding-top:5px;
+}
+
+#lbCloseLink {
+	display: block;
+	float: right;
+	width: 66px;
+	height: 36px;
+	background: transparent url(close.png) no-repeat center;
+	margin: 5px 0;
+}
+
+#lbCaption, #lbNumber {
+    padding-left:5px;
+	margin-right: 71px;
+    color:#111;
+}
+
+#lbCaption {
+	font-weight: bold;
+}
+
+/* Begin Mozilla Additions */
+#lbPreviewContainerContainer {
+	width: 100%;
+    border-top: 3px solid #555;
+    border-bottom: 3px solid #555;
+	background-color: #ccc;
+
+}
+#lbPreviewContainer {
+	width: 100%;
+	height: 75px;
+    margin: 5px auto 5px auto;
+}
+#lbPreviewContainer img {
+    border: 1px solid #000;
+    width: 65px;
+    height: 65px;
+    padding: 2px 2px 2px 2px;
+    margin: 2px 2px 2px 2px;
+}
+#lbPreviewContainer img.active {
+    border: 1px solid #e35200;
+    width: 65px;
+    height: 65px;
+}

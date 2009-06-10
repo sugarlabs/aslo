@@ -1,0 +1,144 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
+ *   Wil Clouser <wclouser@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+$this->layout = 'amo2009';
+
+loadModel('Group');
+$groupModel =& new Group();
+
+$groups = $groupModel->findAll();
+
+global $valid_languages, $native_languages;
+
+$developers = array();
+$localizers = array();
+$editors = array();
+$past_developers = array();
+$other_contributors = array();
+
+foreach ($groups as $group) {
+    if (strpos($group['Group']['rules'], 'Localizers') !== false) {
+        $rules = explode(':', $group['Group']['rules']);
+        
+        if (array_key_exists($rules[1], $valid_languages)) {
+            foreach ($group['User'] as $user) {
+                $localizers["{$user['firstname']} {$user['lastname']}"] = $html->link("{$user['firstname']} {$user['lastname']}", "/user/{$user['id']}")." ({$native_languages[$rules[1]]['native']})";
+            }
+        }
+    }
+    elseif ($group['Group']['name'] == 'Editors' || $group['Group']['name'] == 'Senior Editors') {
+        foreach ($group['User'] as $user) {
+            $editors["{$user['firstname']} {$user['lastname']}"] = $html->link("{$user['firstname']} {$user['lastname']}", "/user/{$user['id']}");
+        }
+    }
+    elseif ($group['Group']['name'] == 'Past Developers') {
+        foreach ($group['User'] as $user) {
+            $past_developers["{$user['firstname']} {$user['lastname']}"] = $html->link("{$user['firstname']} {$user['lastname']}", "/user/{$user['id']}");
+        }
+    }
+    elseif ($group['Group']['name'] == 'Developers') {
+        foreach ($group['User'] as $user) {
+            $developers["{$user['firstname']} {$user['lastname']}"] = $html->link("{$user['firstname']} {$user['lastname']}", "/user/{$user['id']}");
+        }
+    }
+    elseif ($group['Group']['name'] == 'Other Contributors') {
+        foreach ($group['User'] as $user) {
+            $other_contributors["{$user['firstname']} {$user['lastname']}"] = $html->link("{$user['firstname']} {$user['lastname']}", "/user/{$user['id']}");
+        }
+    }
+}
+ksort($developers);
+ksort($localizers);
+ksort($editors);
+ksort($past_developers);
+ksort($other_contributors);
+?>
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/categories')?>
+</div>
+
+<div class="primary prose" role="main">
+    <?=$this->renderElement('amo2009/search')?>
+
+<?=_('credits_intro')?>
+<br/><br/>
+<div class="corner-box">
+<?php
+    echo '<h4>'._('credits_section_developers').'</h4>';
+    echo implode(', ', $developers);
+?>
+</div>
+<div class="corner-box">
+<?php
+    echo '<h4>'._('credits_section_localizers').'</h4>';
+    echo implode(', ', $localizers);
+?>
+</div>
+<div class="corner-box">
+<?php
+    echo '<h4>'._('credits_section_editors').'</h4>';
+    echo implode(', ', $editors);
+?>
+</div>
+<div class="corner-box">
+<?php
+    echo '<h4>'._('credits_section_other_contributors').'</h4>';
+    echo implode(', ', $other_contributors);
+?>
+</div>
+<div class="corner-box">
+<?php
+    echo '<h4>'._('credits_section_past_developers').'</h4>';
+    echo implode(', ', $past_developers);
+?>
+</div>
+<div class="corner-box">
+<?php
+    echo '<h4>'._('credits_section_software').'</h4>';
+?>
+    <ul>
+        <li><?=_('credits_software_famfamfam')?></li>
+        <li><?=___('credits_software_timeplot', 'Some pages use elements of <a href="http://www.simile-widgets.org/timeplot/">Timeplot</a>, licensed under a <a href="http://simile.mit.edu/license.html">BSD License</a>.')?></li>
+    </ul>
+</div>
+
+<br/>
+<?=sprintf(_('credits_contributing'), $html->link(_('credits_contributing_wikipage'), 'http://wiki.mozilla.org/Update'))?>
+
+</div>

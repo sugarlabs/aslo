@@ -1,0 +1,153 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   l.m.orchard <lorchard@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+if (isset($error)) { ?>
+<error><?php echo ($error); ?></error>   
+<?php
+} else {
+?>
+<collection>
+    <id><?php echo $feed_id ?></id>
+    <name><?php echo $feed_name ?></name>
+    <description><?php echo $feed_description ?></description>
+    <closed><?php echo $feed_closed ?></closed>
+    <site><?php echo SITE_URL . $html->url( '/collection/display/' . $feed_id ) ?></site>
+    <addons>
+<?php 
+    foreach ($addonsdata as $addon) {
+
+  if (empty($addonIconPath)) {
+      $addonIconPath = ($addon['addontype_id'] == ADDON_THEME ? $html->urlImage(DEFAULT_THEME_ICON) : $html->urlImage(DEFAULT_ADDON_ICON));
+    }
+
+    $amo = 'https://addons.mozilla.org';
+?>
+<addon>
+    <meta>
+        <added><?php echo $addon['collection_added'] ?></added>
+        <comments><?php echo $addon['collection_comments'] ?></comments>
+    </meta>
+    <categories>
+    <?php foreach ($addon['tags'] as $tag): ?>
+        <category id="<?php echo $tag['id'] ?>"><?php echo $tag['name'] ?></category>
+    <?php endforeach ?>
+    </categories>
+    <name><?php echo $addon['name']; ?></name>
+    <type id='<?php echo $addon['addontype_id']; ?>'><?php echo $addon['addontype_name']; ?></type>
+    <guid><?php echo $addon['guid']; ?></guid>
+    <version><?php echo $addon['install_version']; ?></version>
+    <status id='<?php echo $addon['status']; ?>'><?php 
+        if ($addon['status'] ==  STATUS_PUBLIC) {
+                echo rtrim(_('a_header_public'));  
+              } else {
+                echo rtrim(_('a_header_sandbox'));  
+              }
+        ?></status>
+    <authors>
+<?php
+    foreach ($addon['users'] as $author) {
+        $authorName = (!empty($author['nickname'])) ? $author['nickname'] : $author['firstname'].' '.$author['lastname'];
+?>
+          <author><?php echo $authorName; ?></author>
+<?php
+    }
+?>    </authors>      
+    <summary><?php echo $addon['summary']; ?></summary>
+    <description><?php echo $addon['description']; ?></description>
+    <icon><?php 
+        if ($addon['icon'])  {
+            echo $amo.$addon['icon'];
+        } else {
+            $addonIconPath = ($addon['addontype_id'] == ADDON_THEME ? $html->urlImage(DEFAULT_THEME_ICON) : $html->urlImage(DEFAULT_ADDON_ICON));     
+            echo $amo.$addonIconPath;
+        } 
+    ?></icon>
+    <compatible_applications>
+    <?php
+    foreach ($addon['compatible_apps'] as $app) {
+        ?>
+        <application>
+            <name><?php echo $app['name']; ?></name>
+            <application_id><?php echo $app['id']; ?></application_id>
+            <min_version><?php echo $app['min_version']; ?></min_version>
+            <max_version><?php echo $app['max_version']; ?></max_version>
+<?php 
+     if ($api_version > 1) { ?>
+            <appID><?php echo $app['guid']; ?></appID>
+     <?php  } ?>
+        </application>
+     <?php  
+    }
+?>    </compatible_applications>      
+<?php if ($api_version >0 ) { ?>
+        <all_compatible_os>
+            <?php foreach ($addon['all_compatible_os'] as $os) {
+              ?><os><?php echo $os ?></os>
+            <?php } ?>
+        </all_compatible_os>
+    <?php } ?>
+    <eula><?php echo $addon['eula'];?></eula>
+    <thumbnail><?php echo $amo.$addon['thumbnail']; ?></thumbnail>
+    <rating><?php
+              $rating ='';  
+              if (isset($addon['averagerating'])) {
+                   $rating = $addon['averagerating']; 
+                   if ($api_version < 1) {
+                       // we need to double the rating since the addons mgr expects it to
+                       // be out of 10 and we have halved everything in the db 
+                       $rating *= 2; 
+                   } 
+                   // round rating to match stars in AMO
+                   $rating = ceil($rating);
+               }
+              echo $rating; 
+    ?></rating>
+    <learnmore><?php echo $amo.'/addon/'.$addon['id']; ?></learnmore>
+<?php if ($api_version > 0 ) { 
+         foreach($addon['fileinfo'] as $file) {?>
+             <install hash='<?php echo $file['hash']; ?>' os='<?php echo $file['os']; ?>'><?php
+              echo $amo.'/downloads/file/'.$file['id'].'/'.$file['filename']; ?></install>          
+         <?php } 
+} ?>
+</addon>
+
+<?php
+        }
+    ?>
+    </addons>
+</collection>
+<?php } ?>
