@@ -824,7 +824,7 @@ class SharingApiController extends AppController
 
         $data = array(
             'ApiAuthToken' => array(
-                'token_value' => $token_value,
+                'token' => $token_value,
                 'user_id' => $this->auth_user['id']
             )
         );
