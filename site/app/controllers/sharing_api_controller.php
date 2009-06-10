@@ -103,7 +103,10 @@ class SharingApiController extends AppController
 
         $this->layout = 'rest';
         
-        $this->forceShadowDb();
+        if (!$this->isWriteHttpMethod()) {
+            // Only force shadow DB on reads.
+            $this->forceShadowDb();
+        }
 
         // HACK: No cache invalidation on write, so disable caching on these 
         // models for now.
@@ -817,8 +820,11 @@ class SharingApiController extends AppController
     function auth_POST($context) {
         extract($context);
 
+        $token_value = $this->ApiAuthToken->generateTokenValue();
+
         $data = array(
             'ApiAuthToken' => array(
+                'token_value' => $token_value,
                 'user_id' => $this->auth_user['id']
             )
         );
@@ -831,9 +837,7 @@ class SharingApiController extends AppController
             );
         }
 
-        $new_token   = $this->ApiAuthToken->findById($this->ApiAuthToken->id);
-        $token_value = $new_token['ApiAuthToken']['token'];
-        $token_url   = $this->base_url . '/' . $token_value; 
+        $token_url = $this->base_url . '/' . $token_value;
 
         return $this->renderStatus(
             self::STATUS_CREATED, 'auth_token', array(
