@@ -87,10 +87,11 @@ class SharingApiController extends AppController
     const STATUS_UNSUPPORTED_MEDIA  = '415 Unsupported Media Type';
     const STATUS_ERROR              = '500 Internal Server Error';
 
-    var $cache_lifetime = 10; // 10 seconds
+    var $cache_lifetime = 0; // 0 seconds
 
     function forceCache() {
         header('Cache-Control: public, max-age=' . $this->cache_lifetime);
+        header('Vary: X-API-Auth');
         header('Last-Modified: ' . gmdate("D, j M Y H:i:s", $this->last_modified) . " GMT");
         header('Expires: ' . gmdate("D, j M Y H:i:s", $this->last_modified + $this->cache_lifetime) . " GMT");
     }
@@ -1400,17 +1401,14 @@ class SharingApiController extends AppController
     function getAuthUser() {
         $auth_user = null;
 
+        // 1: Check an auth header token
         if (null == $auth_user && !empty($_SERVER['HTTP_X_API_AUTH'])) {
             // Try accepting an API auth token in a header.
             $token = $_SERVER['HTTP_X_API_AUTH'];
             $auth_user = $this->ApiAuthToken->getUserForAuthToken($token);
         }
 
-        if (null == $auth_user && $this->Session->check('User')) {
-            // Try grabbing the user from a logged in session.
-            $auth_user = $this->Session->read('User');
-        } 
-
+        // 2: Check HTTP basic auth
         if (null == $auth_user && 
                 !empty($_SERVER['PHP_AUTH_USER']) && 
                 !empty($_SERVER['PHP_AUTH_PW'])) {
