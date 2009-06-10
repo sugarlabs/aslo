@@ -57,7 +57,7 @@ class AppModel extends Model
         }
         return parent::__construct($id, $table, $ds);
     }
-    
+
     /**
      * This function will dynamically join translations into the current find operation,
      * according to whichever fields it finds in $this->translated_fields.
@@ -70,14 +70,14 @@ class AppModel extends Model
 
         // Tell the user they are bad because they don't have a model name.
         if (!isset($this->name)) {
-            trigger_error('No model name was found for class: '.$get_class($this).'.', E_NOTICE); 
+            trigger_error('No model name was found for class: '.$get_class($this).'.', E_NOTICE);
         }
-    
+
         if (!$this->translate) return true; // don't do anything if translation was deactivated
-        
+
         // This will build a finderQuery for the translations, and bind our current model to the translations table on the fly
         if (isset($this->translated_fields) && is_array($this->translated_fields)) {
-            
+
             // Allow querying for a locale other than currently set
             $lang = $this->getLang();
 
@@ -102,15 +102,15 @@ class AppModel extends Model
             // Generate a field list just like Cake would do it, so that we
             // know which translations to join in.
             // If the user didn't give us a field list, we use the default field
-            // list set for this Model. We have to have cake 
+            // list set for this Model. We have to have cake
             // generate the list for us now, because once we set a fields
-            // array, Cake won't select any other fields anymore than the ones 
+            // array, Cake won't select any other fields anymore than the ones
             // we request.
             if (!empty($queryData['fields']))
                 $_fields = $queryData['fields'];
             else
                 $_fields = $this->default_fields;
-            
+
             // if it's a string only, wrap it into an array so all the
             // following array magic works with it as well
             if (is_string($_fields)) $_fields = array($_fields);
@@ -122,15 +122,15 @@ class AppModel extends Model
                 if (false === $pos = array_search("`{$this->name}`.`{$field}`", $_fields)) {
                     continue;
                 }
-                
-                // for each translated field, we select the localized string, 
+
+                // for each translated field, we select the localized string,
                 // automatically falling back to en-US if nothing is found.
-                // We also fetch the locale, which will be the requested 
+                // We also fetch the locale, which will be the requested
                 // locale if found and en-US in case of fallback.
                 // naming is {fieldname} and {fieldname}_locale resp., which
                 // means, fallback is transparent.
                 $_select = "IFNULL(`tr_{$field}`.localized_string, `fb_{$field}`.localized_string) AS `{$field}`";
-                
+
                 // replace the translation id with the translation unless explicitly opted out of
                 if ($this->translationReplace === false) {
                     // append the translation
@@ -143,12 +143,12 @@ class AppModel extends Model
                 // (that is: the requested locale if the localized string
                 // is not null, otherwise the fallback locale)
                 $_fields[] = "IF(!ISNULL(`tr_{$field}`.localized_string), `tr_{$field}`.locale, `fb_{$field}`.locale) AS `{$field}_locale`";
-                
+
 
                 // Our query design requires us to join on the same table repeatedly.
                 // Each join requires a different table name, so we're actually
                 // calling our tables the same things as the fields. We're also
-                // creating a string for the fallback versions (usually en-US). 
+                // creating a string for the fallback versions (usually en-US).
                 // The requested locale has the prefix "tr_" (as "translation")
                 // and the fallback has the prefix "fb_".
                 $_joins[] = "LEFT JOIN translations AS `tr_{$field}` ON (`{$this->name}`.`{$field}` = `tr_{$field}`.id AND `tr_{$field}`.locale='{$lang}')";
@@ -232,7 +232,7 @@ class AppModel extends Model
     /**
      * query(), checking for cached result objects (only on select queries,
      * of course).
-     * Note: If you execute multiple queries in one line with a select query 
+     * Note: If you execute multiple queries in one line with a select query
      * first, followed by some writing (insert or so), this *will* break.
      * Don't do this.
      */
@@ -241,11 +241,11 @@ class AppModel extends Model
             && is_string($query)
             && (0 === strpos(strtolower(ltrim($query)), 'select'))
             && isset($this->name)) {
-            
+
             $cachekey = $this->_cachekey('query:'.$query);
             if ($cached = $this->Cache->get($cachekey)) return $cached;
         }
-        
+
         if ($use_shadow_database && !defined('SHADOW_DISABLED')) {
             $this->useDbConfig = 'shadow';
             $result = parent::query($query, $cakeCaching);
@@ -253,9 +253,9 @@ class AppModel extends Model
         } else {
             $result = parent::query($query, $cakeCaching);
         }
-        
+
         if ($this->caching && !empty($cachekey) && $result !== false) {
-            // cache it (if it's a select query, otherwise $cachekey 
+            // cache it (if it's a select query, otherwise $cachekey
             // would be empty)
             $res = $this->Cache->set($cachekey, $result);
         }
@@ -280,7 +280,7 @@ class AppModel extends Model
 
         return MEMCACHE_PREFIX.md5($key);
     }
-    
+
 
    /**
     * Allowed querying for a locale other than currently set.
@@ -348,11 +348,11 @@ class AppModel extends Model
             $this->validationErrors[$field] = $msg;
         }
     }
-    
+
     var $hasMany_full = array();
     var $hasAndBelongsToMany_full = array();
     var $belongsTo_full = array();
-    
+
     function bindFully() {
         $this->bindModel(array('hasMany' => $this->hasMany_full,
                                'hasAndBelongsToMany' => $this->hasAndBelongsToMany_full,
@@ -411,7 +411,7 @@ class AppModel extends Model
         }
         $this->unbindModel($unbind);
     }
-   
+
    /**
     * Updates a table without requiring a primary key
     * @param mixed $update Array of fields and values to update or the update string
@@ -423,9 +423,9 @@ class AppModel extends Model
         if (empty($update) || empty($where)) {
             return false;
         }
-        
+
         $db =& ConnectionManager::getDataSource($this->useDbConfig);
-        
+
         //Create update string from array
         if (is_array($update)) {
             foreach ($update as $field => $value) {
@@ -440,7 +440,7 @@ class AppModel extends Model
         elseif (is_string($update)) {
             $updateQry = $update;
         }
-        
+
         //Create where clause from array
         if (is_array($where)) {
             foreach ($where as $field => $value) {
@@ -455,9 +455,9 @@ class AppModel extends Model
         elseif (is_string($where)) {
             $whereQry = $where;
         }
-        
+
         $limitQry = empty($limit) ? '' : " LIMIT {$limit}";
-        
+
         return $db->execute("UPDATE ".$db->name($db->fullTableName($this))." SET {$updateQry} WHERE {$whereQry}{$limitQry}");
     }
 
@@ -473,16 +473,16 @@ class AppModel extends Model
             $_tr_fields_tobestored = array_intersect($this->translated_fields, array_keys($this->data[$this->name]));
             if (empty($_tr_fields_tobestored)) return true;
         }
-        
+
         // copy the data we intend to save
         $data = $this->data;
 
         // Allow querying for a locale other than currently set
         $lang = $this->getLang();
-        
+
         // Make sure translation ids are returned
         $this->translationReplace = false;
-        
+
         // start a transaction
         $db =& ConnectionManager::getDataSource($this->useDbConfig);
         $this->begin();
@@ -498,7 +498,7 @@ class AppModel extends Model
         $errors = false;
         foreach ($this->translated_fields as $tr_field) {
             if (!isset($data[$this->name][$tr_field])) continue;
-            
+
             // remove existing translation if empty
             $_remove = (empty($data[$this->name][$tr_field]));
 
@@ -513,7 +513,7 @@ class AppModel extends Model
                     unset($data[$this->name][$tr_field]);
                     continue;
                 }
-                
+
                 $_update = false;
                 // generate a new primary key id
                 $db->execute('UPDATE translations_seq SET id=LAST_INSERT_ID(id+1);');
@@ -548,17 +548,17 @@ class AppModel extends Model
                     ."({$_trans_id}, '{$lang}', '{$data[$this->name][$tr_field]}', NOW());";
                 $_res = $db->execute($sql);
             }
-            
+
             // errors? don't go on
             if ($_res === false) {
                 $errors = true;
                 break;
             }
-            
+
             // replace localized string by localization id in data to be saved
             $data[$this->name][$tr_field] = $_trans_id;
         }
-        
+
         // return to default
         $this->translationReplace = true;
         // if something went wrong, roll back
@@ -622,7 +622,7 @@ class AppModel extends Model
         }
         return false;
     }
-    
+
     /**
      * Gets translations for all locales for the specific record and fields
      * @param int $id the primary key to pull from
@@ -635,9 +635,9 @@ class AppModel extends Model
         if (empty($fields) || !is_array($fields)) {
             $fields = $this->translated_fields;
         }
-        
+
         $translations = array();
-        
+
         // Pull the translation ids for the selected fields
         $tableInfo = $this->query("SELECT ".implode($fields, ', ')." FROM {$this->table} AS {$this->name} WHERE {$this->name}.id={$id}", $cache, $cache);
         if (!empty($tableInfo)) {
@@ -646,11 +646,11 @@ class AppModel extends Model
                 if (!empty($translation_id)) {
                     $translation_ids[$field] = $translation_id;
                 }
-                
+
                 $translations[$field] = array();
             }
         }
-        
+
         // Pull translations for all ids
         if (!empty($translation_ids)) {
             $where = $includeNULL ? '' : ' AND Translation.localized_string IS NOT NULL';
@@ -671,7 +671,7 @@ class AppModel extends Model
                 return $translations;
             }
         }
-        
+
         if ($returnIDs) {
             return array($translations, $translation_ids);
         }
@@ -679,7 +679,7 @@ class AppModel extends Model
             return $translations;
         }
     }
-    
+
     /**
      * Save translations for new, updated, and deleted locales.
      * This should only be used for mass updating and is more efficient
@@ -707,13 +707,13 @@ class AppModel extends Model
                             $this->execute("UPDATE translations SET localized_string='{$data[$field][$locale]}', modified=NOW() WHERE id={$translation_ids[$field]} AND locale='{$locale}'");
                         }
                         // Else, no changes
-                        
+
                         unset($data[$field][$locale]);
                     }
                 }
             }
         }
-        
+
         // Handle new translations
         if (!empty($data)) {
             foreach ($data as $field => $translations) {
@@ -741,7 +741,7 @@ class AppModel extends Model
             }
         }
     }
-    
+
     /**
      * Validate localized fields from translation box
      * @param array $data unescaped translation data
@@ -764,7 +764,7 @@ class AppModel extends Model
     function splitLocalizedFields($data) {
         $localizedFields = array();
         $unlocalizedFields = array();
-        
+
         if (!empty($data)) {
             foreach ($data as $field => $value) {
                 if (in_array($field, $this->translated_fields)) {
@@ -775,10 +775,10 @@ class AppModel extends Model
                 }
             }
         }
-        
+
         return array($localizedFields, $unlocalizedFields);
     }
-    
+
     /**
      * Strips fields that aren't in the specified whitelist
      */
@@ -791,9 +791,9 @@ class AppModel extends Model
                 }
             }
         }
-        
+
         return $safe;
     }
-    
+
 }
 ?>
