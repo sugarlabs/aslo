@@ -757,6 +757,9 @@ Bandwagon.Controller.CollectionsPane._repopulateCollectionsList = function()
     {
         var collection = bandwagonService.collections[id];
 
+        if (!collection.subscribed)
+            continue;
+
         if (collection.type == collection.TYPE_AUTOPUBLISHER)
         {
             Bandwagon.Logger.debug("Adding autopublisher collection (" + collection.toString() + ") to collection list");
@@ -769,6 +772,9 @@ Bandwagon.Controller.CollectionsPane._repopulateCollectionsList = function()
     for (var id in bandwagonService.collections)
     {
         var collection = bandwagonService.collections[id];
+
+        if (!collection.subscribed)
+            continue;
 
         if (collection.type != collection.TYPE_AUTOPUBLISHER)
         {

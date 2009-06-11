@@ -403,6 +403,9 @@ Bandwagon.Controller.Settings._repopulateCollectionsList = function()
         if (collection == null)
             return;
 
+        if (!collection.subscribed)
+            continue;
+
         const XULNS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
         var elemBandwagonCollection = document.createElementNS(XULNS, "bandwagonCollection");
         elemBandwagonCollection.setAttribute("view", "settings");
@@ -420,6 +423,9 @@ Bandwagon.Controller.Settings._repopulateCollectionsList = function()
     for (var id in bandwagonService.collections)
     {
         var collection = bandwagonService.collections[id];
+
+        if (!collection.subscribed)
+            continue;
 
         Bandwagon.Controller.Settings.collections[id] =
         {

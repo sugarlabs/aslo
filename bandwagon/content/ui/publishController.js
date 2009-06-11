@@ -229,7 +229,8 @@ Bandwagon.Controller.Publish.finished = function(event)
 
     if (Bandwagon.Controller.Publish.publishType == Bandwagon.Controller.Publish.TYPE_COLLECTION)
     {
-        bandwagonService.forceCheckForUpdates(Bandwagon.Controller.Publish.publishDestination);
+        if (Bandwagon.Controller.Publish.publishDestination.subscribed)
+          bandwagonService.forceCheckForUpdates(Bandwagon.Controller.Publish.publishDestination);
 
         document.getElementById("error").textContent = Bandwagon.Controller.Publish.stringBundle.getString("the.addon.has.been.published");
     }

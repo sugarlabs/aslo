@@ -663,6 +663,9 @@ BandwagonService.prototype = {
         {
             var collection = this.collections[id];
 
+            if (!collection.subscribed)
+                continue;
+
             if (collection.updateInterval == -1)
             {
                 // use global setting
@@ -726,6 +729,10 @@ BandwagonService.prototype = {
         for (var id in this.collections)
         {
             var collection = this.collections[id];
+
+            if (!collection.subscribed)
+                continue;
+
             this.forceCheckForUpdates(collection);
         }
     },

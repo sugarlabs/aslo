@@ -73,7 +73,6 @@ Bandwagon.Model.ServiceDocument.prototype.unserialize = function(xsharing)
 
         collection.addonsResourceURL = baseURL + "/" + xcollection.addons.attribute("href").toString();
 
-        if (collection.subscribed)
-            this.collections.push(collection);
+        this.collections.push(collection);
     }
 }
