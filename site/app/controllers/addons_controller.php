@@ -1336,7 +1336,11 @@ class AddonsController extends AppController
                $_addon_ids[] = $_addon['Addon']['id'];
         }
         if (!empty($_addon_ids)) {
-            $featAddons = $this->Addon->getListAddons($_addon_ids, $this->status, $order, true);
+            $associations = array(
+                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'latest_version', 'list_details'
+            );
+            $featAddons = $this->Addon->getAddonList($_addon_ids, $associations);
         } else {
             $featAddons = array();
         }
