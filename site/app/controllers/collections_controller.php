@@ -714,9 +714,10 @@ class CollectionsController extends AppController
      * @access private
      */
     function _getUserRights($user, $collection_id) {
-        $writable = $this->Collection->isWritableByUser($collection_id, $user['id']);
+        $can_write = $this->Collection->isWritableByUser($collection_id, $user['id']);
         $isadmin = $this->SimpleAcl->actionAllowed('Admin', 'EditAnyCollection', $user);
         $role = $this->Collection->getUserRole($collection_id, $user['id']);
+        $writable = ($isadmin || $can_write);
         $atleast_manager = ($isadmin || in_array($role, array(COLLECTION_ROLE_ADMIN, COLLECTION_ROLE_OWNER)));
         $atleast_owner = ($isadmin || $role == COLLECTION_ROLE_OWNER);
 
