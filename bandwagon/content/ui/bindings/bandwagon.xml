@@ -303,9 +303,18 @@
                         sbVal = Math.floor(diff/60/60/24/365);
                     }
 
-                    Components.utils.import("resource://gre/modules/PluralForm.jsm");
-                    let [get, numForms] = PluralForm.makeGetter(this._stringBundle.getString("bandwagon.addon.pluralRule"));
-                    var datestr = get(sbVal, this._stringBundle.getFormattedString(sbString, [sbVal]));
+                    var datestr;
+
+                    if (sbString != "bandwagon.addon.added.justnow")
+                    {
+                        Components.utils.import("resource://gre/modules/PluralForm.jsm");
+                        let [get, numForms] = PluralForm.makeGetter(this._stringBundle.getString("bandwagon.addon.pluralRule"));
+                        datestr = get(sbVal, this._stringBundle.getFormattedString(sbString, [sbVal]));
+                    }
+                    else
+                    {
+                        datestr = this._stringBundle.getFormattedString(sbString, [sbVal]);
+                    }
 
                     document.getAnonymousElementByAttribute(this, 'anonid', 'dateadded').value = datestr;
                 ]]>
