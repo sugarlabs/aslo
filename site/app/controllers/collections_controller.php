@@ -281,7 +281,7 @@ class CollectionsController extends AppController
 
         // Set up pagination
         $this->Pagination->total = count($addonIds);
-        $this->Pagination->show = 7;
+        $this->Pagination->show = 15;
         list($order, $limit, $page) = $this->Pagination->init();
 
         // Default sorting is by date added to Collection.
