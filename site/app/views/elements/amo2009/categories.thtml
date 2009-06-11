@@ -71,8 +71,13 @@
                 <?php foreach ($AmoTags as $_tag): ?>
                     <?php if (0!==$_tag['cat'] || ADDON_PLUGIN===$_tag['type']) continue ?>
                     <?php 
-                        $_url = "/browse/type:{$_tag['type']}".
-                            ($_tag['cat']!=0 ? "/cat:{$_tag['cat']}" : '');
+                        if (ADDON_THEME === $_tag['type']) {
+                            $_url = "/browse/type:{$_tag['type']}/cat:all?sort=popular";
+                        }
+                        else {
+                            $_url = "/browse/type:{$_tag['type']}".
+                                ($_tag['cat']!=0 ? "/cat:{$_tag['cat']}" : '');
+                        }
                     ?>
                     <li>
                         <?= $html->link($html->entities($_tag['name']), $_url) ?>
