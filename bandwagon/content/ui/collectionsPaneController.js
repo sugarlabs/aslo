@@ -49,6 +49,7 @@ Bandwagon.Controller.CollectionsPane = new function()
     this.elemBandwagonCollectionTitle = null;
     this.elemBandwagonCollectionDescription = null;
     this.elemBandwagonCollectionsNotification = null;
+    this.elemBandwagonCollectionIcon = null;
     this.elemBandwagonCollectionDeck = null;
     this.stringBundle = null;
     this.loginInProcess = false;
@@ -72,6 +73,7 @@ Bandwagon.Controller.CollectionsPane.init = function()
     this.elemBandwagonCollectionDescription = document.getElementById("bandwagon-collection-description");
     this.elemBandwagonCollectionsNotification = document.getElementById("bandwagon-collections-notification");
     this.elemBandwagonCollectionDeck = document.getElementById("bandwagon-collection-deck");
+    this.elemBandwagonCollectionIcon = document.getElementById("bandwagon-collection-icon");
 
     Bandwagon.Controller.CollectionsPane._repopulateCollectionsList();
     Bandwagon.Controller.CollectionsPane.invalidate();
@@ -451,6 +453,17 @@ Bandwagon.Controller.CollectionsPane.doShowCollection = function()
     else
     {
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.setAttribute("collapsed", true);
+    }
+
+    if (collection.iconURL != "")
+    {
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.src = collection.iconURL;
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.collapsed = false;
+    }
+    else
+    {
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.src = ""
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.collapsed = true;
     }
 
     Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionsNotification.notificationsHidden = true;

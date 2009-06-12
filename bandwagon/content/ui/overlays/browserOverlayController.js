@@ -210,10 +210,12 @@ Bandwagon.Controller.BrowserOverlay.showNewAddonsAlert = function(collection)
         }
     }
 
+    var icon = ((collection.iconURL != "")?collection.iconURL:"chrome://bandwagon/skin/images/icon32.png");
+
     try
     {
         alertsService.showAlertNotification(
-                "chrome://bandwagon/skin/images/icon32.png",
+                icon,
                 bandwagonStrings.getString("newaddons.alert.title"),
                 bandwagonStrings.getFormattedString("newaddons.alert.text", [collectionName]),
                 true, 

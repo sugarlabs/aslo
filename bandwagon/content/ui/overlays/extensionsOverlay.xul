@@ -97,26 +97,33 @@
                     </vbox>
                     <splitter id="bandwagon-sidebar-splitter" />
                     <notificationbox flex="1" id="bandwagon-collections-notification">
-                        <hbox align="center">
+                        <hbox>
                             <vbox>
-                                <description id="bandwagon-collection-title"/>
+                                <image id="bandwagon-collection-icon" collapsed="true"/>
                             </vbox>
-                            <spacer flex="1"/>
-                            <hbox pack="end">
-                                <label id="bandwagon-button-viewsite"
-                                       value="&view.label;"
-                                       class="text-link"
-                                       onclick="Bandwagon.Controller.CollectionsPane.doViewSite();"/>
-                                <separator id="bandwagon-link-splitter"/>
-                                <label id="bandwagon-button-remove"
-                                       value="&unsubscribe.label;"
-                                       class="text-link"
-                                       onclick="Bandwagon.Controller.CollectionsPane.doUnsubscribe();"/>
-                            </hbox>
+                            <vbox flex="1">
+                                <hbox flex="1">
+                                    <vbox>
+                                        <description id="bandwagon-collection-title"/>
+                                    </vbox>
+                                    <spacer flex="1"/>
+                                    <hbox pack="end">
+                                        <label id="bandwagon-button-viewsite"
+                                               value="&view.label;"
+                                               class="text-link"
+                                               onclick="Bandwagon.Controller.CollectionsPane.doViewSite();"/>
+                                        <separator id="bandwagon-link-splitter"/>
+                                        <label id="bandwagon-button-remove"
+                                               value="&unsubscribe.label;"
+                                               class="text-link"
+                                               onclick="Bandwagon.Controller.CollectionsPane.doUnsubscribe();"/>
+                                    </hbox>
+                                </hbox>
+                                <vbox>
+                                    <description id="bandwagon-collection-description"/>
+                                </vbox>
+                             </vbox>
                         </hbox>
-                        <vbox>
-                            <description id="bandwagon-collection-description"/>
-                        </vbox>
                         <deck id="bandwagon-collection-deck" selectedIndex="0" flex="1">
                             <hbox flex="1">
                                 <richlistbox id="bandwagon-addons-list"

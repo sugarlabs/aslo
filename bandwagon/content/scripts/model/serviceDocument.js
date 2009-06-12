@@ -70,6 +70,7 @@ Bandwagon.Model.ServiceDocument.prototype.unserialize = function(xsharing)
         collection.subscribed = (xcollection.attribute("subscribed").toString()=="yes"?true:false);
         collection.lastModified = this.Bandwagon.Util.ISO8601toDate(xcollection.attribute("lastmodified").toString());
         collection.type = xcollection.attribute("type").toString();
+        collection.iconURL = xcollection.attribute("icon").toString();
 
         collection.addonsResourceURL = baseURL + "/" + xcollection.addons.attribute("href").toString();
 

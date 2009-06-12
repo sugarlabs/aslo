@@ -49,6 +49,7 @@ Bandwagon.Model.Collection = function()
     this.writable = false;
     this.subscribed = false;
     this.lastModified = new Date();
+    this.iconURL = "";
 
     this.password = null;
     this.dateAdded = new Date();
@@ -205,6 +206,7 @@ Bandwagon.Model.Collection.prototype.unserialize = function(xcollection)
     this.subscribed = (xcollection.attribute("subscribed").toString()=="yes"?true:false);
     this.lastModified = this.Bandwagon.Util.ISO8601toDate(xcollection.attribute("lastmodified").toString());
     this.type = xcollection.attribute("type").toString();
+    this.iconURL = xcollection.attribute("icon").toString();
 
     //this.addonsResourceURL = baseURL + "/" + xcollection.addons.attribute("href").toString();
 
