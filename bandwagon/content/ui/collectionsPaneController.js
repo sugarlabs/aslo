@@ -458,12 +458,10 @@ Bandwagon.Controller.CollectionsPane.doShowCollection = function()
     if (collection.iconURL != "")
     {
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.src = collection.iconURL;
-        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.collapsed = false;
     }
     else
     {
-        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.src = ""
-        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.collapsed = true;
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.src = "chrome://bandwagon/skin/images/icon32.png";
     }
 
     Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionsNotification.notificationsHidden = true;
