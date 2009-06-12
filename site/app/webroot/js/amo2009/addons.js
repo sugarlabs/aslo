@@ -1970,3 +1970,10 @@ var addons_history = {
         return true;
     }
 }
+
+/* Remove "Go" buttons from <form class="go" */
+$(document).ready(function(){
+    var f = $('form.go');
+    f.find('select').change(function(){ this.form.submit(); });
+    f.find('button').hide();
+});

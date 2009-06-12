@@ -49,10 +49,6 @@ collections.init = function(){
 
     var c = collections;
 
-    var f = $('form.item-sort');
-    f.find('select').change(function(){ this.form.submit(); });
-    f.find('button').hide();
-
     /* Hijack form.favourite for some ajax fun. */
     $('form.favourite').submit(function(event){
         event.preventDefault();

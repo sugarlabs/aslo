@@ -327,9 +327,9 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
         <div class="primary">
 
         <?php if (!isset($suppressLanguageSelector) || !$suppressLanguageSelector): ?>
-            <form class="languages" method="get" action="">
+            <form class="languages go" method="get" action="">
                 <label for="language"><?=_('footer_other_languages')?></label>
-                <select id="language" name="lang" dir="ltr" onchange="this.form.submit()">
+                <select id="language" name="lang" dir="ltr">
                 <?php
                 // Retrieve language arrays from bootstrap.
                 global $supported_languages, $native_languages;
