@@ -83,26 +83,13 @@ Bandwagon.Model.Addon.INSTALL_NO_ADDON_IS_FOR_OLDER_VERSION = 2;
 Bandwagon.Model.Addon.INSTALL_NO_UPGRADE_TO_USE_THIS_VERSION = 3;
 Bandwagon.Model.Addon.INSTALL_NO_MUST_DOWNLOAD_BETA = 4;
 Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS = 5;
-Bandwagon.Model.Addon.INSTALL_NO_IS_EXPERIMENTAL = 6;
+Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL = 6;
 
 Bandwagon.Model.Addon.STATUS_PUBLIC = 4;
 Bandwagon.Model.Addon.STATUS_SANDBOX = 1;
 
 Bandwagon.Model.Addon.prototype.canInstall = function(env)
 {
-    // chec is the extension experimental
-
-    if (this.status == Bandwagon.Model.Addon.STATUS_SANDBOX)
-    {
-        var details =
-        {
-            type: Bandwagon.Model.Addon.INSTALL_NO_IS_EXPERIMENTAL,
-            requiredVersion: ""
-        };
-
-        return details;
-    }
-
     // check is the extension compatible with this os
 
     if (!this.getInstaller(env.os))
@@ -175,8 +162,21 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
 
         return details;
     }
-    
-    // if we get this far, then the add-on is compatible
+
+    // check is the extension experimental (user can still install, but we'll show a warning)
+
+    if (this.status == Bandwagon.Model.Addon.STATUS_SANDBOX)
+    {
+        var details =
+        {
+            type: Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL,
+            requiredVersion: ""
+        };
+
+        return details;
+    }
+   
+    // if we get this far, then the add-on is compatible and non-experimental
 
     var details = 
     {
