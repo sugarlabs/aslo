@@ -331,9 +331,6 @@ jQuery(function($) {
 	$(".home a[href^='#popular']").click(tabClickFactory('show-popular'));
 	$(".home a[href^='#added']").click(tabClickFactory('show-added'));
 	$(".home a[href^='#updated']").click(tabClickFactory('show-updated'));
-	
-	$('a.screenshot.thumbnail').append('<img src="/img/amo2009/icons/resize.png" alt="click to expand image" class="img-control"/>')
-
 });
 
 jQuery(window).load(function() {
