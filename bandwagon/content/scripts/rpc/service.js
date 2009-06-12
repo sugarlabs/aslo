@@ -378,7 +378,9 @@ Bandwagon.RPC.Service.prototype.newCollection = function(collection, callback)
     var data = {
         name: collection.name,
         description: collection.description,
+        /* bug 497419
         nickname: collection.getNicknameFromName(),
+        */
         listed: (collection.listed?1:0)
     };
 
