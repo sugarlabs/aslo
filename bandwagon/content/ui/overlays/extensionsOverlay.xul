@@ -97,30 +97,29 @@
                     </vbox>
                     <splitter id="bandwagon-sidebar-splitter" />
                     <notificationbox flex="1" id="bandwagon-collections-notification">
-                        <hbox>
-                            <vbox>
+                        <hbox align="center">
+                            <vbox align="center" pack="center">
                                 <image id="bandwagon-collection-icon" src="chrome://bandwagon/skin/images/icon32.png"/>
                             </vbox>
                             <vbox flex="1">
-                                <hbox flex="1">
-                                    <vbox>
-                                        <description id="bandwagon-collection-title"/>
-                                    </vbox>
-                                    <spacer flex="1"/>
-                                    <hbox pack="end">
+                                <stack flex="1">
+                                    <description id="bandwagon-collection-title" crop="end"/>
+                                    <hbox pack="end" align="start">
                                         <label id="bandwagon-button-viewsite"
                                                value="&view.label;"
                                                class="text-link"
                                                onclick="Bandwagon.Controller.CollectionsPane.doViewSite();"/>
-                                        <separator id="bandwagon-link-splitter"/>
+                                        <hbox align="center" pack="center">
+                                            <separator id="bandwagon-link-splitter"/>
+                                        </hbox>
                                         <label id="bandwagon-button-remove"
                                                value="&unsubscribe.label;"
                                                class="text-link"
                                                onclick="Bandwagon.Controller.CollectionsPane.doUnsubscribe();"/>
                                     </hbox>
-                                </hbox>
+                                </stack>
                                 <vbox>
-                                    <description id="bandwagon-collection-description"/>
+                                    <description id="bandwagon-collection-description" crop="end"/>
                                 </vbox>
                              </vbox>
                         </hbox>
