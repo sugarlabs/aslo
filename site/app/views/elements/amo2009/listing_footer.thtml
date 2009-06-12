@@ -16,12 +16,11 @@
  *
  * The Initial Developer of the Original Code is
  * The Mozilla Foundation.
- * Portions created by the Initial Developer are Copyright (C) 2006
+ * Portions created by the Initial Developer are Copyright (C) 2009
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
- *   Wil Clouser <wclouser@mozilla.com>
+ *   Jeff Balogh <jbalogh@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,37 +34,11 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
-
-$this->viewVars['bodyclass'] = 'inverse';
-$this->layout = 'amo2009';
-
+ * ***** END LICENSE BLOCK ***** */
 ?>
-<div class="section">
-  <div class="stand-alone-options">
-    <?=$this->renderElement('amo2009/categories')?>
-    <?=$this->renderElement('amo2009/search', array('query'=>$search_terms, 
-        'category'=>$category, 'appid'=>$appid, 'atype'=>$atype, 'lup'=>"$lup", 
-        'pid'=>$pid, 'sort'=>$sort, 'hver'=>$hver, 'lver'=>$lver, 'vfuz'=>$vfuz, 'pp'=>$pp))?>
-  </div>
-  <?php // TODO Remove style when new search design is implemented; bug 482857 ?>
-  <div class="primary" style="width:100%;">
-    <?=$this->renderElement('amo2009/breadcrumbs')?>
 
-    <div class="featured listing">
-      <div class="featured-inner">
-        <div class="listing-header">
-            <?php if (empty($search_results)): ?>
-                <p class="addon-search-message"><?=_('search_nothing_found')?></p>
-            <?php endif; ?>
-        </div> <!-- listing-header -->
-            <?php
-                foreach ($search_results as $var => $val) {
-                    echo $this->renderElement('amo2009/homepage_addon', array('addon' => $val));
-                }
-            ?>
-      </div> <!-- featured-inner -->
-      <?=$this->renderElement('amo2009/listing_footer')?>
-    </div> <!-- featured listing -->
-  </div> <!-- primary -->
-</div><!-- /#section -->
+<?php if ($paging['pageCount'] > 1): ?>
+  <div class="listing-footer">
+    <?=$this->renderElement('amo2009/pagination');?>
+  </div>
+<?php endif; ?>
