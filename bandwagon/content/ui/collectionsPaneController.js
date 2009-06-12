@@ -864,6 +864,8 @@ Bandwagon.Controller.CollectionsPane._openLocalizedURL = function(url)
     if (locale && locale != "")
         url = url.replace(/en-US/, locale, "g");
 
+    url = url.replace("%%AMO_HOST%%", Bandwagon.Preferences.getPreference("amo_host"));
+
     Bandwagon.Controller.CollectionsPane._openURL(url);
 }
 

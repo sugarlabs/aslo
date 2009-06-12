@@ -47,7 +47,7 @@ Bandwagon.RPC.Service = function()
     this._observers = new Array();
     this._logger = null;
     this._serviceDocument = null;
-    this._serviceRootURL = this.Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_DOCUMENT;
+    this._serviceRootURL = this.Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_DOCUMENT.replace("%%AMO_HOST%%", this.Bandwagon.Preferences.getPreference("amo_host"));
 
     this.rpcComplete = function(rpcnet, result, response, type, callback)
     {
@@ -319,7 +319,7 @@ Bandwagon.RPC.Service.prototype.getServiceDocument = function(callback)
 
     this.rpcSend(service.Bandwagon.RPC.Constants.BANDWAGON_RPC_EVENT_TYPE_BANDWAGON_RPC_GET_SERVICE_DOCUMENT_COMPLETE, 
                  internalCallback, 
-                 service.Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_DOCUMENT,
+                 service._serviceRootURL,
                  "GET",
                  null);
 }

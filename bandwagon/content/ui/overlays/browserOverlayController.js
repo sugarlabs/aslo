@@ -120,9 +120,11 @@ Bandwagon.Controller.BrowserOverlay.openFirstRunLandingPage = function()
 {
     Bandwagon.Logger.debug("opening firstrun landing page");
 
+    var url = Bandwagon.FIRSTRUN_LANDING_PAGE.replace("%%AMO_HOST%%", Bandwagon.Preferences.getPreference("amo_host"));
+
     window.setTimeout(function()
     {
-        var tab = window.getBrowser().addTab(Bandwagon.FIRSTRUN_LANDING_PAGE);
+        var tab = window.getBrowser().addTab(url);
         window.getBrowser().selectedTab = tab;
     },
     1000);

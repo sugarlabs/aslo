@@ -121,8 +121,6 @@ BandwagonService.prototype = {
 
         Bandwagon.Logger.info("Initializing Bandwagon");
 
-        this._initAMOHost();
-
         // init rpc service
 
         this._service = new Bandwagon.RPC.Service();
@@ -162,21 +160,6 @@ BandwagonService.prototype = {
         this._initialized = true;
 
         Bandwagon.Logger.info("Bandwagon has been initialized");
-    },
-
-    /** 
-     * Update "constants" to reflect amo_host in preferences
-     */
-    _initAMOHost: function()
-    {
-        var amoHost = Bandwagon.Preferences.getPreference("amo_host");
-
-        Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_DOCUMENT = Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_DOCUMENT.replace("%%AMO_HOST%%", amoHost);
-        Bandwagon.LOGINPANE_DO_NEW_ACCOUNT = Bandwagon.LOGINPANE_DO_NEW_ACCOUNT.replace("%%AMO_HOST%%", amoHost);
-        Bandwagon.COLLECTIONSPANE_DO_SUBSCRIBE_URL = Bandwagon.COLLECTIONSPANE_DO_SUBSCRIBE_URL.replace("%%AMO_HOST%%", amoHost);
-        Bandwagon.COLLECTIONSPANE_DO_NEW_COLLECTION_URL = Bandwagon.COLLECTIONSPANE_DO_NEW_COLLECTION_URL.replace("%%AMO_HOST%%", amoHost);
-        Bandwagon.FIRSTRUN_LANDING_PAGE = Bandwagon.FIRSTRUN_LANDING_PAGE.replace("%%AMO_HOST%%", amoHost);
-        Bandwagon.AMO_AUTH_COOKIE_HOST = Bandwagon.AMO_AUTH_COOKIE_HOST.replace("%%AMO_HOST%%", amoHost);
     },
 
     _initCollections: function()
@@ -1074,13 +1057,15 @@ BandwagonService.prototype = {
 
         var iterator = cm.enumerator;
 
+        var cookieHost = Bandwagon.AMO_AUTH_COOKIE_HOST.replace("%%AMO_HOST%%", Bandwagon.Preferences.getPreference("amo_host"));
+
         while (iterator.hasMoreElements())
         {
             var cookie = iterator.getNext();
 
             if (cookie instanceof Ci.nsICookie)
             {
-                if (cookie.host == Bandwagon.AMO_AUTH_COOKIE_HOST && cookie.name == Bandwagon.AMO_AUTH_COOKIE_NAME)
+                if (cookie.host == cookieHost && cookie.name == Bandwagon.AMO_AUTH_COOKIE_NAME)
                 {
                     // KILL!
                     cm.remove(cookie.host, cookie.name, cookie.path, false);

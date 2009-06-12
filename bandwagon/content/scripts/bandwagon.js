@@ -51,9 +51,7 @@ Bandwagon.SQLITE_FILENAME = "bandwagon.sqlite";
 
 Bandwagon.COLLECTION_UPDATE_TIMER_DELAY = 10 * 60;
 
-// Note: %%AMO_HOST%% replacement done in bandwagonService._initAMOHost()
-// XX Brian - this should really be done on the fly to avoid repitition of urls throughtout the code
-//   and to lessen maintenance.
+// XXX Dave - replacement now done on the fly (bug 497584)
 
 Bandwagon.LOGINPANE_DO_NEW_ACCOUNT = "https://%%AMO_HOST%%/users/register";
 Bandwagon.COLLECTIONSPANE_DO_SUBSCRIBE_URL = "https://%%AMO_HOST%%/collections";
