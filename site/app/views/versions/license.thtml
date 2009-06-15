@@ -47,11 +47,12 @@
     $addon_id = $version['Version']['addon_id'];
     $version_id = $version['Version']['id'];
     $version_name = $version['Version']['version'];
-    $addon_link = $html->link($addon['Translation']['name']['string'], '/addon/'.$addon_id);
+    $addon_name = '<span' . $addon['Translation']['name']['locale_html'] . '>' . $addon['Translation']['name']['string'] . '</span>';
+    $addon_link = $html->link($addon_name, '/addon/'.$addon_id);
     $version_link = $html->link($version_name, '/addons/versions/'.$addon_id.'#version-'.$version_name);
     $header = sprintf(___('versions_license_header_source'), $addon_link, $version_link);
     ?>
-    <h2<?=$addon['Translation']['name']['locale_html']?>><?=$header?></h2>
+    <h2><?=$header?></h2>
 
-    <pre><?=$license_text?></pre>
+    <pre dir="ltr" style="text-align: left;"><?=$license_text?></pre>
 </div>
