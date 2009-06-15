@@ -301,6 +301,21 @@ Bandwagon.Util.getInstalledExtensions = function()
     return items;
 }
 
+Bandwagon.Util.isExtensionInstalled = function(guid)
+{
+    var installedExtensions = Bandwagon.Util.getInstalledExtensions();
+
+    for (var i=0; i<installedExtensions.length; i++)
+    {
+        if (installedExtensions[i].id == guid)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 Bandwagon.Util.getExtensionProperty = function(id, propertyName)
 {
     Bandwagon.Util._initExtensionServices();

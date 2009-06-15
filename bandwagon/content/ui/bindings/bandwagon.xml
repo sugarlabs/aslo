@@ -438,7 +438,26 @@
                         }
                         else
                         {
-                            if (type == Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL)
+                            if (type == Bandwagon.Model.Addon.INSTALL_NO_ALREADY_INSTALLED)
+                            {
+                                var msg;
+
+                                try
+                                {
+                                    msg = this._stringBundle.getString("bandwagon.addon.alreadyinstalled");
+                                }
+                                catch (e)
+                                {
+                                    // we don't have the string - revert to previous behaviour
+                                    document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').disabled = false;
+                                    document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').collapsed = true;
+                                    return;
+                                }
+
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
+                                    document.createTextNode(msg));
+                            }
+                            else if (type == Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL)
                             {
                                 var msg;
 

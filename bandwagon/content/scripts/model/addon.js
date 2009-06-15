@@ -84,12 +84,25 @@ Bandwagon.Model.Addon.INSTALL_NO_UPGRADE_TO_USE_THIS_VERSION = 3;
 Bandwagon.Model.Addon.INSTALL_NO_MUST_DOWNLOAD_BETA = 4;
 Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS = 5;
 Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL = 6;
+Bandwagon.Model.Addon.INSTALL_NO_ALREADY_INSTALLED = 7;
 
 Bandwagon.Model.Addon.STATUS_PUBLIC = 4;
 Bandwagon.Model.Addon.STATUS_SANDBOX = 1;
 
 Bandwagon.Model.Addon.prototype.canInstall = function(env)
 {
+    // check is the extension already installed
+    if (Bandwagon.Util.isExtensionInstalled(this.guid))
+    {
+        var details =
+        {
+            type: Bandwagon.Model.Addon.INSTALL_NO_ALREADY_INSTALLED,
+            requiredVersion: ""
+        };
+
+        return details;
+    }
+
     // check is the extension compatible with this os
 
     if (!this.getInstaller(env.os))
