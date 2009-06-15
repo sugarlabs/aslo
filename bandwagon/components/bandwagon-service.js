@@ -1253,6 +1253,17 @@ BandwagonService.prototype = {
             return;
         }
 
+        // sql schema updates for bandwagon 1.0.3
+
+        try
+        {
+            this._storageConnection.executeSimpleSQL("ALTER TABLE collections ADD COLUMN iconURL TEXT");
+        }
+        catch (e)
+        {
+            // fail silently
+        }
+
         this._storageConnection.commitTransaction();
     },
 

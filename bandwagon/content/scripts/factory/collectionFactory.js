@@ -188,7 +188,7 @@ Bandwagon.Factory.CollectionFactory.prototype.commitCollection = function(collec
 
     this.connection.beginTransaction();
 
-    var statement = this.connection.createStatement("REPLACE INTO collections VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18)");
+    var statement = this.connection.createStatement("REPLACE INTO collections VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19)");
 
     try
     {
@@ -210,6 +210,7 @@ Bandwagon.Factory.CollectionFactory.prototype.commitCollection = function(collec
         (collection.lastModified == null?statement.bindNullParameter(15):statement.bindInt32Parameter(15, collection.lastModified.getTime()/1000));
         statement.bindUTF8StringParameter(16, collection.addonsResourceURL);
         statement.bindUTF8StringParameter(17, collection.type);
+        statement.bindUTF8StringParameter(18, collection.iconURL);
         
         statement.execute();
     }
@@ -364,6 +365,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openCollectionFromRS = function(r
 
         collection.addonsResourceURL = resultset.getUTF8String(16);
         collection.type = resultset.getUTF8String(17);
+        collection.iconURL = resultset.getUTF8String(18);
 
         return collection;
 }
