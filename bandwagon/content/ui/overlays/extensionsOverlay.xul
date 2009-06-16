@@ -55,21 +55,20 @@
         <stringbundle id="bandwagon-strings" src="chrome://bandwagon/locale/extensionOverlay.properties"/>
     </stringbundleset>
 
-
-    <stack id="topStackBar">
-        <radiogroup id="viewGroup">
-            <radio id="bandwagon-collections-view"
-                   label="&collections.label;"
-                   insertbefore="extensions-view"
-                   oncommand="showView('bandwagon-collections');"
-                   persist="last-selected"/>
-            <radio id="search-view"
-                   label="&search.label.bandwagon;"
-                   insertbefore="updates-view"
-                   oncommand="showView('search');"
-                   persist="last-selected"/>
-        </radiogroup>
-    </stack>
+    <!-- Tabs at top that select panels
+        Move Get Add-ons to end and rename it to Search -->
+    <radiogroup id="viewGroup">
+        <radio id="bandwagon-collections-view"
+               label="&collections.label;"
+               insertbefore="extensions-view"
+               oncommand="showView('bandwagon-collections');"
+               persist="last-selected"/>
+        <radio id="search-view"
+               label="&search.label.bandwagon;"
+               insertbefore="updates-view"
+               oncommand="showView('search');"
+               persist="last-selected"/>
+    </radiogroup>
 
     <vbox id="extensionsBox">
         <vbox id="bandwagon-collections-panel" hidden="true" flex="1">
