@@ -51,13 +51,13 @@ class SharingApiController extends AppController
     // 0 or unspecified is for Fx3b3
     // 0.9 is for Fx3b4
     var $newest_api_version = 1.4;
- 
+
     var $beforeFilter = array(
         '_checkSandbox'
     );
     var $uses = array(
         'Addon', 'AddonCollection', 'Addontype', 'ApiAuthToken',
-        'Application', 'Collection', 'File', 'Platform', 'Tag', 'Translation', 
+        'Application', 'Collection', 'File', 'Platform', 'Tag', 'Translation',
         'UpdateCount', 'Version'
     );
     var $components = array(
@@ -65,7 +65,7 @@ class SharingApiController extends AppController
         'Versioncompare'
     );
     var $helpers = array(
-        'Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 
+        'Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number',
         'Pagination'
     );
 
@@ -102,13 +102,13 @@ class SharingApiController extends AppController
         $this->last_modified = time();
 
         $this->layout = 'rest';
-        
+
         if (!$this->isWriteHttpMethod()) {
             // Only force shadow DB on reads.
             $this->forceShadowDb();
         }
 
-        // HACK: No cache invalidation on write, so disable caching on these 
+        // HACK: No cache invalidation on write, so disable caching on these
         // models for now.
         $this->Collection->caching = false;
         $this->AddonCollection->caching = false;
@@ -117,7 +117,7 @@ class SharingApiController extends AppController
 
         $this->SimpleAuth->enabled = false;
         $this->SimpleAcl->enabled = false;
-       
+
         // extract API version
         $url = $_SERVER['REQUEST_URI'];
 
@@ -125,15 +125,15 @@ class SharingApiController extends AppController
         if (preg_match('/api\/([\d\.]*)\//', $url, $matches)) {
             $this->api_version = $matches[1];
             if (!is_numeric($this->api_version)) {
-                $this->api_version = $this->newest_api_version; 
+                $this->api_version = $this->newest_api_version;
             }
         } else {
            // nothing supplied: assume Fx3b3
-            $this->api_version = 0; 
+            $this->api_version = 0;
         }
 
         // set up translation table for os names
-        // this is hardcoded in 
+        // this is hardcoded in
         $this->os_translation = array(
             'ALL' => 'ALL',
             'bsd' => 'BSD_OS',
@@ -145,9 +145,9 @@ class SharingApiController extends AppController
             'win' => 'WINNT',
             'Windows' => 'WINNT',
         );
-        
+
         // Establish a base URL for this request.
-        $this->base_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) . 
+        $this->base_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) .
             '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         if ( ($qpos = strpos($this->base_url, '?')) !== FALSE) {
             // Toss out any query parameters.
@@ -190,16 +190,16 @@ class SharingApiController extends AppController
 
         $this->User->bindModel(array(
             'hasAndBelongsToMany' => array(
-                'Collections' => 
+                'Collections' =>
                     $this->User->hasAndBelongsToMany_full['Collections'],
-                'CollectionSubscriptions' => 
+                'CollectionSubscriptions' =>
                     $this->User->hasAndBelongsToMany_full['CollectionSubscriptions'],
             )
         ));
         $user = $this->User->findById($this->auth_user['id']);
 
         $collection_ids = array();
-        foreach ($user['Collections'] as $row) 
+        foreach ($user['Collections'] as $row)
             $collection_ids[$row['id']] = 1;
         foreach ($user['CollectionSubscriptions'] as $row)
             $collection_ids[$row['id']] = 1;
@@ -208,7 +208,7 @@ class SharingApiController extends AppController
         // Collect last-modified times for collections known to the user.
         $modifieds = array();
         foreach ($collection_ids as $id)
-            $modifieds[] = 
+            $modifieds[] =
                 $this->Collection->getLastModifiedForCollection($id);
 
         if (!empty($modifieds)) {
@@ -238,12 +238,12 @@ class SharingApiController extends AppController
      */
     function collections_POST($context) {
         global $app_shortnames;
-        
+
         extract($context);
 
         $params = $this->getParams(array(
-            'name'        => '', 
-            'description' => '', 
+            'name'        => '',
+            'description' => '',
             'nickname'    => '',
             'type'        => 'autopublisher',
             'app'         => 'firefox',
@@ -260,7 +260,7 @@ class SharingApiController extends AppController
             default:
                 $type = Collection::COLLECTION_TYPE_AUTOPUBLISHER; break;
         };
-        
+
         // Convert app name to a constant
         if (!empty($app_shortnames[$params['app']])) {
             $appid = $app_shortnames[$params['app']];
@@ -290,11 +290,11 @@ class SharingApiController extends AppController
             }
         }
 
-        if (!$this->Collection->validates($data) || 
+        if (!$this->Collection->validates($data) ||
                 !$this->Collection->save($data)) {
             $invalid = $this->Collection->invalidFields();
             return $this->renderStatus(
-                self::STATUS_BAD_REQUEST, 'error', 
+                self::STATUS_BAD_REQUEST, 'error',
                 array(
                     'reason'  => 'invalid_parameters',
                     'details' => join(',', array_keys($invalid))
@@ -309,8 +309,8 @@ class SharingApiController extends AppController
             $new_collection['Collection']['id'], $this->auth_user['id'], COLLECTION_ROLE_OWNER
         );
 
-        $new_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) . 
-            '://' . $_SERVER['HTTP_HOST'] . 
+        $new_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) .
+            '://' . $_SERVER['HTTP_HOST'] .
             $this->resolveUrl($_SERVER['REQUEST_URI'], $new_collection['Collection']['uuid'].'/');
         $this->publish('base_url', $new_url);
 
@@ -327,24 +327,24 @@ class SharingApiController extends AppController
      */
     function collection_detail($uuid) {
 
-        // Attempt to set the last-modified header, throwing a 404 if no 
+        // Attempt to set the last-modified header, throwing a 404 if no
         // last-modified could be found.
-        $this->last_modified = 
+        $this->last_modified =
             $this->Collection->getLastModifiedForCollection(null, $uuid);
         if (null === $this->last_modified) {
             return $this->renderStatus(
-                self::STATUS_NOT_FOUND, 'error', 
+                self::STATUS_NOT_FOUND, 'error',
                 array('reason' => 'collection_unknown')
             );
         }
         if ($this->isNotModifiedSince()) return;
 
-        // Try to find the collection by the ID in the URL.  Kick out a 404 
+        // Try to find the collection by the ID in the URL.  Kick out a 404
         // error if not found.
         $collection = $this->Collection->findByUuid($uuid);
         if (empty($collection)) {
             return $this->renderStatus(
-                self::STATUS_NOT_FOUND, 'error', 
+                self::STATUS_NOT_FOUND, 'error',
                 array('reason' => 'collection_unknown')
             );
         }
@@ -356,7 +356,7 @@ class SharingApiController extends AppController
         if (('PUT' !== $method) && $this->isWriteHttpMethod()) {
             if (!$writable) {
                 return $this->renderStatus(
-                    self::STATUS_FORBIDDEN, 'error', 
+                    self::STATUS_FORBIDDEN, 'error',
                     array('reason' => 'not_writable')
                 );
             }
@@ -368,8 +368,8 @@ class SharingApiController extends AppController
                 'GET'    => 'collection_detail_GET',
                 'PUT'    => 'collection_detail_PUT',
                 'DELETE' => 'collection_detail_DELETE'
-            ), 
-            $args, 
+            ),
+            $args,
             compact('collection', 'writable')
         );
     }
@@ -394,12 +394,12 @@ class SharingApiController extends AppController
         $params = $this->getParams(array(
             'name'        => $collection['Translation']['name']['string'],
             'description' => $collection['Translation']['description']['string'],
-            'nickname'    => $collection['Collection']['nickname'], 
+            'nickname'    => $collection['Collection']['nickname'],
             'listed'      => $collection['Collection']['listed'],
             'subscribed'  => NULL
         ));
 
-        // Whether the user can write to this collection in general, they 
+        // Whether the user can write to this collection in general, they
         // should be able to modify their own subscription status...
         switch ($params['subscribed']) {
 
@@ -421,11 +421,11 @@ class SharingApiController extends AppController
 
             case NULL:
             default:
-                // If this collection is not writable, the user has no business 
+                // If this collection is not writable, the user has no business
                 // trying to change anything beyond the subscribed flag.
                 if (!$writable) {
                     return $this->renderStatus(
-                        self::STATUS_FORBIDDEN, 'error', 
+                        self::STATUS_FORBIDDEN, 'error',
                         array('reason' => 'not_writable')
                     );
                 }
@@ -434,7 +434,7 @@ class SharingApiController extends AppController
         }
 
         if ($writable) {
-            // Beyond subscription changes above, accept further changes to 
+            // Beyond subscription changes above, accept further changes to
             // collection if the user is allowed.
 
             $data = array(
@@ -448,11 +448,11 @@ class SharingApiController extends AppController
             );
             $this->Amo->clean($data);
 
-            if (!$this->Collection->validates($data) || 
+            if (!$this->Collection->validates($data) ||
                     !$this->Collection->save($data)) {
                 $invalid = $this->Collection->invalidFields();
                 return $this->renderStatus(
-                    self::STATUS_BAD_REQUEST, 'error', 
+                    self::STATUS_BAD_REQUEST, 'error',
                     array(
                         'reason'  => 'invalid_parameters',
                         'details' => join(',', array_keys($invalid))
@@ -481,12 +481,12 @@ class SharingApiController extends AppController
      */
     function collection_addons($uuid) {
 
-        // Try to find the collection by the ID in the URL.  Kick out a 404 
+        // Try to find the collection by the ID in the URL.  Kick out a 404
         // error if not found.
         $collection = $this->Collection->findByUuid($uuid);
         if (empty($collection)) {
             return $this->renderStatus(
-                self::STATUS_NOT_FOUND, 'error', 
+                self::STATUS_NOT_FOUND, 'error',
                 array('reason' => 'collection_unknown')
             );
         }
@@ -497,7 +497,7 @@ class SharingApiController extends AppController
             );
             if (!$writable) {
                 return $this->renderStatus(
-                    self::STATUS_FORBIDDEN, 'error', 
+                    self::STATUS_FORBIDDEN, 'error',
                     array('reason' => 'not_writable')
                 );
             }
@@ -507,8 +507,8 @@ class SharingApiController extends AppController
         return $this->dispatchHttpMethod(
             array(
                 'POST' => 'collection_addons_POST'
-            ), 
-            $args, 
+            ),
+            $args,
             compact('collection')
         );
     }
@@ -528,22 +528,22 @@ class SharingApiController extends AppController
         $addon = $this->Addon->findByGuid($params['guid']);
         if (empty($addon)) {
             return $this->renderStatus(
-                self::STATUS_BAD_REQUEST, 'error', 
+                self::STATUS_BAD_REQUEST, 'error',
                 array('reason' => 'unknown_addon_guid')
             );
         }
 
-        // Check to see if this addon already exists in the collection, and 
+        // Check to see if this addon already exists in the collection, and
         // throw an error if so.
         $added = $this->AddonCollection->find(array(
-            'AddonCollection.collection_id' => 
+            'AddonCollection.collection_id' =>
                 $collection['Collection']['id'],
-            'AddonCollection.addon_id' => 
+            'AddonCollection.addon_id' =>
                 $addon['Addon']['id'],
         ), null, null, 1);
         if (!empty($added)) {
             return $this->renderStatus(
-                self::STATUS_CONFLICT, 'error', 
+                self::STATUS_CONFLICT, 'error',
                 array('reason' => 'addon_already_in_collection')
             );
         }
@@ -564,7 +564,7 @@ class SharingApiController extends AppController
         if (!$this->AddonCollection->validates($data)) {
             $invalid = $this->AddonCollection->invalidFields();
             return $this->renderStatus(
-                self::STATUS_BAD_REQUEST, 'error', 
+                self::STATUS_BAD_REQUEST, 'error',
                 array(
                     'reason'  => 'invalid_parameters',
                     'details' => join(',', array_keys($invalid))
@@ -576,7 +576,7 @@ class SharingApiController extends AppController
         if (!$this->AddonCollection->save($data)) {
             $invalid = $this->AddonCollection->invalidFields();
             return $this->renderStatus(
-                self::STATUS_BAD_REQUEST, 'error', 
+                self::STATUS_BAD_REQUEST, 'error',
                 array(
                     'reason'  => 'invalid_parameters',
                     'details' => join(',', array_keys($invalid))
@@ -584,12 +584,12 @@ class SharingApiController extends AppController
             );
         }
 
-        // Build the URL where the new addon can be found in the collection and 
+        // Build the URL where the new addon can be found in the collection and
         // return it.
-        $new_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) . 
-            '://' . $_SERVER['HTTP_HOST'] . 
+        $new_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) .
+            '://' . $_SERVER['HTTP_HOST'] .
             $this->resolveUrl(
-                $_SERVER['REQUEST_URI'],  
+                $_SERVER['REQUEST_URI'],
                 rawurlencode($addon['Addon']['guid'])
             );
         $this->publish('base_url', $new_url);
@@ -609,12 +609,12 @@ class SharingApiController extends AppController
      */
     function collection_addon_detail($collection_uuid, $addon_guid) {
 
-        // Try to find the collection by the ID in the URL.  Kick out a 404 
+        // Try to find the collection by the ID in the URL.  Kick out a 404
         // error if not found.
         $collection = $this->Collection->findByUuid($collection_uuid);
         if (empty($collection)) {
             return $this->renderStatus(
-                self::STATUS_NOT_FOUND, 'error', 
+                self::STATUS_NOT_FOUND, 'error',
                 array('reason' => 'collection_unknown')
             );
         }
@@ -626,12 +626,12 @@ class SharingApiController extends AppController
         ));
         if (empty($addon_collection)) {
             return $this->renderStatus(
-                self::STATUS_NOT_FOUND, 'error', 
+                self::STATUS_NOT_FOUND, 'error',
                 array('reason' => 'addon_not_in_collection')
             );
         }
 
-        $this->last_modified = 
+        $this->last_modified =
             strtotime($addon_collection['AddonCollection']['modified']);
         if ($this->isNotModifiedSince()) return;
 
@@ -642,7 +642,7 @@ class SharingApiController extends AppController
             );
             if (!$writable) {
                 return $this->renderStatus(
-                    self::STATUS_FORBIDDEN, 'error', 
+                    self::STATUS_FORBIDDEN, 'error',
                     array('reason' => 'not_writable')
                 );
             }
@@ -654,8 +654,8 @@ class SharingApiController extends AppController
                 'GET'    => 'collection_addon_detail_GET',
                 'PUT'    => 'collection_addon_detail_PUT',
                 'DELETE' => 'collection_addon_detail_DELETE'
-            ), 
-            $args, 
+            ),
+            $args,
             compact('collection', 'addon', 'addon_collection')
         );
     }
@@ -683,7 +683,7 @@ class SharingApiController extends AppController
             'comments' => $addon_collection['AddonCollection']['comments']
         ));
 
-        // HACK: Re-add the addon after deletion, because it's the easiest way 
+        // HACK: Re-add the addon after deletion, because it's the easiest way
         // to re-trigger the translated fields update.
         $this->AddonCollection->deleteByAddonIdAndCollectionId(
             $addon['Addon']['id'], $collection['Collection']['id']
@@ -744,7 +744,7 @@ class SharingApiController extends AppController
         // Gripe if no email addresses supplied.
         if (empty($params['to'])) {
             return $this->renderStatus(
-                self::STATUS_BAD_REQUEST, 'error', 
+                self::STATUS_BAD_REQUEST, 'error',
                 array(
                     'reason'  => 'invalid_parameters',
                     'details' => 'to'
@@ -759,7 +759,7 @@ class SharingApiController extends AppController
             $em = trim($em);
             if (preg_match(VALID_EMAIL, $em) === 0) {
                 return $this->renderStatus(
-                    self::STATUS_BAD_REQUEST, 'error', 
+                    self::STATUS_BAD_REQUEST, 'error',
                     array(
                         'reason'  => 'invalid_parameters',
                         'details' => 'to['.$em.']'
@@ -773,15 +773,15 @@ class SharingApiController extends AppController
         $addon = $this->Addon->findByGuid($params['guid']);
         if (empty($addon)) {
             return $this->renderStatus(
-                self::STATUS_BAD_REQUEST, 'error', 
+                self::STATUS_BAD_REQUEST, 'error',
                 array('reason' => 'unknown_addon_guid')
             );
         }
         $this->publish('addon', $addon, false);
-        
+
         $senderemail = $this->auth_user['email'];
         $this->set('senderemail', $senderemail);
-        
+
         // Send recommendation email(s)
         $this->publish('message', $params['message'], false);
         $this->Email->fromName = null;
@@ -790,7 +790,7 @@ class SharingApiController extends AppController
         $this->Email->template = 'email/recommend_email';
         $this->Email->subject = sprintf('%1$s recommends %2$s',
             $this->auth_user['email'], $addon['Translation']['name']['string']);
-        
+
         foreach ($emails as $em) {
             $this->Email->to = $em;
             $result = $this->Email->send();
@@ -858,7 +858,7 @@ class SharingApiController extends AppController
     }
 
     /**
-     * Delete an existing token, rendering it unusable in the future. (eg. for 
+     * Delete an existing token, rendering it unusable in the future. (eg. for
      * logout)
      */
     function auth_detail_DELETE($context, $token) {
@@ -872,7 +872,7 @@ class SharingApiController extends AppController
             return $this->renderStatus(self::STATUS_GONE, 'empty');
         } else {
             return $this->renderStatus(
-                self::STATUS_NOT_FOUND, 'error', 
+                self::STATUS_NOT_FOUND, 'error',
                 array('reason' => 'token_unknown')
             );
         }
@@ -896,17 +896,17 @@ class SharingApiController extends AppController
             // If addons detail was requested, add a binding for Addons.
             $this->Collection->bindModel(array(
                 'hasAndBelongsToMany' => array(
-                    'Addon' => 
+                    'Addon' =>
                         $this->Collection->hasAndBelongsToMany_full['Addon']
                 )
             ));
         }
 
-        // Assemble IDs for the user's subscriptions for use in detecting 
+        // Assemble IDs for the user's subscriptions for use in detecting
         // subscriptions in the collection set.
         $subs = $this->User->getSubscriptions($this->auth_user['id']);
         $sub_ids = array();
-        foreach ($subs as $sub) 
+        foreach ($subs as $sub)
             $sub_ids[] = $sub['Collection']['id'];
 
         $collections_out = array();
@@ -921,7 +921,7 @@ class SharingApiController extends AppController
                 $row['Collection']['id'], $this->auth_user['id']
             );
 
-            // Try to look up the owner user for this collection and 
+            // Try to look up the owner user for this collection and
             // derive a name.
             $owner_users = $this->Collection->getUsers(
                 $row['Collection']['id'], array( COLLECTION_ROLE_OWNER )
@@ -946,7 +946,7 @@ class SharingApiController extends AppController
                 'listed'       => ($listed) ? 'yes' : 'no',
                 'writable'     => ($writable) ? 'yes' : 'no',
                 'subscribed'   => ($subscribed) ? 'yes' : 'no',
-                'lastmodified' => 
+                'lastmodified' =>
                     date('c', $this->Collection->getLastModifiedForCollection(
                         $row['Collection']['id']
                     ))
@@ -963,12 +963,12 @@ class SharingApiController extends AppController
                     $c_data['type'] = 'normal'; break;
             }
 
-            // If addon details were requested, look up and add the addons for 
+            // If addon details were requested, look up and add the addons for
             // this collection.
             if ($addons_detail) {
                 $addon_ids = array();
                 foreach ($row['Addon'] as $addon_row)
-                    $addon_ids[] = $addon_row['id']; 
+                    $addon_ids[] = $addon_row['id'];
                 $c_data['addons'] = $this->getCollectionAddonsForView(
                     $row['Collection']['id'], $addon_ids
                 );
@@ -989,7 +989,7 @@ class SharingApiController extends AppController
      */
     function getCollectionAddonsForView($collection_id, $addon_ids) {
 
-        // Fetch the addons for the feed, first tearing down the model bindings 
+        // Fetch the addons for the feed, first tearing down the model bindings
         // and selectively rebuilding them.
         $this->Addon->unbindFully();
         $this->Addon->bindModel(array(
@@ -1015,14 +1015,14 @@ class SharingApiController extends AppController
             'Addon.id' => $addon_ids,
             'Addon.inactive' => 0,
             'Addon.addontype_id' => array(
-                ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, 
+                ADDON_EXTENSION, ADDON_THEME, ADDON_DICT,
                 ADDON_SEARCH, ADDON_PLUGIN
             )
         );
 
         $addons_data = $this->Addon->findAll($conditions);
 
-        // Rather than trying to join tags and addon types in SQL, collect IDs 
+        // Rather than trying to join tags and addon types in SQL, collect IDs
         // and make a pair of queries to fetch them.
         $tag_ids = array();
         $addon_type_ids = array();
@@ -1030,7 +1030,7 @@ class SharingApiController extends AppController
         foreach ($addons_data as $addon) {
             $addon_ids[] = $addon['Addon']['id'];
             $addon_type_ids[$addon['Addon']['addontype_id']] = true;
-            foreach ($addon['Tag'] as $tag) 
+            foreach ($addon['Tag'] as $tag)
                 $tag_ids[$tag['id']] = true;
         }
 
@@ -1045,16 +1045,16 @@ class SharingApiController extends AppController
             $user_id = $c['AddonCollection']['user_id'];
             if (!isset($user_names[$user_id])) {
                 $user = $this->User->findById($user_id);
-                $user_names[$user_id] = 
+                $user_names[$user_id] =
                     !empty($user['User']['nickname']) ?
-                        $user['User']['nickname'] : 
+                        $user['User']['nickname'] :
                         "{$user['User']['firstname']} {$user['User']['lastname']}";
             }
             $c['addedby'] = $user_names[$user_id];
             $addon_collections[$c['AddonCollection']['addon_id']] = $c;
         }
 
-        // Query for addon types found in this set of addons, assemble a map 
+        // Query for addon types found in this set of addons, assemble a map
         // for an in-code join later.
         $addon_type_rows = $this->Addontype->findAll(array(
             'Addontype.id' => array_keys($addon_type_ids)
@@ -1064,7 +1064,7 @@ class SharingApiController extends AppController
             $addon_types[$row['Addontype']['id']] = $row;
         }
 
-        // Query for addon types found in this set of tags, assemble a map 
+        // Query for addon types found in this set of tags, assemble a map
         // for an in-code join later.
         $tag_rows = $this->Tag->findAll(array(
             'Tag.id' => array_keys($tag_ids)
@@ -1080,13 +1080,13 @@ class SharingApiController extends AppController
         $collection = $this->Collection->findById($collection_id, 'uuid', null, null, -1);
         $this->publish('collection_uuid', $collection['Collection']['uuid']);
 
-        $this->publish('app_names', $app_names); 
-        $this->publish('guids', $guids); 
+        $this->publish('app_names', $app_names);
+        $this->publish('guids', $guids);
         $this->publish('ids', $addon_ids);
-        $this->publish('api_version', $this->api_version); 
-        $this->publish('os_translation', $this->os_translation);   
+        $this->publish('api_version', $this->api_version);
+        $this->publish('os_translation', $this->os_translation);
 
-        // Process addons list to produce a much flatter and more easily 
+        // Process addons list to produce a much flatter and more easily
         // sanitized array structure for the view, sprinkling in details
         // like tags and version information along the way.
         $addons_out = array();
@@ -1104,32 +1104,32 @@ class SharingApiController extends AppController
             );
 
             if (!isset($addon_collections[$id])) {
-                // Skip addons that were found yet somehow not a part of a 
+                // Skip addons that were found yet somehow not a part of a
                 // collection.
                 continue;
             }
 
-            // Start constructing a flat minimal list of addon details made up of only 
+            // Start constructing a flat minimal list of addon details made up of only
             // what the view will need.
             $addon_out = array(
-                'collection_added' => 
+                'collection_added' =>
                     date('c', strtotime($addon_collections[$id]['AddonCollection']['added'])),
-                'collection_addedby' => 
+                'collection_addedby' =>
                     $addon_collections[$id]['addedby'],
-                'collection_comments' => 
+                'collection_comments' =>
                     $addon_collections[$id]['Translation']['comments']['string'],
                 'id' => $addon['Addon']['id'],
                 'guid' => $addon['Addon']['guid'],
                 'name' => $addon['Translation']['name']['string'],
                 'summary' => $addon['Translation']['summary']['string'],
-                'description' => 
+                'description' =>
                     $addon['Translation']['description']['string'],
                 'addontype_id' => $addontype_id,
-                'addontype_name' => 
+                'addontype_name' =>
                     $this->Addontype->getName($addontype_id),
-                'icon' => 
+                'icon' =>
                     $this->Image->getAddonIconURL($id),
-                'thumbnail' => 
+                'thumbnail' =>
                     $this->Image->getHighlightedPreviewURL($id),
                 'install_version' => $install_version,
                 'status' => $addon['Addon']['status'],
@@ -1152,15 +1152,15 @@ class SharingApiController extends AppController
             }
 
             // Add the list of compatible apps into the addon details
-            $compatible_apps = 
+            $compatible_apps =
                 $this->Version->getCompatibleApps($install_version);
             foreach ($compatible_apps as $x) {
-                $addon_out['compatible_apps'][] = array( 
-                    'id'   => $x['Application']['application_id'],   
-                    'name' => $app_names[ $x['Application']['application_id']],   
-                    'guid' => $guids[$app_names[$x['Application']['application_id']]], 
-                    'min_version' => $x['Min_Version']['version'],  
-                    'max_version' => $x['Max_Version']['version']  
+                $addon_out['compatible_apps'][] = array(
+                    'id'   => $x['Application']['application_id'],
+                    'name' => $app_names[ $x['Application']['application_id']],
+                    'guid' => $guids[$app_names[$x['Application']['application_id']]],
+                    'min_version' => $x['Min_Version']['version'],
+                    'max_version' => $x['Max_Version']['version']
                 );
             }
 
@@ -1201,7 +1201,7 @@ class SharingApiController extends AppController
                 );
             }
 
-            // Finally, add this set of addon details to the list intended for 
+            // Finally, add this set of addon details to the list intended for
             // the view.
             $addons_out[] = $addon_out;
         }
@@ -1210,12 +1210,12 @@ class SharingApiController extends AppController
     }
 
     /**
-     * API specific publish 
+     * API specific publish
      * Uses XML encoding and is UTF-8 safe
      * @param mixed the data array (or string) to be html-encoded (by reference)
      * @param bool clean the array keys as well?
      * @return void
-    */   
+    */
     function publish($viewvar, $value, $sanitizeme = true) {
         if ($sanitizeme) {
             if (is_array($value)) {
@@ -1229,32 +1229,32 @@ class SharingApiController extends AppController
         $this->set($viewvar, $value);
     }
 
-    /**     
+    /**
      * API specific sanitize
-     * xml-encode an array, recursively 
+     * xml-encode an array, recursively
      * UTF-8 safe
-     *          
-     * @param mixed the data array to be encoded 
+     *
+     * @param mixed the data array to be encoded
      * @param bool clean the array keys as well?
-     * @return void 
-     */ 
+     * @return void
+     */
     var $sanitize_patterns = array(
-        "/\&/u", "/</u", "/>/u", 
+        "/\&/u", "/</u", "/>/u",
         '/"/u', "/'/u",
         '/[\cA-\cL]/u',
         '/[\cN-\cZ]/u',
      );
     var $sanitize_replacements = array(
-        "&amp;", "&lt;", "&gt;", 
-        "&quot;", "&#39;", 
-        "", 
+        "&amp;", "&lt;", "&gt;",
+        "&quot;", "&#39;",
+        "",
         ""
     );
     var $sanitize_field_exceptions = array(
         'id'=>1, 'guid'=>1, 'addontype_id'=>1, 'status'=>1, 'higheststatus'=>1,
-        'icontype'=>1, 'version_id'=>1, 'platform_id'=>1, 'size'=>1, 'hash'=>1, 
-        'codereview'=>1, 'password'=>1, 'emailhidden'=>1, 'sandboxshown'=>1, 
-        'averagerating'=>1, 'textdir'=>1, 'locale'=>1, 'locale_html'=>1, 
+        'icontype'=>1, 'version_id'=>1, 'platform_id'=>1, 'size'=>1, 'hash'=>1,
+        'codereview'=>1, 'password'=>1, 'emailhidden'=>1, 'sandboxshown'=>1,
+        'averagerating'=>1, 'textdir'=>1, 'locale'=>1, 'locale_html'=>1,
         'created'=>1, 'modified'=>1, 'datestatuschanged'=>1
     );
     function _sanitizeArrayForXML(&$data, $cleankeys = false) {
@@ -1272,13 +1272,13 @@ class SharingApiController extends AppController
                 $this->_sanitizeArrayForXML($data[$key], $cleankeys);
             } else {
                 $data[$key] = preg_replace(
-                    $this->sanitize_patterns, 
-                    $this->sanitize_replacements, 
+                    $this->sanitize_patterns,
+                    $this->sanitize_replacements,
                     $data[$key]
                 );
             }
         }
-            
+
         // change the keys if necessary
         if ($cleankeys) {
             $keys = array_keys($data);
@@ -1308,7 +1308,7 @@ class SharingApiController extends AppController
     }
 
     /**
-     * Dispatch to the appropriate handler based on HTTP method and a map of 
+     * Dispatch to the appropriate handler based on HTTP method and a map of
      * handlers.
      */
     function dispatchHttpMethod($map, $args=NULL, $context=null) {
@@ -1326,19 +1326,19 @@ class SharingApiController extends AppController
 
         if (!isset($map[$method])) {
             return $this->renderStatus(
-                self::STATUS_METHOD_NOT_ALLOWED, 'error', 
+                self::STATUS_METHOD_NOT_ALLOWED, 'error',
                 array('reason' => $method . '_not_allowed')
             );
         }
 
         return call_user_func_array(
-            array($this, $map[$method]), 
+            array($this, $map[$method]),
             array_merge(array($context), $args)
         );
     }
 
     /**
-     * Grab named keys from POST parameters.  Missing parameters will be 
+     * Grab named keys from POST parameters.  Missing parameters will be
      * set as null.
      *
      * @param array list of named parameters.
@@ -1363,9 +1363,9 @@ class SharingApiController extends AppController
         }
         return $params;
     }
-    
+
     /**
-     * Figure out the current HTTP method, with overrides accepted in a _method 
+     * Figure out the current HTTP method, with overrides accepted in a _method
      * parameter (GET/POST) or in an X_HTTP_METHOD_OVERRIDE header ala Google
      */
     function getHttpMethod() {
@@ -1380,7 +1380,7 @@ class SharingApiController extends AppController
     }
 
     /**
-     * Return whether the current HTTP method is a request to write in some 
+     * Return whether the current HTTP method is a request to write in some
      * way.
      */
     function isWriteHttpMethod() {
@@ -1388,7 +1388,7 @@ class SharingApiController extends AppController
     }
 
     /**
-     * If an if-modified-since header was provided, return a 304 if the 
+     * If an if-modified-since header was provided, return a 304 if the
      * collection indeed has not been modified since the given time.
      */
     function isNotModifiedSince() {
@@ -1403,7 +1403,7 @@ class SharingApiController extends AppController
     }
 
     /**
-     * Return the current authenticated user, or return null and set 401 
+     * Return the current authenticated user, or return null and set 401
      * Unauthorized headers.
      *
      * @return mixed Authenticated user details.
@@ -1419,8 +1419,8 @@ class SharingApiController extends AppController
         }
 
         // 2: Check HTTP basic auth
-        if (null == $auth_user && 
-                !empty($_SERVER['PHP_AUTH_USER']) && 
+        if (null == $auth_user &&
+                !empty($_SERVER['PHP_AUTH_USER']) &&
                 !empty($_SERVER['PHP_AUTH_PW'])) {
             // Try validating the user by HTTP Basic auth username and password.
             $someone = $this->User->findByEmail($_SERVER['PHP_AUTH_USER']);
@@ -1428,8 +1428,8 @@ class SharingApiController extends AppController
                 $auth_user = $someone['User'];
                 $auth_user['Group'] = $someone['Group'];
             }
-        } 
-        
+        }
+
         return $auth_user;
     }
 
@@ -1441,8 +1441,8 @@ class SharingApiController extends AppController
      */
     function sanitizeForXML($value) {
         return preg_replace(
-            $this->sanitize_patterns, 
-            $this->sanitize_replacements, 
+            $this->sanitize_patterns,
+            $this->sanitize_replacements,
             $value
         );
     }
@@ -1519,7 +1519,7 @@ class SharingApiController extends AppController
         $uri .= isset($parsed['query']) ? '?'.$parsed['query'] : '';
         $uri .= isset($parsed['fragment']) ? '#'.$parsed['fragment'] : '';
 
-        return $uri; 
+        return $uri;
     }
 
 }
