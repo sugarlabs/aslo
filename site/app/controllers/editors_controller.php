@@ -1383,26 +1383,64 @@ class EditorsController extends AppController
     * Display logs
     */
     function logs() {
+        if (!$this->SimpleAcl->actionAllowed('Admin', '%', $this->Session->read('User')) ||
+            !$this->SimpleAcl->actionAllowed('Editor', '*', $this->Session->read('User')) ) {
+            $this->Amo->accessDenied();
+        }
+
         $this->breadcrumbs[_('editorcp_logs_page_heading')] = '/editors/logs';
         $this->set('breadcrumbs', $this->breadcrumbs);
+
+        //Default conditions are the current month
+        $monthStart = date('Y-m-01');
+        $conditions = array("Eventlog.created >= '{$monthStart} 00:00:00'");
+        $startDate = $monthStart;
+        $endDate = ___('editors_date_filter_placeholder', 'YYYY-MM-DD');
+        $filter = '';
         
-        $conditions = array();
-        
-        if (!empty($this->data)) {
-            $filter = explode(':', $this->data['Eventlog']['filter']);
-            $conditions['type'] = $filter[0];
+        //If user has specified own conditions, use those
+        if (!empty($this->params['url']['start'])) {
+            $startTime = strtotime($this->params['url']['start']);
+            if ($startTime !== false && $startTime != -1) {
+                $conditions = array("Eventlog.created >= FROM_UNIXTIME('{$startTime}')");
+                $startDate = $this->params['url']['start'];
+            }
+        }
+        if (!empty($this->params['url']['end'])) {
+            $endTime = strtotime($this->params['url']['end']);
+            if ($endTime !== false && $endTime != -1) {
+                $conditions[] = "Eventlog.created < FROM_UNIXTIME('".strtotime('+1 day', $endTime)."')";
+                $endDate = $this->params['url']['end'];
+            }
+        }
+        if (!empty($this->params['url']['filter'])) {
+            $filter = $this->params['url']['filter'];
+            $filterParts = explode(':', $filter);
+            $conditions['type'] = $filterParts[0];
             
-            if ($filter[1] != '*') {
-                $conditions['action'] = $filter[1];
+            if ($filterParts[1] != '*') {
+                $conditions['action'] = $filterParts[1];
             }
         }
         $conditions['type'] = 'editor';
+            
+        // set up pagination
+        list($order,$limit,$page) = $this->Pagination->init($conditions, null,
+            array('modelClass'=>'Eventlog', 'show'=>50, 'sortby'=>'created', 'direction'=>'DESC'));
         
-        $logs = $this->Eventlog->findAll($conditions, null, 'Eventlog.created DESC');
-        
+        $logs = $this->Eventlog->findAll($conditions, null, $order, $limit, $page);
         $logs = $this->Audit->explainLog($logs);
         
         $this->set('logs', $logs);
+        $this->publish('startDate', $startDate);
+        $this->publish('endDate', $endDate);
+        $this->publish('filter', $filter);
+
+        $this->publish('filterOptions', array(
+                '' => '',
+                'editor:review_approve' => ___('editorcp_logs_review_approve', 'editor:review_approve'),
+                'editor:review_delete' => ___('editorcp_logs_review_delete', 'editor:review_delete')
+        ));
         
         $this->set('page', 'logs');
         $this->render('logs');
