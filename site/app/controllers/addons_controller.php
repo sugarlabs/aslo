@@ -373,9 +373,9 @@ class AddonsController extends AppController
         $this->pageTitle = sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
 
         $this->publish('stats_downloaded',
-            $this->GlobalStat->getNamedCount('addons_downloaded'));
+            $this->GlobalStat->getNamedCount('addon_total_downloads'));
         $this->publish('stats_inuse',
-            $this->GlobalStat->getNamedCount('addons_in_use'));
+            $this->GlobalStat->getNamedCount('addon_total_updatepings'));
 
         $this->publish('teaser_collection_promos', $this->_findTeaserCollections());
         $this->publish('teaser_collections_categories', $this->CollectionPromo->titles_and_taglines);

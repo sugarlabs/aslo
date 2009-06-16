@@ -20,7 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   l.m.orchard <lorchard@mozilla.com>
+ *   Justin Scott <fligtar@mozilla.com> (Original Author)
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,51 +35,40 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+?>
 
-class GlobalStat extends AppModel
-{
-    var $name = "GlobalStat";
-    var $useTable = 'global_stats';
-
-    /**
-     * Shortcut to fetch a named count for a given date. If no date is given,
-     * will return the most recent available.
-     *
-     * @param  string name
-     * @param  string date
-     * @return numeric
-     */
-    function getNamedCount($name, $date = '') {
-        $conditions = array('name' => $name);
-        
-        if (!empty($date)) {
-            $conditions['date'] = $date;
-        }
-        
-        $rv = $this->find($conditions, null, 'date DESC');
-        
-        if (empty($rv)) return 0;
-        
-        return $rv['GlobalStat']['count'];
-    }
+<stats date="<?php echo $date; ?>">
     
-    /**
-     * Fetches the most recent stat up to a certain date.
-     *
-     * @param  string name
-     * @param  string date
-     * @return array
-     */
-    function getUpdatepingsUpToDate($name, $date = '') {
-        if (empty($date)) {
-            $date = date('Y-m-d');
-        }
-        $conditions = "name = '{$name}' AND date <= '{$date}'";
+    <addons>
+        <counts>
+            <public><?php echo $stats['addon_count_public']; ?></public>
+            <pending><?php echo $stats['addon_count_pending']; ?></pending>
+            <experimental><?php echo $stats['addon_count_experimental']; ?></experimental>
+            <nominated><?php echo $stats['addon_count_nominated']; ?></nominated>
+        </counts>
         
-        $rv = $this->find($conditions, null, 'date DESC');
+        <downloads><?php echo $stats['addon_total_downloads']; ?></downloads>
         
-        if (empty($rv)) return 0;
+        <updatepings date="<?php echo $stats['addon_total_updatepings']['date']; ?>"><?php echo $stats['addon_total_updatepings']['count']; ?></updatepings>
+    </addons>
+    
+    <collections>
+        <counts>
+            <total><?php echo $stats['collection_count_total']; ?></total>
+            <private><?php echo $stats['collection_count_private']; ?></private>
+            <public><?php echo $stats['collection_count_public']; ?></public>
+            <editorspicks><?php echo $stats['collection_count_editorspicks']; ?></editorspicks>
+            <autopublishers><?php echo $stats['collection_count_autopublishers']; ?></autopublishers>
+            <normal><?php echo $stats['collection_count_normal']; ?></normal>
+        </counts>
         
-        return $rv['GlobalStat'];
-    }
-}
+        <addon_downloads><?php echo $stats['collection_addon_downloads']; ?></addon_downloads>
+        
+        <collector>
+            <downloads><?php echo $stats['collector_total_downloads']; ?></downloads>
+            
+            <updatepings date="<?php echo $stats['collector_updatepings']['date']; ?>"><?php echo $stats['collector_updatepings']['count']; ?></updatepings>
+        </collector>
+    </collections>
+    
+</stats>

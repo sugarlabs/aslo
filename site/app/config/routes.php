@@ -95,13 +95,14 @@
         
         // API hookup
         $Route->connect("/{$prefix}/api/addon/*", array('controller' => 'api', 'action'=>'addon')); 
-        $Route->connect("/{$prefix}/api/list/*", array('controller' => 'api', 'action'=>'list_addons')); 
+        $Route->connect("/{$prefix}/api/list/*", array('controller' => 'api', 'action'=>'list_addons'));
 
         // Add API versioning support
         $Route->connect("/{$prefix}/api/[\d\.]*/addon/*", array('controller' => 'api', 'action'=>'addon'));
         $Route->connect("/{$prefix}/api/[\d\.]*/list/*", array('controller' => 'api', 'action'=>'list_addons'));
         $Route->connect("/{$prefix}/api/[\d\.]*/search/*", array('controller' => 'api', 'action'=>'search'));
         $Route->connect("/{$prefix}/api/[\d\.]*/get_language_packs/*", array('controller' => 'api', 'action'=>'get_language_packs'));
+        $Route->connect("/{$prefix}/api/[\d\.]*/stats/*", array('controller' => 'api', 'action' => 'stats'));
         
         // Bandwagon sharing API
         $Route->connect("/{$prefix}/api/[\d\.]*/sharing/collections/*/addons/", array('controller' => 'sharing_api', 'action'=>'collection_addons'));

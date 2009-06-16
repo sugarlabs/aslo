@@ -22,6 +22,7 @@
  * Contributor(s):
  *   Laura Thomson <lthomson@mozilla.com> (Original Author) 
  *   l.m.orchard <lorchard@mozilla.com>
+ *   Justin Scott <fligtar@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -53,7 +54,7 @@ class ApiController extends AppController
     // some of this is excessive but will likely be needed as 
     // development continues
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
-    var $uses = array('Addon', 'AddonCollection', 'Addontype', 'Application', 'Collection', 'File', 'Platform', 'Tag', 'Translation', /*'Review',*/ 'UpdateCount', 'Version');    
+    var $uses = array('Addon', 'AddonCollection', 'Addontype', 'Application', 'Collection', 'File', 'GlobalStat', 'Platform', 'Tag', 'Translation', /*'Review',*/ 'UpdateCount', 'Version');    
     var $components = array('Amo', 'Image', 'Pagination', 'Search', 'Session', 'Versioncompare');    
     var $helpers = array('Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 'Pagination');
     var $namedArgs = true;
@@ -878,6 +879,41 @@ class ApiController extends AppController
        $this->publish('os_counts', $os_counts);
     } 
 */
+    
+    /**
+     * Returns global stats for AMO for the specified date
+     */
+    function stats($date = '') {
+        $this->layout = 'rest';
+        
+        if (empty($date)) {
+            $date = date('Y-m-d');
+        }
+        else {
+            $date = date('Y-m-d', strtotime($date));
+        }
+        
+        $stats = array(
+            'addon_total_downloads' => $this->GlobalStat->getNamedCount('addon_total_downloads', $date),
+            'addon_total_updatepings' => $this->GlobalStat->getUpdatepingsUpToDate('addon_total_updatepings', $date),
+            'addon_count_public' => $this->GlobalStat->getNamedCount('addon_count_public', $date),
+            'addon_count_pending' => $this->GlobalStat->getNamedCount('addon_count_pending', $date),
+            'addon_count_experimental' => $this->GlobalStat->getNamedCount('addon_count_experimental', $date),
+            'addon_count_nominated' => $this->GlobalStat->getNamedCount('addon_count_nominated', $date),
+            'collection_count_total' => $this->GlobalStat->getNamedCount('collection_count_total', $date),
+            'collection_count_private' => $this->GlobalStat->getNamedCount('collection_count_private', $date),
+            'collection_count_public' => $this->GlobalStat->getNamedCount('collection_count_public', $date),
+            'collection_count_autopublishers' => $this->GlobalStat->getNamedCount('collection_count_autopublishers', $date),
+            'collection_count_editorspicks' => $this->GlobalStat->getNamedCount('collection_count_editorspicks', $date),
+            'collection_count_normal' => $this->GlobalStat->getNamedCount('collection_count_normal', $date),
+            'collection_addon_downloads' => $this->GlobalStat->getNamedCount('collection_addon_downloads', $date),
+            'collector_total_downloads' => $this->GlobalStat->getNamedCount('collector_total_downloads', $date),
+            'collector_updatepings' => $this->GlobalStat->getUpdatepingsUpToDate('collector_updatepings', $date)
+        );
+        
+        $this->publish('stats', $stats);
+        $this->publish('date', $date);
+    }
 
     /**
     * Return a complete list of available language packs 
