@@ -328,6 +328,7 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
 
         <?php if (!isset($suppressLanguageSelector) || !$suppressLanguageSelector): ?>
             <form class="languages go" method="get" action="">
+              <div>
                 <label for="language"><?=_('footer_other_languages')?></label>
                 <select id="language" name="lang" dir="ltr">
                 <?php
@@ -340,6 +341,7 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                 ?>
                 </select>
                 <button><?=_('footer_lang_form_lang_submit_go')?></button>
+              </div>
             </form>
         <?php endif; ?>
 
