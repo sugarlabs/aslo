@@ -215,6 +215,9 @@ class AppModel extends Model
             $cachekey = $this->_cachekey('findAll:'.serialize($cachekey));
             // if this was already cached, return it immediately
             if (false !== $cached = $this->Cache->get($cachekey)) {
+                // Reset any bind/unbind Model calls, as would happen on a
+                // normal query.
+                $this->__resetAssociations();
                 return $cached;
             }
         }
