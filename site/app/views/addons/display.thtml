@@ -262,7 +262,7 @@ if (!empty($coll_addon_added)) {
           <?php if (!empty($review['Translation']['title']['string'])): ?>
             <h5><?=$review['Translation']['title']['string']?></h5>
           <?php endif; ?>
-          <p class="description"><?=$review['Translation']['body']['string']?></p>
+          <p class="description"><?=nl2br($review['Translation']['body']['string'])?></p>
           <p>
             <?=$this->renderElement('amo2009/stars',
                                     array('rating' => $review['Review']['rating']));?>
@@ -384,7 +384,7 @@ if (!empty($coll_addon_added)) {
 
 <div class="highlight">
 
-  <?php 
+  <?php
   if (is_array($relatedTags)) {
       foreach ($relatedTags as $tag) {
           echo $html->link(sprintf(_('addons_display_see_all_addons'),$tag['Translation']['name']['string']), '/browse/' . "type:" . $tag['Tag']['addontype_id'] . '/' . "cat:" . $tag['Tag']['id'], array('class' => 'more-info')) . "\n";
@@ -412,7 +412,7 @@ if (!empty($coll_addon_added)) {
       ?>
       </ul>
  </div>
- 
+
  <?php endif; ?>
 
 </div>
@@ -432,10 +432,10 @@ if (!empty($coll_addon_added)) {
                 <li>
                     <?=sprintf(n___('addons_display_collections_more', 'addons_display_collections_more', $_othercolls), $_othercolls)?>
                 </li>
-        
+
         <?php endif; ?>
         </ul>
-        <?php endif; ?>        
+        <?php endif; ?>
         <?php if ($loggedIn): ?>
         <form action="<?= $html->url('/collections/addtocollection') ?>" method="post" id="coll_publish">
             <div>
@@ -474,8 +474,7 @@ if (!empty($coll_addon_added)) {
                 imageBtnNext: "<?= $html->urlImage('jquery-lightbox/goright.png')?>",
                 containerResizeSpeed: 350
             });
-        
+
     });
 </script>
 <!-- /#content -->
-

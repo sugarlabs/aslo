@@ -35,7 +35,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 ?>
 
 <div class="secondary" role="complementary">
@@ -44,7 +44,7 @@
 
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
-    
+
     <h3><?=_('users_info_author_profile')?></h3>
     <dl>
         <? if (!empty($profile['User']['firstname']) || !empty($profile['User']['lastname'])): ?>
@@ -95,7 +95,7 @@
 <div>
 <h3><?=sprintf(_('users_info_addons_by_user'), $displayName)?></h3>
 <dl>
-<? 
+<?
     global $app_shortnames;
     foreach($addons as &$addon):
         if (array_key_exists('Tag', $addon) && !empty($addon['Tag'])) {
@@ -126,7 +126,7 @@
     ?>
     <dt><?= $html->linkNoLocaleNoApp($review['Addon']['Translation']['name']['string'],
         '/'.LANG."/{$_application}/addon/{$review['Addon']['Addon']['id']}"); ?></dt>
-    <dd><?=$review['Translation']['body']['string']?></dd>
+    <dd><?=nl2br($review['Translation']['body']['string'])?></dd>
     <? endforeach; ?>
 </dl>
 </div>
