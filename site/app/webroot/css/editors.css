@@ -438,45 +438,97 @@ th.headerSortUp {
 #tabTable #details,
 #tabTable #charts {
     border-bottom: 1px solid black;
-    text-align: left;
+    text-align: right;
     vertical-align: bottom;
 }
 .html-rtl #tabTable #details,
 .html-rtl #tabTable #charts {
-    text-align: right;
+    text-align: left;
+}
+#performanceHeader h3 {
+    margin-left: 180px;
 }
 #performanceUserSelect {
     float:right;
 }
 .html-rtl #performanceUserSelect {
     float:left;
+    margin-left: 180px;
 }
-.performancePieContainer {
-    height: 200px;
-    margin: 10px 5px;
-}
-#byCatTeamChart,
-#byCatUserChart {
+#performancePieContainer {
     width: 200px;
+    margin-top: 10px;
     float: left;
     clear: left;
 }
-.html-rtl #byCatTeamChart,
-.html-rtl #byCatUserChart {
+.html-rtl #performancePieContainer {
     float: right;
     clear: left;
 }
-#performanceTeamLegend,
-#performanceUserLegend {
+#performancePieContainer h4,
+#performancePieLegendContainer h4 {
+    margin-bottom: 1.0em;
+}
+#performancePieContainer div {
+    margin-bottom: 1.5em;
+}
+#performancePieLegendContainer {
     float: left;
-    margin: 0 10px;
+    margin-top: 10px;
+    margin-left: 30px;
 }
-#performanceTeamLegend div,
-#performanceUserLegend div {
-    margin: 0.2em;
-    padding: 0 0.2em;
-}
-.html-rtl #performanceTeamLegend,
-.html-rtl #performanceUserLegend {
+.html-rtl #performancePieLegendContainer {
     float: right;
+    margin-left: 0;
+    margin-right: 30px;
 }
+#performancePieLegend ul {
+    margin: 0;
+    padding: 0;
+}
+#performancePieLegend ul li {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0 0.1em;
+    line-height: 1.5em;
+    list-style: none;
+    cursor: pointer;
+    width: 28em;
+}
+.html-ltr #performancePieLegend ul li span { padding-left: 0.2em; }
+.html-rtl #performancePieLegend ul li span { padding-right: 0.2em; }
+#performancePieLegend ul li.col2 {
+    margin-left: 29em;
+    width: auto;
+}
+.html-rtl #performancePieLegend li.col2 {
+    margin-left: 0;
+    margin-right: 29em;
+}
+#performancePieLegendControl {
+    margin-top: 40px;
+    margin-left: 0;
+    margin-right: 0;
+}
+#performancePieLegendControl li {
+    display: inline;
+    list-style: none;
+    cursor: pointer;
+    line-height: 1.5em;
+}
+.html-ltr #performancePieLegendControl li {
+    float: left;
+    border-left:1px solid #666666;
+    padding-left: 1em;
+    margin-right: 1em;
+}
+.html-rtl #performancePieLegendControl li {
+    float: right;
+    border-right:1px solid #666666;
+    padding-right: 1em;
+    margin-left: 1em;
+}
+.html-ltr #performancePieLegendControl li:first-child { border-left: 0; padding-left: 0; }
+.html-rtl #performancePieLegendControl li:first-child { border-right: 0; padding-right: 0; }

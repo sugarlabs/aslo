@@ -65,15 +65,22 @@
                 <?=$html->submit(_('editorcp_reviewlog_button_filter'))?>
             </div>
             </form>
-            <h4><?=$userName?> - <?=$pieTitleDate?></h4>
-            <div class="performancePieContainer">
+            <div id="performancePieContainer">
+                <h4><?=$userName?> - <?=$pieTitleDate?></h4>
                 <div id="byCatUserChart"></div>
-                <div id="performanceUserLegend"></div>
-            </div>
-            <h4><?=___('editorcp_performance_column_teamaverage', 'Team Average')?> - <?=$pieTitleDate?></h4>
-            <div class="performancePieContainer">
+                <h4><?=___('editorcp_performance_column_teamaverage', 'Team Average')?> - <?=$pieTitleDate?></h4>
                 <div id="byCatTeamChart"></div>
-                <div id="performanceTeamLegend"></div>
+            </div>
+            <div id="performancePieLegendContainer">
+                <h4><?=___('editorcp_performance_legend', 'Legend')?></h4>
+                <div id="performancePieLegend"></div>
+                <ul id="performancePieLegendControl">
+                    <li><a id="topUserSlices" href="#"><?=___('editorcp_performance_top_user_categories', 'Top User Categories')?></a></li>
+                    <li><a id="topTeamSlices" href="#"><?=___('editorcp_performance_top_team_categories', 'Top Team Categories')?></a></li>
+                    <li><a id="allSlices" href="#"><?=___('editorcp_performance_select_all', 'Select All')?></a></li>
+                    <li><a id="noSlices" href="#"><?=___('editorcp_performance_select_none', 'Select None')?></a></li>
+                    <li><a id="toggleSliceLabels" href="#"><?=___('editorcp_performance_toggle_labels', 'Toggle Labels')?></a></li>
+                </ul>
             </div>
         </div>
 
@@ -81,76 +88,28 @@
 </div>
 <script type="text/javascript">
 // <![CDATA[
+    var imageURL = '<?=$html->url('/img', true, false, false)?>';
     $(document).ready(function() {
-        editors_performance.init();
-
-        var ticks = [<?=$monthlyTicksJS?>];
-        var d1 = [<?=$monthlyUserPointsJS?>];
-        var d2 = [<?=$monthlyTeamPointsJS?>];
-
-        $.plot($('#byMonthChart'), [
-            { label: '<?=$userName?>',  data: d1, color:'#0066cc'},
-            { label: '<?=___('editorcp_performance_column_teamaverage', 'Team Average')?>',  data: d2, color:'#cc3333'}
-        ], {
-            lines: { show: true },
-            points: { show: true },
-            xaxis: { ticks: ticks },
-            grid: { backgroundColor: "#fffaff", hoverable: true }
-        });
-
-        var previousPoint = null;
-        $('#byMonthChart').bind('plothover', function (event, pos, item) {
-            if (item) {
-                if (previousPoint != item.datapoint) {
-                    previousPoint = item.datapoint;
-                    $('#chartTip').remove();
-                    var y = item.datapoint[1].toFixed(2);
-                    editors_performance.showChartTooltip(item.pageX, item.pageY, '' + y);
-                }
-            }
-            else {
-                $('#chartTip').remove();
-                previousPoint = null;            
-            }
-        });
+        // line chart data
+        editors_performance.monthlyData = [
+            { label: '<?=$userName?>',  data: [<?=$monthlyUserPointsJS?>], color:'#0066cc'},
+            { label: '<?=___('editorcp_performance_column_teamaverage', 'Team Average')?>',  data: [<?=$monthlyTeamPointsJS?>], color:'#cc3333'}
+        ];
+        editors_performance.monthlyTicks = [<?=$monthlyTicksJS?>];
 
         // pie chart data
-        var sliceColors = [<?=$sliceColorsJS?>];
-        var sliceLabels = [<?=$sliceLabelsJS?>];
-        var userPieData = [<?=$userPieDataJS?>];
-        var teamPieData = [<?=$teamPieDataJS?>];
+        editors_performance.pieData = [
+            { id: 'byCatUserChart', data: [<?=$userPieDataJS?>] },
+            { id: 'byCatTeamChart', data: [<?=$teamPieDataJS?>] }
+        ];
+        editors_performance.pieLabels = [<?=$sliceLabelsJS?>];
+        editors_performance.pieOptions = {
+            legendId: 'performancePieLegend',
+            otherLabel: '<?=___('editorcp_performance_unselected', 'Unselected')?>',
+            emptyLabel: '<?=___('editorcp_performance_nodata', 'No Data')?>',
+        };
 
-        // draw user pie chart
-        $('#byCatUserChart').sparkline(userPieData, {
-            type:'pie',
-            height:200,
-            sliceColors:sliceColors
-        });
-
-        // draw team pie chart
-        $('#byCatTeamChart').sparkline(teamPieData, {
-            type:'pie',
-            height:200,
-            sliceColors:sliceColors
-        });
-
-        // sums for legend percentage calculations
-        var userSum = 0;
-        $.each(userPieData, function(i, val) {
-            userSum += val;
-        });
-        var teamSum = 0;
-        $.each(teamPieData, function(i, val) {
-            teamSum += val;
-        });
-
-        // create legend for each pie chart
-        $.each(sliceLabels, function(i, val) {
-            $('#performanceUserLegend').append(editors_performance.pieLegendEntry(
-                sliceColors[i], val, userPieData[i], userSum, 'userSlice'+i)); 
-            $('#performanceTeamLegend').append(editors_performance.pieLegendEntry(
-                sliceColors[i], val, teamPieData[i], teamSum, 'teamSlice'+i)); 
-        });
+        editors_performance.init();
     });
 // ]]>
 </script>

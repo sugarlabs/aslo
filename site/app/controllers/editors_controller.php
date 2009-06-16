@@ -495,7 +495,7 @@ class EditorsController extends AppController
         $this->publish('userName', $userName);
         $this->publish('showUserLookup', $isSenior);
         $this->publish('editors', $isSenior ? $this->_recentEditors() : array());
-        $this->publish('collapse_categories', false);
+        $this->publish('collapse_categories', true);
         $this->publish('subpagetitle', ___('editors_performance_pagetitle', 'Performance Reports'));
         $this->set('page', 'performance');
 
@@ -695,10 +695,6 @@ class EditorsController extends AppController
             $teamPoints[] = "[{$i},{$n}]";
         }
 
-        // pie chart color-scheme (javascript)
-        $sliceColors = array("'#6d746a'","'#205f9a'","'#3d8128'","'#63522b'",
-                                "'#dc5313'","'#f3c01c'","'#bc1c39'");
-
         // pie chart labels (javascript)
         $sliceLabels = array();
         foreach ($byCatData['labels'] as $i => $label) {
@@ -722,7 +718,6 @@ class EditorsController extends AppController
         $this->set('monthlyTicksJS', implode(',', $monthlyTicks));
         $this->set('monthlyUserPointsJS', implode(',', $userPoints));
         $this->set('monthlyTeamPointsJS', implode(',', $teamPoints));
-        $this->set('sliceColorsJS', implode(',', $sliceColors));
         $this->set('sliceLabelsJS', implode(',', $sliceLabels));
         $this->set('userPieDataJS', implode(',', $byCatData['usercount']));
         $this->set('teamPieDataJS', implode(',', $byCatData['teamcount']));
@@ -790,7 +785,127 @@ class EditorsController extends AppController
 
 
     /**
-     * Generate data for category breakdown summary for user and team
+     * Generate data for extension category breakdown summary for user and team
+     * @param int $userId user to generate report for
+     * @param int $startTime timestamp
+     * @param int $endTime timestamp
+     * @return array
+     */
+    function _performanceSummaryExtension($userId, $startTime, $endTime) {
+        // ids of similar categories (across different apps)
+        // the counts will be merged together and the first id will determine
+        // the category name to display
+        $category_merge = array(
+            // 'other' ids should match those used in
+            // DevelopersController::_editAddonCategories
+            'other'               => array(73, 49, 50),
+
+            'bookmarks'           => array(22, 51),
+            'download management' => array(5, 42),
+            'language support'    => array(55, 76, 37, 69),
+            'photos music video'  => array(38, 56),
+            'privacy security'    => array(12, 46, 66),
+            'rss news blogging'   => array(39, 57, 1),
+            'search tools'        => array(13, 47),
+            'web development'     => array(4, 41),
+        );
+
+        // 'other' categories are special - they will only be counted if they
+        // are the only category associated with an add-on
+        $otherId = $category_merge['other'][0];
+
+        // fetch all extension categories
+        $this->Tag->unbindFully();
+        $cats = $this->Tag->findAll("addontype_id='".ADDON_EXTENSION."'", null, 'Tag.id');
+        $catCounts = array();
+        foreach ($cats as $cat) {
+            $catCounts[$cat['Tag']['id']] = array(
+                'label' => $cat['Translation']['name']['string'],
+                'usercount' => 0,
+                'teamcount' => 0
+            );
+        }
+
+        // sum approvals by addon, category, and user
+        $sql = "SELECT `Approval`.`addon_id`, `AddonTag`.`tag_id`, `Approval`.`user_id`, COUNT(*) AS `total`
+                  FROM `approvals` AS `Approval`
+                 INNER JOIN `addons` AS `Addon` ON (`Addon`.`id`=`Approval`.`addon_id`)
+                 INNER JOIN `addons_tags` AS `AddonTag` ON (`AddonTag`.`addon_id`=`Addon`.`id`)
+                 WHERE `Approval`.`created` >= FROM_UNIXTIME('{$startTime}')
+                   AND `Approval`.`created` < FROM_UNIXTIME('{$endTime}')
+                   AND `Addon`.`addontype_id` = '".ADDON_EXTENSION."'
+                 GROUP BY `Approval`.`addon_id`, `AddonTag`.`tag_id`, `Approval`.`user_id`";
+
+        $approvals = $this->Approval->query($sql);
+
+        // "other" tracking
+        $nonOtherCount = $lastAddon = $userOther = $teamOther = 0;
+
+        foreach ($approvals as $appr) {
+            $catId = $appr['AddonTag']['tag_id'];
+
+            if ($appr['Approval']['addon_id'] !== $lastAddon) {
+                // we just finished an add-on
+                // now include "other" totals if no other categories were tallied
+                if ($nonOtherCount == 0) {
+                    $catCounts[$otherId]['usercount'] += $userOther;
+                    $catCounts[$otherId]['teamcount'] += $teamOther;
+                }
+
+                // reset "other" tracking
+                $nonOtherCount = $userOther = $teamOther = 0;
+                $lastAddon = $appr['Approval']['addon_id'];
+            }
+
+            // defer counting "other" until we know if it is the add-on's only category
+            if (in_array($catId, $category_merge['other'])) {
+                if ($appr['Approval']['user_id'] == $userId) {
+                    $userOther += $appr[0]['total'];
+                }
+                $teamOther += $appr[0]['total'];
+
+            // always count non-other category totals
+            } else {
+                $nonOtherCount++;
+                if ($appr['Approval']['user_id'] == $userId) {
+                    $catCounts[$catId]['usercount'] += $appr[0]['total'];
+                }
+                $catCounts[$catId]['teamcount'] += $appr[0]['total'];
+            }
+        }
+        // other counts for the last add-on in the query results
+        if ($nonOtherCount == 0) {
+            $catCounts[$otherId]['usercount'] += $userOther;
+            $catCounts[$otherId]['teamcount'] += $teamOther;
+        }
+
+        // merge results of similar categories
+        foreach ($category_merge as $merge) {
+            $keepId = $merge[0];
+            for ($i = 1; $i < count($merge); $i++) {
+                // combine!
+                $catCounts[$keepId]['usercount'] += $catCounts[$merge[$i]]['usercount'];
+                $catCounts[$keepId]['teamcount'] += $catCounts[$merge[$i]]['teamcount'];
+
+                // whack!
+                unset($catCounts[$merge[$i]]);
+            }
+        }
+
+        // package up final results all nice and pretty
+        $results = array('labels'=>array(), 'usercount'=>array(), 'teamcount'=>array());
+        foreach ($catCounts as $arr) {
+            $results['labels'][] = $arr['label'];
+            $results['usercount'][] = $arr['usercount'];
+            $results['teamcount'][] = $arr['teamcount'];
+        }
+
+        return $results;
+    }
+
+
+    /**
+     * Generate data for category breakdown summary for user and team (includes addon-types)
      * @param int $userId user to generate report for
      * @param int $year year (default: current year)
      * @param int $month month to summarize (default: generate data for entire year)
@@ -806,11 +921,14 @@ class EditorsController extends AppController
                     'usercount' => array(),
                     'teamcount' => array());
 
+        // treat each add-on types as a category - except extensions
+        // they get broken down further later on
         $addonTypes = $this->Addontype->getNames();
-        asort($addonTypes);
-
         $addonTypeKeys = array();
         foreach ($addonTypes as $key => $val) {
+            if ($key == ADDON_EXTENSION) {
+                continue;
+            }
             $addonTypeKeys[] = $key;
             $data['labels'][] = $val;
             $data['usercount'][] = 0;
@@ -831,12 +949,14 @@ class EditorsController extends AppController
             $endTime = strtotime('+1 year', $startTime);
         }
 
+        // sum approvals by user and add-on type
         $sql = "SELECT `Addon`.`addontype_id`, `User`.`id`, COUNT(*) AS `total`
                   FROM `approvals` AS `Approval`
                   LEFT JOIN `users` AS `User` ON (`User`.`id`=`Approval`.`user_id`)
                   LEFT JOIN `addons` AS `Addon` ON (`Addon`.`id`=`Approval`.`addon_id`)
                  WHERE `Approval`.`created` >= FROM_UNIXTIME('{$startTime}')
                    AND `Approval`.`created` < FROM_UNIXTIME('{$endTime}')
+                   AND `Addon`.`addontype_id` != '".ADDON_EXTENSION."'
                  GROUP BY `Approval`.`user_id`, `Addon`.`addontype_id`";
 
         $results = $this->Approval->query($sql);
@@ -850,6 +970,15 @@ class EditorsController extends AppController
                 $data['usercount'][$i] += $row[0]['total'];
             }
         }
+
+        // merge in extension category summary
+        $extCatCounts = $this->_performanceSummaryExtension($userId, $startTime, $endTime);
+        $data['labels'] = array_merge($data['labels'], $extCatCounts['labels']);
+        $data['usercount'] = array_merge($data['usercount'], $extCatCounts['usercount']);
+        $data['teamcount'] = array_merge($data['teamcount'], $extCatCounts['teamcount']);
+
+        // sort all data by category name for an orderly legend display
+        array_multisort($data['labels'], SORT_ASC, SORT_STRING, $data['usercount'], $data['teamcount']);
 
         return $data;
     }
