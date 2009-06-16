@@ -16,11 +16,11 @@
  *
  * The Initial Developer of the Original Code is
  * The Mozilla Foundation.
- * Portions created by the Initial Developer are Copyright (C) 2007
+ * Portions created by the Initial Developer are Copyright (C) 2009
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Jeff Balogh <jbalogh@mozilla.com> (Original Author)
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,21 +34,18 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
-
+ * ***** END LICENSE BLOCK ***** */
 
 /**
- * This element uses the following local variables:
- * - compatible_apps array provided by Version->getCompatibleApps
+ * Required:
+ * $app, an Application
  */
 
+global $app_prettynames, $app_shortnames;
+$shortname = array_search($app['Application']['application_id'], $app_shortnames);
 
+echo sprintf('%s: %s &ndash; %s',
+             $app_prettynames[$shortname],
+             $app['Min_Version']['version'],
+             $app['Max_Version']['version']);
 ?>
-<div class="app_compat">
-    <h5><?=_('addons_display_workswith')?></h5>
-    <ul>
-        <?php foreach($compatible_apps as $app): ?>
-            <li><?=$this->renderElement('app_versions', array('app' => $app))?></li>
-        <? endforeach; ?>
-    </ul>
-</div>

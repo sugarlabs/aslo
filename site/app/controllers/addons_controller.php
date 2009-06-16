@@ -212,6 +212,8 @@ class AddonsController extends AppController
             $compat_apps = $this->Version->getCompatibleApps($_latest_version);
             $this->publish('compatible_apps', array_slice($compat_apps, 0, 1));
             $addon_data['compatible_apps'] = $compat_apps;
+        } else {
+            $this->publish('hasversion', false);
         }
 
         // if the latest version is incompatible with the current app, redirect
@@ -356,6 +358,9 @@ class AddonsController extends AppController
 
         // Collapse categories menu
         $this->publish('collapse_categories', true);
+        $this->publish('breadcrumbs', array(
+            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+        ));
     }
 
     /**
