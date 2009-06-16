@@ -504,28 +504,60 @@ switch ($action) {
      */
     case 'global_stats':
         echo "Starting global stats update...\n";
+
         $affected_rows = 0;
-        $db->write("
-            REPLACE INTO global_stats 
-                (name, count, modified) 
-                VALUES 
-                ('addons_downloaded', (
-                    SELECT SUM(count) 
-                    FROM download_counts 
-                ), now())
-        ");
-        $affected_rows += mysql_affected_rows();
-        $db->write("
-            REPLACE INTO global_stats 
-                (name, count, modified) 
-                VALUES 
-                ('addons_in_use', ( 
-                    SELECT SUM(count) 
-                    FROM update_counts 
-                    WHERE date > ((SELECT MAX(date) FROM update_counts) - INTERVAL 1 DAY)  
-                ), now())
-        ");
-        $affected_rows += mysql_affected_rows();
+        
+        $stats = array(
+            // Total downloads
+            'addon_total_downloads'             => 'SELECT SUM(count) FROM download_counts',
+            
+            // Add-on counts
+            'addon_count_public'                => 'SELECT COUNT(*) FROM addons WHERE status = 4 AND inactive = 0',
+            'addon_count_pending'               => 'SELECT COUNT(*) FROM versions INNER JOIN files ON versions.id = files.version_id WHERE files.status = 2',
+            'addon_count_experimental'          => 'SELECT COUNT(*) FROM addons WHERE status = 1 AND inactive = 0',
+            'addon_count_nominated'             => 'SELECT COUNT(*) FROM addons WHERE status = 3 AND inactive = 0',
+            
+            // Collection counts
+            'collection_count_total'            => 'SELECT COUNT(*) FROM collections',
+            'collection_count_private'          => 'SELECT COUNT(*) FROM collections WHERE listed = 0',
+            'collection_count_public'           => 'SELECT COUNT(*) FROM collections WHERE listed = 1',
+            'collection_count_autopublishers'   => 'SELECT COUNT(*) FROM collections WHERE collection_type = 1',
+            'collection_count_editorspicks'     => 'SELECT COUNT(*) FROM collections WHERE collection_type = 2',
+            'collection_count_normal'           => 'SELECT COUNT(*) FROM collections WHERE collection_type = 0',
+            'collection_addon_downloads'        => 'SELECT SUM(count) FROM stats_addons_collections_counts',
+            
+            // Add-on Collector
+            'collector_total_downloads'         => 'SELECT SUM(count) FROM download_counts WHERE addon_id = 11950'
+        );
+        
+        $date = date('Y-m-d');
+        
+        // Update all "total" stats that don't require a date
+        foreach ($stats as $stat => $query) {
+            echo "Updating {$stat}...\n";
+            
+            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), '{$date}')");
+            
+            $affected_rows += mysql_affected_rows();
+        }
+        
+        // These stats are specific to the latest available metrics data import
+        
+        $date = 'SELECT MAX(date) FROM update_counts';
+        
+        $variable_date_stats = array(
+            'addon_total_updatepings'           => "SELECT SUM(count) FROM update_counts WHERE date = ({$date})",
+            'collector_updatepings'             => "SELECT count FROM update_counts WHERE addon_id = 11950 AND date = ({$date})"
+        );
+        
+        foreach ($variable_date_stats as $stat => $query) {
+            echo "Updating {$stat}...\n";
+            
+            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), ({$date}))");
+            
+            $affected_rows += mysql_affected_rows();
+        }
+
     break;
 
 
