@@ -76,8 +76,12 @@ class CollectionsController extends AppController
     }
 
     function _listing($collections, $pagination_options=array()) {
-        $ids = array();
-        foreach ($collections as $c) $ids[] = $c['Collection']['id'];
+        if (!empty($collections[0]['Collection']['id'])) {
+            $ids = array();
+            foreach ($collections as $c) $ids[] = $c['Collection']['id'];
+        } else {
+            $ids = $collections;
+        }
 
         $collections = $this->CollectionsListing->fetchPage($ids, $pagination_options);
         list($sort_opts, $sortby) = $this->CollectionsListing->sorting();
@@ -90,9 +94,11 @@ class CollectionsController extends AppController
         // if a collection was just deleted, show success message
         $this->publish('collection_deleted', $this->Session->delete('collection_deleted'), false);
 
-        $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-        ));
+        if (empty($this->viewVars['breadcrumbs'])) {
+            $this->publish('breadcrumbs', array(
+                sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+            ));
+        }
 
         $this->render('listing');
     }
@@ -163,6 +169,26 @@ class CollectionsController extends AppController
              FROM collections AS Collection JOIN collection_subscriptions
              ON Collection.id = collection_subscriptions.collection_id
              WHERE collection_subscriptions.user_id = " . $user['id']);
+        $this->_listing($collections);
+    }
+
+    function addon($id) {
+        if (!$id || !is_numeric($id)) {
+            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            return;
+        }
+        $addon = $this->Addon->getAddon($id);
+        $collections = $this->AddonCollection->getPopularCollectionsForAddon(
+            $id, null, APP_ID);
+
+        $this->set('hide_listing_header', true);
+        $this->publish('list_header', sprintf(___('collections_index_header_addon'),
+            $addon['Translation']['name']['string']));
+        $this->publish('breadcrumbs', array(
+            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+            $addon['Translation']['name']['string'] => "/addon/{$addon['Addon']['id']}"
+        ));
+
         $this->_listing($collections);
     }
 

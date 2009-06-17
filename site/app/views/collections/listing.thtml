@@ -48,7 +48,11 @@ $this->layout = 'amo2009';
   </div>
   <div class="primary" role="main">
     <?=$this->renderElement('amo2009/breadcrumbs')?>
-    <h2><?=___('collections_index_header_collections')?></h2>
+    <?php if (empty($list_header)): ?>
+        <h2><?=___('collections_index_header_collections')?></h2>
+    <?php else: ?>
+        <h2><?=$list_header?></h2>
+    <?php endif; ?>
     <?php if (!empty($collection_deleted)): ?>
         <?=$this->renderElement('notification', array(
             'type' => 'success',
@@ -62,6 +66,7 @@ $this->layout = 'amo2009';
     <?php endif; ?>
     <div class="featured listing">
       <div class="featured-inner">
+        <?php if (empty($hide_listing_header)): ?>
         <div class="listing-header">
           <ul>
             <?php foreach ($tabs as $tab): ?>
@@ -75,6 +80,7 @@ $this->layout = 'amo2009';
           </ul>
           <?=$this->renderElement('amo2009/collections_sort_form')?>
         </div> <!-- listing-header -->
+        <?php endif; ?>
         <script type="text/javascript">
           <?=$this->renderElement('amo2009/collections_js_init')?>
         </script>
