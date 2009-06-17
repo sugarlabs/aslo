@@ -1167,6 +1167,10 @@ CREATE TABLE `plugins_mimes` (
   PRIMARY KEY  (`mime_id`,`plugin_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `schema_version`;
+CREATE TABLE `schema_version` (
+  `version` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Default data that doesn't change over time (or isn't supposed to anyway).

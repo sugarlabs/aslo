@@ -1,0 +1,10 @@
+Make a settings.py that looks like this:
+
+    db = 'mysql -pong -h cm-webdev01-master01 -D j_remora --silent'
+    table = 'schema_version'
+
+`db` is the mysql connection string, `table` is where you store schema info.
+
+Then run `python bin/schematic/schematic.py config/migrations`.
+
+Note that those paths aren't exact.
