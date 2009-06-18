@@ -1253,15 +1253,26 @@ BandwagonService.prototype = {
             return;
         }
 
-        // sql schema updates for bandwagon 1.0.3
+        if (this._storageConnection.schemaVersion < 103)
+        {
+            // sql schema updates for bandwagon 1.0.3
 
-        try
-        {
-            this._storageConnection.executeSimpleSQL("ALTER TABLE collections ADD COLUMN iconURL TEXT");
+            try
+            {
+                this._storageConnection.executeSimpleSQL("ALTER TABLE collections ADD COLUMN iconURL TEXT");
+            }
+            catch (e)
+            {
+                Bandwagon.Logger.warn("Error updating sqlite schema (possibly harmless): " + e);
+            }
+
+            this._storageConnection.schemaVersion = 103;
         }
-        catch (e)
+
+        if (this._storageConnection.schemaVersion < 104)
         {
-            // fail silently (we have already added the column)
+            // XXX future 1.0.4 schema updates go here
+            // this._storageConnection.schemaVersion = 104;
         }
 
         this._storageConnection.commitTransaction();
