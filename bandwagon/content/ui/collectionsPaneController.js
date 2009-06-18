@@ -769,9 +769,21 @@ Bandwagon.Controller.CollectionsPane._repopulateCollectionsList = function()
 
     var styleWithSeparator = false;
 
+    var sortedCollections = [];
+
     for (var id in bandwagonService.collections)
     {
-        var collection = bandwagonService.collections[id];
+        sortedCollections.push(bandwagonService.collections[id]);
+    }
+
+    sortedCollections.sort(function(a, b)
+    {
+        return (a.name > b.name);
+    });
+
+    for (var i=0; i<sortedCollections.length; i++)
+    {
+        var collection = bandwagonService.collections[sortedCollections[i].resourceURL];
 
         if (!collection.subscribed)
             continue;
@@ -785,9 +797,9 @@ Bandwagon.Controller.CollectionsPane._repopulateCollectionsList = function()
         }
     }
 
-    for (var id in bandwagonService.collections)
+    for (var i=0; i<sortedCollections.length; i++)
     {
-        var collection = bandwagonService.collections[id];
+        var collection = bandwagonService.collections[sortedCollections[i].resourceURL];
 
         if (!collection.subscribed)
             continue;
