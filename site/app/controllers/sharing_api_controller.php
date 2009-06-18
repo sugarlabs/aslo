@@ -275,7 +275,8 @@ class SharingApiController extends AppController
                 'nickname'        => $params['nickname'],
                 'collection_type' => $type,
                 'application_id'  => $appid,
-                'listed' => 
+                'defaultlocale'   => LANG, // defaults to current lang
+                'listed' =>
                     ($params['listed'] === '1' || $params['listed'] == 'yes') ?
                     1 : 0
             )
