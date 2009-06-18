@@ -169,7 +169,7 @@ $c = $collection['Collection'];
                          '<strong>'.$html->number_format($downloads).'</strong>')?>
             </p>
             <p class="review">
-              <?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?>
+              <?=$this->renderElement('amo2009/reviews', array('addon' => $addon, 'collection_uuid' => $c['uuid']))?>
             </p>
           </div> <!-- item-info -->
           <a href="<?=$html->url('/addon/'.$a['id'])?>">
@@ -181,7 +181,7 @@ $c = $collection['Collection'];
               <?=$addon['Translation']['summary']['string']?>
             </p>
             <p>
-              <a href="<?=$html->url('/addon/'.$a['id'])?>">
+              <a href="<?=$html->url('/addon/'.$a['id'])."?collection_id={$c['uuid']}"?>">
                 <?=___('collections_detail_a_learn')?>
               </a>
             </p>

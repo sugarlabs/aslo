@@ -47,8 +47,14 @@ $addon_id = $addon['Addon']['id'];
 ?>
 
 <?=$this->renderElement('amo2009/stars',array('rating' => $rating))?>
+<?
+$_url = $html->url('/addon/'.$addon_id);
+if (!empty($collection_uuid))
+    $_url = $html->appendParametersToUrl($_url, array('collection_id' => $collection_uuid));
+$_url .= '#reviews'
+?>
 <?php if ($reviews > 0): ?>
-  <a href="<?=$html->url('/addon/'.$addon_id.'#reviews')?>">
+  <a href="<?=$_url?>">
     <?=sprintf(n___('feature_reviews', 'feature_reviews', $reviews),
                '<strong>'.$reviews.'</strong>')?>
   </a>
