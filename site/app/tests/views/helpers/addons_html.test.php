@@ -114,5 +114,21 @@ class AddonsHtmlHelperTest extends UnitTestCase {
         phpQuery::newDocument($result);
         $this->assertEqual(pq('h5.flag a')->text(), 'recommended', 'Category recommended and recommended addons are flagged as recommended');
     }
+
+    function testAppendParametersToUrl() {
+        $url = 'http://www.mozilla.com';
+        $this->assertEqual($this->html->appendParametersToUrl($url, array('var' => 'val')), "$url?var=val");
+        $this->assertEqual($this->html->appendParametersToUrl($url, array('var' => 'val', 'foo' => 'bar')), "$url?var=val&foo=bar");
+
+        $url = 'http://www.mozilla.com?blah';
+        $this->assertEqual($this->html->appendParametersToUrl($url, array('var' => 'val')), "$url&var=val");
+        $this->assertEqual($this->html->appendParametersToUrl($url, array('var' => 'val', 'foo' => 'bar')), "$url&var=val&foo=bar");
+
+        $url = 'http://www.mozilla.com?';
+        $this->assertEqual($this->html->appendParametersToUrl($url, array('var' => 'val')), "{$url}var=val");
+
+        $url = 'http://www.mozilla.com?x&';
+        $this->assertEqual($this->html->appendParametersToUrl($url, array('var' => 'val')), "{$url}var=val");
+    }
 }
 ?>

@@ -58,6 +58,7 @@
  * - $allPlatforms - There should only be one platform in the list when this is used on the eula view.
  * - $addonType - default ADDON_EXTENSION
  * - $collection_uuid - if this add-on download is collection related, this will set a tracking code in the download ID. default null
+ * - $src - the source of the add-on, e.g. 'addondetail'
  * - $buttonMessage - default 'a_install'
  * - $showInstructions - Show install instructions for Thunderbird or Seamonkey, defaults to true
  */
@@ -235,7 +236,11 @@ if (count($addonFiles) < 1) {
 
                 $latest_permalink .= "/addon-${addonId}-latest.".$path_info['extension'];
 
-                if (!empty($collection_uuid)) $latest_permalink .= "?collection_id={$collection_uuid}";
+                if (!empty($collection_uuid))
+                    $latest_permalink = $html->appendParametersToUrl($latest_permalink, array('collection_id' => $collection_uuid));
+                if (!empty($src)) {
+                    $latest_permalink = $html->appendParametersToUrl($latest_permalink, array('src' => $src));
+                }
 
                 $install_button_html .= $html->link($linktitle, $latest_permalink, $linkOptions);
             } else {
@@ -251,7 +256,11 @@ if (count($addonFiles) < 1) {
 
             $link_url = "/addons/policy/0/{$addonId}/{$file['id']}";
 
-            if (!empty($collection_uuid)) $link_url .= "?collection_id={$collection_uuid}";
+            if (!empty($collection_uuid))
+                $link_url = $html->appendParametersToUrl($link_url, array('collection_id' => $collection_uuid));
+            if (!empty($src)) {
+                $link_url = $html->appendParametersToUrl($link_url, array('src' => $src));
+            }
 
             $install_button_html .= $html->link(
                 $install_button_image.'<span class="install-button-text">'.sprintf(_('a_download'),$_install_platform_string).'</span>',

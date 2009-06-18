@@ -596,5 +596,26 @@ class AddonsHtmlHelper extends HtmlHelper
             return null;
         }
     }
+
+    /**
+     * Appends a parameter to a URL, checking if it should add a ? or &.  This does no URL encoding!
+     *
+     * @param string url
+     * @param array parameters
+     */
+    function appendParametersToUrl($url, array $params) {
+        if (strpos($url, '?') === false) {
+            $url .= "?";
+        }
+
+        foreach ($params as $var => $val) {
+            if (!in_array(substr($url,-1), array('?','&'))) {
+                $url .= '&';
+            }
+            $url .= "{$var}={$val}";
+        }
+
+        return $url;
+    }
 }
 ?>
