@@ -98,7 +98,11 @@ Bandwagon.Controller.CollectionsPane.onViewSelect = function()
 {
     Bandwagon.Logger.debug("in Bandwagon.Controller.CollectionsPane.onViewSelect()");
 
-    if (Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem != null)
+    if (!bandwagonService.isAuthenticated() || this.loginInProcess == true)
+    {
+        window.setTimeout(function() { document.getElementById("login").focus(); }, 200);
+    }
+    else if (Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem != null)
     {
         // make sure the expanded collection item is scrolled into view
         var elemsAddonExpanded = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("bandwagonAddonExpanded");
@@ -448,10 +452,11 @@ Bandwagon.Controller.CollectionsPane.doShowCollection = function()
     if (collection && collection.description != "")
     {
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.textContent = collection.description;
-        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.removeAttribute("collsaped");
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.removeAttribute("collapsed");
     }
     else
     {
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.textContent = "";
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.setAttribute("collapsed", true);
     }
 

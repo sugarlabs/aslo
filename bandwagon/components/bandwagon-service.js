@@ -1261,7 +1261,7 @@ BandwagonService.prototype = {
         }
         catch (e)
         {
-            // fail silently
+            // fail silently (we have already added the column)
         }
 
         this._storageConnection.commitTransaction();

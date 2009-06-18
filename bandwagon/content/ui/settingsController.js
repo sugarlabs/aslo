@@ -458,6 +458,8 @@ Bandwagon.Controller.Settings.doLogin = function()
         const EMFEATURES = "chrome,menubar,extra-chrome,toolbar,dialog=no,resizable";
         window.openDialog(EMURL, "", EMFEATURES);
     }
+
+    window.close();
 }
 
 Bandwagon.Controller.Settings.doLogout = function()

@@ -64,14 +64,7 @@ Bandwagon.Controller.BrowserOverlay.initBandwagon = function()
         Bandwagon.Logger.error("Error initializing bandwagon: " + e);
     }
 
-    try
-    {
-        gBrowser.addEventListener("DOMContentLoaded", Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument, true);
-    }
-    catch (e)
-    {
-        Bandwagon.Logger.debug("Error adding subscription refresh event listener to document (probably harmless): " + e);
-    }
+    gBrowser.addEventListener("DOMContentLoaded", Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument, true);
 }
 
 Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument = function(event)
@@ -90,16 +83,23 @@ Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocumen
             }
         }
 
-        if (doc && doc.defaultView && doc.defaultView.location && doc.defaultView.location.host)
+        try
         {
-            var docHost = doc.defaultView.location.host;
-
-            if (docHost == Bandwagon.Preferences.getPreference("amo_host"))
+            if (doc && doc.defaultView && doc.defaultView.location && doc.defaultView.location.host)
             {
-                Bandwagon.Logger.debug("This document is on $amo_host, will add bandwagonRefresh listener");
+                var docHost = doc.defaultView.location.host;
 
-                doc.addEventListener("bandwagonRefresh", Bandwagon.Controller.BrowserOverlay.handleSubscriptionRefreshEvent, true);
+                if (docHost == Bandwagon.Preferences.getPreference("amo_host"))
+                {
+                    Bandwagon.Logger.debug("This document is on $amo_host, will add bandwagonRefresh listener");
+
+                    doc.addEventListener("bandwagonRefresh", Bandwagon.Controller.BrowserOverlay.handleSubscriptionRefreshEvent, true);
+                }
             }
+        }
+        catch (e)
+        {
+            Bandwagon.Logger.debug("Error adding subscription refresh event listener to document (probably harmless): " + e);
         }
     }
 }
