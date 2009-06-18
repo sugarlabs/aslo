@@ -49,8 +49,8 @@ collections.init = function(){
 
     var c = collections;
 
-    /* Hijack form.favourite for some ajax fun. */
-    $('form.favourite').submit(function(event){
+    /* Hijack form.favorite for some ajax fun. */
+    $('form.favorite').submit(function(event){
         event.preventDefault();
 
         // `this` is the form.

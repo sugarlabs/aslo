@@ -179,12 +179,12 @@ jQuery(function($) {
 	//	Add the class "hasJS" to the body element.
 	$('body').addClass('hasJS');
 
-	// Greys out the favourites icon when it is clicked
-    $(".item-info li.favourite").click(function () {
+	// Greys out the favorites icon when it is clicked
+    $(".item-info li.favorite").click(function () {
 	  var self = this;
-	  $(self).addClass("favourite-loading");
+	  $(self).addClass("favorite-loading");
 	  setTimeout(function() {
-	    $(self).addClass("favourite-added");
+	    $(self).addClass("favorite-added");
 	  },2000);
     });
 

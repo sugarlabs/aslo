@@ -54,7 +54,7 @@ $breadcrumbs = array(
     foreach ($collections as $collection) {
         $c = $collection['Collection'];
         $uuid = $c['uuid'];
-        $_favorite_button = '<div class="collector-firstrun-favorite favourite"> </div>'; // default is no button
+        $_favorite_button = '<div class="collector-firstrun-favorite favorite"> </div>'; // default is no button
 
         if ($this->controller->Session->check('User')) {
             $fav = $this->controller->Collection->isSubscribed($c['id'], $user['id']);
@@ -63,7 +63,7 @@ $breadcrumbs = array(
             }
             $text = ___('collections_detail_button_add');
             $_favorite_button = <<<FAVORITE_BUTTON
-                <form class="collector-firstrun-favorite favourite" method="post" action="{$subscribe_url}">
+                <form class="collector-firstrun-favorite favorite" method="post" action="{$subscribe_url}">
                   <div>
                     {$html->hiddenSession()}
                     <input value="{$uuid}" type="hidden" name="uuid" />

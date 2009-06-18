@@ -284,7 +284,7 @@ PlotKit.Base.keys = function(lst) {
 };
 
 // 
-// colour schemes
+// color schemes
 //
 
 PlotKit.Base.baseColors = function () {
