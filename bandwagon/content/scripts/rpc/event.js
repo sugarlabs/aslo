@@ -35,9 +35,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Bandwagon.RPC.Event = function(type, result, response)
+Bandwagon.RPC.Event = function(type, result, response, bw)
 {
-    this.Bandwagon = Bandwagon;
+    this.Bandwagon = bw;
 
     // public instance variables
     this._type = type;

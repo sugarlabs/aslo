@@ -34,9 +34,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Bandwagon.Model.ServiceDocument = function()
+Bandwagon.Model.ServiceDocument = function(bw)
 {
-    this.Bandwagon = Bandwagon;
+    this.Bandwagon = bw;
 
     this.emailResourceURL = "";
     this.collectionListResourceURL = "";
@@ -57,7 +57,7 @@ Bandwagon.Model.ServiceDocument.prototype.unserialize = function(xsharing)
 
     for each (var xcollection in xsharing.collections.collection)
     {
-        var collection = new this.Bandwagon.Model.Collection();
+        var collection = new this.Bandwagon.Model.Collection(this.Bandwagon);
         collection.Bandwagon = this.Bandwagon;
 
         collection.resourceURL = baseURL + "/" + xcollection.attribute("href").toString();

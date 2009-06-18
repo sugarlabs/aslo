@@ -34,13 +34,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Bandwagon.Model.Addon = function()
+Bandwagon.Model.Addon = function(bw)
 {
-    try
-    {
-        this.Bandwagon = Bandwagon;
-    }
-    catch (e) {}
+    this.Bandwagon = bw;
 
     this.TYPE_EXTENSION = 1;
     this.STATUS_PUBLIC = 4;
@@ -92,11 +88,11 @@ Bandwagon.Model.Addon.STATUS_SANDBOX = 1;
 Bandwagon.Model.Addon.prototype.canInstall = function(env)
 {
     // check is the extension already installed
-    if (Bandwagon.Util.isExtensionInstalled(this.guid))
+    if (this.Bandwagon.Util.isExtensionInstalled(this.guid))
     {
         var details =
         {
-            type: Bandwagon.Model.Addon.INSTALL_NO_ALREADY_INSTALLED,
+            type: this.Bandwagon.Model.Addon.INSTALL_NO_ALREADY_INSTALLED,
             requiredVersion: ""
         };
 
@@ -109,7 +105,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
     {
         var details =
         {
-            type: Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS,
+            type: this.Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS,
             requiredVersion: env.os
         };
 
@@ -126,7 +122,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
 
         var details =
         {
-            type: Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS,
+            type: this.Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS,
             requiredVersion: env.appName
         };
 
@@ -147,7 +143,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
         {
             details =
             {
-                type: Bandwagon.Model.Addon.INSTALL_NO_MUST_DOWNLOAD_BETA,
+                type: this.Bandwagon.Model.Addon.INSTALL_NO_MUST_DOWNLOAD_BETA,
                 requiredVersion: application.minVersion
             };
         }
@@ -155,7 +151,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
         {
             details =
             {
-                type: Bandwagon.Model.Addon.INSTALL_NO_UPGRADE_TO_USE_THIS_VERSION,
+                type: this.Bandwagon.Model.Addon.INSTALL_NO_UPGRADE_TO_USE_THIS_VERSION,
                 requiredVersion: application.minVersion
             };
         }
@@ -169,7 +165,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
 
         var details =
         {
-            type: Bandwagon.Model.Addon.INSTALL_NO_ADDON_IS_FOR_OLDER_VERSION,
+            type: this.Bandwagon.Model.Addon.INSTALL_NO_ADDON_IS_FOR_OLDER_VERSION,
             requiredVersion: application.maxVersion
         };
 
@@ -178,11 +174,11 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
 
     // check is the extension experimental (user can still install, but we'll show a warning)
 
-    if (this.status == Bandwagon.Model.Addon.STATUS_SANDBOX)
+    if (this.status == this.Bandwagon.Model.Addon.STATUS_SANDBOX)
     {
         var details =
         {
-            type: Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL,
+            type: this.Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL,
             requiredVersion: ""
         };
 
@@ -193,7 +189,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
 
     var details = 
     {
-        type: Bandwagon.Model.Addon.INSTALL_YES,
+        type: this.Bandwagon.Model.Addon.INSTALL_YES,
         requiredVersion: ""
     };
     

@@ -460,7 +460,7 @@ Bandwagon.Controller.CollectionsPane.doShowCollection = function()
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.setAttribute("collapsed", true);
     }
 
-    if (collection.iconURL != "")
+    if (collection && collection.iconURL != "")
     {
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionIcon.src = collection.iconURL;
     }

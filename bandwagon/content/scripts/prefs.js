@@ -40,6 +40,8 @@ Bandwagon.Preferences = new function() {}
 Bandwagon.Preferences._prefServiceRoot = "extensions.bandwagon.";
 Bandwagon.Preferences._prefServiceListDelimiter = "|";
 Bandwagon.Preferences._prefServiceCache = null;
+Bandwagon.Preferences.Cc = Components.classes;
+Bandwagon.Preferences.Ci = Components.interfaces;
 
 Bandwagon.Preferences.setPreference = function(name, value)
 {
@@ -123,7 +125,7 @@ Bandwagon.Preferences.addObserver = function(observer)
 {
     var prefService = this._getPrefService();
 
-    prefService.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    prefService.QueryInterface(this.Ci.nsIPrefBranch2);
     prefService.addObserver("", observer, false);
 }
 
@@ -134,15 +136,15 @@ Bandwagon.Preferences.removeObserver = function(observer)
 
 Bandwagon.Preferences.notifyObservers = function(data)
 {
-    Components.classes["@mozilla.org/observer-service;1"]
-              .getService(Components.interfaces.nsIObserverService)
+    this.Cc["@mozilla.org/observer-service;1"]
+              .getService(this.Ci.nsIObserverService)
               .notifyObservers(null, "nsPref:changed", data);
 }
 
 Bandwagon.Preferences.getGlobalPreference = function(name, failSilently)
 {
-    var prefSvc = Components.classes["@mozilla.org/preferences-service;1"].
-        getService(Components.interfaces.nsIPrefService);
+    var prefSvc = this.Cc["@mozilla.org/preferences-service;1"].
+        getService(this.Ci.nsIPrefService);
 
     var val = null;
 
@@ -180,22 +182,22 @@ Bandwagon.Preferences.getGlobalPreference = function(name, failSilently)
 
 Bandwagon.Preferences.addGlobalObserver = function(observer, branchName)
 {
-    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-        .getService(Components.interfaces.nsIPrefService);
+    var prefService = this.Cc["@mozilla.org/preferences-service;1"]
+        .getService(this.Ci.nsIPrefService);
 
     var branch = prefService.getBranch(branchName);
-    branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    branch.QueryInterface(this.Ci.nsIPrefBranch2);
 
     branch.addObserver("", observer, false);
 }
 
 Bandwagon.Preferences.removeGlobalObserver = function(observer, branchName)
 {
-    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-        .getService(Components.interfaces.nsIPrefService);
+    var prefService = this.Cc["@mozilla.org/preferences-service;1"]
+        .getService(this.Ci.nsIPrefService);
 
     var branch = prefService.getBranch(branchName);
-    branch.QueryInterface(Components.interfaces.nsIPrefBranch2);
+    branch.QueryInterface(this.Ci.nsIPrefBranch2);
 
     branch.removeObserver("", observer);
 }
@@ -206,8 +208,8 @@ Bandwagon.Preferences._getPrefService = function()
     {
         try
         {
-            var prefSvc = Components.classes["@mozilla.org/preferences-service;1"].
-                getService(Components.interfaces.nsIPrefService);
+            var prefSvc = this.Cc["@mozilla.org/preferences-service;1"].
+                getService(this.Ci.nsIPrefService);
             this._prefServiceCache = prefSvc.getBranch(this._prefServiceRoot);
         }
         catch (e)

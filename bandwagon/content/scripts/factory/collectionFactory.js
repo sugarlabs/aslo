@@ -55,7 +55,7 @@ Bandwagon.Factory.CollectionFactory.prototype.openServiceDocument = function()
     {
         while (statement.executeStep())
         {
-            serviceDocument = new this.Bandwagon.Model.ServiceDocument();
+            serviceDocument = new this.Bandwagon.Model.ServiceDocument(this.Bandwagon);
             serviceDocument.emailResourceURL = statement.getUTF8String(0);
             serviceDocument.collectionListResourceURL = statement.getUTF8String(1);
         }
@@ -114,7 +114,7 @@ Bandwagon.Factory.CollectionFactory.prototype.commitServiceDocument = function(s
 
 Bandwagon.Factory.CollectionFactory.prototype.newCollection = function()
 {
-    return new this.Bandwagon.Model.Collection();
+    return new this.Bandwagon.Model.Collection(this.Bandwagon);
 }
 
 Bandwagon.Factory.CollectionFactory.prototype.openCollection = function(collection_id)
@@ -340,7 +340,7 @@ Bandwagon.Factory.CollectionFactory.prototype.deleteCollection = function(collec
 
 Bandwagon.Factory.CollectionFactory.prototype._openCollectionFromRS = function(resultset)
 {
-        var collection = new this.Bandwagon.Model.Collection();
+        var collection = new this.Bandwagon.Model.Collection(this.Bandwagon);
         collection.storageID = resultset.getInt32(0);
         collection.resourceURL = resultset.getUTF8String(1);
         collection.name = resultset.getUTF8String(2);
@@ -407,7 +407,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddons = function(collection)
 
         while (statement.executeStep())
         {
-            var addon = new this.Bandwagon.Model.Addon();
+            var addon = new this.Bandwagon.Model.Addon(Bandwagon);
             addon.Bandwagon = this.Bandwagon;
 
             addon.storageID = statement.getInt32(0);

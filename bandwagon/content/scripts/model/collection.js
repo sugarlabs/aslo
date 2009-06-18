@@ -34,9 +34,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Bandwagon.Model.Collection = function()
+Bandwagon.Model.Collection = function(bw)
 {
-    this.Bandwagon = Bandwagon;
+    this.Bandwagon = bw;
 
     this.storageID = -1;
     this.resourceURL = "";
@@ -212,7 +212,7 @@ Bandwagon.Model.Collection.prototype.unserialize = function(xcollection)
 
     for each (var xaddon in xcollection.addons.addon)
     {
-        var addon = new this.Bandwagon.Model.Addon();
+        var addon = new this.Bandwagon.Model.Addon(this.Bandwagon);
         addon.Bandwagon = this.Bandwagon;
 
         addon.unserialize(xaddon);

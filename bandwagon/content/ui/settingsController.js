@@ -536,7 +536,7 @@ Bandwagon.Controller.Settings.doCreateAutoPublisher = function()
     //
     // TODO this logic should not be in the UI controller
 
-    var collection = new Bandwagon.Model.Collection();
+    var collection = new Bandwagon.Model.Collection(Bandwagon);
 
     collection.name = collectionName;
     collection.description = Bandwagon.Controller.Settings.stringBundle.getString("auto.create.description");

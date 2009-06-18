@@ -39,30 +39,32 @@ Bandwagon.Util = new function() {}
 
 Bandwagon.Util._extensionManager = null;
 Bandwagon.Util._rdfService = null;
-Bandwagon.Util._extensionsDataSource == null;
+Bandwagon.Util._extensionsDataSource = null;
+Bandwagon.Util.Cc = Components.classes;
+Bandwagon.Util.Ci = Components.interfaces;
 
 Bandwagon.Util.getMainWindow = function()
 {
-    return window.QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-        .getInterface(Components.interfaces.nsIWebNavigation)
-        .QueryInterface(Components.interfaces.nsIDocShellTreeItem)
+    return window.QueryInterface(this.Ci.nsIInterfaceRequestor)
+        .getInterface(this.Ci.nsIWebNavigation)
+        .QueryInterface(this.Ci.nsIDocShellTreeItem)
         .rootTreeItem
-        .QueryInterface(Components.interfaces.nsIInterfaceRequestor)
-        .getInterface(Components.interfaces.nsIDOMWindow);
+        .QueryInterface(this.Ci.nsIInterfaceRequestor)
+        .getInterface(this.Ci.nsIDOMWindow);
 }
 
 Bandwagon.Util.getExtensionVersion = function(emid)
 {
     var bits = {major: 1, minor: 0, revision: 0, increment: 0};
 
-    var em = Components.classes["@mozilla.org/extensions/manager;1"]
-        .getService(Components.interfaces.nsIExtensionManager);
+    var em = this.Cc["@mozilla.org/extensions/manager;1"]
+        .getService(this.Ci.nsIExtensionManager);
 
     var addon = em.getItemForID(emid);
 
     var versionString = addon.version;
 
-    return Bandwagon.Util.splitVersionString(versionString);
+    return this.splitVersionString(versionString);
 }
 
 Bandwagon.Util.splitVersionString = function(versionString)
@@ -88,11 +90,11 @@ Bandwagon.Util.getHostEnvironmentInfo = function()
 {
     // Returns "WINNT" on Windows Vista, XP, 2000, and NT systems;
     // "Linux" on GNU/Linux; and "Darwin" on Mac OS X.
-    var osString = Components.classes["@mozilla.org/xre/app-info;1"]
-        .getService(Components.interfaces.nsIXULRuntime).OS;
+    var osString = this.Cc["@mozilla.org/xre/app-info;1"]
+        .getService(this.Ci.nsIXULRuntime).OS;
 
-    var info = Components.classes["@mozilla.org/xre/app-info;1"]
-        .getService(Components.interfaces.nsIXULAppInfo);
+    var info = this.Cc["@mozilla.org/xre/app-info;1"]
+        .getService(this.Ci.nsIXULAppInfo);
     // Get the name of the application running us
     info.name; // Returns "Firefox" for Firefox
     info.version; // Returns "2.0.0.1" for Firefox version 2.0.0.1
@@ -110,8 +112,8 @@ Bandwagon.Util.getHostEnvironmentInfo = function()
 
 Bandwagon.Util.compareVersions = function(versionA, versionB)
 {
-    var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
-        .getService(Components.interfaces.nsIVersionComparator);
+    var versionChecker = this.Cc["@mozilla.org/xpcom/version-comparator;1"]
+        .getService(this.Ci.nsIVersionComparator);
 
     var result = versionChecker.compare(versionA, versionB);
 
@@ -188,15 +190,15 @@ Bandwagon.Util.intervalMillisecondsToUnits = function(ms)
 {
     if (ms % (1000*60*60*24) == 0)
     {
-        return {units: Bandwagon.Util.INTERVAL_DAYS, interval: ms/(1000*60*60*24)};
+        return {units: this.INTERVAL_DAYS, interval: ms/(1000*60*60*24)};
     }
     else if (ms % (1000*60*60) == 0)
     {
-        return {units: Bandwagon.Util.INTERVAL_HOURS, interval: ms/(1000*60*60)};
+        return {units: this.INTERVAL_HOURS, interval: ms/(1000*60*60)};
     }
     else
     {
-        return {units: Bandwagon.Util.INTERVAL_MINUTES, interval: ms/(1000*60)};
+        return {units: this.INTERVAL_MINUTES, interval: ms/(1000*60)};
     }
 }
 
@@ -206,13 +208,13 @@ Bandwagon.Util.intervalUnitsToMilliseconds = function(interval, units)
 
     switch (units)
     {
-        case Bandwagon.Util.INTERVAL_MINUTES:
+        case this.INTERVAL_MINUTES:
             ms = 1000 * 60 * interval;
             break;
-        case Bandwagon.Util.INTERVAL_HOURS:
+        case this.INTERVAL_HOURS:
             ms = 1000 * 60 * 60 * interval;
             break;
-        case Bandwagon.Util.INTERVAL_DAYS:
+        case this.INTERVAL_DAYS:
             ms = 1000 * 60 * 60 * 24 * interval;
             break;
     }
@@ -224,8 +226,8 @@ Bandwagon.Util.intervalUnitsToMilliseconds = function(interval, units)
 
 Bandwagon.Util.getCookie = function(host, name)
 {
-    var cookieManager = Components.classes["@mozilla.org/cookiemanager;1"]
-        .getService(Components.interfaces.nsICookieManager);
+    var cookieManager = this.Cc["@mozilla.org/cookiemanager;1"]
+        .getService(this.Ci.nsICookieManager);
 
     var iter = cookieManager.enumerator;
 
@@ -233,7 +235,7 @@ Bandwagon.Util.getCookie = function(host, name)
     {
         var cookie = iter.getNext();
 
-        if (cookie instanceof Components.interfaces.nsICookie)
+        if (cookie instanceof this.Ci.nsICookie)
         {
             if (cookie.host == host && cookie.name == name)
                 return cookie.value;
@@ -245,32 +247,32 @@ Bandwagon.Util.getCookie = function(host, name)
 
 Bandwagon.Util._initExtensionServices = function()
 {
-    if (Bandwagon.Util._extensionManager == null)
+    if (this._extensionManager == null)
     {
-        this._extensionManager = Components.classes["@mozilla.org/extensions/manager;1"]
-            .getService(Components.interfaces.nsIExtensionManager);
+        this._extensionManager = this.Cc["@mozilla.org/extensions/manager;1"]
+            .getService(this.Ci.nsIExtensionManager);
     }
 
-    if (Bandwagon.Util._rdfService == null)
+    if (this._rdfService == null)
     {
-        this._rdfService = Components.classes["@mozilla.org/rdf/rdf-service;1"]
-            .getService(Components.interfaces.nsIRDFService);
+        this._rdfService = this.Cc["@mozilla.org/rdf/rdf-service;1"]
+            .getService(this.Ci.nsIRDFService);
     }
 
     var getURLSpecFromFile = function(file)
     {
-        var ioServ = Components.classes["@mozilla.org/network/io-service;1"]
-            .getService(Components.interfaces.nsIIOService);
+        var ioServ = this.Cc["@mozilla.org/network/io-service;1"]
+            .getService(this.Ci.nsIIOService);
         var fph = ioServ.getProtocolHandler("file")
-            .QueryInterface(Components.interfaces.nsIFileProtocolHandler);
+            .QueryInterface(this.Ci.nsIFileProtocolHandler);
         return fph.getURLSpecFromFile(file);
     }
 
     var getDir = function(key, pathArray)
     {
-        var fileLocator = Components.classes["@mozilla.org/file/directory_service;1"]
-            .getService(Components.interfaces.nsIProperties);
-        var dir = fileLocator.get(key, Components.interfaces.nsILocalFile);
+        var fileLocator = this.Cc["@mozilla.org/file/directory_service;1"]
+            .getService(this.Ci.nsIProperties);
+        var dir = fileLocator.get(key, this.Ci.nsILocalFile);
         for (var i=0; i<pathArray.length; ++i)
         {
             dir.append(pathArray[i]);
@@ -286,24 +288,24 @@ Bandwagon.Util._initExtensionServices = function()
         return file;
     }
 
-    if (Bandwagon.Util._extensionsDataSource == null)
+    if (this._extensionsDataSource == null)
     {
-        Bandwagon.Util._extensionsDataSource = this._rdfService.GetDataSourceBlocking(getURLSpecFromFile(getFile("ProfD", ["extensions.rdf"])));
+        this._extensionsDataSource = this._rdfService.GetDataSourceBlocking(getURLSpecFromFile(getFile("ProfD", ["extensions.rdf"])));
     }
 }
 
 Bandwagon.Util.getInstalledExtensions = function()
 {
-    Bandwagon.Util._initExtensionServices();
+    this._initExtensionServices();
 
-    var items = this._extensionManager.getItemList(Components.interfaces.nsIUpdateItem.TYPE_ANY, { });
+    var items = this._extensionManager.getItemList(this.Ci.nsIUpdateItem.TYPE_ANY, { });
 
     return items;
 }
 
 Bandwagon.Util.isExtensionInstalled = function(guid)
 {
-    var installedExtensions = Bandwagon.Util.getInstalledExtensions();
+    var installedExtensions = this.getInstalledExtensions();
 
     for (var i=0; i<installedExtensions.length; i++)
     {
@@ -318,13 +320,13 @@ Bandwagon.Util.isExtensionInstalled = function(guid)
 
 Bandwagon.Util.getExtensionProperty = function(id, propertyName)
 {
-    Bandwagon.Util._initExtensionServices();
+    this._initExtensionServices();
 
     var value;
 
     try
     {
-        var target = Bandwagon.Util._extensionsDataSource.GetTarget
+        var target = this._extensionsDataSource.GetTarget
         (
             this._rdfService.GetResource("urn:mozilla:item:" + id),
             this._rdfService.GetResource("http://www.mozilla.org/2004/em-rdf#" + propertyName),
@@ -333,9 +335,9 @@ Bandwagon.Util.getExtensionProperty = function(id, propertyName)
 
         var stringData = function(literalOrResource)
         {
-            if (literalOrResource instanceof Components.interfaces.nsIRDFLiteral)
+            if (literalOrResource instanceof this.Ci.nsIRDFLiteral)
                 return literalOrResource.Value;
-            if (literalOrResource instanceof Components.interfaces.nsIRDFResource)
+            if (literalOrResource instanceof this.Ci.nsIRDFResource)
                 return literalOrResource.Value;
             return undefined;
         }
@@ -344,7 +346,7 @@ Bandwagon.Util.getExtensionProperty = function(id, propertyName)
     }
     catch (e)
     {
-        Bandwagon.Logger.error("Error getting extension property: " + e);
+        //Bandwagon.Logger.error("Error getting extension property: " + e);
         return "";
     }
 
@@ -390,7 +392,7 @@ Bandwagon.Util.ISO8601toDate = function(dString)
 
 Bandwagon.Util.getBrowserLocale = function()
 {
-    var gmyextensionBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService);
+    var gmyextensionBundle = this.Cc["@mozilla.org/intl/stringbundle;1"].getService(this.Ci.nsIStringBundleService);
     var bundle = gmyextensionBundle.createBundle("chrome://global/locale/intl.properties");
 
     return bundle.GetStringFromName("general.useragent.locale");

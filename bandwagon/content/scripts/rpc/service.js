@@ -55,7 +55,7 @@ Bandwagon.RPC.Service = function()
 
         service._logger.debug("Bandwagon.RPC.Service: got rpc complete (id=" + (rpcnet?rpcnet.id:"null") + ",s=" + (rpcnet?rpcnet.status:"null") + ") of type = " + type + " and status = " + result);
 
-        var event = new service.Bandwagon.RPC.Event(type, result, response);
+        var event = new service.Bandwagon.RPC.Event(type, result, response, service.Bandwagon);
         event.Bandwagon = service.Bandwagon;
 
         if (result == service.Bandwagon.RPC.Constants.BANDWAGON_RPC_NET_FAILURE)
@@ -307,7 +307,7 @@ Bandwagon.RPC.Service.prototype.getServiceDocument = function(callback)
         }
         else
         {
-            event.serviceDocument = new Bandwagon.Model.ServiceDocument();
+            event.serviceDocument = new service.Bandwagon.Model.ServiceDocument(service.Bandwagon);
             event.serviceDocument.unserialize(event.getData());
         }
 
@@ -370,7 +370,7 @@ Bandwagon.RPC.Service.prototype.newCollection = function(collection, callback)
     if (collection.name == "" || service._serviceDocument == null)
     {
         if (callback)
-            callback(new this.Bandwagon.RPC.Event());
+            callback(new this.Bandwagon.RPC.Event(null, null, null, this.Bandwagon));
 
         return;
     }
@@ -426,7 +426,7 @@ Bandwagon.RPC.Service.prototype.deleteCollection = function(collection, callback
     if (collection == null)
     {
         if (callback)
-            callback(new this.Bandwagon.RPC.Event());
+            callback(new this.Bandwagon.RPC.Event(null, null, null, this.Bandwagon));
 
         return;
     }
@@ -447,7 +447,7 @@ Bandwagon.RPC.Service.prototype.unsubscribeFromCollection = function(collection,
     if (collection == null)
     {
         if (callback)
-            callback(new this.Bandwagon.RPC.Event());
+            callback(new this.Bandwagon.RPC.Event(null, null, null, this.Bandwagon));
 
         return;
     }
@@ -472,7 +472,7 @@ Bandwagon.RPC.Service.prototype.subscribeToCollection = function(collection, cal
     if (collection == null)
     {
         if (callback)
-            callback(new this.Bandwagon.RPC.Event());
+            callback(new this.Bandwagon.RPC.Event(null, null, null, this.Bandwagon));
 
         return;
     }
@@ -497,7 +497,7 @@ Bandwagon.RPC.Service.prototype.updateCollectionDetails = function(collection, c
     if (collection == null)
     {
         if (callback)
-            callback(new this.Bandwagon.RPC.Event());
+            callback(new this.Bandwagon.RPC.Event(null, null, null, this.Bandwagon));
 
         return;
     }
@@ -542,7 +542,7 @@ Bandwagon.RPC.Service.prototype.removeAddonFromCollection = function(guid, colle
 {
     var service = this;
 
-    Bandwagon.Logger.debug("Bandwagon.RPC.Service.removeAddonFromCollection: extension.guid = '" + guid + "', collection = '" + collection.resourceURL);
+    this.Bandwagon.Logger.debug("Bandwagon.RPC.Service.removeAddonFromCollection: extension.guid = '" + guid + "', collection = '" + collection.resourceURL);
 
     var internalCallback = function(event)
     {
@@ -562,7 +562,7 @@ Bandwagon.RPC.Service.prototype.publishToCollection = function(extension, collec
 {
     var service = this;
 
-    Bandwagon.Logger.debug("Bandwagon.RPC.Service.publishToCollection: extension.guid = '" + extension.guid + "', extension.name = '" + extension.name + "', collection = '" + collection.resourceURL + "', personalNote = '" + personalNote + "'");
+    this.Bandwagon.Logger.debug("Bandwagon.RPC.Service.publishToCollection: extension.guid = '" + extension.guid + "', extension.name = '" + extension.name + "', collection = '" + collection.resourceURL + "', personalNote = '" + personalNote + "'");
 
     var data = {
         "guid": extension.guid,
@@ -587,12 +587,12 @@ Bandwagon.RPC.Service.prototype.shareToEmail = function(extension, emailAddress,
 {
     var service = this;
 
-    Bandwagon.Logger.debug("Bandwagon.RPC.Service.shareToEmail: extension.guid = '" + extension.guid + "', extension.name = '" + extension.name + "', emailAddress = '" + emailAddress + "', personalNote = '" + personalNote + "'");
+    this.Bandwagon.Logger.debug("Bandwagon.RPC.Service.shareToEmail: extension.guid = '" + extension.guid + "', extension.name = '" + extension.name + "', emailAddress = '" + emailAddress + "', personalNote = '" + personalNote + "'");
 
     if (!extension.guid || extension.guid == "" || !emailAddress || emailAddress == "" || service._serviceDocument == null)
     {
         if (callback)
-            callback(new this.Bandwagon.RPC.Event());
+            callback(new this.Bandwagon.RPC.Event(null, null, null, this.Bandwagon));
 
         return;
     }
