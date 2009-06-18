@@ -679,6 +679,7 @@ Bandwagon.Controller.Settings.doUpdateAutoPublisher = function()
 Bandwagon.Controller.Settings.doDeleteAutoPublisher = function()
 {
     document.getElementById("auto-spinner").collapsed = false;
+    document.getElementById("auto-error").value = "";
     document.getElementById("auto-error").style.color = 'red';
 
     var localAutoPublisher = bandwagonService.getLocalAutoPublisher();
