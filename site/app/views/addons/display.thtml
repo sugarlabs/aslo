@@ -437,7 +437,12 @@ if (!empty($coll_addon_added)) {
                 <?php endforeach; ?>
             <?php if (($_othercolls = $collection_count - count($pop_collections)) > 0): ?>
                 <li>
-                    <?=sprintf(n___('addons_display_collections_more', 'addons_display_collections_more', $_othercolls), $_othercolls)?>
+                    <a href="<?=$html->url('/collections/addon/'.$addon['Addon']['id'])?>">
+                        <?=sprintf(n___('addons_display_collections_more',
+                                        'addons_display_collections_more',
+                                        $_othercolls),
+                                   $_othercolls)?>
+                    </a>
                 </li>
 
         <?php endif; ?>
