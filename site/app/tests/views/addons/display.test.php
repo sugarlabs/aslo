@@ -142,6 +142,15 @@ class AddonTest extends WebTestHelper {
         $this->assertLinkLocation($link, $text);
     }
 
+    function testReviews() {
+        $this->getAction("/addon/" . $this->id);
+        phpQuery::newDocument($this->_browser->getContent());
+
+        $link = pq('a.more-info');
+        $this->assertEqual($link->attr('href'),
+                           $this->actionPath('').'/reviews/display/'.$this->id);
+    }
+
     function testIcon() {
         $this->getAction("/addon/" . $this->id);
         phpQuery::newDocument($this->_browser->getContent());
