@@ -186,6 +186,7 @@ class CollectionsController extends AppController
             $addon['Translation']['name']['string']));
         $this->publish('breadcrumbs', array(
             sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+            ___('collections_breadcrumb') => '/collections',
             $addon['Translation']['name']['string'] => "/addon/{$addon['Addon']['id']}"
         ));
 

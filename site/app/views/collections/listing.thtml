@@ -66,8 +66,8 @@ $this->layout = 'amo2009';
     <?php endif; ?>
     <div class="featured listing">
       <div class="featured-inner">
-        <?php if (empty($hide_listing_header)): ?>
-            <div class="listing-header">
+        <div class="listing-header">
+            <?php if (empty($hide_listing_header)): ?>
               <ul>
                 <?php foreach ($tabs as $tab): ?>
                   <?php $class = ($tab['href'] == $selected) ? 'class="selected"' : ''; ?>
@@ -78,9 +78,9 @@ $this->layout = 'amo2009';
                   </li>
                 <?php endforeach; ?>
               </ul>
-              <?=$this->renderElement('amo2009/collections_sort_form')?>
-            </div> <!-- listing-header -->
-        <?php endif; ?>
+            <?php endif; ?>
+            <?=$this->renderElement('amo2009/collections_sort_form')?>
+        </div> <!-- listing-header -->
         <script type="text/javascript">
           <?=$this->renderElement('amo2009/collections_js_init')?>
         </script>
