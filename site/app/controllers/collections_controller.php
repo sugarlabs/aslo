@@ -533,7 +533,7 @@ class CollectionsController extends AppController
         }
 
         // get collection data for display (and publish to view)
-        $this->_getCollectionDataForView($id);
+        $this->_getCollectionDataForView($id, $user);
 
         // view setup
         $this->layout = 'amo2009'; // TODO: remove this when the entire controller is amo2009-based
@@ -552,7 +552,7 @@ class CollectionsController extends AppController
      * @return void
      * @access private
      */
-    function _getCollectionDataForView($id) {
+    function _getCollectionDataForView($id, $user) {
         $this->Collection->unbindModel(array('hasAndBelongsToMany'=>array('Addon')));
         $collection = $this->Collection->findById($id);
         $this->data['Collection'] = $collection;
@@ -589,12 +589,14 @@ class CollectionsController extends AppController
         ), false);
 
         // get existing publishers and managers
-        $publishers = $this->Collection->getUsers($id, array(COLLECTION_ROLE_PUBLISHER));
+        $publishers = $this->Collection->getUsers($id,
+            array(COLLECTION_ROLE_PUBLISHER), array($user['id']));
         $publishers_noscript = $managers_noscript = array();
         foreach ($publishers as &$p) {
             $publishers_noscript[$p['User']['id']] = $p['User']['email'];
         }
-        $managers = $this->Collection->getUsers($id, array(COLLECTION_ROLE_ADMIN));
+        $managers = $this->Collection->getUsers($id,
+            array(COLLECTION_ROLE_ADMIN), array($user['id']));
         foreach ($managers as &$m) {
             $managers_noscript[$m['User']['id']] = $m['User']['email'];
         }

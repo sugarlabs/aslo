@@ -398,8 +398,9 @@ class Collection extends AppModel
      * 
      * @param int id of the collection
      * @param array (optional) list of roles for which users should be fetched
+     * @param array (optional) list of user IDs to be excluded
      */
-    function getUsers($collectionId, $roles=null) {
+    function getUsers($collectionId, $roles=null, $exclude=null) {
         if (!is_numeric($collectionId)) return null;
         
         // Build SQL to look up user IDs and roles for collection
@@ -421,8 +422,9 @@ class Collection extends AppModel
         $rows = $this->execute($sql);
         $user_map = array();
         foreach ($rows as $row) {
-            $user_map[$row['collections_users']['user_id']] = 
-                $row['collections_users'];
+            if (is_array($exclude) && !in_array($row['collections_users']['user_id'], $exclude)) {
+                $user_map[$row['collections_users']['user_id']] = $row['collections_users'];
+            }
         }
 
         // Look up users with user IDs, merge the role info into each found.
