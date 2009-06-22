@@ -174,7 +174,9 @@
             <div id="created-results">
                 <p><?=sprintf(___('devcp_uploader_file_created'), $version, '<span id="new-file-status"></span>')?></p>
                 <p id="pending-message"><?=sprintf(___('devcp_uploader_p_pending_file'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
-                <p><?=sprintf(___('devcp_uploader_p_update_file'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
+                <p><?=sprintf(___('devcp_uploader_update_file_nextsteps'),
+                    $html->url("/developers/versions/edit/{$version_id}"),
+                    $html->url("/developers/addon/status/{$addon_id}"))?>
             </div>
         </div><!-- /#file-created-content -->
     <?php endif; ?>
