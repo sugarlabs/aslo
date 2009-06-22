@@ -108,8 +108,7 @@ class AddonsHtmlHelperTest extends UnitTestCase {
      * Tests that an addon that has the addons_tags.feature = 1 is shown as featured
      */
     function testRecommendedFlag() {
-        $addon = $this->Addon->getListAddons(4021, array(STATUS_PUBLIC), '', true);
-        $addon = $addon[0];
+        $addon = $this->Addon->getAddon(4021, array('all_tags'));
         $result = $this->html->flag($addon);
         phpQuery::newDocument($result);
         $this->assertEqual(pq('h5.flag a')->text(), 'recommended', 'Category recommended and recommended addons are flagged as recommended');

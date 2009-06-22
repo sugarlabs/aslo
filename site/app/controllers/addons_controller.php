@@ -783,13 +783,12 @@ class AddonsController extends AppController
             );
 
             $a_fields = array(
-                'id','guid','averagerating','created','modified',
-                'weeklydownloads','totaldownloads'
+                'id','averagerating','created','weeklydownloads',
             );
             foreach ($a_fields as $field)
                 $r[$field] = $addon['Addon'][$field];
 
-            $t_fields = array('name','summary','description');
+            $t_fields = array('name','summary');
             foreach ($t_fields as $field)
                 $r[$field] = $addon['Translation'][$field]['string'];
 
@@ -818,6 +817,11 @@ class AddonsController extends AppController
     function _categoryLanding() {
         global $valid_status, $app_listedtypes;
 
+        $associations = array(
+            'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+            'latest_version', 'list_details'
+        );
+
         $valid_status = array(STATUS_PUBLIC);
 
         $format = $this->setLayoutForFormat();
@@ -841,7 +845,7 @@ class AddonsController extends AppController
         } else {
             $_order_by = 'Addon.id';
         }
-        $featureAddons = $this->Addon->getListAddons($_feat_ids, $valid_status, $_order_by, true);
+        $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
 
         $this->publish('featured_addons', $featureAddons);
 
@@ -852,7 +856,7 @@ class AddonsController extends AppController
             'popular', 'DESC', $list_num, 1, '', false
         );
         $pop_addons = $this->_buildMinimalAddonDetails(
-            $this->Addon->getListAddons($pop_addon_ids, $valid_status, 'Addon.weeklydownloads DESC')
+            $this->Addon->getAddonList($pop_addon_ids, $associations)
         );
 
         $this->publish('popular_addons', $pop_addons);
@@ -862,7 +866,7 @@ class AddonsController extends AppController
             'DESC', $list_num, 1, '', false
         );
         $new_addons = $this->_buildMinimalAddonDetails(
-            $this->Addon->getListAddons($new_addon_ids, $valid_status, 'Addon.created DESC')
+            $this->Addon->getAddonList($new_addon_ids, $associations)
         );
 
         $this->publish('new_addons', $new_addons);
@@ -872,7 +876,7 @@ class AddonsController extends AppController
             'rated', 'DESC', $list_num, 1, '', false
         );
         $upd_addons = $this->_buildMinimalAddonDetails(
-            $this->Addon->getListAddons($upd_addon_ids, $valid_status, 'Addon.bayesianrating DESC')
+            $this->Addon->getAddonList($upd_addon_ids, $associations)
         );
 
         $this->publish('updated_addons', $upd_addons);
@@ -1092,8 +1096,11 @@ class AddonsController extends AppController
         // fetch up to 4 recommended add-ons
         $_feat_ids = $this->AddonTag->getRandomAddons($subcat_ids, true, 4);
         if (!empty($_feat_ids)) {
-            $featureAddons = $this->Addon->getListAddons($_feat_ids, $valid_status,
-                null, true);
+            $associations = array(
+                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'latest_version', 'list_details'
+            );
+            $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
         } else {
             $featureAddons = array();
         }
@@ -1178,7 +1185,11 @@ class AddonsController extends AppController
                 $_dict_ids[] = $_dict['Addon']['id'];
             $tloc_dicts = array();
             $this->Addon->unbindFully();
-            $tloc_dicts = $this->Addon->getListAddons($_dict_ids, array(STATUS_PUBLIC), null, true);
+            $associations = array(
+                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'latest_version', 'list_details'
+            );
+            $tloc_dicts = $this->Addon->getAddonList($_dict_ids, $associations);
             foreach ($tloc_dicts as $dict) { // add add-ons to results array
                 if (empty($dict['File'])) continue;
 
@@ -1278,8 +1289,11 @@ class AddonsController extends AppController
         // fetch up to 2 recommended add-ons
         $_feat_ids = $this->AddonTag->getRandomAddons($subcat_ids, true, 4);
         if (!empty($_feat_ids)) {
-            $featureAddons = $this->Addon->getListAddons($_feat_ids, $valid_status,
-                null, true);
+            $associations = array(
+                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'latest_version', 'list_details'
+            );
+            $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
         } else {
             $featureAddons = array();
         }

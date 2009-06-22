@@ -103,6 +103,11 @@ class SearchController extends AppController
 
     function index() {
         global $valid_status, $app_shortnames;
+        $associations = array(
+            'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+            'latest_version', 'list_details'
+        );
+
         if (!empty($this->params['url']['q'])) {
             $_terms = $this->params['url']['q'];
         } else {
@@ -208,8 +213,7 @@ class SearchController extends AppController
             }
             
             if (!empty($_result_ids)) {
-                $results = $this->Addon->getListAddons($_result_ids, $valid_status,
-                    'FIELD(Addon.id,'.implode(',', $_result_ids).')', true);
+                $results = $this->Addon->getAddonList($_result_ids, $associations);
             } else {
                 $results = array();
             }
@@ -232,8 +236,7 @@ class SearchController extends AppController
         } else {
             if (!empty($_result_ids)) {
                 $_search_ids = array_slice($_result_ids, 0, 20);
-                $results = $this->Addon->getListAddons($_search_ids, $valid_status,
-                    'FIELD(Addon.id,'.implode(',', $_search_ids).')');
+                $results = $this->Addon->getAddonList($_search_ids, $associations);
             } else {
                 $results = array();
             }

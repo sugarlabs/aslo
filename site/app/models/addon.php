@@ -220,7 +220,7 @@ class Addon extends AppModel
 
             case 'list_details':
                 // add-on details needed for a list item
-                $fields = array_merge($fields, array('summary', 'eula',
+                $fields = array_merge($fields, array('summary', 'eula', 'created',
                     'weeklydownloads', 'addontype_id', 'averagerating', 'totalreviews'));
                 break;
 
@@ -751,108 +751,6 @@ class Addon extends AppModel
     }
 
     /* * * * * * deprecated functions * * * * * */
-    /**
-     * Return add-ons with latest version information.
-     *
-     * @params mixed $id int or array of ints
-     * @params array $status
-     * @deprecated since 4.0.1, use getAddonList() instead
-     */
-    function getListAddons($id, $status = array(STATUS_PUBLIC), $order = null, $includeFiles = false) {
-
-        // Bind previews and include only the fields we want.
-        $this->unbindModel(array('hasMany'=>array('className'=>'Version')));
-        $this->bindModel(
-            array(
-                'hasMany'=>
-                    array(
-                        'Preview' =>
-                            array(
-                                'className'   => 'Preview',
-                                'conditions'  => '',
-                                'order'       => 'Preview.highlight DESC',
-                                'limit'       => '',
-                                'foreignKey'  => 'addon_id',
-                                'dependent'   => true,
-                                'exclusive'   => false,
-                                'finderSql'   => '',
-                                'fields'      => array('id', 'addon_id', 'filetype', 'thumbtype', 'caption', 'highlight', 'created', 'modified')
-                            ),
-
-                        'AddonTag' =>
-                         array('classname'   => 'AddonTag',
-                               'conditions'  => '',
-                               'order'       => '',
-                               'limit'       => '',
-                               'foreignKey'  => 'addon_id',
-                               'dependent'   => true,
-                               'exclusive'   => false,
-                               'finderSql'   => ''
-                         )
-                    )
-	           )
-        );
-
-        $this->useDbConfig = 'shadow';
-
-        $_fields = array('id', 'guid', 'name', 'defaultlocale', 'addontype_id', 'status',
-        'icontype', 'icondata',  'supportemail', 'supporturl', 'homepage', 'description', 'summary',
-        'averagerating', 'weeklydownloads', 'totaldownloads', 'totalreviews',
-        'developercomments', 'inactive', 'trusted', 'viewsource', 'publicstats',
-        'prerelease', 'adminreview', 'sitespecific', 'externalsoftware',
-        'eula', 'privacypolicy', 'target_locale', 'locale_disambiguation',
-        'nominationmessage', 'created', 'modified');
-
-        $addons = $this->findAllById($id, $_fields, $order);
-
-        if (!empty($addons) && is_array($addons)) {
-            // we need to File model to pull in the files if requested
-            if ($includeFiles) {
-                loadModel('File');
-                $this->File =& new File();
-            }
-
-            foreach ($addons as $key=>$addon) {
-                /* pull in last version */
-                $this->Version->unbindFully();
-                $this->Version->useDbConfig = 'shadow';
-                $buf = $this->Version->findAll(array(
-                    'Version.id' => $this->Version->getVersionByAddonId($addon['Addon']['id'],
-                        ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $status))),
-                    array('Version.id', 'Version.version', 'Version.created'));
-                if (!empty($buf[0]['Version'])) {
-                    $addons[$key]['Version'][0] = $buf[0]['Version'];
-
-                    /* get add-on app compatibility info for that version */
-                    $addons[$key]['compatible_apps'] = $this->Version->getCompatibleApps($buf[0]['Version']['id']);
-                }
-
-                // is the addon recommended?
-                $addons[$key]['Addon']['recommended'] = $this->is_recommended($addon['Addon']['id']);
-
-                // add addon tags
-                if (!empty($addon['AddonTag'])) {
-                    $_tag_ids = array();
-                    foreach($addon['AddonTag'] as $_tag)
-                        $_tag_ids[] = $_tag['tag_id'];
-                    $tags = array();
-                    if (!empty($_tag_ids))
-                        $tags = $this->Tag->findAll(array('Tag.id' => $_tag_ids, 'Tag.application_id' => APP_ID));
-                    $addons[$key]['Tag'] = $tags;
-                }
-
-                /* add files for last version, if requested */
-                if ($includeFiles && !empty($addons[$key]['Version'])) {
-                    $this->File->unbindfully();
-                    $_files = $this->File->findAll("File.version_id = '{$addons[$key]['Version'][0]['id']}'");
-                    foreach ($_files as $_file)
-                        $addons[$key]['File'][] = $_file['File'];
-                }
-            }
-        }
-        return $addons;
-    }
-
     /**
      * Get addons in a category, sorted by name, popularity (weekly downloads)
      * or "recently updated" (last file approval timestamp).
