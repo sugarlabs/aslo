@@ -1263,7 +1263,7 @@ class SharingApiTest extends WebTestHelper {
             $this->Collection->save($collection);
             $new_id = $this->Collection->id;
             $this->Collection->addUser(
-                $new_id, $user_id, COLLECTION_ROLE_OWNER
+                $new_id, $user_id, COLLECTION_ROLE_ADMIN
             );
         }
         return $test_collections;
@@ -1353,7 +1353,7 @@ class SharingApiTest extends WebTestHelper {
             $this->Collection->save($collection);
             $new_id = $this->Collection->id;
             $this->Collection->addUser(
-                $new_id, $user['User']['id'], COLLECTION_ROLE_OWNER
+                $new_id, $user['User']['id'], COLLECTION_ROLE_ADMIN
             );
             $collections[] = $this->Collection->findById($new_id);
         }

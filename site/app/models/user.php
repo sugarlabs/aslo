@@ -60,7 +60,7 @@ class User extends AppModel
                                                 'foreignKey'            => 'user_id',
                                                 'associationForeignKey' => 'collection_id'
                                          ),
-                                      'Collections' => 
+                                      'Collections' =>
                                           array('className'             => 'Collection',
                                                 'joinTable'             => 'collections_users',
                                                 'foreignKey'            => 'user_id',
@@ -126,7 +126,7 @@ class User extends AppModel
         $res = $this->execute("SELECT COUNT(*) as c FROM addons_users AS au WHERE au.user_id = '{$id}';");
         return $res[0][0]['c'];
     }
-    
+
     /**
      * Anonymize a user account.
      * This is the user-facing "delete account" feature, which does not delete
@@ -149,7 +149,7 @@ class User extends AppModel
             ));
         return $this->save($data, false, array_keys($data['User']));
     }
-    
+
     /**
      * Enforce one of the name fields not to be empty
      */
@@ -164,7 +164,7 @@ class User extends AppModel
             $this->invalidate('lastname');
             $this->invalidate('nickname');
         }
-        
+
         return parent::beforeValidate();
     }
 
@@ -244,7 +244,7 @@ class User extends AppModel
                                   "User.resetcode_expires > NOW()"));
         return $user && $code == $user['User']['resetcode'];
     }
-    
+
     /**
      * Get subscriptions
      *
@@ -255,7 +255,7 @@ class User extends AppModel
         // Just bind to the collection subscriptions relation.
         $this->bindModel(array(
             'hasAndBelongsToMany' => array(
-                'CollectionSubscriptions' => 
+                'CollectionSubscriptions' =>
                     $this->hasAndBelongsToMany_full['CollectionSubscriptions']
             )
         ));
@@ -271,10 +271,10 @@ class User extends AppModel
         $subscriptions = $this->Collection->findAll($criteria);
         return $subscriptions;
     }
-    
+
     /**
      * Get IDs of collections this user has write access to
-     * 
+     *
      * @param int $userId user id
      * @param int $app (optional) only show collections with this app ID, defaults to all
      * @param array $filterAddons (optional) list of add-ons to exclude:
@@ -304,8 +304,8 @@ class User extends AppModel
             ."INNER JOIN collections AS c ON (cu.collection_id = c.id) "
             .$_join
             ."WHERE cu.user_id = {$userId} "
-            ."AND cu.role IN (".implode(',', array(COLLECTION_ROLE_OWNER,
-                COLLECTION_ROLE_ADMIN, COLLECTION_ROLE_PUBLISHER))."){$_where}");
+            ."AND cu.role IN (".implode(',', array(COLLECTION_ROLE_ADMIN,
+                COLLECTION_ROLE_PUBLISHER))."){$_where}");
 
         $collectionIds = array();
         foreach($res as &$_coll) $collectionIds[] = $_coll['c']['id'];

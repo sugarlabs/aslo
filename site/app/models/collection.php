@@ -330,7 +330,6 @@ class Collection extends AppModel
 
     /**
      * Remove all user rights from a collection, by role
-     * Warning: do not do this with OWNER unless you know what you are doing.
      *
      * @param int $collection_id
      * @param int $role user role to remove, for example COLLECTION_ROLE_ADMIN
@@ -450,14 +449,13 @@ class Collection extends AppModel
         $role = $this->getUserRole($collection_id, $user_id);
         if ($role === false) return false; // no access rights
         return in_array($role, array(
-            COLLECTION_ROLE_OWNER, 
             COLLECTION_ROLE_ADMIN, 
             COLLECTION_ROLE_PUBLISHER 
         ));
     }
 
     /**
-     * Determine a user's role for a collection (admin, owner, subscriber...).
+     * Determine a user's role for a collection (admin, subscriber...).
      *
      * @param int $collection_id
      * @param int $user_id

@@ -305,9 +305,9 @@ class SharingApiController extends AppController
 
         $new_collection = $this->Collection->findById($this->Collection->id);
 
-        // Make the auth user owner of this new collection.
+        // Make the auth user a manager of this new collection.
         $this->Collection->addUser(
-            $new_collection['Collection']['id'], $this->auth_user['id'], COLLECTION_ROLE_OWNER
+            $new_collection['Collection']['id'], $this->auth_user['id'], COLLECTION_ROLE_ADMIN
         );
 
         $new_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) .
@@ -922,15 +922,15 @@ class SharingApiController extends AppController
                 $row['Collection']['id'], $this->auth_user['id']
             );
 
-            // Try to look up the owner user for this collection and
+            // Try to look up one of the admin users for this collection and
             // derive a name.
-            $owner_users = $this->Collection->getUsers(
-                $row['Collection']['id'], array( COLLECTION_ROLE_OWNER )
+            $admin_users = $this->Collection->getUsers(
+                $row['Collection']['id'], array( COLLECTION_ROLE_ADMIN )
             );
-            if (empty($owner_users)) {
+            if (empty($admin_users)) {
                 $creator_name = '';
             } else {
-                $u = $owner_users[0]['User'];
+                $u = $admin_users[0]['User'];
                 $creator_name = !empty($u['nickname']) ?
                     $u['nickname'] : "{$u['firstname']} {$u['lastname']}";
             }

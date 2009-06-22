@@ -240,7 +240,7 @@ class CollectionsController extends AppController
                 $collectionid = $this->Collection->id; // new collection id
                 $_coll = $this->Collection->findById($collectionid, array('Collection.uuid'));
 
-                $this->Collection->addUser($this->Collection->id, $user['id'], COLLECTION_ROLE_OWNER);
+                $this->Collection->addUser($this->Collection->id, $user['id'], COLLECTION_ROLE_ADMIN);
 
                 if (!empty($this->params['form']['addons'])) {
                     // add-ons preselected
@@ -506,7 +506,7 @@ class CollectionsController extends AppController
         if (!empty($this->data)) {
             // Delete collection?
             if (isset($this->data['action']) && $this->data['action'] == 'delete-coll') {
-                if (!$rights['atleast_owner']) {
+                if (!$rights['atleast_manager']) {
                     $this->flash(___('error_access_denied'), '/', 3);
                     return;
                 }
@@ -736,8 +736,7 @@ class CollectionsController extends AppController
      * get user rights for a specific collection
      * @param array $user array from user model
      * @param int $collection_id
-     * @return array of booleans ('writable', 'isadmin', 'atleast_manager',
-     *      'atleast_owner', 'role')
+     * @return array of booleans ('writable', 'isadmin', 'atleast_manager', 'role')
      * @access private
      */
     function _getUserRights($user, $collection_id) {
@@ -745,20 +744,17 @@ class CollectionsController extends AppController
         $isadmin = $this->SimpleAcl->actionAllowed('Admin', 'EditAnyCollection', $user);
         $role = $this->Collection->getUserRole($collection_id, $user['id']);
         $writable = ($isadmin || $can_write);
-        $atleast_manager = ($isadmin || in_array($role, array(COLLECTION_ROLE_ADMIN, COLLECTION_ROLE_OWNER)));
-        $atleast_owner = ($isadmin || $role == COLLECTION_ROLE_OWNER);
+        $atleast_manager = ($isadmin || $role == COLLECTION_ROLE_ADMIN);
 
         $this->publish('writable', $writable, false);
         $this->publish('isadmin', $isadmin, false);
         $this->publish('atleast_manager', $atleast_manager, false);
-        $this->publish('atleast_owner', $atleast_owner, false);
         $this->publish('role', $role, false);
 
         return array(
             'writable'          => $writable,
             'isadmin'           => $isadmin,
             'atleast_manager'   => $atleast_manager,
-            'atleast_owner'     => $atleast_owner,
             'role'              => $role
         );
     }

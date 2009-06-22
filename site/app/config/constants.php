@@ -209,7 +209,6 @@ define('AUTHOR_ROLE_NONE', 0);
 /**
  * Collection Author Roles
  */
-define('COLLECTION_ROLE_OWNER', 2);
 define('COLLECTION_ROLE_ADMIN', 1);
 define('COLLECTION_ROLE_PUBLISHER', 0);
 
