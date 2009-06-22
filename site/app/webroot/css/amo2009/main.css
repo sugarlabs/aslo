@@ -1149,25 +1149,37 @@ form.favorite {
     padding: 0;
     float: right;
     color: #223355;
+    display: table;
+    border-collapse: collapse;
 }
 
 .hasJS .stats {
     margin: -8em 0 0 0;
 }
+
 .stats li {
     padding: 0.1em 0;
     line-height: 1.2em;
-    
 }
 
 .hasJS .stats li {
     border-bottom: 1px dotted #94BFCE;
     padding: 0.2em 0;
     line-height: 1.25em;
+    display: table-row;
 }
 
 .stats li:last-child {
     border-bottom: none;
+}
+
+.stats strong, .stats span {
+    display: table-cell;
+    padding: 0.1em 0.2em;
+}
+
+.stats span {
+    text-align: left;
 }
 
 .stats strong {
@@ -3517,12 +3529,11 @@ background-position:left -303px;
 }
 
 .html-rtl .stats strong {
-    float: right;
     margin-left: 0.5em;
 }
 
 .html-rtl .stats span {
-    float: right;
+    text-align: right;
 }
 
 .html-rtl ol.breadcrumbs {
