@@ -376,7 +376,7 @@ if (count($addonFiles) < 1) {
          'setTimeout(function() {';
     echo "initExpConfirm('{$versionId}');";
     if (!$versionsPage) {
-        echo "fixPlatformLinks('{$versionId}', document.getElementById('{$installTriggerName}').getAttribute('addonName'));";
+        echo "fixPlatformLinks('{$versionId}', '{$addonName}');";
     }
 
     // show add-on compatibility hints for Firefox
