@@ -1476,6 +1476,7 @@ class EditorsController extends AppController
             $_addon_ids = array_unique($_addon_ids);
 
             // Big ol' array
+            $this->Addon->bindOnly('AddonTag');
             $features = $this->Addon->findAll(array('Addon.id' => $_addon_ids), array('Addon.id', 'Addon.name', 'Addon.addontype_id'), 'Translation.name');
 
             foreach ($features as $feature) {
