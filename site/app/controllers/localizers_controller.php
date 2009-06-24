@@ -350,22 +350,43 @@ class LocalizersController extends AppController
         
         //This is not automatic because not all pages should be translated, yo
         $pages = array(
-                       0 => array('page' => 'developer_agreement.thtml',
+                       0 => array('page' => 'about.thtml',
+                                  'url' => '/pages/about'
+                                 ),
+                       1 => array('page' => 'collector_faq.thtml',
+                                  'url' => '/pages/collector_faq'
+                                 ),
+                       2 => array('page' => 'collector_features.thtml',
+                                  'url' => '/pages/collector_features'
+                                 ),
+                       3 => array('page' => 'collector_firstrun.thtml',
+                                  'url' => '/pages/collector_firstrun'
+                                 ),
+                       4 => array('page' => 'collector.thtml',
+                                  'url' => '/pages/collector'
+                                 ),
+                       5 => array('page' => 'developer_agreement.thtml',
                                   'url' => '/developers/add'
                                  ),
-                       1 => array('page' => 'error404.thtml',
+                       6 => array('page' => 'developer_faq.thtml',
+                                  'url' => '/pages/developer_faq'
+                                 ),
+                       7 => array('page' => 'error404.thtml',
                                   'url' => '/thispage/doesnotexist'
                                  ),
-                       2 => array('page' => 'nomination.thtml',
+                       8 => array('page' => 'nomination.thtml',
                                   'url' => ''
                                  ),
-                       3 => array('page' => 'policy.thtml',
+                       9 => array('page' => 'policy.thtml',
                                   'url' => '/pages/policy'
                                  ),
-                       4 => array('page' => 'sandbox.thtml',
+                       10=> array('page' => 'sandbox.thtml',
                                   'url' => '/pages/sandbox'
                                  ),
-                       5 => array('page' => 'submission_help.thtml',
+                       11=> array('page' => 'statistics_help.thtml',
+                                  'url' => ''
+                                 ),
+                       12=> array('page' => 'submission_help.thtml',
                                   'url' => '/pages/submissionhelp'
                                  )
                       );
