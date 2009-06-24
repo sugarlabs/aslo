@@ -957,6 +957,7 @@ class ApiController extends AppController
     */
     function _getAddons($ids) {
        $addonsdata = array();
+       $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonTag');
        foreach ($ids as $id) {
         $_conditions = array(
             'Addon.id' => $id,
