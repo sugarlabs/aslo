@@ -40,10 +40,16 @@
 header('Content-type: text/plain');
 
 if (!empty($addons)) {
+    echo "[\n";
+    $addoncount = 0;
     foreach ($addons as &$addon) {
-        $name = str_replace('|', '&#124;', $addon['Translation']['name']['string']);
-        if (empty($addon['Addon']['iconpath']))
-            $addon['Addon']['iconpath'] = ($addon['Addon']['addontype_id'] == ADDON_THEME ? $html->urlImage(DEFAULT_THEME_ICON) : $html->urlImage(DEFAULT_ADDON_ICON));
-        echo "{$name}|{$addon['Addon']['id']}|{$addon['Addon']['iconpath']}\n";
+        if ($addoncount++ > 0) echo ',';
+        $listing->json(array(
+            'id' => $addon['Addon']['id'],
+            'name' => $html->unsanitize($addon['Translation']['name']['string']),
+            'html_name' => $addon['Translation']['name']['string'],
+            'iconpath' => $addon['Addon']['iconpath']
+        ));
     }
+    echo "]\n";
 }

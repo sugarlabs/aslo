@@ -1390,7 +1390,19 @@ var collections_add = {
         $('#addonname').autocomplete(this.options.lookup_url, {
             minChars: 2,
             max: 0,
-            formatItem: function(row) { return '<img src="' + row[2] + '"/>' + row[0]; },
+            dataType: 'json',
+            parse: function(data) {
+                var rows = new Array();
+                for (var i=0; i<data.length; i++){
+                    rows[i] = {
+                        data: data[i],
+                        value: '',
+                        result: data[i].name+' ['+data[i].id+']'
+                    };
+                }
+                return rows;
+            },
+            formatItem: function(row) { return '<img src="' + row.iconpath + '"/>&nbsp;' + row.html_name; },
             extraParams: { timestamp: null }
         });
         $('#addonname').result(function(event,data) {
@@ -1401,7 +1413,7 @@ var collections_add = {
     },
 
     addAddon: function(data) {
-        var newid = 'addon-'+data[1];
+        var newid = 'addon-'+data.id;
         if ($('#'+newid).size() > 0) {
             $('#'+newid)
                 .attr('checked', true)
@@ -1414,8 +1426,8 @@ var collections_add = {
         }
         $('#selectedaddons').children('ul:first').append(
             '<li>'+
-            '<input type="checkbox" name="addons[]" value="'+data[1]+'" id="addon-'+data[1]+'" checked="true"/>'+
-            '<label for="addon-'+data[1]+'"><img src="'+data[2]+'"/>&nbsp;'+data[0]+'</label><li>'
+            '<input type="checkbox" name="addons[]" value="'+data.id+'" id="'+newid+'" checked="true"/>'+
+            '<label for="'+newid+'"><img src="'+data.iconpath+'"/>&nbsp;'+data.html_name+'</label><li>'
         );
         $('#selectedaddons').show();
         return true;
@@ -1599,8 +1611,19 @@ var collections_edit = {
         $('#addonname').autocomplete(collURL+'/addonLookup', {
             minChars: 2,
             max: 0,
-            formatItem: function(row) { return '<img src="' + row[2] + '"/>&nbsp;' + row[0]; },
-            formatResult: function(row) { return row[0]+' ['+row[1]+']'; },
+            dataType: 'json',
+            parse: function(data) {
+                var rows = new Array();
+                for (var i=0; i<data.length; i++){
+                    rows[i] = {
+                        data: data[i],
+                        value: '',
+                        result: data[i].name+' ['+data[i].id+']'
+                    };
+                }
+                return rows;
+            },
+            formatItem: function(row) { return '<img src="' + row.iconpath + '"/>&nbsp;' + row.html_name; },
             extraParams: { timestamp: null }
         });
         $('#addonname').keypress(function(e){

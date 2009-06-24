@@ -880,8 +880,8 @@ class CollectionsController extends AppController
     function addonLookup() {
         global $valid_status;
 
-        // Rather than change our cake parameter regex, use a normal get var
-        $name = $_GET['q'];
+        // expect a GET variable containing the search string
+        $name = (!empty($_GET['q']) ? $_GET['q'] : '');
         $this->Amo->clean($name);
 
         // search conditions
