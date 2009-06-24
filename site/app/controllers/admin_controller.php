@@ -21,6 +21,7 @@
  *
  * Contributor(s):
  *    Frederic Wenzel <fwenzel@mozilla.com>
+ *    Wil Clouser <wclouser@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -39,7 +40,7 @@
 class AdminController extends AppController
 {
     var $name = 'Admin';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Cannedresponse', 'Collection', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
     var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Versioncompare');
     var $helpers = array('Html', 'Javascript');
     //These defer to their own access checks
@@ -526,10 +527,13 @@ class AdminController extends AppController
    /**
     * Collections Manager
     */
-    function collections($action='') {
+    function collections($action='', $subaction='', $id=0) {
         switch($action) {
             case 'promobox':
                 $this->_collectionsPromoBox();
+                break;
+            case 'promoboxstructure':
+                $this->_collectionsPromoBoxStructure($subaction, $id);
                 break;
             default:
                 $this->set('page', 'collections');
@@ -592,6 +596,173 @@ class AdminController extends AppController
         $this->set('page', 'collections');
         $this->set('subpage', 'promobox');
         $this->render('collections_promobox');
+    }
+
+    function _collectionsPromoBoxStructure($action = '', $id = 0) {
+        //Part of the Lists permission
+        if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
+            $this->Amo->accessDenied();
+        }
+
+        $this->breadcrumbs['Collections Features'] = '/admin/collections/promoboxstructure';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        if (!empty($action)) {
+            $this->Amo->clean($id);
+            
+            if ($action == 'edit') {
+                $this->_collectionFeatureEdit($id);
+                return;
+            }
+            elseif ($action == 'create') {
+                $this->_collectionFeatureCreate($id);
+                return;
+            }
+        }
+        
+        $collection_features = $this->CollectionFeatures->findAll(null, null, null, null, null, -1);
+        
+        $this->set('collection_features', $collection_features);
+        $this->set('page', 'collections');
+        $this->set('subpage', 'promobox');
+        $this->render('collection_features');
+    }
+
+    function _collectionFeatureEdit($id) {
+        $this->breadcrumbs['Edit Collection Features'] = '/admin/collections/promoboxstructure/edit'.$id;
+        $this->set('breadcrumbs', $this->breadcrumbs);
+        
+        $this->CollectionFeatures->id = $id;
+
+        if (!empty($this->data)) {
+            //Delete
+            if (!empty($_POST['delete'])) {
+                //Retrieve platform to store name in log
+                $feature = $this->CollectionFeatures->findById($this->CollectionFeatures->id, null, null, -1);
+                
+                $this->CollectionFeatures->execute("DELETE FROM collection_features WHERE id='{$id}'");
+                
+                //Log admin action
+                $this->Eventlog->log($this, 'admin', 'collection_feature_delete', null, $id, null, $feature['Translation']['title']['string']);
+                
+                $this->flash('Feature deleted!', '/admin/collections/promoboxstructure');
+                return;
+            }
+            //Edit
+            else {
+                //Save translated fields (name, description)
+                $this->Developers->saveTranslations($this->data, array('CollectionFeatures'));
+                
+                //Log admin action
+                $this->Eventlog->log($this, 'admin', 'collection_feature_edit', null, $id);
+                
+                $this->flash('Feature updated!', '/admin/collections/promoboxstructure');
+                return;
+            }
+        }
+        
+        $feature = $this->CollectionFeatures->findById($this->CollectionFeatures->id, null, null, -1);
+        
+        $this->set('feature', $feature);
+
+        $localizedFields = array(
+                                'title' => array(
+                                                    'type'        => 'input',
+                                                    'display'     => 'Title',
+                                                    'model'       => 'CollectionFeatures',
+                                                    'field'       => 'title',
+                                                    'attributes'  => array( 'size' => 40)
+                                ),
+                                'tagline' => array(
+                                                    'type'        => 'input',
+                                                    'display'     => 'Tag Line',
+                                                    'model'       => 'CollectionFeatures',
+                                                    'field'       => 'tagline',
+                                                    'attributes'  => array( 'size' => 40)
+                                )
+                   );
+                   
+        //Retrieve language arrays from bootstrap.
+        global $valid_languages, $native_languages;
+        foreach (array_keys($valid_languages) as $key) {
+            $languages[$key] = $native_languages[$key]['native'];
+
+            $this->CollectionFeatures->setLang($key, $this);
+            $featureL = $this->CollectionFeatures->read();
+
+            foreach ($featureL['Translation'] as $field => $translation) {
+                if ($translation['locale'] == $key) {
+                    $info[$key][$field] = $translation['string'];
+                }
+                else {
+                    $info[$key][$field] = '';
+                }
+            }
+        }
+        
+        //Set up localebox info
+        $this->set('localebox', array('info' => $info,
+                                      'defaultLocale' => 'en-US',
+                                      'languages' => $languages,
+                                      'localizedFields' => $localizedFields));
+        
+        $this->set('page', 'collections');
+        $this->set('subpage', 'promobox');
+        $this->render('collection_features_edit');
+    }
+    function _collectionFeatureCreate($id) {
+        $this->breadcrumbs['Create Collection Features'] = '/admin/collections/promoboxstructure/create';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        if (!empty($this->data)) {
+            //Save translated fields (title, tagline)
+            $this->Developers->saveTranslations($this->data, array('CollectionFeatures'));
+            
+            //Log admin action
+            $this->Eventlog->log($this, 'admin', 'collection_feature_create', null, $this->Tag->getLastInsertID());
+            
+            $this->flash('Feature created!', '/admin/collections/promoboxstructure');
+            return;  
+        }
+        
+        $localizedFields = array(
+                                'title' => array(
+                                                    'type'        => 'input',
+                                                    'display'     => 'Title',
+                                                    'model'       => 'CollectionFeatures',
+                                                    'field'       => 'title',
+                                                    'attributes'  => array( 'size' => 40)
+                                ),
+                                'tagline' => array(
+                                                    'type'        => 'input',
+                                                    'display'     => 'Tag Line',
+                                                    'model'       => 'CollectionFeatures',
+                                                    'field'       => 'tagline',
+                                                    'attributes'  => array( 'size' => 40)
+                                )
+                   );
+                
+        //Retrieve language arrays from bootstrap.
+        global $valid_languages, $native_languages;
+        foreach (array_keys($valid_languages) as $key) {
+            $languages[$key] = $native_languages[$key]['native'];
+
+            $this->CollectionFeatures->setLang($key, $this);
+
+            foreach ($this->CollectionFeatures->translated_fields as $field) {
+                $info[$key][$field] = '';
+            }
+        }
+        
+        //Set up localebox info
+        $this->set('localebox', array('info' => $info,
+                                      'defaultLocale' => 'en-US',
+                                      'languages' => $languages,
+                                      'localizedFields' => $localizedFields));
+        
+        $this->set('page', 'collections');
+        $this->set('subpage', 'promobox');
+        $this->render('collection_features_create');
     }
     
    /**

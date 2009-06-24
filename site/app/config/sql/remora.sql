@@ -1073,6 +1073,20 @@ CREATE TABLE `addons_collections` (
   CONSTRAINT `addons_collections_ibfk_3` FOREIGN KEY (`comments`) REFERENCES `translations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
+DROP TABLE IF EXISTS `collection_features`;
+CREATE TABLE `collection_features` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `title` int(11) unsigned NOT NULL default '0',
+  `tagline` int(11) unsigned NOT NULL default '0',
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  KEY `collection_features_ibfk_1` (`title`),
+  KEY `collection_features_ibfk_2` (`tagline`),
+  CONSTRAINT `collection_features_ibfk_1` FOREIGN KEY (`title`) REFERENCES `translations` (`id`),
+  CONSTRAINT `collection_features_ibfk_2` FOREIGN KEY (`tagline`) REFERENCES `translations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Table structure for table `collection_promos`
 -- Named that way because it's not actually a join.

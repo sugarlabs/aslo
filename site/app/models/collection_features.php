@@ -15,11 +15,12 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Justin Scott <fligtar@gmail.com>.
- * Portions created by the Initial Developer are Copyright (C) 2007
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ *   Wil Clouser <wclouser@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,17 +35,10 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/adminmenu');?>
 
-    <div id="content-main">
-        <h3>List Manager</h3>
-        <ul>
-        <li><h2><?=$html->link('Categories', '/admin/tags')?></h2></li>
-        <li><h2><?=$html->link("Collection Features' Titles and Taglines", '/admin/collections/promoboxstructure')?></h2></li>
-        <li><h2><?=$html->link('Platforms', '/admin/platforms')?></h2></li>
-        <li><h2><?=$html->link('Responses', '/admin/responses')?></h2></li>
-        </ul>
-    </div>
-</div>
+class CollectionFeatures extends AppModel
+{
+    var $name = "CollectionFeatures";
+    var $useTable = 'collection_features';
+    var $translated_fields = array( 'title', 'tagline' );
+}

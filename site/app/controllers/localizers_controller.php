@@ -38,7 +38,7 @@
 class LocalizersController extends AppController
 {
     var $name = 'Localizers';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Eventlog', 'Platform','Tag', 'Translation', 'User', 'Version');
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'CollectionFeatures', 'Eventlog', 'Platform','Tag', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Audit', 'Error', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Pagination');
     
@@ -275,6 +275,48 @@ class LocalizersController extends AppController
         $this->set('tags', $tags);
         $this->set('page', 'tags');
         $this->render('tags');
+    }
+    
+   /**
+    * Collection Features Localization
+    */
+    function collection_features() {
+        
+        $this->breadcrumbs['Collection Features Localization'] = '/localizers/collection_features';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+        
+        if (!empty($this->data['CollectionFeatures'])) {
+            //Make sure user has write access
+            if (!$this->writeAccess)  {
+                //Log
+                $this->Eventlog->log($this, 'security', 'modify_other_locale', null, 1, null, null, USERLANG);
+                
+                $this->flash('You do not have permission to modify this locale!', '/localizers/collection_features');
+                return;
+            }
+            
+            $this->CollectionFeatures->setLang(USERLANG, $this);
+            foreach ($this->data['CollectionFeatures'] as $id => $data) {
+                $this->CollectionFeatures->id = $id;
+                $this->CollectionFeatures->save($data);
+            }
+            
+            //Log l10n action
+            $this->Eventlog->log($this, 'l10n', 'update_collection_features', null, 1, null, null, USERLANG);
+
+            $this->flash('Translations updated!', '/localizers/collection_features');
+            return;
+        }
+        
+        $this->CollectionFeatures->setLang(USERLANG, $this);
+        $features[USERLANG] = $this->CollectionFeatures->findAll(null, null, null, null, null, 0);
+        
+        $this->CollectionFeatures->setLang('en-US', $this);
+        $features['en-US'] = $this->CollectionFeatures->findAll(null, null, null, null, null, 0);
+        
+        $this->set('features', $features);
+        $this->set('page', 'collection_features');
+        $this->render('collection_features');
     }
     
    /**

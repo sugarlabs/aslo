@@ -15,7 +15,7 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Justin Scott <fligtar@gmail.com>.
+ * Wil Clouser <wclouser@mozilla.com>.
  * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
@@ -39,12 +39,17 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>List Manager</h3>
-        <ul>
-        <li><h2><?=$html->link('Categories', '/admin/tags')?></h2></li>
-        <li><h2><?=$html->link("Collection Features' Titles and Taglines", '/admin/collections/promoboxstructure')?></h2></li>
-        <li><h2><?=$html->link('Platforms', '/admin/platforms')?></h2></li>
-        <li><h2><?=$html->link('Responses', '/admin/responses')?></h2></li>
-        </ul>
+        <h3>Collection Feature Manager</h3>
+        <?php 
+        if (!empty($collection_features)) {
+            foreach ($collection_features as $feature) {
+                echo '<div class="groupItem">';
+                    echo '<h3>'.$feature['Translation']['title']['string'].' ('.$feature['Translation']['tagline']['string'].')</h3>';
+                    echo $html->link('Edit Feature', '/admin/collections/promoboxstructure/edit/'.$feature['CollectionFeatures']['id']);
+                echo '</div>';
+            }
+        }
+        echo $html->link('Create Feature Title and Tagline', '/admin/collections/promoboxstructure/create');
+        ?>
     </div>
 </div>

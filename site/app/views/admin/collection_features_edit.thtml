@@ -15,7 +15,7 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Justin Scott <fligtar@gmail.com>.
+ * Wil Clouser <wclouse@mozilla.com>.
  * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
@@ -39,12 +39,21 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>List Manager</h3>
-        <ul>
-        <li><h2><?=$html->link('Categories', '/admin/tags')?></h2></li>
-        <li><h2><?=$html->link("Collection Features' Titles and Taglines", '/admin/collections/promoboxstructure')?></h2></li>
-        <li><h2><?=$html->link('Platforms', '/admin/platforms')?></h2></li>
-        <li><h2><?=$html->link('Responses', '/admin/responses')?></h2></li>
-        </ul>
+        <h3>Edit Collection Feature '<?=$feature['Translation']['title']['string']?>'</h3>
+        <?php
+        if (!empty($errors['main'])) {
+            echo '<div class="error">'.$errors['main'].'</div>';
+        }
+        echo $html->formTag('/admin/collections/promoboxstructure/edit/'.$feature['CollectionFeatures']['id']);
+        ?>
+        <div id="developersForm">
+            <?=$this->renderElement('developers/localebox')?>
+            <div class="buttonBox">
+                <?=$html->submit('Update Feature')?>
+                <?=$html->submit('Delete Feature', array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\'Are you SURE you wish to delete this feature?\');'))?>
+            </div>
+        </div>
+        </form>
+        <?=$html->link('Back to Collection Feature Manager', '/admin/collections/promoboxstructure')?>
     </div>
 </div>
