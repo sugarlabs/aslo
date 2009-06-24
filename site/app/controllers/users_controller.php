@@ -85,6 +85,12 @@ class UsersController extends AppController
      * Register a new user
      */
     function register() {
+        // if we are logged in, go to the main page
+        if ($this->Session->check('User')) {
+            $this->redirect($this->referer('/', true));
+            return;
+        }
+
         $this->disableCache();
     
         $this->pageTitle = _('users_register_pagetitle'). ' :: '. sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
@@ -107,8 +113,8 @@ class UsersController extends AppController
             
             $this->data['User']['confirmationcode'] = md5(mt_rand());
             
-            $this->Amo->clean($this->data);
             $this->User->data = $this->data;
+            $this->Amo->clean($this->User->data);
             // hash password(s)
             $this->User->data['User']['password'] = $this->User->createPassword($this->User->data['User']['password']);
             
