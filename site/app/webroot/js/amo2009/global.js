@@ -157,6 +157,7 @@
 				function(e) {
 					if(! $(self.target+':animated').length) {
 						if ($(self.target+':visible').length){
+						    self.callbackFunction();
 						    self.hide();
 						} else {
 							self.callbackFunction();
