@@ -372,10 +372,11 @@ if (count($addonFiles) < 1) {
     <?php
     // Show platform-specific install buttons only, except on version history page
     $versionsPage = ($this->name == 'Addons' && $this->action == 'versions');
+    $policyPage = ($this->name == 'Addons' && $this->action == 'policy');
     echo '<script type="text/javascript">'.
          'setTimeout(function() {';
     echo "initExpConfirm('{$versionId}');";
-    if (!$versionsPage) {
+    if (!$versionsPage && !$policyPage) {
         echo "fixPlatformLinks('{$versionId}', '{$addonName}');";
     }
 

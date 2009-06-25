@@ -1429,6 +1429,7 @@ class AddonsController extends AppController
         if (isset($file_id)) {
             $this->File->unbindFully();
             $this_file = $this->File->findById($file_id);
+            $this_addon['File'] = array($this_file['File']);
             $this_addon['Version'] =  $this->Version->findAllById($this_file['File']['version_id'], null, null, 0);
 
             // is this the latest public version?
