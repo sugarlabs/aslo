@@ -41,4 +41,18 @@ class CollectionFeatures extends AppModel
     var $name = "CollectionFeatures";
     var $useTable = 'collection_features';
     var $translated_fields = array( 'title', 'tagline' );
+
+    /**
+     * Sort titles and taglines by ID (legacy format). Will return strings in LANG!
+     *
+     * @return array
+     */
+    function getTitlesAndTaglinesById() {
+        $_res = $this->findAll();
+        $_ret = array();
+        foreach ($_res as $var => $val) {
+            $_ret[$val['CollectionFeatures']['id']] = array( 'title' => $val['Translation']['title']['string'], 'tagline' => $val['Translation']['tagline']['string']);
+        }
+        return $_ret;
+    }
 }

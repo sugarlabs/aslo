@@ -543,7 +543,6 @@ class AdminController extends AppController
     }
 
     function _collectionsPromoBox() {
-
         if (!empty($_POST)) {
             switch ($_POST['action']) {
                 case 'add':
@@ -563,7 +562,7 @@ class AdminController extends AppController
                         $this->Error->addError('Invalid locale specified.');
                     }
 
-                    if (in_array($_POST['titletagline'], array_keys($this->CollectionPromo->titles_and_taglines))) {
+                    if (in_array($_POST['titletagline'], array_keys($this->CollectionFeatures->getTitlesAndTaglinesById()))) {
                         $_titletagline = $_POST['titletagline'];
                     } else {
                         $this->Error->addError('Invalid Title/TagLine specified.');
@@ -588,7 +587,7 @@ class AdminController extends AppController
             }
         }
 
-        $this->set('titles_and_taglines', $this->CollectionPromo->titles_and_taglines);
+        $this->set('titles_and_taglines', $this->CollectionFeatures->getTitlesAndTaglinesById());
         $this->publish('promoted_collections', $this->CollectionPromo->findAll());
         $this->set('locales', LANGUAGE_CONFIG::getAllValidLanguages('english',true));
 

@@ -47,7 +47,7 @@ class AddonsController extends AppController
 {
     var $name = 'Addons';
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
-    var $uses = array('Addon', 'AddonCollection', 'AddonTag', 'Addontype', 'Application',
+    var $uses = array('Addon', 'AddonCollection', 'AddonTag', 'Addontype', 'Application', 'CollectionFeatures',
         'Feature', 'File', 'GlobalStat', 'License', 'Platform', 'Preview', 'Tag', 'Translation',
         'Review', 'Version', 'Collection', 'CollectionPromo');
     var $components = array('Amo', 'Image', 'Pagination', 'Session', 'Userfunc');
@@ -378,7 +378,7 @@ class AddonsController extends AppController
             $this->GlobalStat->getNamedCount('addon_total_updatepings'));
 
         $this->publish('teaser_collection_promos', $this->_findTeaserCollections());
-        $this->publish('teaser_collections_categories', $this->CollectionPromo->titles_and_taglines);
+        $this->publish('teaser_collections_categories', $this->CollectionFeatures->getTitlesAndTaglinesById());
         $this->publish('popular_collections', $this->_findPopularCollections());
         $this->publish('promoted_collections', $this->_findCollectionPromoList(true));
 
@@ -479,7 +479,7 @@ class AddonsController extends AppController
 
             foreach($promoCatList as $index => $collectionId) {
                 $addons = $this->Addon->getAddonsFromCollection($collectionId, 'RAND()', null, 3);
-                $teaser_collections[] = $this->Addon->getAddonList($addons, $associations);
+                $teaser_collections[$index] = $this->Addon->getAddonList($addons, $associations);
             }
 
             return $teaser_collections;
@@ -494,17 +494,17 @@ class AddonsController extends AppController
     **/
     function _findCollectionPromoList($bindFully = false) {
         $collectionPromos = $this->CollectionPromo->findAll();
-        $promoCats = $this->CollectionPromo->titles_and_taglines;
+        $promoCats = $this->CollectionFeatures->getTitlesAndTaglinesById();
         $promoCatList = array();
 
         //Doing this to merge collection ids into promotion categories and allow locale-specific selections to override
-        for($i = 0; $i < count($promoCats); $i++) {
+        foreach ($promoCats as $pid => $pc) {
             $collection = false;
 
-            if(isset($collectionPromos[LANG][$i])) {
-                $collection = $collectionPromos[LANG][$i];
-            } elseif(isset($collectionPromos['all'][$i])) {
-                $collection = $collectionPromos['all'][$i];
+            if(isset($collectionPromos[LANG][$pid])) {
+                $collection = $collectionPromos[LANG][$pid];
+            } elseif(isset($collectionPromos['all'][$pid])) {
+                $collection = $collectionPromos['all'][$pid];
             }
 
             if($collection) {
@@ -512,9 +512,9 @@ class AddonsController extends AppController
                 $id = $id[0];
 
                 if($bindFully) {
-                    $promoCatList[] = $this->Collection->findById($id);
+                    $promoCatList[$pid] = $this->Collection->findById($id);
                 } else {
-                    $promoCatList[] = $id;
+                    $promoCatList[$pid] = $id;
                 }
             }
         }

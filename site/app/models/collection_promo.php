@@ -40,24 +40,9 @@ class CollectionPromo extends AppModel
 {
     var $name = "CollectionPromo";
     var $useTable = 'collection_promos';
-    var $belongsTo = array('Collection');
+    var $belongsTo = array('Collection', 'CollectionFeatures');
     var $recursive = 1;
     var $translated_fields = array();
-
-    var $titles_and_taglines = array();
-
-    function __construct() {
-        // Order is used in the database so it must be maintained.  Append new entries to the end.
-        $this->titles_and_taglines = array(
-            0 => array('title' => ___('collections_social_title'),    'tagline' => ___('collections_social_tagline')),
-            1 => array('title' => ___('collections_family_title'),    'tagline' => ___('collections_family_tagline')),
-            2 => array('title' => ___('collections_travel_title'),    'tagline' => ___('collections_travel_tagline')),
-            3 => array('title' => ___('collections_reference_title'), 'tagline' => ___('collections_reference_tagline')),
-            4 => array('title' => ___('collections_webdev_title'),    'tagline' => ___('collections_webdev_tagline'))
-        );
-
-        return parent::__construct();
-    }
 
     /**
      * Will return an array of all promoted collections in the format:
@@ -67,7 +52,7 @@ class CollectionPromo extends AppModel
      *          [collection_id] => 
      *              [name] => [collection_name]
      *              [application_id] => [application_id]
-     *          [collection_id] => [collection_name]
+     *          [collection_id] =>
      *              [name] => [collection_name]
      *              [application_id] => [application_id]
      *      ...
@@ -79,7 +64,7 @@ class CollectionPromo extends AppModel
             SELECT 
             collection_promos.id as promo_id,
             collection_promos.locale as promo_locale,
-            collection_promos.title_tagline as promo_title_tagline,
+            collection_promos.collection_feature_id,
             collections.id as collection_id,
             collections.application_id as application_id,
             c_name.localized_string as collection_name
@@ -98,7 +83,7 @@ class CollectionPromo extends AppModel
                 $_locale = $_res['collection_promos']['promo_locale'];
             }
 
-            $_return[$_locale][$_res['collection_promos']['promo_title_tagline']][$_res['collections']['collection_id']] = array('name' => $_res['c_name']['collection_name'], 'application_id' => $_res['collections']['application_id']);
+            $_return[$_locale][$_res['collection_promos']['collection_feature_id']][$_res['collections']['collection_id']] = array('name' => $_res['c_name']['collection_name'], 'application_id' => $_res['collections']['application_id']);
             
         }
 
@@ -116,10 +101,10 @@ class CollectionPromo extends AppModel
     function promoteCollection($collection_id, $titletagline, $locale) {
         global $valid_languages;
         if (!is_numeric($collection_id)) return false;
-        if (!in_array($titletagline, array_keys($this->titles_and_taglines))) return false;
+        if (!in_array($titletagline, array_keys($this->CollectionFeatures->getTitlesAndTaglinesById()))) return false;
         if (!(empty($locale) || in_array($locale, array_keys($valid_languages)))) return false;
 
-        return $this->execute("INSERT INTO collection_promos (collection_id, locale, title_tagline, created) VALUES ({$collection_id}, '{$locale}', {$titletagline}, NOW())");
+        return $this->execute("INSERT INTO collection_promos (collection_id, locale, collection_feature_id, created) VALUES ({$collection_id}, '{$locale}', {$titletagline}, NOW())");
     }
 
     /**
@@ -132,9 +117,9 @@ class CollectionPromo extends AppModel
     function demoteCollection($collection_id, $titletagline, $locale) {
         global $valid_languages;
         if (!is_numeric($collection_id)) return false;
-        if (!in_array($titletagline, array_keys($this->titles_and_taglines))) return false;
+        if (!in_array($titletagline, array_keys($this->CollectionFeatures->getTitlesAndTaglinesById()))) return false;
         if (!(empty($locale) || in_array($locale, array_keys($valid_languages)))) return false;
 
-        return $this->execute("DELETE FROM collection_promos WHERE collection_id={$collection_id} AND title_tagline={$titletagline} AND locale='{$locale}' LIMIT 1");
+        return $this->execute("DELETE FROM collection_promos WHERE collection_id={$collection_id} AND collection_feature_id={$titletagline} AND locale='{$locale}' LIMIT 1");
     }
 }
