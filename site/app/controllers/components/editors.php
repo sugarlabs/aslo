@@ -325,6 +325,85 @@ class EditorsComponent extends Object {
         $this->controller->Email->subject = sprintf('Mozilla Add-ons: %s %s', $emailInfo['name'], $emailInfo['version']);
         $this->controller->Email->send();
     }
+
+    /**
+     * Post a new comment to a version by an editor
+     * @param int $versionId version ID
+     * @param array $data POST data
+     * @return int id of new comment on success, false on error
+     */
+    function postVersionComment($versionId, $data) {
+        $returnId = false;
+
+        $session = $this->controller->Session->read('User');
+
+        $commentData = $data['Versioncomment'];
+        $commentData['version_id'] = $versionId;
+        $commentData['user_id'] = $session['id'];
+
+        // validation
+        if (empty($commentData['subject'])) {
+            $this->controller->Error->addError(___('editor_review_error_comment_subject_required', 'Comment subject is required'));
+        }
+        if (empty($commentData['comment'])) {
+            $this->controller->Error->addError(___('editor_review_error_comment_body_required', 'Comment body is required'));
+        }
+
+        // cake does not turn '' into NULL
+        if ($commentData['reply_to'] === '') {
+            $commentData['reply_to'] = null;
+        }
+
+        if ($this->controller->Error->noErrors()) {
+            if ($this->controller->Versioncomment->save($commentData)) {
+                $returnId = $this->controller->Versioncomment->id;
+            } else {
+                $this->controller->Error->addError(___('editor_review_error_comment_save_fail', 'Failed to save comment'));
+            }
+        }
+
+        return $returnId;
+    }
+
+
+    /**
+     * Notify subscribed editors of a new comment posted to a thread
+     * @param int $commentId id of new comment
+     * @param int $rootId id of thread's root comment
+     * @return void
+     */
+    function versionCommentNotify($commentId, $rootId) {
+        $comment = $this->controller->Versioncomment->findById($commentId);
+        $userIds = $this->controller->Versioncomment->getSubscribers($rootId);
+
+        // nothing to send or nobody to send it to
+        if (empty($comment) || empty($userIds)) { return; }
+
+        // fetch details
+        $addon = $this->controller->Addon->getAddon($comment['Version']['addon_id']);
+        $subscribers = $this->controller->User->findAllById($userIds, null, null, null, null, -1);
+
+        // send out notification email(s)
+        $emailInfo = array(
+            'addon' => $addon['Translation']['name']['string'],
+            'version' => $comment['Version']['version'],
+            'versionid' => $comment['Version']['id'],
+            'commentid' => $commentId,
+            'subject' => $comment['Versioncomment']['subject'],
+            'author' => "{$comment['User']['firstname']} {$comment['User']['lastname']}",
+        );
+        $this->controller->publish('info', $emailInfo, false);
+        
+        // load the spam cannon
+        $this->controller->Email->template = '../editors/email/notify_version_comment';
+        $this->controller->Email->subject = $emailInfo['subject'];
+        
+        // fire away
+        foreach ($subscribers as &$subscriber) {
+            $this->controller->Email->to = $subscriber['User']['email'];
+            $result = $this->controller->Email->send();
+        }
+    }
     
     /**
      * Jump to specific item in queue

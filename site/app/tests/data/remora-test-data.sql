@@ -1010,6 +1010,20 @@ INSERT INTO `versions` (`id`, `addon_id`, `version`, `approvalnotes`, `releaseno
 (28900, 4023, '1.0', '', 46713, '2007-02-12 22:16:19', '2007-02-12 22:16:49'),
 (28901, 4023, '0.9', '', 46713, '2007-02-12 22:16:19', '2007-02-20 22:16:49');
 
+-- 
+-- Dumping data for table `versioncomments`
+-- 
+INSERT INTO `versioncomments` (`id`, `version_id`, `user_id`, `reply_to`, `subject`, `comment`, `created`, `modified`) VALUES 
+(1, 1, 1, NULL, 'Test comment', 'First post!', '2006-04-28 09:02:34', '2006-04-28 09:02:34'),
+(2, 1, 2, 1, 're: Test comment', 'Very lame, dude.\r\n\r\n> First post!', '2006-04-28 09:05:34', '2006-04-28 09:05:34');
+
+-- 
+-- Dumping data for table `users_versioncomments`
+-- 
+INSERT INTO `users_versioncomments` (`user_id`, `comment_id`, `subscribed`, `created`, `modified`) VALUES
+(1, 1, 0, '2006-04-28 09:02:34', '2006-04-28 09:02:34'),
+(2, 1, 0, '2006-04-28 09:05:34', '2006-04-28 09:05:34');
+
 --
 -- Set up the materialized views for search
 --

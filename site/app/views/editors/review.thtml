@@ -147,6 +147,7 @@
     <span id="previews_link"><a href="#previews"><?=___('editors_review_a_previews')?></a></span>
     <?=(!empty($addon['Addon']['homepage'])) ? '<span id="homepage_link">'.$html->link(___('editors_review_a_item_homepage'), $addon['Addon']['homepage']).'</span>' : ''?>
     <?=($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $this->controller->Session->read('User'))) ? '<span id="edit_link">'.$html->link(___('editors_review_a_edit_item'), '/developers/edit/'.$addon['Addon']['id']).'</span>' : ''?>
+    <span id="comments_link"><a href="#editorComments"><?=___('editors_review_a_comments', 'Editor Comments')?></a></span>
 </div>
 <div id="form">
     <?php
@@ -323,5 +324,48 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
         }
     ?>
 </div>
+<br class="clear">
+<div id="editorComments">
+    <div class="sectionHeader">
+        <div class="name"><a name="editorComments"></a><?=___('editors_review_header_comments', 'Editor Comments')?></div>
+        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+        <br class="clear">
+        <div><a href="#" class="expandAllThreads"><?=___('editors_review_expand_all', '(Expand All)')?></a> <a href="#" class="collapseAllThreads"><?=___('editors_review_collapse_all', '(Collapse All)')?></a></div>
+    </div>
+    <br class="clear">
+    <?php foreach ($comments as $c): ?>
+    <div id="editorComment<?=$c['Versioncomment']['id']?>" class="editorComment commentDepth<?=$c['depth']?><?=($c['Versioncomment']['reply_to'] ? " commentReply{$c['Versioncomment']['reply_to']}" : '')?>">
+        <div class="commentHeader"><?=$c['Versioncomment']['subject']?></div>
+        <div class="commentSubheader">
+            <?="{$c['User']['firstname']} {$c['User']['lastname']} "?>
+            <?=$html->link("({$c['User']['email']})", "mailto:{$c['User']['email']}")?>
+            <?=(" - " . strftime('%c', strtotime($c['Versioncomment']['created'])))?>
+        </div>
+        <div class="commentBody">
+            <?=$c['Versioncomment']['comment']?>
+            <div class="commentFooter"><a href="#editorComment<?=$c['Versioncomment']['id']?>" class="replyLink"><?=___('editors_review_link_reply', '(Reply)')?></a></div>
+        </div>
+    </div>
+    <?php endforeach; ?>
 
+    <a href="#" class="newThreadLink"><?=___('editors_review_link_new_thread', '(New Thread)')?></a>
+    <?=$html->formTag('/editors/review/'.$version['Version']['id'], 'post', array('id'=>'editorCommentForm', 'class'=>'hidden'))?>
+    <div>
+        <?=$html->input('Versioncomment/subject', array('size'=>'50'))?>
+        <label for="VersioncommentSubject"><?=___('editors_review_label_subject', 'Subject')?></label><br />
+
+        <?=$html->textarea('Versioncomment/comment', array('cols'=>'70', 'rows'=>'10'))?><br />
+
+        <?=$html->hidden('Versioncomment/reply_to', array('value'=>''))?>
+        <input type="submit" value="<?=___('editors_review_input_post_comment', 'Post Comment')?>" />
+        <input type="button" value="<?=___('editors_review_input_cancel', 'Cancel')?>" id="VersioncommentCancel" />
+    </div>
+    </form>
 </div>
+<script type="text/javascript">
+// <![CDATA[
+    $(document).ready(function() {
+        editors_review.init();
+    });
+// ]]>
+</script>

@@ -46,7 +46,7 @@ class EditorsController extends AppController
     var $uses = array('Addon', 'AddonCategory', 'Addontype', 'Application', 'Approval',
         'Appversion', 'Cannedresponse', 'EditorSubscription', 'Eventlog', 'Favorite',
         'File', 'Platform', 'Review', 'ReviewsModerationFlag', 'Category', 'Translation',
-        'User', 'Version');
+        'User', 'Version', 'Versioncomment');
     var $components = array('Amo', 'Audit', 'Developers', 'Editors', 'Email', 'Error', 'Image', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Listing', 'Localization', 'Pagination');
 
@@ -258,6 +258,7 @@ class EditorsController extends AppController
         $this->Addontype->bindFully();
         $this->Version->bindFully();
         $this->Addon->bindFully();
+        $this->Versioncomment->bindFully();
 
         if (!$version = $this->Version->findById($id, null, null, 1)) {
             $this->flash(_('error_version_notfound'), '/editors/queue');
@@ -282,7 +283,11 @@ class EditorsController extends AppController
 
         if (!empty($this->data)) {
             //pr($this->data);
-            if ($this->data['Approval']['ActionField'] == 'info') {
+            if (isset($this->data['Versioncomment'])) {
+                // new editor comment
+                $commentId = $this->Editors->postVersionComment($id, $this->data);
+            }
+            elseif ($this->data['Approval']['ActionField'] == 'info') {
                 // request more information
                 $this->Editors->requestInformation($addon, $this->data);
             }
@@ -292,8 +297,22 @@ class EditorsController extends AppController
             else {
                 $this->Editors->reviewPendingFiles($addon, $this->data);
             }
-            
+        
             if ($this->Error->noErrors()) {
+                if (isset($this->data['Versioncomment'])) {
+                    // autosubscribe to notifications
+                    $threadRoot = $this->Versioncomment->getThreadRoot($id, $commentId);
+                    if ($threadRoot) {
+                        $this->Versioncomment->subscribe($threadRoot['Versioncomment']['id'], $session['id']);
+                    }
+
+                    // notify subscribed editors of post
+                    $this->Editors->versionCommentNotify($commentId, $threadRoot['Versioncomment']['id']);
+
+                    $this->flash(___('editors_comment_posted', 'Comment successfully posted'), '/editors/review/'.$id.'#editorComment'.$commentId);
+                    return;
+                }
+
                 // if editor chose to be reminded of the next upcoming update, save this
                 if ($this->data['Approval']['subscribe'])
                     $this->EditorSubscription->subscribeToUpdates($session['id'], $addon['Addon']['id']);
@@ -369,6 +388,12 @@ class EditorsController extends AppController
         }
         
         //pr($history);
+
+        //Editor Comments
+        $comments = $this->Versioncomment->getThreadTree($version['Version']['id']);
+
+        //pr($comments);
+
         
         if ($addon['Addon']['status'] == STATUS_NOMINATED) {
             $reviewType = 'nominated';
@@ -395,6 +420,7 @@ class EditorsController extends AppController
         $this->publish('addontype', $addon['Addon']['addontype_id']);
         $this->publish('approval', $this->Amo->getApprovalStatus());  
         $this->publish('history', $history); 
+        $this->publish('comments', $comments);
         $this->publish('errors', $this->Error->errors);
         $this->publish('reviewType', $reviewType, false);
         $this->publish('filtered', $filtered);

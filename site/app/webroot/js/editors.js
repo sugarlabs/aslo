@@ -64,6 +64,101 @@ var editors_queue = {
 /*************************************************
 *               editors/review                 *
 *************************************************/
+var editors_review = {
+    init: function () {
+        // indent comment replies
+        var margin = 'margin-left';
+        if ($('body').hasClass('html-rtl')) {
+            margin = 'margin-right';
+        }
+        var depth = 1;
+        var comments = $('#editorComments .commentDepth'+depth);
+        while (comments.length > 0) {
+            comments.css(margin, 2*depth+'em');
+            depth += 1;
+            comments = $('#editorComments .commentDepth'+depth);
+        }
+
+        // click a comment header to toggle showing/hiding its body
+        $('#editorComments .commentHeader').click(this.toggleOneComment);
+
+        // comment expand/collapse all links
+        $('#editorComments .expandAllThreads').click(this.expandAllComments);
+        $('#editorComments .collapseAllThreads').click(this.collapseAllComments);
+
+        // show the comment form
+        $('#editorComments .replyLink, #editorComments .newThreadLink').click(this.showCommentForm);
+
+        // hide the comment form
+        $('#VersioncommentCancel').click(function() {
+            $(this.form).slideUp('fast');
+        });
+
+        // highlight any comment specified in the location hash
+        if (window.location.hash.match(/^#editorComment(\d+)$/)) {
+            $(window.location.hash+' .commentBody').show();
+            $(window.location.hash).css('background-color', '#efefef');
+        }
+    },
+
+    // toggle showing/hiding a single comment body
+    toggleOneComment: function(e) {
+        var commentBody = $('.commentBody', $(this).parent());
+        if (! commentBody.is(':animated')) {
+            if (commentBody.is(':visible')) {
+                commentBody.slideUp('fast');
+                $(this).addClass('collapsed');
+            } else {
+                commentBody.slideDown('fast');
+                $(this).removeClass('collapsed');
+            }
+        }
+        return false;
+    },
+
+    // show all comment bodies
+    expandAllComments: function(e) {
+        $('#editorComments .commentBody').show();
+        $('#editorComments .commentHeader').removeClass('collapsed');
+        return false;
+    },
+
+    // hide all comment bodies
+    collapseAllComments: function(e) {
+        $('#editorComments .commentBody').hide();
+        $('#editorComments .commentHeader').addClass('collapsed');
+        return false;
+    },
+
+    // move and show the comment form under the link clicked
+    showCommentForm: function(e) {
+        var re = /^#editorComment(\d+)$/;
+        var match = re.exec($(this).attr('href'));
+        var commentId = '';
+        if (match) {
+            commentId = match[1];
+        }
+
+        // when relocating the form, initialize subject and comment 
+        if (! $(this).next().is('#editorCommentForm')) {
+            if (match) {
+                var subject = $('#editorComment'+commentId+' .commentHeader').text();
+                subject = subject.replace(/^(re: )?/, 're: ');
+                $('#VersioncommentSubject').val(subject);
+            } else {
+                $('#VersioncommentSubject').val('');
+            }
+            $('#VersioncommentComment').val('');
+            $('#editorCommentForm').insertAfter(this);
+        }
+        // always initialize reply_to just to be safe
+        $('#VersioncommentReplyTo').val(commentId);
+
+        $('#editorCommentForm').slideDown('fast');
+        return false;
+    }
+}
+
 //Array of possible actions
 var actions = ['public', 'sandbox', 'info', 'superreview'];
 
