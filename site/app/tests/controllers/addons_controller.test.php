@@ -62,6 +62,19 @@ class AddonsTest extends UnitTestCase {
         
     }
 
+
+    /**
+     * Test if the tags are present
+     */
+	function testTagsAdded() {
+	// Test that tags are added to addons
+	    $this->Addon->caching = false;
+       	$this->Addon->cacheQueries = false;
+        $this->helper->callControllerAction($this->controller, 'display', $this, array(9));
+        $this->assertEqual(1, $this->controller->viewVars['addon']['UserTagAddon'][0]['tag_id']);
+	}
+
+
     /**
      * Test if the different addon list sort orders are correct
      */
@@ -111,6 +124,10 @@ class AddonsTest extends UnitTestCase {
             }
         }
     }
+
+
+
+
 
 }
 

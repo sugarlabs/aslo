@@ -15,8 +15,8 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Justin Scott <fligtar@gmail.com>.
- * Portions created by the Initial Developer are Copyright (C) 2007
+ * Mike Morgan <morgamic@mozilla.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2006
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
@@ -34,33 +34,48 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/adminmenu');?>
+class TagsControllerTest extends UnitTestCase {
 
-    <div id="content-main">
-        <h3>Create Category</h3>
-        <?php
-        if (!empty($errors['main'])) {
-            echo '<div class="error">'.$errors['main'].'</div>';
-        }
-        echo $html->formTag('/admin/tags/create');
-        ?>
-        <div id="developersForm">
-            <div>
-                <label for="TagApplicationId">Application</label>
-                <?=$html->selectTag('Tag/application_id', $applications, null, null, null, false)?>
-            </div>
-            <div>
-                <label for="TagAddontypeId">Add-on Type</label>
-                <?=$html->selectTag('Tag/addontype_id', $addontypes, null, null, null, false)?>
-            </div>
-            <?=$this->renderElement('developers/localebox')?>
-            <div class="buttonBox">
-                <?=$html->submit('Create Category')?>
-            </div>
-        </div>
-        </form>
-        <?=$html->link('Back to Category Manager', '/admin/tags')?>
-    </div>
-</div>
+	/**
+	* Setup the Tags Controller
+	*/
+	function testLoad() {
+		$this->helper = new UnitTestHelper();
+		$this->controller = $this->helper->getController('Tags', $this);
+		//$this->helper->mockModels($this->controller, $this);
+		$this->helper->mockComponents($this->controller, $this);
+		
+		
+
+        loadModel('Addon');
+        $this->Addon =& new Addon();
+        $this->Addon->caching = false;
+        $this->Addon->cacheQueries = false;
+	}
+
+	
+	function testTagAddAjax() {
+		// log in first
+		
+				$username = 'nobody@mozilla.org';
+        $pw = 'test';
+        $this->controller->Session =& new MockSessionComponent();
+        
+        $this->usercontroller = $this->helper->getController('Users', $this);
+        $this->helper->mockComponents($this->usercontroller, $this);
+        
+        $this->usercontroller->data = array();
+        $this->usercontroller->data['Login']['email'] = $username;
+        $this->usercontroller->data['Login']['password'] = $pw;
+        $this->helper->callControllerAction($this->usercontroller, 'login', $this);
+		
+        $this->helper->callControllerAction($this->controller, 'add_ajax', $this, array('9','booya'));
+
+	
+	}
+	
+	
+	
+	
+}
+?>

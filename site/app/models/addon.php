@@ -50,17 +50,24 @@ class Addon extends AppModel
                                             'conditions' => 'addons_users.listed=1',
                                             'order' => 'addons_users.position'
                                       ),
-                                     'Tag' =>
-                                       array('className'  => 'Tag',
-                                            'joinTable'  => 'addons_tags',
+                                     'Category' =>
+                                       array('className'  => 'Category',
+                                            'joinTable'  => 'addons_categories',
                                             'foreignKey' => 'addon_id',
-                                            'associationForeignKey'=> 'tag_id'
+                                            'associationForeignKey'=> 'category_id'
                                       ),
                                       'Collection' =>
                                        array('classname' => 'Collection',
                                        'joinTable' => 'addons_collections',
                                        'foreignKey' => 'addon_id',
-                                       'associationForeignKey' => 'collection_id')
+                                       'associationForeignKey' => 'collection_id'),
+                                       
+                                       'Tag' => 
+                                        array('className' => 'Tag', 
+                                        'joinTable'  => 'users_tags_addons',
+                                        'foreignKey' => 'addon_id',
+                                        'associationForeignKey' => 'tag_id'
+                                       )
                                );
     var $belongsTo = array('Addontype');
     var $hasMany = array('Version' =>
@@ -74,8 +81,8 @@ class Addon extends AppModel
                                'finderSql'   => ''
                          ),
                          // see the addon_tag model for details
-                         'AddonTag' =>
-                         array('classname'   => 'AddonTag',
+                         'AddonCategory' =>
+                         array('classname'   => 'AddonCategory',
                                'conditions'  => '',
                                'order'       => '',
                                'limit'       => '',
@@ -103,6 +110,10 @@ class Addon extends AppModel
                                'dependent'   => true,
                                'exclusive'   => false,
                                'finderSql'   => ''
+                         ),                                                  
+                         'UserTagAddon' =>
+                         	array('className' => 'UserTagAddon'
+                         		
                          )
                   );
 
@@ -181,11 +192,11 @@ class Addon extends AppModel
 
         foreach ($associations as $association) {
             switch ($association) {
-            case 'all_tags':
+            case 'all_categories':
                 // all categories this add-on is associated with
                 $this->bindModel(array('hasMany' =>
-                    array('AddonTag' =>
-                       array('className'  => 'AddonTag',
+                    array('AddonCategory' =>
+                       array('className'  => 'AddonCategory',
                              'foreignKey' => 'addon_id'
                         ))));
                 break;
@@ -224,16 +235,16 @@ class Addon extends AppModel
                     'weeklydownloads', 'addontype_id', 'averagerating', 'totalreviews'));
                 break;
 
-            case 'single_tag':
+            case 'single_category':
                 // the first category this add-on is associated with
                 $this->bindModel(array('hasMany' =>
-                    array('AddonTag' =>
-                       array('className'  => 'AddonTag',
+                    array('AddonCategory' =>
+                       array('className'  => 'AddonCategory',
                              'foreignKey' => 'addon_id',
                              'limit' => 1
                         ))));
                 break;
-
+                
             default:
                 debug("Association $association not declared!");
                 break;
@@ -291,17 +302,17 @@ class Addon extends AppModel
             }
         }
 
-        // add addon tags
-        if ((in_array('all_tags', $associations) || in_array('single_tag', $associations))
-            && !empty($addon['AddonTag'])) {
+        // add addon categories
+        if ((in_array('all_categories', $associations) || in_array('single_category', $associations))
+            && !empty($addon['AddonCategory'])) {
 
-            $_tag_ids = array();
-            foreach ($addon['AddonTag'] as $_tag)
-                $_tag_ids[] = $_tag['tag_id'];
-            $tags = array();
-            if (!empty($_tag_ids))
-                $tags = $this->Tag->findAll(array('Tag.id' => $_tag_ids, 'Tag.application_id' => APP_ID));
-            $addon['Tag'] = $tags;
+            $_category_ids = array();
+            foreach ($addon['AddonCategory'] as $_category)
+                $_category_ids[] = $_category['category_id'];
+            $categories = array();
+            if (!empty($_category_ids))
+                $categories = $this->Category->findAll(array('Category.id' => $_category_ids, 'Category.application_id' => APP_ID));
+            $addon['Category'] = $categories;
         }
 
         // cache this object...
@@ -350,7 +361,7 @@ class Addon extends AppModel
         $add_joins = $orderby = $limitclause = $groupby = $where = '';
         if ($category != 'all') {
             // if cat == all, don't worry about the category. Otherwise only select the chosen one.
-            $add_joins .= "INNER JOIN addons_tags AS at ON (at.tag_id = '{$category}' AND at.addon_id = Addon.id) ";
+            $add_joins .= "INNER JOIN addons_categories AS at ON (at.category_id = '{$category}' AND at.addon_id = Addon.id) ";
         }
         // only select add-ons that have any files to offer
         $add_joins .= "INNER JOIN files AS File ON (Version.id = File.version_id AND File.status IN (".implode(',',$status).")) ";
@@ -561,23 +572,23 @@ class Addon extends AppModel
             $addontypes = array($addontypes);
 
         // Construct the SQL query, stolen from getAddonsByCategory
-        $sql = 'SELECT at.tag_id, COUNT(DISTINCT Addon.id) AS co '
+        $sql = 'SELECT at.category_id, COUNT(DISTINCT Addon.id) AS co '
                 .'FROM addons AS Addon '
                 .'INNER JOIN versions AS Version ON (Addon.id = Version.addon_id) '
                 .'INNER JOIN applications_versions AS av ON (av.version_id = Version.id AND av.application_id = '.APP_ID.') '
-                .'INNER JOIN addons_tags AS at ON (at.addon_id = Addon.id)  '
+                .'INNER JOIN addons_categories AS at ON (at.addon_id = Addon.id)  '
                 .'INNER JOIN files AS File ON (Version.id = File.version_id AND File.status IN ('.implode(',',$status).')) '
                 .'WHERE Addon.addontype_id IN('.implode(',',$addontypes).') '
                 .'AND Addon.status IN('.implode(',',$status).') '
                 .'AND Addon.inactive = 0 '
-                .'GROUP BY at.tag_id';
+                .'GROUP BY at.category_id';
 
         $rows = $this->query($sql, true);
 
         // Reduce the rows from the DB down to simple ID / count
         $addon_counts = array();
         foreach ($rows as $row) {
-            $addon_counts[ $row['at']['tag_id'] ] = $row[0]['co'];
+            $addon_counts[ $row['at']['category_id'] ] = $row[0]['co'];
         }
 
         return $addon_counts;
@@ -761,7 +772,7 @@ class Addon extends AppModel
         $addontypes = ADDON_EXTENSION, $category = 'all', $sort_by = 'name',
         $direction = 'ASC', $limit = '5', $page = '1', $friends = '', $includeFiles = false) {
 
-        $associations = array('all_tags', 'authors', 'compatible_apps',
+        $associations = array('all_categories', 'authors', 'compatible_apps',
             'latest_version', 'list_details');
         if ($includeFiles) {
             $associations[] = 'files';
@@ -777,5 +788,89 @@ class Addon extends AppModel
             return $this->countAddonsInCategory($status, $addontypes, $category, $friends);
         }
     }
+    
+    /**
+     * adds a tag to an addon
+     * -using saveAuthor() as an example
+     * -trigger trg_tag_stat_inc will update tag_stat
+     */
+	function addTag($addonId, $tagId, $userId) {
+		$sql = "INSERT IGNORE INTO users_tags_addons set user_id = {$userId}, tag_id = {$tagId}, addon_id = {$addonId}, created = now()";
+		$ret = $this->execute($sql);
+	}
+	
+	/**
+	 * -trigger trg_tag_stat_dec will update tag_stat
+	 */
+	function removeUserTagFromAddon($user_id, $tag_id, $addon_id) {
+		$this->caching = false;
+	
+		$this->execute("DELETE FROM users_tags_addons where user_id={$user_id} AND tag_id={$tag_id} AND addon_id = {$addon_id}");
+		$this->caching = true;
+		
+	}
+	
+	/**
+	 * -trigger trg_tag_stat_dec will update tag_stat
+	 */
+	function removeTagFromAddons($tag_id, $addon_id) {
+		$this->execute("DELETE FROM users_tags_addons where tag_id={$tag_id} AND addon_id = {$addon_id}");
+	}
+		
+	/**
+	 * Gets all the tags for this addon
+	 */
+	function getTagsByAddon($addon_id) {
+		$userTagAddons = $this->UserTagAddon->findAll(array('addon_id' => $addon_id));
+		$tagIds = array();
+		foreach ($userTagAddons as $uta) {
+			$tagIds[] = $uta['UserTagAddon']['tag_id'];
+		}
+		
+		return $this->Tag->findAllById($tagIds,null,"Tag.tag_text asc");
+	} 
+	
+	function getTagsByUserTagAddon($users_tags_addons) {
+		$tagIds = array();
+		foreach ($users_tags_addons as $uta) {
+			$tagIds[] = $uta['UserTagAddon']['tag_id'];
+		}
+		
+		if( count($tagIds) > 0)
+			return $this->Tag->findAllById($tagIds);
+		else {
+			return array();
+		}
+		
+	}
+	
+	function getAddonsByUserTagAddon($users_tags_addons) {
+		$addonIds = array();
+		foreach ($users_tags_addons as $uta) {
+			$addonIds[] = $uta['UserTagAddon']['addon_id'];
+		}
+		
+		if( count($addonIds) > 0)
+			return $this->findAllById($addonIds);
+		else {
+			return array();
+		}
+		
+	}
+
+	function getTagsByUser($user_id) {
+		$userTagAddons = $this->UserTagAddon->findAll(array('user_id' => $user_id));
+		//print_r($userTagAddons);
+		return $this->getTagsByUserTagAddon($userTagAddons);
+	}
+	
+    
+    function getAddonsByTag($tag_id) {
+    	$userTagAddons = $this->UserTagAddon->findAll(array('tag_id' => $tag_id));
+    	return $this->getAddonsByUserTagAddon($userTagAddons);
+    }
+    
+    
+    
 }
 ?>

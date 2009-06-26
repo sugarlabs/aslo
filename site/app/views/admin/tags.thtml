@@ -39,21 +39,50 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>Category Manager</h3>
+        <h3>Tag Manager</h3>
+        <table width="100%">
+        <?
+		$pagination->setPaging($paging); // Initialize the pagination variables
+		$th = array (
+            $pagination->sortBy('tag_text','Tag','Tag'),
+            $pagination->sortBy('created','Created','Tag'),
+            $pagination->sortBy('blacklisted'),
+            $pagination->sortBy('num_addons','Popularity','TagStat'),            
+		); // Generate the pagination sort links
+		echo $html->tableHeaders($th); // Create the table headers with sort links if desired         
+            //    <tr><th>Tag</th><th>Created</th><th>Blacklisted</th><th>Count</th></tr>
+        
+        
+        ?>
         <?php 
         if (!empty($tags)) {
             foreach ($tags as $tag) {
-                echo '<div class="groupItem">';
-                    echo '<h3>'.$tag['Translation']['name']['string'].'</h3>';
-                    echo $tag['Translation']['description']['string'];
-                    echo '<br>Application: '.$tag['application'];
-                    echo ' | Add-on type: '.$tag['addontype'];
-                    echo ' | Add-on Count: '.$tag['count'];
-                    echo ' | '.$html->link('Edit Category', '/admin/tags/edit/'.$tag['Tag']['id']);
-                echo '</div>';
+                echo '<tr>';
+                    echo '<td><span>'.$html->link($tag['Tag']['tag_text'], '/tag/'.$tag['Tag']['tag_text']).'</span></td>';
+                    echo '<td>'.$tag['Tag']['created'] . '</td>';
+                    echo '<td>'.$tag['Tag']['blacklisted'] . '</td>';
+                    echo '<td>'.$tag['TagStat']['num_addons'] . '</td>';
+                    echo '<td>';
+                    if ($tag['Tag']['blacklisted']) {
+                    	echo $html->link('Un-blacklist', '/admin/tags/unblacklist/'.$tag['Tag']['id']);
+                    } else {
+                    	echo $html->link('Blacklist', '/admin/tags/blacklist/'.$tag['Tag']['id']);
+                    }
+                    echo '</td>';
+                echo '</tr>';            
+           
             }
         }
-        echo $html->link('Create Category', '/admin/tags/create');
+        ?></table><?
+                echo $this->renderElement('pagination');
+        
         ?>
+    <h3>Blacklist Tags</h3>
+	<div class="addtagform ">
+		<form action="/tags/addAndBlacklist/">
+			<input type="text" id='newTag' name="newTag" method="POST">
+			<button id="addtagbutton">Add</button>
+		</form>
+	</div>
     </div>
 </div>

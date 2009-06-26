@@ -25,7 +25,7 @@ if (typeof SimileAjax == "undefined") {
         */
         
     var getHead = function(doc) {
-        return doc.getElementsByTagName("head")[0];
+        return doc.getElementsBycategoryName("head")[0];
     };
     
     SimileAjax.findScript = function(doc, substring) {

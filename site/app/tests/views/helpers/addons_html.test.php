@@ -105,7 +105,7 @@ class AddonsHtmlHelperTest extends UnitTestCase {
     }
     
     /**
-     * Tests that an addon that has the addons_tags.feature = 1 is shown as featured
+     * Tests that an addon that has the addons_categories.feature = 1 is shown as featured
      */
     function testRecommendedFlag() {
         $addon = $this->Addon->getAddon(4021, array('all_tags'));

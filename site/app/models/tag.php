@@ -3,7 +3,7 @@
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
+ * 1.1 (the "License"); you not use this file except in compliance with
  * the License. You may obtain a copy of the License at
  * http://www.mozilla.org/MPL/
  *
@@ -41,94 +41,146 @@
 class Tag extends AppModel
 {
     var $name = 'Tag';
-    var $hasAndBelongsToMany_full = array('Addon' =>
-                                     array('className'  => 'Addon',
-                                           'joinTable'  => 'addons_tags',
-                                           'foreignKey' => 'tag_id',
-                                           'associationForeignKey'=> 'addon_id')
-                               );
-    var $belongsTo = array('Addontype', 'Application');
-
-    /**
-     * Fields here will looked up in the translations table
-     *
-     * @var array
-     * @access public
-     */
-    var $translated_fields = array('name', 'description');
     
-    /**
-     * Saves selected categories by only removing deleted categories and inserting
-     * new categories rather than deleting all existing categories and adding all
-     * back.
-     * @param int $addon_id add-on id
-     * @param array $data tag data from form
-     */
-    function saveCategories($addon_id, $data) {
-        if (empty($data)) {
-            return;
-        }
-        
-        foreach ($data as $application_id => $selectedTags) {
-            foreach ($selectedTags as $tag_id) {
-                if (!empty($tag_id)) {
-                    $newTags[] = $tag_id;
-                }
-            }
-        }
-        
-        if (!empty($newTags)) {
-            // Only delete tags that aren't still selected to retain additional
-            // information, such as featured status
-            $this->execute("DELETE FROM addons_tags WHERE addon_id={$addon_id} AND tag_id NOT IN (".implode(',', $newTags).")");
-        }
-        
-        $_currentTags = $this->query("SELECT tag_id FROM addons_tags WHERE addon_id={$addon_id}");
-        if (!empty($_currentTags)) {
-            foreach ($_currentTags as $currentTag) {
-                $currentTags[] = $currentTag['addons_tags']['tag_id'];
-            }
-        }
-        
-        // Insert tags that aren't already there
-        foreach ($newTags as $tag_id) {
-            if (empty($currentTags) || (!empty($currentTags) && !in_array($tag_id, $currentTags))) {
-                $this->execute("INSERT INTO addons_tags (addon_id, tag_id) VALUES({$addon_id}, {$tag_id})");
-            }
-        }
-    }
     
-    /**
-     * same as above method but backported to 3.2
-     * @deprecate
-     */
-    function LEGACY_saveCategories($addon_id, $data) {
-        if (empty($data)) {
-            return;
-        }
-        
-        $newTags = $data;
-        
-        if (!empty($newTags)) {
-            // Only delete tags that aren't still selected to retain additional
-            // information, such as featured status
-            $this->execute("DELETE FROM addons_tags WHERE addon_id={$addon_id} AND tag_id NOT IN (".implode(',', $newTags).")");
-        }
-        
-        $_currentTags = $this->query("SELECT tag_id FROM addons_tags WHERE addon_id={$addon_id}");
-        if (!empty($_currentTags)) {
-            foreach ($_currentTags as $currentTag) {
-                $currentTags[] = $currentTag['addons_tags']['tag_id'];
-            }
-        }
-        
-        // Insert tags that aren't already there
-        foreach ($newTags as $tag_id) {
-            if (!in_array($tag_id, $currentTags)) {
-                $this->execute("INSERT INTO addons_tags (addon_id, tag_id) VALUES({$addon_id}, {$tag_id})");
-            }
-        }
-    }
+ 	var $hasOne = array('TagStat' =>
+                              array('className'  => 'TagStat',
+                                    'joinTable'  => 'tag_stat',
+                                    'foreignKey' => 'tag_id',
+                                    'dependent'   => true
+                              )
+ 	
+ 	);
+ 	
+	var $hasMany = array(
+ 									
+									'UserTagAddon' => 
+ 										array( 'className' => 'UserTagAddon',
+ 										'foreignKey' => 'tag_id',
+ 										'dependent'   => true
+  										)
+ 						);
 
+ 	var $recursive = 1;
+ 	
+	function makeTagList($addon_data, $user, $showblacklist=true) {
+	$this->caching = false;
+	
+      // Make a list of user_ids for the addon owners so we can see if these count as developer tags
+       $developers = array();
+       // Make a new array of developer tags
+       $developerTags = array();
+       // Make a new array of user tags
+       $userTags = array();       
+       foreach ($addon_data['User'] as $developer) {
+       	$developers[] = $developer['id'];
+       }
+       
+        $_related_tag_ids = array();
+        foreach ($addon_data['Tag'] as $tagvalue){
+            $_related_tag_ids[] = $tagvalue['id'];
+        } 
+
+        if (!empty($_related_tag_ids)) {
+            $related_tags = $this->findAll("Tag.id IN (".implode(',', $_related_tag_ids).") and blacklisted=0",null,"Tag.tag_text asc");      	
+				// Go through tags and assign developer status and owner status
+				foreach ($related_tags as $tag) {
+					// If the logged in user owns the tag or is a developer of this addon, mark the tag element
+					if ($user) {
+						if (($tag['UserTagAddon'][0]['user_id']==$user['id'])  || (in_array($user['id'],$developers))) {
+							$tag['Tag']['OwnerOrDeveloper'] = 1;
+						}
+						$tag['LoggedInUser']=$user;
+					}
+					if (in_array($tag['UserTagAddon'][0]['user_id'], $developers)) {
+							$developerTags[] = $tag;			
+					} else {
+							$userTags[] = $tag;					
+					}
+				}
+			}
+        else
+            $related_tags = array();
+		
+		$this->caching = true;
+		
+		return array('userTags'=>$userTags, 'developerTags'=>$developerTags);
+	}		 	
+ 	
+ 	
+ 	
+ 	/**
+ 	 * 
+ 	 */
+ 	function blacklistTag($tag_id) {
+ 		$dbTag = $this->findById($tag_id);
+ 		if( !empty($dbTag)) {
+ 			$this->id = $dbTag['Tag']['id'];
+ 			$this->saveField('blacklisted', 1);
+ 			
+ 			// remove all the tag-addon relations
+ 			$numDeletedFromAddons = $this->deleteFromAddons($tag_id);
+ 			
+ 		} else {
+ 			return false;
+ 		}
+ 	}
+ 	
+ 	function unblacklistTag($tag_id) {
+ 		$dbTag = $this->findById($tag_id);
+ 		if( !empty($dbTag)) {
+ 			$this->id = $dbTag['Tag']['id'];
+ 			$this->saveField('blacklisted', 0);
+ 		} else {
+ 			return false;
+ 		}
+ 	}
+ 	
+ 	function deleteFromAddons($tag_id) {
+ 		$sql = "DELETE FROM users_tags_addons WHERE tag_id={$tag_id}";
+ 		$res = $this->query($sql); 		
+ 		return $this->getAffectedRows();
+ 		
+ 	}
+
+	/*
+	 * Given an array of addon IDs this function returns a list of distinct tags for that list of addons.
+	 * 
+	 */
+	function getDistinctTagsForAddons($addon_ids) {
+		if (count($addon_ids) == 0 ) {
+			return null;
+		}
+		
+		return $this->findAll(" id in (select distinct(tag_id) from users_tags_addons where addon_id in (". implode(",", $addon_ids) . "))", array("id", "tag_text", "blacklisted", "created", "TagStat.tag_id", "TagStat.num_addons"), "num_addons DESC");
+		
+	}
+  	function getMaxNumAddons() {
+ 		$sql = "select max(num_addons) as maxaddons from tag_stat;";
+ 		$res = $this->query($sql); 		
+ 		return $res[0][0]['maxaddons'];
+ 	}
+ 	
+	function getTop($numTags, $sortBy) {
+		
+		if( $sortBy == "freq") {
+			$sort = "num_addons DESC";	
+		} else if( $sortBy == "alpha") {
+			$sort = "tag_text ASC";
+		} else {
+			$sort = null;
+		}
+		
+		return $this->findAll(" TagStat.num_addons > 0 ", null/*fields*/, $sort, $numTags);
+	}
+	
+	/**
+	 * Cake doesn't seem to be propogating deletions so doing it here.
+	 */
+	function beforeDelete() {
+		$this->caching = false;
+		$this->execute("delete from users_tags_addons where tag_id = {$this->id}");
+		$this->execute("delete from tag_stat where tag_id = {$this->id}");
+		$this->caching = true;
+	}
 }
-?>

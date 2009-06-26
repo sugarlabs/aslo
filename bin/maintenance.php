@@ -471,7 +471,7 @@ switch ($action) {
                 tags AS t 
             INNER JOIN ( 
                 SELECT 
-                    at.tag_id, 
+                    at.category_id, 
                     COUNT(DISTINCT Addon.id) AS ct
                 FROM 
                     addons AS Addon 
@@ -479,7 +479,7 @@ switch ($action) {
                     ON (Addon.id = Version.addon_id)
                 INNER JOIN applications_versions AS av 
                     ON (av.version_id = Version.id)
-                INNER JOIN addons_tags AS at 
+                INNER JOIN addons_categories AS at 
                     ON (at.addon_id = Addon.id)
                 INNER JOIN files AS File 
                     ON (Version.id = File.version_id 
@@ -487,8 +487,8 @@ switch ($action) {
                 WHERE 
                     Addon.status IN ({$valid_status}) 
                         AND Addon.inactive = 0
-                GROUP BY at.tag_id
-            ) AS j ON (t.id = j.tag_id)
+                GROUP BY at.category_id
+            ) AS j ON (t.id = j.category_id)
             SET 
                 t.count = j.ct
         ";

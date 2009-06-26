@@ -42,7 +42,7 @@ class AddonTest extends WebTestHelper {
     function AddonTest() {
         $this->WebTestCase("Views->Addons->Display Tests");
         loadModel('Addon');
-        loadModel('Tag');
+        loadModel('Category');
         loadModel('Version');
     }
 
@@ -52,22 +52,22 @@ class AddonTest extends WebTestHelper {
         $model =& new Addon();
         $model->caching = false;
 
-        $tagModel =& new Tag();
-        $tagModel->caching = false;
+        $categoryModel =& new Category();
+        $categoryModel->caching = false;
 
         $versionModel =& new Version();
         $versionModel->caching = false;
 
         $this->data = $model->find("Addon.id=$this->id", null , null , 2);
         $this->data['Version'] = $versionModel->findAll("Version.addon_id=$this->id", null, "Version.created DESC", 0);
-        //get tag l10n data
-        foreach ($this->data['Tag'] as $tagkey => $tagvalue) {
-            if ($tagkey == 0)
-                $related_tag_query = "Tag.id='${tagvalue['id']}'";
+        //get category l10n data
+        foreach ($this->data['Category'] as $categorykey => $categoryvalue) {
+            if ($categorykey == 0)
+                $related_category_query = "Category.id='${categoryvalue['id']}'";
             else
-                $related_tag_query = $related_tag_query . " OR Tag.id ='${tagvalue['id']}'";    
+                $related_category_query = $related_category_query . " OR Category.id ='${categoryvalue['id']}'";    
         }
-        $this->tagData = $tagModel->findAll($related_tag_query);
+        $this->categoryData = $categoryModel->findAll($related_category_query);
         
         $this->getAction("/addon/" . $this->id);
 
@@ -100,9 +100,9 @@ class AddonTest extends WebTestHelper {
         //$this->wantedPattern = "#<span>\(" . $this->data['Version'][0]['File'][0]['size'] . "KB\)</span>#";
         //$this->assertWantedPattern($this->wantedPattern, htmlentities($this->wantedPattern));
 
-        // tags
-        foreach ($this->tagData as $tag) {
-            $this->wantedPattern = "@<li><a href=\"[^\"]+\"( )*>" . $tag['Translation']['name']['string'] . "</a></li>@";
+        // categories
+        foreach ($this->categoryData as $category) {
+            $this->wantedPattern = "@<li><a href=\"[^\"]+\"( )*>" . $category['Translation']['name']['string'] . "</a></li>@";
             $this->assertWantedPattern($this->wantedPattern, htmlentities($this->wantedPattern));
         }		        
         // are reviews displayed?

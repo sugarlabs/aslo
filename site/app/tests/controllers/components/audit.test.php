@@ -16,7 +16,7 @@ class AuditTest extends UnitTestCase {
         $this->controller->Addon =& new Addon();
         $this->controller->Group =& new Group();
         $this->controller->Application =& new Application();
-        $this->controller->Tag =& new Tag();
+        $this->controller->Category =& new Category();
         $this->controller->Platform =& new Platform();
         $this->controller->Feature =& new Feature();
         $this->controller->Cannedresponse =& new Cannedresponse();
@@ -104,7 +104,7 @@ class AuditTest extends UnitTestCase {
         $kwargs = array('notes' => $lang);
         $link = $this->link($lang, "/localizers/%s/?userlang=${lang}");
         $appLink = sprintf($link, 'applications');
-        $tagLink = sprintf($link, 'tags');
+        $categoryLink = sprintf($link, 'categories');
         $platformLink = sprintf($link, 'platforms');
 
         $actions = array(
@@ -112,9 +112,9 @@ class AuditTest extends UnitTestCase {
                 $kwargs,
                 "{$this->user} updated application translations for {$appLink}",
             ),
-            'update_tags' => array(
+            'update_categories' => array(
                 $kwargs,
-                "{$this->user} updated category translations for {$tagLink}",
+                "{$this->user} updated category translations for {$categoryLink}",
             ),
             'update_platforms' => array(
                 $kwargs,
@@ -164,10 +164,10 @@ class AuditTest extends UnitTestCase {
         $appLink = $this->link($app['Translation']['name']['string'],
                                '/admin/applications');
 
-        $tag_id = 1;
-        $tag = $this->controller->Tag->findById($tag_id);
-        $tagLink = $this->link($tag['Translation']['name']['string'],
-                               '/admin/tags');
+        $category_id = 1;
+        $category = $this->controller->Category->findById($category_id);
+        $categoryLink = $this->link($category['Translation']['name']['string'],
+                               '/admin/categories');
 
         $platform_id = 1;
         $platform = $this->controller->Platform->findById($platform_id);
@@ -207,17 +207,17 @@ class AuditTest extends UnitTestCase {
                 array('notes' => $app_id, 'removed' => $app_id),
                 "{$this->user} deleted version {$app_id} for {$appLink}",
             ),
-            'tag_create' => array(
-                array('changed_id' => $tag_id),
-                "{$this->user} created tag {$tagLink}",
+            'category_create' => array(
+                array('changed_id' => $category_id),
+                "{$this->user} created category {$categoryLink}",
             ),
-            'tag_edit' => array(
-                array('changed_id' => $tag_id),
-                "{$this->user} edited category {$tagLink}",
+            'category_edit' => array(
+                array('changed_id' => $category_id),
+                "{$this->user} edited category {$categoryLink}",
             ),
-            'tag_delete' => array(
-                array('changed_id' => $tag_id, 'removed' => $tag_id),
-                "{$this->user} deleted category {$tag_id} (ID {$tag_id})",
+            'category_delete' => array(
+                array('changed_id' => $category_id, 'removed' => $category_id),
+                "{$this->user} deleted category {$category_id} (ID {$category_id})",
             ),
             'platform_create' => array(
                 array('changed_id' => $platform_id),

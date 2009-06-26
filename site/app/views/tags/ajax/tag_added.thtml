@@ -15,11 +15,13 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Justin Scott <fligtar@gmail.com>.
+ * The Mozilla Foundation.
  * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Wil Clouser <clouserw@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -33,39 +35,11 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/adminmenu');?>
+ * ***** END LICENSE BLOCK ***** */ 
 
-    <div id="content-main">
-        <h3>Edit Category '<?=$tag['Translation']['name']['string']?>'</h3>
-        <?php
-        if (!empty($errors['main'])) {
-            echo '<div class="error">'.$errors['main'].'</div>';
-        }
-        echo $html->formTag('/admin/tags/edit/'.$tag['Tag']['id']);
-        ?>
-        <div id="developersForm">
-            <div>
-                <label for="TagApplicationId">Application</label>
-                <?=$html->selectTag('Tag/application_id', $applications, $tag['Tag']['application_id'], null, null, false)?>
-            </div>
-            <div>
-                <label for="TagAddontypeId">Add-on Type</label>
-                <?=$html->selectTag('Tag/addontype_id', $addontypes, $tag['Tag']['addontype_id'], null, null, false)?>
-            </div>
-            <div>
-                <label for="TagWeightId">Category Weight (<small>sort-order</small>)</label>
-                <?=$html->input('Tag/weight', array('value' => $tag['Tag']['weight']))?>
-            </div>
-            <?=$this->renderElement('developers/localebox')?>
-            <div class="buttonBox">
-                <?=$html->submit('Update Category')?>
-                <?=$html->submit('Delete Category', array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\'Are you SURE you wish to delete this category?\');'))?>
-            </div>
-        </div>
-        </form>
-        <?=$html->link('Back to Category Manager', '/admin/tags')?>
-    </div>
-</div>
+//$this->layout = 'amo2009';
+?>
+<?=$this->renderElement('addon_tags',$relatedTags);
+if (!empty($message)) { ?><div id='tagMessage' class="tagnotice <?=$status?>"><?=$message?></div><? }
+
+ ?>

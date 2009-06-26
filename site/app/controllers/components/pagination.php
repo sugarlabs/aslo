@@ -460,7 +460,7 @@ class PaginationComponent extends Object
 			{
 				if (isset($_GET[$parameter]))
 				{
-					$this->paging[$field] = $this->Sanitize->paranoid($_GET[$parameter]);		
+					$this->paging[$field] = $this->Sanitize->cleanValue($_GET[$parameter]);		
 				}
 				else
 				{

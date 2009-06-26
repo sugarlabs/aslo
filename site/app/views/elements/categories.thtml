@@ -53,10 +53,10 @@ global $hybrid_categories;
     if (isset($highlight) && !empty($highlight)) {
         // find current category in category list
         $highlight_cat = array();
-        foreach ($AmoTags as $_tag) {
-            if ($_tag['type'] == $highlight[0] &&
-                ($_tag['cat'] == $highlight[1] || $_tag['cat'] == 0)) {
-                $highlight_cat = $_tag;
+        foreach ($AmoCategories as $_category) {
+            if ($_category['type'] == $highlight[0] &&
+                ($_category['cat'] == $highlight[1] || $_category['cat'] == 0)) {
+                $highlight_cat = $_category;
                 break;
             }
         }
@@ -74,11 +74,11 @@ global $hybrid_categories;
             
             // when appropriate, show sub-category
             if ($highlight_cat['cat'] == 0 && $highlight[1] != 0
-                && isset($this_tag)) {
+                && isset($this_category)) {
                 echo "<br/>&lfloor;&nbsp;"; // sub-category marker
                 
-                echo $html->link($this_tag['Translation']['name']['string'],
-                    $_url."/cat:{$this_tag['Tag']['id']}",
+                echo $html->link($this_category['Translation']['name']['string'],
+                    $_url."/cat:{$this_category['Category']['id']}",
                     array('title'=>_('categories_current_title')));
             }
             echo "</p>";
@@ -90,9 +90,9 @@ global $hybrid_categories;
     <ul id='cat-list'>
     <?php
     
-    foreach ($AmoTags as $_tag) {
-        $_url = "/browse/type:{$_tag['type']}".($_tag['cat']!=0 ? "/cat:{$_tag['cat']}" : '');
-        echo '<li>'.$html->link($html->entities($_tag['name']), $_url)."</li>\n";
+    foreach ($AmoCategories as $_category) {
+        $_url = "/browse/type:{$_category['type']}".($_category['cat']!=0 ? "/cat:{$_category['cat']}" : '');
+        echo '<li>'.$html->link($html->entities($_category['name']), $_url)."</li>\n";
     }
     ?>
     </ul>

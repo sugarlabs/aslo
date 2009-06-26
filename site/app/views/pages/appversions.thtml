@@ -44,7 +44,7 @@ loadComponent('Versioncompare');
 $applicationModel =& new Application();
 $versionCompare =& new VersioncompareComponent();
 
-$applicationModel->unbindModel(array('hasAndBelongsToMany' => array('Version'), 'hasMany' => array('Tag')));
+$applicationModel->unbindModel(array('hasAndBelongsToMany' => array('Version'), 'hasMany' => array('Category')));
 $applications = $applicationModel->findAll('Application.supported=1', null, null, null, null, 2);
 
 foreach ($applications as $application) {

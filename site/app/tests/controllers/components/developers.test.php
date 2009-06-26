@@ -52,22 +52,22 @@ class DevelopersTest extends UnitTestCase {
 	}
 
    /**
-    * Test the validateTags() method
+    * Test the validateCategories() method
     */
-	function testValidateTags() {
-	    $this->controller->Tag =& new Tag();
+	function testValidateCategories() {
+	    $this->controller->Category =& new Category();
 	    
 	    //Test selecting valid number of categories
-	    $this->assertTrue($this->controller->Developers->validateTags(array('1', '2', '3', '4', '5')), 'Select valid number of categories (return true)');
-		$this->assertEqual($this->controller->Error->errors['Tag/Tag'], null, 'Select valid number of categories (error string)');
+	    $this->assertTrue($this->controller->Developers->validateCategories(array('1', '2', '3', '4', '5')), 'Select valid number of categories (return true)');
+		$this->assertEqual($this->controller->Error->errors['Category/Category'], null, 'Select valid number of categories (error string)');
 		
 	    //Test selecting no categories
-	    $this->assertFalse($this->controller->Developers->validateTags(array()), 'Must select at least one category (return false)');
-		$this->assertEqual($this->controller->Error->errors['Tag/Tag'], 'Please select at least one category.', 'Must select at least one category (error string): %s');
+	    $this->assertFalse($this->controller->Developers->validateCategories(array()), 'Must select at least one category (return false)');
+		$this->assertEqual($this->controller->Error->errors['Category/Category'], 'Please select at least one category.', 'Must select at least one category (error string): %s');
 		
 		//Test selecting many categories
-	    $this->assertFalse($this->controller->Developers->validateTags(array('1', '2', '3', '4', '5', '6')), 'Select no more than 5 categories (return false)');
-		$this->assertEqual($this->controller->Error->errors['Tag/Tag'], 'Please select no more than five categories.', 'Select no more than 5 categories (error string): %s');
+	    $this->assertFalse($this->controller->Developers->validateCategories(array('1', '2', '3', '4', '5', '6')), 'Select no more than 5 categories (return false)');
+		$this->assertEqual($this->controller->Error->errors['Category/Category'], 'Please select no more than five categories.', 'Select no more than 5 categories (error string): %s');
 	}
 	
    /**
@@ -88,40 +88,40 @@ class DevelopersTest extends UnitTestCase {
 	}
 	
    /**
-    * Test the getTags() method
+    * Test the getCategories() method
     */
-	function testGetTags() {
-	    $this->controller->Tag =& new Tag();
+	function testGetCategories() {
+	    $this->controller->Category =& new Category();
 	    
-	    //Get all tags for extensions
-	    $testArray = $this->controller->Developers->getTags(ADDON_EXTENSION, array(1));
-		$this->assertIsA($testArray, 'Array', 'Retrieved tags for addon type');
+	    //Get all categories for extensions
+	    $testArray = $this->controller->Developers->getCategories(ADDON_EXTENSION, array(1));
+		$this->assertIsA($testArray, 'Array', 'Retrieved categories for addon type');
 	}
 
    /**
-    * Test the getSelectedTags() method
+    * Test the getSelectedCategories() method
     */
-	function testGetSelectedTags() {
-	    $this->controller->Tag =& new Tag();
+	function testGetSelectedCategories() {
+	    $this->controller->Category =& new Category();
 	    
-	    //Test order of selected tags - none selected
-	    $testArray = $this->controller->Developers->getSelectedTags(null);
-		$this->assertTrue(empty($testArray), 'No selected tags');
+	    //Test order of selected categories - none selected
+	    $testArray = $this->controller->Developers->getSelectedCategories(null);
+		$this->assertTrue(empty($testArray), 'No selected categories');
 		
-		//Current tags in database
-		$currentTags = array(
+		//Current categories in database
+		$currentCategories = array(
 		                array(
 		                    'id' => '15',
 		                    'name' => 'Test'
 		                )
 		               );
-		$testArray = $this->controller->Developers->getSelectedTags($currentTags);
-		$this->assertTrue(in_array(15, $testArray), 'Database selected tags');
+		$testArray = $this->controller->Developers->getSelectedCategories($currentCategories);
+		$this->assertTrue(in_array(15, $testArray), 'Database selected categories');
 		
-		//Post data selected tags
-		$this->controller->data['Tag']['Tag'][] = 20;
-		$testArray = $this->controller->Developers->getSelectedTags($currentTags);
-		$this->assertTrue(in_array(20, $testArray), 'POST data selected tags');
+		//Post data selected categories
+		$this->controller->data['Category']['Category'][] = 20;
+		$testArray = $this->controller->Developers->getSelectedCategories($currentCategories);
+		$this->assertTrue(in_array(20, $testArray), 'POST data selected categories');
 		
 	}
 	

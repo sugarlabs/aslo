@@ -48,16 +48,16 @@
     <ul id="categoriesdropdown">
         <li>
             <ul>
-                <?php foreach ($AmoTags as $_tag): ?>
-                    <?php if (0===$_tag['cat'] && ADDON_PLUGIN!==$_tag['type']) continue ?>
+                <?php foreach ($AmoCategories as $_category): ?>
+                    <?php if (0===$_category['cat'] && ADDON_PLUGIN!==$_category['type']) continue ?>
                     <?php 
-                        $_url = "/browse/type:{$_tag['type']}".
-                            ($_tag['cat']!=0 ? "/cat:{$_tag['cat']}" : '');
+                        $_url = "/browse/type:{$_category['type']}".
+                            ($_category['cat']!=0 ? "/cat:{$_category['cat']}" : '');
                     ?>
                     <li>
-                        <?= $html->link($html->entities($_tag['name']), $_url) ?>
-                        <?php if (isset($_tag['count'])): ?>
-                            <span class="items"><?= $html->entities($_tag['count']) ?></span>
+                        <?= $html->link($html->entities($_category['name']), $_url) ?>
+                        <?php if (isset($_category['count'])): ?>
+                            <span class="items"><?= $html->entities($_category['count']) ?></span>
                         <?php endif ?>
                     </li>
                 <?php endforeach ?>
@@ -68,19 +68,19 @@
                 <li>
                     <?= $html->link(___('addons_home_collections','Collections'), '/collections/') ?>
                 </li>
-                <?php foreach ($AmoTags as $_tag): ?>
-                    <?php if (0!==$_tag['cat'] || ADDON_PLUGIN===$_tag['type']) continue ?>
+                <?php foreach ($AmoCategories as $_category): ?>
+                    <?php if (0!==$_category['cat'] || ADDON_PLUGIN===$_category['type']) continue ?>
                     <?php 
-                        if (ADDON_THEME === $_tag['type']) {
-                            $_url = "/browse/type:{$_tag['type']}/cat:all?sort=popular";
+                        if (ADDON_THEME === $_category['type']) {
+                            $_url = "/browse/type:{$_category['type']}/cat:all?sort=popular";
                         }
                         else {
-                            $_url = "/browse/type:{$_tag['type']}".
-                                ($_tag['cat']!=0 ? "/cat:{$_tag['cat']}" : '');
+                            $_url = "/browse/type:{$_category['type']}".
+                                ($_category['cat']!=0 ? "/cat:{$_category['cat']}" : '');
                         }
                     ?>
                     <li>
-                        <?= $html->link($html->entities($_tag['name']), $_url) ?>
+                        <?= $html->link($html->entities($_category['name']), $_url) ?>
                     </li>
                 <?php endforeach ?>
             </ul>

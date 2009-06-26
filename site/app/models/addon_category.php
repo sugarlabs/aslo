@@ -37,42 +37,42 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-class AddonTag extends AppModel
+class AddonCategory extends AppModel
 {
     // This is sort of experimental.  I need to retrieve information stored with this 
-    // relationship (in the addons_tags model).  Cake 1.1 doesn't provide a way to do that
+    // relationship (in the addons_categories model).  Cake 1.1 doesn't provide a way to do that
     // so I'm sort of abusing it here and making the Addon model do an extra hasMany join
-    // against this model (it's already doing an HABTM join against Tag using this table).
+    // against this model (it's already doing an HABTM join against Category using this table).
     // Cake 1.2 fixes this problem and we can rip all this code out... --clouserw
 
-    var $name = 'AddonTag';
-    var $useTable = 'addons_tags';
-    var $belongsTo = array('Addon', 'Tag');
+    var $name = 'AddonCategory';
+    var $useTable = 'addons_categories';
+    var $belongsTo = array('Addon', 'Category');
 
     var $recursive = -1;
 
    /**
     * Returns add-ons for the given category (recommended or not).
     *
-    * @param mixed single tag or array of tags
+    * @param mixed single category or array of categories
     * @param bool return recommended or non-recommended add-ons?
     * @param int limit amount of add-ons to return
     * @param string SQL order, default random
     * @return array Add-on IDs that match the criteria
     */
-    function getRandomAddons($tag, $recommended=false, $limit=null, $order='RAND()', $addontype=null) {
+    function getRandomAddons($category, $recommended=false, $limit=null, $order='RAND()', $addontype=null) {
         global $valid_status;
         
-        if (!is_array($tag)) $tag = array($tag);
+        if (!is_array($category)) $category = array($category);
         if (!is_null($addontype) && !is_array($addontype)) $addontype = array($addontype);
         
         $raw_addons = $this->query(
             "SELECT DISTINCT Addon.id "
-            ."FROM addons_tags AS AddonTag "
-            ."INNER JOIN addons AS Addon ON (AddonTag.addon_id = Addon.id)"
+            ."FROM addons_categories AS AddonCategory "
+            ."INNER JOIN addons AS Addon ON (AddonCategory.addon_id = Addon.id)"
             ."WHERE "
-                ."AddonTag.tag_id IN (".implode(',', $tag).') AND '
-                ."AddonTag.feature = ".($recommended ? '1' : '0')." AND "
+                ."AddonCategory.category_id IN (".implode(',', $category).') AND '
+                ."AddonCategory.feature = ".($recommended ? '1' : '0')." AND "
                 ."Addon.status IN (".implode(',', $valid_status).') AND '
                 .'Addon.inactive = 0 '
                 .(!empty($addontype) ? ' AND Addon.addontype_id IN ('.implode(',', $addontype).') ' : '')

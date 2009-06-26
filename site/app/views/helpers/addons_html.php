@@ -554,7 +554,7 @@ class AddonsHtmlHelper extends HtmlHelper
     function isFeatured($addon) {
         $featured = false;
         
-        foreach($addon['AddonTag'] as $tag) {
+        foreach($addon['AddonCategory'] as $tag) {
             if($tag['feature'] == 1) {
                 $featured = true;
                 break;

@@ -337,7 +337,7 @@ class AmoComponent extends Object {
             loadComponent('Versioncompare');
             $versionCompare =& new VersioncompareComponent();
 
-            $applicationModel->unbindModel(array('hasAndBelongsToMany' => array('Version'), 'hasMany' => array('Tag')));
+            $applicationModel->unbindModel(array('hasAndBelongsToMany' => array('Version'), 'hasMany' => array('Category')));
             $applications = $applicationModel->findAll('Application.supported=1', null, null, null, null, 2);
             $appvids = array();
             $versions = array();
@@ -636,26 +636,26 @@ class AmoComponent extends Object {
 
 
     /**
-     * Get a list of tags in alphabetical order.
+     * Get a list of categories in alphabetical order.
      */
-    function getTags($app=APP_ID,$type=ADDON_EXTENSION) {
+    function getCategories($app=APP_ID,$type=ADDON_EXTENSION) {
 
-        if (!isset($this->controller->Tag)) {
-            loadModel('Tag');
-            $this->controller->Tag =& new Tag();
+        if (!isset($this->controller->Category)) {
+            loadModel('Category');
+            $this->controller->Category =& new Category();
             // for CakePHP 1.2 this would be:
-            // $this->controller->loadModel('Tag');
+            // $this->controller->loadModel('Category');
         }
     
-        $this->controller->Tag->unbindFully();
+        $this->controller->Category->unbindFully();
         
-        return $this->controller->Tag->findAll(
+        return $this->controller->Category->findAll(
             array(
                 'application_id' => $app,
                 'addontype_id'   => $type
             ),
             null,
-            'Tag.weight, Translation.name'
+            'Category.weight, Translation.name'
         );
     }
     
@@ -713,20 +713,20 @@ class AmoComponent extends Object {
         }
         
         // add regular categories to list
-        $tags = $this->getTags();
-        foreach ($tags as $_tag) {
+        $categories = $this->getCategories();
+        foreach ($categories as $_category) {
             /* support hybrid categories */
-            if (isset($hybrid_categories[APP_ID][$_tag['Tag']['id']])) {
-                $_type = $hybrid_categories[APP_ID][$_tag['Tag']['id']];
+            if (isset($hybrid_categories[APP_ID][$_category['Category']['id']])) {
+                $_type = $hybrid_categories[APP_ID][$_category['Category']['id']];
                 $_cat = 0;
             } else {
-                $_type = $_tag['Tag']['addontype_id'];
-                $_cat = $_tag['Tag']['id'];
+                $_type = $_category['Category']['addontype_id'];
+                $_cat = $_category['Category']['id'];
             }
             
-            $_name = $_tag['Translation']['name']['string'];
-            $_weight = $_tag['Tag']['weight'];
-            $_count = $_tag['Tag']['count'];
+            $_name = $_category['Translation']['name']['string'];
+            $_weight = $_category['Category']['weight'];
+            $_count = $_category['Category']['count'];
             
             // add item to results array
             $catlist[] = array(

@@ -42,7 +42,7 @@
         <ul id="cat-list">
             <li<?=($page == 'summary') ? ' class="selected"' : ''?>><?=$html->link('Localizer Summary', '/localizers/summary')?></li>
             <li<?=($page == 'applications') ? ' class="selected"' : ''?>><?=$html->link('Applications', '/localizers/applications')?></li>
-            <li<?=($page == 'tags') ? ' class="selected"' : ''?>><?=$html->link('Categories', '/localizers/tags')?></li>
+            <li<?=($page == 'categories') ? ' class="selected"' : ''?>><?=$html->link('Categories', '/localizers/categories')?></li>
             <li<?=($page == 'collection_features') ? ' class="selected"' : ''?>><?=$html->link('Collection Features', '/localizers/collection_features')?></li>
             <?php if ($this->controller->SimpleAcl->actionAllowed('Admin', 'lists', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'platforms') ? ' class="selected"' : ''?>><?=$html->link('Platforms', '/localizers/platforms')?></li>

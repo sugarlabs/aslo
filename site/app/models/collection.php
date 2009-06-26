@@ -65,11 +65,11 @@ class Collection extends AppModel
     );
     
     var $hasAndBelongsToMany_full = array(
-        'Tag' => array(
-            'className'  => 'Tag',
-            'joinTable'  => 'collections_tags',
+        'Category' => array(
+            'className'  => 'Category',
+            'joinTable'  => 'collections_categories',
             'foreignKey' => 'collection_id',
-            'associationForeignKey'=> 'tag_id'
+            'associationForeignKey'=> 'category_id'
         ),
         'Addon' => array(
             'className' => 'Addon',
@@ -346,7 +346,7 @@ class Collection extends AppModel
     function delete($id) {
         $this->execute("DELETE FROM collections_users WHERE collection_id = {$id}");
         $this->execute("DELETE FROM addons_collections WHERE collection_id = {$id}");
-        $this->execute("DELETE FROM collections_tags WHERE collection_id = {$id}");
+        $this->execute("DELETE FROM collections_categories WHERE collection_id = {$id}");
         $this->execute("DELETE FROM collection_subscriptions WHERE collection_id = {$id}");
         $this->execute("DELETE FROM collection_promos WHERE collection_id = {$id}");
         $this->execute("DELETE FROM collections WHERE id = {$id}");

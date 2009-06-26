@@ -40,13 +40,15 @@
 class AdminController extends AppController
 {
     var $name = 'Admin';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
-    var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Versioncompare');
-    var $helpers = array('Html', 'Javascript');
+
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
+    var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Versioncompare', 'Pagination');
+    var $helpers = array('Html', 'Javascript', 'Pagination');
+
     //These defer to their own access checks
     var $aclExceptions = array('index', 'summary',
                                'addonLookup', 'userLookup',
-                               'addontypes', 'tags', 'platforms', 'responses');
+                               'addontypes', 'categories', 'platforms', 'responses');
 
    /**
     * Require login for all actions
@@ -767,13 +769,13 @@ class AdminController extends AppController
    /**
     * Category Manager
     */
-    function tags($action = '', $id = 0) {
+    function categories($action = '', $id = 0) {
         //Part of the Lists permission
         if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
             $this->Amo->accessDenied();
         }
         
-        $this->breadcrumbs['Category Manager'] = '/admin/tags';
+        $this->breadcrumbs['Category Manager'] = '/admin/categories';
         $this->set('breadcrumbs', $this->breadcrumbs);
         
         $applications = array('All');
@@ -792,84 +794,84 @@ class AdminController extends AppController
             $this->Amo->clean($id);
             
             if ($action == 'edit') {
-                $this->_tagEdit($id);
+                $this->_categoryEdit($id);
                 return;
             }
             elseif ($action == 'create') {
-                $this->_tagCreate($id);
+                $this->_categoryCreate($id);
                 return;
             }
         }
         
-        $tags = $this->Tag->findAll();
+        $categories = $this->Category->findAll();
         
-        foreach ($tags as $k => $tag) {
-            $tags[$k]['application'] = !empty($applications[$tag['Tag']['application_id']]) ? $applications[$tag['Tag']['application_id']] : 'All';
-            $tags[$k]['addontype'] = $addontypes[$tag['Tag']['addontype_id']];
+        foreach ($categories as $k => $category) {
+            $categories[$k]['application'] = !empty($applications[$category['Category']['application_id']]) ? $applications[$category['Category']['application_id']] : 'All';
+            $categories[$k]['addontype'] = $addontypes[$category['Category']['addontype_id']];
             
-            $count = $this->Tag->query("SELECT COUNT(*) FROM addons_tags WHERE tag_id='{$tag['Tag']['id']}'");
-            $tags[$k]['count'] = $count[0][0]['COUNT(*)'];
+            $count = $this->Category->query("SELECT COUNT(*) FROM addons_categories WHERE category_id='{$category['Category']['id']}'");
+            $categories[$k]['count'] = $count[0][0]['COUNT(*)'];
         }
         
-        $this->set('tags', $tags);
+        $this->set('categories', $categories);
         $this->set('page', 'lists');
-        $this->set('subpage', 'tags');
-        $this->render('tags');
+        $this->set('subpage', 'categories');
+        $this->render('categories');
     }
     
    /**
-    * Edit Tags
+    * Edit Categories
     */
-    function _tagEdit($id) {
-        $this->breadcrumbs['Edit Category'] = '/admin/tags/edit/'.$id;
+    function _categoryEdit($id) {
+        $this->breadcrumbs['Edit Category'] = '/admin/categories/edit/'.$id;
         $this->set('breadcrumbs', $this->breadcrumbs);
         
-        $this->Tag->id = $id;
+        $this->Category->id = $id;
         
         if (!empty($this->data)) {
             //Delete
             if (!empty($_POST['delete'])) {
-                //Retrieve tag to store name in log
-                $tag = $this->Tag->read();
+                //Retrieve category to store name in log
+                $category = $this->Category->read();
                 
-                $this->Group->execute("DELETE FROM addons_tags WHERE tag_id='{$id}'");
-                $this->Group->execute("DELETE FROM tags WHERE id='{$id}'");
+                $this->Group->execute("DELETE FROM addons_categories WHERE category_id='{$id}'");
+                $this->Group->execute("DELETE FROM categories WHERE id='{$id}'");
                 
                 //Log admin action
-                $this->Eventlog->log($this, 'admin', 'tag_delete', null, $id, null, $tag['Translation']['name']['string']);
+                $this->Eventlog->log($this, 'admin', 'category_delete', null, $id, null, $category['Translation']['name']['string']);
                 
-                $this->flash('Category deleted successfully.', '/admin/tags');
+                $this->flash('Category deleted successfully.', '/admin/categories');
                 return;
             }
             //Edit
             else {
                 // Must manually set application id to null if "All" is selected
-                if (empty($this->data['Tag']['application_id']))
-                    $this->data['Tag']['application_id'] = NULL;
+                if (empty($this->data['Category']['application_id']))
+                    $this->data['Category']['application_id'] = NULL;
                     
-                $this->Tag->save($this->data['Tag']);
-                $this->Tag->execute("UPDATE tags SET weight='".$this->data['Tag']['weight']."' WHERE id='{$id}'");				
+                $this->Category->save($this->data['Category']);
+                $this->Category->execute("UPDATE categories SET weight='".$this->data['Category']['weight']."' WHERE id='{$id}'");				
                 
                 //Log admin action
-                $this->Eventlog->log($this, 'admin', 'tag_edit', null, $id);
+                $this->Eventlog->log($this, 'admin', 'category_edit', null, $id);
                 
                 //Save translated fields (name, description)
-                $this->Developers->saveTranslations($this->data, array('Tag'));
+                $this->Developers->saveTranslations($this->data, array('Category'));
                 
-                $this->flash('Category updated!', '/admin/tags');
+                $this->flash('Category updated!', '/admin/categories');
                 return;
             }
         }
         
-        $tag = $this->Tag->read();
+        $category = $this->Category->read();
         
-        $this->set('tag', $tag);
+        $this->set('category', $category);
         
         $localizedFields = array(
                                 'name' => array(
                                                     'type'        => 'input',
                                                     'display'     => 'Category Name',
-                                                    'model'       => 'Tag',
+                                                    'model'       => 'Category',
                                                     'field'       => 'name',
                                                     'attributes'  => array(
                                                                       'size' => 40
@@ -878,7 +880,7 @@ class AdminController extends AppController
                                 'description' => array(
                                                     'type'        => 'textarea',
                                                     'display'     => 'Category Description',
-                                                    'model'       => 'Tag',
+                                                    'model'       => 'Category',
                                                     'field'       => 'description',
                                                     'attributes'  => array(
                                                                         'cols' => 60,
@@ -892,10 +894,10 @@ class AdminController extends AppController
         foreach (array_keys($valid_languages) as $key) {
             $languages[$key] = $native_languages[$key]['native'];
 
-            $this->Tag->setLang($key, $this);
-            $tagL = $this->Tag->read();
+            $this->Category->setLang($key, $this);
+            $categoryL = $this->Category->read();
 
-            foreach ($tagL['Translation'] as $field => $translation) {
+            foreach ($categoryL['Translation'] as $field => $translation) {
                 if ($translation['locale'] == $key) {
                     $info[$key][$field] = $translation['string'];
                 }
@@ -912,31 +914,31 @@ class AdminController extends AppController
                                       'localizedFields' => $localizedFields));
         
         $this->set('page', 'lists');
-        $this->set('subpage', 'tags');
-        $this->render('tags_edit');    
+        $this->set('subpage', 'categories');
+        $this->render('categories_edit');    
     }
     
    /**
-    * Create Tags
+    * Create Categories
     */
-    function _tagCreate() {
-        $this->breadcrumbs['Create Category'] = '/admin/tags/create';
+    function _categoryCreate() {
+        $this->breadcrumbs['Create Category'] = '/admin/categories/create';
         $this->set('breadcrumbs', $this->breadcrumbs);
         
         if (!empty($this->data)) {
             // Must manually set application id to null if "All" is selected
-            if (empty($this->data['Tag']['application_id']))
-                $this->data['Tag']['application_id'] = NULL;
+            if (empty($this->data['Category']['application_id']))
+                $this->data['Category']['application_id'] = NULL;
             
-            $this->Tag->save($this->data['Tag']);
+            $this->Category->save($this->data['Category']);
             
             //Log admin action
-            $this->Eventlog->log($this, 'admin', 'tag_create', null, $this->Tag->getLastInsertID());
+            $this->Eventlog->log($this, 'admin', 'category_create', null, $this->Category->getLastInsertID());
             
             //Save translated fields (name, description)
-            $this->Developers->saveTranslations($this->data, array('Tag'));
+            $this->Developers->saveTranslations($this->data, array('Category'));
             
-            $this->flash('Category created!', '/admin/tags');
+            $this->flash('Category created!', '/admin/categories');
             return;  
         }
 
@@ -944,7 +946,7 @@ class AdminController extends AppController
                                 'name' => array(
                                                     'type'        => 'input',
                                                     'display'     => 'Category Name',
-                                                    'model'       => 'Tag',
+                                                    'model'       => 'Category',
                                                     'field'       => 'name',
                                                     'attributes'  => array(
                                                                       'size' => 40
@@ -953,7 +955,7 @@ class AdminController extends AppController
                                 'description' => array(
                                                     'type'        => 'textarea',
                                                     'display'     => 'Category Description',
-                                                    'model'       => 'Tag',
+                                                    'model'       => 'Category',
                                                     'field'       => 'description',
                                                     'attributes'  => array(
                                                                         'cols' => 60,
@@ -967,9 +969,9 @@ class AdminController extends AppController
         foreach (array_keys($valid_languages) as $key) {
             $languages[$key] = $native_languages[$key]['native'];
 
-            $this->Tag->setLang($key, $this);
+            $this->Category->setLang($key, $this);
 
-            foreach ($this->Tag->translated_fields as $field) {
+            foreach ($this->Category->translated_fields as $field) {
                 $info[$key][$field] = '';
             }
         }
@@ -981,10 +983,68 @@ class AdminController extends AppController
                                       'localizedFields' => $localizedFields));
         
         $this->set('page', 'lists');
-        $this->set('subpage', 'tags');
-        $this->render('tags_create');    
+        $this->set('subpage', 'categories');
+        $this->render('categories_create');    
     }
-   
+
+   /**
+    * Tags Manager
+    */
+    function tags($action = '', $id = 0) {
+        //Part of the Lists permission
+        if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
+            $this->Amo->accessDenied();
+        }
+        
+        $this->breadcrumbs['Tag Manager'] = '/admin/tags';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+                
+        if (!empty($action)) {
+            $this->Amo->clean($id);
+            
+            if ($action == 'delete') {
+                $this->_tagDelete($id);
+                return;
+            }
+            elseif ($action == 'blacklist') {
+                $this->_tagBlacklist($id);
+                return;
+            }
+            elseif ($action == 'unblacklist') {
+                $this->_tagUnBlacklist($id);
+                return;
+            }            
+        }
+        
+    //    $tags = $this->Tag->findAll();
+        $criteria=NULL;
+        $this->Pagination->modelClass='Tag';
+        
+        list($order,$limit,$page) = $this->Pagination->init($criteria, array('modelClass'=>'Tag')); // Added
+       // $order=str_replace('Addon','Tag', $order);
+        $tags = $this->Tag->findAll($criteria, NULL, $order, $limit, $page); // Extra parameters added 
+                
+        $this->set('tags', $tags);
+        $this->set('page', 'lists');
+        $this->set('subpage', 'tags');
+        $this->render('tags');
+    }
+ 
+	function _tagBlacklist($tag_id) {
+        if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
+            $this->Amo->accessDenied();
+        }
+        $this->Tag->blacklistTag($tag_id);
+       $this->redirect('/admin/tags');
+	}
+
+	function _tagUnBlacklist($tag_id) {
+        if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
+            $this->Amo->accessDenied();
+        }
+        $this->Tag->unblacklistTag($tag_id);
+       $this->redirect('/admin/tags');
+	}   
 
    /**
     * Platform Manager
@@ -1121,7 +1181,7 @@ class AdminController extends AppController
             $this->Developers->saveTranslations($this->data, array('Platform'));
             
             //Log admin action
-            $this->Eventlog->log($this, 'admin', 'platform_create', null, $this->Tag->getLastInsertID());
+            $this->Eventlog->log($this, 'admin', 'platform_create', null, $this->Category->getLastInsertID());
             
             $this->flash('Platform created!', '/admin/platforms');
             return;  
@@ -1153,9 +1213,9 @@ class AdminController extends AppController
         foreach (array_keys($valid_languages) as $key) {
             $languages[$key] = $native_languages[$key]['native'];
 
-            $this->Tag->setLang($key, $this);
+            $this->Category->setLang($key, $this);
 
-            foreach ($this->Tag->translated_fields as $field) {
+            foreach ($this->Category->translated_fields as $field) {
                 $info[$key][$field] = '';
             }
         }
@@ -1537,7 +1597,7 @@ class AdminController extends AppController
     }
     
    /**
-    * Create Tags
+    * Create Categories
     */
     function _responseCreate() {
         $this->breadcrumbs['Create Response'] = '/admin/responses/create';

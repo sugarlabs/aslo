@@ -109,21 +109,21 @@ class AuditComponent extends Object {
                                 }
                                 break;
                             
-                            case 'tag_create':
-                            case 'tag_edit':
-                                $tagInfo = $this->controller->Tag->findById($log['Eventlog']['changed_id'], null, null, -1);
-                                $tag = $this->link($tagInfo['Translation']['name']['string'], '/admin/tags');
+                            case 'category_create':
+                            case 'category_edit':
+                                $categoryInfo = $this->controller->Category->findById($log['Eventlog']['changed_id'], null, null, -1);
+                                $category = $this->link($categoryInfo['Translation']['name']['string'], '/admin/categories');
                                 
-                                if ($log['Eventlog']['action'] == 'tag_create') {
-                                    $entry = sprintf(___('audit_tag_create'), $user, $tag);
+                                if ($log['Eventlog']['action'] == 'category_create') {
+                                    $entry = sprintf(___('audit_category_create'), $user, $category);
                                 }
-                                elseif ($log['Eventlog']['action'] == 'tag_edit') {
-                                    $entry = sprintf(___('audit_tag_edit'), $user, $tag);
+                                elseif ($log['Eventlog']['action'] == 'category_edit') {
+                                    $entry = sprintf(___('audit_category_edit'), $user, $category);
                                 }
                                 break;
                             
-                            case 'tag_delete':
-                                $entry = sprintf(___('audit_tag_delete'), $user, $log['Eventlog']['removed'], $log['Eventlog']['changed_id']);
+                            case 'category_delete':
+                                $entry = sprintf(___('audit_category_delete'), $user, $log['Eventlog']['removed'], $log['Eventlog']['changed_id']);
                                 break;
                             
                             case 'platform_create':
@@ -266,8 +266,8 @@ class AuditComponent extends Object {
                                 $entry = sprintf(___('audit_update_applications'), $user, $this->linkTitle($log['Eventlog']['notes'], "/localizers/applications/?userlang="));
                                 break;
                             
-                            case 'update_tags':
-                                $entry = sprintf(___('audit_update_tags'), $user, $this->linkTitle($log['Eventlog']['notes'], "/localizers/tags/?userlang="));
+                            case 'update_categories':
+                                $entry = sprintf(___('audit_update_categories'), $user, $this->linkTitle($log['Eventlog']['notes'], "/localizers/categories/?userlang="));
                                 break;
                             
                             case 'update_platforms':

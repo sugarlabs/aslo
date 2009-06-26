@@ -43,9 +43,9 @@
 class EditorsController extends AppController
 {
     var $name = 'Editors';
-    var $uses = array('Addon', 'AddonTag', 'Addontype', 'Application', 'Approval',
+    var $uses = array('Addon', 'AddonCategory', 'Addontype', 'Application', 'Approval',
         'Appversion', 'Cannedresponse', 'EditorSubscription', 'Eventlog', 'Favorite',
-        'File', 'Platform', 'Review', 'ReviewsModerationFlag', 'Tag', 'Translation',
+        'File', 'Platform', 'Review', 'ReviewsModerationFlag', 'Category', 'Translation',
         'User', 'Version');
     var $components = array('Amo', 'Audit', 'Developers', 'Editors', 'Email', 'Error', 'Image', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Listing', 'Localization', 'Pagination');
@@ -305,14 +305,14 @@ class EditorsController extends AppController
         
         $this->pageTitle = $addon['Translation']['name']['string'] . ' :: ' . $this->pageTitle;
 
-        if (!empty($addon['Tag'])) {
-            foreach ($addon['Tag'] as $tag) {
-                $tags[] = $tag['id'];
+        if (!empty($addon['Category'])) {
+            foreach ($addon['Category'] as $category) {
+                $categories[] = $category['id'];
             }
-            $addon['Tags'] = $this->Tag->findAll("Tag.id IN (".implode(', ', $tags).")");
+            $addon['Categories'] = $this->Category->findAll("Category.id IN (".implode(', ', $categories).")");
         }
         else
-            $addon['Tags'] = array();
+            $addon['Categories'] = array();
         
         $platforms = $this->Amo->getPlatformName();   
         
@@ -1378,7 +1378,7 @@ class EditorsController extends AppController
                     $this->data['Addon']['id'] = $matches[1];
                 } 
 
-                if (!is_numeric($this->data['Addon']['id']) || !is_numeric($this->data['Tag']['id'])) {
+                if (!is_numeric($this->data['Addon']['id']) || !is_numeric($this->data['Category']['id'])) {
                     header('HTTP/1.1 400 Bad Request');
                     $this->flash(_('editors_featured_addon_add_failure'), '/editors/featured');
                     return;
@@ -1392,9 +1392,9 @@ class EditorsController extends AppController
                 }
 
                 // If the add-on isn't in the category, we'll add it.
-                $_new_feature_query = "REPLACE INTO addons_tags (addon_id, tag_id, feature) VALUES ( '{$this->data['Addon']['id']}', '{$this->data['Tag']['id']}', 1)";
+                $_new_feature_query = "REPLACE INTO addons_categories (addon_id, category_id, feature) VALUES ( '{$this->data['Addon']['id']}', '{$this->data['Category']['id']}', 1)";
 
-                if ($this->AddonTag->query($_new_feature_query)) {
+                if ($this->AddonCategory->query($_new_feature_query)) {
                     header('HTTP/1.1 400 Bad Request');
                     $this->flash(_('editors_featured_addon_add_failure'), '/editors/featured');
                 } else {
@@ -1406,15 +1406,15 @@ class EditorsController extends AppController
             case 'edit':
                 global $valid_languages;
 
-                if (!empty($this->data['AddonTag']['feature_locales'])) {
-                    if (count(array_diff(explode(',',$this->data['AddonTag']['feature_locales']), array_keys($valid_languages))) > 0) {
+                if (!empty($this->data['AddonCategory']['feature_locales'])) {
+                    if (count(array_diff(explode(',',$this->data['AddonCategory']['feature_locales']), array_keys($valid_languages))) > 0) {
                         header('HTTP/1.1 400 Bad Request');
                         $this->flash(_('editors_featured_addon_invalid_locale'), '/editors/featured');
                         return;
                     }
                 }
 
-                if (!is_numeric($this->data['Addon']['id']) || !is_numeric($this->data['Tag']['id']) || preg_match('/[^A-Za-z,-]/',$this->data['AddonTag']['feature_locales'])) {
+                if (!is_numeric($this->data['Addon']['id']) || !is_numeric($this->data['Category']['id']) || preg_match('/[^A-Za-z,-]/',$this->data['AddonCategory']['feature_locales'])) {
                     header('HTTP/1.1 400 Bad Request');
                     $this->flash(_('editors_featured_addon_edit_failure'), '/editors/featured');
                     return;
@@ -1423,16 +1423,16 @@ class EditorsController extends AppController
                 $this->Eventlog->log($this, 'editor', 'feature_locale_change', 'feature-locales', $this->data['Addon']['id']);
 
                 // Reorder the locales
-                $_locales = array_unique(explode(',', $this->data['AddonTag']['feature_locales']));
+                $_locales = array_unique(explode(',', $this->data['AddonCategory']['feature_locales']));
                 sort($_locales);
-                $this->data['AddonTag']['feature_locales'] = implode(',',$_locales);
+                $this->data['AddonCategory']['feature_locales'] = implode(',',$_locales);
 
-                $_edit_feature_query = "UPDATE addons_tags 
-                                        SET feature_locales='{$this->data['AddonTag']['feature_locales']}' 
+                $_edit_feature_query = "UPDATE addons_categories 
+                                        SET feature_locales='{$this->data['AddonCategory']['feature_locales']}' 
                                         WHERE addon_id='{$this->data['Addon']['id']}' 
-                                        AND tag_id='{$this->data['Tag']['id']}'";
+                                        AND category_id='{$this->data['Category']['id']}'";
 
-                if ($this->AddonTag->query($_edit_feature_query)) {
+                if ($this->AddonCategory->query($_edit_feature_query)) {
                     header('HTTP/1.1 400 Bad Request');
                     $this->flash(_('editors_featured_addon_edit_failure'), '/editors/featured');
                 } else {
@@ -1441,12 +1441,12 @@ class EditorsController extends AppController
                 return;
 
             case 'remove':
-                if (is_numeric($this->data['Tag']['id']) && is_numeric($this->data['Addon']['id'])) {
+                if (is_numeric($this->data['Category']['id']) && is_numeric($this->data['Addon']['id'])) {
 
                     $this->Eventlog->log($this, 'editor', 'feature_remove', null, $this->data['Addon']['id'], null, $this->data['Addon']['id']);
 
                     // Neither query() nor execute() return success from a DELETE call, even when the row is deleted. wtf.
-                    $this->AddonTag->execute("DELETE FROM `addons_tags` WHERE addon_id='{$this->data['Addon']['id']}' AND tag_id='{$this->data['Tag']['id']}' AND feature=1 LIMIT 1");
+                    $this->AddonCategory->execute("DELETE FROM `addons_categories` WHERE addon_id='{$this->data['Addon']['id']}' AND category_id='{$this->data['Category']['id']}' AND feature=1 LIMIT 1");
 
                     // Assume we succeeded
                     $this->flash(_('editors_featured_addon_remove_success'), '/editors/featured', 3);
@@ -1468,11 +1468,11 @@ class EditorsController extends AppController
         $this->publish('subpagetitle', _('editors_featured_addons_pagetitle'));
 
         // Get all featured Addons
-        $features = $this->AddonTag->findAllByFeature(1, array('addon_id'));
-        $_addon_ids = $addons_by_tag = array();
+        $features = $this->AddonCategory->findAllByFeature(1, array('addon_id'));
+        $_addon_ids = $addons_by_category = array();
 
         if (!empty($features)) {
-            foreach ($features as $feature) { $_addon_ids[] = $feature['AddonTag']['addon_id']; }
+            foreach ($features as $feature) { $_addon_ids[] = $feature['AddonCategory']['addon_id']; }
             $_addon_ids = array_unique($_addon_ids);
 
             // Big ol' array
@@ -1481,12 +1481,12 @@ class EditorsController extends AppController
 
             foreach ($features as $feature) {
                 // Dump them into the array sorted by category
-                foreach ($feature['AddonTag'] as $attributes) {
+                foreach ($feature['AddonCategory'] as $attributes) {
                     if ($attributes['feature'] == 1) {
-                        // override the AddonTag array for the view.  Even though an add-on will have multiple tags, we only want one for this view
-                        $feature['AddonTag'] = array( 0 => $attributes );
+                        // override the AddonCategory array for the view.  Even though an add-on will have multiple categories, we only want one for this view
+                        $feature['AddonCategory'] = array( 0 => $attributes );
 
-                        $addons_by_tag[$attributes['tag_id']][] = $feature;
+                        $addons_by_category[$attributes['category_id']][] = $feature;
                     }
                     
                 }
@@ -1494,17 +1494,17 @@ class EditorsController extends AppController
             }
         }
 
-        // Reorganize the tags so it's easier to use them in the view.  TheLittleThingsWearMeDown++ :(
-        $tags = array();
-        foreach ($this->Tag->findAll('', null, array('Tag.application_id', 'Tag.addontype_id', 'Translation.name')) as $tag) {
-            $tags[$tag['Tag']['id']] = $tag;
+        // Reorganize the categories so it's easier to use them in the view.  TheLittleThingsWearMeDown++ :(
+        $categories = array();
+        foreach ($this->Category->findAll('', null, array('Category.application_id', 'Category.addontype_id', 'Translation.name')) as $category) {
+            $categories[$category['Category']['id']] = $category;
         }
         
         $this->set('applications', $this->Amo->getApplicationName());
         $this->set('addontypes', $this->Addontype->getNames());
-        $this->set('tags', $tags);
+        $this->set('categories', $categories);
         $this->set('mode', 'featured');
-        $this->publish('addons_by_tag', $addons_by_tag);
+        $this->publish('addons_by_category', $addons_by_category);
         $this->render('featured');
 
     }

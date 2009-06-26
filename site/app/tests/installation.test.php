@@ -161,9 +161,9 @@ class InstallationTest extends UnitTestCase {
             $this->assertTrue($r[0]['count']>0,'Test data in `addons` exists.');
             unset($r);
 
-            // Test data in `addons_tags`?
-            $r = $connected->fetchRow('SELECT count(*) as count FROM `addons_tags`');
-            $this->assertTrue($r[0]['count']>0,'Test data in `addons_tags` exists.');
+            // Test data in `addons_categories`?
+            $r = $connected->fetchRow('SELECT count(*) as count FROM `addons_categories`');
+            $this->assertTrue($r[0]['count']>0,'Test data in `addons_categories` exists.');
             unset($r);
 
             // Test data in `addons_users`?
@@ -196,9 +196,9 @@ class InstallationTest extends UnitTestCase {
             $this->assertTrue($r[0]['count']>0,'Test data in `previews` exists.');
             unset($r);
 
-            // Test data in `tags`?
-            $r = $connected->fetchRow('SELECT count(*) as count FROM `tags`');
-            $this->assertTrue($r[0]['count']>0,'Test data in `tags` exists.');
+            // Test data in `categories`?
+            $r = $connected->fetchRow('SELECT count(*) as count FROM `categories`');
+            $this->assertTrue($r[0]['count']>0,'Test data in `categories` exists.');
             unset($r);
 
             // Test data in `users`?

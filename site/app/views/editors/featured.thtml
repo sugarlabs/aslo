@@ -65,33 +65,33 @@
             </tr>
 <?php
     $current_type = 0;
-    foreach ($tags as $tag) :
+    foreach ($categories as $category) :
        
-        if ($tag['Tag']['addontype_id'] != $current_type) {
-            echo '<tr class="featureTypeHeader '.preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$tag['Tag']['addontype_id']])).'"><th colspan="2">'.$html->image('developers/'.strtolower($applications[$tag['Tag']['application_id']]).'.png', array('title' => $applications[$tag['Tag']['application_id']])).' '.$addontypes[$tag['Tag']['addontype_id']].'</th></tr>';
-            $current_type = $tag['Tag']['addontype_id'];
+        if ($category['Category']['addontype_id'] != $current_type) {
+            echo '<tr class="featureTypeHeader '.preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$category['Category']['addontype_id']])).'"><th colspan="2">'.$html->image('developers/'.strtolower($applications[$category['Category']['application_id']]).'.png', array('title' => $applications[$category['Category']['application_id']])).' '.$addontypes[$category['Category']['addontype_id']].'</th></tr>';
+            $current_type = $category['Category']['addontype_id'];
         }
 
-        echo '<tr class="featureHeader '.preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$tag['Tag']['addontype_id']])).'"><th colspan="2"><span lang="'.$tag['Translation']['name']['locale'].'">'.$tag['Translation']['name']['string'].'</span></th></tr>';
+        echo '<tr class="featureHeader '.preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$category['Category']['addontype_id']])).'"><th colspan="2"><span lang="'.$category['Translation']['name']['locale'].'">'.$category['Translation']['name']['string'].'</span></th></tr>';
 
-        $_class = preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$tag['Tag']['addontype_id']]));
-        if (array_key_exists($tag['Tag']['id'], $addons_by_tag) && !empty($addons_by_tag[$tag['Tag']['id']])) {
+        $_class = preg_replace('/[^A-Za-z0-9]/','',strtolower($addontypes[$category['Category']['addontype_id']]));
+        if (array_key_exists($category['Category']['id'], $addons_by_category) && !empty($addons_by_category[$category['Category']['id']])) {
             $zebra = 0;
-            foreach ($addons_by_tag[$tag['Tag']['id']] as $addon):
+            foreach ($addons_by_category[$category['Category']['id']] as $addon):
                 $_evenodd = ($zebra++ % 2 == 0 ? ' even' : ' odd');
                 ?>
-                <tr class="<?=$_class.$_evenodd?>" id="feature-<?=$tag['Tag']['id']?>-<?=$addon['Addon']['id']?>">
+                <tr class="<?=$_class.$_evenodd?>" id="feature-<?=$category['Category']['id']?>-<?=$addon['Addon']['id']?>">
                     <td>
                         <?php
                         echo $html->formTag('/editors/featured/remove', 'post',
-                            array('id' => 'feature-remove-form-'.$tag['Tag']['id'].'-'.$addon['Addon']['id'],
-                                  'onsubmit' => 'removeFeature('.$tag['Tag']['id'].','.$addon['Addon']['id'].'); return false;'));
+                            array('id' => 'feature-remove-form-'.$category['Category']['id'].'-'.$addon['Addon']['id'],
+                                  'onsubmit' => 'removeFeature('.$category['Category']['id'].','.$addon['Addon']['id'].'); return false;'));
                         echo $html->submitImage('/developers/delete.png',
                             array('title'=>_('editors_featured_remove_feature'),
                                   'alt' => _('editors_featured_remove_feature'),
                                   'class' => 'featureremove',
-                                  'id' => 'delete-'.$tag['Tag']['id'].'-'.$addon['Addon']['id']));
-                        echo $html->hidden('Tag/id', array('value' => $tag['Tag']['id']));
+                                  'id' => 'delete-'.$category['Category']['id'].'-'.$addon['Addon']['id']));
+                        echo $html->hidden('Category/id', array('value' => $category['Category']['id']));
                         echo $html->hidden('Addon/id', array('value' => $addon['Addon']['id']));
                         echo '&nbsp;';
                         echo $html->link($addon['Translation']['name']['string'], '/addon/'.$addon['Addon']['id']);
@@ -100,11 +100,11 @@
                     </td>    
                     <td>
                         <?php
-                        echo $html->formTag('/editors/featured/edit', 'post', array('id' => 'feature-edit-form-'.$tag['Tag']['id'].'-'.$addon['Addon']['id'], 'onsubmit' => 'editFeatureSubmit('.$tag['Tag']['id'].','.$addon['Addon']['id'].'); return false;'));
-                        echo $html->hidden('Tag/id', array('value' => $tag['Tag']['id']));
+                        echo $html->formTag('/editors/featured/edit', 'post', array('id' => 'feature-edit-form-'.$category['Category']['id'].'-'.$addon['Addon']['id'], 'onsubmit' => 'editFeatureSubmit('.$category['Category']['id'].','.$addon['Addon']['id'].'); return false;'));
+                        echo $html->hidden('Category/id', array('value' => $category['Category']['id']));
                         echo $html->hidden('Addon/id', array('value' => $addon['Addon']['id']));
-                        echo $html->input('AddonTag/feature_locales', array('id' => "edit-addon-locales-{$tag['Tag']['id']}-{$addon['Addon']['id']}", 'size' => 40, 'value' => $addon['AddonTag'][0]['feature_locales']));
-                        echo $html->submit(_('editors_featured_edit_feature_submit'), array('id' => 'edit-feature-submit-'.$tag['Tag']['id'].'-'.$addon['Addon']['id']));
+                        echo $html->input('AddonCategory/feature_locales', array('id' => "edit-addon-locales-{$category['Category']['id']}-{$addon['Addon']['id']}", 'size' => 40, 'value' => $addon['AddonCategory'][0]['feature_locales']));
+                        echo $html->submit(_('editors_featured_edit_feature_submit'), array('id' => 'edit-feature-submit-'.$category['Category']['id'].'-'.$addon['Addon']['id']));
                         ?>
                         </form>
                     </td>
@@ -113,19 +113,19 @@
             endforeach;
         }
 
-        echo '<tr class="'.$_class.' even" id="feature-add-tr-form-'.$tag['Tag']['id'].'"><td>';
-        echo $html->formTag('/editors/featured/add', 'post', array('id' => 'feature-add-form-'.$tag['Tag']['id'], 'onsubmit' => 'addFeatureSubmit('.$tag['Tag']['id'].'); return false;'));
-        echo $html->hidden('Tag/id', array('value' => $tag['Tag']['id']));
+        echo '<tr class="'.$_class.' even" id="feature-add-tr-form-'.$category['Category']['id'].'"><td>';
+        echo $html->formTag('/editors/featured/add', 'post', array('id' => 'feature-add-form-'.$category['Category']['id'], 'onsubmit' => 'addFeatureSubmit('.$category['Category']['id'].'); return false;'));
+        echo $html->hidden('Category/id', array('value' => $category['Category']['id']));
         echo $html->submitImage('developers/add.png',
             array('title' => _('editors_featured_add_feature'),
                   'alt' => _('editors_featured_add_feature'),
                   'class' => 'featureadd',
-                  'id' => 'add-'.$tag['Tag']['id'],
+                  'id' => 'add-'.$category['Category']['id'],
                   )).'&nbsp;';
-        echo '<input type="text" name="data[Addon][id]" id="new-addon-id-'.$tag['Tag']['id'].'" onfocus="prepAutocomplete('.$tag['Tag']['id'].');" size="40" />';
-        echo '<noscript>'.$html->submit(_('editors_featured_add_feature_submit'), array('id' => 'new-feature-submit-'.$tag['Tag']['id'])).'</noscript>';
+        echo '<input type="text" name="data[Addon][id]" id="new-addon-id-'.$category['Category']['id'].'" onfocus="prepAutocomplete('.$category['Category']['id'].');" size="40" />';
+        echo '<noscript>'.$html->submit(_('editors_featured_add_feature_submit'), array('id' => 'new-feature-submit-'.$category['Category']['id'])).'</noscript>';
         echo '</form></td>';
-        echo '<td><span id="edit-feature-message-'.$tag['Tag']['id'].'"></span></td></tr>'; // use the extra space for messages
+        echo '<td><span id="edit-feature-message-'.$category['Category']['id'].'"></span></td></tr>'; // use the extra space for messages
 
     endforeach;
 ?>

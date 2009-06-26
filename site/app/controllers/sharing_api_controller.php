@@ -57,7 +57,7 @@ class SharingApiController extends AppController
     );
     var $uses = array(
         'Addon', 'AddonCollection', 'Addontype', 'ApiAuthToken',
-        'Application', 'Collection', 'File', 'Platform', 'Tag', 'Translation',
+        'Application', 'Collection', 'File', 'Platform', 'Category', 'Translation', 
         'UpdateCount', 'Version'
     );
     var $components = array(
@@ -1003,11 +1003,11 @@ class SharingApiController extends AppController
                     'conditions' => 'addons_users.listed=1',
                     'order' => 'addons_users.position'
                 ),
-                'Tag' => array(
-                    'className'  => 'Tag',
-                    'joinTable'  => 'addons_tags',
+                'Category' => array(
+                    'className'  => 'Category',
+                    'joinTable'  => 'addons_categories',
                     'foreignKey' => 'addon_id',
-                    'associationForeignKey'=> 'tag_id'
+                    'associationForeignKey'=> 'category_id'
                 )
             )
         ));
@@ -1023,16 +1023,16 @@ class SharingApiController extends AppController
 
         $addons_data = $this->Addon->findAll($conditions);
 
-        // Rather than trying to join tags and addon types in SQL, collect IDs
+        // Rather than trying to join categories and addon types in SQL, collect IDs 
         // and make a pair of queries to fetch them.
-        $tag_ids = array();
+        $category_ids = array();
         $addon_type_ids = array();
         $addon_ids = array();
         foreach ($addons_data as $addon) {
             $addon_ids[] = $addon['Addon']['id'];
             $addon_type_ids[$addon['Addon']['addontype_id']] = true;
-            foreach ($addon['Tag'] as $tag)
-                $tag_ids[$tag['id']] = true;
+            foreach ($addon['Category'] as $category) 
+                $category_ids[$category['id']] = true;
         }
 
         $user_names = array();
@@ -1065,14 +1065,14 @@ class SharingApiController extends AppController
             $addon_types[$row['Addontype']['id']] = $row;
         }
 
-        // Query for addon types found in this set of tags, assemble a map
+        // Query for addon types found in this set of categories, assemble a map 
         // for an in-code join later.
-        $tag_rows = $this->Tag->findAll(array(
-            'Tag.id' => array_keys($tag_ids)
+        $category_rows = $this->Category->findAll(array(
+            'Category.id' => array_keys($category_ids)
         ));
-        $all_tags = array();
-        foreach ($tag_rows as $row) {
-            $all_tags[$row['Tag']['id']] = $row;
+        $all_categories = array();
+        foreach ($category_rows as $row) {
+            $all_categories[$row['Category']['id']] = $row;
         }
 
         $app_names = $this->Application->getIDList();
@@ -1089,7 +1089,7 @@ class SharingApiController extends AppController
 
         // Process addons list to produce a much flatter and more easily
         // sanitized array structure for the view, sprinkling in details
-        // like tags and version information along the way.
+        // like categories and version information along the way.
         $addons_out = array();
         for ($i=0; $i<count($addons_data); $i++) {
 
@@ -1137,17 +1137,17 @@ class SharingApiController extends AppController
                 'users' => $addon['User'],
                 'eula' => $addon['Translation']['eula']['string'],
                 'averagerating' => $addon['Addon']['averagerating'],
-                'tags' => array(),
+                'categories' => array(),
                 'compatible_apps' => array(),
                 'all_compatible_os' => array(),
                 'fileinfo' => array()
             );
 
-            // Add the list of tags into the addon details
-            foreach ($addon['Tag'] as $x) {
-                $x = $all_tags[ $x['id'] ];
-                $addon_out['tags'][] = array(
-                    'id'   => $x['Tag']['id'],
+            // Add the list of categories into the addon details
+            foreach ($addon['Category'] as $x) {
+                $x = $all_categories[ $x['id'] ];
+                $addon_out['categories'][] = array(
+                    'id'   => $x['Category']['id'],
                     'name' => $x['Translation']['name']['string']
                 );
             }

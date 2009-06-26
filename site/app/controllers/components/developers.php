@@ -48,21 +48,21 @@ class DevelopersComponent extends Object {
     }
     
    /**
-    * Make sure at least one but no more than 5 tags selected
-    * @param array $tags post data of selected tags
+    * Make sure at least one but no more than 5 categories selected
+    * @param array $categories post data of selected categories
     */
-    function validateTags($tags) {
+    function validateCategories($categories) {
         $errors =& $this->controller->Error;
         
-        //Must have at least one tag selected, but no more than 5
-        if (empty($tags)) {
-            $errors->addError(_('devcp_error_one_category'), 'Tag/Tag');
-            $this->controller->Tag->invalidate('Tag');
+        //Must have at least one category selected, but no more than 5
+        if (empty($categories)) {
+            $errors->addError(_('devcp_error_one_category'), 'Category/Category');
+            $this->controller->Category->invalidate('Category');
             return false;
         }
-        elseif (count($tags) > 5) {
-            $errors->addError(_('devcp_error_five_categories'), 'Tag/Tag');
-            $this->controller->Tag->invalidate('Tag');
+        elseif (count($categories) > 5) {
+            $errors->addError(_('devcp_error_five_categories'), 'Category/Category');
+            $this->controller->Category->invalidate('Category');
             return false;
         }
         
@@ -115,23 +115,23 @@ class DevelopersComponent extends Object {
     }
     
    /**
-    * Get all tags for an addontype
+    * Get all categories for an addontype
     * @param int $addontypeId the addontype ID
     * @param array $applicationIds the ids of supported applications
-    * @return array $tags the tags
+    * @return array $categories the categories
     */
-    function getTags($addontypeId, $applicationIds) {
-        //Get tags based on addontype
-        $applicationIdQry = !empty($applicationIds) ? "Tag.application_id IN (".implode(', ', $applicationIds).") OR" : '';
+    function getCategories($addontypeId, $applicationIds) {
+        //Get categories based on addontype
+        $applicationIdQry = !empty($applicationIds) ? "Category.application_id IN (".implode(', ', $applicationIds).") OR" : '';
 
         // Override for search engines.  They have no application restrictions (bug 417727)
         if ($addontypeId == ADDON_SEARCH) {
-            $applicationIdQry = 'Tag.application_id IS NOT NULL OR';
+            $applicationIdQry = 'Category.application_id IS NOT NULL OR';
         }
         
-        $tagsQry = $this->controller->Tag->findAll("Tag.addontype_id='{$addontypeId}' AND ({$applicationIdQry} Tag.application_id IS NULL)");
+        $categoriesQry = $this->controller->Category->findAll("Category.addontype_id='{$addontypeId}' AND ({$applicationIdQry} Category.application_id IS NULL)");
 
-        if ($tagsQry) {
+        if ($categoriesQry) {
             // show (APP) behind name?
             $add_apps = (is_array($applicationIds) && count($applicationIds)>1);
             if ($add_apps) {
@@ -144,46 +144,46 @@ class DevelopersComponent extends Object {
                 }
             }
             
-            foreach ($tagsQry as $k => $v) {
-                $tags['names'][$v['Tag']['id']] = $v['Translation']['name']['string'];
-                if ($add_apps && !is_null($v['Tag']['application_id']))
-                    $tags['names'][$v['Tag']['id']] .= " ({$appnames[$v['Tag']['application_id']]})";
-                $tags['descriptions'][] = $v['Tag']['id'].': "'.addslashes($v['Translation']['description']['string']).'"';
+            foreach ($categoriesQry as $k => $v) {
+                $categories['names'][$v['Category']['id']] = $v['Translation']['name']['string'];
+                if ($add_apps && !is_null($v['Category']['application_id']))
+                    $categories['names'][$v['Category']['id']] .= " ({$appnames[$v['Category']['application_id']]})";
+                $categories['descriptions'][] = $v['Category']['id'].': "'.addslashes($v['Translation']['description']['string']).'"';
             }
         }
         
-        if (!empty($tags)) {
-            asort($tags['names']);
-            return $tags;
+        if (!empty($categories)) {
+            asort($categories['names']);
+            return $categories;
         }
         
         return array();
     }
     
    /**
-    * Get all selected tags in order of post data, existing data, default
-    * @param array $currentTags currently selected tags
-    * @return array $selectedTags the selected tags
+    * Get all selected categories in order of post data, existing data, default
+    * @param array $currentCategories currently selected categories
+    * @return array $selectedCategories the selected categories
     */
-    function getSelectedTags($currentTags) {
+    function getSelectedCategories($currentCategories) {
         //post data
-        if (!empty($this->controller->data['Tag']['Tag'])) {
-            foreach($this->controller->data['Tag']['Tag'] as $tag) {
-                $selectedTags[] = $tag;
+        if (!empty($this->controller->data['Category']['Category'])) {
+            foreach($this->controller->data['Category']['Category'] as $category) {
+                $selectedCategories[] = $category;
             }
         }
         //current data
-        elseif (!empty($currentTags)) {
-            foreach ($currentTags as $tag) {
-                $selectedTags[] = $tag['id'];
+        elseif (!empty($currentCategories)) {
+            foreach ($currentCategories as $category) {
+                $selectedCategories[] = $category['id'];
             }
         }
         //default data
         else {
-            $selectedTags = array();
+            $selectedCategories = array();
         }
         
-        return $selectedTags;
+        return $selectedCategories;
     }
 
    /**
@@ -864,7 +864,7 @@ class DevelopersComponent extends Object {
 
    /**
     * Delete an addon, along with its versions, files, reviews, previews,
-    * favorites, features, tags, and translations
+    * favorites, features, categories, and translations
     * @param int $id the add-on id
     * @return boolean
     */
@@ -893,8 +893,8 @@ class DevelopersComponent extends Object {
             }
         }
 
-        //Delete addons_tags rows
-        $this->controller->Addon->execute("DELETE FROM addons_tags WHERE addon_id='{$id}'");
+        //Delete addons_categories rows
+        $this->controller->Addon->execute("DELETE FROM addons_categories WHERE addon_id='{$id}'");
 
         //Delete addons_users rows
         $this->controller->Addon->execute("DELETE FROM addons_users WHERE addon_id='{$id}'");

@@ -38,7 +38,8 @@
 class LocalizersController extends AppController
 {
     var $name = 'Localizers';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'CollectionFeatures', 'Eventlog', 'Platform','Tag', 'Translation', 'User', 'Version');
+
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'CollectionFeatures', 'Eventlog', 'Platform','Category', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Audit', 'Error', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Pagination');
     
@@ -153,14 +154,14 @@ class LocalizersController extends AppController
             }
         }
         
-        //Pull tag translation ids
-        if ($tags = $this->Tag->query("SELECT name, description FROM tags")) {
-            foreach ($tags as $tag) {
-                if (!empty($tag['tags']['name'])) {
-                    $ids[] = $tag['tags']['name'];
+        //Pull category translation ids
+        if ($categories = $this->Category->query("SELECT name, description FROM categories")) {
+            foreach ($categories as $category) {
+                if (!empty($category['categories']['name'])) {
+                    $ids[] = $category['categories']['name'];
                 }
-                if (!empty($tag['tags']['description'])) {
-                    $ids[] = $tag['tags']['description'];
+                if (!empty($category['categories']['description'])) {
+                    $ids[] = $category['categories']['description'];
                 }
             }
         }
@@ -239,42 +240,42 @@ class LocalizersController extends AppController
    /**
     * Category Localization
     */
-    function tags() {
-        $this->breadcrumbs['Tag Localization'] = '/localizers/tags';
+    function categories() {
+        $this->breadcrumbs['Category Localization'] = '/localizers/categories';
         $this->set('breadcrumbs', $this->breadcrumbs);
         
-        if (!empty($this->data['Tag'])) {
+        if (!empty($this->data['Category'])) {
             //Make sure user has write access
             if (!$this->writeAccess)  {
                 //Log
                 $this->Eventlog->log($this, 'security', 'modify_other_locale', null, 1, null, null, USERLANG);
                 
-                $this->flash('You do not have permission to modify this locale!', '/localizers/tags');
+                $this->flash('You do not have permission to modify this locale!', '/localizers/categories');
                 return;
             }
             
-            $this->Tag->setLang(USERLANG, $this);
-            foreach ($this->data['Tag'] as $id => $data) {
-                $this->Tag->id = $id;
-                $this->Tag->save($data);
+            $this->Category->setLang(USERLANG, $this);
+            foreach ($this->data['Category'] as $id => $data) {
+                $this->Category->id = $id;
+                $this->Category->save($data);
             }
             
             //Log l10n action
-            $this->Eventlog->log($this, 'l10n', 'update_tags', null, 1, null, null, USERLANG);
+            $this->Eventlog->log($this, 'l10n', 'update_categories', null, 1, null, null, USERLANG);
             
-            $this->flash('Translations updated!', '/localizers/tags');
+            $this->flash('Translations updated!', '/localizers/categories');
             return;
         }
         
-        $this->Tag->setLang(USERLANG, $this);
-        $tags[USERLANG] = $this->Tag->findAll(null, null, null, null, null, 0);
+        $this->Category->setLang(USERLANG, $this);
+        $categories[USERLANG] = $this->Category->findAll(null, null, null, null, null, 0);
         
-        $this->Tag->setLang('en-US', $this);
-        $tags['en-US'] = $this->Tag->findAll(null, null, null, null, null, 0);
+        $this->Category->setLang('en-US', $this);
+        $categories['en-US'] = $this->Category->findAll(null, null, null, null, null, 0);
         
-        $this->set('tags', $tags);
-        $this->set('page', 'tags');
-        $this->render('tags');
+        $this->set('categories', $categories);
+        $this->set('page', 'categories');
+        $this->render('categories');
     }
     
    /**

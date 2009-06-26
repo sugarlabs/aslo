@@ -116,6 +116,9 @@ if (!empty($coll_addon_added)) {
           <?=nl2br($addon['Translation']['summary']['string'])?>
         </p>
 
+    <h4 class="hidden"><?=_('addons_display_categories')?></h4>
+    <?=$this->renderElement('addon_categories', array('categories' => $relatedCategories)); ?>
+
         <?php
         if ($hasversion):
             if (array_key_exists('collection_id', $_GET) && $this->controller->Collection->isValidUUID($_GET['collection_id'])) {
@@ -392,9 +395,9 @@ if (!empty($coll_addon_added)) {
 <div class="highlight">
 
   <?php
-  if (is_array($relatedTags)) {
-      foreach ($relatedTags as $tag) {
-          echo $html->link(sprintf(_('addons_display_see_all_addons'),$tag['Translation']['name']['string']), '/browse/' . "type:" . $tag['Tag']['addontype_id'] . '/' . "cat:" . $tag['Tag']['id'], array('class' => 'more-info')) . "\n";
+  if (is_array($relatedCategories)) {
+      foreach ($relatedCategories as $category) {
+          echo $html->link(sprintf(_('addons_display_see_all_addons'),$category['Translation']['name']['string']), '/browse/' . "type:" . $category['Category']['addontype_id'] . '/' . "cat:" . $category['Category']['id'], array('class'=>'more-info')) . "\n";
       }
   }
   ?>
@@ -421,6 +424,23 @@ if (!empty($coll_addon_added)) {
  </div>
 
  <?php endif; ?>
+
+</div>
+<div class="highlight">
+<h3>Tags</h3>
+<div id='tags'><?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags,'addon_id'=>$addon_id, 'origin'=>'users')); ?></div>
+
+<? if ($loggedIn) {
+	?>
+	<a href="" id="addatag">+ Add a tag</a>
+	<div class="addtagform ">
+		<form id='#tagForm' action="/tags/add/">
+			<input type="text" id='newTag' name="newTag" method="POST">
+			<input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon['Addon']['id']?>"/>
+			<button id="addtagbutton">Add</button>
+		</form>
+	</div>	
+<? } else { echo $html->link(_('header_navlink_login'), $html->login_url()) . " to add tags."; } ?>
 
 </div>
 <!-- /#more-addons-->

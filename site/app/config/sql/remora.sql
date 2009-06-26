@@ -91,19 +91,19 @@ CREATE TABLE `addons` (
 
 
 --
--- Table structure for table `addons_tags`
+-- Table structure for table `addons_categories`
 --
 
-DROP TABLE IF EXISTS `addons_tags`;
-CREATE TABLE `addons_tags` (
+DROP TABLE IF EXISTS `addons_categories`;
+CREATE TABLE `addons_categories` (
   `addon_id` int(11) unsigned NOT NULL default '0',
-  `tag_id` int(11) unsigned NOT NULL default '0',
+  `category_id` int(11) unsigned NOT NULL default '0',
   `feature` int(1) unsigned NOT NULL default '0',
   `feature_locales` varchar(255) default NULL,
-  PRIMARY KEY  (`addon_id`,`tag_id`),
-  KEY `tag_id` (`tag_id`),
-  CONSTRAINT `addons_tags_ibfk_3` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`),
-  CONSTRAINT `addons_tags_ibfk_4` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
+  PRIMARY KEY  (`addon_id`,`category_id`),
+  KEY `category_id` (`category_id`),
+  CONSTRAINT `addons_categories_ibfk_3` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`),
+  CONSTRAINT `addons_categories_ibfk_4` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -812,11 +812,11 @@ CREATE TABLE `stats_share_counts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `tags`
+-- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `tags`;
-CREATE TABLE `tags` (
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `name` int(11) unsigned default NULL,
   `description` int(11) unsigned default NULL,
@@ -829,12 +829,12 @@ CREATE TABLE `tags` (
   PRIMARY KEY  (`id`),
   KEY `addontype_id` (`addontype_id`),
   KEY `application_id` (`application_id`),
-  KEY `tags_ibfk_3` (`name`),
-  KEY `tags_ibfk_4` (`description`),
-  CONSTRAINT `tags_ibfk_1` FOREIGN KEY (`addontype_id`) REFERENCES `addontypes` (`id`),
-  CONSTRAINT `tags_ibfk_2` FOREIGN KEY (`application_id`) REFERENCES `applications` (`id`),
-  CONSTRAINT `tags_ibfk_3` FOREIGN KEY (`name`) REFERENCES `translations` (`id`),
-  CONSTRAINT `tags_ibfk_4` FOREIGN KEY (`description`) REFERENCES `translations` (`id`)
+  KEY `categories_ibfk_3` (`name`),
+  KEY `categories_ibfk_4` (`description`),
+  CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`addontype_id`) REFERENCES `addontypes` (`id`),
+  CONSTRAINT `categories_ibfk_2` FOREIGN KEY (`application_id`) REFERENCES `applications` (`id`),
+  CONSTRAINT `categories_ibfk_3` FOREIGN KEY (`name`) REFERENCES `translations` (`id`),
+  CONSTRAINT `categories_ibfk_4` FOREIGN KEY (`description`) REFERENCES `translations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1106,15 +1106,15 @@ CREATE TABLE `collection_promos` (
   CONSTRAINT `collection_features_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `collections_tags`;
-CREATE TABLE `collections_tags` (
+DROP TABLE IF EXISTS `collections_categories`;
+CREATE TABLE `collections_categories` (
   `collection_id` int(11) unsigned NOT NULL ,
-  `tag_id` int(11) unsigned NOT NULL ,
-  PRIMARY KEY ( `collection_id` , `tag_id` ),
+  `category_id` int(11) unsigned NOT NULL ,
+  PRIMARY KEY ( `collection_id` , `category_id` ),
   KEY `collection_id` (`collection_id`),
-  KEY `tag_id` (`tag_id`),
-  CONSTRAINT `collections_tags_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `addons` (`id`),
-  CONSTRAINT `collections_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
+  KEY `category_id` (`category_id`),
+  CONSTRAINT `collections_categories_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `addons` (`id`),
+  CONSTRAINT `collections_categories_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 DROP TABLE IF EXISTS `collection_subscriptions`;
@@ -1186,6 +1186,49 @@ CREATE TABLE `schema_version` (
   `version` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `tags`;
+CREATE TABLE `tags` (
+    `id` int(11) unsigned NOT NULL auto_increment,
+    `tag_text` varchar(128) NOT NULL,
+    `blacklisted` tinyint(1) NOT NULL default 0,
+    `created` datetime NOT NULL default '0000-00-00 00:00:00',    
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `tag_text` (`tag_text`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tag_stat`;
+CREATE TABLE `tag_stat` (
+    `tag_id` int(11) unsigned NOT NULL,
+    `num_addons` int(11) unsigned NOT NULL default '0',
+    `modified` datetime NOT NULL default '0000-00-00 00:00:00',
+    PRIMARY KEY  (`tag_id`),
+    CONSTRAINT `tag_stat_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tag_strength`;
+CREATE TABLE `tag_strength` (
+    `tag1_id` int(11) unsigned NOT NULL,
+    `tag2_id` int(11) unsigned NOT NULL,
+    `strength` int(11) unsigned NOT NULL default '0',
+    PRIMARY KEY  (`tag1_id`, `tag2_id`),
+    CONSTRAINT `tag_strength_ibfk_1` FOREIGN KEY (`tag1_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `tag_strength_ibfk_2` FOREIGN KEY (`tag2_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `users_tags_addons`;
+CREATE TABLE `users_tags_addons` (
+    `user_id` int(11) unsigned NOT NULL,
+    `tag_id` int(11) unsigned NOT NULL,
+    `addon_id` int(11) unsigned NOT NULL,
+    `created` datetime NOT NULL default '0000-00-00 00:00:00',
+    PRIMARY KEY  (`user_id`,`tag_id`,`addon_id`),
+      INDEX (`tag_id`),
+    INDEX (`addon_id`),
+    CONSTRAINT `users_tags_addons_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `users_tags_addons_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE, 
+    CONSTRAINT `users_tags_addons_ibfk_3` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Default data that doesn't change over time (or isn't supposed to anyway).
 --
@@ -1238,6 +1281,7 @@ DROP TABLE IF EXISTS `userevents`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+
 /* These are my TRIGGERS. */
 
 CREATE TRIGGER collections_update_addon_count_insert
@@ -1267,3 +1311,26 @@ CREATE TRIGGER collections_update_subscriber_count_delete
     UPDATE collections AS c
     SET c.subscribers = c.subscribers - 1
     WHERE c.id=OLD.collection_id;
+
+DELIMITER |
+
+drop trigger if exists trg_tag_stat_inc |
+
+CREATE TRIGGER trg_tag_stat_inc AFTER INSERT ON `users_tags_addons`
+   FOR EACH ROW 
+   BEGIN
+    insert ignore INTO tag_stat(tag_id, num_addons, modified) values(NEW.tag_id, 0, now());
+    UPDATE `tag_stat` set num_addons = (num_addons+1) WHERE tag_id = NEW.tag_id;
+  END;
+|
+
+drop trigger if exists trg_tag_stat_dec |
+
+CREATE TRIGGER trg_tag_stat_dec AFTER DELETE ON `users_tags_addons`
+   FOR EACH ROW 
+   BEGIN
+    UPDATE `tag_stat` set num_addons = (num_addons-1) WHERE tag_id = OLD.tag_id;
+  END;
+
+|
+DELIMITER ;

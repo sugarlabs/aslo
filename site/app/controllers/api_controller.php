@@ -54,7 +54,7 @@ class ApiController extends AppController
     // some of this is excessive but will likely be needed as 
     // development continues
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
-    var $uses = array('Addon', 'AddonCollection', 'Addontype', 'Application', 'Collection', 'File', 'GlobalStat', 'Platform', 'Tag', 'Translation', /*'Review',*/ 'UpdateCount', 'Version');    
+    var $uses = array('Addon', 'AddonCollection', 'Addontype', 'Application', 'Collection', 'File', 'GlobalStat', 'Platform', 'Category', 'Translation', /*'Review',*/ 'UpdateCount', 'Version');    
     var $components = array('Amo', 'Image', 'Pagination', 'Search', 'Session', 'Versioncompare');    
     var $helpers = array('Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 'Pagination');
     var $namedArgs = true;
@@ -354,7 +354,7 @@ class ApiController extends AppController
        if ($listtype =='recommended') {
            $sql .= ' UNION SELECT DISTINCT(f.addon_id) 
                            FROM ';
-           $tables2 = ' addons_tags AS f LEFT JOIN addons AS a ON f.addon_id = a.id ';
+           $tables2 = ' addons_categories AS f LEFT JOIN addons AS a ON f.addon_id = a.id ';
            $where2 = ' WHERE f.feature = 1 
                        AND a.status =\''.STATUS_PUBLIC.'\' ';
            if ($list_os && $list_os != 'all' && $list_os != 'ALL'
@@ -472,11 +472,11 @@ class ApiController extends AppController
                     'conditions' => 'addons_users.listed=1',
                     'order' => 'addons_users.position'
                 ),
-                'Tag' => array(
-                    'className'  => 'Tag',
-                    'joinTable'  => 'addons_tags',
+                'Category' => array(
+                    'className'  => 'Category',
+                    'joinTable'  => 'addons_categories',
                     'foreignKey' => 'addon_id',
-                    'associationForeignKey'=> 'tag_id'
+                    'associationForeignKey'=> 'category_id'
                 )
             )
         ));
@@ -489,14 +489,14 @@ class ApiController extends AppController
             )
         ));
 
-        // Rather than trying to join tags and addon types in SQL, collect IDs 
+        // Rather than trying to join categories and addon types in SQL, collect IDs 
         // and make a pair of queries to fetch them.
-        $tag_ids = array();
+        $category_ids = array();
         $addon_type_ids = array();
         foreach ($addons_data as $addon) {
             $addon_type_ids[$addon['Addon']['addontype_id']] = true;
-            foreach ($addon['Tag'] as $tag) 
-                $tag_ids[$tag['id']] = true;
+            foreach ($addon['Category'] as $category) 
+                $category_ids[$category['id']] = true;
         }
 
         // Query for addon types found in this set of addons, assemble a map 
@@ -509,14 +509,14 @@ class ApiController extends AppController
             $addon_types[$row['Addontype']['id']] = $row;
         }
 
-        // Query for addon types found in this set of tags, assemble a map 
+        // Query for addon types found in this set of categories, assemble a map 
         // for an in-code join later.
-        $tag_rows = $this->Tag->findAll(array(
-            'Tag.id' => array_keys($tag_ids)
+        $category_rows = $this->Category->findAll(array(
+            'Category.id' => array_keys($category_ids)
         ));
-        $all_tags = array();
-        foreach ($tag_rows as $row) {
-            $all_tags[$row['Tag']['id']] = $row;
+        $all_categories = array();
+        foreach ($category_rows as $row) {
+            $all_categories[$row['Category']['id']] = $row;
         }
 
         $app_names = $this->Application->getIDList();
@@ -530,7 +530,7 @@ class ApiController extends AppController
 
         // Process addons list to produce a much flatter and more easily 
         // sanitized array structure for the view, sprinkling in details
-        // like tags and version information along the way.
+        // like categories and version information along the way.
         //
         // TODO: Reconcile this with the _getAddons() method from which this 
         // was refactored but not replaced.
@@ -580,17 +580,17 @@ class ApiController extends AppController
                 'users' => $addon['User'],
                 'eula' => $addon['Translation']['eula']['string'],
                 'averagerating' => $addon['Addon']['averagerating'],
-                'tags' => array(),
+                'categories' => array(),
                 'compatible_apps' => array(),
                 'all_compatible_os' => array(),
                 'fileinfo' => array()
             );
 
-            // Add the list of tags into the addon details
-            foreach ($addon['Tag'] as $x) {
-                $x = $all_tags[ $x['id'] ];
-                $addon_out['tags'][] = array(
-                    'id'   => $x['Tag']['id'],
+            // Add the list of categories into the addon details
+            foreach ($addon['Category'] as $x) {
+                $x = $all_categories[ $x['id'] ];
+                $addon_out['categories'][] = array(
+                    'id'   => $x['Category']['id'],
                     'name' => $x['Translation']['name']['string']
                 );
             }

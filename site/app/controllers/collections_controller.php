@@ -334,7 +334,7 @@ class CollectionsController extends AppController
 
         // Fetch #3!  Pull useful addon data this time.
         $addons = $this->Addon->getAddonList($pagedIds,array(
-            'all_tags', 'authors', 'compatible_apps', 'files', 'latest_version',
+            'all_categories', 'authors', 'compatible_apps', 'files', 'latest_version',
             'list_details'));
 
         foreach($addons as &$addon) {

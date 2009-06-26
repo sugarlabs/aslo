@@ -48,7 +48,7 @@ $addonFiles = $addon['File'];
 $addonEULA = $addon['Translation']['eula']['string'];
 $addonStatus = $addon['Addon']['status'];
 $addonAuthors = $addon['User'];
-$addonTags = $addon['Tag'];
+$addonCategories = $addon['Category'];
 $addonWeeklyDownloads = $addon['Addon']['weeklydownloads'];
 $allPlatforms = $platforms;
 $compatible_apps = $addon['compatible_apps'];
@@ -123,8 +123,8 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
     array('class'=>'view', 'title'=>sprintf(_('feature_learnmore_about_addon'), $addonName)))?></p>
 <?php endif; ?>
 
-<?php if(!empty($addonTags)): ?>
-<p class="more-from"><?=_('feature_view_more_from_category')?> <a href="<?=$html->url('/browse/type:'.$addonType.'/cat:'.$addonTags[0]['Tag']['id'])?>" class="view"><?=$addonTags[0]['Translation']['name']['string']?></a></p>
+<?php if(!empty($addonCategories)): ?>
+<p class="more-from"><?=_('feature_view_more_from_category')?> <a href="<?=$html->url('/browse/type:'.$addonType.'/cat:'.$addonCategories[0]['Category']['id'])?>" class="view"><?=$addonCategories[0]['Translation']['name']['string']?></a></p>
 <?php endif; ?>
 
 <?php endif ?>

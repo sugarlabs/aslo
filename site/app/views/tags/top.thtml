@@ -1,0 +1,10 @@
+<h2>Top <?=$numTags?> Tags</h2>
+<?
+	//print_r($topTags);
+	echo "<ul>";
+	foreach( $topTags as $tagInfo ) {
+		echo "<li><a href=\"/addons/fortag/". $tagInfo['Tag']['id'] . "\">".$tagInfo['Tag']['tag_text']."</a></li>";
+	
+	}
+	echo "</ul>";
+?>

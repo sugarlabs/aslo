@@ -98,8 +98,8 @@
 <?
     global $app_shortnames;
     foreach($addons as &$addon):
-        if (array_key_exists('Tag', $addon) && !empty($addon['Tag'])) {
-            $_application = array_search($addon['Tag'][0]['application_id'], $app_shortnames);
+        if (array_key_exists('Category', $addon) && !empty($addon['Category'])) {
+            $_application = array_search($addon['Category'][0]['application_id'], $app_shortnames);
         } else {
             $_application = 'firefox';
         }

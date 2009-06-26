@@ -50,8 +50,8 @@ if (empty($addonIconPath)) {
         <?php if (isset($base_url)): ?><collection href=".." /><?php endif ?>
     </meta>
     <categories>
-    <?php foreach ($addon['tags'] as $tag): ?>
-        <category id="<?php echo $tag['id'] ?>"><?php echo $tag['name'] ?></category>
+    <?php foreach ($addon['categories'] as $category): ?>
+        <category id="<?php echo $category['id'] ?>"><?php echo $category['name'] ?></category>
     <?php endforeach ?>
     </categories>
     <name><?php echo $addon['name']; ?></name>

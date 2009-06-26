@@ -74,7 +74,7 @@ class DevelopersEditTest extends WebTestHelper {
         $this->assertTitle('Developer Tools :: Firefox Add-ons');
 
         //Check fields
-        $this->assertWantedPattern('/\<option value="12" +selected="selected"\>Organizer\<\/option\>/', 'Tag selected');
+        $this->assertWantedPattern('/\<option value="12" +selected="selected"\>Organizer\<\/option\>/', 'Category selected');
 
         $this->assertText($this->data['User'][0]['firstname'].' '.$this->data['User'][0]['lastname'].' ['.$this->data['User'][0]['email'].']', 'Author populated');
 

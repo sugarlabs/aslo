@@ -127,9 +127,9 @@ class SearchComponent extends Object {
      * @param locale controls whether we search within only the current locale and en-US (faster) or all locales
      * @return array of information about results (modified cake results)
      */
-    function search($terms, $searchtype=NULL, $category=0, $status=NULL, 
+    function search($terms, $tag=null, $searchtype=NULL, $category=0, $status=NULL, 
                     $lver = -1, $hver = -1, $vfuz =false, $atype = ADDON_ANY,
-                    $platform= PLATFORM_ANY, $lup = "", $sort = "", $locale=false) {
+                    $platform= PLATFORM_ANY, $lup = "", $sort = "", $locale=false ) {
         global $valid_status, $hybrid_categories, $app_listedtypes;
         
         if (isset($status)) {
@@ -151,7 +151,7 @@ class SearchComponent extends Object {
         /* prepare SQL query */
         
         // fields to search in
-        $fields = array('name', 'summary', 'description');
+        $fields = array('name', 'summary', 'description', 'tags');
         $_termarray = array();
 
         // first prepare text terms
@@ -178,6 +178,11 @@ class SearchComponent extends Object {
             
             $text_score = " MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_termarray)."')";
             $boolean_score =  " MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_search_termarray)."' IN BOOLEAN MODE)";
+            if( $tag != null ) {
+            	$boolean_score .= " AND MATCH(a.".implode(', a.', array('tags')).") AGAINST ('".implode(" ", array($tag))."' IN BOOLEAN MODE) ";	
+            }
+            
+        
         } else { //in this case enumerate all addons. this allows advanced search to act as a filter
             $text_score = "TRUE";
             $boolean_score = "TRUE";
@@ -240,14 +245,14 @@ class SearchComponent extends Object {
         if ($category > 0) {
             if (!isset($hybrid_categories[APP_ID][$category])) {
                 // regular category restriction
-                $_joins[] = "INNER JOIN addons_tags AS atags ON (atags.addon_id = id AND atags.tag_id = '{$category}')";
+                $_joins[] = "INNER JOIN addons_categories AS acategories ON (acategories.addon_id = id AND acategories.category_id = '{$category}')";
             } else {
                 // hybrid category
                 $_hybrid_type = $hybrid_categories[APP_ID][$category];
                 if (!in_array($_hybrid_type, $_addon_types)) $_addon_types[] = $_hybrid_type;
                 
-                $_joins[] = "LEFT JOIN addons_tags AS atags ON (atags.addon_id = id AND atags.tag_id = '{$category}')";
-                $_where[] = "(a.addontype = ".$_hybrid_type." OR atags.tag_id IS NOT NULL)";
+                $_joins[] = "LEFT JOIN addons_categories AS acategories ON (acategories.addon_id = id AND acategories.category_id = '{$category}')";
+                $_where[] = "(a.addontype = ".$_hybrid_type." OR acategories.category_id IS NOT NULL)";
             }
         }
         
@@ -348,6 +353,8 @@ class SearchComponent extends Object {
                 .(empty($_where) ? '' : 'AND ('.implode(' AND ', $_where).') ')
             ."ORDER BY ".implode(', ', $_orderby);
 
+		//echo '<br><br>sql='.$sql;
+		
         // query the db and return the ids found
         $_results = $this->controller->Addon->query($sql, true);
 
@@ -394,6 +401,7 @@ class SearchComponent extends Object {
             
             $text_score = " MATCH(c.".implode(', c.',$fields).") AGAINST ('".implode(" ", $_termarray)."')";
             $boolean_score =  " MATCH(c.".implode(', c.',$fields).") AGAINST ('".implode(" ", $_search_termarray)."' IN BOOLEAN MODE)";
+            
         } else { //in this case enumerate all collections. this allows advanced search to act as a filter
             $text_score = "TRUE";
             $boolean_score = "TRUE";
@@ -445,6 +453,9 @@ class SearchComponent extends Object {
                 WHERE {$_matches}
                     ".(empty($_where) ? '' : 'AND ('.implode(' AND ', $_where).') ')."
                 ORDER BY ".implode(', ', $_orderby);
+                
+		          
+                
         $_results = $this->controller->Addon->query($sql, true);
 
         // return the ids found

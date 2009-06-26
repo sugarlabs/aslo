@@ -286,7 +286,7 @@ function addNewFeatureRowBeforeElement(sibling, tagid, addonid, addonname) {
         addonform.setAttribute('method', 'post');
 
         var addonforminputlocale = document.createElement('input');
-        addonforminputlocale.setAttribute('name', 'data[AddonTag][feature_locales]');
+        addonforminputlocale.setAttribute('name', 'data[AddonCategory][feature_locales]');
         addonforminputlocale.setAttribute('id', 'edit-addon-locales-' + tagid + '-' + addonid);
         addonforminputlocale.setAttribute('size', '40');
         addonforminputlocale.setAttribute('type', 'text');

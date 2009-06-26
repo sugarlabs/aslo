@@ -316,9 +316,9 @@ class UsersTest extends UnitTestCase {
      }
 
     /**
-     * Test to see if a user had edit access on the Tags ACO.
+     * Test to see if a user had edit access on the Categories ACO.
      */
-    function testEditTagAccess() {
+    function testEditCategoryAccess() {
         return false;
     }
 

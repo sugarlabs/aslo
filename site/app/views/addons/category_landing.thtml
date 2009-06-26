@@ -41,8 +41,8 @@
 $this->viewVars['bodyclass'] = 'inverse category_landing';
 $this->layout = 'amo2009';
 
-$curr_tag_name = $this_tag['Translation']['name']['string'];
-$curr_tag_desc = $this_tag['Translation']['description']['string'];
+$curr_category_name = $this_category['Translation']['name']['string'];
+$curr_category_desc = $this_category['Translation']['description']['string'];
 
 $nameLimit = 40;
 $summaryLimit = 70; 
@@ -54,7 +54,7 @@ $summaryLimit = 70;
 
 <div class="primary" role="main">
 
-    <h2><?php echo $curr_tag_name ?></h2>
+    <h2><?php echo $curr_category_name ?></h2>
 
     <div id="featured_addons" class="clearfix">
         <ul>
@@ -98,8 +98,8 @@ $summaryLimit = 70;
                                     $icon = '';
 
                                 // prepare categories
-                                if (!empty($addon['Tag'])) {
-                                    $categories = $this->renderElement('addon_categories', array('tags' => $addon['Tag']));
+                                if (!empty($addon['Category'])) {
+                                    $categories = $this->renderElement('addon_categories', array('categories' => $addon['Category']));
                                 } else
                                     $categories = '';
 

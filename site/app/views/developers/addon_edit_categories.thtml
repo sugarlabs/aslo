@@ -50,41 +50,41 @@
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <?php
-        if (!empty($sortedTags)) {
+        if (!empty($sortedCategories)) {
             echo '<form id="addon-edit-categories-form" action="" method="post">';
             echo $html->hiddenSession();
-            foreach ($sortedTags as $application_id => $tags) {
-                $otherSelected = !empty($otherTags[$application_id]) && in_array($otherTags[$application_id], $currentTags);
+            foreach ($sortedCategories as $application_id => $categories) {
+                $otherSelected = !empty($otherCategories[$application_id]) && in_array($otherCategories[$application_id], $currentCategories);
                 
                 echo '<div class="edit-categories-box field graybox rounded spaced app-'.$application_id.'">';
                 echo '<h4 style="border-bottom: none;">'.$html->image('app-icons/'.strtolower($applications[$application_id]).'_small.png', array('alt' => $applications[$application_id]));
                 echo sprintf(___('devcp_edit_categories_header_application'), $applications[$application_id]).'</h4>';
-                if (!empty($tags)) {
+                if (!empty($categories)) {
                     echo '<p>'.sprintf(___('devcp_edit_categories_select_application_categories'), $applications[$application_id]).':</p>';
                     echo '<table style="width: 100%;"><tr><td style="width: 50%;">';
                     for ($i = 1; $i <= 3; $i++) {
                         $selected = false;
                         echo '<label>'.sprintf(___('devcp_edit_categories_label_category_num'), $i).':&nbsp;';
-                        echo '<select name="data[Tag]['.$application_id.'][]"'.($otherSelected ? ' disabled="disabled"' : '').'>';
+                        echo '<select name="data[Category]['.$application_id.'][]"'.($otherSelected ? ' disabled="disabled"' : '').'>';
                         echo '<option value="" style="color: gray;">'.___('devcp_edit_authors_option_empty').'</option>';
-                        foreach ($tags as $tag_id => $tag_name) {
-                            if ($otherTags[$application_id] == $tag_id)
+                        foreach ($categories as $category_id => $category_name) {
+                            if ($otherCategories[$application_id] == $category_id)
                                 continue;
                             
-                            echo '<option value="'.$tag_id.'"';
-                            if (in_array($tag_id, $currentTags) && !$selected) {
+                            echo '<option value="'.$category_id.'"';
+                            if (in_array($category_id, $currentCategories) && !$selected) {
                                 echo ' selected="selected"';
-                                unset($currentTags[array_search($tag_id, $currentTags)]);
+                                unset($currentCategories[array_search($category_id, $currentCategories)]);
                                 $selected = true;
                             }
-                            echo ' onmouseover="addon_edit_categories.updateDescription('.$application_id.', \''.$html->entities('<strong>'.$tag_name.'</strong><br />'.$html->entities($tagDescriptions[$tag_id])).'\');"';
-                            echo '>'.$html->entities($tag_name).'</option>'."\n";
+                            echo ' onmouseover="addon_edit_categories.updateDescription('.$application_id.', \''.$html->entities('<strong>'.$category_name.'</strong><br />'.$html->entities($categoryDescriptions[$category_id])).'\');"';
+                            echo '>'.$html->entities($category_name).'</option>'."\n";
                         }
                         echo '</select></label>';
                     }
-                    if (!empty($otherTags[$application_id])) {
-                        echo '<label onmouseover="addon_edit_categories.updateDescription('.$application_id.', \''.$html->entities('<strong>'.$sortedTags[$application_id][$otherTags[$application_id]].'</strong><br />'.___('devcp_edit_categories_other')).'\');">';
-                        echo '<input type="checkbox" name="data[Tag]['.$application_id.'][]" value="'.$otherTags[$application_id].'" onclick="addon_edit_categories.toggleDropdowns(this, '.$application_id.');"'.($otherSelected ? ' checked="checked"' : '').' />&nbsp;';
+                    if (!empty($otherCategories[$application_id])) {
+                        echo '<label onmouseover="addon_edit_categories.updateDescription('.$application_id.', \''.$html->entities('<strong>'.$sortedCategories[$application_id][$otherCategories[$application_id]].'</strong><br />'.___('devcp_edit_categories_other')).'\');">';
+                        echo '<input type="checkbox" name="data[Category]['.$application_id.'][]" value="'.$otherCategories[$application_id].'" onclick="addon_edit_categories.toggleDropdowns(this, '.$application_id.');"'.($otherSelected ? ' checked="checked"' : '').' />&nbsp;';
                         echo ___('devcp_edit_categories_does_not_fit');
                         echo '</label>';
                     }

@@ -36,14 +36,14 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-foreach ($tagList as $cat) {
-    $caturl = SITE_URL.$html->url("/browse/type:{$type}/cat:{$cat['Tag']['id']}");
+foreach ($categoryList as $cat) {
+    $caturl = SITE_URL.$html->url("/browse/type:{$type}/cat:{$cat['Category']['id']}");
     echo $this->renderElement('rss_listitem', array(
         'title' => $cat['Translation']['name']['string'],
         'url' => $caturl,
         'description' =>$cat['Translation']['description']['string'],
         'author' => '',
-        'pubDate' => $time->toRss($cat['Tag']['created']),
+        'pubDate' => $time->toRss($cat['Category']['created']),
         'permalink' => $caturl
         ));
 }

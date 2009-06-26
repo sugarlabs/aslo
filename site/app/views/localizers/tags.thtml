@@ -39,15 +39,15 @@
     <?=$this->renderElement('developers/localizermenu');?>
 
     <div id="content-main">
-        <h3>Tag Localization for <?=USERLANG?></h3>
+        <h3>category Localization for <?=USERLANG?></h3>
         <?php
         if (!$writeAccess) {
             echo '<div class="error">You do not have write access to this locale. You can look, but won\'t be able to make any changes.</div>';
         }
-        echo $html->formTag('/localizers/tags');
-        if (!empty($tags)) {
-            foreach ($tags['en-US'] as $k => $tag) {
-                $id = $tags['en-US'][$k]['Tag']['id'];
+        echo $html->formTag('/localizers/categories');
+        if (!empty($categories)) {
+            foreach ($categories['en-US'] as $k => $category) {
+                $id = $categories['en-US'][$k]['Category']['id'];
                 echo '<table class="translatedSection">';
                     echo '<tr>';
                         echo '<th width="5%">ID '.$id.'</th>';
@@ -56,13 +56,13 @@
                     echo '</tr>';
                     echo '<tr>';
                         echo '<td class="field">Name</td>';
-                        echo '<td class="enus">'.$tags['en-US'][$k]['Translation']['name']['string'].'</td>';
-                        echo '<td class="localized">'.$html->input("Tag/{$id}][name", array('value' => ($tags[USERLANG][$k]['Translation']['name']['locale'] != 'en-US' ? $tags[USERLANG][$k]['Translation']['name']['string'] : ''), 'size' => 40)).'</td>';
+                        echo '<td class="enus">'.$categories['en-US'][$k]['Translation']['name']['string'].'</td>';
+                        echo '<td class="localized">'.$html->input("Category/{$id}][name", array('value' => ($categories[USERLANG][$k]['Translation']['name']['locale'] != 'en-US' ? $categories[USERLANG][$k]['Translation']['name']['string'] : ''), 'size' => 40)).'</td>';
                     echo '</tr>';
                     echo '<tr>';
                         echo '<td class="field">Description</td>';
-                        echo '<td class="enus">'.$tags['en-US'][$k]['Translation']['description']['string'].'</td>';
-                        echo '<td class="localized">'.$html->textarea("Tag/{$id}][description", array('value' => ($tags[USERLANG][$k]['Translation']['description']['locale'] != 'en-US' ? $tags[USERLANG][$k]['Translation']['description']['string'] : ''), 'cols' => 34, 'rows' => 3)).'</td>';
+                        echo '<td class="enus">'.$categories['en-US'][$k]['Translation']['description']['string'].'</td>';
+                        echo '<td class="localized">'.$html->textarea("Category/{$id}][description", array('value' => ($categories[USERLANG][$k]['Translation']['description']['locale'] != 'en-US' ? $categories[USERLANG][$k]['Translation']['description']['string'] : ''), 'cols' => 34, 'rows' => 3)).'</td>';
                     echo '</tr>';
                 echo '</table>';
             }

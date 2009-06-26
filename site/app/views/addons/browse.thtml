@@ -47,9 +47,9 @@ $this->layout = 'amo2009';
     <div class="stand-alone-options">
         <?=$this->renderElement('amo2009/categories')?>
         <?php
-        if (!empty($type) && array_key_exists('Tag', $this_tag))
+        if (!empty($type) && array_key_exists('Category', $this_category))
             echo $this->renderElement('amo2009/search', array('category' =>
-                array($type, $this_tag['Tag']['id'])));
+                array($type, $this_category['Category']['id'])));
         else
             echo $this->renderElement('amo2009/search');
         ?>

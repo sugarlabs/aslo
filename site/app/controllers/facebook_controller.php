@@ -42,7 +42,7 @@ class FacebookController extends AppController
 {
     var $name = 'Facebook';
     var $beforeFilter = array('checkCSRF', 'getNamedArgs');
-    var $uses = array('Addon', 'Application', 'FacebookData', 'FacebookFavorite', 'FacebookSession', 'FacebookUser', 'File', 'Preview', 'Tag', 'User', 'Version');
+    var $uses = array('Addon', 'Application', 'FacebookData', 'FacebookFavorite', 'FacebookSession', 'FacebookUser', 'File', 'Preview', 'Category', 'User', 'Version');
     var $components = array('Amo', 'Image', 'Newsfeed', 'Search');
     var $helpers = array('Html', 'Facebook');
 
@@ -335,25 +335,25 @@ class FacebookController extends AppController
         }
         
         if ($type == ADDON_EXTENSION || (is_array($type) && in_array(ADDON_EXTENSION, $type))) {
-            // Extension tags
-            if ($extension_tags = $this->Tag->findAll(array('application_id' => APP_ID, 'addontype_id' => ADDON_EXTENSION))) {
-                foreach ($extension_tags as $extension_tag) {
-                    $tags[$extension_tag['Tag']['id']] = (is_array($type) ? 'Extensions: ' : '').$extension_tag['Translation']['name']['string'];
+            // Extension categories
+            if ($extension_categories = $this->Category->findAll(array('application_id' => APP_ID, 'addontype_id' => ADDON_EXTENSION))) {
+                foreach ($extension_categories as $extension_category) {
+                    $categories[$extension_category['Category']['id']] = (is_array($type) ? 'Extensions: ' : '').$extension_category['Translation']['name']['string'];
                 }
             }
         }
         if ($type == ADDON_THEME || (is_array($type) && in_array(ADDON_THEME, $type))) {
-            // Theme tags
-            if ($theme_tags = $this->Tag->findAll(array('application_id' => APP_ID, 'addontype_id' => ADDON_THEME))) {
-                foreach ($theme_tags as $theme_tag) {
-                    $tags[$theme_tag['Tag']['id']] = (is_array($type) ? 'Themes: ' : '').$theme_tag['Translation']['name']['string'];
+            // Theme categories
+            if ($theme_categories = $this->Category->findAll(array('application_id' => APP_ID, 'addontype_id' => ADDON_THEME))) {
+                foreach ($theme_categories as $theme_category) {
+                    $categories[$theme_category['Category']['id']] = (is_array($type) ? 'Themes: ' : '').$theme_category['Translation']['name']['string'];
                 }
             }
         }
         
-        $tags[0] = ' Filter by Category';
-        asort($tags);
-        $this->set('tags', $tags);
+        $categories[0] = ' Filter by Category';
+        asort($categories);
+        $this->set('categories', $categories);
         
         $this->set('addons', $addons);
         $this->set('count', $count);

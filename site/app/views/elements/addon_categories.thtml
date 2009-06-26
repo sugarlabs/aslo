@@ -39,14 +39,14 @@
 
 /**
  * This element uses the following local variables:
- * - $tags (a Tag model-style result set)
+ * - $categories (a Category model-style result set)
  */
 ?>
 <ul class="addon-cats">
 <?php
 // show top-level category for non-extension add-ons
-if (!empty($tags)) {
-    switch ($tags[0]['Tag']['addontype_id']) {
+if (!empty($categories)) {
+    switch ($categories[0]['Category']['addontype_id']) {
     case ADDON_DICT:
     case ADDON_LPAPP:
         $li = $html->link(___('nav_category_dicts_langpacks'), '/browse/type:'.ADDON_DICT);
@@ -62,14 +62,14 @@ if (!empty($tags)) {
 
 // regular category list
 $c = 0;
-foreach ($tags as $_tag) {
-    if (0 == $c++)
+foreach ($categories as $_category) {
+    if (0 == $c++) {
         echo '<li class="first">';
-    else
+    } else {
         echo '<li>';
-    echo $html->link($_tag['Translation']['name']['string'],
-        "/browse/type:{$_tag['Tag']['addontype_id']}/cat:{$_tag['Tag']['id']}")
-        ."</li>\n";
+    }
+    echo $html->link($_category['Translation']['name']['string'],
+        "/browse/type:{$_category['Category']['addontype_id']}/cat:{$_category['Category']['id']}")."</li>\n";
 }
 ?>
 </ul>

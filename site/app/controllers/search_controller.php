@@ -73,6 +73,7 @@ class SearchController extends AppController
 
     var $securityLevel = 'low';
 
+
     /**
      * Constructor.  Declared so we can initialize Sanitize.
      * 
@@ -85,6 +86,7 @@ class SearchController extends AppController
     }
 
     function beforeFilter() {
+	    $this->publish('jsAdd', array('amo2009/collections'));
 
         $this->forceShadowDb();
 
@@ -140,7 +142,14 @@ class SearchController extends AppController
         } else
             $category = array(0,0);
         $this->publish('category', $category);
-
+		
+		if (!empty($this->params['url']['tag'])) {
+			$_tag = $this->params['url']['tag'];
+		} else {
+			$_tag = null;
+		}
+		$this->publish('tag', $_tag);
+		
         //if advanced search atype set, use it.
         $atype = -1;
         $addon_types = $this->Addontype->getNames();
@@ -184,26 +193,27 @@ class SearchController extends AppController
         $this->publish('vfuz', $vfuz); 
         
         // execute this search
-        $_result_ids = $this->Search->search($_terms, $category[0], $category[1], NULL, $lver, $hver, $vfuz, $atype, $pid, $lup, $sort);
+        $_result_ids = $this->Search->search($_terms, $_tag, $category[0], $category[1], NULL, $lver, $hver, $vfuz, $atype, $pid, $lup, $sort);
         
         if ($this->params['action'] != 'rss') {
             $this->pageTitle = _('search_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
             $this->publish('cssAdd', array('forms'));
             $this->params['url']['q'] = urlencode( $this->params['url']['q']);
-           
             $this->Pagination->total = count($_result_ids);
-            
+            $this->publish("total_count",$this->Pagination->total);
             //if advanced search pagination set, use it.
             $pp= 20;
             if (isset( $this->params['url']['pp']) && in_array($this->params['url']['pp'], $this->Pagination->resultsPerPage)) {
                  $pp = $this->Pagination->show = $this->params['url']['pp'];
             }
             $this->publish('pp',  $pp); //publish for element caching
-            
+			
             list($order,$limit,$page) = $this->Pagination->init();
-            
+
+            $this->publish("on_page", $page);
             // cut the appropriate slice out of the results array
             $offset = ($page-1)*$limit;
+			$this->publish("offset",$offset);
             $_result_ids = array_slice($_result_ids, $offset, $limit);
         
             if (!empty($_terms)) {

@@ -63,13 +63,13 @@ $this->layout = 'amo2009';
     <?php endif; /* !empty($featureAddons) */ ?>
 </div><!-- /.primary -->
     
-<div class="secondary" role="navigation">
+<div class="secondary more-addons" role="navigation">
     <h3 class="compact"><?=$html->link(_('themes_landing_browse_themes'), "/browse/type:".ADDON_THEME."/cat:all?sort=name", array('class'=>'view'))?></h3>
 
     <ul class="highlight">
         <li><?=$html->link(_('themes_landing_all_themes'), "/browse/type:".ADDON_THEME."/cat:all?sort=name")?></li>
         <?php foreach ($subcats as $subcat): ?>
-            <li class="sub-category"><?=$html->link($subcat['Translation']['name']['string'], "/browse/type:{$subcat['Tag']['addontype_id']}/cat:{$subcat['Tag']['id']}?sort=name", array('class' => 'category'))?></li>
+            <li class="sub-category"><?=$html->link($subcat['Translation']['name']['string'], "/browse/type:{$subcat['Category']['addontype_id']}/cat:{$subcat['Category']['id']}?sort=name", array('class' => 'category'))?></li>
         <?php endforeach; ?>
     </ul>
 </div><!-- /.secondary -->

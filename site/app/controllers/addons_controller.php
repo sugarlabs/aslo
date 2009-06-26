@@ -46,10 +46,9 @@
 class AddonsController extends AppController
 {
     var $name = 'Addons';
+
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
-    var $uses = array('Addon', 'AddonCollection', 'AddonTag', 'Addontype', 'Application', 'CollectionFeatures',
-        'Feature', 'File', 'GlobalStat', 'License', 'Platform', 'Preview', 'Tag', 'Translation',
-        'Review', 'Version', 'Collection', 'CollectionPromo');
+    var $uses = array('Addon', 'AddonCollection', 'AddonCategory', 'Addontype', 'Application', 'CollectionFeatures', 'Feature', 'File', 'GlobalStat', 'License', 'Platform', 'Preview', 'Category', 'Translation', 'Review', 'Version', 'Collection', 'CollectionPromo','Tag');
     var $components = array('Amo', 'Image', 'Pagination', 'Session', 'Userfunc');
     var $helpers = array('Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 'Pagination');
     var $namedArgs = true;
@@ -164,8 +163,8 @@ class AddonsController extends AppController
     */
     function display($id = null) {
         global $valid_status;
-        $this->publish('jsAdd', array('jquery-ui/ui.lightbox'));
-        $this->publish('cssAdd', array('jquery-lightbox'));
+        $this->publish('jsAdd', array('jquery-ui/ui.lightbox','jquery.autocomplete.pack.js','tags.js'));        
+        $this->publish('cssAdd', array('jquery-lightbox','autocomplete'));
         $this->layout = 'amo2009';
         $this->set('bodyclass', 'inverse');
 
@@ -177,6 +176,7 @@ class AddonsController extends AppController
 
         $loggedIn = $this->Session->check('User')? true : false;
         $this->set('loggedIn', $loggedIn);
+        if ($loggedIn) { $user=$this->Session->read('User'); } 
 
         if (!$id || !is_numeric($id)) {
             $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
@@ -275,24 +275,34 @@ class AddonsController extends AppController
         }
 
         $this->publish('previews', $this->Preview->findAllByAddonId($id, array('id', 'addon_id', 'caption'), 'highlight desc'));
-
         $this->publish('addon', $addon_data);
         $this->publish('addonIconPath', $this->Image->getAddonIconURL($id), false);
         $this->publish('addonPreviewPath', $this->Image->getHighlightedPreviewURL($id));
         $this->pageTitle = sprintf(_('addons_display_pagetitle'), $addon_data['Translation']['name']['string']). ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
 
-        // get the tags that are related to the addon, so that they have translation data
-        $_related_tag_ids = array();
-        foreach ($addon_data['Tag'] as $tagvalue){
-            $_related_tag_ids[] = $tagvalue['id'];
+        // get the categories that are related to the addon, so that they have translation data
+        $_related_category_ids = array();
+        foreach ($addon_data['Category'] as $categoryvalue){
+            $_related_category_ids[] = $categoryvalue['id'];
         }
 
-        if (!empty($_related_tag_ids))
-            $related_tags = $this->Tag->findAll("Tag.id IN (".implode(',', $_related_tag_ids).") AND (Tag.application_id = ".APP_ID." OR Tag.application_id IS NULL)");
+        if (!empty($_related_category_ids))
+            $related_categories = $this->Category->findAll("Category.id IN (".implode(',', $_related_category_ids).") AND (Category.application_id = ".APP_ID." OR Category.application_id IS NULL)");
         else
-            $related_tags = array();
+            $related_categories = array();
 
-        $this->publish('relatedTags', $related_tags);
+        $this->publish('relatedCategories', $related_categories);
+
+        
+
+        // Make the tag list, passing in this addon and the currently logged in user
+        if (!$loggedIn) { $user = null; }
+        $tags = $this->Tag->makeTagList($addon_data, $user);
+        $this->publish('tags', $tags);
+        $this->publish('userTags', $tags['userTags']);
+        $this->publish('developerTags', $tags['developerTags']);   
+        $this->publish('addon_id', $addon_data['Addon']['id']);
+             
 
         // The platforms section is necessary because of CakePHP bug #1183 (https://trac.cakephp.org/ticket/1183).  We
         // need the translated strings in the model to offer the right platform to users.
@@ -420,7 +430,7 @@ class AddonsController extends AppController
         global $app_listedtypes;
 
         $associations = array(
-            'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+            'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
             'latest_version', 'list_details'
         );
         $list_num = 5;
@@ -473,7 +483,7 @@ class AddonsController extends AppController
             $teaser_collections = array();
 
             $associations = array(
-                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
 
@@ -590,8 +600,8 @@ class AddonsController extends AppController
         $category = isset($this->namedArgs['cat']) ?
             $this->namedArgs['cat'] : 'all';
 
-        $this->Tag->unbindFully();
-        $this_tag = $this->Tag->findById($category);
+        $this->Category->unbindFully();
+        $this_category = $this->Category->findById($category);
 
         // show experimental add-ons?
         if (isset($this->params['url']['exp'])) {
@@ -613,7 +623,7 @@ class AddonsController extends AppController
         $displaystatuses = ($show_exp ? $valid_status : array(STATUS_PUBLIC));
 
         // fetch a list of all subcategories
-        $subcats = $this->Amo->getTags(APP_ID, $addontype);
+        $subcats = $this->Amo->getCategories(APP_ID, $addontype);
 
         // fetch counts for all categories
         $subcat_totals = $this->Addon->countAddonsInAllCategories(
@@ -664,7 +674,7 @@ class AddonsController extends AppController
         );
 
         $this->set('type',     $addontype);
-        $this->set('this_tag', $this_tag);
+        $this->set('this_category', $this_category);
 
         $this->publish('addons',        $addons);
         $this->publish('show_limit',    $_limit);
@@ -681,7 +691,7 @@ class AddonsController extends AppController
 
         switch($addontype) {
             case ADDON_THEME:
-                $this->pageTitle = sprintf(___('addons_browse_categories_header_theme'), $this_tag['Translation']['name']['string'], APP_PRETTYNAME);
+                $this->pageTitle = sprintf(___('addons_browse_categories_header_theme'), $this_category['Translation']['name']['string'], APP_PRETTYNAME);
                 break;
             default:
                 $this->pageTitle = sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
@@ -834,12 +844,12 @@ class AddonsController extends AppController
         $this->Amo->clean($category);
         $this->publish('cat_id', $category);
 
-        $this->Tag->unbindFully();
-        $this_tag = $this->Tag->findById($category);
-        $this->publish('this_tag', $this_tag);
+        $this->Category->unbindFully();
+        $this_category = $this->Category->findById($category);
+        $this->publish('this_category', $this_category);
 
         // Build a minimal set of addon details for publishing to view.
-        $_feat_ids = $this->AddonTag->getRandomAddons($category, true,  6);
+        $_feat_ids = $this->AddonCategory->getRandomAddons($category, true,  6);
         if (count($_feat_ids) > 0) {
             $_order_by = 'FIELD(Addon.id, '.implode(',', $_feat_ids).')';
         } else {
@@ -894,7 +904,7 @@ class AddonsController extends AppController
         $this->publish('bigHeaderText',
             sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
 
-        $this->pageTitle = $this_tag['Translation']['name']['string']. " :: " .
+        $this->pageTitle = $this_category['Translation']['name']['string']. " :: " .
             sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
         $this->publish('rssAdd', array(
             "/browse/type:{$addontype}/cat:{$category}/format:rss?sort=updated"
@@ -918,11 +928,11 @@ class AddonsController extends AppController
 
         // type:1 && cat:all shows a global add-ons list (not extensions only)
         if ($addontype == ADDON_EXTENSION && $category == 'all') {
-            $this_tag = array();
+            $this_category = array();
             $addontype = $app_listedtypes[APP_ID];
         } else {
-            $this->Tag->unbindFully();
-            $this_tag = $this->Tag->findById($category);
+            $this->Category->unbindFully();
+            $this_category = $this->Category->findById($category);
         }
 
         // determine list sort order
@@ -990,7 +1000,7 @@ class AddonsController extends AppController
         // get enough addons for one page.
         $addons = $this->Addon->getAddonsByCategory(null, $displaystatuses,
             $addontype, $category, $sort_by, $sort_dir, $_limit, $_page, '', true);
-        if ($category!='all' && empty($this_tag) || empty($addons)) {
+        if ($category!='all' && empty($this_category) || empty($addons)) {
             $this->flash(_('error_browse_no_addons'), '/browse/type:' . $addontype, 3);
             return;
         }
@@ -1004,27 +1014,27 @@ class AddonsController extends AppController
         }
 
         // get other categories list (or all, if this is a complete list)
-        $_tags = $this->Tag->query("SELECT DISTINCT t.id FROM tags AS t "
-            ."INNER JOIN addons_tags AS at ON (t.id = at.tag_id) "
+        $_categories = $this->Category->query("SELECT DISTINCT t.id FROM categories AS t "
+            ."INNER JOIN addons_categories AS at ON (t.id = at.category_id) "
             ."WHERE ".($category == 'all'?'1':"t.id <> '{$category}'")." "
             ."AND t.addontype_id = '{$addontype}' AND t.application_id = " . APP_ID . ";"
             );
-        $tag_list = array();
-        if (!empty($_tags)) {
-            $_tag_ids = array();
-            foreach($_tags as $_tag) $_tag_ids[] = $_tag['t']['id'];
-            $this->Tag->unbindFully();
-            $tag_list = $this->Tag->findAllById($_tag_ids);
-            // sort tags by name
-            $_tag_names = array();
-            foreach($tag_list as $_tag) $_tag_names[] = $_tag['Translation']['name']['string'];
-            array_multisort($_tag_names, SORT_ASC, $tag_list);
+        $category_list = array();
+        if (!empty($_categories)) {
+            $_category_ids = array();
+            foreach($_categories as $_category) $_category_ids[] = $_category['t']['id'];
+            $this->Category->unbindFully();
+            $category_list = $this->Category->findAllById($_category_ids);
+            // sort categories by name
+            $_category_names = array();
+            foreach($category_list as $_category) $_category_names[] = $_category['Translation']['name']['string'];
+            array_multisort($_category_names, SORT_ASC, $category_list);
         }
 
         // set data available to view
-        $this->publish('this_tag', $this_tag);
+        $this->publish('this_category', $this_category);
         $this->set('type', $addontype);
-        $this->publish('tagList', $tag_list);
+        $this->publish('categoryList', $category_list);
 
         // set layout details and render view
         if ($category == 'all') {
@@ -1037,7 +1047,7 @@ class AddonsController extends AppController
                 default: $_title = ''; break;
             }
         } else {
-            $_title = sprintf(_('addons_browse_browse_category'), $this_tag['Translation']['name']['string']);
+            $_title = sprintf(_('addons_browse_browse_category'), $this_category['Translation']['name']['string']);
         }
         if ($format != 'rss') {
             $this->pageTitle = $_title . " :: " . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
@@ -1075,26 +1085,27 @@ class AddonsController extends AppController
         // fetch the category belonging to this hybrid page
         $category = array_search(ADDON_SEARCH, $hybrid_categories[APP_ID]);
         if ($category) {
-            $this->Tag->unbindfully();
-            $this_tag = $this->Tag->findById($category);
+            $this->Category->unbindfully();
+            $this_category = $this->Category->findById($category);
         } else {
-            $this_tag = null;
+            $this_category = null;
         }
-        $this->publish('this_tag', $this_tag);
+        $this->publish('this_category', $this_category);
 
         // fetch a list of all subcategories
-        $subcats = $this->Amo->getTags(APP_ID, ADDON_SEARCH);
+        $subcats = $this->Amo->getCategories(APP_ID, ADDON_SEARCH);
         $this->publish('subcats', $subcats);
 
         // make subcategory ID list to grab recommendations from
         $subcat_ids = array();
         foreach ($subcats as $subcat)
-            $subcat_ids[] = $subcat['Tag']['id'];
+            $subcat_ids[] = $subcat['Category']['id'];
         // add hybrid category for possible other recommendations
-        $subcat_ids[] = $this_tag['Tag']['id'];
+        $subcat_ids[] = $this_category['Category']['id'];
 
         // fetch up to 4 recommended add-ons
-        $_feat_ids = $this->AddonTag->getRandomAddons($subcat_ids, true, 4);
+        $_feat_ids = $this->AddonCategory->getRandomAddons($subcat_ids, true, 4);
+
         if (!empty($_feat_ids)) {
             $associations = array(
                 'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
@@ -1278,16 +1289,16 @@ class AddonsController extends AppController
         $format = (isset($this->namedArgs['format']) ? $this->namedArgs['format'] : 'html');
 
         // fetch a list of all subcategories
-        $subcats = $this->Amo->getTags(APP_ID, ADDON_THEME);
+        $subcats = $this->Amo->getCategories(APP_ID, ADDON_THEME);
         $this->publish('subcats', $subcats);
 
         // make subcategory ID list to grab recommendations from
         $subcat_ids = array();
         foreach ($subcats as $subcat)
-            $subcat_ids[] = $subcat['Tag']['id'];
+            $subcat_ids[] = $subcat['Category']['id'];
 
-        // fetch up to 2 recommended add-ons
-        $_feat_ids = $this->AddonTag->getRandomAddons($subcat_ids, true, 4);
+        $_feat_ids = $this->AddonCategory->getRandomAddons($subcat_ids, true, 4);
+
         if (!empty($_feat_ids)) {
             $associations = array(
                 'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
@@ -1343,11 +1354,11 @@ class AddonsController extends AppController
         {
            $category = $this->namedArgs['cat'];
            $this->Amo->clean($category);
-           $criteria = "feature > 0 AND tag_id='".$category."'";
-           $featAddons = $this->AddonTag->findAll($criteria);
+           $criteria = "feature > 0 AND category_id='".$category."'";
+           $featAddons = $this->AddonCategory->findAll($criteria);
 
             foreach ($featAddons as $_addon)
-               $_addon_ids[] = $_addon['AddonTag']['addon_id'];
+               $_addon_ids[] = $_addon['AddonCategory']['addon_id'];
 
         } else {
             $featAddons = $this->Feature->findAll($criteria);
@@ -1404,11 +1415,11 @@ class AddonsController extends AppController
         $this->Addon->bindModel(
             array(
                 'hasAndBelongsToMany' => array(
-                    'Tag' => array(
-                        'className' => 'Tag',
-                        'joinTable'  => 'addons_tags',
+                    'Category' => array(
+                        'className' => 'Category',
+                        'joinTable'  => 'addons_categories',
                         'foreignKey' => 'addon_id',
-                        'associationForeignKey'=> 'tag_id'
+                        'associationForeignKey'=> 'category_id'
                     ),
                     'User' => array(
                         'className'  => 'User',
@@ -1447,16 +1458,16 @@ class AddonsController extends AppController
         else {
             $this->publish('policy', 1);
         }
-        // get the tags that are related to the addon, so that they have translation data
-        $_related_tag_ids = array();
-        foreach ($this_addon['Tag'] as $tagvalue) {
-            $_related_tag_ids[] = $tagvalue['id'];
+        // get the categories that are related to the addon, so that they have translation data
+        $_related_category_ids = array();
+        foreach ($this_addon['Category'] as $categoryvalue) {
+            $_related_category_ids[] = $categoryvalue['id'];
         }
-        $related_tags = $this->Tag->findAll(array('Tag.id' => $_related_tag_ids, 'Tag.application_id' => APP_ID));
-        unset($_related_tag_ids);
+        $related_categories = $this->Category->findAll(array('Category.id' => $_related_category_ids, 'Category.application_id' => APP_ID));
+        unset($_related_category_ids);
 
 
-        $this->publish('relatedTags', $related_tags);
+        $this->publish('relatedCategories', $related_categories);
         $this->publish('addon', $this_addon);
         $this->pageTitle = sprintf(_('addons_display_pagetitle'), $this_addon['Translation']['name']['string']). ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
 
@@ -1588,6 +1599,19 @@ class AddonsController extends AppController
             return;
         }
     }
+    
+    /**
+     * Gets all the addons for this tag
+     */
+    function fortag($tag_id) {
+    	$tag = $this->Tag->findById($tag_id);
+    	$this->publish("tag_id", $tag['Tag']['id']);
+    	$this->publish("tag_text", $tag['Tag']['tag_text']);
+    	
+    	$addons = $this->Addon->getAddonsByTag($tag_id);
+    	$this->publish("addons", $addons);
+    }
+    
 
 }
 

@@ -71,19 +71,19 @@ $this->layout = 'amo2009';
 
     <h3 class="compact"><?=$html->link(_('search_landing_browse_search_engines'), "/browse/type:".ADDON_SEARCH."/cat:all?sort=name", array('class'=>'view'))?></h3>
 
-    <ul class="highlight">
-        <li><?=$html->link(_('search_landing_all_search_engines'),
-            "/browse/type:".ADDON_SEARCH."/cat:all?sort=name", array('class' => 'category'))?></li>
-        <?php foreach ($subcats as $subcat): ?>
-            <li class="sub-category"><?=$html->link($subcat['Translation']['name']['string'],
-                "/browse/type:{$subcat['Tag']['addontype_id']}/cat:{$subcat['Tag']['id']}?sort=name", array('class' => 'category'))?></li>
-        <?php endforeach; ?>
-    </ul>
+    <div class="more-addons">
+        <ul class="highlight">
+            <li><?=$html->link(_('search_landing_all_search_engines'), "/browse/type:".ADDON_SEARCH."/cat:all?sort=name", array('class' => 'category'))?></li>
+            <?php foreach ($subcats as $subcat): ?>
+                <li class="sub-category"><?=$html->link($subcat['Translation']['name']['string'], "/browse/type:{$subcat['Category']['addontype_id']}/cat:{$subcat['Category']['id']}?sort=name", array('class' => 'category'))?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 
     <h3 class="clear"><?=___('addons_searchengines_additional_resources')?></h3>
-    <div class="article prose compact">
+    <div class="article prose compact more-addons">
         <ul>
-            <li><?=$html->link(sprintf(_('category_extra_see_all'), $this_tag['Translation']['name']['string']), "/browse/type:{$this_tag['Tag']['addontype_id']}/cat:{$this_tag['Tag']['id']}?sort=name", array('class'=>'view'))?></li>
+            <li><?=$html->link(sprintf(_('category_extra_see_all'), $this_category['Translation']['name']['string']), "/browse/type:{$this_category['Category']['addontype_id']}/cat:{$this_category['Category']['id']}?sort=name", array('class'=>'view'))?></li>
             <li><?=sprintf(___('addons_searchengines_more'), $html->link(___('addons_searchengines_mycroft_link'), 'http://mycroft.mozdev.org/'))?></li>
             <li><?=sprintf(___('addons_searchengines_learn_howto'), 
                            $html->link(___('addons_searchengines_makeyourown_link'), 'http://developer.mozilla.org'.___('addons_searchengines_makeyourown_href')),

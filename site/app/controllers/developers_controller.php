@@ -60,7 +60,7 @@ function getitem($object, $name, $default=null) {
 class DevelopersController extends AppController
 {
     var $name = 'Developers';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion',
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion','Category',
         'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview', 'Review',
         'Tag', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error',
@@ -612,6 +612,10 @@ class DevelopersController extends AppController
             
             case 'authors':
                 $this->setAction('_editAddonAuthors', $addon_id);
+                break;           
+                 
+            case 'tags':
+                $this->setAction('_editAddonTags', $addon_id);
                 break;
             
             default:
@@ -719,8 +723,8 @@ class DevelopersController extends AppController
     
     function _editAddonCategories($addon_id) {
         // Save categories if POST data
-        if (!empty($this->data['Tag']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
-            $this->Tag->saveCategories($addon_id, $this->data['Tag']);
+        if (!empty($this->data['Category']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
+            $this->Category->saveCategories($addon_id, $this->data['Category']);
             // flush cached add-on objects
             if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
             
@@ -744,57 +748,93 @@ class DevelopersController extends AppController
             $supportedApps = $this->Addon->getApplicationsEverSupported($addon_id);
         }
         
-        // All tags for add-on's type and supported applications
-        $tagDescriptions = array();
-        $sortedTags = array();
+        // All categories for add-on's type and supported applications
+        $categoryDescriptions = array();
+        $sortedCategories = array();
         if (!empty($supportedApps)) {
             foreach ($supportedApps as $supportedApp) {
-                $tags = $this->Tag->findAll("Tag.addontype_id={$addon['Addon']['addontype_id']} AND Tag.application_id={$supportedApp['Application']['id']}");
+                $categories = $this->Category->findAll("Category.addontype_id={$addon['Addon']['addontype_id']} AND Category.application_id={$supportedApp['Application']['id']}");
                 
                 $sorted = array();
-                if (!empty($tags)) {
-                    foreach ($tags as $tag) {
-                        $sorted[$tag['Tag']['id']] = $tag['Translation']['name']['string'];
-                        $tagDescriptions[$tag['Tag']['id']] = $tag['Translation']['description']['string'];
+                if (!empty($categories)) {
+                    foreach ($categories as $category) {
+                        $sorted[$category['Category']['id']] = $category['Translation']['name']['string'];
+                        $categoryDescriptions[$category['Category']['id']] = $category['Translation']['description']['string'];
                     }
                     asort($sorted);
                 }
                 
-                $sortedTags[$supportedApp['Application']['id']] = $sorted;
+                $sortedCategories[$supportedApp['Application']['id']] = $sorted;
             }
         }
         
-        $this->set('sortedTags', $sortedTags);
-        $this->set('tagDescriptions', $tagDescriptions);
+        $this->set('sortedCategories', $sortedCategories);
+        $this->set('categoryDescriptions', $categoryDescriptions);
         
-        // Currently selected tags
-        $currentTags = array();
-        if (!empty($addon['Tag'])) {
-            foreach ($addon['Tag'] as $tag) {
-                $currentTags[] = $tag['id'];
+        // Currently selected categories
+        $currentCategories = array();
+        if (!empty($addon['Category'])) {
+            foreach ($addon['Category'] as $category) {
+                $currentCategories[] = $category['id'];
             }
         }
-        $this->publish('currentTags', $currentTags);
+        $this->publish('currentCategories', $currentCategories);
         
         $this->publish('applications', $this->Application->getIDList());
         
         // The "Other" category for each application that has one
         if ($addon['Addon']['addontype_id'] == ADDON_SEARCH) {
-            $otherTags = array(
+            $otherCategories = array(
                 1 => 82
             );
         }
         else {
-            $otherTags = array(
+            $otherCategories = array(
                 1 => 73,
                 59 => 49,
                 18 => 50,
             );
         }
-        $this->publish('otherTags', $otherTags);
+        $this->publish('otherCategories', $otherCategories);
         
         $this->render('addon_edit_categories');
     }
+
+    function _editAddonTags($addon_id) {
+        $this->publish('jsAdd', array('tags.js'));        
+    
+        // Save tags if POST data
+        if (!empty($this->data['Tag']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
+			// Add tags here            
+
+
+            // flush cached add-on objects
+            if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
+            
+            $this->publish('success', true);
+        }
+        
+        $addon_data = $this->Addon->findById($addon_id);
+        $this->publish('addon_data',$addon_data);
+        
+        // MAke the tag list, passing in this addon and the currently logged in user
+        $loggedIn = $this->Session->check('User')? true : false;
+        $this->set('loggedIn', $loggedIn);
+        if ($loggedIn) { $user=$this->Session->read('User'); } else { $user=null; }      
+        
+        // Get all tags
+       $tags = $this->Tag->makeTagList($addon_data, $user);
+
+        $this->publish('userTags', $tags['userTags']);
+        $this->publish('developerTags', $tags['developerTags']);   
+        $this->publish('addon_id', $addon_data['Addon']['id']);
+        
+          $this->render('addon_edit_tags');
+    }
+
+
+
+
     
     /**
      * Edit Add-on Authors
@@ -884,7 +924,7 @@ class DevelopersController extends AppController
         $criteria['name'] = !empty($addon['Translation']['name']['string']);
         $criteria['summary'] = !empty($addon['Translation']['summary']['string']);
         $criteria['description'] = !empty($addon['Translation']['description']['string']);
-        $criteria['category'] = !empty($addon['Tag']);
+        $criteria['category'] = !empty($addon['Category']);
         $criteria['previews'] = !empty($previews);
         $criteria['prerelease'] = !empty($addon['Addon']['prerelease']) ? false : true;
         

@@ -53,7 +53,7 @@ class TranslationTest extends UnitTestCase {
 
     function setUp()
     {
-        $this->Tag =& new Tag();
+        $this->Category =& new Category();
     }
 
     /**
@@ -62,7 +62,7 @@ class TranslationTest extends UnitTestCase {
     function testAfterFind()
     {
         
-        $_all_data = $this->Tag->findAll();
+        $_all_data = $this->Category->findAll();
 
         // General check - make sure we got data back
         $this->assertEqual($_all_data[0]['Translation']['name']['string'], 'Developer Tools');

@@ -50,8 +50,8 @@ class Application extends AppModel
                                'exclusive'   => false,
                                'finderSql'   => ''
                          ),
-                         'Tag' =>
-                         array('className'   => 'Tag',
+                         'Category' =>
+                         array('className'   => 'Category',
                                'conditions'  => '',
                                'order'       => '',
                                'limit'       => '',

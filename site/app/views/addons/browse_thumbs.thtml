@@ -141,6 +141,37 @@ $this->layout = 'amo2009';
             ?>
             </ul>
 
+            <br style="clear:both" />
+
+            <?=$this->renderElement('pagination', array('countstring' =>
+                    sprintf(ngettext('addon_list_category_totalcount',
+                    'addon_list_category_totalcount', $paging['total']), $paging['total'])));?>
+
+        </div> <!-- #thumb-browser -->
+
+
+    </div><!-- /#content-main -->
+
+    <div id="thumb-subcategories">
+        <ul class="subcategories">
+            <li<?= ($this_category == FALSE) ? ' class="selected"' : '' ?>><?=$html->link( 
+                    'All ('.$all_total.')',
+                    "/browse/type:{$type}/cat:all?sort={$sort_by}"
+            )?></li>
+            <?php foreach ($subcats as $subcat): ?>
+                <?php
+                    $params = 'sort=' . $sort_by;
+                    if ($show_exp) 
+                        $params .= '&exp=on';
+                    if ($show_limit) 
+                        $params .= '&show=' . $show_limit;
+                ?>
+                <li<?= ($this_category['Category']['id'] == $subcat['Category']['id']) ? ' class="selected"' : '' ?>><?=$html->link( 
+                    $subcat['Translation']['name']['string'] . ' (' . (isset($subcat_totals[$subcat['Category']['id']]) ? $subcat_totals[$subcat['Category']['id']] : 0) . ')',
+                    "/browse/type:{$subcat['Category']['addontype_id']}/cat:{$subcat['Category']['id']}?{$params}"
+                )?></li>
+            <?php endforeach; ?>
+        </ul>
     </div>
 
     <?=$this->renderElement('amo2009/pagination');?>

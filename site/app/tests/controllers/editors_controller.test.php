@@ -39,7 +39,7 @@ class EditorsControllerTest extends WebTestHelper {
 
     var $testdata = array(
                             'addonid' => 7, // microfarmer
-                            'tagid'   => 2, // viruses
+                            'categoryid'   => 2, // viruses
                             'feature_locales' => 'en-US,fr,de'
                         );
 
@@ -77,22 +77,22 @@ class EditorsControllerTest extends WebTestHelper {
         $this->login();
         $this->setMaximumRedirects(0);
 
-        $this->getAction("/editors/featured/add/{$this->testdata['tagid']}/{$this->testdata['addonid']}/ajax");
+        $this->getAction("/editors/featured/add/{$this->testdata['categoryid']}/{$this->testdata['addonid']}/ajax");
         $this->assertResponse(array('200'), "Valid AJAX data gets appropriate response.");
         $this->assertTrue($this->_checkIfDataExists(), "Valid AJAX data gets inserted into the db");
         $this->_removeTestData();
 
-        $this->getAction("/editors/featured/add/broken{$this->testdata['tagid']}/blah{$this->testdata['addonid']}/ajax");
+        $this->getAction("/editors/featured/add/broken{$this->testdata['categoryid']}/blah{$this->testdata['addonid']}/ajax");
         $this->assertResponse(array('400'), "Invalid AJAX data gets appropriate response.");
 
-        $_data = array( 'data[Addon][id]' => 'Microfarmer [7]', 'data[Tag][id]' => 2);
+        $_data = array( 'data[Addon][id]' => 'Microfarmer [7]', 'data[Category][id]' => 2);
         $this->post($this->actionURI("/editors/featured/add"),$_data);
         $this->assertResponse(array('200'), "Valid POST data gets appropriate response.");
         $this->assertTrue($this->_checkIfDataExists(), "Valid POST data gets inserted into the db");
         $this->_removeTestData();
         unset($_data);
 
-        $_data = array( 'data[Addon][id]' => '7broken', 'data[Tag][id]' => '2broken');
+        $_data = array( 'data[Addon][id]' => '7broken', 'data[Category][id]' => '2broken');
         $this->post($this->actionURI("/editors/featured/add"),$_data);
         $this->assertResponse(array('400'), "Invalid POST data gets appropriate response.");
         unset($_data);
@@ -104,33 +104,33 @@ class EditorsControllerTest extends WebTestHelper {
 
         $this->_addTestData();
 
-        $_data = array('data[AddonTag][feature_locales]' => 'en-US,de');
-        $this->post($this->actionURI("/editors/featured/edit/{$this->testdata['tagid']}/{$this->testdata['addonid']}/ajax"), $_data);
+        $_data = array('data[AddonCategory][feature_locales]' => 'en-US,de');
+        $this->post($this->actionURI("/editors/featured/edit/{$this->testdata['categoryid']}/{$this->testdata['addonid']}/ajax"), $_data);
         $this->assertResponse(array('200'), "Valid AJAX edit request with valid data gets accepted.");
-        $_ret = $this->Addon->execute("SELECT feature_locales FROM `addons_tags` WHERE addon_id={$this->testdata['addonid']} AND tag_id={$this->testdata['tagid']}");
-        $this->assertEqual('de,en-US', $_ret[0]['AddonTag']['feature_locales'], 'Valid AJAX edit request changes data');
+        $_ret = $this->Addon->execute("SELECT feature_locales FROM `addons_categories` WHERE addon_id={$this->testdata['addonid']} AND category_id={$this->testdata['categoryid']}");
+        $this->assertEqual('de,en-US', $_ret[0]['AddonCategory']['feature_locales'], 'Valid AJAX edit request changes data');
         unset($_data, $_ret);
 
-        $_data = array('data[AddonTag][feature_locales]' => 'en-US,de');
-        $this->post($this->actionURI("/editors/featured/edit/{$this->testdata['tagid']}broken/{$this->testdata['addonid']}broken/ajax"), $_data);
+        $_data = array('data[AddonCategory][feature_locales]' => 'en-US,de');
+        $this->post($this->actionURI("/editors/featured/edit/{$this->testdata['categoryid']}broken/{$this->testdata['addonid']}broken/ajax"), $_data);
         $this->assertResponse(array('400'), "Invalid AJAX edit request with valid data gets rejected.");
 
-        $_data = array('data[AddonTag][feature_locales]' => 'en-US,broken,de');
-        $this->post($this->actionURI("/editors/featured/edit/{$this->testdata['tagid']}/{$this->testdata['addonid']}/ajax"), $_data);
+        $_data = array('data[AddonCategory][feature_locales]' => 'en-US,broken,de');
+        $this->post($this->actionURI("/editors/featured/edit/{$this->testdata['categoryid']}/{$this->testdata['addonid']}/ajax"), $_data);
         $this->assertResponse(array('400'), "Valid AJAX edit request with invalid data gets rejected.");
 
-        $_data = array( 'data[Addon][id]' => 7, 'data[Tag][id]' => 2, 'data[AddonTag][feature_locales]' => 'en-US,fr');
+        $_data = array( 'data[Addon][id]' => 7, 'data[Category][id]' => 2, 'data[AddonCategory][feature_locales]' => 'en-US,fr');
         $this->post($this->actionURI("/editors/featured/edit"), $_data);
         $this->assertResponse(array('200'), "Valid POST edit request with valid data gets accepted.");
-        $_ret = $this->Addon->execute("SELECT feature_locales FROM `addons_tags` WHERE addon_id={$this->testdata['addonid']} AND tag_id={$this->testdata['tagid']}");
-        $this->assertEqual('en-US,fr', $_ret[0]['AddonTag']['feature_locales'], 'Valid POST edit request changes data');
+        $_ret = $this->Addon->execute("SELECT feature_locales FROM `addons_categories` WHERE addon_id={$this->testdata['addonid']} AND category_id={$this->testdata['categoryid']}");
+        $this->assertEqual('en-US,fr', $_ret[0]['AddonCategory']['feature_locales'], 'Valid POST edit request changes data');
         unset($_data, $_ret);
 
-        $_data = array( 'data[Addon][id]' => 7, 'data[Tag][id]' => '2broken', 'data[AddonTag][feature_locales]' => 'en-US,fr');
+        $_data = array( 'data[Addon][id]' => 7, 'data[Category][id]' => '2broken', 'data[AddonCategory][feature_locales]' => 'en-US,fr');
         $this->post($this->actionURI("/editors/featured/edit"), $_data);
         $this->assertResponse(array('400'), "Valid POST edit request with invalid data gets rejected.");
 
-        $_data = array( 'data[Addon][id]' => 7, 'data[Tag][id]' => 2, 'data[AddonTag][feature_locales]' => 'en-US,broken,fr');
+        $_data = array( 'data[Addon][id]' => 7, 'data[Category][id]' => 2, 'data[AddonCategory][feature_locales]' => 'en-US,broken,fr');
         $this->post($this->actionURI("/editors/featured/edit"), $_data);
         $this->assertResponse(array('400'), "Valid POST edit request with invalid locales gets rejected.");
 
@@ -141,11 +141,11 @@ class EditorsControllerTest extends WebTestHelper {
         $this->setMaximumRedirects(0);
 
         $this->_addTestData();
-        $this->getAction("/editors/featured/remove/{$this->testdata['tagid']}/{$this->testdata['addonid']}");
+        $this->getAction("/editors/featured/remove/{$this->testdata['categoryid']}/{$this->testdata['addonid']}");
         $this->assertResponse(array('200'), "Valid GET removal request gets appropriate response.");
         $this->assertFalse($this->_checkIfDataExists(), "Valid GET removal request removes data.");
 
-        $this->getAction("/editors/featured/remove/{$this->testdata['tagid']}broken/{$this->testdata['addonid']}broken");
+        $this->getAction("/editors/featured/remove/{$this->testdata['categoryid']}broken/{$this->testdata['addonid']}broken");
         $this->assertResponse(array('400'), "Invalid GET removal request gets appropriate response.");
     }
 
@@ -303,16 +303,16 @@ class EditorsControllerTest extends WebTestHelper {
      * We've got to use direct queries here because cake 1.1 doesn't support getting data in join tables. :-/
      */
     function _checkIfDataExists() {
-        $ret = $this->Addon->execute("SELECT addon_id FROM `addons_tags` WHERE addon_id={$this->testdata['addonid']} AND tag_id={$this->testdata['tagid']}");
+        $ret = $this->Addon->execute("SELECT addon_id FROM `addons_categories` WHERE addon_id={$this->testdata['addonid']} AND category_id={$this->testdata['categoryid']}");
         return !empty($ret);
     }
 
     function _addTestData() {
-        $this->Addon->execute("INSERT INTO `addons_tags` VALUES('{$this->testdata['addonid']}','{$this->testdata['tagid']}', 1, '{$this->testdata['feature_locales']}')");
+        $this->Addon->execute("INSERT INTO `addons_categories` VALUES('{$this->testdata['addonid']}','{$this->testdata['categoryid']}', 1, '{$this->testdata['feature_locales']}')");
     }
 
     function _removeTestData() {
-        $this->Addon->execute("DELETE FROM `addons_tags` WHERE addon_id={$this->testdata['addonid']} AND tag_id={$this->testdata['tagid']} LIMIT 1");
+        $this->Addon->execute("DELETE FROM `addons_categories` WHERE addon_id={$this->testdata['addonid']} AND category_id={$this->testdata['categoryid']} LIMIT 1");
     }
 
 

@@ -65,9 +65,11 @@
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'lists', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'lists' && empty($subpage)) ? ' class="selected"' : ''?>><?=$html->link('List Manager', '/admin/lists')?></li>
             <?php if ($page == 'lists'): ?>
-            <li class="indented<?=($subpage == 'tags') ? ' selected' : ''?>"><?=$html->link('Categories', '/admin/tags')?></li>
+            <li class="indented<?=($subpage == 'categories') ? ' selected' : ''?>"><?=$html->link('Categories', '/admin/categories')?></li>
             <li class="indented<?=($subpage == 'platforms') ? ' selected' : ''?>"><?=$html->link('Platforms', '/admin/platforms')?></li>
             <li class="indented<?=($subpage == 'responses') ? ' selected' : ''?>"><?=$html->link('Responses', '/admin/responses')?></li>
+            <li class="indented<?=($subpage == 'tags') ? ' selected' : ''?>"><?=$html->link('Tags', '/admin/tags')?></li>
+
             <?php endif; ?>
         <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User'))): ?>

@@ -344,7 +344,7 @@ class AppController extends Controller
      * circumventing the publish() function.
      */
     function beforeRender() {
-       $this->set('AmoTags', $this->Amo->getNavCategories());
+       $this->set('AmoCategories', $this->Amo->getNavCategories());
        $this->set('AmoVersions', $this->Amo->getApplicationVersions());
        $this->set('AmoPlatforms', $this->Platform->getNames());
        $this->set('AmoAddonTypes', $this->Addontype->getNames());

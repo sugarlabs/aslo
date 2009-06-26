@@ -37,35 +37,179 @@
  *
  * ***** END LICENSE BLOCK ***** */ 
 
-$this->viewVars['bodyclass'] = 'inverse';
+// $this->viewVars['bodyclass'] = 'inverse';
 $this->layout = 'amo2009';
+global $app_shortnames, $app_prettynames;
+
+// This is the string that I pass to 'hrefs' to Filter the results. Has to be a better way:
+// $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp)
 
 ?>
+
+
+
 <div class="section">
   <div class="stand-alone-options">
     <?=$this->renderElement('amo2009/categories')?>
-    <?=$this->renderElement('amo2009/search', array('query'=>$search_terms, 
+    <?=$this->renderElement('amo2009/search', array('query'=>$search_terms,
         'category'=>$category, 'appid'=>$appid, 'atype'=>$atype, 'lup'=>"$lup", 
         'pid'=>$pid, 'sort'=>$sort, 'hver'=>$hver, 'lver'=>$lver, 'vfuz'=>$vfuz, 'pp'=>$pp))?>
   </div>
   <?php // TODO Remove style when new search design is implemented; bug 482857 ?>
-  <div class="primary" style="width:100%;">
-    <?=$this->renderElement('amo2009/breadcrumbs')?>
-
-    <div class="featured listing">
+  <div class="primary results-head">
+    <h2><span>Search Results</span></h2>
+<?php if (!empty($search_results)): ?>
+	<h3 class="result-count">Showing <?=$offset + 1?> - <?=$offset + count($search_results)?> of <?=$total_count?> results <?= (!empty($search_terms)) ? "for <strong>".$search_terms."</strong>" : "" ?></h3>
+<?php endif; ?>
+  </div>
+<?php if (empty($search_results)): ?>
+  <div class="primary" role="main" style="width: 100%">	
+<?php else: ?>
+  <div class="primary" role="main">	
+<?php endif; ?>		
+    <div class="featured listing results">
       <div class="featured-inner">
         <div class="listing-header">
-            <?php if (empty($search_results)): ?>
+	        <?php if (empty($search_results)): ?>
                 <p class="addon-search-message"><?=_('search_nothing_found')?></p>
+			<?php else : ?>
+				<ul>
+					<?php
+						foreach (array_keys($app_shortnames) as $_app) {
+						    if ($app_shortnames[$_app] == APP_FENNEC) continue;
+							$class = ($app_shortnames[$_app] == $appid) ? ' class="selected"' : '';
+							echo '<li'.$class.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$app_shortnames[$_app]."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$app_prettynames[$_app].'</a></li>';
+						}
+					?>
+				</ul>
+				<form class="item-sort" method="get" action="">
+	            	<label><?=___('advanced_search_form_sortby'); ?></label>
+	            	<?php 
+						$sort_orders = array( 
+						    '' => ___('advanced_search_form_keyword_match'),
+						    'newest' => ___('advanced_search_form_newest'),
+						    'name' => ___('advanced_search_form_name'),
+						    'averagerating' => ___('advanced_search_form_rating'),
+						    'weeklydownloads' => ___('advanced_search_form_popularity')
+						);
+						$html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
+					?>
+					<button><?=___('collections_index_button_go')?></button>
+		        </form>
+				<script type="text/javascript">collections.init();</script>
             <?php endif; ?>
         </div> <!-- listing-header -->
-            <?php
-                foreach ($search_results as $var => $val) {
-                    echo $this->renderElement('amo2009/homepage_addon', array('addon' => $val));
-                }
-            ?>
+            <?php foreach ($search_results as $var => $val): ?>
+               <?=$this->renderElement('amo2009/results_addon', array('addon' => $val));?>
+            <?php endforeach; ?>
+			<?php if (count($search_results) > 0): ?>
+	        <div class="listing-footer">
+	          <?=$this->renderElement('amo2009/pagination');?>
+	        </div>
+	      <?php endif; ?>
       </div> <!-- featured-inner -->
       <?=$this->renderElement('amo2009/listing_footer')?>
     </div> <!-- featured listing -->
   </div> <!-- primary -->
+<?php if (!empty($search_results)): ?>
+  <div class="secondary" role="complimentary">
+	<div class="highlight">
+		<h2>Refine Results</h2>
+		<div id="refine-compatibility">
+			<h5>Compatible with</h5>
+			<ul class="refinements">
+				<?php
+					$selected = "";
+					if ($hver == "any") {
+						$selected = " class='selected'";
+					}
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">All versions</a></li>';
+				?>
+				<?php
+					$min_display_version_by_app = array(
+					    APP_FIREFOX => "1.0",
+					    APP_THUNDERBIRD => "1.0",
+					    APP_SEAMONKEY => "1.0",
+					    APP_SUNBIRD => "0.2"
+					);
+
+					$new_versions = array();
+					foreach ($app_shortnames as $n => $k) {
+					    if (!empty($AmoVersions[$k])) foreach ($AmoVersions[$k] as $version) {
+					        $versions_parts = explode(".", $version);
+					        $second_part = (isset($versions_parts[1])) ? ".".intval($versions_parts[1]) : "";
+					        if (!isset($min_display_version_by_app[$k])
+					            || $min_display_version_by_app[$k] <= $versions_parts[0].$second_part ) {
+
+					            if ($k != APP_FIREFOX || !in_array($versions_parts[0].$second_part, array('1.4','3.1'))) {
+					                $new_versions[$k][] = $versions_parts[0].$second_part;  
+					            }
+					        }
+					    }
+					    if (!empty($new_versions[$k]))
+					        $new_versions[$k] = array_unique($new_versions[$k]);
+					}
+					$versions = $new_versions;
+					foreach (array_reverse($versions[$appid]) as $app_version){
+						$selected = "";
+						if ($app_version == $hver) {
+							$selected = " class='selected'";
+						}
+						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$app_version."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$app_version.'</a></li>';
+					}
+				?>
+			</ul>
+		</div>
+		<div id="refine-category">
+			<h5>Categories</h5>
+			<ul class="refinements">
+				<?php
+					if ($category == array(0,0)) {
+						$selected = ' class="selected"';
+					} else {
+						$selected = "";
+					}
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">All</a></li>';
+					$results_categories = array();
+					foreach ($search_results as $addon) {
+						if (!empty($addon['Category'])) {
+							array_push($results_categories, $addon['Category'][0]);
+						}
+					}
+					$results_categories = array_unique($results_categories);
+					foreach ($results_categories as $_categories) {
+						if ($category == array($_categories['Category']['addontype_id'], $_categories['Category']['id'])) {
+							$selected = ' class="selected"';
+						} else {
+							$selected = "";
+						}
+						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$app_version."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
+					}
+				?>
+			</ul>
+		</div>
+		<div id="refine-tags">
+			<h5>Tags</h5>
+			<ul class="refinements addon-tags">
+				<!-- <li class="usertag selected"><a class="tagitem" href="#">Tag</a></li>
+				<li class="usertag"><a class="tagitem" href="#">Tag 2</a></li> -->
+				<?php
+					$tag_ids = array();
+
+					foreach ($search_results as $addon) {
+						foreach ($addon['Tag'] as $t) {
+							array_push($tag_ids, $t);
+						}
+					}
+					foreach (array_unique($tag_ids) as $_tag) {
+						$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag['tag_text']."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp);
+						echo "<li class='usertag'><a class='tagitem' href='".$search_query."'>".$_tag['tag_text']."</a></li>";
+					}
+				 ?>
+			</ul>
+
+		</div>
+	</div>
+  </div>
+<?php endif; ?>
 </div><!-- /#section -->

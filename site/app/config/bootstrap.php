@@ -122,7 +122,7 @@ $lang = $language_config->detectCurrentLanguage();
 //  This comment is now longer than the code change. 
 if (array_key_exists('url',$_GET) && 
     !preg_match('/\/api\//', $_GET['url']) && 
-    preg_match('/[^\w\d\/\.\-_!: ]/u',$_GET['url'])) {
+    preg_match('/[^\w\d\/\.\-_!": ]/u',$_GET['url'])) {
     header("HTTP/1.1 400 Bad Request");
     exit;
 }

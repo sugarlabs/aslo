@@ -42,7 +42,7 @@
 /**
  * This element uses the following local variables:
  * - $addon (Addon model-style array, containing 'Addon' and
- *   (optionally) 'Version', 'File', 'Tag' sub-arrays)
+ *   (optionally) 'Version', 'File', 'Category' sub-arrays)
  * - $addonIconPath (optional)
  * - $addonPreviewPath (optional)
  */
@@ -78,8 +78,8 @@ else
     $icon = '';
 
 // prepare categories
-if (!empty($addon['Tag'])) {
-    $categories = $this->renderElement('addon_categories', array('tags' => $addon['Tag']));
+if (!empty($addon['Category'])) {
+    $categories = $this->renderElement('addon_categories', array('categories' => $addon['Category']));
 } else
     $categories = '';
 

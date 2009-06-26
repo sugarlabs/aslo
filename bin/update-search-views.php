@@ -83,13 +83,19 @@ $sql_commands[] = "INSERT INTO `text_search_summary`
                        a.weeklydownloads AS weeklydownloads,
                        `tr_name`.localized_string AS name, 
                        `tr_summary`.localized_string AS summary, 
-                       `tr_description`.localized_string AS description
+                       `tr_description`.localized_string AS description,
+                       tags
                    FROM addons AS a 
                    LEFT JOIN translations AS `tr_name` ON (`tr_name`.id = a.`name`) 
                    LEFT JOIN translations AS `tr_summary` ON (`tr_summary`.id = a.`summary` AND  `tr_name`.locale = `tr_summary`.locale) 
                    LEFT JOIN translations AS `tr_description` 
-	                       ON (`tr_description`.id = a.`description` AND  `tr_name`.locale = `tr_description`.locale)
-                   WHERE `tr_name`.locale IS NOT NULL AND (
+	                       ON (`tr_description`.id = a.`description` AND  `tr_name`.locale = `tr_description`.locale) 
+				   LEFT JOIN 	                       		
+				   ( select uta.addon_id, GROUP_CONCAT(distinct t.tag_text  SEPARATOR '\n') as tags
+						from users_tags_addons uta, tags t
+						where uta.tag_id = t.id
+						group by uta.addon_id ) addon_tags ON ( a.id = addon_tags.addon_id)
+		           WHERE `tr_name`.locale IS NOT NULL AND (
                        `tr_name`.localized_string IS NOT NULL 
                        OR `tr_summary`.localized_string IS NOT NULL 
                        OR `tr_description`.localized_string IS NOT NULL

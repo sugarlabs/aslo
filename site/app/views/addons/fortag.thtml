@@ -1,0 +1,9 @@
+<h2><?=count($addons)?> Addons found for tag <b><i><?=$tag_text?></i></b></h2>
+
+<?
+                foreach ($addons as $var => $val) {
+                    echo $this->renderElement('amo2009/homepage_addon', array('addon' => $val));
+                }
+
+
+?>
