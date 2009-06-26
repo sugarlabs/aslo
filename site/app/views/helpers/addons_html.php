@@ -529,6 +529,9 @@ class AddonsHtmlHelper extends HtmlHelper
      */
     function byStatus($addon, $statusMap) {
         global $experimental_status;
+        if (!array_key_exists('default', $statusMap)) {
+            $statusMap['default'] = '';
+        }
         if (in_array($addon['Addon']['status'], $experimental_status)) {
             return $statusMap['experimental'];
         } elseif ((isset($addon['Addon']['recommended']) && $addon['Addon']['recommended']) || $this->isFeatured($addon))

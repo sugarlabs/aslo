@@ -145,6 +145,7 @@ class ApiController extends AppController
 
         $this->layout = 'rest'; 
         $this->Sanitize = new Sanitize();    
+        $versions=null;
 
         // if we're passed a version do something with it
         if (isset($search_version)) {
@@ -957,7 +958,7 @@ class ApiController extends AppController
     */
     function _getAddons($ids) {
        $addonsdata = array();
-       $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonTag');
+       $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonCategory');
        foreach ($ids as $id) {
         $_conditions = array(
             'Addon.id' => $id,

@@ -106,7 +106,7 @@ class SearchController extends AppController
     function index() {
         global $valid_status, $app_shortnames;
         $associations = array(
-            'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+            'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
             'latest_version', 'list_details'
         );
 

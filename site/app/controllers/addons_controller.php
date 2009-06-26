@@ -190,7 +190,7 @@ class AddonsController extends AppController
             'Addon.status' => $valid_status
             );
 
-        $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonTag');
+        $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonCategory');
         $addon_data = $this->Addon->find($_conditions, null , null , 1);
 
         if (empty($addon_data)) {
@@ -282,8 +282,8 @@ class AddonsController extends AppController
 
         // get the categories that are related to the addon, so that they have translation data
         $_related_category_ids = array();
-        foreach ($addon_data['Category'] as $categoryvalue){
-            $_related_category_ids[] = $categoryvalue['id'];
+        foreach ($addon_data['AddonCategory'] as $categoryvalue){
+            $_related_category_ids[] = $categoryvalue['category_id'];
         }
 
         if (!empty($_related_category_ids))
@@ -828,7 +828,7 @@ class AddonsController extends AppController
         global $valid_status, $app_listedtypes;
 
         $associations = array(
-            'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+            'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
             'latest_version', 'list_details'
         );
 
@@ -1108,7 +1108,7 @@ class AddonsController extends AppController
 
         if (!empty($_feat_ids)) {
             $associations = array(
-                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
             $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
@@ -1197,7 +1197,7 @@ class AddonsController extends AppController
             $tloc_dicts = array();
             $this->Addon->unbindFully();
             $associations = array(
-                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
             $tloc_dicts = $this->Addon->getAddonList($_dict_ids, $associations);
@@ -1301,7 +1301,7 @@ class AddonsController extends AppController
 
         if (!empty($_feat_ids)) {
             $associations = array(
-                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
             $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
@@ -1367,7 +1367,7 @@ class AddonsController extends AppController
         }
         if (!empty($_addon_ids)) {
             $associations = array(
-                'single_tag', 'all_tags', 'authors', 'compatible_apps', 'files',
+                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
             $featAddons = $this->Addon->getAddonList($_addon_ids, $associations);
