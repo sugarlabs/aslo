@@ -115,6 +115,7 @@ class SearchComponent extends Object {
      * @todo we need to be able to specify what fields to search
      *
      * @param string terms to search for
+     * @param string terms to search tags for
      * @param string type of addon to search for, used by API
      * @param int category to search in (0 means no restriction)
      * @param lver, hver - version range addon version should intersect with

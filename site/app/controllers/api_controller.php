@@ -174,7 +174,8 @@ class ApiController extends AppController
             $searchtype = ADDON_API;
         }
 
-        $result_ids = $this->Search->search($term, $searchtype, 0, STATUS_PUBLIC,
+        // We're not searching tags here
+        $result_ids = $this->Search->search($term, '', $searchtype, 0, STATUS_PUBLIC,
                                             $versions , -1, false, -1, $platform_id);
         if (is_array($result_ids)) {
             $total_results = count($result_ids);

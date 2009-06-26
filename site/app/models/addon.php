@@ -201,6 +201,21 @@ class Addon extends AppModel
                         ))));
                 break;
 
+            case 'all_tags':
+                // all categories this add-on is associated with
+                $this->bindModel(array('hasMany' =>
+                    array('UserTagAddon' =>
+                       array('className'  => 'UserTagAddon',
+                        ))));
+                $this->bindModel(array('hasAndBelongsToMany' =>
+                    array('Tag' =>
+                        array('className'  => 'Tag',
+                              'joinTable'  => 'users_tags_addons',
+                              'foreignKey' => 'addon_id',
+                              'associationForeignKey'=> 'tag_id'
+                        ))));
+                break;
+
             case 'authors':
                 // addon authors
                 $this->bindModel(array('hasAndBelongsToMany' =>
@@ -241,6 +256,22 @@ class Addon extends AppModel
                     array('AddonCategory' =>
                        array('className'  => 'AddonCategory',
                              'foreignKey' => 'addon_id',
+                             'limit' => 1
+                        ))));
+                break;
+
+            case 'single_tag':
+                // all categories this add-on is associated with
+                $this->bindModel(array('hasMany' =>
+                    array('UserTagAddon' =>
+                       array('className'  => 'UserTagAddon',
+                        ))));
+                $this->bindModel(array('hasAndBelongsToMany' =>
+                    array('Tag' =>
+                        array('className'  => 'Tag',
+                              'joinTable'  => 'users_tags_addons',
+                              'foreignKey' => 'addon_id',
+                              'associationForeignKey'=> 'tag_id',
                              'limit' => 1
                         ))));
                 break;

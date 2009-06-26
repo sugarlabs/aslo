@@ -104,9 +104,6 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
     <h3>
         <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><?=$addonName?></a>
         <span title="<?=___('addons_author_tooltip') ?>"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></span>
-		<?php if (!empty($addonCategories)): ?>
-			<span><strong><a href="<?=$html->url('/browse/type:'.$addonType.'/cat:'.$addonCategories[0]['Category']['id'])?>" class="view"><?=$addonCategories[0]['Translation']['name']['string']?></a></strong></span>
-		<?php endif; ?>
 	    <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonIconPath?>" width="32" height="32" alt="<?=$_alt?>" title="<?=$_alt?>" class="icon"/></a>
     </h3>
     <blockquote cite="#"><p><?=$addonSummary?></p></blockquote>

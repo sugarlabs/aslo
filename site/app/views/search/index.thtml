@@ -67,6 +67,7 @@ global $app_shortnames, $app_prettynames;
 <?php else: ?>
   <div class="primary" role="main">	
 <?php endif; ?>		
+
     <div class="featured listing results">
       <div class="featured-inner">
         <div class="listing-header">
@@ -102,15 +103,11 @@ global $app_shortnames, $app_prettynames;
             <?php foreach ($search_results as $var => $val): ?>
                <?=$this->renderElement('amo2009/results_addon', array('addon' => $val));?>
             <?php endforeach; ?>
-			<?php if (count($search_results) > 0): ?>
-	        <div class="listing-footer">
-	          <?=$this->renderElement('amo2009/pagination');?>
-	        </div>
-	      <?php endif; ?>
       </div> <!-- featured-inner -->
       <?=$this->renderElement('amo2009/listing_footer')?>
     </div> <!-- featured listing -->
   </div> <!-- primary -->
+
 <?php if (!empty($search_results)): ?>
   <div class="secondary" role="complimentary">
 	<div class="highlight">
@@ -183,7 +180,7 @@ global $app_shortnames, $app_prettynames;
 						} else {
 							$selected = "";
 						}
-						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$app_version."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
+						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
 					}
 				?>
 			</ul>

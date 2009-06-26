@@ -107,7 +107,7 @@ class SearchController extends AppController
         global $valid_status, $app_shortnames;
         $associations = array(
             'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
-            'latest_version', 'list_details'
+            'latest_version', 'list_details', 'all_tags'
         );
 
         if (!empty($this->params['url']['q'])) {
