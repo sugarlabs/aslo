@@ -81,10 +81,10 @@ INSERT INTO `addons_collections` (`addon_id`, `collection_id`, `added`, `categor
 (8,1,'2008-01-01 00:00:00', 1, 3);
 
 -- 
--- Dumping data for table `addons_tags`
+-- Dumping data for table `addons_categories`
 -- 
 
-INSERT INTO `addons_tags` (`addon_id`, `tag_id`, `feature`) VALUES 
+INSERT INTO `addons_categories` (`addon_id`, `category_id`, `feature`) VALUES
 (4021, 1, 1),
 (4022, 1, 0),
 (2, 2, 0),
@@ -419,10 +419,10 @@ INSERT INTO `reviews` (`id`, `version_id`, `user_id`, `reply_to`, `rating`, `tit
 (7, 1, 5, 4, NULL, 46714, 46715, 0, 0, 0, '2007-07-24 05:19:25', '2007-07-24 05:19:25');
 
 -- 
--- Dumping data for table `tags`
+-- Dumping data for table `categories`
 -- 
 
-INSERT INTO `tags` (`id`, `name`, `description`, `addontype_id`, `application_id`, `created`, `modified`) VALUES 
+INSERT INTO `categories` (`id`, `name`, `description`, `addontype_id`, `application_id`, `created`, `modified`) VALUES
 (1, 30, 17, 1, 1, '2006-08-22 12:27:42', '2006-08-22 12:51:46'),
 (2, 31, 18, 1, 1, '2006-08-22 12:35:06', '2006-08-22 12:35:06'),
 (3, 32, 19, 1, 18, '2006-08-22 12:47:47', '2006-08-22 12:47:47'),

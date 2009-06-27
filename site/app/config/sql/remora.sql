@@ -1146,7 +1146,7 @@ CREATE TABLE `collection_promos` (
   PRIMARY KEY  (`id`),
   KEY `collection_id` (`collection_id`),
   UNIQUE KEY `one_collection_per_tagline_per_locale` (`collection_id`,`locale`,`title_tagline`),
-  CONSTRAINT `collection_features_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`)
+  CONSTRAINT `collection_promos_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `collections_categories`;
