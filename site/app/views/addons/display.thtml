@@ -396,8 +396,9 @@ if (!empty($coll_addon_added)) {
 
   <?php
   if (is_array($relatedCategories)) {
+      $_sort_opt = ($addon['Addon']['addontype_id'] == ADDON_SEARCH) ? '?sort=rated' : '';
       foreach ($relatedCategories as $category) {
-          echo $html->link(sprintf(_('addons_display_see_all_addons'),$category['Translation']['name']['string']), '/browse/' . "type:" . $category['Category']['addontype_id'] . '/' . "cat:" . $category['Category']['id'], array('class'=>'more-info')) . "\n";
+          echo $html->link(sprintf(_('addons_display_see_all_addons'),$category['Translation']['name']['string']), '/browse/' . "type:" . $category['Category']['addontype_id'] . '/' . "cat:" . $category['Category']['id'] . $_sort_opt , array('class'=>'more-info')) . "\n";
       }
   }
   ?>
