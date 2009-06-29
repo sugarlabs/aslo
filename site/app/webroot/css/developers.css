@@ -328,6 +328,12 @@ p {
 .actionbar .edit-authors {
     background: transparent url('../img/developers/actionbar/edit_authors.png') no-repeat 0% 50%;
 }
+.actionbar .edit-contributions {
+    background: transparent url('../img/developers/actionbar/edit_contributions.png') no-repeat 0% 50%;
+}
+.actionbar .edit-profile {
+    background: transparent url('../img/developers/actionbar/edit_profile.png') no-repeat 0% 50%;
+}
 .actionbar .status {
     background: transparent url('../img/developers/actionbar/status.png') no-repeat 0% 50%;
 }
@@ -1242,7 +1248,141 @@ div.addonName {
 	padding: 4px;
 }
 
+/* New icons for profile and contributions */
+/* Stolen from amo2009/main.css */
+span.new {
+    padding: 0.2em 0.5em;
+    background-color: #305083;
+    color: white;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    background-image: url(../../img/amo2009/bg/heading-dark-blue.jpg);
+    background-repeat: repeat-x;
+    background-position: bottom left;
+    border:  1px solid #021437;
+    text-transform: uppercase;
+    font-size: 0.611em;
+}
 
+.edit-profile, .edit-contributions {
+    white-space: nowrap;
+}
 
- 
+/* Developer profile & contributions page. */
+#create-dev-profile button {
+    margin-top: 1em;
+}
+
+.button-holder {
+    text-align: center;
+}
+
+.intro #contributions,
+.intro #dev-profile {
+    display: none;
+}
+
+#currently.asking {
+    background-color: #e6fae0;
+    border: 1px solid #d5e6ce;
+}
+
+#currently.not-asking {
+    background-color: #fbfbfb;
+    border: 1px solid #e6e6e6;
+}
+
+#currently.asking button {
+    color: #2e8d23;
+}
+
+#currently.not-asking button {
+    color: #1d587f;
+}
+
+#currently p:last-of-type {
+    float: right;
+}
+
+#currently p:first-of-type {
+    float: left;
+}
+
+button.link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 100%;
+}
+
+button.link span {
+    text-decoration: underline;
+}
+
+#contributions label {
+    font-weight: bold;
+}
+
+#contributions input[type=radio] + label {
+    font-weight: normal;
+}
+
+#contrib-account div {
+    float: left;
+}
+
+#contrib-account div:nth-of-type(3) {
+    margin: 0 2em;
+}
+
+#contributions form input:not([type=hidden]) + p {
+    font-size: 90%;
+}
+
+#currently {
+    font-size: 90%;
+    padding: 0 1em;
+    margin: 1em 0;
+}
+
+#currently p {
+    padding: 0;
+    margin: 0.5em 0;
+}
+
+ul.radio {
+    list-style-type: none;
+    margin: 0;
+}
+
+ul.radio label {
+    display: inline;
+}
+
+ul.radio input {
+    margin-left: 0;
+}
+
+/* Disable the icon, overlay the NEW! indicator. */
+#sidebar .edit-contributions,
+#sidebar .edit-profile {
+    background: none;
+}
+
+/* This is a stupid hack.  Take the NEW! indicator out of the flow
+ * and position it where it needs to be.  If the devcp wasn't using absolute
+ * positions and hardcoded widths for columns, this would be unnecessary.
  */
+#sidebar .edit-contributions .new,
+#sidebar .edit-profile .new {
+    position: absolute;
+    left: 2em;
+}
+.html-rtl #sidebar .edit-contributions .new,
+.html-rtl #sidebar .edit-profile .new {
+    position: absolute;
+    left: 13em;

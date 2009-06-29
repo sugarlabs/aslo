@@ -49,6 +49,14 @@
 
         <li class="edit-descriptions<?=($subaction == 'descriptions' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></li>
         <li class="edit-properties<?=($subaction == 'properties' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_properties'), "/developers/addon/edit/{$addon_id}/properties")?></li>
+        <li class="edit-profile<?=($subaction == 'profile' ? ' selected' : '')?>">
+            <?=$this->renderElement('amo2009/new_indicator')?>
+            <?=$html->link(___('devcp_editbox_profile'), "/developers/addon/edit/{$addon_id}/profile")?>
+        </li>
+        <li class="edit-contributions<?=($subaction == 'contributions' ? ' selected' : '')?>">
+            <?=$this->renderElement('amo2009/new_indicator')?>
+            <?=$html->link(___('devcp_editbox_contributions'), "/developers/addon/edit/{$addon_id}/contributions")?>
+        </li>
         </ul></li>
         <?php endif; ?>
         <li class="status<?=($action == 'status' ? ' selected' : '')?>"><?=$html->link(___('devcp_editbox_change_status'), "/developers/addon/status/{$addon_id}/")?></li>

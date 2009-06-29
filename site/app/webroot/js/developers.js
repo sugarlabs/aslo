@@ -759,3 +759,17 @@ function confirmClearDefault(checkbox) {
         return confirm(localized['clearDefaultNotice']);
     }
 }
+
+var edit_profile = function() {
+    $('#create-dev-profile button').click(function(){
+        $('#create-dev-profile').slideUp();
+        $('#dev-profile').slideDown();
+    });
+};
+
+var edit_contributions = function() {
+    $('#start-asking button').click(function(){
+        $('#start-asking').slideUp();
+        $('#contributions').slideDown();
+    });
+};

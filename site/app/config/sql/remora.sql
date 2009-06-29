@@ -58,6 +58,12 @@ CREATE TABLE `addons` (
   `locale_disambiguation` varchar(255) default NULL,
   `nominationdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `dev_agreement` tinyint(1) unsigned NOT NULL default '0',
+  `the_reason` int(11) unsigned default NULL,
+  `the_future` int(11) unsigned default NULL,
+  `paypal_id` varchar(255) NOT NULL default '',
+  `suggested_amount` varchar(255) default NULL,
+  `annoying` int(11) default '0',
+  `wants_contributions` tinyint(1) unsigned NOT NULL default '0',
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
@@ -71,6 +77,8 @@ CREATE TABLE `addons` (
   KEY `addons_ibfk_8` (`developercomments`),
   KEY `addons_ibfk_9` (`eula`),
   KEY `addons_ibfk_10` (`privacypolicy`),
+  KEY `addons_ibfk_11` (`the_reason`),
+  KEY `addons_ibfk_12` (`the_future`),
   KEY `status` (`status`),
   KEY `guid` (`guid`),
   KEY `inactive` (`inactive`),
@@ -86,7 +94,9 @@ CREATE TABLE `addons` (
   CONSTRAINT `addons_ibfk_7` FOREIGN KEY (`summary`) REFERENCES `translations` (`id`),
   CONSTRAINT `addons_ibfk_8` FOREIGN KEY (`developercomments`) REFERENCES `translations` (`id`),
   CONSTRAINT `addons_ibfk_9` FOREIGN KEY (`eula`) REFERENCES `translations` (`id`),
-  CONSTRAINT `addons_ibfk_10` FOREIGN KEY (`privacypolicy`) REFERENCES `translations` (`id`)
+  CONSTRAINT `addons_ibfk_10` FOREIGN KEY (`privacypolicy`) REFERENCES `translations` (`id`),
+  CONSTRAINT `addons_ibfk_11` FOREIGN KEY (`the_reason`) REFERENCES `translations` (`id`),
+  CONSTRAINT `addons_ibfk_12` FOREIGN KEY (`the_future`) REFERENCES `translations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

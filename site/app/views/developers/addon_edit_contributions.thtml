@@ -1,0 +1,151 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Jeff Balogh <jbalogh@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+
+<div id="content">
+  <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons,
+                                                      'extra' => 'developers/editbox'));?>
+  <div id="content-main" class="<?=$show_intro ? 'intro' : ''?>">
+
+    <?=$this->renderElement('developers/addonheader',
+                            array('title' => sprintf(___('devcp_title_edit_addon'),
+                                                     $addon_name),
+                                  'addon_id' => $addon_id));?>
+    <?=$this->renderElement('noscript')?>
+    <?=$this->renderElement('developers/rolecheck')?>
+
+    <?php if ($show_intro): ?>
+        <div id="start-asking" class="graybox field rounded spaced">
+          <h2><?=___('devcp_edit_contrib_header_start')?></h2>
+          <?=___('devcp_edit_contrib_start')?>
+          <?php if ($has_profile): ?>
+              <div class="button-holder">
+                <button><?=___('devcp_edit_contrib_button_start')?></button>
+              </div>
+          <?php else: ?>
+              <p><strong><?=___('devcp_edit_contrib_before')?></strong></p>
+              <a href="<?=$html->url("/developers/addon/edit/{$addon_id}/profile")?>">
+                <?=___('devcp_edit_contrib_button_profile')?>
+              </a>
+          <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php
+    $wants_contributions = $addon['Addon']['wants_contributions'];
+    $contribution_toggle = $html->input('Addon/wants_contributions', array(
+        'value' => !$wants_contributions, 'type' => 'hidden'));
+    ?>
+    <div id="contributions">
+      <form method="post" action="">
+        <?=$html->hiddenSession();?>
+        <?=$contribution_toggle?>
+        <div id="currently" class="clearfix <?=$wants_contributions ? 'asking' : 'not-asking'?>">
+          <?php
+          if ($wants_contributions) {
+              $text = ___('devcp_edit_contrib_currently_asking');
+              $button = ___('devcp_edit_contrib_stop_asking');
+          } else {
+              $text = ___('devcp_edit_contrib_currently_not_asking');
+              $button = ___('devcp_edit_contrib_start_asking');
+          }
+          ?>
+          <p><?=$text?></p>
+          <p><button class="link"><span><?=$button?></span></button></p>
+        </div>
+      </form>
+
+      <form method="post" action="">
+        <div class="graybox field rounded spaced clearfix" id="contrib-account">
+          <h4><?=___('devcp_edit_contrib_header_account')?></h4>
+          <p><?=sprintf(___('devcp_edit_contrib_account'), 'https://paypal.com')?></p>
+            <?=$html->hiddenSession();?>
+            <div>
+              <label for="AddonPaypalId"><?=___('devcp_edit_contrib_label_pp_id')?></label>
+            </div>
+            <div>
+              <?=$html->input('Addon/paypal_id')?>
+              <?=$html->tagErrorMsg('Addon/paypal_id', '')?>
+            </div>
+            <div>
+              <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_registration-run">
+                <?=___('devcp_edit_contrib_pp_signup')?>
+              </a>
+            </div>
+        </div>
+
+        <div class="graybox field rounded spaced">
+          <h4><?=___('devcp_edit_contrib_header_asking')?></h4>
+          <p><?=___('devcp_edit_contrib_asking')?></p>
+            <table>
+              <tr>
+                <th><label for="AddonSuggestedAmount"><?=___('devcp_edit_contrib_label_suggested')?></label></th>
+                <td>
+                  <?=$html->tagErrorMsg('Addon/suggested_amount',
+                                        ___('devcp_edit_contrib_suggested_amount_error'))?>
+                  <?=$html->input('Addon/suggested_amount')?>
+                  <!-- TODO: currency -->
+                  <p><?=___('devcp_edit_contrib_amount')?></p>
+                </td>
+              </tr>
+              <tr>
+                <th><label><?=___('devcp_edit_contrib_label_where')?></label></th>
+                <td>
+                  <?=$html->radio('Addon/annoying', array(
+                      ___('devcp_edit_contrib_radio_ask_passive'),
+                      ___('devcp_edit_contrib_radio_ask_after'),
+                      ___('devcp_edit_contrib_radio_ask_roadblock')
+                  ))?>
+                </td>
+              </tr>
+            </table>
+        </div>
+
+        <div class="button-holder">
+          <?php if ($show_intro): ?>
+            <?=$contribution_toggle?>
+            <button><?=___('devcp_edit_contrib_button_start')?></button>
+          <?php else: ?>
+            <button><?=___('devcp_edit_contrib_button_update')?></button>
+          <?php endif; ?>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">$(document).ready(edit_contributions);</script>

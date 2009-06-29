@@ -64,7 +64,7 @@ class DevelopersController extends AppController
         'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview', 'Review',
         'Tag', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error',
-        'Image', 'Opensearch', 'Rdf', 'Src', 'Versioncompare');
+        'Image', 'Opensearch', 'Paypal', 'Rdf', 'Src', 'Versioncompare');
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Link', 'Listing', 'Localization', 'Form');
     var $addVars = array(); //variables accessible to all additem steps
 
@@ -617,7 +617,15 @@ class DevelopersController extends AppController
             case 'tags':
                 $this->setAction('_editAddonTags', $addon_id);
                 break;
-            
+
+            case 'profile':
+                $this->setAction('_editProfile', $addon_id);
+                break;
+
+            case 'contributions':
+                $this->setAction('_editContributions', $addon_id);
+                break;
+
             default:
                 $this->render('addon_edit');
                 break;
@@ -625,7 +633,69 @@ class DevelopersController extends AppController
         
         return;
     }
-    
+
+    function _editProfile($addon_id) {
+        // Save translations if POST data
+        if (!empty($this->data['Addon']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
+            $this->Addon->saveTranslations($addon_id,
+                                           $this->params['form']['data']['Addon'],
+                                           $this->data['Addon']);
+            // flush cached add-on objects
+            if (QUERY_CACHE)
+                $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
+
+            $this->publish('updated', true);
+        }
+
+        $translations = $this->Addon->getAllTranslations($addon_id);
+        $has_profile = count($translations['the_reason']) + count($translations['the_future']) > 0;
+        $addon = $this->Addon->findById($addon_id);
+
+        $this->set('translations', $translations);
+        $this->set('has_profile', $has_profile);
+        $this->set('addon', $addon);
+        return $this->render('addon_edit_profile');
+    }
+
+    function _editContributions($addon_id) {
+        $this->Addon->id = $addon_id;
+
+        if (!empty($this->data)) {
+            if (isset($this->data['Addon']['paypal_id'])) {
+                $this->_checkPaypalID($addon_id, $this->data['Addon']['paypal_id']);
+            }
+            if ($this->Addon->validates($this->data)) {
+                $this->Addon->save($this->data);
+                $this->redirect("/developers/addon/edit/{$addon_id}/contributions");
+            }
+        }
+
+        $addon = $this->Addon->findById($addon_id);
+        $a = $addon['Addon'];
+        $this->set('addon', $addon);
+        $this->set('a', $a);
+
+        $translations = $this->Addon->getAllTranslations($addon_id);
+        $has_profile = count($translations['the_reason']) + count($translations['the_future']) > 0;
+        $show_intro = (empty($this->data) && empty($a['paypal_id']) && empty($a['suggested_amount']) || !$has_profile);
+        $this->set('has_profile', $has_profile);
+        $this->set('show_intro', $show_intro);
+
+        if (empty($this->data)) {
+            $this->data = $addon;
+        }
+
+        return $this->render('addon_edit_contributions');
+    }
+
+    function _checkPaypalID($addon_id, $paypal_id) {
+        list($success, $response) = $this->Paypal->createButton($paypal_id);
+
+        if (!$success) {
+            $this->Addon->validationErrors['paypal_id'] = $response['L_LONGMESSAGE0'];
+        }
+    }
+
     /**
      * Edit Add-on Properties
      * @param int $addon_id the add-on id

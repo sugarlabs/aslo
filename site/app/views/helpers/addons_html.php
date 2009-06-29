@@ -620,5 +620,25 @@ class AddonsHtmlHelper extends HtmlHelper
 
         return $url;
     }
+
+    function radio($fieldName, $options, $htmlAttributes=array()) {
+        $this->setFormTag($fieldName);
+		$value = isset($htmlAttributes['value']) ? $htmlAttributes['value'] : $this->tagValue($fieldName);
+        $out = array();
+
+		foreach ($options as $optValue => $optTitle) {
+            $attrs = array('value' => $optValue);
+            if ($optValue == $value) {
+                $attrs['checked'] = 'checked';
+            }
+            $attrs = $this->_parseAttributes(array_merge($htmlAttributes, $attrs));
+            $name = "{$this->field}_{$optValue}";
+            $title = "<label for='{$name}'>{$optTitle}</label>";
+            $out[] = '<li>'.sprintf($this->tags['radio'], $this->model, $this->field,
+                                    $name, $attrs, $title)
+                     .'</li>';
+        }
+        return '<ul class="radio">'.join('', $out).'</ul>';
+    }
 }
 ?>

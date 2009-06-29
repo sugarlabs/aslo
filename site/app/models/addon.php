@@ -140,7 +140,9 @@ class Addon extends AppModel
                 'homepage',
                 'name',
                 'privacypolicy',
-                'summary'
+                'summary',
+                'the_future',
+                'the_reason'
             );
 
     var $validate = array(
@@ -152,7 +154,8 @@ class Addon extends AppModel
         'summary' => VALID_NOT_EMPTY,
         'supportemail' => VALID_EMAIL_OPT,
         'supporturl' => VALID_URL_OPT,
-        'homepage' => VALID_URL_OPT
+        'homepage' => VALID_URL_OPT,
+        'suggested_amount' => VALID_MONEY
     );
 
     var $default_fields = array('id', 'guid', 'name', 'defaultlocale', 'addontype_id', 'status',
@@ -161,7 +164,19 @@ class Addon extends AppModel
         'developercomments', 'inactive', 'trusted', 'viewsource', 'publicstats',
         'prerelease', 'adminreview', 'sitespecific', 'externalsoftware', 'binary',
         'eula', 'privacypolicy', 'nominationmessage', 'target_locale', 'locale_disambiguation',
+        'paypal_id', 'suggested_amount', 'wants_contributions', 'annoying',
         'created', 'modified');
+
+    const CONTRIBUTIONS_NONE = 0;
+    const CONTRIBUTIONS_PASSIVE = 1;
+    const CONTRIBUTIONS_AFTER = 2;
+    const CONTRIBUTIONS_ROADBLOCK = 3;
+
+    function clean_annoying($input) {
+        if (CONTRIBUTIONS_ROADBLOCK < (int)$input) {
+            $this->invalidate('annoying');
+        }
+    }
 
     /**
      * Get a single add-on, along with the desired associations

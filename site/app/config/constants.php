@@ -280,6 +280,8 @@ define('VALID_UUID_REQ','/^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a
 define('INVALID_FILENAME_CHARS', '/[^\w\d\.\-_!+]/');
 // invalid collection nicknames
 define('INVALID_COLLECTION_NICKNAME_CHARS', INVALID_FILENAME_CHARS);
+/* Money: anything from 0.00 to 99.99.  Decimal not required. */
+define('VALID_MONEY', '/^(\d{0,2}(\.\d\d)?|\.\d\d)$/');
 
 /**
  * entities to be sanitized by publish()
@@ -305,4 +307,9 @@ if(defined('ROOT')) {
  * Password Reset Expires: the number of days before a resetcode expires.
  */
 define('PASSWORD_RESET_EXPIRES', 3);
+
+/**
+ * Paypal
+ */
+define('PAYPAL_API_VERSION', '50');
 ?>

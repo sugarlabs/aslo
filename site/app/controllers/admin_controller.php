@@ -1810,6 +1810,9 @@ class AdminController extends AppController
         $_constants['TEST_DB_PASS']          = '--removed--';
         $_constants['CAKE_SESSION_STRING']   = '--removed--';
         $_constants['RECAPTCHA_PRIVATE_KEY'] = '--removed--';
+        $_constants['PAYPAL_PASSWORD']       = '--removed--';
+        $_constants['PAYPAL_BN']             = '--removed--';
+        $_constants['PAYPAL_SIGNATURE']      = '--removed--';
 
         $this->set('constants', $_constants);
 

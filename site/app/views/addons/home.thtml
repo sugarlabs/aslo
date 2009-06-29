@@ -140,7 +140,8 @@ $this->viewVars['bodyclass'] = 'home';
     <div class="secondary">
         <img class="pull-right" src="<?=$html->url('/img/amo2009/illustrations/logo-collections-100x125.png', null, false, false)?>" alt=""/>
         <h3><a href="<?=$html->url('/collections')?>"><?=___('addons_home_collections','Collections')?></a>
-            <span class="new indicator"><?=___('addons_home_new_indicator', 'NEW!')?></span></h3>
+            <?=$this->renderElement('amo2009/new_indicator')?>
+        </h3>
         <p><?=___('addons_home_collections_intro', '
             Collections are a way for you to categorize, mix, match and mingle
             add-ons.  Subscribe to collections created by other users or create your
