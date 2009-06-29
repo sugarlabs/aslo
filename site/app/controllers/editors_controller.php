@@ -847,11 +847,11 @@ class EditorsController extends AppController
         $otherId = $category_merge['other'][0];
 
         // fetch all extension categories
-        $this->Tag->unbindFully();
-        $cats = $this->Tag->findAll("addontype_id='".ADDON_EXTENSION."'", null, 'Tag.id');
+        $this->Category->unbindFully();
+        $cats = $this->Category->findAll("addontype_id='".ADDON_EXTENSION."'", null, 'Category.id');
         $catCounts = array();
         foreach ($cats as $cat) {
-            $catCounts[$cat['Tag']['id']] = array(
+            $catCounts[$cat['Category']['id']] = array(
                 'label' => $cat['Translation']['name']['string'],
                 'usercount' => 0,
                 'teamcount' => 0
@@ -859,14 +859,14 @@ class EditorsController extends AppController
         }
 
         // sum approvals by addon, category, and user
-        $sql = "SELECT `Approval`.`addon_id`, `AddonTag`.`tag_id`, `Approval`.`user_id`, COUNT(*) AS `total`
+        $sql = "SELECT `Approval`.`addon_id`, `AddonCategory`.`category_id`, `Approval`.`user_id`, COUNT(*) AS `total`
                   FROM `approvals` AS `Approval`
                  INNER JOIN `addons` AS `Addon` ON (`Addon`.`id`=`Approval`.`addon_id`)
-                 INNER JOIN `addons_tags` AS `AddonTag` ON (`AddonTag`.`addon_id`=`Addon`.`id`)
+                 INNER JOIN `addons_categories` AS `AddonCategory` ON (`AddonCategory`.`addon_id`=`Addon`.`id`)
                  WHERE `Approval`.`created` >= FROM_UNIXTIME('{$startTime}')
                    AND `Approval`.`created` < FROM_UNIXTIME('{$endTime}')
                    AND `Addon`.`addontype_id` = '".ADDON_EXTENSION."'
-                 GROUP BY `Approval`.`addon_id`, `AddonTag`.`tag_id`, `Approval`.`user_id`";
+                 GROUP BY `Approval`.`addon_id`, `AddonCategory`.`category_id`, `Approval`.`user_id`";
 
         $approvals = $this->Approval->query($sql);
 
@@ -874,7 +874,7 @@ class EditorsController extends AppController
         $nonOtherCount = $lastAddon = $userOther = $teamOther = 0;
 
         foreach ($approvals as $appr) {
-            $catId = $appr['AddonTag']['tag_id'];
+            $catId = $appr['AddonCategory']['category_id'];
 
             if ($appr['Approval']['addon_id'] !== $lastAddon) {
                 // we just finished an add-on
@@ -1508,7 +1508,7 @@ class EditorsController extends AppController
             $_addon_ids = array_unique($_addon_ids);
 
             // Big ol' array
-            $this->Addon->bindOnly('AddonTag');
+            $this->Addon->bindOnly('AddonCategory');
             $features = $this->Addon->findAll(array('Addon.id' => $_addon_ids), array('Addon.id', 'Addon.name', 'Addon.addontype_id'), 'Translation.name');
 
             foreach ($features as $feature) {
