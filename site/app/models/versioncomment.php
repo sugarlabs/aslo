@@ -149,6 +149,22 @@ class Versioncomment extends AppModel
     }
 
     /**
+     * Returns the number comments in a version
+     *
+     * @param int $versionId - the id of a version
+     * @return int
+     */
+    function getCommentCount($versionId) {
+        if (!is_numeric($versionId)) return 0;
+
+        $results = $this->query("SELECT COUNT(*) AS total
+                                    FROM versioncomments
+                                    WHERE version_id='{$versionId}'");
+
+        return $results ? $results[0][0]['total'] : 0;
+    }
+
+    /**
      * Subscribes a user to a comment thread
      *
      * @param int $id - the id of a comment
@@ -162,21 +178,17 @@ class Versioncomment extends AppModel
         $e_id     = $db->value($id); 
         $e_userId = $db->value($userId);
 
-        // check for existing subscription
-        $rows = $this->query("SELECT *
-                                FROM users_versioncomments AS uvc
-                                WHERE user_id='{$e_userId}' AND comment_id='{$e_id}'");
+        // dont overwrite existing subscription
+        if (!$force) {
+            $rows = $this->query("SELECT *
+                                    FROM users_versioncomments AS uvc
+                                    WHERE user_id='{$e_userId}' AND comment_id='{$e_id}'");
+            if (!empty($rows)) return;
+        }
 
-        if (empty($rows)) {
-            $this->query("INSERT INTO users_versioncomments
-                            (user_id, comment_id, subscribed, created, modified)
-                            VALUES ('{$e_userId}', '{$e_id}', 1, NOW(), NOW())");
-        }
-        elseif (!$rows[0]['uvc']['subscribed'] && $force) {
-            $this->query("UPDATE users_versioncomments
-                            SET subscribed='1', modified=NOW()
-                            WHERE user_id='{$e_userId}' AND comment_id='{$e_id}'");
-        }
+        $this->query("REPLACE INTO users_versioncomments
+                        (user_id, comment_id, subscribed, created, modified)
+                        VALUES ('{$e_userId}', '{$e_id}', 1, NOW(), NOW())");
     }
     
     /**
@@ -192,21 +204,9 @@ class Versioncomment extends AppModel
         $e_id     = $db->value($id); 
         $e_userId = $db->value($userId);
 
-        // check for existing subscription
-        $rows = $this->query("SELECT *
-                                FROM users_versioncomments AS uvc
-                                WHERE user_id='{$e_userId}' AND comment_id='{$e_id}'");
-
-        if (empty($rows)) {
-            $this->query("INSERT INTO users_versioncomments
-                            (user_id, comment_id, subscribed, created, modified)
-                            VALUES ('{$e_userId}', '{$e_id}', 0, NOW(), NOW())");
-        }
-        elseif ($rows[0]['uvc']['subscribed']) {
-            $this->query("UPDATE users_versioncomments
-                            SET subscribed='0', modified=NOW()
-                            WHERE user_id='{$e_userId}' AND comment_id='{$e_id}'");
-        }
+        $this->query("REPLACE INTO users_versioncomments
+                        (user_id, comment_id, subscribed, created, modified)
+                        VALUES ('{$e_userId}', '{$e_id}', 0, NOW(), NOW())");
     }
     
     /**

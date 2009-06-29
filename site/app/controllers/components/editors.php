@@ -396,7 +396,7 @@ class EditorsComponent extends Object {
         
         // load the spam cannon
         $this->controller->Email->template = '../editors/email/notify_version_comment';
-        $this->controller->Email->subject = $emailInfo['subject'];
+        $this->controller->Email->subject = "[AMO] {$emailInfo['subject']}; {$emailInfo['addon']} Review {$emailInfo['versionid']}";
         
         // fire away
         foreach ($subscribers as &$subscriber) {

@@ -79,13 +79,9 @@ var editors_review = {
             comments = $('#editorComments .commentDepth'+depth);
         }
 
-        // click a comment header to toggle showing/hiding its body
-        $('#editorComments .commentHeader').click(this.toggleOneComment);
-
-        // comment expand/collapse all links
-        $('#editorComments .expandAllThreads').click(this.expandAllComments);
-        $('#editorComments .collapseAllThreads').click(this.collapseAllComments);
-
+        // click a root comment header to toggle showing/hiding the entire thread
+        $('#editorComments .commentDepth0 .commentHeader').click(this.toggleThread);
+        
         // show the comment form
         $('#editorComments .replyLink, #editorComments .newThreadLink').click(this.showCommentForm);
 
@@ -96,7 +92,6 @@ var editors_review = {
 
         // highlight any comment specified in the location hash
         if (window.location.hash.match(/^#editorComment(\d+)$/)) {
-            $(window.location.hash+' .commentBody').show();
             $(window.location.hash).css('background-color', '#efefef');
         }
     },
@@ -116,18 +111,33 @@ var editors_review = {
         return false;
     },
 
-    // show all comment bodies
-    expandAllComments: function(e) {
-        $('#editorComments .commentBody').show();
-        $('#editorComments .commentHeader').removeClass('collapsed');
-        return false;
-    },
+    // toggle showing/hiding an entire comment thread
+    toggleThread: function(e) {
+        var root = $(this).parent();
+        var rootBody = $('.commentBody', root);
 
-    // hide all comment bodies
-    collapseAllComments: function(e) {
-        $('#editorComments .commentBody').hide();
-        $('#editorComments .commentHeader').addClass('collapsed');
-        return false;
+        if (! rootBody.is(':animated')) {
+            // toggle body of root comment
+            var visible = rootBody.is(':visible');
+            if (visible) {
+                $(rootBody).slideUp();
+                $(this).addClass('collapsed');
+            } else {
+                $(rootBody).slideDown();
+                $(this).removeClass('collapsed');
+            }
+
+            // walk and toggle list of siblings until we hit a root node (or the end)
+            for (   var sibling = root.next('.editorComment').not('.commentDepth0');
+                    sibling.length;
+                    sibling = sibling.next('.editorComment').not('.commentDepth0')) {
+                if (visible) {
+                    sibling.slideUp();
+                } else {
+                    sibling.slideDown();
+                }
+            }
+        }
     },
 
     // move and show the comment form under the link clicked

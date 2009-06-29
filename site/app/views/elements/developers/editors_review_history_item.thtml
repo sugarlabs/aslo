@@ -46,7 +46,13 @@ else
 ?>
 
 <tr <?=$trclass?>>
-    <td><?php if (!empty($hist['Version'])) echo "{$hist['Version']['version']} ({$platforms[$hist['File']['platform_id']]})"?></td>
+    <td><?php 
+        if (!empty($hist['Version'])) {
+            echo "{$hist['Version']['version']} ({$platforms[$hist['File']['platform_id']]})";
+            echo "<br />";
+            echo $html->link(sprintf(ngettext('editors_review_history_comment_count', 'editors_review_history_comment_count', $hist['commentCount']), $hist['commentCount']), "/editors/review/{$hist['Version']['id']}#editorComments");
+        }
+    ?></td>
     <td><?=$hist['Approval']['created']?></td>
     <td><?=$html->linkEmail($hist['User']['firstname'].' '.$hist['User']['lastname'], $hist['User']['email'])?></td>
     <td>

@@ -384,6 +384,12 @@ class EditorsController extends AppController
                 if ($hist['Approval']['reviewtype'] == 'info') {
                     $hist['replies'] = $this->Approval->findAll(array('Approval.reply_to' => $hist['Approval']['id']), null, 'Approval.created');
                 }
+
+                // add editor comment count
+                if (!empty($hist['Version']['id'])) {
+                    $hist['commentCount'] = $this->Versioncomment->getCommentCount($hist['Version']['id']);
+                }
+
             }
         }
         
