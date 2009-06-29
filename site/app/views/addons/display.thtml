@@ -429,6 +429,9 @@ if (!empty($coll_addon_added)) {
 </div>
 <div class="highlight">
 <h3>Tags</h3>
+        <script type="text/javascript">
+          <?=$this->renderElement('tags_js_init')?>
+        </script>
 <div id='tags'><?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags,'addon_id'=>$addon_id, 'origin'=>'users')); ?></div>
 
 <? if ($loggedIn) {

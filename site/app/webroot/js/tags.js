@@ -9,7 +9,7 @@ function addTag() {
 	if($.trim(tagVal)=='' || $.trim(addonid)==''){
 		return;
 	}
-	$.get("/tags/add_ajax/"+addonid+"/" + urlencode(tagVal), function(data) {
+	$.get(add_ajax_url+addonid+"/" + urlencode(tagVal), function(data) {
 		$("#tags").html(data);
 		$(".addtagform form")[0].reset();
 		$("#tags .addon-tags").removeClass("nojs");
@@ -24,7 +24,7 @@ function addTag() {
 
 function remTag(addonid, tagid){
 	//var addonid = '<?= $addon['Addon']['id']; ?>';
-	$.get("/tags/remove_ajax/"+ addonid +"/"+ tagid, function(data){
+	$.get(remove_ajax_url+ addonid +"/"+ tagid, function(data){
 		$("#tags").html(data);
 		$(".addtagform form")[0].reset();
 		$("#tags .addon-tags").removeClass("nojs");
