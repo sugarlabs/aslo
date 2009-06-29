@@ -11,8 +11,6 @@ class AddonModelTest extends UnitTestCase {
     function AddonModelTest() {
         loadModel('Addon');
         $this->Addon = new Addon();
-        
-        //$this->setupData();
     }
     
     
@@ -195,7 +193,7 @@ class AddonModelTest extends UnitTestCase {
 	}
 	
 	
-	function testDeleteTag() {
+function testDeleteTag() {
 		$this->Addon->Tag->delete($this->tag1Id);
 		
 		// make sure there is not tag1Id record in tags
@@ -209,14 +207,8 @@ class AddonModelTest extends UnitTestCase {
 		
 		// make sure that tag_stat is gone for tagId1
 		$stat = $this->Addon->Tag->TagStat->findByTagId($this->tag1Id);
-		$this->assertEqual($stat['TagStat'], null);
-		
-		
-		
-		
+		$this->assertEqual($stat['TagStat']['num_addons'], 0);
 	}
-	
-
     
 }
 ?>

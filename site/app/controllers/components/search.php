@@ -114,8 +114,11 @@ class SearchComponent extends Object {
      * @todo write tests for advance search
      * @todo we need to be able to specify what fields to search
      *
-     * @param string terms to search for
-     * @param string terms to search tags for
+     * @param string terms to search for - this string is now applied on tags as well, with tags having a weight of 1.5 
+     * @param $tagFilter - used to filter the results further by exactly a tag (used by the side nav 
+     *                     tag links after results are returned.  Clicking on the link performs the same 
+     *                     search again but does a filter on tags to get all the addons in the previous result that have this tag)
+     * @param $searchTagsOnly - flag used to indicate if search should be performed on tags only
      * @param string type of addon to search for, used by API
      * @param int category to search in (0 means no restriction)
      * @param lver, hver - version range addon version should intersect with
@@ -128,7 +131,7 @@ class SearchComponent extends Object {
      * @param locale controls whether we search within only the current locale and en-US (faster) or all locales
      * @return array of information about results (modified cake results)
      */
-    function search($terms, $tag=null, $searchtype=NULL, $category=0, $status=NULL, 
+    function search($terms, $tagFilter=null, $searchTagsOnly = false, $searchtype=NULL, $category=0, $status=NULL, 
                     $lver = -1, $hver = -1, $vfuz =false, $atype = ADDON_ANY,
                     $platform= PLATFORM_ANY, $lup = "", $sort = "", $locale=false ) {
         global $valid_status, $hybrid_categories, $app_listedtypes;
@@ -152,7 +155,7 @@ class SearchComponent extends Object {
         /* prepare SQL query */
         
         // fields to search in
-        $fields = array('name', 'summary', 'description', 'tags');
+        $fields = array('name', 'summary', 'description');
         $_termarray = array();
 
         // first prepare text terms
@@ -175,13 +178,23 @@ class SearchComponent extends Object {
             foreach ($_termarray as $term) {
                 if (false !== strpos($term, ' ')) $term = '"'.$term.'"'; // enclose "literal phrases" in quotes
                 $_search_termarray[] = '+'.$term."*";
+            }           
+            
+            if( $searchTagsOnly == true ) {
+				 // for tag searching we need to remove all whitespace since whitespace is ignored
+				$tagTerm = str_replace(" ", "", $terms);				
+	            $text_score = " MATCH(a.tags) AGAINST ('".$tagTerm."') ";
+	            $boolean_score =  " MATCH(a.tags) AGAINST ('".$tagTerm."' IN BOOLEAN MODE)";
+				            	
+            } else {
+	            $tagTerm = str_replace(" ", "", $terms);
+	            $text_score = " MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_termarray)."') +  1.5 * MATCH(a.tags) AGAINST ('".$tagTerm."') " ;
+	            $boolean_score =  " ( MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_search_termarray)."' IN BOOLEAN MODE) OR MATCH(a.tags) AGAINST ('+".$tagTerm."*' IN BOOLEAN MODE) ) ";
+	            if( $tagFilter != null && !empty($tagFilter)) {
+	            	$boolean_score .= " AND MATCH(a.tags) AGAINST ('".$tagFilter."' IN BOOLEAN MODE) ";
+	            }
             }
             
-            $text_score = " MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_termarray)."')";
-            $boolean_score =  " MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_search_termarray)."' IN BOOLEAN MODE)";
-            if( $tag != null ) {
-            	$boolean_score .= " AND MATCH(a.".implode(', a.', array('tags')).") AGAINST ('".implode(" ", array($tag))."' IN BOOLEAN MODE) ";	
-            }
             
         
         } else { //in this case enumerate all addons. this allows advanced search to act as a filter
@@ -354,11 +367,9 @@ class SearchComponent extends Object {
                 .(empty($_where) ? '' : 'AND ('.implode(' AND ', $_where).') ')
             ."ORDER BY ".implode(', ', $_orderby);
 
-		//echo '<br><br>sql='.$sql;
-		
         // query the db and return the ids found
         $_results = $this->controller->Addon->query($sql, true);
-
+		
         $_result_ids = array();
         foreach ($_results as $_result) $_result_ids[] = $_result['a']['id'];
         return $_result_ids;

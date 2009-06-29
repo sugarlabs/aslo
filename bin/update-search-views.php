@@ -91,7 +91,7 @@ $sql_commands[] = "INSERT INTO `text_search_summary`
                    LEFT JOIN translations AS `tr_description` 
 	                       ON (`tr_description`.id = a.`description` AND  `tr_name`.locale = `tr_description`.locale) 
 				   LEFT JOIN 	                       		
-				   ( select uta.addon_id, GROUP_CONCAT(distinct t.tag_text  SEPARATOR '\n') as tags
+				   ( select uta.addon_id, GROUP_CONCAT(distinct  replace(t.tag_text, ' ', '') SEPARATOR ',') as tags
 						from users_tags_addons uta, tags t
 						where uta.tag_id = t.id
 						group by uta.addon_id ) addon_tags ON ( a.id = addon_tags.addon_id)

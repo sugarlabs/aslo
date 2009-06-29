@@ -193,7 +193,7 @@ class SearchController extends AppController
         $this->publish('vfuz', $vfuz); 
         
         // execute this search
-        $_result_ids = $this->Search->search($_terms, $_tag, $category[0], $category[1], NULL, $lver, $hver, $vfuz, $atype, $pid, $lup, $sort);
+        $_result_ids = $this->Search->search($_terms, $_tag, false, $category[0], $category[1], NULL, $lver, $hver, $vfuz, $atype, $pid, $lup, $sort);
         
         if ($this->params['action'] != 'rss') {
             $this->pageTitle = _('search_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);

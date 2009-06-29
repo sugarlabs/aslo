@@ -63,8 +63,8 @@ class SearchTest extends UnitTestCase {
         $this->controller->Search->startup($this->controller);
     }
   
-    function runSimpleSearch($terms, $tag=null) {
-        return $this->controller->Search->search($terms, $tag);
+    function runSimpleSearch($terms, $tagFilter=null, $searchTagsOnly = false) {
+        return $this->controller->Search->search($terms, $tagFilter, $searchTagsOnly);
     }
 
     function runSimpleCollectionSearch($terms) {
@@ -181,7 +181,7 @@ class SearchTest extends UnitTestCase {
 		                   LEFT JOIN translations AS `tr_description` 
 			                       ON (`tr_description`.id = a.`description` AND  `tr_name`.locale = `tr_description`.locale) 
 						   LEFT JOIN 	                       		
-						   ( select uta.addon_id, GROUP_CONCAT(distinct t.tag_text  SEPARATOR '\r\n') as tags
+						   ( select uta.addon_id, GROUP_CONCAT(distinct replace(t.tag_text, ' ', '')  SEPARATOR ',') as tags
 								from users_tags_addons uta, tags t
 								where uta.tag_id = t.id
 								group by uta.addon_id ) addon_tags ON ( a.id = addon_tags.addon_id)
@@ -255,6 +255,9 @@ class SearchTest extends UnitTestCase {
 		$tagErvinna = $this->addTag('ervinna lim');
 		$tagFarmer = $this->addTag('farmer');
 		$tagYemHuynh = $this->addTag("Yemmer Huynh");
+		$tagMicroformat = $this->addTag("MicroFormat");
+		$tagSanitization = $this->addTag("sanitization");
+		
 		
 	
     	$this->Addon->Tag->TagStat->cacheQueries = false;
@@ -268,6 +271,7 @@ class SearchTest extends UnitTestCase {
     	$this->Addon->addTag(7, $tagHuynh, 9); // addon+id, tag_id, user_id
     	$this->Addon->addTag(7, $tagFarmer, 9); // addon+id, tag_id, user_id
     	$this->Addon->addTag(8, $tagYemmer, 9); // addon+id, tag_id, user_id
+    	$this->Addon->addTag(9, $tagMicroformat, 9); // addon+id, tag_id, user_id
     	$this->Addon->addTag(9, $tagHuynh, 9); // addon+id, tag_id, user_id
     	$this->Addon->addTag(9, $tagYemmer, 9); // addon+id, tag_id, user_id
     	$this->Addon->addTag(4021, $tagFarmer, 9); // addon+id, tag_id, user_id
@@ -276,6 +280,7 @@ class SearchTest extends UnitTestCase {
     	$this->Addon->addTag(2, $tagFarmer, 9); // addon+id, tag_id, user_id
     	$this->Addon->addTag(4023, $tagErvinna, 9); // addon+id, tag_id, user_id
     	$this->Addon->addTag(2, $tagYemHuynh, 9); // addon+id, tag_id, user_id
+    	$this->Addon->addTag(9, $tagSanitization, 9); // addon+id, tag_id, user_id
     	
     	$this->refreshFulltextIndexes();
     	
@@ -302,9 +307,9 @@ class SearchTest extends UnitTestCase {
      	$results = $this->runSimpleSearch("yemmer");
     	$this->assertTrue(!empty($results), "found results for yemmer huynh");
     	
-     	$results = $this->runSimpleSearch("\"huynh yemmer\"");
+     	$results = $this->runSimpleSearch('"huynh yemmer"');
      	//print_r($results);
-    	//$this->assertTrue(empty($results), "found NO results for 'huynh yemmer'");
+    	$this->assertTrue(empty($results), "found NO results for 'huynh yemmer'");
 		
 		
 		// test search refined by tag
@@ -324,8 +329,24 @@ class SearchTest extends UnitTestCase {
     	$this->assertTrue(in_array(9, $results) ,"search on 'firefox' and refined by 'yemmer' found addon 9");
 		$this->assertTrue(in_array(7, $results) ,"search on 'firefox' and refined by 'yemmer' found addon 7");
 		
+		// search tags only 
+		// addons 7, 9 have 'Microformat' in name, summary, and/or description.
+		// only addon 9 is tagged with 'Microformat'
+		$results = $this->runSimpleSearch("MicroFormat", null, true);
+		$this->assertTrue(count($results) == 1 &&  in_array(9, $results),"search on 'Microformat' on tags only retreives only addon 9");
+			    	    	
+			    	    	
+		// test scoring, using the above setup, verify that addon 9 would be returned before addon 7.		
+		$results = $this->runSimpleSearch("MicroFormat");   	
+		$this->assertTrue(count($results) == 2 &&  $results[0] == 9 ,"search on 'Microformat' returns addon 9 first.");			
 		
-			    	    	    	
+		// test scoring again.  Use 2 addons where one has a keyword in the description but nowhere else and the other with
+		// the same keyword in tags but nowhere else.  Confirm the one with the keywords in tags is ranked higher in search results
+		// addon 7 has 'sanitization' in description and addon 9 has it in tags but not in description.
+		$results = $this->runSimpleSearch("sanitization");
+		$this->assertTrue(count($results) == 2 &&  $results[0] == 9 ,"search on 'sanitization' returns addon 9 first.");
+		
+					    	    	    	
     	// tear it down
     	$this->Addon->execute('delete from users_tags_addons');
     	$this->Addon->execute('delete from tag_stat');

@@ -52,13 +52,8 @@ class Tag extends AppModel
  	
  	);
  	
-	var $hasMany = array(
- 									
-									'UserTagAddon' => 
- 										array( 'className' => 'UserTagAddon',
- 										'foreignKey' => 'tag_id',
- 										'dependent'   => true
-  										)
+	var $hasMany = array('UserTagAddon' => 
+                            array( 'className' => 'UserTagAddon')
  						);
 
  	var $recursive = 1;
@@ -172,15 +167,5 @@ class Tag extends AppModel
 		}
 		
 		return $this->findAll(" TagStat.num_addons > 0 ", null/*fields*/, $sort, $numTags);
-	}
-	
-	/**
-	 * Cake doesn't seem to be propogating deletions so doing it here.
-	 */
-	function beforeDelete() {
-		$this->caching = false;
-		$this->execute("delete from users_tags_addons where tag_id = {$this->id}");
-		$this->execute("delete from tag_stat where tag_id = {$this->id}");
-		$this->caching = true;
 	}
 }
