@@ -121,8 +121,9 @@ if (!empty($coll_addon_added)) {
     <h4 class="hidden"><?=_('addons_display_categories')?></h4>
     <?=$this->renderElement('addon_categories', array('categories' => $relatedCategories)); ?>
 
-        <?php
-        if ($hasversion):
+        <?php if ($hasversion): ?>
+        <div id="addon-install">
+            <?php
             if (array_key_exists('collection_id', $_GET) && $this->controller->Collection->isValidUUID($_GET['collection_id'])) {
                 $_collection_uuid = $_GET['collection_id'];
             } else {
@@ -142,13 +143,14 @@ if (!empty($coll_addon_added)) {
             ));
 
             /* TODO: align View Privacy Policy w/ recommended & regular */
-            if (!empty($addon['Translation']['privacypolicy']['string'])) { ?>
+            if (!empty($addon['Translation']['privacypolicy']['string'])): ?>
                 <a class="privacy-policy"
                    href="<?=$html->url('/addons/policy/0/'.$addon['Addon']['id'])?>">
                   <strong><?=___('addons_display_view_privacy')?></strong>
                 </a>
-        <?php
-            }
+            <?php endif; ?>
+        </div>
+            <?php
             $_version_data = array(
                 'addonid' => $addon['Addon']['id'],
                 'version' => $addon['Version'][0]['Version']['version'],
@@ -157,6 +159,15 @@ if (!empty($coll_addon_added)) {
             );
         endif;
         ?>
+
+        <?php
+        if ($this->controller->Addon->acceptContributions($addon)) {
+            echo $this->renderElement('amo2009/contribution', array(
+                    'text' => ___('addons_display_contribution_ask', 'The developer of this add-on asks that you help support its continued development by making a small contribution.'),
+                    'source' => 'addon-detail'));
+        }
+        ?>
+
         <table summary="<?___('addons_display_table_summary')?>">
           <tbody>
             <?php if ($hasversion): ?>

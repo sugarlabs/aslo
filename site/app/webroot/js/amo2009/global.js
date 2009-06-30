@@ -310,11 +310,16 @@ jQuery(function($) {
 	notificationHelpDropdown.target = ('.notification .toggle-info'); // reference
 	notificationHelpDropdown.targetParent = ('.notification'); // reference
 	notificationHelpDropdown.init();
-	$('.notification .toggle-info').append('<a href="#" class="close">close</a>')
 	$('.notification a.close').click(function() {
 		notificationHelpDropdown.hide();
 		return false;
 	})
+
+	var contributionDropdown = new DropdownArea();
+	contributionDropdown.trigger = $('#contribute-button');
+	contributionDropdown.target = '#contribute-links';
+	contributionDropdown.targetParent = '.notification';
+	contributionDropdown.init();
 	
 	// listing where interaction is inline
 	$('.home .listing div:first').addClass('interactive');

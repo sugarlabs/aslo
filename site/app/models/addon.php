@@ -906,7 +906,6 @@ class Addon extends AppModel
 
 	function getTagsByUser($user_id) {
 		$userTagAddons = $this->UserTagAddon->findAll(array('user_id' => $user_id));
-		//print_r($userTagAddons);
 		return $this->getTagsByUserTagAddon($userTagAddons);
 	}
 	
@@ -916,7 +915,10 @@ class Addon extends AppModel
     	return $this->getAddonsByUserTagAddon($userTagAddons);
     }
     
-    
-    
+    function acceptContributions($addon) {
+        $a = $addon['Addon'];
+        return $a['wants_contributions'] && !empty($a['paypal_id']) &&
+               (int)$a['suggested_amount'] > 0;
+    }
 }
 ?>
