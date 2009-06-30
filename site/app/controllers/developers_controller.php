@@ -685,6 +685,7 @@ class DevelopersController extends AppController
             $this->data = $addon;
         }
 
+        $this->set('paypal_disabled', $this->Config->getValue('paypal_disabled'));
         return $this->render('addon_edit_contributions');
     }
 

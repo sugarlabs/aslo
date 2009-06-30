@@ -917,8 +917,10 @@ class Addon extends AppModel
     
     function acceptContributions($addon) {
         $a = $addon['Addon'];
-        return $a['wants_contributions'] && !empty($a['paypal_id']) &&
-               (int)$a['suggested_amount'] > 0;
+        $this->Config =& new Config();
+        $config = $this->Config->getConfig();
+        return (!$config['paypal_disabled'] && $a['wants_contributions'] &&
+                !empty($a['paypal_id']) && (int)$a['suggested_amount'] > 0);
     }
 }
 ?>

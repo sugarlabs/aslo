@@ -114,10 +114,9 @@ class AddonsController extends AppController
      *   source: string tracking which page the donation is coming from
      */
     function contribute($addon_id) {
-        $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
-
-        $type = isset($_GET['type']) ? $_GET['type'] : null;
-        $source = isset($_GET['source']) ? $_GET['source'] : null;
+        if ($this->Config->getValue('paypal_disabled')) {
+            return $this->flash(___('error_paypal_disabled'), '/', 3);
+        }
 
         $this->Addon->unbindFully();
         $addon = $this->Addon->findById($addon_id);
@@ -125,14 +124,18 @@ class AddonsController extends AppController
             return $this->flash(_('error_addon_notfound'), '/', 3);
         }
 
-        $a = $addon['Addon'];
-        if (empty($a['paypal_id']) || !$a['wants_contributions']) {
-            return $this->flash(___('error_addon_no_contributions', 'The add-on developers have not enabled contributions.'), '/', 3);
+        if (!$this->Addon->acceptContributions($addon)) {
+            return $this->flash(___('error_addon_no_contributions'), '/', 3);
         }
 
+        $type = isset($_GET['type']) ? $_GET['type'] : null;
+        $source = isset($_GET['source']) ? $_GET['source'] : null;
+
+        $a = $addon['Addon'];
         $amount = ($type === 'suggested' && !empty($a['suggested_amount']))
                     ? $a['suggested_amount'] : null;
 
+        $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
         $sql = "INSERT INTO stats_contributions
                 (addon_id, amount, source, annoying, created)
                 VALUES
@@ -142,7 +145,7 @@ class AddonsController extends AppController
         $this->Addon->execute($sql);
 
         $this->Paypal->contribute($a['paypal_id'],
-                                  sprintf(___('addon_contribute_item', 'Contribution for %s'),
+                                  sprintf(___('addon_contribute_item'),
                                           $addon['Translation']['name']['string']),
                                   SITE_URL . $this->url('/addon/'.$a['id']),
                                   $amount);

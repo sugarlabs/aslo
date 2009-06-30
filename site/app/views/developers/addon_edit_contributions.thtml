@@ -49,6 +49,14 @@
     <?=$this->renderElement('noscript')?>
     <?=$this->renderElement('developers/rolecheck')?>
 
+    <?php
+    if ($paypal_disabled) {
+        echo $this->renderElement('notification', array(
+            'type' => 'notification',
+            'msg' => ___('error_paypal_disabled')));
+    }
+    ?>
+
     <?php if ($show_intro): ?>
         <div id="start-asking" class="graybox field rounded spaced">
           <h2><?=___('devcp_edit_contrib_header_start')?></h2>

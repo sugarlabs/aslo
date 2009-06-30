@@ -56,66 +56,30 @@
             </div>
             
             <h4>Disable Functionality</h4>
-            <div>
-                <label>Submissions Disabled</label>
-                <div class="description">Disable add-on uploads/submissions. Default: No</div>
-                <label class="normal">
-                    <input type="radio" name="data[Config][submissions_disabled]" value="0"<?=($config['submissions_disabled'] == 0) ? ' checked="checked"' : ''?>>
-                    &nbsp;No
-                </label>
-                <label class="normal">
-                    <input type="radio" name="data[Config][submissions_disabled]" value="1"<?=($config['submissions_disabled'] == 1) ? ' checked="checked"' : ''?>>
-                    &nbsp;Yes
-                </label>
-            </div>
-            <div>
-                <label>Queues Disabled</label>
-                <div class="description">Disable all review queues. Default: No</div>
-                <label class="normal">
-                    <input type="radio" name="data[Config][queues_disabled]" value="0"<?=($config['queues_disabled'] == 0) ? ' checked="checked"' : ''?>>
-                    &nbsp;No
-                </label>
-                <label class="normal">
-                    <input type="radio" name="data[Config][queues_disabled]" value="1"<?=($config['queues_disabled'] == 1) ? ' checked="checked"' : ''?>>
-                    &nbsp;Yes
-                </label>
-            </div>
-            <div>
-                <label>Search Disabled</label>
-                <div class="description">Disable searching the site. Default: No</div>
-                <label class="normal">
-                    <input type="radio" name="data[Config][search_disabled]" value="0"<?=($config['search_disabled'] == 0) ? ' checked="checked"' : ''?>>
-                    &nbsp;No
-                </label>
-                <label class="normal">
-                    <input type="radio" name="data[Config][search_disabled]" value="1"<?=($config['search_disabled'] == 1) ? ' checked="checked"' : ''?>>
-                    &nbsp;Yes
-                </label>
-            </div>
-            <div>
-                <label>Statistics Disabled</label>
-                <div class="description">Disable the Statistics Dashboard. Default: No</div>
-                <label class="normal">
-                    <input type="radio" name="data[Config][stats_disabled]" value="0"<?=($config['stats_disabled'] == 0) ? ' checked="checked"' : ''?>>
-                    &nbsp;No
-                </label>
-                <label class="normal">
-                    <input type="radio" name="data[Config][stats_disabled]" value="1"<?=($config['stats_disabled'] == 1) ? ' checked="checked"' : ''?>>
-                    &nbsp;Yes
-                </label>
-            </div>
-            <div>
-                <label>API Disabled</label>
-                <div class="description">Disable the API. Default: No</div>
-                <label class="normal">
-                    <input type="radio" name="data[Config][api_disabled]" value="0" <?=($config['api_disabled'] == 0) ? 'checked="checked"' : ''?>>
-                    &nbsp;No
-                </label>
-                <label class="normal">
-                    <input type="radio" name="data[Config][api_disabled]" value="1" <?=($config['api_disabled'] == 1) ? 'checked="checked"' : ''?>>
-                    &nbsp;Yes
-                </label>
-            </div>
+            <?=$this->renderElement('config_radio', array(
+                'label' => 'Submissions Disabled',
+                'description' => 'Disable add-on uploads/submissions.  Default: No',
+                'key' => 'submissions_disabled'))?>
+            <?=$this->renderElement('config_radio', array(
+                'label' => 'Queues Disabled',
+                'description' => 'Disable all review queues.  Default: No',
+                'key' => 'queues_disabled'))?>
+            <?=$this->renderElement('config_radio', array(
+                'label' => 'Search Disabled',
+                'description' => 'Disable searching the site.  Default: No',
+                'key' => 'search_disabled'))?>
+            <?=$this->renderElement('config_radio', array(
+                'label' => 'Statistics Disabled',
+                'description' => 'Disable the Statistics dashboard.  Default: No',
+                'key' => 'stats_disabled'))?>
+            <?=$this->renderElement('config_radio', array(
+                'label' => 'API Disabled',
+                'description' => 'Disable the API.  Default: No',
+                'key' => 'api_disabled'))?>
+            <?=$this->renderElement('config_radio', array(
+                'label' => 'PayPal Disabled',
+                'description' => 'Disable contributions.  Default: No',
+                'key' => 'paypal_disabled'))?>
 
             
             <h4>Special Events</h4>

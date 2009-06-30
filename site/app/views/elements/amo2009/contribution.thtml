@@ -16,7 +16,7 @@
          href="<?=$html->url('/addons/developers/' . $addon_id)?>">
         <?=$html->image('amo2009/icons/buttons/heart-blue-16x16.gif',
                         array('alt' => ''))
-        ?><?=___('addon_display_contribute', 'Contribute')?>
+        ?><?=___('addon_display_contribute')?>
       </a>
     </p>
     <div class="suggestion">
@@ -34,20 +34,20 @@
   <ul>
     <li>
       <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}&type=suggested")?>">
-        <?=sprintf(___('addon_display_contribute_suggested', 'Contribute $%s'),
+        <?=sprintf(___('addon_display_contribute_suggested'),
                    $addon['Addon']['suggested_amount'])?>
       </a>
-      <span><?=___('addon_display_suggested', 'Suggested')?></span>
+      <span><?=___('addon_display_suggested')?></span>
     </li>
     <li>
       <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}")?>">
-        <?=___('addon_display_contribute_different', 'Contribute a Different Amount')?>
+        <?=___('addon_display_contribute_different')?>
       </a>
     </li>
   </ul>
 </div>
   <div id="contribute-why" class="toggle-info">
-    <p class="dropdown"><?=___('addons_display_contribute_why', 'Mozilla is committed to supporting a vibrant and healthy developer ecosystem. Your optional contribution helps sustain further development of this add-on.')?></p>
-    <a class="close" href="#"><?=___('addons_display_contribute_close', 'close')?></a>
+    <p class="dropdown"><?=___('addons_display_contribute_why')?></p>
+    <a class="close" href="#"><?=___('addons_display_contribute_close')?></a>
   </div>
 </div>
