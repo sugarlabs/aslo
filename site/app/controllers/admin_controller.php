@@ -1936,6 +1936,20 @@ class AdminController extends AppController
                 
                 case 'edit':
                 default:
+                    if ($this->data['User']['removepicture'] == 1) {
+                        $this->data['User']['picture_data'] = null;
+                        $this->data['User']['picture_type'] = '';
+                    }
+
+                    // Picture fields.
+                    if (!empty($this->data['User']['picture_data']['name'])) {
+                        $fileinfo = $this->Developers->validatePicture($this->data['User']['picture_data']);
+                        if (is_array($fileinfo)) {
+                            $this->data['User']['picture_data'] = $fileinfo['picture_data'];
+                            $this->data['User']['picture_type'] = $fileinfo['picture_type'];
+                        }
+                    }
+
                     $this->User->save($this->data['User']);
 
 					// save author "about me"

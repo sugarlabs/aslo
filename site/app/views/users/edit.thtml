@@ -60,10 +60,7 @@ $this->translationBox = array(
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
 
-<?php
-// show confirmation message?
-if (isset($confirmation_page) && $confirmation_page):
-?>
+<?php if (isset($confirmation_page) && $confirmation_page): ?>
 
     <?echo $this->renderElement('notification', array('type' => 'success', 'msg' => $confirmation_message))?>
     
@@ -71,12 +68,8 @@ if (isset($confirmation_page) && $confirmation_page):
         <?echo $this->renderElement('notification', array('type' => 'success', 'description' => sprintf(___('user_edit_confirm_email_sent'), $newemail)));?>
     <?php endif; ?>
 
-    <p><?=$html->link(___('link_return_to_front_page'), '/')?></p>
+<?php endif; ?>
 
-<?php
-else:
-// show "edit" form
-?>
 <?php if(isset($errorMessage)): ?>
     <?echo $this->renderElement('notification', array('type' => 'error', 'msg' => _('error_formerrors')));?>
 <p></p>
@@ -85,7 +78,7 @@ else:
 
 <h1><?php printf(_('user_form_editprofile'), $this->data['User']['email']); ?></h1>
 
-<form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
+<form enctype="multipart/form-data" action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
     <?=$html->hiddenSession() ?>
     
 <div id="tabbed-editor" class="flora">
@@ -116,8 +109,12 @@ else:
             <?=$html->tagErrorMsg('User/nickname', _('error_user_nickname_notunique'))?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
-            <?=$html->checkBox('User/emailhidden') ?>
+            <label class="amo-label-large" for="UserLocation"><?=___('user_form_location', 'Location')?></label>
+            <?=$html->input('User/location') ?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserOccupation"><?=___('user_form_occupation', 'Occupation')?></label>
+            <?=$html->input('User/occupation') ?>
         </div>
         <div class="line">
             <label class="amo-label-large" for="UserHomepage"><?=_('user_form_homepage')?></label>
@@ -125,6 +122,24 @@ else:
             <?=$html->tagErrorMsg('User/homepage', _('error_invalid_url'))?>
         </div>
         <div class="line">
+            <label class="amo-label-large" for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
+            <?=$html->checkBox('User/emailhidden') ?>
+        </div>
+        <div class="line">
+            <label class="amo-label-large" for="UserPictureData"><?=___('user_form_picture', 'Picture')?></label>
+            <div class="edit-picture">
+                <img src="<?=$html->url("/user/{$user_id}/picture")?>" alt="<?=empty($this->data['User']['picture_data']) ? ___('user_picture_alt_no_picture', 'No photo') : ___('user_picture_alt_name', "Picture of {$this->data['User']['email']}")?>" class="avatar photo-large photo" />
+                <br />
+                <?php if(!empty($this->data['User']['picture_data'])): ?>
+                    <label for="UserRemovepicture"><?=___('user_form_delete_picture', 'Remove this picture?')?></label>
+                    <?=$html->checkBox('User/removepicture') ?><br />
+                <? endif; ?>
+                <label for="UserRemovepicture"><?=___('user_form_new_picture', 'Upload a new picture?')?></label>
+                <?=$html->file('User/picture_data') ?>
+                <?=$html->tagErrorMsg('User/picture_data', @$picture_error)?>
+            </div>
+        </div>
+        <div class="line clearboth">
             <?php
             echo $this->renderElement('translationbox', array(
                 'field' => 'bio',
@@ -200,14 +215,12 @@ else:
         <h3 class="hidden"><?=___('user_form_otheractions', 'Other Actions');?></h3>
         <p><?=$html->link(___('user_edit_delete_user', 'Delete user account'), '/users/delete');?></p>
     </div>
-</div>
+</div><!-- /#tabbed-editor -->
 
     <?=$html->submit(_('user_form_submit_edit'), array('class'=>'amo-submit')); ?>
 </form>
 
-<?php endif; /* end of form vs. confirmation */ ?>
-
-</div>
+</div><!-- /.primary -->
 
 <script type="text/javascript">
     $(document).ready(function(){

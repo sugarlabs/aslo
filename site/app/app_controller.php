@@ -60,7 +60,7 @@ class AppController extends Controller
      */
     var $dontsanitize = array('icondata', 'locale','locale_html', 'created', 
         'modified', 'datestatuschanged', 'DateLastActive', 
-        'dateadded', 'filedata', 'thumbdata');
+        'dateadded', 'filedata', 'thumbdata', 'picture_data');
 
     function __construct() {
         parent::__construct();

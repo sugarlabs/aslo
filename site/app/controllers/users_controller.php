@@ -42,7 +42,7 @@ class UsersController extends AppController
 {
     var $name = 'Users';
     var $uses = array('User', 'Addon', 'Collection', 'Eventlog', 'Review', 'Version');
-    var $components = array('Amo', 'Email', 'Ldap', 'Session', 'Pagination', 'Recaptcha');
+    var $components = array('Amo', 'Developers', 'Email', 'Image', 'Ldap', 'Session', 'Pagination', 'Recaptcha');
     var $helpers = array('Html', 'Link', 'Javascript');
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
     var $exceptionCSRF = array("/users/login", "/users/register", "/users/pwreset");	
@@ -416,6 +416,7 @@ class UsersController extends AppController
         }
         
         $sessionuser = $this->Session->read('User');
+        $this->publish('user_id', $sessionuser['id']);
         
         $this->pageTitle = _('users_edit_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms', 'jquery-ui/flora/flora.tabs'));
@@ -440,8 +441,29 @@ class UsersController extends AppController
         $changed['nickname'] = $this->data['User']['nickname'];
         $changed['emailhidden'] = $this->data['User']['emailhidden'];
         $changed['homepage'] = $this->data['User']['homepage'];
+        $changed['location'] = $this->data['User']['location'];
+        $changed['occupation'] = $this->data['User']['occupation'];
         $changed['display_collections'] = $this->data['User']['display_collections'];
         $changed['display_collections_fav'] = $this->data['User']['display_collections_fav'];
+
+        // Picture fields.
+        if (array_key_exists('removepicture', $this->data['User'])) {
+            $changed['picture_data'] = null;
+            $changed['picture_type'] = '';
+        } else if ($this->data['User']['picture_data']['error'] != 4) {
+            $fileinfo = $this->Developers->validatePicture($this->data['User']['picture_data']);
+            if (is_array($fileinfo)) {
+                $changed['picture_data'] = $fileinfo['picture_data'];
+                $changed['picture_type'] = $fileinfo['picture_type'];
+            } else {
+                $this->User->invalidate('picture_data');
+                $this->publish('picture_error', $fileinfo);//should use the Error component but the whole file needs to use it
+            }
+        } else {
+            // default to the current data
+            $changed['picture_data'] = $sessionuser['picture_data'];
+            $changed['picture_type'] = $sessionuser['picture_type'];
+        }
 
         if (!empty($this->data['User']['password']) &&
             !empty($this->data['User']['newpassword'])) {
@@ -493,8 +515,8 @@ class UsersController extends AppController
         }
         
         // notifications
-        $changed['notifycompat'] = $this->data['User']['notifycompat'];
-        $changed['notifyevents'] = $this->data['User']['notifyevents'];
+        $changed['notifycompat'] = array_key_exists('notifycompat', $this->data['User']) ? $this->data['User']['notifycompat'] : '';
+        $changed['notifyevents'] = array_key_exists('notifyevents', $this->data['User']) ? $this->data['User']['notifyevents'] : '';
         
         // save it
         $this->User->id = $sessionuser['id'];
@@ -540,7 +562,7 @@ class UsersController extends AppController
             $result = $this->Email->send();
         }
         
-        $newprofile = $this->User->findById($sessionuser['id']);
+        $newprofile = $this->User->getUser($sessionuser['id']);
         if (!empty($newprofile)) {
             $this->Session->write('User', $newprofile['User']);
             $this->publish('confirmation_message', _('user_profile_saved'));
@@ -824,6 +846,27 @@ class UsersController extends AppController
         }
         
         return;
+    }
+
+    /**
+     *
+     */
+    function picture($id) {
+        if (!is_numeric($id)) {
+            $this->flash(sprintf(_('error_missing_argument'), 'user_id'), '/', 3);
+            return;
+        }
+        $user = $this->User->getUser($id);
+        if (empty($user)) {
+            $this->flash(_('error_user_notfound'), '/', 3);
+            return;
+        }
+
+        if (!empty($user['User']['picture_data'])) {
+            $this->Image->renderImage($user['User']['picture_data'], $user['User']['picture_type']);
+        } else {
+            $this->redirect(IMAGES_URL.'anon_user.png', 302, false, false);
+        }
     }
     
     /**

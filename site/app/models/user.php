@@ -110,11 +110,53 @@ class User extends AppModel
 
     var $translated_fields = array('bio');
 
+    //var $default_fields = array();
+
     var $validate = array(
         'email'     => VALID_EMAIL,
         'password'  => VALID_NOT_EMPTY,
         'homepage'  => VALID_URL_OPT
     );
+
+    /**
+     * Get a single user and desired associations (TODO: I didn't 
+     * need any associations when I wrote this so there are none yet)
+     * (uses the object-invalidation framework)
+     * @param int user id
+     * @param array associations
+     */
+    function getUser($id, $associations = array()) {
+        if (QUERY_CACHE && $cached = $this->Cache->readCacheObject($identifier)) {
+            if (DEBUG >= 2) debug("user $id was cached");
+            return $cached;
+        }
+
+        // deactivate query caching
+        $caching_was = $this->caching;
+        $this->caching = false;
+
+        $user = $this->findById($id);
+
+        // Add anything extra
+        $user['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
+
+        // cache this object...
+        if (QUERY_CACHE)
+            $this->Cache->writeCacheObject($identifier, $user, "user:$id");
+
+        // re-enable query caching
+        $this->caching = $caching_was;
+
+        return $user;
+    }
+
+    /**
+     * afterSave callback. Mark cached objects for flush.
+     */
+    function afterSave() {
+        if (QUERY_CACHE) $this->Cache->markListForFlush("user:{$this->id}");
+        return parent::afterSave();
+    }
 
     /**
      * Get number of add-ons this user is affiliated with
@@ -145,7 +187,9 @@ class User extends AppModel
             'firstname' => '',
             'lastname' => '',
             'nickname' => 'Deleted User',
-            'homepage' => ''
+            'homepage' => '',
+            'picture_data' => null,
+            'picture_type' => ''
             ));
         return $this->save($data, false, array_keys($data['User']));
     }

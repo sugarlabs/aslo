@@ -87,6 +87,7 @@
         // Some pleasant short forms
         $Route->connect("/{$prefix}/browse/*", array('controller' => 'addons', 'action' => 'browse'));
         $Route->connect("/{$prefix}/recommended/*", array('controller' => 'addons', 'action' => 'recommended'));
+        $Route->connect("/{$prefix}/user/*/picture", array('controller' => 'users', 'action' => 'picture'));
         $Route->connect("/{$prefix}/user/*", array('controller' => 'users', 'action' => 'info'));
         $Route->connect("/{$prefix}/addon/share/*", array('controller' => 'addons', 'action' => 'share'));
         $Route->connect("/{$prefix}/addon/*", array('controller' => 'addons', 'action' => 'display'));

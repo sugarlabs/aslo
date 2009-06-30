@@ -38,6 +38,8 @@
 class DevelopersComponent extends Object {
     var $controller;
     var $imageExtensions = array('.png', '.jpg', '.gif');
+
+    var $uploadErrors = array();
     
    /**
     * Save a reference to the controller on startup
@@ -45,6 +47,13 @@ class DevelopersComponent extends Object {
     */
     function startup(&$controller) {
         $this->controller =& $controller;
+
+        $this->uploadErrors = array(
+                    '1' => _('devcp_error_http_maxupload'),
+                    '2' => _('devcp_error_http_maxupload'),
+                    '3' => _('devcp_error_http_incomplete'),
+                    '4' => _('devcp_error_http_nofile')
+                );
     }
     
    /**
@@ -331,17 +340,11 @@ class DevelopersComponent extends Object {
     * @return string if error
     */
     function validateFile($file, $addon) {
-        $uploadErrors = array(
-                            '1' => _('devcp_error_http_maxupload'),
-                            '2' => _('devcp_error_http_maxupload'),
-                            '3' => _('devcp_error_http_incomplete'),
-                            '4' => _('devcp_error_http_nofile')
-                        );
         $allowedExtensions = $this->getAllowedExtensions($addon['Addon']['addontype_id']);
         
         // Check for file upload errors
         if (!empty($file['error'])) {
-            return $uploadErrors[$file['error']];
+            return $this->uploadErrors[$file['error']];
         }
 
         // Set file properties to be used later
@@ -379,20 +382,12 @@ class DevelopersComponent extends Object {
    /**
     * Validate the icon file
     * @param array $file the icon file array
-    * @param array $fileErrors the HTTP file error associations
-    * @param array $allowedExtensions allowed file extensions
     */
     function validateIcon($icon) {
-        $uploadErrors = array(
-                    '1' => _('devcp_error_http_maxupload'),
-                    '2' => _('devcp_error_http_maxupload'),
-                    '3' => _('devcp_error_http_incomplete'),
-                    '4' => _('devcp_error_http_nofile')
-                );
         
         // Check for file upload errors
         if (!empty($icon['error'])) {
-            return $uploadErrors[$icon['error']];
+            return $this->uploadErrors[$icon['error']];
         }
         
         // Check for file extension match
@@ -409,6 +404,35 @@ class DevelopersComponent extends Object {
         
         // Resize to 32x32
         $fileInfo['icondata'] = $this->resizeImage($fileInfo['icondata'], $sourceWidth, $sourceHeight, 32, 32);
+        
+        return $fileInfo;
+    }
+
+   /**
+    * Validate the user's picture file
+    * @param array $file the picture file array
+    */
+    function validatePicture($picture) {
+        
+        // Check for file upload errors
+        if (!empty($picture['error'])) {
+            return $this->uploadErrors[$picture['error']];
+        }
+        
+        // Check for file extension match
+        $extension = substr($picture['name'], strrpos($picture['name'], '.'));
+        if (!in_array(strtolower($extension), $this->imageExtensions)) {
+            return sprintf(_('devcp_error_icon_extension'), $extension, implode(', ', $this->imageExtensions));
+        }
+        
+        $fileInfo['picture_data'] = file_get_contents($picture['tmp_name']);
+        $fileInfo['picture_type'] = $picture['type'];
+        
+        // Get picture size
+        list($sourceWidth, $sourceHeight) = getimagesize($picture['tmp_name']);
+        
+        // Resize to 200x200 which is the largest size we use
+        $fileInfo['picture_data'] = $this->resizeImage($fileInfo['picture_data'], $sourceWidth, $sourceHeight, 200, 200);
         
         return $fileInfo;
     }

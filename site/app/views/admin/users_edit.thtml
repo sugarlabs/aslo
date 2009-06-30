@@ -61,7 +61,7 @@ $this->translationBox = array(
         if (!empty($errors['main'])) {
             echo '<div class="error">'.$errors['main'].'</div>';
         }
-        echo $html->formTag('/admin/users/'.$user['User']['id']);
+        echo $html->formTag('/admin/users/'.$user['User']['id'], 'post', array('enctype' => 'multipart/form-data'));
         ?>
         <div id="developersForm">
             <div>
@@ -91,17 +91,37 @@ $this->translationBox = array(
                 <label for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
                 <?=$html->checkBox('User/emailhidden', null, array('checked' => ($user['User']['emailhidden'] ? 'checked' : false), 'value' => 1)) ?>
             </div>
-                <div>
+            <div>
                 <label for="UserSandboxshown"><?=_('user_form_showsandbox')?></label>
                 <?=$html->checkBox('User/sandboxshown', null, array('checked' => ($user['User']['sandboxshown'] ? 'checked' : false), 'value' => 1)) ?>
+            </div>
+            <div class="line">
+                <label class="amo-label-large" for="UserLocation"><?=___('user_form_location', 'Location')?></label>
+                <?=$html->input('User/location', array('value' => $user['User']['location'])) ?>
+            </div>
+            <div class="line">
+                <label class="amo-label-large" for="UserOccupation"><?=___('user_form_occupation', 'Occupation')?></label>
+                <?=$html->input('User/occupation', array('value' => $user['User']['occupation'])) ?>
             </div>
             <div>
                 <label for="UserHomepage"><?=_('user_form_homepage')?></label>
                 <?=$html->input('User/homepage', array('value' => $user['User']['homepage'])) ?>
                 <?=$html->tagErrorMsg('User/homepage', _('error_invalid_url'))?>
             </div>
+            <div class="line">
+                <label class="amo-label-large" for="UserPictureData"><?=___('user_form_picture', 'Picture')?></label>
+                <div class="edit-picture">
+                    <img src="<?=$html->url("/user/{$user['User']['id']}/picture")?>" alt="<?=empty($user['User']['picture_data']) ? ___('user_picture_alt_no_picture', 'No photo') : ___('user_picture_alt_name', "Picture of {$this->data['User']['email']}")?>" class="avatar photo-large photo" />
+                    <br />
+                    <label for="UserRemovepicture"><?=___('user_form_delete_picture', 'Remove this picture?')?></label>
+                    <?=$html->checkBox('User/removepicture') ?><br />
+                    <label for="UserRemovepicture"><?=___('user_form_new_picture', 'Upload a new picture?')?></label>
+                    <?=$html->file('User/picture_data') ?>
+                    <?=$html->tagErrorMsg('User/picture_data', @$picture_error)?>
+                </div>
+            </div>
             
-            <div>
+            <div class="clearboth">
             <?php
             echo $this->renderElement('translationbox', array(
                 'field' => 'bio',
