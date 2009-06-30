@@ -66,6 +66,17 @@ class HttplibComponent extends Object {
     }
 
     /**
+     * Turn an array into a query string.
+     */
+    function urlify($arr) {
+        $d = array();
+        foreach ($arr as $k => $v) {
+            $d[] = sprintf('%s=%s', urlencode($k), urlencode($v));
+        }
+        return join('&', $d);
+    }
+
+    /**
      * HTTP POST $url with $data, returning (content, info).
      */
     function post($url, $data) {
@@ -73,11 +84,7 @@ class HttplibComponent extends Object {
             /* Converting to a string because PHP isn't outputting
              * the form data when it's in an array. php++
              */
-            $d = array();
-            foreach ($data as $k => $v) {
-                $d[] = sprintf('%s=%s', urlencode($k), urlencode($v));
-            }
-            $data = join('&', $d);
+            $data = $this->urlify($data);
         }
 
         $c = curl_init($url);

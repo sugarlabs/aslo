@@ -49,7 +49,7 @@ class AddonsController extends AppController
 
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
     var $uses = array('Addon', 'AddonCollection', 'AddonCategory', 'Addontype', 'Application', 'CollectionFeatures', 'Feature', 'File', 'GlobalStat', 'License', 'Platform', 'Preview', 'Category', 'Translation', 'Review', 'Version', 'Collection', 'CollectionPromo','Tag');
-    var $components = array('Amo', 'Image', 'Pagination', 'Session', 'Userfunc');
+    var $components = array('Amo', 'Image', 'Pagination', 'Paypal', 'Session', 'Userfunc');
     var $helpers = array('Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 'Pagination');
     var $namedArgs = true;
 
@@ -103,6 +103,49 @@ class AddonsController extends AppController
 
         );
 
+    }
+
+    /**
+     * Redirect from amo to paypal, saving statistics first.
+     *
+     * We look for some GET params:
+     *   type: only 'suggested' is recognized; the donation will be
+     *         the add-on's suggested amount
+     *   source: string tracking which page the donation is coming from
+     */
+    function contribute($addon_id) {
+        $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
+
+        $type = isset($_GET['type']) ? $_GET['type'] : null;
+        $source = isset($_GET['source']) ? $_GET['source'] : null;
+
+        $this->Addon->unbindFully();
+        $addon = $this->Addon->findById($addon_id);
+        if (empty($addon)) {
+            return $this->flash(_('error_addon_notfound'), '/', 3);
+        }
+
+        $a = $addon['Addon'];
+        if (empty($a['paypal_id']) || !$a['wants_contributions']) {
+            return $this->flash(___('error_addon_no_contributions', 'The add-on developers have not enabled contributions.'), '/', 3);
+        }
+
+        $amount = ($type === 'suggested' && !empty($a['suggested_amount']))
+                    ? $a['suggested_amount'] : null;
+
+        $sql = "INSERT INTO stats_contributions
+                (addon_id, amount, source, annoying, created)
+                VALUES
+                ({$db->value($addon_id)}, {$db->value($amount)},
+                 {$db->value($source)}, {$a['annoying']},
+                  NOW())";
+        $this->Addon->execute($sql);
+
+        $this->Paypal->contribute($a['paypal_id'],
+                                  sprintf(___('addon_contribute_item', 'Contribution for %s'),
+                                          $addon['Translation']['name']['string']),
+                                  SITE_URL . $this->url('/addon/'.$a['id']),
+                                  $amount);
     }
 
     /**

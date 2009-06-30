@@ -70,12 +70,38 @@ class PaypalComponent extends Object {
             'L_BUTTONVAR0' => "business={$businessName}"
         );
 
-        list($content, $info) = $this->httplib->post(PAYPAL_URL, $data);
+        list($content, $info) = $this->httplib->post(PAYPAL_API_URL, $data);
         $response = $this->httplib->parse_qs($content);
 
         // Hooray for HTTP status codes!
         $success = $response['ACK'] == 'Success';
         return array($success, $response);
+    }
+
+    /**
+     * Build up the paramter string that we send to paypal.
+     *
+     * @param business: the add-on's Paypal ID (business name)
+     * @param item_name: title of the donation
+     * @param return_url: the callback after paypal is done
+     * @param amount: optional donation amount, figured out on paypal's side if blank
+     */
+    function contribute($business, $item_name, $return_url, $amount=null) {
+        $data = array(
+            'cmd' => '_donations',
+            'business' => $business,
+            'item_name' => $item_name,
+            'bn' => PAYPAL_BN,
+            'no_shipping' => '1',
+            'return' => $return_url
+        );
+
+        if (!empty($amount)) {
+            $data['amount'] = $amount;
+        }
+
+        $query_string = $this->httplib->urlify($data);
+        $this->controller->redirect(PAYPAL_CGI_URL . '?' . $query_string, 302, false, false);
     }
 }
 ?>
