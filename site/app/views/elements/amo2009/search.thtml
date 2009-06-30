@@ -366,14 +366,13 @@ if (!isset($category)) $category = array(0, 0);
     <?php
     // to handle js-less case when a advanced query is sent there is one form,
     // so have to add back hidden form for js-aware case.
-    if (isset($this->params['url']['as'])): ?>
+    if ($two_form == ''): ?>
         hiddenForm = document.createElement("form");
         hiddenForm.id = "hidden-form";
         var searchBubble = document.getElementById("search-bubble-inner");
         searchBubble.appendChild(hiddenForm);
         $("#hidden-form").addClass("asclosed");
         $("#advanced-search").appendTo("#hidden-form");
-        advLink.click();
     <?php endif; ?>
 
     $(document).ready(function() {
