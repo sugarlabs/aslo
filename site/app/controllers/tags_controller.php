@@ -201,6 +201,7 @@ class TagsController extends AppController
         global $valid_status;
         
         $this->Amo->clean($addon_id);
+        $this->Amo->clean($tag_id);
         $this->Amo->checkLoggedIn(); // must be logged in
         $this->Addon->caching = false;        
         
@@ -223,6 +224,7 @@ class TagsController extends AppController
         global $valid_status;
         
         $this->Amo->clean($addon_id);
+        $this->Amo->clean($tag_id);
         $this->Amo->checkLoggedIn(); // must be logged in
         $this->Addon->caching = false;        
         
@@ -236,39 +238,32 @@ class TagsController extends AppController
 		$this->redirect('/addon/' . $addon_id);	 
 	}		
 		
-		
-		
-		
-	function splitTags($string)
-	{
+	function splitTags($string) {
 		// Code from http://us2.php.net/manual/en/function.split.php#81490
 		$separator=' ';
-    $elements = explode($separator, $string);
-    for ($i = 0; $i < count($elements); $i++) {
-        $nquotes = substr_count($elements[$i], '"');
-        if ($nquotes %2 == 1) {
-            for ($j = $i+1; $j < count($elements); $j++) {
-                if (substr_count($elements[$j], '"') %2 == 1) { // Look for an odd-number of quotes
-                    // Put the quoted string's pieces back together again
-                    array_splice($elements, $i, $j-$i+1,
-                        implode($separator, array_slice($elements, $i, $j-$i+1)));
-                    break;
+        $elements = explode($separator, $string);
+        for ($i = 0; $i < count($elements); $i++) {
+            $nquotes = substr_count($elements[$i], '"');
+            if ($nquotes %2 == 1) {
+                for ($j = $i+1; $j < count($elements); $j++) {
+                    if (substr_count($elements[$j], '"') %2 == 1) { // Look for an odd-number of quotes
+                        // Put the quoted string's pieces back together again
+                        array_splice($elements, $i, $j-$i+1,
+                            implode($separator, array_slice($elements, $i, $j-$i+1)));
+                        break;
+                    }
                 }
             }
+            if ($nquotes > 0) {
+                // Remove first and last quotes, then merge pairs of quotes
+                $qstr =& $elements[$i];
+                $qstr = substr_replace($qstr, '', strpos($qstr, '"'), 1);
+                $qstr = substr_replace($qstr, '', strrpos($qstr, '"'), 1);
+                $qstr = str_replace('""', '"', $qstr);
+            }
         }
-        if ($nquotes > 0) {
-            // Remove first and last quotes, then merge pairs of quotes
-            $qstr =& $elements[$i];
-            $qstr = substr_replace($qstr, '', strpos($qstr, '"'), 1);
-            $qstr = substr_replace($qstr, '', strrpos($qstr, '"'), 1);
-            $qstr = str_replace('""', '"', $qstr);
-        }
-    }
-    return $elements;		
-  	  return $elements;
+        return $elements;		
 	}		
-
-
 
  	function lookup() {
         global $valid_status;
@@ -279,10 +274,7 @@ class TagsController extends AppController
  		$tags = $this->Tag->findAll("Tag.tag_text like '$text%' and blacklisted=0");
  		$this->publish('tags',$tags);
         $this->render('ajax/tag_lookup', 'ajax');        
- 	
  	}
- 
-
 
 	function top($numTags=100, $sortBy="freq") {
 		// get the top tags

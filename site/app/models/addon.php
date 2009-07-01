@@ -865,6 +865,9 @@ class Addon extends AppModel
 	 * -trigger trg_tag_stat_dec will update tag_stat
 	 */
 	function removeTagFromAddons($tag_id, $addon_id) {
+        if (!(is_int($tag_id) && is_int($addon_id)) {
+            return false;
+        }
 		$this->execute("DELETE FROM users_tags_addons where tag_id={$tag_id} AND addon_id = {$addon_id}");
 	}
 		
