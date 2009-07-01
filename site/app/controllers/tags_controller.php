@@ -91,7 +91,6 @@ class TagsController extends AppController
         
         $this->Amo->clean($addon_id);
         $this->Amo->checkLoggedIn(); // must be logged in
-        $this->caching = false;        
         
         $user = $this->Session->read('User');
 
@@ -160,6 +159,7 @@ class TagsController extends AppController
 
 		
  		// Get tag list for addon
+        $this->Addon->caching = false;        
  		$addon_data = $this->Addon->findById($addon_id);
         $tags = $this->Tag->makeTagList($addon_data, $user);
         $this->publish('addon_id', $addon_data['Addon']['id']);
