@@ -59,8 +59,12 @@ global $app_shortnames, $app_prettynames;
       <h2><span><?=___('search_results_header', 'Search Results')?></span></h2>
 <?php if (!empty($search_results)): ?>
     <h3 class="result-count">
-        <?php if(!empty($search_terms)): ?>
-            <?=sprintf(___('search_results_showing_x_of_y_for_z_header', 'Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms)?>
+        <?php if(!empty($search_terms) && !empty($tag)): ?>
+            <?=sprintf(___('search_results_showing_x_of_y_for_terms_and_tags_header', 'Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with <strong>%5$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms, $tag)?>
+        <?php elseif(!empty($tag)): ?>
+            <?=sprintf(___('search_results_showing_x_of_y_for_tags_header', 'Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $tag)?>
+        <?php elseif(!empty($search_terms)): ?>
+            <?=sprintf(___('search_results_showing_x_of_y_for_terms_header', 'Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms)?>
         <?php else: ?>
             <?=sprintf(___('search_results_showing_x_of_y_header', 'Showing %1$s - %2$s of %3$s results'), $offset+1, $offset+count($search_results), $total_count)?>
         <?php endif; ?>
@@ -193,8 +197,6 @@ global $app_shortnames, $app_prettynames;
 		<div id="refine-tags">
             <h5><?=___('search_filter_tags_header', 'Tags')?></h5>
 			<ul class="refinements addon-tags">
-				<!-- <li class="usertag selected"><a class="tagitem" href="#">Tag</a></li>
-				<li class="usertag"><a class="tagitem" href="#">Tag 2</a></li> -->
 				<?php
 					$tag_ids = array();
 
@@ -203,9 +205,18 @@ global $app_shortnames, $app_prettynames;
 							array_push($tag_ids, $t);
 						}
 					}
-					foreach (array_unique($tag_ids) as $_tag) {
-						$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag['tag_text']."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp);
-						echo "<li class='usertag'><a class='tagitem' href='".$search_query."'>".$_tag['tag_text']."</a></li>";
+					if (empty($tag_ids)) {
+						echo '<li>'.___('search_filter_no_tags', 'No tags for these add-ons').'</li>';
+					} else {
+						foreach (array_unique($tag_ids) as $_tag) {
+							if ($tag == $_tag['tag_text']) {
+								$selected = ' selected';
+							} else {
+								$selected = "";
+							}
+							$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag['tag_text']."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp);
+							echo "<li class='usertag".$selected."'><a class='tagitem' href='".$search_query."'>".$_tag['tag_text']."</a></li>";
+						}
 					}
 				 ?>
 			</ul>
