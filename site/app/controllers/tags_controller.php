@@ -58,29 +58,33 @@ class TagsController extends AppController
         $this->SimpleAcl->enabled = false;
     }
     
-	/**
-	* Add a new tag (AJAX)
-	**/
-	
-	function add_ajax($addon_id, $tags_text) {
- 		$this->_add_tag($addon_id, $tags_text);
-		$this->render('tag_added', 'ajax');        
-   }
    
  	/**
-	* Add a new tag (Non-AJAX)
+	* Add a new tag
 	**/
 	
 	function add() {
-		$addon_id = $_REQUEST['addonid'];
-		$tags_text = $_REQUEST['newTag'];
+        $this->Amo->checkLoggedIn(); // must be logged in	
+
+		$addon_id = $_POST['addonid'];
+		$tags_text = $_POST['newTag'];
+
+        if (!is_numeric($addon_id)) {
+            return false;
+        }
+
  		$this->_add_tag($addon_id, $tags_text);
+
  		// Send user back where he came from
- 		if ($_REQUEST['origin'] == 'developers') {
-			$this->redirect('/developers/addon/edit/' . $addon_id . '/tags');	    
- 			exit();
- 		}
-		$this->redirect('/addon/' . $addon_id);	    
+ 		if (@$_POST['ajax']==1) {
+ 			$this->render('tag_added', 'ajax');  
+ 		} else {
+ 		 	if (@$_POST['origin'] == 'developers') {
+				$this->redirect('/developers/addon/edit/' . $addon_id . '/tags');	    
+ 				exit();
+ 			}
+			$this->redirect('/addon/' . $addon_id);	    
+		}
    }  
 
 	/**
@@ -174,7 +178,8 @@ class TagsController extends AppController
 	}
 
 	function addAndBlacklist() {
-        $tags_text = $_REQUEST['newTag'];
+	    $this->Amo->checkLoggedIn(); // must be logged in
+        $tags_text = $_POST['newTag'];
         $split_tags = $this->splitTags($tags_text);
 
 		// Process each tag
@@ -202,12 +207,20 @@ class TagsController extends AppController
 		$this->redirect('admin/tags');
 	}
 
-	function remove_ajax($addon_id, $tag_id) {
-        $this->Amo->clean($addon_id);
-        $this->Amo->clean($tag_id);
+	function remove() {
         $this->Amo->checkLoggedIn(); // must be logged in
-        $this->Addon->caching = false;        
-        
+
+        $addon_id = $_POST['addonid'];
+        $tag_id = $_POST['tagid'];
+        $origin = @$_POST['origin'];
+
+        if (!(is_numeric($tag_id) && is_numeric($addon_id))) {
+            return false;
+        }
+
+        $user = $this->Session->read('User');
+
+        $this->Addon->caching = false;    
 		$this->Addon->removeTagFromAddons($tag_id, $addon_id);
 		
 		// Get tag list for addon
@@ -219,24 +232,18 @@ class TagsController extends AppController
         $this->publish('developerTags', $tags['developerTags']);  
 		$this->publish('message', ___('tag_message_tag_removed', 'Tag removed'));
         
-		$this->render('tag_added', 'ajax');        
+ 		if (@$_POST['ajax']==1) {
+ 			$this->render('tag_added', 'ajax');  
+ 		} else {
+ 		 	if ($origin == 'developers') {
+				$this->redirect('/developers/addon/edit/' . $addon_id . '/tags');	    
+ 				exit();
+ 			}
+			$this->redirect('/addon/' . $addon_id);	    
+		}
+     
 		
 	}
-		
-	function remove($addon_id, $tag_id, $origin) {
-        $this->Amo->clean($addon_id);
-        $this->Amo->clean($tag_id);
-        $this->Amo->checkLoggedIn(); // must be logged in
-        $this->Addon->caching = false;        
-        
-		$this->Addon->removeTagFromAddons($tag_id, $addon_id);
-		$this->flash('Tag removed');
- 		if ($origin == 'developers') {
-			$this->redirect('/developers/addon/edit/' . $addon_id . '/tags');	    
- 			exit();
- 		}
-		$this->redirect('/addon/' . $addon_id);	 
-	}		
 		
 	function splitTags($string) {
 		// Code from http://us2.php.net/manual/en/function.split.php#81490

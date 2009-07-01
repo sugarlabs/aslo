@@ -20,7 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *      Justin Scott <fligtar@mozilla.com> (Original Author)
+ *      Patrick Sullivan
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -54,8 +54,9 @@
           <?=$this->renderElement('tags_js_init')?>
         </script>
 	<div class="addtagform ">
-		<form action="<?=$html->url("/tags/add/")?>">
-			<input type="text" id='newTag' name="newTag" method="POST">
+		<form id='tagForm' action="<?=$html->url("/tags/add/")?>" method="POST">
+			<?=$html->hiddenSession() ?>
+			<input type="text" id='newTag' name="newTag">
 			<input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon_data['Addon']['id']?>"/>
 			<input type="hidden" name="origin" id="origin" value="developers"/>
 			

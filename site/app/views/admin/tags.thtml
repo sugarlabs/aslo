@@ -79,8 +79,9 @@
         ?>
     <h3>Blacklist Tags</h3>
 	<div class="addtagform ">
-		<form action="<?=$html->url("/tags/addAndBlacklist")?>">
-			<input type="text" id='newTag' name="newTag" method="POST">
+		<form action="<?=$html->url("/tags/addAndBlacklist")?>" method="POST">
+			<?=$html->hiddenSession() ?>
+			<input type="text" id='newTag' name="newTag">
 			<button id="addtagbutton">Add</button>
 		</form>
 	</div>

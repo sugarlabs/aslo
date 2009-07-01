@@ -1,7 +1,6 @@
 
 
 function addTag() {
-	// mod_rewrite doesn't play well with quotes
 
 	var tagVal = $("#newTag").val();
 	var addonid = $("#tags ul").attr("id").split("addonid-")[1];
@@ -9,7 +8,8 @@ function addTag() {
 	if($.trim(tagVal)=='' || $.trim(addonid)==''){
 		return;
 	}
-	$.get(add_ajax_url+addonid+"/" + urlencode(tagVal), function(data) {
+	var post_data = $('#tagForm').serialize()+"&ajax=1";
+	$.post(add_ajax_url, post_data, function(data) {
 		$("#tags").html(data);
 		$(".addtagform form")[0].reset();
 		$("#tags .addon-tags").removeClass("nojs");
@@ -24,7 +24,8 @@ function addTag() {
 
 function remTag(addonid, tagid){
 	//var addonid = '<?= $addon['Addon']['id']; ?>';
-	$.get(remove_ajax_url+ addonid +"/"+ tagid, function(data){
+	var session=$("input[name='sessionCheck']").val();
+	$.post(remove_ajax_url, "ajax=1&addonid="+ addonid +"&tagid="+ tagid + "&sessionCheck="+session, function(data){
 		$("#tags").html(data);
 		$(".addtagform form")[0].reset();
 		$("#tags .addon-tags").removeClass("nojs");
