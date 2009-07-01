@@ -61,6 +61,7 @@ if (empty($addonIconPath)) {
     <?=($hasversion ? $addon['Version'][0]['Version']['version'] : '')?>
   </span>
 </h2>
+<h4 class="author"><?=_('addons_home_by')?> <?= $html->linkUsersFromModel($addon['User'], 0); ?></h4> 
 
 <?php
 if (!empty($coll_addon_added)) {
