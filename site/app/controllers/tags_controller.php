@@ -106,7 +106,7 @@ class TagsController extends AppController
         foreach ($split_tags as $tag_text) {
         	// If we're up to 80 tags, then break
         	if ($num_tags > 79) {
-        	$this->publish('message', 'Too many tags.');
+        	$this->publish('message', ___('tag_message_tag_limit_reached', 'Tag limit reached'));
         	
         		break;
         	}
@@ -153,7 +153,7 @@ class TagsController extends AppController
 			} else {
 				// Add Tag to Addon
 				$this->Addon->addTag($addon_id, $tag_id, $user['id']);
-				$this->publish('message', 'Tag Added.');
+				$this->publish('message', ___('tag_message_tag_added', 'Tag added'));
 			}
             $num_tags++;
 	} // foreach $tag	
@@ -213,7 +213,7 @@ class TagsController extends AppController
         $this->publish('addon_id', $addon_data['Addon']['id']);
         $this->publish('userTags', $tags['userTags']);
         $this->publish('developerTags', $tags['developerTags']);  
-		$this->publish('message', 'Tag Removed.');
+		$this->publish('message', ___('tag_message_tag_removed', 'Tag removed'));
         
 		$this->render('tag_added', 'ajax');        
 		
