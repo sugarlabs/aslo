@@ -1669,20 +1669,6 @@ class AddonsController extends AppController
             return;
         }
     }
-    
-    /**
-     * Gets all the addons for this tag
-     */
-    function fortag($tag_id) {
-    	$tag = $this->Tag->findById($tag_id);
-    	$this->publish("tag_id", $tag['Tag']['id']);
-    	$this->publish("tag_text", $tag['Tag']['tag_text']);
-    	
-    	$addons = $this->Addon->getAddonsByTag($tag_id);
-    	$this->publish("addons", $addons);
-    }
-    
-
 }
 
 ?>
