@@ -155,15 +155,19 @@ class AddonsController extends AppController
         foreach ($this->Addon->getAuthors($addon_id) as $a) {
             $authors[] = $this->User->getUser($a['User']['id'], array('addons',));
         }
+
         foreach ($authors as $a) {
             foreach ($a['Addon'] as $addon) {
                 $other_addons[$addon['Addon']['id']] = $addon;
             }
         }
+
+        $addon = $this->Addon->getAddon($addon_id, array('contrib_details'));
+
         $this->set('authors', $authors);
         $this->set('num_authors', count($authors));
         $this->set('multiple', count($authors) > 1);
-        $this->set('addon', $this->Addon->getAddon($addon_id, array('contrib_details')));
+        $this->set('addon', $addon);
         $this->set('other_addons', $other_addons);
         $this->publish('breadcrumbs', array(
             sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
