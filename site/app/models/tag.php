@@ -49,7 +49,6 @@ class Tag extends AppModel
                                     'foreignKey' => 'tag_id',
                                     'dependent'   => true
                               )
- 	
  	);
  	
 	var $hasMany = array('UserTagAddon' => 
@@ -58,8 +57,11 @@ class Tag extends AppModel
 
  	var $recursive = 1;
  	
-	function makeTagList($addon_data, $user, $showblacklist=true) {
-	$this->caching = false;
+ 	/**
+ 	 * 
+ 	 */
+	function makeTagList($addon_data, $user) {
+        $this->caching = false;
 	
       // Make a list of user_ids for the addon owners so we can see if these count as developer tags
        $developers = array();
@@ -67,8 +69,9 @@ class Tag extends AppModel
        $developerTags = array();
        // Make a new array of user tags
        $userTags = array();       
+
        foreach ($addon_data['User'] as $developer) {
-       	$developers[] = $developer['id'];
+           $developers[] = $developer['id'];
        }
        
         $_related_tag_ids = array();
@@ -88,21 +91,19 @@ class Tag extends AppModel
 						$tag['LoggedInUser']=$user;
 					}
 					if (in_array($tag['UserTagAddon'][0]['user_id'], $developers)) {
-							$developerTags[] = $tag;			
+                        $developerTags[] = $tag;			
 					} else {
-							$userTags[] = $tag;					
+                        $userTags[] = $tag;					
 					}
 				}
-			}
-        else
+        } else {
             $related_tags = array();
+        }
 		
 		$this->caching = true;
 		
 		return array('userTags'=>$userTags, 'developerTags'=>$developerTags);
 	}		 	
- 	
- 	
  	
  	/**
  	 * 
@@ -112,15 +113,14 @@ class Tag extends AppModel
  		if( !empty($dbTag)) {
  			$this->id = $dbTag['Tag']['id'];
  			$this->saveField('blacklisted', 1);
- 			
- 			// remove all the tag-addon relations
- 			$numDeletedFromAddons = $this->deleteFromAddons($tag_id);
- 			
  		} else {
  			return false;
  		}
  	}
  	
+ 	/**
+ 	 * 
+ 	 */
  	function unblacklistTag($tag_id) {
  		$dbTag = $this->findById($tag_id);
  		if( !empty($dbTag)) {
@@ -131,7 +131,13 @@ class Tag extends AppModel
  		}
  	}
  	
+ 	/**
+ 	 * 
+ 	 */
  	function deleteFromAddons($tag_id) {
+        if (!(is_numeric($tag_id))) {
+            return false;
+        }
  		$sql = "DELETE FROM users_tags_addons WHERE tag_id={$tag_id}";
  		$res = $this->query($sql); 		
  		return $this->getAffectedRows();
@@ -150,12 +156,19 @@ class Tag extends AppModel
 		return $this->findAll(" id in (select distinct(tag_id) from users_tags_addons where addon_id in (". implode(",", $addon_ids) . "))", array("id", "tag_text", "blacklisted", "created", "TagStat.tag_id", "TagStat.num_addons"), "num_addons DESC");
 		
 	}
+
+    /**
+     *
+     */
   	function getMaxNumAddons() {
  		$sql = "select max(num_addons) as maxaddons from tag_stat;";
  		$res = $this->query($sql); 		
  		return $res[0][0]['maxaddons'];
  	}
  	
+    /**
+     *
+     */
 	function getTop($numTags, $sortBy) {
 		
 		if( $sortBy == "freq") {
@@ -165,6 +178,10 @@ class Tag extends AppModel
 		} else {
 			$sort = null;
 		}
+
+        if ($numTags > 100) {
+            $numTags = 100;
+        }
 		
 		return $this->findAll(" TagStat.num_addons > 0 ", null/*fields*/, $sort, $numTags);
 	}

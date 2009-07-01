@@ -87,9 +87,11 @@ class TagsController extends AppController
 	* Internal function to add a new tag
 	**/
 	function _add_tag($addon_id, $tags_text) {
-       global $valid_status;
-        
-        $this->Amo->clean($addon_id);
+      
+        if (!is_numeric($addon_id)) {
+            return false;
+        }
+
         $this->Amo->checkLoggedIn(); // must be logged in
         
         $user = $this->Session->read('User');
@@ -97,22 +99,25 @@ class TagsController extends AppController
 		// Only 80 tags per addon.
 		$num_tags = count($this->Addon->getTagsByAddon($addon_id));
 
-        // Strip non-alphanumeric and quotes
-     //   $tags_text = ereg_replace("[^A-Za-z0-9\"\']", "", $tags_text);
  		// Split based on whitespace, but keep quotes. 
  		$split_tags = $this->splitTags($tags_text);
+
+        // We disable caching here specifically for Tag->findByTagText().  If that gets cached
+        // and a new tag is added any future attempt to add the same tag will fail until the
+        // query is done again (so it can get the tag id).
+        $this->Tag->caching = false;
+
 		// Process each tag
         foreach ($split_tags as $tag_text) {
         	// If we're up to 80 tags, then break
         	if ($num_tags > 79) {
-        	$this->publish('message', ___('tag_message_tag_limit_reached', 'Tag limit reached'));
-        	
+                $this->publish('message', ___('tag_message_tag_limit_reached', 'Tag limit reached'));
         		break;
         	}
         
 	        // Check if tag exists
-  	 	     $tag = $this->Tag->findByTagText($tag_text);
-   		     if (!empty($tag)) {
+  	 	    $tag = $this->Tag->findByTagText($tag_text);
+   		    if (!empty($tag)) {
 				// Tag exists. Use this tag id.
    	     		$tag_id = $tag['Tag']['id'];
    	    	} else {
@@ -125,15 +130,14 @@ class TagsController extends AppController
 				$this->Tag->create(); // re-initialize the model
 				$this->Tag->save($arrayTagData);
 				$tag_id = $this->Tag->getLastInsertId();
-				unset($tag);
 			}
+            unset($tag);
 
 			// Check if addon is already tagged with this tag
 			$existing = $this->UserTagAddon->find("tag_id = $tag_id and addon_id=$addon_id");
 			if (!empty($existing)) {
 				// Load the model to see who the owner is
-				//$addon = $this->Addon->getAddon($addon_id, array('User'));
-				$addon = $this->Addon->findById($addon_id);
+				$addon = $this->Addon->getAddon($addon_id, array('authors'));
 				foreach($addon['User'] as $addon_user) {
 					if ($addon_user['id'] == $user['id']) {
 						// Logged in user is tag owner. 
@@ -155,12 +159,14 @@ class TagsController extends AppController
 				$this->publish('message', ___('tag_message_tag_added', 'Tag added'));
 			}
             $num_tags++;
-	} // foreach $tag	
+        } // foreach $tag	
+        $this->Tag->caching = true;
 
+        // We probably updated some stuff
+        if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 		
  		// Get tag list for addon
-        $this->Addon->caching = false;        
- 		$addon_data = $this->Addon->findById($addon_id);
+ 		$addon_data = $this->Addon->getAddon($addon_id, array('authors', 'all_tags'));
         $tags = $this->Tag->makeTagList($addon_data, $user);
         $this->publish('addon_id', $addon_data['Addon']['id']);
         $this->publish('userTags', $tags['userTags']);
@@ -168,8 +174,9 @@ class TagsController extends AppController
 	}
 
 	function addAndBlacklist() {
-			$tags_text = $_REQUEST['newTag'];
-			$split_tags = $this->splitTags($tags_text);
+        $tags_text = $_REQUEST['newTag'];
+        $split_tags = $this->splitTags($tags_text);
+
 		// Process each tag
         foreach ($split_tags as $tag_text) {
 	        // Check if tag exists
@@ -189,26 +196,22 @@ class TagsController extends AppController
 				$tag_id = $this->Tag->getLastInsertId();
 				
 			}
-							$this->Tag->blacklistTag($tag_id);
-				unset($tag);
-			}
+            $this->Tag->blacklistTag($tag_id);
+            unset($tag);
+        }
 		$this->redirect('admin/tags');
 	}
 
-
-
 	function remove_ajax($addon_id, $tag_id) {
-        global $valid_status;
-        
         $this->Amo->clean($addon_id);
         $this->Amo->clean($tag_id);
         $this->Amo->checkLoggedIn(); // must be logged in
         $this->Addon->caching = false;        
         
-        $user = $this->Session->read('User');	
 		$this->Addon->removeTagFromAddons($tag_id, $addon_id);
-		// Get tag list for addon
 		
+		// Get tag list for addon
+        $this->Addon->bindOnly('Tag', 'User');
  		$addon_data = $this->Addon->findById($addon_id);
         $tags = $this->Tag->makeTagList($addon_data, $user);
         $this->publish('addon_id', $addon_data['Addon']['id']);
@@ -221,14 +224,11 @@ class TagsController extends AppController
 	}
 		
 	function remove($addon_id, $tag_id, $origin) {
-        global $valid_status;
-        
         $this->Amo->clean($addon_id);
         $this->Amo->clean($tag_id);
         $this->Amo->checkLoggedIn(); // must be logged in
         $this->Addon->caching = false;        
         
-        $user = $this->Session->read('User');	
 		$this->Addon->removeTagFromAddons($tag_id, $addon_id);
 		$this->flash('Tag removed');
  		if ($origin == 'developers') {
@@ -265,17 +265,6 @@ class TagsController extends AppController
         return $elements;		
 	}		
 
- 	function lookup() {
-        global $valid_status;
-        $text = $_REQUEST['q'];
-        
-        $this->Amo->clean($id);
-        $this->Amo->checkLoggedIn(); // must be logged in
- 		$tags = $this->Tag->findAll("Tag.tag_text like '$text%' and blacklisted=0");
- 		$this->publish('tags',$tags);
-        $this->render('ajax/tag_lookup', 'ajax');        
- 	}
-
 	function top($numTags=100, $sortBy="freq") {
 		// get the top tags
 		$this->publish('numTags', $numTags);
@@ -284,7 +273,5 @@ class TagsController extends AppController
 		$this->publish('topTags', $topTags);
 	}
  }
- 
- 
 
 ?>

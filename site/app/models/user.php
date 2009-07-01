@@ -126,6 +126,7 @@ class User extends AppModel
      * @param array associations
      */
     function getUser($id, $associations = array()) {
+        $identifier = array("user:$id", $associations);
         if (QUERY_CACHE && $cached = $this->Cache->readCacheObject($identifier)) {
             if (DEBUG >= 2) debug("user $id was cached");
             return $cached;

@@ -846,6 +846,9 @@ class Addon extends AppModel
      * -trigger trg_tag_stat_inc will update tag_stat
      */
 	function addTag($addonId, $tagId, $userId) {
+        if (!(is_numeric($userId) && is_numeric($tagId) && is_numeric($addonId))) {
+            return false;
+        }
 		$sql = "INSERT IGNORE INTO users_tags_addons set user_id = {$userId}, tag_id = {$tagId}, addon_id = {$addonId}, created = now()";
 		$ret = $this->execute($sql);
 	}
@@ -854,18 +857,18 @@ class Addon extends AppModel
 	 * -trigger trg_tag_stat_dec will update tag_stat
 	 */
 	function removeUserTagFromAddon($user_id, $tag_id, $addon_id) {
-		$this->caching = false;
+        if (!(is_numeric($user_id) && is_numeric($tag_id) && is_numeric($addon_id))) {
+            return false;
+        }
 	
-		$this->execute("DELETE FROM users_tags_addons where user_id={$user_id} AND tag_id={$tag_id} AND addon_id = {$addon_id}");
-		$this->caching = true;
-		
+		$this->execute("DELETE FROM users_tags_addons where user_id={$user_id} AND tag_id={$tag_id} AND addon_id ={$addon_id}");
 	}
 	
 	/**
 	 * -trigger trg_tag_stat_dec will update tag_stat
 	 */
 	function removeTagFromAddons($tag_id, $addon_id) {
-        if (!(is_int($tag_id) && is_int($addon_id))) {
+        if (!(is_numeric($tag_id) && is_numeric($addon_id))) {
             return false;
         }
 		$this->execute("DELETE FROM users_tags_addons where tag_id={$tag_id} AND addon_id = {$addon_id}");
@@ -884,6 +887,9 @@ class Addon extends AppModel
 		return $this->Tag->findAllById($tagIds,null,"Tag.tag_text asc");
 	} 
 	
+    /**
+     * use bindOnly() before you use this function!
+     */
 	function getTagsByUserTagAddon($users_tags_addons) {
 		$tagIds = array();
 		foreach ($users_tags_addons as $uta) {
@@ -898,6 +904,9 @@ class Addon extends AppModel
 		
 	}
 	
+    /**
+     * use Addon->bindOnly() before you call this function!
+     */
 	function getAddonsByUserTagAddon($users_tags_addons) {
 		$addonIds = array();
 		foreach ($users_tags_addons as $uta) {
@@ -912,12 +921,17 @@ class Addon extends AppModel
 		
 	}
 
+    /**
+     * use Addon->bindOnly() before you call this function!
+     */
 	function getTagsByUser($user_id) {
 		$userTagAddons = $this->UserTagAddon->findAll(array('user_id' => $user_id));
 		return $this->getTagsByUserTagAddon($userTagAddons);
 	}
 	
-    
+    /**
+     * use Addon->bindOnly() before you call this function!
+     */
     function getAddonsByTag($tag_id) {
     	$userTagAddons = $this->UserTagAddon->findAll(array('tag_id' => $tag_id));
     	return $this->getAddonsByUserTagAddon($userTagAddons);
