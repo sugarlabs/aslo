@@ -89,7 +89,7 @@ if(!isset($lver)) {
 }
 
 if(!isset($hver)) {
-    $hver = "";
+    $hver = "any";
 }
 
 // AmoPlatforms is from controller->beforeRender()
@@ -155,14 +155,14 @@ if (!isset($sort)) {
 
 $toggle_uri = $_SERVER['REQUEST_URI'];
 
-if (isset($this->params['url']['adv']) || isset($this->params['url']['as'])) {
-    $toggle_uri = str_replace("adv=", "nor=", $toggle_uri);
+if ($advancedSearch || isset($this->params['url']['as'])) {
+    $toggle_uri = str_replace("advancedsearch=", "nor=", $toggle_uri);
     $toggle_uri = str_replace("as=", "nor=", $toggle_uri);
     $two_form = "";
 } else {
-    $toggle_uri = str_replace("nor=", "adv=", $toggle_uri);
+    $toggle_uri = str_replace("nor=", "advancedsearch=", $toggle_uri);
     $delim = (stristr($toggle_uri,"?")) ? "&" : "?";
-    if(!stristr($toggle_uri, "adv=")) { $toggle_uri .= "{$delim}adv=true"; }
+    if(!stristr($toggle_uri, "advancedsearch=")) { $toggle_uri .= "{$delim}advancedsearch=1"; }
     $two_form = "</form><form method=\"get\" action=\"\" id=\"hidden-form\" class=\"asclosed\">";
 }
 $toggle_uri = htmlspecialchars($toggle_uri);
@@ -210,7 +210,13 @@ if (!isset($category)) $category = array(0, 0);
 
         <div class="advanced" id="advanced-search">
             <fieldset class="important">
-                <input type="hidden" name="as" value="true" />
+            <?php
+            // propagate advancedsearch flag for the JS-less case so that
+            // the advanced form will be shown with the search results
+            if ($advancedSearch): ?>
+                <input type="hidden" name="advancedsearch" value="1" />
+            <?php endif; ?>
+                <input type="hidden" name="as" value="1" />
                 <input type="hidden" id="vfuz" name="vfuz" value="false" />
 
                 <div class="container application">
@@ -254,7 +260,7 @@ if (!isset($category)) $category = array(0, 0);
             </fieldset>
         </div>
 
-        <div id="advanced-link" title="<?=___('advanced_search_form_toggle_tooltip');?>"><a href="?advancedsearch=<?=!$advancedSearch; ?>"><?= ___('advanced_search_form') ?></a></div>
+        <div id="advanced-link" title="<?=___('advanced_search_form_toggle_tooltip');?>"><a href="<?=$toggle_uri; ?>"><?= ___('advanced_search_form') ?></a></div>
     </form>
     <div id="search-bubble-inner"></div>
 
