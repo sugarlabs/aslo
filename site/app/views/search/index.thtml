@@ -55,11 +55,16 @@ global $app_shortnames, $app_prettynames;
         'category'=>$category, 'appid'=>$appid, 'atype'=>$atype, 'lup'=>"$lup", 
         'pid'=>$pid, 'sort'=>$sort, 'hver'=>$hver, 'lver'=>$lver, 'vfuz'=>$vfuz, 'pp'=>$pp))?>
   </div>
-  <?php // TODO Remove style when new search design is implemented; bug 482857 ?>
   <div class="primary results-head">
-    <h2><span>Search Results</span></h2>
+      <h2><span><?=___('search_results_header', 'Search Results')?></span></h2>
 <?php if (!empty($search_results)): ?>
-	<h3 class="result-count">Showing <?=$offset + 1?> - <?=$offset + count($search_results)?> of <?=$total_count?> results <?= (!empty($search_terms)) ? "for <strong>".$search_terms."</strong>" : "" ?></h3>
+    <h3 class="result-count">
+        <?php if(!empty($search_terms)): ?>
+            <?=sprintf(___('search_results_showing_x_of_y_for_z_header', 'Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms)?>
+        <?php else: ?>
+            <?=sprintf(___('search_results_showing_x_of_y_header', 'Showing %1$s - %2$s of %3$s results'), $offset+1, $offset+count($search_results), $total_count)?>
+        <?php endif; ?>
+    </h3>
 <?php endif; ?>
   </div>
 <?php if (empty($search_results)): ?>
@@ -111,16 +116,16 @@ global $app_shortnames, $app_prettynames;
 <?php if (!empty($search_results)): ?>
   <div class="secondary" role="complimentary">
 	<div class="highlight">
-		<h2>Refine Results</h2>
+        <h2><?=___('search_results_refine_header', 'Refine Results')?></h2>
 		<div id="refine-compatibility">
-			<h5>Compatible with</h5>
+            <h5><?=___('search_filter_compatible_header', 'Compatible with')?></h5>
 			<ul class="refinements">
 				<?php
 					$selected = "";
 					if ($hver == "any") {
 						$selected = " class='selected'";
 					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">All versions</a></li>';
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('search_refine_all_versions_link', 'All Versions').'</a></li>';
 				?>
 				<?php
 					$min_display_version_by_app = array(
@@ -158,7 +163,7 @@ global $app_shortnames, $app_prettynames;
 			</ul>
 		</div>
 		<div id="refine-category">
-			<h5>Categories</h5>
+            <h5><?=___('search_filter_categories_header', 'Categories')?></h5>
 			<ul class="refinements">
 				<?php
 					if ($category == array(0,0)) {
@@ -186,7 +191,7 @@ global $app_shortnames, $app_prettynames;
 			</ul>
 		</div>
 		<div id="refine-tags">
-			<h5>Tags</h5>
+            <h5><?=___('search_filter_tags_header', 'Tags')?></h5>
 			<ul class="refinements addon-tags">
 				<!-- <li class="usertag selected"><a class="tagitem" href="#">Tag</a></li>
 				<li class="usertag"><a class="tagitem" href="#">Tag 2</a></li> -->
@@ -204,7 +209,6 @@ global $app_shortnames, $app_prettynames;
 					}
 				 ?>
 			</ul>
-
 		</div>
 	</div>
   </div>
