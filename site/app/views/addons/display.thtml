@@ -450,7 +450,7 @@ if (!empty($coll_addon_added)) {
 	?>
 	<a href="" id="addatag">+ Add a tag</a>
 	<div class="addtagform ">
-		<form id='#tagForm' action="/tags/add/">
+		<form id='#tagForm' action="<?=$html->url("/tags/add/")?>">
 			<input type="text" id='newTag' name="newTag" method="POST">
 			<input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon['Addon']['id']?>"/>
 			<button id="addtagbutton">Add</button>

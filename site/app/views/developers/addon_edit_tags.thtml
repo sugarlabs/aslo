@@ -54,15 +54,13 @@
           <?=$this->renderElement('tags_js_init')?>
         </script>
 	<div class="addtagform ">
-		<form action="/tags/add/">
+		<form action="<?=$html->url("/tags/add/")?>">
 			<input type="text" id='newTag' name="newTag" method="POST">
 			<input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon_data['Addon']['id']?>"/>
 			<input type="hidden" name="origin" id="origin" value="developers"/>
 			
 			<button id="addtagbutton">Add</button>
 		</form>
-	</div>	
-        
-		<pre><? //print_r($addon_data); ?></pre>
-     </div>
+	</div>
+ </div>
 </div>
