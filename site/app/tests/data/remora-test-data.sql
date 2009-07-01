@@ -1025,6 +1025,17 @@ INSERT INTO `users_versioncomments` (`user_id`, `comment_id`, `subscribed`, `cre
 (2, 1, 0, '2006-04-28 09:05:34', '2006-04-28 09:05:34');
 
 --
+-- Dumping data for table `tags`
+--
+INSERT INTO `tags` VALUES (1,'test',0,'2009-06-30 06:30:36');
+
+--
+-- Dumping data for table `users_tags_addons`
+--
+INSERT INTO `users_tags_addons` VALUES (5,1,9,'2009-06-30 18:30:36');
+
+
+--
 -- Set up the materialized views for search
 --
 INSERT INTO `text_search_summary`
