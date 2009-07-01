@@ -458,7 +458,11 @@ if (!empty($coll_addon_added)) {
 			<button id="addtagbutton">Add</button>
 		</form>
 	</div>	
-<? } else { echo $html->link(_('header_navlink_login'), $html->login_url()) . " to add tags."; } ?>
+<? } else { 
+    echo sprintf(
+        ___('tags_register_or_login', '<a href="%1$s">Register</a> or <a href="%2$s">Log in</a> to add tags'),
+        $html->url('/users/register', false), $html->url($html->login_url()));
+} ?>
 
 </div>
 <!-- /#more-addons-->
