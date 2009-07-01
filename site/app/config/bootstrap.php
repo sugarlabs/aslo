@@ -302,5 +302,17 @@ $licenses = array(
     ___('licenses_mit'),
     ___('licenses_bsd')
 );
+
+global $license_urls;
+$license_urls = array(
+    'http://www.mozilla.org/MPL/MPL-1.1.html',
+    'http://www.gnu.org/licenses/gpl-2.0.html',
+    'http://www.gnu.org/licenses/gpl-3.0.html',
+    'http://www.gnu.org/licenses/lgpl-2.1.html',
+    'http://www.gnu.org/licenses/lgpl-3.0.html',
+    'http://www.opensource.org/licenses/mit-license.php',
+    'http://www.opensource.org/licenses/bsd-license.php'   
+);
+    
+
 //EOF
-?>

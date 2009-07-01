@@ -441,18 +441,18 @@ var license_picker = {
         for (var k in license_trans) {
             license_trans[k] = $(license_trans[k]);
         }
-        $("#license-name").change(function() {
-            var val = $(this).val();
+        $("input[name='data[License][name]']").change(function() {
+            var val = $("input[name='data[License][name]']:checked").val();
             $("#license-translationbox").contents().remove();
             if(val in license_trans) {
                 license_trans[val].appendTo($('#license-translationbox'));
             }
         });
-        $('#license-name').change();
+        $("input[name='data[License][name]']").change();
     },
 
     acceptable: function(accept_null) {
-        var val = $("#license-name").val();
+        var val = $("input[name='data[License][name]']:checked").val();
         var trans = $.grep($("#license-translationbox textarea"),
                            function(e) {
                                return $(e).val() != "";
@@ -464,7 +464,7 @@ var license_picker = {
 
     complain: function(accept_null) {
         if (!license_picker.acceptable(accept_null)) {
-            if ($('#license-name').val() == 'other') {
+            if ($("input[name='data[License][name]']:checked").val() == 'other') {
                 // The text box must be empty.
                 alert(devcp_js_license_text);
             } else {

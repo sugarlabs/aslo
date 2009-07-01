@@ -47,6 +47,11 @@ class License extends AppModel {
         global $licenses;
         return $licenses;
     }
+    
+    function getUrls() {
+        global $license_urls;
+        return $license_urls;
+    }
 
     function getBuiltin($license_num) {
         $license = $this->findByName($license_num);

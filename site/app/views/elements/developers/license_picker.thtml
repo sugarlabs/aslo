@@ -39,11 +39,23 @@
  *    - $licenses: array to populate options (value => array(name, selected))
  */
 ?>
-<select id="license-name" name="data[License][name]">
+<p>Please Choose:</p>
+<ol id="license-name">
+    <?php foreach ($licenses as $val => $license): ?>
+      <li>
+          <input type="radio" name="data[License][name]" value="<?php echo $val?>" id="license_<?php echo $val?>" />
+          <label for="license_<?php echo $val?>"><?php echo $license['name']?></label>&nbsp;
+          <?php if ($val != 'other' && $license['url']): ?>
+            <a target="new" href="<?php echo $license['url'] ?>"><?php echo ___('devcp_view_license', 'View License'); ?></a>
+          <?php endif ?>
+      </li>
+    <?php endforeach ?>
+</ol>
+<!-- <select id="license-name" name="data[License][name]">
 <?php
     foreach ($licenses as $val => $license) {
         $selected = $license['selected'] ? 'selected="selected"' : '';
         echo "<option value='{$val}' ${selected}>{$license['name']}</option>";
     }
 ?>
-</select>
+</select> -->

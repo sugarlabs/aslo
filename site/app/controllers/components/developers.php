@@ -1204,16 +1204,18 @@ class DevelopersComponent extends Object {
         }
 
         // Add 'Please Choose...' only if no license has been selected.
-        if (!isset($version['license_id'])) {
-            $licenses['null'] = array(
-                'name' => ___('devcp_uploader_please_choose'),
-                'selected' => True);
-        }
+        // if (!isset($version['license_id'])) {
+        //     $licenses['null'] = array(
+        //         'name' => ___('devcp_uploader_please_choose'),
+        //         'selected' => True);
+        // }
 
         // Grab all the pre-approved licenses.
+        $license_urls = $this->controller->License->getUrls();
         foreach ($this->controller->License->getNames() as $num => $builtin) {
             $licenses['builtin_'.$num] = array(
                 'name' => $builtin,
+                'url'  => $license_urls[$num],
                 'selected' => isset($license) && (string)$num === $license['License']['name']);
         }
 
