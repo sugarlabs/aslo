@@ -151,6 +151,20 @@ class AddonsController extends AppController
                                   $amount);
     }
 
+    function developers($addon_id) {
+        $addon = $this->Addon->getAddon($addon_id, array('contrib_details'));
+        foreach ($this->Addon->getAuthors($addon_id) as $a) {
+            $authors[] = $this->User->getUser($a['User']['id'], array('addons',));
+        }
+        $this->set('authors', $authors);
+        $this->set('author', $authors[0]);
+        $this->set('addon', $addon);
+        $this->publish('breadcrumbs', array(
+            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+            $addon['Translation']['name']['string'] => '/addon/'.$addon['Addon']['id'],
+        ));
+    }
+
     /**
      * Share an addon with a link sharing service.
      * @param int $id the id of the addon

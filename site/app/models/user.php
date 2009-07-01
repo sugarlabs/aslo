@@ -138,7 +138,21 @@ class User extends AppModel
         $user = $this->findById($id);
 
         // Add anything extra
-        $user['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
+        $user['User']['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
+
+        if (in_array('addons', $associations)) {
+            loadModel('Addons');
+            $this->Addon =& new Addon();
+
+            $addons = $this->Addon->getAddonsByUser($id);
+            $user['Addon'] = $this->Addon->getAddonList(array_keys($addons), array('list_details'));
+            $user['User']['num_addons'] = count($user['Addon']);
+
+            foreach ($user['Addon'] as $r) {
+                $ratings[] = $r['Addon']['averagerating'];
+            }
+            $user['User']['average_rating'] = array_sum($ratings) / count($ratings);
+        }
 
         // cache this object...
         if (QUERY_CACHE)

@@ -90,7 +90,8 @@
         $Route->connect("/{$prefix}/user/*/picture", array('controller' => 'users', 'action' => 'picture'));
         $Route->connect("/{$prefix}/user/*", array('controller' => 'users', 'action' => 'info'));
         $Route->connect("/{$prefix}/addon/share/*", array('controller' => 'addons', 'action' => 'share'));
-        $Route->connect("/{$prefix}/addon/*", array('controller' => 'addons', 'action' => 'display'));
+        $Route->connect("/{$prefix}/addon/(\d+)/developers/*", array('controller' => 'addons', 'action' => 'developers'));
+        $Route->connect("/{$prefix}/addon/(\d+)/*", array('controller' => 'addons', 'action' => 'display'));
         $Route->connect("/{$prefix}/blog/*", array('controller' => 'blog', 'action' => 'view'));
         $Route->connect("/{$prefix}/collection/*", array('controller' => 'collections', 'action' => 'view'));
         

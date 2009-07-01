@@ -290,6 +290,11 @@ class Addon extends AppModel
                              'limit' => 1
                         ))));
                 break;
+
+            case 'contrib_details':
+                $fields = array_merge($fields, array('the_reason', 'the_future',
+                    'wants_contributions', 'paypal_id', 'suggested_amount'));
+                break;
                 
             default:
                 debug("Association $association not declared!");

@@ -1,0 +1,102 @@
+<?php
+$this->layout = 'amo2009';
+$this->pageTitle = sprintf(___('addon_developer_title'), $addon['Translation']['name']['string']);
+?>
+
+<div class="section">
+  <div class="stand-alone-options">
+    <?=$this->renderElement('amo2009/categories')?>
+    <?=$this->renderElement('amo2009/search')?>
+  </div>
+  <?=$this->renderElement('amo2009/breadcrumbs')?>
+  <h2><?=___('addon_developer_h2_meet')?></h2>
+
+  <div class="secondary" role="complementary">
+    <div class="vcard">
+      <?php $u = $author['User']; ?>
+      <img class="avatar photo-large photo" alt="<?=$u['display_name']?>"
+           src="<?=$html->url('/users/picture/'.$u['id'])?>" />
+      <table class="person-info" summary="<?=___('addon_developer_info_summary')?>">
+        <tbody>
+          <tr>
+            <th><?=___('addon_developer_th_name')?></th>
+            <td class="fn n"><?=$u['display_name']?></td>
+          </tr>
+          <tr>
+            <th><?=___('addon_developer_th_location')?></th>
+            <td class="adr"><?=$u['location']?></td>
+          </tr>
+          <tr>
+            <th><?=___('addon_developer_th_occupation')?></th>
+            <td class="role"><?=$u['occupation']?></td>
+          </tr>
+          <tr>
+            <th><?=___('addon_developer_th_homepage')?></th>
+            <td><a class="url" href="<?=$u['homepage']?>"><?=$u['homepage']?></a></td>
+          </tr>
+          <?php if (!$u['emailhidden']): ?>
+              <tr>
+                <th><?=___('addon_developer_th_email')?></th>
+                <td><a class="email" href="mailto:<?=$u['email']?>"><?=$u['email']?></a></td>
+              </tr>
+          <?php endif; ?>
+          <tr>
+            <th><?=___('addon_developer_th_user_since')?></th>
+            <td><?=strftime(_('date'), strtotime($u['created']))?></td>
+          </tr>
+          <tr>
+            <!-- TODO: link this to a listing of add-ons by user -->
+            <th><?=___('addon_developer_th_num_addons')?></th>
+            <td><?=sprintf(___('addon_developer_td_num_addons'), $u['num_addons'])?></td>
+          </tr>
+          <tr>
+            <th><?=___('addon_developer_th_rating')?></th>
+            <td><?=$this->renderElement('stars', array('rating' => $u['average_rating']))?></td>
+          </tr>
+        </tbody>
+      </table>
+    </div> <!-- vcard -->
+  </div> <!-- secondary -->
+
+  <div class="primary" role="main">
+    <?php
+    if ($this->controller->Addon->acceptContributions($addon)) {
+        echo $this->renderElement('amo2009/contribution', array(
+                'addon_id' => $addon['Addon']['id'],
+                'text' => ___('addons_display_contribution_ask'),
+                'source' => 'meet-the-developer'));
+    }
+    ?>
+
+    <div class="primary prose">
+      <?php if($author['Translation']['bio']['string']): ?>
+          <h3><?=sprintf(___('addon_developer_who_is'), $u['display_name'])?></h3>
+          <p class="intro"><?=$author['Translation']['bio']['string']?></p>
+      <?php endif; ?>
+      <?php if ($addon['Translation']['the_reason']['string']): ?>
+          <h3><?=sprintf(___('addon_developer_why_created'), $addon['Translation']['name']['string'])?></h3>
+          <p><?=$addon['Translation']['the_reason']['string']?></p>
+      <?php endif; ?>
+      <?php if ($addon['Translation']['the_future']['string']): ?>
+          <h3><?=sprintf(___('addon_developer_what_next'), $addon['Translation']['name']['string'])?></h3>
+          <p><?=$addon['Translation']['the_future']['string']?></p>
+      <?php endif; ?>
+    </div>
+
+    <div class="secondary" role="complementary">
+      <div class="article secondary-item-list">
+        <h4><?=___('addon_developer_other_addons')?></h4>
+        <ul>
+          <?php foreach ($author['Addon'] as $a): ?>
+              <li class="addons">
+                <a href="<?=$html->url('/addon/'.$a['Addon']['id'])?>">
+                  <?=$a['Translation']['name']['string']?>
+                </a>
+              </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- primary -->
+
+</div> <!-- section -->
