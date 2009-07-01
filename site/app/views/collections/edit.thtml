@@ -296,7 +296,8 @@ JS;
                 <input id="delete-coll" type="button" class="jsonly" name="data[action]" value="<?=___('collections_edit_submit_deletecollection')?>"/>
                 <div id="delete-confirm">
                     <div><input id="delete-coll-noscript" type="checkbox" name="data[action]" value="delete-coll"/> <label for="delete-coll-noscript"><?=___('collections_edit_confirm_deletecollection')?></label></div>
-                    <p><?=sprintf(___('collections_edit_confirm_deletecollection_description'), ___('collections_edit_submit'))?></p>
+                    <p class="jsonly"><?=sprintf(___('collections_edit_confirm_deletecollection_description'), ___('collections_edit_submit_deletecollection'))?></p>
+                    <noscript><p><?=sprintf(___('collections_edit_confirm_deletecollection_description'), ___('collections_edit_submit'))?></p></noscript>
                 </div>
             </fieldset>
             </div>
