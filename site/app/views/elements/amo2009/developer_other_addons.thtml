@@ -38,53 +38,24 @@
 
 /**
  * Required parameters:
- *   $addon
- *   $addon_id
- *   $text: the begging text at the top of the contribution box
- *   $source: the page where the contribution link is coming from
+ *   $addons
+ *   $skip: an add-on id to skip over
+ *   $num_authors
  */
 ?>
-
-<div class="notification">
-  <h3><?=$text?></h3>
-  <div class="aux">
-    <p class="button-wrapper">
-      <a class="button significant" id="contribute-button"
-         href="<?=$html->url('/addons/developers/' . $addon_id)?>">
-        <?=$html->image('amo2009/icons/buttons/heart-blue-16x16.gif',
-                        array('alt' => ''))
-        ?><?=___('addon_display_contribute')?>
-      </a>
-    </p>
-    <div class="suggestion">
-      <p><?=sprintf(___('addon_display_suggested_amount'),
-                    $addon['Addon']['suggested_amount'])?>
-      </p>
-      <p>
-        <a class="toggle-help" href="#contribute-why">
-          <?=___('addons_display_a_license_what')?>
-        </a>
-      </p>
-    </div>
-  </div>
-<div id="contribute-links" class="dropdown">
-  <ul>
-    <li>
-      <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}&type=suggested")?>">
-        <?=sprintf(___('addon_display_contribute_suggested'),
-                   $addon['Addon']['suggested_amount'])?>
-      </a>
-      <span><?=___('addon_display_suggested')?></span>
-    </li>
-    <li>
-      <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}")?>">
-        <?=___('addon_display_contribute_different')?>
-      </a>
-    </li>
-  </ul>
-</div>
-  <div id="contribute-why" class="toggle-info">
-    <p class="dropdown"><?=___('addons_display_contribute_why')?></p>
-    <a class="close" href="#"><?=___('addons_display_contribute_close')?></a>
+<div class="secondary" role="complementary">
+  <div class="article secondary-item-list">
+    <h4><?=n___('addon_developer_other_addons', 'addon_developer_other_addons', $num_authors)?></h4>
+    <ul>
+      <?php foreach ($addons as $a): ?>
+          <?php if ($a['Addon']['id'] != $skip): ?>
+              <li class="addons">
+                <a href="<?=$html->url('/addon/'.$a['Addon']['id'])?>">
+                  <?=$a['Translation']['name']['string']?>
+                </a>
+              </li>
+          <?php endif; ?>
+      <?php endforeach; ?>
+    </ul>
   </div>
 </div>

@@ -152,13 +152,19 @@ class AddonsController extends AppController
     }
 
     function developers($addon_id) {
-        $addon = $this->Addon->getAddon($addon_id, array('contrib_details'));
         foreach ($this->Addon->getAuthors($addon_id) as $a) {
             $authors[] = $this->User->getUser($a['User']['id'], array('addons',));
         }
+        foreach ($authors as $a) {
+            foreach ($a['Addon'] as $addon) {
+                $other_addons[$addon['Addon']['id']] = $addon;
+            }
+        }
         $this->set('authors', $authors);
-        $this->set('author', $authors[0]);
-        $this->set('addon', $addon);
+        $this->set('num_authors', count($authors));
+        $this->set('multiple', count($authors) > 1);
+        $this->set('addon', $this->Addon->getAddon($addon_id, array('contrib_details')));
+        $this->set('other_addons', $other_addons);
         $this->publish('breadcrumbs', array(
             sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
             $addon['Translation']['name']['string'] => '/addon/'.$addon['Addon']['id'],

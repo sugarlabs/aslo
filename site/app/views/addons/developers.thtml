@@ -1,6 +1,11 @@
 <?php
 $this->layout = 'amo2009';
-$this->pageTitle = sprintf(___('addon_developer_title'), $addon['Translation']['name']['string']);
+$this->pageTitle = sprintf(n___('addon_developer_title', 'addon_developer_title',
+                                $num_authors),
+                           $addon['Translation']['name']['string']);
+if ($multiple) {
+    $this->viewVars['bodyclass'] = 'inverse';
+}
 ?>
 
 <div class="section">
@@ -9,94 +14,83 @@ $this->pageTitle = sprintf(___('addon_developer_title'), $addon['Translation']['
     <?=$this->renderElement('amo2009/search')?>
   </div>
   <?=$this->renderElement('amo2009/breadcrumbs')?>
-  <h2><?=___('addon_developer_h2_meet')?></h2>
 
-  <div class="secondary" role="complementary">
-    <div class="vcard">
-      <?php $u = $author['User']; ?>
-      <img class="avatar photo-large photo" alt="<?=$u['display_name']?>"
-           src="<?=$html->url('/users/picture/'.$u['id'])?>" />
-      <table class="person-info" summary="<?=___('addon_developer_info_summary')?>">
-        <tbody>
-          <tr>
-            <th><?=___('addon_developer_th_name')?></th>
-            <td class="fn n"><?=$u['display_name']?></td>
-          </tr>
-          <tr>
-            <th><?=___('addon_developer_th_location')?></th>
-            <td class="adr"><?=$u['location']?></td>
-          </tr>
-          <tr>
-            <th><?=___('addon_developer_th_occupation')?></th>
-            <td class="role"><?=$u['occupation']?></td>
-          </tr>
-          <tr>
-            <th><?=___('addon_developer_th_homepage')?></th>
-            <td><a class="url" href="<?=$u['homepage']?>"><?=$u['homepage']?></a></td>
-          </tr>
-          <?php if (!$u['emailhidden']): ?>
-              <tr>
-                <th><?=___('addon_developer_th_email')?></th>
-                <td><a class="email" href="mailto:<?=$u['email']?>"><?=$u['email']?></a></td>
-              </tr>
-          <?php endif; ?>
-          <tr>
-            <th><?=___('addon_developer_th_user_since')?></th>
-            <td><?=strftime(_('date'), strtotime($u['created']))?></td>
-          </tr>
-          <tr>
-            <!-- TODO: link this to a listing of add-ons by user -->
-            <th><?=___('addon_developer_th_num_addons')?></th>
-            <td><?=sprintf(___('addon_developer_td_num_addons'), $u['num_addons'])?></td>
-          </tr>
-          <tr>
-            <th><?=___('addon_developer_th_rating')?></th>
-            <td><?=$this->renderElement('stars', array('rating' => $u['average_rating']))?></td>
-          </tr>
-        </tbody>
-      </table>
-    </div> <!-- vcard -->
-  </div> <!-- secondary -->
+  <h2><?=n___('addon_developer_h2_meet', 'addon_developer_h2_meet', $num_authors)?></h2>
 
-  <div class="primary" role="main">
-    <?php
-    if ($this->controller->Addon->acceptContributions($addon)) {
-        echo $this->renderElement('amo2009/contribution', array(
-                'addon_id' => $addon['Addon']['id'],
-                'text' => ___('addons_display_contribution_ask'),
-                'source' => 'meet-the-developer'));
-    }
-    ?>
+  <?php
+  if ($this->controller->Addon->acceptContributions($addon)) {
+      $contrib_element = $this->renderElement('amo2009/contribution', array(
+          'addon_id' => $addon['Addon']['id'],
+          'text' => ___('addons_display_contribution_ask'),
+          'source' => 'meet-the-developer'));
+  } else {
+      $contrib_element = '';
+  }
+  $other_addons_element = $this->renderElement('amo2009/developer_other_addons',
+      array('addons' => $other_addons,
+            'skip' => $addon['Addon']['id']));
+  ?>
 
-    <div class="primary prose">
-      <?php if($author['Translation']['bio']['string']): ?>
-          <h3><?=sprintf(___('addon_developer_who_is'), $u['display_name'])?></h3>
-          <p class="intro"><?=$author['Translation']['bio']['string']?></p>
-      <?php endif; ?>
-      <?php if ($addon['Translation']['the_reason']['string']): ?>
-          <h3><?=sprintf(___('addon_developer_why_created'), $addon['Translation']['name']['string'])?></h3>
-          <p><?=$addon['Translation']['the_reason']['string']?></p>
-      <?php endif; ?>
-      <?php if ($addon['Translation']['the_future']['string']): ?>
-          <h3><?=sprintf(___('addon_developer_what_next'), $addon['Translation']['name']['string'])?></h3>
-          <p><?=$addon['Translation']['the_future']['string']?></p>
-      <?php endif; ?>
-    </div>
-
+  <?php if (!$multiple): ?>
+    <?php $author = $authors[0]; ?>
     <div class="secondary" role="complementary">
-      <div class="article secondary-item-list">
-        <h4><?=___('addon_developer_other_addons')?></h4>
-        <ul>
-          <?php foreach ($author['Addon'] as $a): ?>
-              <li class="addons">
-                <a href="<?=$html->url('/addon/'.$a['Addon']['id'])?>">
-                  <?=$a['Translation']['name']['string']?>
-                </a>
-              </li>
-          <?php endforeach; ?>
-        </ul>
+      <div class="vcard">
+        <?php $this->viewVars['user'] = $author['User'];?>
+        <?=$this->renderElement('amo2009/user_avatar')?>
+        <?=$this->renderElement('amo2009/user_vcard')?>
       </div>
     </div>
-  </div> <!-- primary -->
+    <div class="primary" role="main">
+      <?=$contrib_element?>
+      <div class="primary prose">
+        <?php if($author['Translation']['bio']['string']): ?>
+          <h3><?=sprintf(___('addon_developer_who_is', 'Who is %s?'), $author['User']['display_name'])?></h3>
+          <p class="intro"><?=$author['Translation']['bio']['string']?></p>
+        <?php endif; ?>
+        <?=$this->renderElement('amo2009/developer_about_addon')?>
+      </div>
+      <?=$other_addons_element?>
+    </div>
+
+  <?php else: ?>
+    <div class="primary"><?=$contrib_element?></div>
+    <script type="text/javascript">
+      /* Disable the freaking rotation. */
+      $(document).ready(AmoSlideshow);
+      Slideshow.prototype.autoRotate = function(){};
+    </script>
+    <div class="primary featured section-teaser">
+      <div class="featured-inner inverse">
+        <div class="teaser-header">
+        <ol>
+          <?php foreach ($authors as $author): ?>
+            <li><a href="#t-author-<?=$author['User']['id']?>"><?=$author['User']['display_name']?></a></li>
+          <?php endforeach; ?>
+        </ol>
+        </div>
+        <ol class="teaser-items">
+          <?php foreach ($authors as $author): ?>
+            <li class="vcard" id="t-author-<?=$user['id']?>">
+              <?php $user = $this->viewVars['user'] = $author['User'];?>
+              <div class="secondary" style="margin: 1em 0 0 1em;">
+                <?=$this->renderElement('amo2009/user_avatar')?>
+              </div>
+              <div class="primary">
+                <h3><?=$user['display_name']?></h3>
+                <?php if($author['Translation']['bio']['string']): ?>
+                  <p class="intro"><?=$author['Translation']['bio']['string']?></p>
+                <?php endif; ?>
+                <?=$this->renderElement('amo2009/user_vcard')?>
+              </div>
+            </li>
+          <?php endforeach; ?>
+        </ol>
+      </div>
+    </div>
+    <?=$other_addons_element?>
+    <div class="primary prose">
+      <?=$this->renderElement('amo2009/developer_about_addon')?>
+    </div>
+  <?php endif; ?>
 
 </div> <!-- section -->

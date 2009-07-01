@@ -414,11 +414,11 @@ if (!empty($coll_addon_added)) {
   <h3><?=n___('addon_developer_h2_meet', 'addon_developer_h2_meet', count($devs))?></h3>
   <img class="avatar" alt="<?=$dev['User']['display_name']?>" height="64" width="64"
        src="<?=$html->url('/users/picture/'.$dev['User']['id'])?>" />
-  <p><?=sprintf(___('addon_display_meet_learn', "Learn why %s was created and find out what's next for this add-on."),
+  <p><?=sprintf(___('addon_display_meet_learn'),
                 $addon['Translation']['name']['string'])?></p>
   <p>
     <a class="more-info" href="<?=$html->url('/addon/'.$addon_id.'/developers')?>">
-      <?=sprintf(___('addon_display_meet_x', 'Meet %s'), $dev['User']['display_name'])?>
+      <?=sprintf(___('addon_display_meet_x'), $dev['User']['display_name'])?>
     </a>
   </p>
 </div>
