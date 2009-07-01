@@ -46,42 +46,42 @@
   <table class="person-info" summary="<?=___('addon_developer_info_summary', 'Developer Information')?>">
     <tbody>
       <tr>
-        <th><?=___('addon_developer_th_name', 'Name')?></th>
+        <th><?=___('addon_developer_th_name')?></th>
         <td class="fn n"><?=$user['display_name']?></td>
       </tr>
       <tr>
-        <th><?=___('addon_developer_th_location', 'Location')?></th>
+        <th><?=___('addon_developer_th_location')?></th>
         <td class="adr"><?=$user['location']?></td>
       </tr>
       <tr>
-        <th><?=___('addon_developer_th_occupation', 'Occupation')?></th>
+        <th><?=___('addon_developer_th_occupation')?></th>
         <td class="role"><?=$user['occupation']?></td>
       </tr>
       <tr>
-        <th><?=___('addon_developer_th_homepage', 'Homepage')?></th>
+        <th><?=___('addon_developer_th_homepage')?></th>
         <td><a class="url" href="<?=$user['homepage']?>"><?=$user['homepage']?></a></td>
       </tr>
       <?php if (!$user['emailhidden']): ?>
           <tr>
-            <th><?=___('addon_developer_th_email', 'Email address')?></th>
+            <th><?=___('addon_developer_th_email')?></th>
             <td><a class="email" href="mailto:<?=$user['email']?>"><?=$user['email']?></a></td>
           </tr>
       <?php endif; ?>
       <tr>
-        <th><?=___('addon_developer_th_user_since', 'User since')?></th>
+        <th><?=___('addon_developer_th_user_since')?></th>
         <td><?=strftime(_('date'), strtotime($user['created']))?></td>
       </tr>
       <tr>
-        <th><?=___('addon_developer_th_num_addons', 'Number of Add-ons Developed')?></th>
+        <th><?=___('addon_developer_th_num_addons')?></th>
         <td>
           <a href="<?=$html->url('/user/'.$user['id'])?>">
-            <?=sprintf(___('addon_developer_td_num_addons', '%s Add-ons'),
+            <?=sprintf(n___('addon_developer_td_num_addons', 'addon_developer_td_num_addons', $user['num_addons']),
                        $user['num_addons'])?>
           </a>
         </td>
       </tr>
       <tr>
-        <th><?=___('addon_developer_th_rating', 'Average rating for their Add-ons')?></th>
+        <th><?=___('addon_developer_th_rating')?></th>
         <td><?=$this->renderElement('stars', array('rating' => $user['average_rating']))?></td>
       </tr>
     </tbody>
