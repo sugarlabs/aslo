@@ -1242,18 +1242,9 @@ class DevelopersComponent extends Object {
                 $trans[$val] = $this->controller->License->getAllTranslations($existing['license_id']);
             }
         }
-        // did we select any of those?
-        $noSelections = true;
-        
-        foreach ($licenses AS $license) {
-            if ($license['selected']) {
-                $noSelections = false;
-                break;
-            }
-        }
         
         $licenses['other'] = array('name' => ___('devcp_uploader_option_other'),
-                                   'selected' => $noSelections);
+                                   'selected' => false);
         return array($licenses, $trans);
     }
 
