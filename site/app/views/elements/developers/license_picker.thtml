@@ -41,11 +41,13 @@
 ?>
 <p>Please Choose:</p>
 <ol id="license-name">
-    <?php foreach ($licenses as $val => $license): ?>
+    <?php foreach ($licenses as $val => $license): 
+    $checked = $license['selected'] ? 'checked="checked"' : '';
+    ?>
       <li>
-          <input type="radio" name="data[License][name]" value="<?php echo $val?>" id="license_<?php echo $val?>" />
+          <input type="radio" name="data[License][name]" value="<?php echo $val?>" id="license_<?php echo $val?>" <?php echo $checked ?>/>
           <label for="license_<?php echo $val?>"><?php echo $license['name']?></label>&nbsp;
-          <?php if ($val != 'other' && $license['url']): ?>
+          <?php if (strpos($val,'builtin_') === 0): ?>
             <a target="new" href="<?php echo $license['url'] ?>"><?php echo ___('devcp_view_license', 'View License'); ?></a>
           <?php endif ?>
       </li>

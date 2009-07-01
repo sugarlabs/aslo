@@ -1211,11 +1211,10 @@ class DevelopersComponent extends Object {
         // }
 
         // Grab all the pre-approved licenses.
-        $license_urls = $this->controller->License->getUrls();
-        foreach ($this->controller->License->getNames() as $num => $builtin) {
+        foreach ($this->controller->License->getNamesAndUrls() as $num => $builtin) {
             $licenses['builtin_'.$num] = array(
-                'name' => $builtin,
-                'url'  => $license_urls[$num],
+                'name' => $builtin['name'],
+                'url'  => $builtin['url'],
                 'selected' => isset($license) && (string)$num === $license['License']['name']);
         }
 
@@ -1243,9 +1242,18 @@ class DevelopersComponent extends Object {
                 $trans[$val] = $this->controller->License->getAllTranslations($existing['license_id']);
             }
         }
-
+        // did we select any of those?
+        $noSelections = true;
+        
+        foreach ($licenses AS $license) {
+            if ($license['selected']) {
+                $noSelections = false;
+                break;
+            }
+        }
+        
         $licenses['other'] = array('name' => ___('devcp_uploader_option_other'),
-                                   'selected' => False);
+                                   'selected' => $noSelections);
         return array($licenses, $trans);
     }
 

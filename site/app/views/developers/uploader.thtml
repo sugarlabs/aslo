@@ -79,8 +79,7 @@
             echo $this->renderElement('developers/license_picker',
                                       array('licenses' => $licenses));
             ?>
-            <input type="button" value="<?=___('devcp_uploader_button_agree')?>"
-                id="accept-agreement" disabled="true" onclick="upload.acceptAgreement()"/>
+
             <?php
             // Retrieve language arrays from bootstrap.
             global $valid_languages, $native_languages;
@@ -99,6 +98,10 @@
                                       array('translations' => $trans,
                                             'fieldname' => 'text'));
             ?>
+            <div class="submit-area">
+                <input type="button" value="<?=___('devcp_uploader_button_agree')?>"
+                id="accept-agreement" disabled="true" onclick="upload.acceptAgreement()"/>
+            </div>
             <script type="text/javascript">
             $(document).ready(function($){
                 $("input[name='data[License][name]']").change(function() {

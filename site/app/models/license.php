@@ -43,16 +43,11 @@ class License extends AppModel {
                    );
     var $translated_fields = array('text');
 
-    function getNames() {
+    function getNamesAndUrls() {
         global $licenses;
         return $licenses;
     }
     
-    function getUrls() {
-        global $license_urls;
-        return $license_urls;
-    }
-
     function getBuiltin($license_num) {
         $license = $this->findByName($license_num);
         if ($license == false) {
