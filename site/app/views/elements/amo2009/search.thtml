@@ -187,18 +187,18 @@ if (!isset($category)) $category = array(0, 0);
             <select name="cat" id="cat">
                     <option class="cat-all" value="all"<?=(!$collectionSearch && $category[0]==0 ? ' selected="selected"' : '')?>><?=_('search_form_all_addons')?></option>
 
-                    <?php foreach ($AmoCategories as $category): ?>
+                    <?php foreach ($AmoCategories as $AmoCategory): ?>
                         <?php
                             // skip "plugins" as it is a static page at the moment and thus
                             // cannot be searched here
-                            if ($category['type'] == ADDON_PLUGIN) continue;
+                            if ($AmoCategory['type'] == ADDON_PLUGIN) continue;
 
-                            if ($category[0] == $category['type'] && ($category[1]==$category['cat'] || $category['cat']==0))
+                            if ($category[0] == $AmoCategory['type'] && ($category[1]==$AmoCategory['cat'] || $AmoCategory['cat']==0))
                                 $sel = ' selected="selected"';
                             else
                                 $sel = '';
                         ?>
-                        <option value="<?=$category['type'].','.$category['cat']?>"<?=$sel?>><?=$html->entities($category['name'])?></option>
+                        <option value="<?=$AmoCategory['type'].','.$AmoCategory['cat']?>"<?=$sel?>><?=$html->entities($AmoCategory['name'])?></option>
                     <?php endforeach; ?>
 
                     <option class="cat-all" value="collections"<?=($collectionSearch ? ' selected="selected"' : '')?>><?=___('search_form_all_collections', 'all collections')?></option>
