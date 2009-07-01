@@ -110,7 +110,11 @@ class User extends AppModel
 
     var $translated_fields = array('bio');
 
-    //var $default_fields = array();
+    var $default_fields = array('id', 'email', 'password', 'firstname',
+        'lastname', 'nickname', 'bio', 'emailhidden', 'sandboxshown',
+        'homepage', 'display_collections', 'display_collections_fav',
+        'confirmationcode', 'created', 'modified', 'notes', 'location',
+        'occupation');
 
     var $validate = array(
         'email'     => VALID_EMAIL,
@@ -136,7 +140,8 @@ class User extends AppModel
         $caching_was = $this->caching;
         $this->caching = false;
 
-        $user = $this->findById($id);
+        $user = $this->findById($id, array_merge($this->default_fields,
+            array('picture_data', 'picture_type')));
 
         // Add anything extra
         $user['User']['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
