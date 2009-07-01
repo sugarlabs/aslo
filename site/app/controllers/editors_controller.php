@@ -1600,8 +1600,8 @@ class EditorsController extends AppController
 
         $this->publish('filterOptions', array(
                 '' => '',
-                'editor:review_approve' => ___('editorcp_logs_review_approve', 'editor:review_approve'),
-                'editor:review_delete' => ___('editorcp_logs_review_delete', 'editor:review_delete')
+                'editor:review_approve' => ___('editorcp_logs_review_approve', 'Approved reviews'),
+                'editor:review_delete' => ___('editorcp_logs_review_delete', 'Deleted reviews')
         ));
         
         $this->set('page', 'logs');
