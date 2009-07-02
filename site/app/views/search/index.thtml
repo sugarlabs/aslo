@@ -210,6 +210,9 @@ global $app_shortnames, $app_prettynames;
 					} else {
                         $_list_o_tags = array();
                         foreach ($tag_ids as $var => $val) {
+							if($val['blacklisted'] == 1 ) {
+								continue;
+							}
                             $_list_o_tags[] = $val['tag_text'];
                         }
 

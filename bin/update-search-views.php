@@ -93,7 +93,7 @@ $sql_commands[] = "INSERT INTO `text_search_summary`
 				   LEFT JOIN 	                       		
 				   ( select uta.addon_id, GROUP_CONCAT(distinct  replace(t.tag_text, ' ', '') SEPARATOR ',') as tags
 						from users_tags_addons uta, tags t
-						where uta.tag_id = t.id
+						where uta.tag_id = t.id and t.blacklisted = 0 
 						group by uta.addon_id ) addon_tags ON ( a.id = addon_tags.addon_id)
 		           WHERE `tr_name`.locale IS NOT NULL AND (
                        `tr_name`.localized_string IS NOT NULL 
