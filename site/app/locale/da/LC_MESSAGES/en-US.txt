@@ -22,7 +22,7 @@ msgstr "Cancel Installation"
 #. This is the text that appears on buttons to download add-ons.
 #. %$1s is an optional string that only appears if the add-on is only available for
 #. a certain platform.  Examples:  (Windows)  or  (Linux)
-#. Note that the parenthesis are included in the string. :(
+#. Note that the parentheses are included in the string. :(
 #, php-format
 msgid "a_download"
 msgstr "Download Now %s"
@@ -39,20 +39,77 @@ msgstr "Public"
 msgid "a_header_sandbox"
 msgstr "Sandbox"
 
+#. %1 is an add-on name.
+msgid "addon_contribute_item"
+msgstr "Contribution for %1$s"
+
 #. %s is a date in the _('date') format
 msgid "addon_detail_last_updated"
 msgstr "Updated %s"
+
+msgid "addon_developer_info_summary"
+msgstr "Developer Information"
+
+#. %1 is a number.
+msgid "addon_developer_td_num_addons"
+msgstr "%1$s Add-ons"
+
+msgid "addon_developer_th_email"
+msgstr "Email address"
+
+msgid "addon_developer_th_homepage"
+msgstr "Homepage"
+
+msgid "addon_developer_th_location"
+msgstr "Location"
+
+msgid "addon_developer_th_name"
+msgstr "Name"
+
+msgid "addon_developer_th_num_addons"
+msgstr "Number of Add-ons Developed"
+
+msgid "addon_developer_th_occupation"
+msgstr "Occupation"
+
+msgid "addon_developer_th_rating"
+msgstr "Average rating for their Add-ons"
+
+msgid "addon_developer_th_user_since"
+msgstr "User since"
+
+#. %1 is an add-on name.
+msgid "addon_developer_what_next"
+msgstr "What's next for %1$s"
+
+#. %1 is a user's name.
+msgid "addon_developer_who_is"
+msgstr "Who is %1$s?"
+
+#. %1 is an add-on name.
+msgid "addon_developer_why_created"
+msgstr "Why was %1$s created?"
+
+msgid "addon_display_contribute"
+msgstr "Contribute"
+
+msgid "addon_display_contribute_different"
+msgstr "Contribute a Different Amount"
+
+#. %1 is a number like 32 or 47.99.
+msgid "addon_display_contribute_suggested"
+msgstr "Contribute $%1$s"
 
 #. %s is the version of the add-on.  Example:  3.2a1
 #, php-format
 msgid "addon_display_header_version"
 msgstr "Version %s"
 
+msgid "addon_display_suggested"
+msgstr "Suggested"
+
 msgid "addon_downloads"
 msgstr "downloads"
-
-msgid "addon_downloads_total"
-msgstr "total downloads"
 
 msgid "addon_downloads_weekly"
 msgstr "weekly downloads"
@@ -179,12 +236,6 @@ msgstr "by %1$s on %2$s"
 msgid "addon_reviewed_on_x_rated_y"
 msgstr "by %1$s on %2$s (rated %3$s)"
 
-msgid "addon_slider_tooltip_next"
-msgstr "Next Add-on"
-
-msgid "addon_slider_tooltip_previous"
-msgstr "Previous Add-on"
-
 msgid "addon_version_permalink"
 msgstr "Permanent link to this version"
 
@@ -219,11 +270,49 @@ msgstr "What's this?"
 msgid "addons_display_add_review"
 msgstr "Add a review"
 
-msgid "addons_display_advanced_details"
-msgstr "Advanced Details"
-
 msgid "addons_display_categories"
 msgstr "Categories"
+
+msgid "addons_display_collection_add"
+msgstr "Add to a collection:"
+
+msgid "addons_display_collection_add_new"
+msgstr "New Collection..."
+
+msgid "addons_display_collection_add_select_one"
+msgstr "Select a collection..."
+
+msgid "addons_display_collection_add_submit"
+msgstr "Publish"
+
+#. %1$s is the add-on name
+#. %2$s is the collection name, linked to the collection's page
+msgid "addons_display_collection_publish_success"
+msgstr "%1$s has been added to the %2$s collection."
+
+msgid "addons_display_collection_whatsthis"
+msgstr "What's this?"
+
+#. %1$s is a number
+msgid "addons_display_collections_more"
+msgid_plural "addons_display_collections_more"
+msgstr[0] "and %1$s more collection"
+msgstr[1] "and %1$s more collections"
+
+#. This refers to closing a small pop-up window
+msgid "addons_display_contribute_close"
+msgstr "close"
+
+msgid "addons_display_contribute_why"
+msgstr ""
+"Mozilla is committed to supporting a vibrant and healthy developer "
+"ecosystem. Your optional contribution helps sustain further development of "
+"this add-on."
+
+msgid "addons_display_contribution_ask"
+msgstr ""
+"The developer of this add-on asks that you help support its continued "
+"development by making a small contribution."
 
 msgid "addons_display_detailed_review"
 msgstr "detailed review"
@@ -234,14 +323,11 @@ msgstr "Don't like it"
 msgid "addons_display_edit_review"
 msgstr "Edit your review"
 
-msgid "addons_display_has_privacy"
-msgstr "This add-on has a privacy policy."
-
 msgid "addons_display_hate_it"
 msgstr "Hate it"
 
-msgid "addons_display_header_developer_comments"
-msgstr "Developer Comments"
+msgid "addons_display_header_collections"
+msgstr "Related Collections"
 
 msgid "addons_display_header_homepage"
 msgstr "Homepage"
@@ -255,17 +341,23 @@ msgstr "Reviews"
 msgid "addons_display_header_support"
 msgstr "Support"
 
+msgid "addons_display_image_gallery"
+msgstr "Image Gallery"
+
+msgid "addons_display_label_review"
+msgstr "Review"
+
 msgid "addons_display_like_it"
 msgstr "Like it"
-
-msgid "addons_display_long_description"
-msgstr "Long Description"
 
 msgid "addons_display_love_it"
 msgstr "Love it"
 
-msgid "addons_display_more_images"
-msgstr "More Images"
+msgid "addons_display_more_about"
+msgstr "More about this add-on"
+
+msgid "addons_display_nocollections"
+msgstr "This add-on is not yet in any collections."
 
 #. %1$s is either an author's name or a comma separated list of authors. Using
 #. the list doesn't make sense in the English plural form so we ignore the
@@ -300,11 +392,18 @@ msgstr ""
 msgid "addons_display_paragraph_supportinfourl"
 msgstr "Support for this add-on is provided by the developer at %s"
 
-msgid "addons_display_rate_it"
-msgstr "Rate It"
+#. %1 is a URL
+msgid "addons_display_please_login"
+msgstr "Please <a href=\"%1$s\">log in</a> to submit a review"
+
+msgid "addons_display_post_review"
+msgstr "Post Review"
 
 msgid "addons_display_really_like_it"
 msgstr "Really like it"
+
+msgid "addons_display_release_notes"
+msgstr "Release Notes"
 
 msgid "addons_display_review_etiquette"
 msgstr ""
@@ -322,26 +421,31 @@ msgstr ""
 "See the <a href=\"%1$s\">support section</a> to find out where to get "
 "assistance for this add-on."
 
-msgid "addons_display_review_submit"
-msgstr "Save"
-
 #, php-format
 msgid "addons_display_see_all_addons"
 msgstr "See All %1$s Add-ons"
 
-#. %1 is the number of reviews
-#, php-format
-msgid "addons_display_see_all_reviews"
-msgstr "See all reviews (%1$s)"
+#. %1 is a number.
+msgid "addons_display_see_reviews"
+msgstr "See all %1$s reviews of this add-on"
 
-msgid "addons_display_see_all_versions"
-msgstr "See All Versions"
+msgid "addons_display_statistics"
+msgstr "Statistics"
+
+msgid "addons_display_table_summary"
+msgstr "Add-on Information"
+
+msgid "addons_display_th_workswith"
+msgstr "Works with"
+
+msgid "addons_display_view_older"
+msgstr "View Older Versions"
+
+msgid "addons_display_view_privacy"
+msgstr "View privacy policy"
 
 msgid "addons_display_view_source"
 msgstr "View the source"
-
-msgid "addons_display_view_stats"
-msgstr "View statistics"
 
 msgid "addons_display_what_do_you_think"
 msgstr "What do you think?"
@@ -349,11 +453,52 @@ msgstr "What do you think?"
 msgid "addons_display_workswith"
 msgstr "Works with:"
 
+msgid "addons_home_browse_new"
+msgstr "Just Added"
+
+msgid "addons_home_browse_popular"
+msgstr "Popular"
+
+msgid "addons_home_browse_recommended"
+msgstr "Recommended"
+
+msgid "addons_home_browse_subscribe"
+msgstr "Subscribe"
+
+msgid "addons_home_browse_title"
+msgstr "Browse Add-ons"
+
+msgid "addons_home_browse_updated"
+msgstr "Updated"
+
 msgid "addons_home_by"
 msgstr "by"
 
-msgid "addons_home_feature_head"
-msgstr "We Recommend"
+msgid "addons_home_collection_popular_title"
+msgstr "Popular Collections"
+
+msgid "addons_home_collections"
+msgstr "Collections"
+
+#. %1$s is the count of addons in a collection
+msgid "addons_home_collections_addon_count"
+msgid_plural "addons_home_collections_addon_count"
+msgstr[0] "<strong>%1$s</strong> add-on"
+msgstr[1] "<strong>%1$s</strong> add-ons"
+
+msgid "addons_home_collections_all"
+msgstr "View All Collections"
+
+msgid "addons_home_collections_intro"
+msgstr ""
+"Collections are a way for you to categorize, mix, match and mingle add-ons.  "
+"Subscribe to collections created by other users or create your own."
+
+#. %1$s is the count of subscribers for a collection
+msgid "addons_home_collections_subscribers"
+msgid_plural "addons_home_collections_subscribers"
+msgstr[0] "<strong>%1$s</strong> subscriber"
+msgstr[1] "<strong>%1$s</strong> subscribers"
 
 #, php-format
 msgid "addons_home_header_details"
@@ -361,8 +506,31 @@ msgstr ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
 "a look around and make %1$s your own."
 
-msgid "addons_home_newest_header"
-msgstr "Newest:"
+#. %1$s is the HTML collection name link.
+msgid "addons_home_introduction_collection_link"
+msgstr "Like these? Find related add-ons in the %1$s collection."
+
+msgid "addons_home_introduction_extras"
+msgstr ""
+"<strong>Over 5000 free extras</strong> that let you customize and extend "
+"Firefox to meet your needs."
+
+msgid "addons_home_introduction_header"
+msgstr "What are Add-ons?"
+
+msgid "addons_home_introduction_install"
+msgstr "<strong>Easy to install</strong> and keep up-to-date."
+
+msgid "addons_home_introduction_name"
+msgstr "Introduction"
+
+msgid "addons_home_introduction_themes"
+msgstr ""
+"Toolbars, themes and search providers that <strong>help you perform common "
+"tasks.</strong>"
+
+msgid "addons_home_new_indicator"
+msgstr "NEW!"
 
 msgid "addons_home_other_applications"
 msgstr "Other Applications"
@@ -371,19 +539,24 @@ msgstr "Other Applications"
 #. Sunbird
 #, php-format
 msgid "addons_home_pagetitle"
-msgstr "%1$s Add-ons"
+msgstr "Add-ons for %1$s"
 
-msgid "addons_home_popular_header"
-msgstr "Most Popular:"
+#. %1$s is the number of addons downloaded
+msgid "addons_home_stats_downloaded"
+msgid_plural "addons_home_stats_downloaded"
+msgstr[0] "<strong>%1$s</strong> <span>add-on downloaded</span>"
+msgstr[1] "<strong>%1$s</strong> <span>add-ons downloaded</span>"
 
-msgid "addons_home_recommended_header"
-msgstr "We Recommend:"
+#. %1$s is the number of addons in use
+msgid "addons_home_stats_inuse"
+msgid_plural "addons_home_stats_inuse"
+msgstr[0] "<strong>%1$s</strong> <span>add-on in use</span>"
+msgstr[1] "<strong>%1$s</strong> <span>add-ons in use</span>"
 
-msgid "addons_home_updated_header"
-msgstr "Recently Updated:"
-
-msgid "addons_home_view_all"
-msgstr "View all"
+msgid "addons_home_summary_developer"
+msgid_plural "addons_home_summary_developer"
+msgstr[0] "Developer"
+msgstr[1] "Developers"
 
 msgid "addons_home_view_all_newest_title"
 msgstr "View all newly created add-ons"
@@ -399,17 +572,16 @@ msgstr "View all recently updated add-ons"
 
 msgid "addons_install_in_sunbird"
 msgstr ""
-"<ol><li>Click the link below to save the file.</li><li>In Mozilla Sunbird, "
-"open Add-ons from the Tools menu.</li><li>Click the Install button, and "
-"locate/select the file you downloaded and click \"OK\".</li></ol>"
+"<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla "
+"Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, "
+"and locate/select the file you downloaded and click \"OK\".</li></ol>"
 
 msgid "addons_install_in_sunbird_title"
 msgstr "How to Install in Sunbird"
 
 msgid "addons_install_in_thunderbird"
 msgstr ""
-"<ol><li>Right-click the link below and choose \"Save Link As...\" to "
-"download and save the file to your hard disk.</li><li>In Mozilla "
+"<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla "
 "Thunderbird, open Add-ons from the Tools menu.</li><li>Click the Install "
 "button, and locate/select the file you downloaded and click \"OK\".</li></ol>"
 
@@ -532,11 +704,11 @@ msgstr "Search Engines"
 
 msgid "addons_searchengines_thanks"
 msgstr ""
-"Special thanks to the Mycroft Project for their work on Firefox Search "
-"Engines."
+"Special thanks to the Mycroft Project for their work on Firefox search "
+"engines."
 
-msgid "addons_share_button_text"
-msgstr "Share this"
+msgid "addons_share_button_a_text"
+msgstr "Share this Add-on"
 
 msgid "addons_share_label_delicious"
 msgstr "Add to Delicious"
@@ -694,6 +866,12 @@ msgstr "Type"
 msgid "advanced_search_form_version"
 msgstr "version"
 
+msgid "amo2009_pagination_next_page"
+msgstr "Next"
+
+msgid "amo2009_pagination_previous_page"
+msgstr "Prev"
+
 msgid "app_compat_ignore_check"
 msgstr "Ignore version check"
 
@@ -753,6 +931,19 @@ msgstr "See All %1$s"
 msgid "collection_description_limit"
 msgstr "The description should be less than %1$s characters."
 
+#. %1$s is the name of the collection
+msgid "collection_detail_rss_title"
+msgstr "%s Collection"
+
+msgid "collection_error_deleting_addon"
+msgstr "Error deleting add-on!"
+
+msgid "collection_error_saving_addon"
+msgstr "Error saving add-on!"
+
+msgid "collection_error_saving_comment"
+msgstr "Error saving comment!"
+
 #. %1$s is a number.
 msgid "collection_name_limit"
 msgstr "The name should be less than %1$s characters."
@@ -760,10 +951,482 @@ msgstr "The name should be less than %1$s characters."
 msgid "collection_not_found"
 msgstr "Collection not found!"
 
+#. %1$s is the text on the "create collection" button
+msgid "collections_add_formfield_addons_description"
+msgstr ""
+"If you already know which add-ons you want to add to your collection, just "
+"start typing their names below. If you'd rather wait and do this later, just "
+"click %1$s now."
+
+msgid "collections_add_formfield_firstaddons"
+msgstr "Choose your first add-ons"
+
+msgid "collections_add_header"
+msgstr "Create a Collection"
+
+msgid "collections_add_header_selectedaddons"
+msgstr "Selected Add-ons"
+
+msgid "collections_add_intro"
+msgstr ""
+"It's easy to create your own collection of add-ons by filling in a few "
+"fields below."
+
+msgid "collections_add_submit"
+msgstr "Create Collection"
+
+msgid "collections_breadcrumb"
+msgstr "Collections"
+
+msgid "collections_detail_a_learn"
+msgstr "Learn More"
+
+msgid "collections_detail_button_add"
+msgstr "Add to Favorites"
+
+msgid "collections_detail_button_remove"
+msgstr "Remove from Favorites"
+
+#. %1$s is a URL.
+#. %2$s is a full <a href>.
+msgid "collections_detail_created_desc"
+msgstr ""
+"<p>You can view your new collection below. If you'd like to set a collection "
+"nickname, upload an icon, or change additional settings, please visit the <a "
+"href='%1$s'>Manage Collections</a> page.</p><p>Your collection can be "
+"accessed at this location: %2$s</p>"
+
+msgid "collections_detail_created_msg"
+msgstr "Your collection is now ready!"
+
+msgid "collections_detail_header_about"
+msgstr "About This Collection"
+
+#. %1$s is a number.
+msgid "collections_detail_header_count"
+msgid_plural "collections_detail_header_count"
+msgstr[0] "%1$s Add-on in this Collection"
+msgstr[1] "%1$s Add-ons in this Collection"
+
+msgid "collections_detail_info_created"
+msgstr "<strong>Created by:</strong> %1$s"
+
+msgid "collections_detail_info_updated"
+msgstr "<strong>Updated:</strong>"
+
+msgid "collections_detail_js_adding"
+msgstr "Adding to Favorites&hellip;"
+
+msgid "collections_detail_js_removing"
+msgstr "Removing Favorite&hellip;"
+
+#. %1$s is a URL
+msgid "collections_detail_login"
+msgstr "<a href=\"%1$s\">Log in</a> to add this collection to your favorites."
+
+msgid "collections_detail_manage"
+msgstr "Manage Collection"
+
+msgid "collections_detail_sort_date"
+msgstr "Date Added"
+
+msgid "collections_detail_sort_name"
+msgstr "Name"
+
+msgid "collections_detail_sort_popularity"
+msgstr "Popularity"
+
+#. %1$s is a number.
+msgid "collections_detail_weekly_downloads"
+msgid_plural "collections_detail_weekly_downloads"
+msgstr[0] "%1$s download this week"
+msgstr[1] "%1$s downloads this week"
+
+msgid "collections_edit_addons_delete_noscript"
+msgstr "Selected add-ons will be removed upon Save"
+
+msgid "collections_edit_addons_description"
+msgstr ""
+"To publish new add-ons to this collection, start typing their names below."
+
+msgid "collections_edit_addons_description_noscript"
+msgstr ""
+"To publish new add-ons to this collection, enter a comma-separated list of "
+"Add-on IDs below."
+
+msgid "collections_edit_addons_description_publish_detailspage"
+msgstr "You can also publish an add-on from its normal listing page."
+
+#. %1$s is the date the add-on was added to the collection
+#. %1$s is the name of the user who added the add-on to the collection
+msgid "collections_edit_addons_listitem_added"
+msgstr "Added %1$s by %2$s"
+
+msgid "collections_edit_addons_listitem_comment_add"
+msgstr "Add publisher comment"
+
+msgid "collections_edit_addons_listitem_comment_delete"
+msgstr "Delete publisher comment"
+
+msgid "collections_edit_addons_listitem_comment_edit"
+msgstr "Edit publisher comment"
+
+msgid "collections_edit_addons_listitem_comment_note"
+msgstr ""
+"Note: Comment will appear as though written by original publisher on the "
+"original publication date"
+
+msgid "collections_edit_addons_listitem_comment_submit"
+msgstr "Save Comment"
+
+msgid "collections_edit_addons_listitem_remove"
+msgstr "Remove"
+
+msgid "collections_edit_addons_submit"
+msgstr "Add to Collection"
+
+msgid "collections_edit_check_nickname"
+msgstr "Check Availability"
+
+msgid "collections_edit_confirm_deletecollection"
+msgstr "Yes, I would like to delete this collection."
+
+#. %1$s is the label of the edit form's submit button
+msgid "collections_edit_confirm_deletecollection_description"
+msgstr "Check the box, then click on \"%1$s\" to delete this collection."
+
+#. %1$s is the "delete" submit button text
+#. %2$s is the title of the "advanced" tab
+msgid "collections_edit_delete_upon_submit"
+msgstr ""
+"Upon clicking \"%1$s\" below, your collection will be deleted. If you do not "
+"want to delete your collection, uncheck the confirmation box in the \"%2$s\" "
+"tab and continue editing your collection. If you leave this page without "
+"saving, your collection will also not be deleted."
+
+msgid "collections_edit_delete_warning"
+msgstr "Your collection is about to be deleted!"
+
+msgid "collections_edit_form_error_description"
+msgstr "You must provide a description of your collection."
+
+msgid "collections_edit_form_error_icon"
+msgstr "There was an error uploading your icon."
+
+msgid "collections_edit_form_error_name"
+msgstr "You must give your collection a name."
+
+msgid "collections_edit_form_error_nickname"
+msgstr "If you choose a nickname, it must be unique."
+
+msgid "collections_edit_formfield_addons"
+msgstr "Add-on name:"
+
+msgid "collections_edit_formfield_application"
+msgstr "Associated Application"
+
+msgid "collections_edit_formfield_application_description"
+msgstr "Select the application that your collection supports."
+
+msgid "collections_edit_formfield_collectiontype"
+msgstr "Collection Type"
+
+msgid "collections_edit_formfield_deletecollection"
+msgstr "Delete Collection"
+
+msgid "collections_edit_formfield_deletecollection_description"
+msgstr "Deleting your collection will permanently erase it."
+
+msgid "collections_edit_formfield_description"
+msgstr "Collection Description"
+
+msgid "collections_edit_formfield_description_description"
+msgstr "Briefly describe your collection and the kind of add-ons in it"
+
+msgid "collections_edit_formfield_icon"
+msgstr "Icon"
+
+msgid "collections_edit_formfield_icon_description"
+msgstr ""
+"You can upload a JPG, GIF or PNG icon that will be resized to 32x32 pixels."
+
+msgid "collections_edit_formfield_listed"
+msgstr "Who can view your collection?"
+
+msgid "collections_edit_formfield_listed_description"
+msgstr ""
+"By default, collections appear in the public Collection Directory and are "
+"discoverable by anyone. If you want to restrict your collection to be "
+"viewable only by people who are given a special link, choose that option "
+"below."
+
+msgid "collections_edit_formfield_listed_false"
+msgstr "Only people I invite can view my collection"
+
+msgid "collections_edit_formfield_listed_true"
+msgstr "Everyone can view my collection in the directory"
+
+msgid "collections_edit_formfield_managers"
+msgstr "Who can manage my collection?"
+
+msgid "collections_edit_formfield_managers_description"
+msgstr ""
+"These users can publish add-ons to your collection, manage all add-ons and "
+"settings, and grant other users permission."
+
+msgid "collections_edit_formfield_name"
+msgstr "Collection Name"
+
+msgid "collections_edit_formfield_name_description"
+msgstr ""
+"Give your collection a descriptive name, such as \"Dave's Favorite Travel "
+"Add-ons\""
+
+msgid "collections_edit_formfield_nickname"
+msgstr "Collection Nickname"
+
+msgid "collections_edit_formfield_nickname_description"
+msgstr "Optionally, give your collection a unique nickname for quick access:"
+
+msgid "collections_edit_formfield_publishers"
+msgstr "Who can publish add-ons to your collection?"
+
+msgid "collections_edit_formfield_publishers_description"
+msgstr ""
+"These users can publish add-ons to your collection and remove add-ons that "
+"they publish."
+
+msgid "collections_edit_formfield_users_add"
+msgstr "Enter the e-mail address of a Firefox Add-ons account:"
+
+msgid "collections_edit_formfield_users_delete_noscript"
+msgstr "Selected accounts will be removed upon Save"
+
+msgid "collections_edit_formfield_users_new_noscript"
+msgstr ""
+"Enter a comma-separated list of e-mail addresses of Firefox Add-ons accounts"
+
+msgid "collections_edit_formfield_users_onlyme"
+msgstr "Only me"
+
+msgid "collections_edit_formfield_users_otherusers"
+msgstr "Myself and these users:"
+
+msgid "collections_edit_formfield_users_submit"
+msgstr "Add"
+
+#. %1$s is the name of the collection
+msgid "collections_edit_header"
+msgstr "Manage %1$s"
+
+msgid "collections_edit_header_addons"
+msgstr "Manage Collection Contents"
+
+msgid "collections_edit_header_addons_current"
+msgstr "Current Add-ons:"
+
+msgid "collections_edit_header_advanced"
+msgstr "Advanced Settings"
+
+msgid "collections_edit_header_permissions"
+msgstr "Manage Collection Permissions"
+
+msgid "collections_edit_icon_cancel"
+msgstr "Cancel"
+
+msgid "collections_edit_icon_delete"
+msgstr "Delete Icon"
+
+msgid "collections_edit_icon_replace"
+msgstr "Replace Icon"
+
+#. %1$s is the label of the edit form's submit button
+msgid "collections_edit_icon_toberemoved"
+msgstr "Icon will be removed when \"%1$s\" is clicked below"
+
+msgid "collections_edit_nickname_available"
+msgstr "Nickname Available"
+
+msgid "collections_edit_nickname_error"
+msgstr ""
+"Your nickname contained invalid characters and was corrected. Please try "
+"again."
+
+msgid "collections_edit_nickname_taken"
+msgstr "Nickname Taken"
+
+#. This string is followed by a URL pointing to the collection's view page
+msgid "collections_edit_saved_nextstep"
+msgstr "Your collection can be accessed at this location:"
+
+msgid "collections_edit_saved_success"
+msgstr "Your collection was successfully saved!"
+
+msgid "collections_edit_submit"
+msgstr "Update Collection"
+
+msgid "collections_edit_submit_deletecollection"
+msgstr "Delete Collection"
+
+msgid "collections_edit_tabheader_addons"
+msgstr "Add-ons"
+
+msgid "collections_edit_tabheader_advanced"
+msgstr "Advanced"
+
+msgid "collections_edit_tabheader_details"
+msgstr "Name &amp; Details"
+
+msgid "collections_edit_tabheader_permissions"
+msgstr "Permissions"
+
+msgid "collections_index_a_check_out"
+msgstr "Check out Add-on Collector"
+
+msgid "collections_index_a_create"
+msgstr "Create a Collection"
+
+msgid "collections_index_button_go"
+msgstr "Go"
+
+#. %1$s is a URL.
+msgid "collections_index_filler_favorites"
+msgstr ""
+"<p><strong>You don't have any favorite collections yet.</strong></p> "
+"<p>Collections you mark as favorites can be quickly accessed from this page, "
+"and will appear in the <a href='%1$s'>Add-on Collector</a> if you've "
+"installed it.</p>"
+
+#. %1$s is a URL.
+msgid "collections_index_filler_mine"
+msgstr ""
+"<p>You haven't created any collections yet. Collections are easy to create "
+"and fill with your favorite add-ons.  <a href='%1$s'>Try it out</a>!</p>"
+
+#. %1$s is an add-on's name
+msgid "collections_index_header_addon"
+msgstr "Collections containing %1$s"
+
+msgid "collections_index_header_collections"
+msgstr "Collections"
+
+msgid "collections_index_header_collector"
+msgstr "Add-on Collector"
+
+#. %1$s is a comma-separated list of author names
+msgid "collections_index_header_created"
+msgstr "created by %1$s"
+
+msgid "collections_index_header_what"
+msgstr "What are Collections?"
+
+msgid "collections_index_label_sortby"
+msgstr "Sort by"
+
+msgid "collections_index_li_editors"
+msgstr "Editor's Picks"
+
+msgid "collections_index_li_favorites"
+msgstr "My Favorites"
+
+msgid "collections_index_li_mine"
+msgstr "My Collections"
+
+msgid "collections_index_li_popular"
+msgstr "Popular"
+
+msgid "collections_index_option_all"
+msgstr "Most popular all time"
+
+msgid "collections_index_option_month"
+msgstr "Most popular this month"
+
+msgid "collections_index_option_newest"
+msgstr "Newest"
+
+msgid "collections_index_option_week"
+msgstr "Most popular this week"
+
+msgid "collections_index_p_collector"
+msgstr ""
+"There's a new way to manage and find favorite add-ons. Comment, share and "
+"sync collections, all from your browser"
+
+msgid "collections_index_p_what_are"
+msgstr "Collections are groups of related add-ons assembled for easy sharing."
+
 #. %s is a date in the _('date') format
 #, php-format
 msgid "collections_interactive_addon_added"
 msgstr "Added %s"
+
+msgid "collections_subscribe_button_close"
+msgstr "Close"
+
+msgid "collections_subscribe_error"
+msgstr ""
+"An error occurred trying to add a favorite collection. Is this collection "
+"already a favorite?"
+
+msgid "collections_subscribe_label_bothersome"
+msgstr "Don't show me this message again."
+
+#. %1$s is the collection name
+msgid "collections_subscribe_success"
+msgstr "%1$s has been added to your favorite collections."
+
+#. %1$s is the link to the "My Favorites" tab on the main collections page
+#. %2$s is the localized title of the "My Favorites" tab
+#. %3$s is the link URL to the collector add-on
+msgid "collections_subscribe_success_desc"
+msgstr ""
+"You can now quickly find this collection from the <a href=\"%1$s\">%2$s</a> "
+"tab in the directory. For an even easier way to keep track of your favorite "
+"collections, try out our <a href=\"%3$s\">Add-on Collector</a> extension for "
+"Firefox."
+
+msgid "collections_success_delete"
+msgstr "The collection has been deleted."
+
+#. A collection of add-ons that is automatically built for a user.  They are "automatically published" to this collection.
+msgid "collections_type_autopublisher"
+msgstr "Auto-publisher"
+
+#. A collection that has been chosen by an Editor as notable or exceptional
+msgid "collections_type_editorspick"
+msgstr "Editor's Pick"
+
+msgid "collections_type_normal"
+msgstr "Normal"
+
+msgid "collections_unsubscribe_error"
+msgstr ""
+"An error occurred trying to remove a favorite collection. Was this "
+"collection not a favorite?"
+
+#. %1$s is the collection name
+msgid "collections_unsubscribe_success"
+msgstr "%1$s has been removed from your favorite collections."
+
+msgid "collections_whatare_header"
+msgstr "What are Collections?"
+
+msgid "collections_whatare_learnmore"
+msgstr "Read the FAQ"
+
+msgid "collections_whatare_text"
+msgstr ""
+"There’s a new way to manage and find favorite add-ons. Comment, share and "
+"sync collections, all from your browser."
+
+msgid "collector_features_a_home"
+msgstr "Add-on Collector Home"
+
+msgid "collector_features_heading_download"
+msgstr "Download the Add-on Collector:"
+
+msgid "collector_features_img_logo"
+msgstr "Add-on Collector Logo"
 
 msgid "compatibility_dashboard_center_header"
 msgstr "Add-on Compatibility Center"
@@ -935,6 +1598,12 @@ msgstr "Access Denied"
 msgid "error_access_denied_message"
 msgstr "You are not authorized to view this page."
 
+msgid "error_addon_exists"
+msgstr "Add-on already exists!"
+
+msgid "error_addon_no_contributions"
+msgstr "The add-on developers have not enabled contributions."
+
 msgid "error_addon_notfound"
 msgstr "Add-on not found!"
 
@@ -983,6 +1652,9 @@ msgstr "Missing argument: %s"
 msgid "error_no_files_in_addon"
 msgstr "No Files"
 
+msgid "error_paypal_disabled"
+msgstr "Sorry, PayPal contributions are temporarily disabled."
+
 msgid "error_preview_notfound"
 msgstr "Preview not found!"
 
@@ -1006,6 +1678,11 @@ msgstr ""
 "The email change has expired. Please change your email address again in your "
 "user profile and click the link in the confirmation email as soon as you "
 "receive it."
+
+msgid "error_user_exists"
+msgstr ""
+"Users can only have one role at a time.  Please remove the user from any "
+"existing roles before continuing."
 
 msgid "error_user_nickname_notunique"
 msgstr "This nickname is already taken."
@@ -1166,25 +1843,71 @@ msgstr "Theme"
 msgid "general_addontype_theme_plural"
 msgstr "Themes"
 
+msgid "general_languages_all_locales"
+msgstr "All Locales"
+
+msgid "header_brand_name"
+msgstr "Mozilla"
+
 #. %1$s is the application name.  Example:  Firefox
 #, php-format
 msgid "header_home_tooltip"
 msgstr "Return to the %1$s Add-ons homepage"
 
 msgid "header_main_firefox_header"
-msgstr "Firefox Add-ons"
+msgstr "Add-ons for Firefox"
+
+#. %1$s is the URL to the logo image
+msgid "header_main_firefox_header_with_logo"
+msgstr ""
+"Add-ons <em>for</em> <img alt=\"Firefox\" src=\"%1$s\" /> <strong>Firefox</"
+"strong>"
 
 msgid "header_main_header"
 msgstr "Add-ons"
 
+#. %1$s is the URL to the logo image
+msgid "header_main_header_with_logo"
+msgstr "Add-ons <img alt=\"Add-ons\" src=\"%1$s\" />"
+
 msgid "header_main_seamonkey_header"
 msgstr "SeaMonkey Add-ons"
+
+#. %1$s is the URL to the logo image
+msgid "header_main_seamonkey_header_with_logo"
+msgstr ""
+"Add-ons <em>for</em> <img alt=\"seamonkey\" src=\"%1$s\" /> "
+"<strong>SeaMonkey</strong>"
 
 msgid "header_main_sunbird_header"
 msgstr "Sunbird Add-ons"
 
+#. %1$s is the URL to the logo image
+msgid "header_main_sunbird_header_with_logo"
+msgstr ""
+"Add-ons <em>for</em> <img alt=\"sunbird\" src=\"%1$s\" /> <strong>Sunbird</"
+"strong>"
+
 msgid "header_main_thunderbird_header"
 msgstr "Thunderbird Add-ons"
+
+#. %1$s is the URL to the logo image
+msgid "header_main_thunderbird_header_with_logo"
+msgstr ""
+"Add-ons <em>for</em> <img alt=\"thunderbird\" src=\"%1$s\" /> "
+"<strong>Thunderbird</strong>"
+
+msgid "header_navaccess_applications_menu"
+msgstr "Skip to other applications menu"
+
+msgid "header_navaccess_categories_menu"
+msgstr "Skip to categories menu"
+
+msgid "header_navaccess_main_content"
+msgstr "Skip to main content"
+
+msgid "header_navaccess_search_form"
+msgstr "Skip to search form"
 
 msgid "header_navlink_addons"
 msgstr "Add-ons"
@@ -1201,8 +1924,13 @@ msgstr "My Account"
 msgid "header_navlink_register"
 msgstr "Register"
 
-msgid "home"
-msgstr "home"
+#. %1 is the URL to the registration page
+#. %2 is the URL to the login page
+msgid "header_navlink_register_or_login"
+msgstr "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a>"
+
+msgid "header_navlink_tools"
+msgstr "Tools"
 
 #. %s is the add-on name
 #, php-format
@@ -1337,6 +2065,18 @@ msgstr "others"
 msgid "page_title_appversions"
 msgstr "Application Versions"
 
+msgid "page_title_collector"
+msgstr "Add-on Collector"
+
+msgid "page_title_collector_faq"
+msgstr "Add-on Collector FAQ"
+
+msgid "page_title_collector_features"
+msgstr "Add-on Collector Features"
+
+msgid "page_title_collector_firstrun"
+msgstr "Welcome to the Add-on Collector"
+
 msgid "page_title_credits"
 msgstr "Credits"
 
@@ -1396,11 +2136,6 @@ msgstr "Sandbox Information Page"
 
 msgid "pagination_next_page"
 msgstr "next"
-
-#. %1 is page number, %2 is total page count
-#, php-format
-msgid "pagination_page_number_title"
-msgstr "This is page %1$s of %2$s"
 
 msgid "pagination_previous_page"
 msgstr "previous"
@@ -1492,20 +2227,49 @@ msgstr "Featured Add-ons"
 msgid "rss_newestaddons"
 msgstr "Newest Add-ons"
 
+msgid "rss_popularaddons"
+msgstr "Popular Add-ons"
+
 msgid "rss_updatedaddons"
 msgstr "Updated Add-ons"
 
 msgid "search"
 msgstr "Search"
 
+msgid "search_collections_header"
+msgstr "Collection Search Results"
+
+msgid "search_collections_pagetitle"
+msgstr "Collection Search Results"
+
 msgid "search_disabled"
 msgstr "Search is currently disabled. Please try again later."
+
+msgid "search_filter_categories_header"
+msgstr "Categories"
+
+#. This is the header for a list of links
+msgid "search_filter_compatible_header"
+msgstr "Compatible with"
+
+msgid "search_filter_no_tags"
+msgstr "No tags for these add-ons"
+
+msgid "search_filter_tags_header"
+msgstr "Tags"
 
 msgid "search_form_all_addons"
 msgstr "all add-ons"
 
+#. This string is in the main category dropdown when searching
+msgid "search_form_all_collections"
+msgstr "all collections"
+
 msgid "search_form_default_text"
 msgstr "search for add-ons"
+
+msgid "search_form_default_text_collections"
+msgstr "search for collections"
 
 msgid "search_form_submit_tooltip"
 msgstr "Search for add-ons"
@@ -1522,18 +2286,48 @@ msgstr "All Search Engines"
 msgid "search_landing_browse_search_engines"
 msgstr "Browse Search Engines"
 
-#. %s is a number
-#, php-format
-msgid "search_matching_addons_number"
-msgid_plural "search_matching_addons_number"
-msgstr[0] "%s matching add-on"
-msgstr[1] "%s matching add-ons"
-
 msgid "search_nothing_found"
 msgstr "No results found."
 
 msgid "search_pagetitle"
 msgstr "Search Add-ons"
+
+msgid "search_refine_all_versions_link"
+msgstr "All Versions"
+
+msgid "search_results_header"
+msgstr "Search Results"
+
+msgid "search_results_refine_header"
+msgstr "Refine Results"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is a word (the add-on is tagged with it)
+msgid "search_results_showing_x_of_y_for_tags_header"
+msgstr "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is the word the person is searching for
+#. %5$s is a word (the add-on is tagged with it)
+msgid "search_results_showing_x_of_y_for_terms_and_tags_header"
+msgstr "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with <strong>%5$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is the word the person is searching for
+msgid "search_results_showing_x_of_y_for_terms_header"
+msgstr "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+msgid "search_results_showing_x_of_y_header"
+msgstr "Showing %1$s - %2$s of %3$s results"
 
 msgid "search_rss_description"
 msgstr "Search results feed"
@@ -1597,6 +2391,11 @@ msgstr "Not yet rated"
 msgid "stars_rated_x_outof_5"
 msgstr "Rated %s out of 5 stars"
 
+#. %1$s is a URL
+#. %2$s is a URL
+msgid "tags_register_or_login"
+msgstr "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a> to add tags"
+
 msgid "themes_landing_all_themes"
 msgstr "All Themes"
 
@@ -1608,6 +2407,9 @@ msgstr "Change Email Address"
 
 msgid "user_change_password"
 msgstr "Change password"
+
+msgid "user_change_password_or_email"
+msgstr "Change Password or Email"
 
 msgid "user_confirmationcode_resent"
 msgstr "The confirmation code was resent!"
@@ -1715,7 +2517,7 @@ msgstr ""
 "\n"
 "%1$s\n"
 "\n"
-"Once you successfully activated your account, you can throw away this e-"
+"Once you've successfully activated your account, you can throw away this e-"
 "mail.\n"
 "\n"
 "Thanks for joining %2$s Add-ons\n"
@@ -1791,6 +2593,15 @@ msgstr ""
 msgid "user_form_confirmpassword"
 msgstr "Confirm password"
 
+msgid "user_form_delete_picture"
+msgstr "Remove this picture?"
+
+msgid "user_form_display_collections"
+msgstr "Display the collections I have created in my user profile"
+
+msgid "user_form_display_collections_fav"
+msgstr "Display my favorite collections in my user profile"
+
 #, php-format
 msgid "user_form_editprofile"
 msgstr "Edit user profile for %s"
@@ -1810,14 +2621,23 @@ msgstr "Website URL"
 msgid "user_form_lastname"
 msgstr "Last name"
 
+msgid "user_form_location"
+msgstr "Location"
+
 msgid "user_form_login"
 msgstr "User Login"
+
+msgid "user_form_new_picture"
+msgstr "Upload a new picture?"
 
 msgid "user_form_newpassword"
 msgstr "New password"
 
 msgid "user_form_nickname"
 msgstr "Nickname"
+
+msgid "user_form_occupation"
+msgstr "Occupation"
 
 msgid "user_form_oldpassword"
 msgstr "Old password"
@@ -1827,6 +2647,9 @@ msgstr "Other Actions"
 
 msgid "user_form_password"
 msgstr "Password"
+
+msgid "user_form_picture"
+msgstr "Picture"
 
 msgid "user_form_registration"
 msgstr "New User Registration"
@@ -1871,6 +2694,13 @@ msgid "user_notifications_specific_contact"
 msgstr ""
 "Mozilla reserves the right to contact you individually about specific "
 "concerns with your hosted add-ons."
+
+#. %1$s is a user's email address or name
+msgid "user_picture_alt_name"
+msgstr "Picture of %1$s"
+
+msgid "user_picture_alt_no_picture"
+msgstr "No photo"
 
 msgid "user_profile_edit_error"
 msgstr ""
@@ -1930,13 +2760,14 @@ msgid "user_register_details"
 msgstr ""
 "<p>Registration on AMO is <strong>not required</strong> if you simply want "
 "to download and install public add-ons.</p><p>You only need to register if:</"
-"p><ul><li>You want to submit reviews for add-ons</li><li>You are an add-on "
-"developer and want to upload your add-on for hosting on AMO</li></ul><p>Upon "
-"successful registration, you will be sent a confirmation email to the "
-"address you provided. Please follow the instructions there to confirm your "
-"account.</p><p>If you like, you can read our <a href='%1$s' title='Legal "
-"Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy Policy'>Privacy "
-"Policy</a>.</p>"
+"p><ul><li>You want to submit reviews for add-ons</li><li>You want to keep "
+"track of your favorite add-on collections or create one yourself</li><li>You "
+"are an add-on developer and want to upload your add-on for hosting on AMO</"
+"li></ul><p>Upon successful registration, you will be sent a confirmation "
+"email to the address you provided. Please follow the instructions there to "
+"confirm your account.</p><p>If you like, you can read our <a href='%1$s' "
+"title='Legal Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy "
+"Policy'>Privacy Policy</a>.</p>"
 
 #. %1 is the link to the "resend confirmation code" page
 #, php-format
@@ -1956,6 +2787,9 @@ msgstr "Welcome to addons.mozilla.org (AMO)!"
 
 msgid "user_required_firstlast_or_nickname"
 msgstr "A first name, last name or nickname is required."
+
+msgid "user_tab_collections"
+msgstr "Collections"
 
 msgid "user_tab_notifications"
 msgstr "Notifications"
@@ -1985,8 +2819,15 @@ msgstr "Name"
 msgid "users_info_author_profile"
 msgstr "User Profile"
 
+#. %s is the user name
+msgid "users_info_collections_by_user"
+msgstr "Collections by %s"
+
 msgid "users_info_email"
 msgstr "Email address"
+
+msgid "users_info_fav_collections_by_user"
+msgstr "Favorite Collections"
 
 msgid "users_info_homepage"
 msgstr "Homepage"
@@ -2042,3 +2883,28 @@ msgstr "View all top downloads"
 
 msgid "view_top_rated"
 msgstr "View all top rated"
+
+msgid "addon_developer_other_addons"
+msgid_plural "addon_developer_other_addons"
+msgstr[0] "Other add-ons by this developer"
+msgstr[1] "Other add-ons by these developers"
+
+#. %1 is an add-on name.
+msgid "addon_developer_title"
+msgid_plural "addon_developer_title"
+msgstr[0] "Meet the %s Developer"
+msgstr[1] "Meet the %s Developers"
+
+msgid "addon_developer_h2_meet"
+msgid_plural "addon_developer_h2_meet"
+msgstr[0] "Meet the Developer"
+msgstr[1] "Meet the Developers"
+
+msgid "addon_display_suggested_amount"
+msgstr "Suggested Donation: $%s"
+
+msgid "addon_display_meet_learn"
+msgstr "Learn why %s was created and find out what's next for this add-on."
+
+msgid "addon_display_meet_x"
+msgstr "Meet %s"
