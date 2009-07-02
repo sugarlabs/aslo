@@ -155,7 +155,7 @@ if (!isset($sort)) {
 
 $toggle_uri = $_SERVER['REQUEST_URI'];
 
-if ($advancedSearch || isset($this->params['url']['as'])) {
+if (@$advancedSearch || isset($this->params['url']['as'])) {
     $toggle_uri = str_replace("advancedsearch=", "nor=", $toggle_uri);
     $toggle_uri = str_replace("as=", "nor=", $toggle_uri);
     $two_form = "";
