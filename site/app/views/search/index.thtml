@@ -208,14 +208,19 @@ global $app_shortnames, $app_prettynames;
 					if (empty($tag_ids)) {
 						echo '<li>'.___('search_filter_no_tags', 'No tags for these add-ons').'</li>';
 					} else {
-						foreach (array_unique($tag_ids) as $_tag) {
-							if ($tag == $_tag['tag_text']) {
+                        $_list_o_tags = array();
+                        foreach ($tag_ids as $var => $val) {
+                            $_list_o_tags[] = $val['tag_text'];
+                        }
+
+						foreach (array_unique($_list_o_tags) as $_tag) {
+							if ($tag == $_tag) {
 								$selected = ' selected';
 							} else {
 								$selected = "";
 							}
-							$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag['tag_text']."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp);
-							echo "<li class='usertag".$selected."'><a class='tagitem' href='".$search_query."'>".$_tag['tag_text']."</a></li>";
+							$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp);
+							echo "<li class='usertag".$selected."'><a class='tagitem' href='".$search_query."'>".$_tag."</a></li>";
 						}
 					}
 				 ?>
