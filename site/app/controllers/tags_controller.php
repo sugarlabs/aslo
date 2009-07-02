@@ -247,7 +247,7 @@ class TagsController extends AppController
 		
 	function splitTags($string) {
 		// Code from http://us2.php.net/manual/en/function.split.php#81490
-		$separator=' ';
+		$separator=',';
         $elements = explode($separator, $string);
         for ($i = 0; $i < count($elements); $i++) {
             $nquotes = substr_count($elements[$i], '"');
@@ -269,6 +269,9 @@ class TagsController extends AppController
                 $qstr = str_replace('""', '"', $qstr);
             }
         }
+        // Trim whitespace
+        foreach ($elements as &$element)
+        	$element = trim($element);
         return $elements;		
 	}		
 
