@@ -40,22 +40,42 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+uses('sanitize');
+
+
 class TagsController extends AppController
 {
     var $name = 'Tags';
     var $layout = 'mozilla';
-    var $uses = array('Addon', 'Eventlog', 'Review', 'Tag', 'Translation', 'Version', 'ReviewsModerationFlag', 'UserTagAddon');
-    var $components = array('Amo', 'Pagination', 'Session');
+    var $uses = array('Addon', 'Eventlog', 'Review', 'Tag', 'Translation', 'Version', 'ReviewsModerationFlag', 'UserTagAddon', 'File', 'Platform');
+    var $components = array('Amo', 'Pagination', 'Session', 'Search', 'Image');
     var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
     var $namedArgs = true;
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox');
 
     var $securityLevel = 'low';
 
+	/**
+     * Holds the sanitize component, used to clean variables in our custom queries
+     * @var object
+     */
+    var $Sanitize;
+
     function beforeFilter() {
         // Disable ACLs because this controller is entirely public.
         $this->SimpleAuth->enabled = false;
         $this->SimpleAcl->enabled = false;
+    }
+
+    /**
+     * Constructor.  Declared so we can initialize Sanitize.
+     * 
+     */
+    function TagsController() {
+
+        parent::__construct();
+
+        $this->Sanitize = new Sanitize();
     }
     
    
@@ -281,6 +301,53 @@ class TagsController extends AppController
 		
 		$topTags = $this->Tag->getTop($numTags, $sortBy);
 		$this->publish('topTags', $topTags);
+	}
+	
+	function display($tag_text) {
+		$associations = array(
+            'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
+            'latest_version', 'list_details', 'all_tags'
+        );
+
+		$tag = $this->Tag->findByTagText($tag_text);
+		
+		$this->publish('tag_text',$tag['Tag']['tag_text']);
+		
+		$_results = $this->Search->search($tag_text, null, true);
+		
+		$this->Pagination->total = count($_results);
+		$this->publish('total_count',$this->Pagination->total);
+		
+		// stolen from search_controller
+		$pp= 20;
+		$this->Pagination->show = $pp;
+        $this->publish('pp',  $pp); //publish for element caching
+
+        list($order,$limit,$page) = $this->Pagination->init();
+
+        $this->publish("on_page", $page);
+        // cut the appropriate slice out of the results array
+        $offset = ($page-1)*$limit;
+		$this->publish("offset",$offset);
+		$_results = array_slice($_results, $offset, $limit);
+		
+		if (!empty($_results)) {
+            $results = $this->Addon->getAddonList($_results, $associations);
+        } else {
+            $results = array();
+        }
+        $this->publish('bigHeader', true);
+        $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+        
+        /* pull in platforms for install button */
+        $this->Platform->unbindFully();
+        $platforms = $this->Platform->findAll();
+        $this->publish('platforms', $platforms);
+
+        $this->publish('results', $results);
+		
+		$this->render();
+		return;
 	}
  }
 

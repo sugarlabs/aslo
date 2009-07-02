@@ -126,8 +126,12 @@
         $Route->connect("/{$prefix}/developers/add/*", array('controller' => 'developers', 'action' => 'versions' ,'add'));
         $Route->connect("/{$prefix}/developers/editversion/*", array('controller' => 'developers', 'action' => 'versions', 'edit'));
         
+		// Tag page
+		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));
+
         // Magical undocumented routing syntax - if nothing has matched up till now, it'll hit this
         $Route->connect("/{$prefix}/:controller/:action/*", array('controller' => 'pages', 'action' => 'index'));
+
     }
 //}}
 
