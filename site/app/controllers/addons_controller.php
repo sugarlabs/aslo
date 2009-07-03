@@ -1487,25 +1487,7 @@ class AddonsController extends AppController
             return;
         }
 
-        $this->Addon->unbindFully();
-        $this->Addon->bindModel(
-            array(
-                'hasAndBelongsToMany' => array(
-                    'Category' => array(
-                        'className' => 'Category',
-                        'joinTable'  => 'addons_categories',
-                        'foreignKey' => 'addon_id',
-                        'associationForeignKey'=> 'category_id'
-                    ),
-                    'User' => array(
-                        'className'  => 'User',
-                        'joinTable'  => 'addons_users',
-                        'foreignKey' => 'addon_id',
-                        'associationForeignKey'=> 'user_id'
-                    )
-                )
-            )
-        );
+        $this->Addon->bindOnly('Tag', 'User', 'Category');
 
         $this_addon = $this->Addon->findById($addon_id);
         if (empty($this_addon)) {
