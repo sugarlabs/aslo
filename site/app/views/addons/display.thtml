@@ -100,7 +100,7 @@ if (!empty($coll_addon_added)) {
             <ul>
               <?php foreach ($link_sharing_services as $l_name => $l_details) :?>
                 <li class="<?= $l_name ?>">
-                  <?php $share_url = str_replace('/addon/', '/addon/share/', $_SERVER['REQUEST_URI']) ?>
+                  <?php $share_url = str_replace('/addon/', '/addon/share/', $html->url()) ?>
                   <a class="uniquify" target="_blank" href="<?= $share_url . '?service=' . $l_name ?>">
                     <?php // Escaping here because these details came via set() ?>
                     <?=htmlentities($l_details['label'], ENT_COMPAT, 'UTF-8')?>
