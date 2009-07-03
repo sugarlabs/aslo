@@ -36,6 +36,7 @@
  * ***** END LICENSE BLOCK ***** */
 
     $this->layout = 'amo2009';
+	global $app_shortnames, $app_prettynames;
 
 ?>
 <div class="section">
@@ -58,6 +59,31 @@
 				<?php if (empty($results)): ?>
 					<p class="addon-search-message"><?=_('search_nothing_found')?></p>
 				<?php else: ?>
+					<div class="listing-header">
+						<ul>
+							<?php
+								foreach (array_keys($app_shortnames) as $_app) {
+								    if ($app_shortnames[$_app] == APP_FENNEC) continue;
+									$class = ($app_shortnames[$_app] == $appid) ? ' class="selected"' : '';
+									echo '<li'.$class.'><a href="'.$html->url("display/".$tag_text."?appid=".$app_shortnames[$_app]).'">'.$app_prettynames[$_app].'</a></li>';
+								}
+							?>
+						</ul>
+						<form class="item-sort" method="get" action="<?= $html->url('display/'.$tag_text); ?>">
+			            	<label><?=___('advanced_search_form_sortby'); ?></label>
+			            	<?php 
+								$sort_orders = array( 
+								    'newest' => ___('advanced_search_form_newest'),
+								    'name' => ___('advanced_search_form_name'),
+								    'averagerating' => ___('advanced_search_form_rating'),
+								    'weeklydownloads' => ___('advanced_search_form_popularity')
+								);
+								$html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
+							?>
+							<button><?=___('collections_index_button_go')?></button>
+				        </form>
+						<script type="text/javascript">collections.init();</script>
+					</div>
 					<?php foreach ($results as $var => $val): ?>
 		               <?=$this->renderElement('amo2009/results_addon', array('addon' => $val));?>
 		            <?php endforeach; ?>

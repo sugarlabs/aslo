@@ -314,6 +314,7 @@ class TagsController extends AppController
 	}
 	
 	function display($tag_text) {
+		global $app_shortnames;
 		$associations = array(
             'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
             'latest_version', 'list_details', 'all_tags'
@@ -323,7 +324,23 @@ class TagsController extends AppController
 		
 		$this->publish('tag_text',$tag['Tag']['tag_text']);
 		
-		$_results = $this->Search->search($tag_text, null, true);
+		$appname = "";
+        if (isset( $this->params['url']['appid']) && 
+            in_array($this->params['url']['appid'], array_values($app_shortnames) ) ) {
+            $appname = array_search($this->params['url']['appid'], $app_shortnames);
+            $redirect = str_replace(APP_SHORTNAME, $appname, $_SERVER['REQUEST_URI']);
+            
+            if($this->params['url']['appid'] != APP_ID) { $this->redirect("http://".$_SERVER["HTTP_HOST"].$redirect, null, true); }
+        }
+        $this->publish('appid', APP_ID);
+
+        $sort = "weeklydownloads";
+        $sort_orders = array('newest', 'name', 'averagerating', 'weeklydownloads');
+        if (isset( $this->params['url']['sort']) && 
+            in_array($this->params['url']['sort'], $sort_orders) ) { $sort = $this->params['url']['sort']; }
+        $this->publish('sort', $sort); //publish for element caching
+		
+		$_results = $this->Search->search($tag_text, null, true, null, 0, null, -1, -1, false, ADDON_ANY, PLATFORM_ANY, "", $sort);
 		
 		$this->Pagination->total = count($_results);
 		$this->publish('total_count',$this->Pagination->total);
@@ -355,6 +372,8 @@ class TagsController extends AppController
         $this->publish('platforms', $platforms);
 
         $this->publish('results', $results);
+
+		$this->pageTitle = sprintf(_('addons_display_pagetitle'), $tag['Tag']['tag_text']). ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
 		
 		$this->render();
 		return;
