@@ -135,6 +135,7 @@ if (!empty($coll_addon_added)) {
                 'addon' => $addon,
                 'collection_uuid' => $_collection_uuid,
                 'src' => 'addondetail',
+                'annoying' => $addon['Addon']['wants_contributions'] ? $addon['Addon']['annoying'] : 0,
                 'addonFiles' => $addon['Version'][0]['File']
             ));
 

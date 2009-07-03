@@ -19,10 +19,21 @@ if ($multiple) {
 
   <?php
   if ($this->controller->Addon->acceptContributions($addon)) {
+      $source = 'meet-the-developer';
+      if ($roadblock) {
+          $source .= '-roadblock';
+      }
+      else if ($post_install) {
+          $source .= '-post-install';
+      }
+
       $contrib_element = $this->renderElement('amo2009/contribution', array(
           'addon_id' => $addon['Addon']['id'],
-          'text' => ___('addons_display_contribution_ask'),
-          'source' => 'meet-the-developer'));
+          'text' => $roadblock ? ___('addons_display_contribution_roadblock')
+                               : ___('addons_display_contribution_ask'),
+          'source' => $source,
+          'show_install' => True,
+          ));
   } else {
       $contrib_element = '';
   }
@@ -73,7 +84,7 @@ if ($multiple) {
           <?php foreach ($authors as $author): ?>
             <li class="vcard" id="t-author-<?=$user['id']?>">
               <?php $user = $this->viewVars['user'] = $author['User'];?>
-              <div class="secondary" style="margin: 1em 0 0 1em;">
+              <div class="secondary">
                 <?=$this->renderElement('amo2009/user_avatar')?>
               </div>
               <div class="primary">

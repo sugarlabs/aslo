@@ -42,6 +42,7 @@
  *   $addon_id
  *   $text: the begging text at the top of the contribution box
  *   $source: the page where the contribution link is coming from
+ *   $show_install: whether or not to show the install button
  */
 ?>
 
@@ -55,6 +56,23 @@
                         array('alt' => ''))
         ?><?=___('addon_display_contribute')?>
       </a>
+      <?php if (isset($show_install) && $show_install): ?>
+        <?php
+        $flags = array($html->byStatus($addon, array('experimental' => 'experimental',
+                                                     'recommended' => 'recommended',
+                                                     'default' => '')));
+        ?>
+        <span class="continue"><?=___('addon_display_or')?></span>
+        <div id="addon-summary" class="<?=$html->extraClass($addon)?>">
+          <?=$this->renderElement('amo2009/install', array(
+              'addon' => $addon,
+              'flags' => $flags,
+              'buttonClass' => 'significant',
+              'buttonSize' => '16x16',
+              'src' => 'developers',
+          ))?>
+        </div>
+      <?php endif; ?>
     </p>
     <div class="suggestion">
       <p><?=sprintf(___('addon_display_suggested_amount'),

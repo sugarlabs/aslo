@@ -46,6 +46,8 @@
  *   $flags: defaults to [], could contain 'recommended' or 'experimental'
  *   $buttonSize: defaults to '8x9'
  *   $buttonClass: defaults to ''
+ *   $annoying: if 2, user will be directed to /developers during installation
+ *              if 3, install button will go to /developers *without* installation
  *
  * This element accepts the following as overrides or instead of $addon:
  * - $addonIconPath
@@ -104,6 +106,10 @@ if (!isset($buttonSize)) {
 
 if (!isset($buttonClass)) {
     $buttonClass = '';
+}
+
+if (!isset($annoying)) {
+    $annoying = 0;
 }
 
 ?>
@@ -219,7 +225,10 @@ if (count($addonFiles) < 1) {
             "/img/amo2009/icons/buttons/plus-green-{$buttonSize}.gif", null, false, false
         ).'" alt="" />';
         $install_button_html = '';
-        if (empty($addonEULA)) {
+        if ($annoying == Addon::CONTRIBUTIONS_ROADBLOCK) {
+            $linktitle = $install_button_image.'<span class="install-button-text">'.sprintf(_('a_download'),$_install_platform_string).'</span>';
+            $install_button_html = $html->link($linktitle, '/addon/'.$addon_id.'/developers/roadblock', $linkOptions);
+        } else if (empty($addonEULA)) {
             // wipe disallowed characters off the displayed filename
             $addon_filename = $html->entities(preg_replace(
                 INVALID_FILENAME_CHARS, '_', $html->unsanitize($file['filename'])));
@@ -333,7 +342,7 @@ if (count($addonFiles) < 1) {
     // If we're looking at thunderbird pages, and there is no EULA, show the TB
     // install instructions.  Bug 401272 fixed the button so it downloads instead of
     // installs, but it doesn't hurt to have these instructions still.
-    if (empty($addonEULA) && $showInstructions && (APP_ID == APP_THUNDERBIRD || APP_ID == APP_SUNBIRD)):
+    if ($annoying != Addon::CONTRIBUTIONS_ROADBLOCK && empty($addonEULA) && $showInstructions && (APP_ID == APP_THUNDERBIRD || APP_ID == APP_SUNBIRD)):
         $installPopupName = "install-popup-" . $versionId;
         if (APP_ID == APP_THUNDERBIRD):
             $installTitle = _('addons_install_in_thunderbird_title');
@@ -409,3 +418,31 @@ if (count($addonFiles) < 1) {
 <?php
 }
 ?>
+
+<?php if ($annoying > Addon::CONTRIBUTIONS_PASSIVE): ?>
+  <script type="text/javascript">
+    <?php if ($annoying == Addon::CONTRIBUTIONS_AFTER): ?>
+        /**
+         * Hijack the install function so that it calls install,
+         * then redirects to the developer's page.
+         */
+        var hack = function(old) {
+            return function() {
+                var ret = old.apply(undefined, arguments);
+                window.location += '/developers/post_install?confirmed=true';
+                // If something goes wrong, return a value
+                // so propagation stops.
+                return ret;
+            };
+        };
+        install = hack(install);
+        addEngine = hack(addEngine);
+    <?php elseif ($annoying == Addon::CONTRIBUTIONS_ROADBLOCK): ?>
+      /**
+       * This function attaches installTrigger to the install button;
+       * Making it a no-op lets us redirect to the developer page.
+       */
+      installButtonAttachInstallMethod = function(){};
+    <?php endif; ?>
+  </script>
+<?php endif; ?>
