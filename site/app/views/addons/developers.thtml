@@ -28,7 +28,8 @@ if ($multiple) {
   }
   $other_addons_element = $this->renderElement('amo2009/developer_other_addons',
       array('addons' => $other_addons,
-            'skip' => $addon['Addon']['id']));
+            'skip' => $addon['Addon']['id'],
+            'force_output' => false));
   ?>
 
   <?php if (!$multiple): ?>

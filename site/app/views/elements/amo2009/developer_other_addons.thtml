@@ -41,8 +41,10 @@
  *   $addons
  *   $skip: an add-on id to skip over
  *   $num_authors
+ *   $force_output -> if there are no authors this won't display anything by default.
  */
 ?>
+<?php if ($force_output || (count($addons) > 1)): ?>
 <div class="secondary" role="complementary">
   <div class="article secondary-item-list">
     <h4><?=n___('addon_developer_other_addons', 'addon_developer_other_addons', $num_authors)?></h4>
@@ -59,3 +61,4 @@
     </ul>
   </div>
 </div>
+<? endif; ?>
