@@ -55,7 +55,36 @@ class AppModel extends Model
             loadModel('Memcaching');
             $this->Cache = new Memcaching();
         }
-        return parent::__construct($id, $table, $ds);
+
+        /* We make a copy of all the declared associations here so that no
+         * matter what cake does we'll always have them.  Now we can bind
+         * and unbind with abandon, knowing everything will be made right
+         * in __resetAssociations.
+         *
+         * If you were hoping to create persistent models on the fly, tough
+         * luck.  If you really want to, make sure you also stick them in the
+         * ___association_store.
+         */
+        $ret = parent::__construct($id, $table, $ds);
+        foreach ($this->__associations as $association) {
+            // Three underscores = ultimate privacy!
+            $this->___association_store[$association] = $this->$association;
+        }
+        return $ret;
+    }
+
+    /**
+     * When you do an unbindModel, cake goes and modifies the canonical copy
+     * of the model declarations in $this->hasMany, $this->belongsTo, etc.
+     * It tries to do some major juggling with __backAssociation (put back
+     * these associations, I suppose) but it's easy to get confused.  Instead,
+     * we made a copy at startup and we'll use that to put everything back
+     * together, because it's really simple that way.
+     */
+    function __resetAssociations() {
+        foreach ($this->__associations as $association) {
+            $this->$association = $this->___association_store[$association];
+        }
     }
 
     /**
