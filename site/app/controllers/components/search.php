@@ -191,7 +191,7 @@ class SearchComponent extends Object {
 	            $text_score = " MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_termarray)."') +  1.5 * MATCH(a.tags) AGAINST ('".$tagTerm."') " ;
 	            $boolean_score =  " ( MATCH(a.".implode(', a.',$fields).") AGAINST ('".implode(" ", $_search_termarray)."' IN BOOLEAN MODE) OR MATCH(a.tags) AGAINST ('+".$tagTerm."*' IN BOOLEAN MODE) ) ";
 	            if( $tagFilter != null && !empty($tagFilter)) {
-	            	$boolean_score .= " AND MATCH(a.tags) AGAINST ('".$tagFilter."' IN BOOLEAN MODE) ";
+	            	$boolean_score .= " AND MATCH(a.tags) AGAINST ('".str_replace(" ", "", $tagFilter)."' IN BOOLEAN MODE) ";
 	            }
             }
             
