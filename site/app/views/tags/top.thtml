@@ -1,10 +1,89 @@
-<h2>Top <?=$numTags?> Tags</h2>
-<?
-	//print_r($topTags);
-	echo "<ul>";
-	foreach( $topTags as $tagInfo ) {
-		echo "<li><a href=\"/addons/fortag/". $tagInfo['Tag']['id'] . "\">".$tagInfo['Tag']['tag_text']."</a></li>";
-	
-	}
-	echo "</ul>";
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+    $this->layout = 'amo2009';
+
+	function addTagClass($tag_count, $max_tag) {
+		$tag_conversions = array(
+		    0 => 'tagLevel1',
+		    10 => 'tagLevel2',
+		    20 => 'tagLevel3',
+		    30 => 'tagLevel4',           
+		    40 => 'tagLevel5',
+		    50 => 'tagLevel6',
+		    60 => 'tagLevel7',
+		    70 => 'tagLevel8',
+		    80 => 'tagLevel9',
+		    90 => 'tagLevel10'
+		    );    
+         $factor = ($tag_count/$max_tag)*100;
+             $lower = 0;
+         foreach ($tag_conversions as $upperlimit => $classname) {
+             if (($lower < $factor) && ($factor <= $upperlimit))
+                 break;
+             $lower = $upperlimit;
+         }
+         //return "Factor$factor";
+        return $classname;
+    }
+
 ?>
+<div class="section">
+	<div class="stand-alone-options">
+	  <?=$this->renderElement('amo2009/categories')?>
+	  <?=$this->renderElement('amo2009/search')?>
+	</div>
+
+	<div class="primary" style="width:100%;" role="main">
+		<h2><?=sprintf(___('top_tags_header', 'Top %s Tags'), $numTags)?></h2>
+		<div class="featured listing results">
+		     <div class="featured-inner">
+                <ul class="tag-cloud">
+				<?php
+					$tag_popularity = "";
+					foreach( $topTags as $tagInfo ) {
+						$tag_popularity = $tagInfo['TagStat']['num_addons'];
+						$tag_class = addTagClass($tag_popularity, $numTags);
+				
+                        echo '<li class="'.$tag_class.'">'.$html->link($tagInfo['Tag']['tag_text'], '/tag/'.$tagInfo['Tag']['tag_text']).'</li>';
+					}
+				?>
+                </ul>
+			</div>
+		</div>
+	</div>
+</div>

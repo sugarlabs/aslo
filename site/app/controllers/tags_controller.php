@@ -305,11 +305,11 @@ class TagsController extends AppController
         return array_filter(array_map('trim', $elements));		
 	}		
 
-	function top($numTags=100, $sortBy="freq") {
-		// get the top tags
+	function top($numTags=100, $sortBy='freq') {
 		$this->publish('numTags', $numTags);
 		
 		$topTags = $this->Tag->getTop($numTags, $sortBy);
+
 		$this->publish('topTags', $topTags);
 	}
 	

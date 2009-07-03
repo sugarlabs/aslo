@@ -128,6 +128,8 @@
         
 		// Tag page
 		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));
+		// Top Tags
+		$Route->connect("/{$prefix}/top-tags", array('controller' => 'tags', 'action' => 'top'));
 
         // Magical undocumented routing syntax - if nothing has matched up till now, it'll hit this
         $Route->connect("/{$prefix}/:controller/:action/*", array('controller' => 'pages', 'action' => 'index'));
