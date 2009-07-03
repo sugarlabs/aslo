@@ -300,10 +300,9 @@ class TagsController extends AppController
                 $qstr = str_replace('""', '"', $qstr);
             }
         }
-        // Trim whitespace
-        foreach ($elements as &$element)
-        	$element = trim($element);
-        return $elements;		
+
+        // trim whitespace and remove empty values
+        return array_filter(array_map('trim', $elements));		
 	}		
 
 	function top($numTags=100, $sortBy="freq") {

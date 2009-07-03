@@ -58,6 +58,35 @@ class Tag extends AppModel
  	var $recursive = 1;
  	
  	/**
+     * This function is full of fail
+     *
+     * @param string text to search for
+     * @return array result
+ 	 */
+    function findByTagText($text) {
+        $db     =& ConnectionManager::getDataSource($this->useDbConfig);
+
+        // What the hell?  if $text is 0 we get all rows back, and if it's a number 
+        // it searches the whole varchar and returns all matching rows?  More in bug 
+        // 501159. Also, I'm really happy we're using a framework so we don't have to
+        // deal with this stuff.  oh wait.
+        if (is_numeric($text)) {
+            $_text = "'{$text}'";
+        } else {
+            $_text  = $db->value($text); 
+        }
+
+        $_ret = $this->query("SELECT * FROM tags WHERE tag_text = {$_text}");
+
+        if (empty($_ret)) {
+            return array();
+        }
+
+        // Since you're using the cake magic you probably want some ridiculous arrays back.  
+        // Two queries for the price of one. :(
+        return $this->findById($_ret[0]['tags']['id']);
+    }
+ 	/**
  	 * 
  	 */
 	function makeTagList($addon_data, $user) {
