@@ -253,17 +253,16 @@ class AddonsController extends AppController
             return;
         }
 
-        $_conditions = array(
-            'Addon.id' => $id,
-            'Addon.inactive' => 0,
-            'Addon.addontype_id' => array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_LPAPP, ADDON_PLUGIN),
-            'Addon.status' => $valid_status
-            );
+        $_associations = array( 'all_categories', 'all_tags', 'authors', 'default_fields', 'latest_version', 'contrib_details');
 
-        $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonCategory');
-        $addon_data = $this->Addon->find($_conditions, null , null , 1);
+        $addon_data = $this->Addon->getAddon($id, $_associations);
 
-        if (empty($addon_data)) {
+        // Only show valid, active add-ons.  Not doing this in SQL because we want to use the cache invalidation framework. more in bug 501187
+        if (empty($addon_data)
+            || $addon_data['Addon']['inactive'] == 1
+            || !in_array($addon_data['Addon']['addontype_id'], array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_LPAPP, ADDON_PLUGIN))
+            || !in_array($addon_data['Addon']['status'], $valid_status)) {
+
             $this->flash(_('error_addon_notfound'), '/', 3);
             return;
         }
@@ -334,6 +333,7 @@ class AddonsController extends AppController
                 'Addon.inactive' => 0,
                 'Addon.status' => $valid_status
             );
+            $this->Addon->bindOnly('User');
             $authorAddons = $this->Addon->findAll($_addoncriteria, null, 'Translation.name');
         } else {
             $authorAddons = array();

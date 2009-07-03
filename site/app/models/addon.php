@@ -248,6 +248,10 @@ class Addon extends AppModel
                 // list of applications this add-on is compatible with
                 break;
 
+            case 'default_fields':
+                //Replaces any fields with the default fields
+                $fields = $this->default_fields;
+
             case 'files':
                 // list of files for all versions returned (depends on lastversion
                 // or allversions);
@@ -276,7 +280,7 @@ class Addon extends AppModel
                 break;
 
             case 'single_tag':
-                // all categories this add-on is associated with
+                // all tags this add-on is associated with
                 $this->bindModel(array('hasMany' =>
                     array('UserTagAddon' =>
                        array('className'  => 'UserTagAddon',
@@ -303,7 +307,7 @@ class Addon extends AppModel
         }
 
         // get desired add-on from DB
-        $addon = $this->findById($id, $fields);
+        $addon = $this->findById($id, array_unique($fields));
 
         // add additional data
         if (in_array('latest_version', $associations)) {
