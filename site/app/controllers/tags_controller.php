@@ -138,6 +138,17 @@ class TagsController extends AppController
                 $this->publish('message', ___('tag_message_tag_limit_reached', 'Tag limit reached'));
         		break;
         	}
+
+            // Strip out stuff that breaks things; bug 502126
+            $tag_text = preg_replace(INVALID_TAG_CHARS, '', $tag_text);
+
+            // Strip out extra whitespace but allow a single space. Tags are already trim()'d
+            $tag_text = preg_replace('/\s\s+/', ' ', $tag_text);
+
+            // Minimum tag length is 2
+            if (mb_strlen($tag_text) < 2) {
+                continue;
+            }
         
 	        // Check if tag exists
   	 	    $tag = $this->Tag->findByTagText($tag_text);
