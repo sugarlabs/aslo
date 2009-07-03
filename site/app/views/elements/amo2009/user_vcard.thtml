@@ -49,18 +49,24 @@
         <th><?=___('addon_developer_th_name')?></th>
         <td class="fn n"><?=$user['display_name']?></td>
       </tr>
+      <? if (!empty($user['location'])): ?>
       <tr>
         <th><?=___('addon_developer_th_location')?></th>
         <td class="adr"><?=$user['location']?></td>
       </tr>
+      <? endif; ?>
+      <? if (!empty($user['occupation'])): ?>
       <tr>
         <th><?=___('addon_developer_th_occupation')?></th>
         <td class="role"><?=$user['occupation']?></td>
       </tr>
+      <? endif; ?>
+      <? if (!empty($user['homepage'])): ?>
       <tr>
         <th><?=___('addon_developer_th_homepage')?></th>
         <td><a class="url" href="<?=$user['homepage']?>"><?=$user['homepage']?></a></td>
       </tr>
+      <? endif; ?>
       <?php if (!$user['emailhidden']): ?>
           <tr>
             <th><?=___('addon_developer_th_email')?></th>
