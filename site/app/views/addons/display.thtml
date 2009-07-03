@@ -384,9 +384,7 @@ if (!empty($coll_addon_added)) {
           <?php if ($addon['Addon']['viewsource'] == 1 &&
                     $this->controller->Session->check('User')): ?>
             <li>
-              <a href="<?=$html->url('/files/browse/'.$addon['Version'][0]['File'][0]['id'])?>">
-                <?=___('addons_display_view_source')?>
-              </a>
+              <a href="<?=$html->url('/files/browse/'.$addon['Version'][0]['File'][0]['id'])?>"><?=___('addons_display_view_source')?></a>
             </li>
           <?php endif; ?>
           <li>
