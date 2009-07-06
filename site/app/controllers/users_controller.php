@@ -428,7 +428,8 @@ class UsersController extends AppController
         if (empty($this->data)) {
             $this->publish('userAddons', $this->Addon->getAddonsByUser($sessionuser['id']));
             
-            $this->data['User'] = $sessionuser;
+            $userdata = $this->User->getUser($sessionuser['id']);
+            $this->data['User'] = $userdata['User'];
             $this->data['User']['password'] = '';
             $this->render();
             return;
@@ -570,6 +571,9 @@ class UsersController extends AppController
             // this should never happen, but anyway...
             $this->publish('confirmation_message', _('user_profile_edit_error'));
         }
+
+        $this->data['User'] = $newprofile['User'];
+        $this->data['User']['password'] = '';
         $this->publish('confirmation_page', true);
         
         $this->render();
