@@ -415,7 +415,11 @@ if (!empty($coll_addon_added)) {
                 $addon['Translation']['name']['string'])?></p>
   <p>
     <a class="more-info" href="<?=$html->url('/addon/'.$addon_id.'/developers')?>">
-      <?=sprintf(___('addon_display_meet_x'), $dev['User']['display_name'])?>
+        <? if (count($devs) > 1): ?>
+          <?=n___('addon_developer_h2_meet', 'addon_developer_h2_meet', count($devs))?>
+        <? else: ?>
+          <?=sprintf(___('addon_display_meet_x'), $dev['User']['display_name'])?>
+        <? endif; ?>
     </a>
   </p>
 </div>
