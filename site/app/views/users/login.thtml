@@ -73,7 +73,6 @@
         <? 
         $redir = (isset($_GET['to'])) ? urldecode($_GET['to']) : urldecode(@$this->data['Login']['referer']);
         $redir = $html->entities($redir);
-        $redir = html_entity_decode($redir);
         echo $html->hidden('Login/referer', array('value' => $redir));
         ?>
     </div>
