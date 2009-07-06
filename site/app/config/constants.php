@@ -281,7 +281,7 @@ define('INVALID_FILENAME_CHARS', '/[^\w\d\.\-_!+]/');
 // regex to preg_replace() the bad characters in tags.  White space is also stripped separately
 // some of these are boolean search operators, others cause problems in URLs.  Be careful if you
 // are removing anything from here.
-define('INVALID_TAG_CHARS', "/(^[+-])|([\/\\\#\"':&%\*<>~])/");
+define('INVALID_TAG_CHARS', "/[\/\\\#\"':&%\*<>~+-]/");
 // invalid collection nicknames
 define('INVALID_COLLECTION_NICKNAME_CHARS', INVALID_FILENAME_CHARS);
 /* Money: anything from 0.00 to 99.99.  Decimal not required. */
