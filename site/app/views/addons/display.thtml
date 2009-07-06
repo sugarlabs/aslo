@@ -456,32 +456,37 @@ if (!empty($coll_addon_added)) {
  <?php endif; ?>
 
 </div>
-<div class="highlight">
-<h3>Tags</h3>
-        <script type="text/javascript">
-          <?=$this->renderElement('tags_js_init')?>
-        </script>
-<div id='tags'><?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags,'addon_id'=>$addon_id, 'origin'=>'users')); ?></div>
 
-<? if ($loggedIn) {
-	?>
-	<a href="" id="addatag">+ Add a tag</a>
-	<div class="addtagform ">
-		<form id='tagForm' action="<?=$html->url("/tags/add/")?>" method="POST">
-			<?=$html->hiddenSession() ?>
-			<input type="text" id='newTag' name="newTag">
-			<input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon['Addon']['id']?>"/>
-			<button id="addtagbutton">Add</button>
-		</form>
-	</div>	
-<? } else { 
-    echo sprintf(
-        ___('tags_register_or_login', '<a href="%1$s">Register</a> or <a href="%2$s">Log in</a> to add tags'),
-        $html->url('/users/register', false), $html->url($html->login_url()));
-} ?>
+<div class="highlight">
+    <h3>Tags</h3>
+
+    <script type="text/javascript">
+        <?=$this->renderElement('tags_js_init')?>
+    </script>
+
+    <div id='tags'>
+        <?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags,'addon_id'=>$addon_id, 'origin'=>'users')); ?>
+    </div>
+
+    <? if ($loggedIn): ?>
+        <a href="#" id="addatag"><?=___('tags_add_tag_link', 'Add a tag');?></a>
+        <div class="addtagform ">
+            <form id='tagForm' action="<?=$html->url("/tags/add/")?>" method="POST">
+                <?=$html->hiddenSession() ?>
+                <input type="text" id='newTag' name="newTag" />
+                <input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon['Addon']['id']?>" />
+                <button id="addtagbutton"><?=___('tags_add_tag_button', 'Add');?></button>
+            </form>
+            <span class="hint"><?=___('tags_example_tags', 'Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
+        </div>	
+    <? else: ?>
+        <?echo sprintf(
+            ___('tags_register_or_login', '<a href="%1$s">Register</a> or <a href="%2$s">Log in</a> to add tags'),
+            $html->url('/users/register', false), $html->url($html->login_url())); ?>
+    <? endif; ?>
 
 </div>
-<!-- /#more-addons-->
+<!-- /.highlight-->
 
     <div class="highlight collections-add prose">
         <h3><?=___('addons_display_header_collections')?></h3>

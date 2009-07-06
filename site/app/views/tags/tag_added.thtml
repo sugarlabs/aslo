@@ -37,9 +37,18 @@
  *
  * ***** END LICENSE BLOCK ***** */ 
 
-//$this->layout = 'amo2009';
+/**
+ * This element uses the following local variables:
+ * - $developerTags (a tag model-style result set)
+ * - $userTags (a tag model-style result set)
+ * - $message (an optional message for users)
+ * - $status ()
+ */
 ?>
-<?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags, 'origin'=>'users')); 
-if (!empty($message)) { ?><div id='tagMessage' class="tagnotice <?=$status?>"><?=$message?></div><? }
+<?=$this->renderElement('addon_tags', array('userTags'=>$userTags, 'developerTags'=>$developerTags, 'origin'=>'users')); ?>
 
- ?>
+<? if (!empty($message)) : ?>
+
+    <div id='tagMessage' class="tagnotice <?=$status?>"><?=$message?></div>
+
+<? endif; ?>
