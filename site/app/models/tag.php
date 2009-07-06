@@ -214,4 +214,23 @@ class Tag extends AppModel
 		
 		return $this->findAll(" TagStat.num_addons > 0 ", null/*fields*/, $sort, $numTags);
 	}
+	
+    /**
+     *
+     */
+	function getTopForAddons($num_tags, $addon_ids) {
+        if (!is_integer($num_tags) || !is_array($addon_ids)) {
+            return false;
+        }
+
+        $_query = "SELECT Distinct(Tag.id), Tag.tag_text 
+            FROM tags Tag, tag_stat TagStat, users_tags_addons UserTagAddon 
+            WHERE Tag.blacklisted = 0 
+            AND Tag.id = TagStat.tag_id 
+            AND Tag.id = UserTagAddon.tag_id 
+            AND UserTagAddon.addon_id in (".implode(',',$addon_ids).") 
+            ORDER BY TagStat.num_addons DESC LIMIT {$num_tags}";
+
+		return $this->query($_query);
+	}
 }

@@ -198,25 +198,11 @@ global $app_shortnames, $app_prettynames;
             <h5><?=___('search_filter_tags_header', 'Tags')?></h5>
 			<ul class="refinements addon-tags">
 				<?php
-					$tag_ids = array();
-
-					foreach ($search_results as $addon) {
-						foreach ($addon['Tag'] as $t) {
-							array_push($tag_ids, $t);
-						}
-					}
-					if (empty($tag_ids)) {
+					if (empty($top_tags)) {
 						echo '<li>'.___('search_filter_no_tags', 'No tags for these add-ons').'</li>';
 					} else {
-                        $_list_o_tags = array();
-                        foreach ($tag_ids as $var => $val) {
-							if($val['blacklisted'] == 1 ) {
-								continue;
-							}
-                            $_list_o_tags[] = $val['tag_text'];
-                        }
-
-						foreach (array_unique($_list_o_tags) as $_tag) {
+						foreach($top_tags as $top_tag ) {
+							$_tag = $top_tag['Tag']['tag_text'];
 							if ($tag == $_tag) {
 								$selected = ' selected';
 							} else {

@@ -53,7 +53,7 @@ class SearchController extends AppController
     /**
      * Cake array for what tables this controller accesses
      */
-    var $uses = array('Addon', 'Addontype', 'Collection', 'File', 'Translation', 'Platform', );
+    var $uses = array('Addon', 'Addontype', 'Collection', 'File', 'Translation', 'Platform', 'Tag');
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
 
     /**
@@ -224,8 +224,11 @@ class SearchController extends AppController
             
             if (!empty($_result_ids)) {
                 $results = $this->Addon->getAddonList($_result_ids, $associations);
+                // Show top 10 tags
+                $topTags = $this->Tag->getTopForAddons(10, $_result_ids);
             } else {
                 $results = array();
+                $topTags = array();
             }
             
             $this->publish('bigHeader', true);
@@ -239,6 +242,8 @@ class SearchController extends AppController
             $this->publish('platforms', $platforms);
             
             $this->publish('search_results', $results);
+            $this->publish('top_tags', $topTags);
+            
             $this->forceCache();
             $this->render();
             return;
