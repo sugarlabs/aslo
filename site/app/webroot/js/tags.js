@@ -22,10 +22,8 @@ function addTag() {
   return s.replace(/~/g,'%7E').replace(/%20/g,'+');
  };
 
-function remTag(addonid, tagid){
-	//var addonid = '<?= $addon['Addon']['id']; ?>';
-	var session=$("input[name='sessionCheck']").val();
-	$.post(remove_ajax_url, "ajax=1&addonid="+ addonid +"&tagid="+ tagid + "&sessionCheck="+session, function(data){
+function remTag(form_data){
+	$.post(remove_ajax_url, form_data, function(data){
 		$("#tags").html(data);
 		$(".addtagform form")[0].reset();
 		$("#tags .addon-tags").removeClass("nojs");
@@ -43,11 +41,14 @@ $(document).ready(function(){
 		e.preventDefault();
 		e.stopPropagation();
 	});
-	$("#tags .removetag").live("click",function(e){
-		var tagid = $(this).attr("id").split("remtag-")[1];
-		var addonid = $(this).parents("ul").attr("id").split("addonid-")[1];
-		//var tagid = $(this).parent().find(".tagitem").text();
-		remTag(addonid,tagid);
+	
+	$("#tags .remove-tags button").live("click",function(e){
+		var form = $("#tags .remove-tags");
+		form.find(":input[name='ajax']").val("1");
+		
+		var tagid = $(this).val();
+		var form_data = form.serialize() + "&tagid=" + tagid;
+		remTag(form_data);
 		e.preventDefault();
 		e.stopPropagation();
 	});

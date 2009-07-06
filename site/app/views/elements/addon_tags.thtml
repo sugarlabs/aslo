@@ -49,22 +49,28 @@
 ?>
 
 <ul class="addon-tags nojs" id="addonid-<?= $addon_id ?>">
+	<form id='tags' class="remove-tags" method="POST" action="<?= $html->url("/tags/remove/"); ?>">
+
+	 	<?= $html->hiddenSession(); ?>
+		<input type="hidden" name="addonid" value="<?= $addon_id; ?>" />
+		<input type="hidden" name="ajax" value="0" />
 <?php
 //  developer tag list
 foreach ($developerTags as $_tag) {
     echo "<li id='taglink-".$_tag['Tag']['id']."' class='developertag'>".$html->link($_tag['Tag']['tag_text'], "/tag/".$_tag['Tag']['tag_text'], array('class'=>'tagitem'));
     if (@$_tag['Tag']['OwnerOrDeveloper']==1) {
-    	echo " <a href='/tags/remove/" . $_tag['UserTagAddon'][0]['addon_id'] . "/".$_tag['Tag']['id']."/$origin' id='remtag-". $_tag['Tag']['id']. "' class='removetag'>x</a></li>\n";
+        echo '<button type="submit" class="link removetag" name="tagid" value="'.$_tag['Tag']['id'].'"><span>x</span></button>'."\n";
 	}
 }
 //  user tag list
 foreach ($userTags as $_tag) {
     echo "<li id='taglink-".$_tag['Tag']['id']."' class='usertag'>".$html->link($_tag['Tag']['tag_text'], "/tag/".$_tag['Tag']['tag_text'], array('class'=>'tagitem'));
     if (@$_tag['Tag']['OwnerOrDeveloper']==1) {
-    	echo " <a href='/tags/remove/" . $_tag['UserTagAddon'][0]['addon_id'] . "/".$_tag['Tag']['id']."' id='remtag-". $_tag['Tag']['id']. "' class='removetag'>x</a></li>\n";
+		echo '<button type="submit" class="link removetag" name="tagid" value="'.$_tag['Tag']['id'].'"><span>x</span></button>'."\n";
 	}
 }
 ?>
+	</form>
 </ul>
 <? //print_r($developerTags); ?>
 <? //print_r($userTags); ?>
