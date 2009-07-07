@@ -112,6 +112,10 @@ if (!isset($annoying)) {
     $annoying = 0;
 }
 
+if (!isset($collection_uuid) && isset($_GET['collection_id'])) {
+    $collection_uuid = htmlentities($_GET['collection_id']);
+}
+
 ?>
 <?php
 global $browser_apps, $experimental_status, $valid_status;
@@ -227,7 +231,12 @@ if (count($addonFiles) < 1) {
         $install_button_html = '';
         if ($annoying == Addon::CONTRIBUTIONS_ROADBLOCK) {
             $linktitle = $install_button_image.'<span class="install-button-text">'.sprintf(_('a_download'),$_install_platform_string).'</span>';
-            $install_button_html = $html->link($linktitle, '/addon/'.$addon_id.'/developers/roadblock', $linkOptions);
+            if (!empty($collection_uuid)) {
+                $qs = '?collection_id='.$collection_uuid;
+            } else {
+                $qs = '';
+            }
+            $install_button_html = $html->link($linktitle, '/addon/'.$addon_id.'/developers/roadblock'.$qs, $linkOptions);
         } else if (empty($addonEULA)) {
             // wipe disallowed characters off the displayed filename
             $addon_filename = $html->entities(preg_replace(
