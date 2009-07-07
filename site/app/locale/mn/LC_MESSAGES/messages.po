@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
-#: views/addons/policy.thtml:98
+#: views/addons/policy.thtml:103
 msgid "a_cancel_installation"
 msgstr "Суулгацыг цуцал"
 
@@ -25,11 +25,12 @@ msgstr "Суулгацыг цуцал"
 #. %$1s is an optional string that only appears if the add-on is only available for
 #. a certain platform.  Examples:  (Windows)  or  (Linux)
 #. Note that the parentheses are included in the string. :(
-#: views/elements/amo2009/install.thtml:126
-#: views/elements/amo2009/install.thtml:227
-#: views/elements/amo2009/install.thtml:257
-#: views/elements/amo2009/install.thtml:300
-#: views/elements/amo2009/install.thtml:312 views/elements/install.thtml:73
+#: views/elements/amo2009/install.thtml:133
+#: views/elements/amo2009/install.thtml:229
+#: views/elements/amo2009/install.thtml:237
+#: views/elements/amo2009/install.thtml:275
+#: views/elements/amo2009/install.thtml:318
+#: views/elements/amo2009/install.thtml:330 views/elements/install.thtml:73
 #: views/elements/install.thtml:181 views/elements/install.thtml:205
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
 #: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
@@ -49,22 +50,140 @@ msgstr "Зөвшөөрөөд суулга"
 
 #: views/elements/header.thtml:76 views/elements/header.thtml:82
 #: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
-#: views/sharing_api/addon.thtml:64
+#: views/sharing_api/addon.thtml:63
 msgid "a_header_public"
 msgstr "Нийтийн"
 
 #: views/elements/header.thtml:58 views/elements/header.thtml:75
 #: views/elements/header.thtml:80 views/api/api_addon.thtml:57
-#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:66
+#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:65
 msgid "a_header_sandbox"
 msgstr "Түр хайрцаг"
 
+#. %1 is an add-on name.
+#: controllers/addons_controller.php:148
+#, fuzzy
+msgid "addon_contribute_item"
+msgstr "Contribution for %1$s"
+
 #. %s is a date in the _('date') format
+#: views/elements/amo2009/results_addon.thtml:94
+#: views/elements/amo2009/results_addon.thtml:117
 #: views/elements/amo2009/homepage_addon.thtml:115
 #: views/elements/addon_listitem.thtml:122 views/elements/feature.thtml:106
-#: views/addons/display.thtml:104 views/addons/browse_thumbs.thtml:73
+#: views/addons/browse_thumbs.thtml:118
 msgid "addon_detail_last_updated"
 msgstr "%s шинэчлэгдсэн "
+
+#: views/addons/developers.thtml:18 views/addons/display.thtml:411
+#: views/addons/display.thtml:419
+#, fuzzy
+msgid "addon_developer_h2_meet"
+msgid_plural "addon_developer_h2_meet"
+msgstr[0] "Meet the Developer"
+msgstr[1] "Meet the Developers"
+
+#: views/elements/amo2009/user_vcard.thtml:46
+#, fuzzy
+msgid "addon_developer_info_summary"
+msgstr "Developer Information"
+
+#: views/elements/amo2009/developer_other_addons.thtml:50
+#, fuzzy
+msgid "addon_developer_other_addons"
+msgid_plural "addon_developer_other_addons"
+msgstr[0] "Other add-ons by this developer"
+msgstr[1] "Other add-ons by these developers"
+
+#. %1 is a number.
+#: views/elements/amo2009/user_vcard.thtml:84
+#, fuzzy
+msgid "addon_developer_td_num_addons"
+msgid_plural "addon_developer_td_num_addons"
+msgstr[0] "%1$s Add-on"
+msgstr[1] "%1$s Add-ons"
+
+#: views/elements/amo2009/user_vcard.thtml:72
+#, fuzzy
+msgid "addon_developer_th_email"
+msgstr "Email address"
+
+#: views/elements/amo2009/user_vcard.thtml:66
+#, fuzzy
+msgid "addon_developer_th_homepage"
+msgstr "Homepage"
+
+#: views/elements/amo2009/user_vcard.thtml:54
+#, fuzzy
+msgid "addon_developer_th_location"
+msgstr "Location"
+
+#: views/elements/amo2009/user_vcard.thtml:49
+#, fuzzy
+msgid "addon_developer_th_name"
+msgstr "Name"
+
+#: views/elements/amo2009/user_vcard.thtml:81
+#, fuzzy
+msgid "addon_developer_th_num_addons"
+msgstr "Number of Add-ons Developed"
+
+#: views/elements/amo2009/user_vcard.thtml:60
+#, fuzzy
+msgid "addon_developer_th_occupation"
+msgstr "Occupation"
+
+#: views/elements/amo2009/user_vcard.thtml:90
+#, fuzzy
+msgid "addon_developer_th_rating"
+msgstr "Average rating for their Add-ons"
+
+#: views/elements/amo2009/user_vcard.thtml:77
+#, fuzzy
+msgid "addon_developer_th_user_since"
+msgstr "User since"
+
+#. %1 is an add-on name.
+#: views/addons/developers.thtml:3
+#, fuzzy
+msgid "addon_developer_title"
+msgid_plural "addon_developer_title"
+msgstr[0] "Meet the %1$s Developer"
+msgstr[1] "Meet the %1$s Developers"
+
+#. %1 is an add-on name.
+#: views/elements/amo2009/developer_about_addon.thtml:50
+#, fuzzy
+msgid "addon_developer_what_next"
+msgstr "What's next for %1$s"
+
+#. %1 is a user's name.
+#: views/addons/developers.thtml:59
+#, fuzzy
+msgid "addon_developer_who_is"
+msgstr "Who is %1$s?"
+
+#. %1 is an add-on name.
+#: views/elements/amo2009/developer_about_addon.thtml:46
+#, fuzzy
+msgid "addon_developer_why_created"
+msgstr "Why was %1$s created?"
+
+#: views/elements/amo2009/contribution.thtml:57
+#, fuzzy
+msgid "addon_display_contribute"
+msgstr "Contribute"
+
+#: views/elements/amo2009/contribution.thtml:99
+#, fuzzy
+msgid "addon_display_contribute_different"
+msgstr "Contribute a Different Amount"
+
+#. %1 is a number like 32 or 47.99.
+#: views/elements/amo2009/contribution.thtml:92
+#, fuzzy
+msgid "addon_display_contribute_suggested"
+msgstr "Contribute $%1$s"
 
 #. %s is the version of the add-on.  Example:  3.2a1
 #: views/elements/amo2009/addon_version_detail.thtml:51
@@ -73,23 +192,51 @@ msgstr "%s шинэчлэгдсэн "
 msgid "addon_display_header_version"
 msgstr "Хувилбар %s"
 
-#: views/addons/browse_thumbs.thtml:80
+#. %1$s is an add-on name.
+#: views/addons/display.thtml:414
+#, fuzzy
+msgid "addon_display_meet_learn"
+msgstr "Learn why %1$s was created and find out what's next for this add-on."
+
+#. %1$s is a a person's name
+#: views/addons/display.thtml:421
+#, fuzzy
+msgid "addon_display_meet_x"
+msgstr "Meet %1$s"
+
+#. This is a separator between the graphical [contribute] button and the 
+#. graphical [download now] button
+#: views/elements/amo2009/contribution.thtml:65
+#, fuzzy
+msgid "addon_display_or"
+msgstr "or"
+
+#: views/elements/amo2009/contribution.thtml:95
+#, fuzzy
+msgid "addon_display_suggested"
+msgstr "Suggested"
+
+#. This is a monetary value like:  $3.99
+#. Note that as of 2009-07-06 this only supports USD
+#: views/elements/amo2009/contribution.thtml:78
+#, fuzzy
+msgid "addon_display_suggested_amount"
+msgstr "Suggested Donation: $%1$s"
+
+#: views/addons/browse_thumbs.thtml:125
 msgid "addon_downloads"
 msgstr "удаа татагдсан"
 
-#: views/addons/display.thtml:147
-msgid "addon_downloads_total"
-msgstr "удаа нийтдээ татагдсан"
-
+#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/amo2009/homepage_addon.thtml:106
 #: views/elements/addon_listitem.thtml:115 views/elements/feature.thtml:101
-#: views/addons/category_landing.thtml:157 views/addons/display.thtml:146
-#: views/addons/browse_thumbs.thtml:80
+#: views/addons/category_landing.thtml:157
+#: views/addons/browse_thumbs.thtml:125
 msgid "addon_downloads_weekly"
 msgstr "удаа долоо хоногт татагдсан"
 
 #. %1 is the add-on count, %2 the category name
-#: views/addons/browse_thumbs.thtml:104 views/addons/browse.thtml:60
+#: views/addons/browse_thumbs.thtml:91 views/addons/browse.thtml:60
 #, php-format
 msgid "addon_list_category_totalcount"
 msgid_plural "addon_list_category_totalcount"
@@ -107,12 +254,12 @@ msgstr "-г нэг хуудсанд"
 msgid "addon_list_sortby"
 msgstr "Эрэмбэлэлт:"
 
-#: views/helpers/addons_html.php:568 views/elements/amo2009/install.thtml:321
+#: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:339
 #: views/elements/feature.thtml:89
 msgid "addon_listitem_flag_experimental"
 msgstr "туршилтын"
 
-#: views/helpers/addons_html.php:570
+#: views/helpers/addons_html.php:573 views/elements/amo2009/install.thtml:337
 msgid "addon_listitem_flag_recommended"
 msgstr "санал болгогдсон"
 
@@ -122,7 +269,7 @@ msgid "addon_not_available_for_platform"
 msgstr "%1$s-н %2$s-д тохирсон хувилбар байхгүй."
 
 #. %1 is the add-on name
-#: views/addons/policy.thtml:101 views/addons/previews.thtml:60
+#: views/addons/policy.thtml:106 views/addons/previews.thtml:60
 #: views/addons/versions.thtml:130 views/reviews/flag.thtml:61
 #: views/reviews/add.thtml:114 views/reviews/display.thtml:216
 #: views/reviews/review_added.thtml:57
@@ -243,7 +390,8 @@ msgstr "Хөгжүүлэгчийн хариулт:"
 msgid "addon_review_saved_successfully"
 msgstr "Таны үнэлгээ амжилттай хадгалагдлаа. Баярлалаа!"
 
-#: views/addons/display.thtml:354 views/reviews/display.thtml:72
+#: views/collections/detail.thtml:192 views/addons/display.thtml:290
+#: views/reviews/display.thtml:72
 msgid "addon_reviewed_by_u_on_d"
 msgstr "%2$s-ны өдөр %1$s-р"
 
@@ -267,10 +415,11 @@ msgstr "Permanent link to this version"
 msgid "addon_versions_getlatestversion"
 msgstr "The most recent version compatible with %1$s %2$s"
 
-#: views/addons/display.thtml:447
+#: views/addons/display.thtml:451
 msgid "addons_author_addons_submit"
 msgstr "Илгээх"
 
+#: views/elements/amo2009/results_addon.thtml:106
 #: views/elements/amo2009/homepage_addon.thtml:100
 #: views/elements/feature.thtml:95
 #, fuzzy
@@ -278,25 +427,25 @@ msgid "addons_author_tooltip"
 msgstr "View Author's Profile"
 
 #. %1 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:1296
+#: controllers/addons_controller.php:1397
 #, fuzzy
 msgid "addons_browse_all_themes_title"
 msgstr "Browse all Themes :: %1$s Add-ons"
 
 #. %s is the name of the category
-#: controllers/addons_controller.php:1016
+#: controllers/addons_controller.php:1126
 #, php-format
 msgid "addons_browse_browse_category"
 msgstr "%s нэмэгдлүүд"
 
 #. %1 is the name of the theme category (eg. Modern)
 #. %2 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:664
+#: controllers/addons_controller.php:770
 #, fuzzy
 msgid "addons_browse_categories_header_theme"
 msgstr "Browse %1$s Themes :: %2$s Add-ons"
 
-#: views/addons/display.thtml:249
+#: views/elements/amo2009/contribution.thtml:83 views/addons/display.thtml:378
 #, fuzzy
 msgid "addons_display_a_license_what"
 msgstr "What's this?"
@@ -305,55 +454,75 @@ msgstr "What's this?"
 msgid "addons_display_add_review"
 msgstr "Үнэлгээ дүгнэлт нэм"
 
-#: views/addons/display.thtml:294
-msgid "addons_display_advanced_details"
-msgstr "Нэмэлт мэдээлэл"
-
-#: views/addons/display.thtml:98
-msgid "addons_display_categories"
-msgstr "Төрөл анги"
-
-#: views/addons/display.thtml:482
+#: views/addons/display.thtml:521
 #, fuzzy
 msgid "addons_display_collection_add"
 msgstr "Add to a collection:"
 
-#: views/addons/display.thtml:491
+#: views/addons/display.thtml:530
 #, fuzzy
 msgid "addons_display_collection_add_new"
 msgstr "New Collection..."
 
-#: views/addons/display.thtml:487
+#: views/addons/display.thtml:526
 #, fuzzy
 msgid "addons_display_collection_add_select_one"
 msgstr "Select a collection..."
 
-#: views/addons/display.thtml:493
+#: views/addons/display.thtml:532
 #, fuzzy
 msgid "addons_display_collection_add_submit"
 msgstr "Publish"
 
 #. %1$s is the add-on name
 #. %2$s is the collection name, linked to the collection's page
-#: views/pages/js_constants.js.thtml:103 views/addons/display.thtml:61
+#: views/pages/js_constants.js.thtml:103 views/addons/display.thtml:70
 #, fuzzy
 msgid "addons_display_collection_publish_success"
 msgstr "%1$s has been added to the %2$s collection."
 
-#: views/addons/display.thtml:483
+#: views/addons/display.thtml:522
 #, fuzzy
 msgid "addons_display_collection_whatsthis"
 msgstr "What's this?"
 
 #. %1$s is a number
-#: views/addons/display.thtml:473
+#: views/addons/display.thtml:508
 #, fuzzy
 msgid "addons_display_collections_more"
 msgid_plural "addons_display_collections_more"
 msgstr[0] "and %1$s more collection"
 msgstr[1] "and %1$s more collections"
 
-#: views/addons/display.thtml:403
+#. This refers to closing a small pop-up window
+#: views/elements/amo2009/contribution.thtml:106
+#, fuzzy
+msgid "addons_display_contribute_close"
+msgstr "close"
+
+#: views/elements/amo2009/contribution.thtml:105
+#, fuzzy
+msgid "addons_display_contribute_why"
+msgstr ""
+"Mozilla is committed to supporting a vibrant and healthy developer "
+"ecosystem. Your optional contribution helps sustain further development of "
+"this add-on."
+
+#: views/addons/developers.thtml:33 views/addons/display.thtml:163
+#, fuzzy
+msgid "addons_display_contribution_ask"
+msgstr ""
+"The developer of this add-on asks that you help support its continued "
+"development by making a small contribution."
+
+#: views/addons/developers.thtml:32
+#, fuzzy
+msgid "addons_display_contribution_roadblock"
+msgstr ""
+"Before downloading this add-on, please consider supporting the development "
+"of this add-on by making a small contribution."
+
+#: views/addons/display.thtml:347
 msgid "addons_display_detailed_review"
 msgstr "дэлгэрэнгүй харуулалт"
 
@@ -365,59 +534,56 @@ msgstr "Таалагдсангүй"
 msgid "addons_display_edit_review"
 msgstr "Тайлбараа засварлах"
 
-#: views/addons/display.thtml:132
-msgid "addons_display_has_privacy"
-msgstr ""
-"Энэ нэмэгдэлд хувь хүнтэй холбоотой мэдээллийг хамгаалах журам заагдсан "
-"байна."
-
 #: views/reviews/add.thtml:87 views/reviews/add.thtml:88
 msgid "addons_display_hate_it"
 msgstr "Үзэн ядаж байна"
 
-#: views/addons/display.thtml:462
+#: views/addons/display.thtml:496
 #, fuzzy
 msgid "addons_display_header_collections"
 msgstr "Related Collections"
 
-#: views/addons/display.thtml:297
-msgid "addons_display_header_developer_comments"
-msgstr "Зохиогчийн тайлбар"
-
-#: views/addons/display.thtml:230
+#: views/addons/display.thtml:202
 msgid "addons_display_header_homepage"
 msgstr "Вэб хуудсанд нь очих"
 
-#: views/addons/display.thtml:247 views/addons/versions.thtml:110
+#: views/addons/display.thtml:376 views/addons/versions.thtml:110
 #, fuzzy
 msgid "addons_display_header_license"
 msgstr "Source Code License"
 
-#: views/addons/display.thtml:337
+#: views/addons/display.thtml:275
 msgid "addons_display_header_reviews"
 msgstr "Үнэлгээ дүгнэлтүүд"
 
-#: views/addons/display.thtml:261
+#: views/addons/display.thtml:257
 msgid "addons_display_header_support"
 msgstr "Дэмжлэг"
+
+#: views/addons/display.thtml:236
+#, fuzzy
+msgid "addons_display_image_gallery"
+msgstr "Image Gallery"
+
+#: views/addons/display.thtml:318
+#, fuzzy
+msgid "addons_display_label_review"
+msgstr "Review"
 
 #: views/reviews/add.thtml:91 views/reviews/add.thtml:92
 msgid "addons_display_like_it"
 msgstr "Таалагдаж байна"
 
-#: views/addons/display.thtml:210
-msgid "addons_display_long_description"
-msgstr "Урт тайлбар"
-
 #: views/reviews/add.thtml:95 views/reviews/add.thtml:96
 msgid "addons_display_love_it"
 msgstr "Дурлахаар байна"
 
-#: views/addons/display.thtml:178
-msgid "addons_display_more_images"
-msgstr "Нэмэлт зурагнууд"
+#: views/addons/display.thtml:230
+#, fuzzy
+msgid "addons_display_more_about"
+msgstr "More about this add-on"
 
-#: views/addons/display.thtml:465
+#: views/addons/display.thtml:499
 #, fuzzy
 msgid "addons_display_nocollections"
 msgstr "This add-on is not yet in any collections."
@@ -425,7 +591,7 @@ msgstr "This add-on is not yet in any collections."
 #. %1$s is either an author's name or a comma separated list of authors. Using
 #. the list doesn't make sense in the English plural form so we ignore the
 #. variable.
-#: views/addons/display.thtml:436
+#: views/addons/display.thtml:440
 #, fuzzy
 msgid "addons_display_other_addons_by"
 msgid_plural "addons_display_other_addons_by"
@@ -435,14 +601,15 @@ msgstr[1] "Other add-ons by these authors"
 #. %s is the name of the add-on and the add-on section.  Example:
 #.   Some Add-on :: Firefox Add-ons
 #. This should not be concatenated in the code and should be fixed.
-#: controllers/addons_controller.php:141 controllers/addons_controller.php:280
-#: controllers/addons_controller.php:1442
+#: controllers/tags_controller.php:376 controllers/addons_controller.php:216
+#: controllers/addons_controller.php:357
+#: controllers/addons_controller.php:1530
 #, php-format
 msgid "addons_display_pagetitle"
 msgstr "%s"
 
 #. %s is an email address
-#: views/addons/display.thtml:286
+#: views/addons/display.thtml:267
 #, php-format
 msgid "addons_display_paragraph_supportinfoemail"
 msgstr ""
@@ -456,7 +623,7 @@ msgstr ""
 
 #. %$1s is a URL
 #. %$2s is an email address
-#: views/addons/display.thtml:269
+#: views/addons/display.thtml:260
 #, php-format
 msgid "addons_display_paragraph_supportinfoemailurl"
 msgstr ""
@@ -470,7 +637,7 @@ msgstr ""
 "болно."
 
 #. %s is a URL
-#: views/addons/display.thtml:278
+#: views/addons/display.thtml:264
 #, php-format
 msgid "addons_display_paragraph_supportinfourl"
 msgstr ""
@@ -482,15 +649,27 @@ msgstr ""
 "хөгжүүлэгч рүү хамт илгээдэггүй учраас хөгжүүлэгчээс танд уг алдаа дутагдал "
 "нь дараагийн хувилбарт засагдсан эсэхийг мэдээлэх боломжгүй байх болно."
 
-#: views/addons/display.thtml:383
-msgid "addons_display_rate_it"
-msgstr "Дүгнэлт өгөх"
+#. %1 is a URL
+#: views/addons/display.thtml:309
+#, fuzzy
+msgid "addons_display_please_login"
+msgstr "Please <a href=\"%1$s\">log in</a> to submit a review"
+
+#: views/addons/display.thtml:334
+#, fuzzy
+msgid "addons_display_post_review"
+msgstr "Post Review"
 
 #: views/reviews/add.thtml:93 views/reviews/add.thtml:94
 msgid "addons_display_really_like_it"
 msgstr "Үнэхээр таалагдаж байна"
 
-#: views/addons/display.thtml:410
+#: views/addons/display.thtml:354
+#, fuzzy
+msgid "addons_display_release_notes"
+msgstr "Release Notes"
+
+#: views/addons/display.thtml:338
 msgid "addons_display_review_etiquette"
 msgstr ""
 "Үнэлгээ дүгнэлт өгөх хэсэгт алдааны мэдээлэл илгээхгүй байхыг хүсье. Бид "
@@ -498,50 +677,63 @@ msgstr ""
 "барьж уг алдааг засахад тань тусалж чадахгүй байх болов уу."
 
 #. %1 is the review guidelines link
-#: views/addons/display.thtml:417
+#: views/addons/display.thtml:343
 #, fuzzy
 msgid "addons_display_review_guidelines_link"
 msgstr "<a href=\"%s\">Review Guidelines</a>"
 
 #. %1 is the support section link
-#: views/addons/display.thtml:414
+#: views/addons/display.thtml:340
 msgid "addons_display_review_see_support"
 msgstr ""
 "<a href=\"%1$s\">Дэмжлэг тусламжийн</a> хэсэгт уг нэмэгдэлд тохирсон "
 "тусламжийг хаанаас авч болохыг харна уу."
 
-#: views/addons/display.thtml:404
-msgid "addons_display_review_submit"
-msgstr "Хадгал"
-
-#: views/addons/display.thtml:430
+#: views/addons/display.thtml:434
 #, php-format
 msgid "addons_display_see_all_addons"
 msgstr "Бүх %1$s төрлийн нэмэгдлүүдийг харах"
 
-#. %1 is the number of reviews
-#: views/addons/display.thtml:364
-#, php-format
-msgid "addons_display_see_all_reviews"
-msgstr "Бүх үнэлгээг харах (%1$s)"
+#. %1 is a number.
+#: views/addons/display.thtml:298
+#, fuzzy
+msgid "addons_display_see_reviews"
+msgstr "See all %1$s reviews of this add-on"
 
 #: views/addons/display.thtml:219
-msgid "addons_display_see_all_versions"
-msgstr "Бүх хувилбарыг нь харах"
+#, fuzzy
+msgid "addons_display_statistics"
+msgstr "Statistics"
 
-#: views/addons/display.thtml:321 views/addons/versions.thtml:117
+#: views/addons/display.thtml:168
+#, fuzzy
+msgid "addons_display_table_summary"
+msgstr "Add-on Information"
+
+#: views/addons/display.thtml:176
+#, fuzzy
+msgid "addons_display_th_workswith"
+msgstr "Works with"
+
+#: views/addons/display.thtml:393
+#, fuzzy
+msgid "addons_display_view_older"
+msgstr "View Older Versions"
+
+#: views/addons/display.thtml:146
+#, fuzzy
+msgid "addons_display_view_privacy"
+msgstr "View privacy policy"
+
+#: views/addons/display.thtml:388 views/addons/versions.thtml:117
 msgid "addons_display_view_source"
 msgstr "Эх бичлэгийг нь харах"
 
-#: views/addons/display.thtml:324
-msgid "addons_display_view_stats"
-msgstr "Судалгааны үр дүнг харах"
-
-#: views/addons/display.thtml:376
+#: views/addons/display.thtml:306
 msgid "addons_display_what_do_you_think"
 msgstr "Та юу гэж бодож байна?"
 
-#: views/elements/app_compatibility.thtml:49
+#: views/elements/app_compatibility.thtml:48
 msgid "addons_display_workswith"
 msgstr "Ажиллах хувилбар:"
 
@@ -555,13 +747,16 @@ msgstr "Just Added"
 msgid "addons_home_browse_popular"
 msgstr "Popular"
 
+#: views/addons/searchengines.thtml:57 views/addons/themes_landing.thtml:54
 #: views/addons/home.thtml:108
 #, fuzzy
 msgid "addons_home_browse_recommended"
 msgstr "Recommended"
 
-#: views/addons/home.thtml:127 views/addons/home.thtml:134
-#: views/addons/home.thtml:141 views/addons/home.thtml:148
+#: views/elements/amo2009/homepage_addon_listing.thtml:49
+#: views/elements/amo2009/homepage_addon_listing.thtml:56
+#: views/elements/amo2009/homepage_addon_listing.thtml:63
+#: views/elements/amo2009/homepage_addon_listing.thtml:70
 #, fuzzy
 msgid "addons_home_browse_subscribe"
 msgstr "Subscribe"
@@ -571,44 +766,45 @@ msgstr "Subscribe"
 msgid "addons_home_browse_title"
 msgstr "Browse Add-ons"
 
-#: views/addons/home.thtml:114
+#: views/addons/display.thtml:183 views/addons/home.thtml:114
 #, fuzzy
 msgid "addons_home_browse_updated"
 msgstr "Updated"
 
+#: views/elements/amo2009/results_addon.thtml:106
 #: views/elements/amo2009/homepage_addon.thtml:100
 #: views/elements/addon_discussionheader.thtml:83
 #: views/elements/addon_listitem.thtml:109 views/elements/feature.thtml:95
 #: views/addons/category_landing.thtml:66 views/addons/policy.thtml:57
-#: views/addons/display.thtml:70 views/addons/home.thtml:178
+#: views/addons/display.thtml:64 views/addons/home.thtml:161
 msgid "addons_home_by"
 msgstr "зохиогч"
 
-#: views/addons/home.thtml:169
+#: views/addons/home.thtml:152
 #, fuzzy
 msgid "addons_home_collection_popular_title"
 msgstr "Popular Collections"
 
-#: views/elements/amo2009/categories.thtml:69 views/addons/home.thtml:160
+#: views/elements/amo2009/categories.thtml:69 views/addons/home.thtml:142
 #, fuzzy
 msgid "addons_home_collections"
 msgstr "Collections"
 
 #. %1$s is the count of addons in a collection
 #: views/elements/amo2009/collection_listing_item.thtml:51
-#: views/addons/home.thtml:185
+#: views/addons/home.thtml:168
 #, fuzzy
 msgid "addons_home_collections_addon_count"
 msgid_plural "addons_home_collections_addon_count"
 msgstr[0] "<strong>%1$s</strong> add-on"
 msgstr[1] "<strong>%1$s</strong> add-ons"
 
-#: views/addons/home.thtml:196
+#: views/addons/home.thtml:179
 #, fuzzy
 msgid "addons_home_collections_all"
 msgstr "View All Collections"
 
-#: views/addons/home.thtml:162
+#: views/addons/home.thtml:145
 #, fuzzy
 msgid "addons_home_collections_intro"
 msgstr ""
@@ -617,23 +813,19 @@ msgstr ""
 
 #. %1$s is the count of subscribers for a collection
 #: views/elements/amo2009/collection_listing_item.thtml:58
-#: views/collections/detail.thtml:96 views/addons/home.thtml:189
+#: views/collections/detail.thtml:96 views/addons/home.thtml:172
 #, fuzzy
 msgid "addons_home_collections_subscribers"
 msgid_plural "addons_home_collections_subscribers"
 msgstr[0] "<strong>%1$s</strong> subscriber"
 msgstr[1] "<strong>%1$s</strong> subscribers"
 
-#: views/addons/searchengines.thtml:54 views/addons/themes_landing.thtml:49
-msgid "addons_home_feature_head"
-msgstr "Бидний санал болголт"
-
-#: controllers/search_controller.php:218 controllers/addons_controller.php:176
-#: controllers/addons_controller.php:428 controllers/addons_controller.php:671
-#: controllers/addons_controller.php:871
-#: controllers/addons_controller.php:1103
-#: controllers/addons_controller.php:1242
-#: controllers/addons_controller.php:1298
+#: controllers/tags_controller.php:367 controllers/search_controller.php:235
+#: controllers/addons_controller.php:251 controllers/addons_controller.php:484
+#: controllers/addons_controller.php:777 controllers/addons_controller.php:981
+#: controllers/addons_controller.php:1207
+#: controllers/addons_controller.php:1350
+#: controllers/addons_controller.php:1399
 #, php-format
 msgid "addons_home_header_details"
 msgstr ""
@@ -641,7 +833,7 @@ msgstr ""
 "өөрчлөхөд тань туслана. Тухтай сайхан зорчиж %1$s-г өөрийн болгоорой."
 
 #. %1$s is the HTML collection name link.
-#: views/elements/amo2009/teaser_collections.thtml:107
+#: views/elements/amo2009/teaser_collections.thtml:108
 #, fuzzy
 msgid "addons_home_introduction_collection_link"
 msgstr "Like these? Find more add-ons in %1$s."
@@ -676,7 +868,7 @@ msgstr ""
 "Toolbars, themes and search providers that <strong>help you perform common "
 "tasks.</strong>"
 
-#: views/addons/home.thtml:161
+#: views/elements/amo2009/new_indicator.thtml:40
 #, fuzzy
 msgid "addons_home_new_indicator"
 msgstr "NEW!"
@@ -690,51 +882,55 @@ msgstr "Бусад програмууд"
 #: views/pages/collector_faq.thtml:49 views/pages/collector_firstrun.thtml:42
 #: views/pages/collector.thtml:46 views/pages/collector_features.thtml:54
 #: controllers/developers_controller.php:87
+#: controllers/tags_controller.php:376
 #: controllers/compatibility_controller.php:72
 #: controllers/components/simple_acl.php:81 controllers/components/amo.php:607
+#: controllers/versions_controller.php:63
 #: controllers/statistics_controller.php:60
 #: controllers/statistics_controller.php:240
-#: controllers/previews_controller.php:67 controllers/users_controller.php:90
-#: controllers/users_controller.php:223 controllers/users_controller.php:330
-#: controllers/users_controller.php:414 controllers/users_controller.php:708
-#: controllers/users_controller.php:723 controllers/reviews_controller.php:204
+#: controllers/previews_controller.php:67 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:421 controllers/users_controller.php:740
+#: controllers/users_controller.php:755 controllers/reviews_controller.php:204
 #: controllers/reviews_controller.php:251
 #: controllers/reviews_controller.php:346
 #: controllers/reviews_controller.php:425
-#: controllers/search_controller.php:185 controllers/search_controller.php:297
-#: controllers/search_controller.php:301 controllers/addons_controller.php:147
-#: controllers/addons_controller.php:280 controllers/addons_controller.php:370
-#: controllers/addons_controller.php:667 controllers/addons_controller.php:874
-#: controllers/addons_controller.php:1019
-#: controllers/addons_controller.php:1034
-#: controllers/addons_controller.php:1101
-#: controllers/addons_controller.php:1121
-#: controllers/addons_controller.php:1240
-#: controllers/addons_controller.php:1357
-#: controllers/addons_controller.php:1364
-#: controllers/addons_controller.php:1442
-#: controllers/addons_controller.php:1477
-#: controllers/addons_controller.php:1538
-#: controllers/addons_controller.php:1543
-#: controllers/editors_controller.php:64 controllers/pages_controller.php:132
+#: controllers/search_controller.php:199 controllers/search_controller.php:298
+#: controllers/search_controller.php:302 controllers/addons_controller.php:179
+#: controllers/addons_controller.php:222 controllers/addons_controller.php:357
+#: controllers/addons_controller.php:448 controllers/addons_controller.php:459
+#: controllers/addons_controller.php:773 controllers/addons_controller.php:984
+#: controllers/addons_controller.php:1129
+#: controllers/addons_controller.php:1144
+#: controllers/addons_controller.php:1205
+#: controllers/addons_controller.php:1225
+#: controllers/addons_controller.php:1348
+#: controllers/addons_controller.php:1462
+#: controllers/addons_controller.php:1469
+#: controllers/addons_controller.php:1530
+#: controllers/addons_controller.php:1565
+#: controllers/addons_controller.php:1626
+#: controllers/addons_controller.php:1631
+#: controllers/editors_controller.php:64 controllers/pages_controller.php:136
 #: controllers/groups_controller.php:65 controllers/groups_controller.php:71
 #: controllers/groups_controller.php:89 controllers/groups_controller.php:111
 #: controllers/collections_controller.php:57
-#: controllers/collections_controller.php:121
-#: controllers/collections_controller.php:205
-#: controllers/collections_controller.php:365
-#: controllers/collections_controller.php:404
-#: controllers/collections_controller.php:466
-#: controllers/collections_controller.php:538
-#: controllers/collections_controller.php:828
-#: controllers/localizers_controller.php:72
+#: controllers/collections_controller.php:99
+#: controllers/collections_controller.php:188
+#: controllers/collections_controller.php:207
+#: controllers/collections_controller.php:371
+#: controllers/collections_controller.php:410
+#: controllers/collections_controller.php:472
+#: controllers/collections_controller.php:544
+#: controllers/collections_controller.php:835
+#: controllers/localizers_controller.php:73
 #, php-format
 msgid "addons_home_pagetitle"
 msgstr "%1$s нэмэгдлүүд"
 
 #. %1$s is the number of addons downloaded
 #: views/addons/home.thtml:57
-#, fuzzy, php-format
+#, fuzzy
 msgid "addons_home_stats_downloaded"
 msgid_plural "addons_home_stats_downloaded"
 msgstr[0] "<strong>%1$s</strong> <span>add-on downloaded</span>"
@@ -742,29 +938,36 @@ msgstr[1] "<strong>%1$s</strong> <span>add-ons downloaded</span>"
 
 #. %1$s is the number of addons in use
 #: views/addons/home.thtml:63
-#, fuzzy, php-format
+#, fuzzy
 msgid "addons_home_stats_inuse"
 msgid_plural "addons_home_stats_inuse"
 msgstr[0] "<strong>%1$s</strong> <span>add-on in use</span>"
 msgstr[1] "<strong>%1$s</strong> <span>add-ons in use</span>"
 
-#: views/addons/home.thtml:136
+#: views/addons/display.thtml:194
+#, fuzzy
+msgid "addons_home_summary_developer"
+msgid_plural "addons_home_summary_developer"
+msgstr[0] "Developer"
+msgstr[1] "Developers"
+
+#: views/elements/amo2009/homepage_addon_listing.thtml:58
 msgid "addons_home_view_all_newest_title"
 msgstr "Шинээр үүсгэгдсэн нэмэгдлүүдийг харах"
 
-#: views/addons/home.thtml:129
+#: views/elements/amo2009/homepage_addon_listing.thtml:51
 msgid "addons_home_view_all_popular_title"
 msgstr "Бүх өргөн тархсан нэмэгдлүүдийг харах"
 
-#: views/addons/home.thtml:150
+#: views/elements/amo2009/homepage_addon_listing.thtml:72
 msgid "addons_home_view_all_recommended_title"
 msgstr "Бүх санал болгосон өргөтгөлүүдийг харах"
 
-#: views/addons/home.thtml:143
+#: views/elements/amo2009/homepage_addon_listing.thtml:65
 msgid "addons_home_view_all_updated_title"
 msgstr "Саяхан шинэчлэгдсэн бүх нэмэгдлүүдийг харах"
 
-#: views/elements/amo2009/install.thtml:334 views/elements/install.thtml:112
+#: views/elements/amo2009/install.thtml:352 views/elements/install.thtml:112
 #, fuzzy
 msgid "addons_install_in_sunbird"
 msgstr ""
@@ -772,12 +975,12 @@ msgstr ""
 "open Add-ons from the Tools menu.</li><li>Click the Install button, and "
 "locate/select the file you downloaded and click \"OK\".</li></ol>"
 
-#: views/elements/amo2009/install.thtml:333 views/elements/install.thtml:111
+#: views/elements/amo2009/install.thtml:351 views/elements/install.thtml:111
 #, fuzzy
 msgid "addons_install_in_sunbird_title"
 msgstr "How to Install in Sunbird"
 
-#: views/elements/amo2009/install.thtml:331 views/elements/install.thtml:106
+#: views/elements/amo2009/install.thtml:349 views/elements/install.thtml:106
 msgid "addons_install_in_thunderbird"
 msgstr ""
 "<ol><li>Доорх холбоос дээр хулганы баруун товчийг дарж \"Холбогдсон файлд "
@@ -786,7 +989,7 @@ msgstr ""
 "li><li>Суулга товч дээр дараад татаж авсан файлынхаа байршлаас файлаа "
 "сонгоод \"OK\" дээр дарна.</li></ol>"
 
-#: views/elements/amo2009/install.thtml:330 views/elements/install.thtml:105
+#: views/elements/amo2009/install.thtml:348 views/elements/install.thtml:105
 msgid "addons_install_in_thunderbird_title"
 msgstr "Thunderbird дээр хэрхэн суулгах вэ"
 
@@ -842,12 +1045,12 @@ msgstr ""
 "ялгардаг."
 
 #. %1$s is the application name.  Example: Firefox, Thunderbird, Sunbird
-#: controllers/addons_controller.php:1122
+#: controllers/addons_controller.php:1226
 #, php-format
 msgid "addons_plugins_main_header"
 msgstr "%1$s-д зориулсан ердийн плагинууд"
 
-#: controllers/components/amo.php:698 controllers/addons_controller.php:1121
+#: controllers/components/amo.php:699 controllers/addons_controller.php:1225
 msgid "addons_plugins_pagetitle"
 msgstr "Плагинууд"
 
@@ -867,7 +1070,7 @@ msgstr ""
 "мэдэх шаардлагатай:"
 
 #. %1 is the add-on name
-#: controllers/addons_controller.php:1476
+#: controllers/addons_controller.php:1564
 #, php-format
 msgid "addons_previews_pagetitle"
 msgstr "%s-н үзүүлбэр"
@@ -877,28 +1080,28 @@ msgstr "%s-н үзүүлбэр"
 msgid "addons_recently_added"
 msgstr "Recently Added"
 
-#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1365
+#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1470
 msgid "addons_recommended_introduction"
 msgstr ""
 "Маш олон нэмэгдлүүд боломжтой байгаа бөгөөд хүн болгонд тохирсон зарим "
 "нэмэгдлүүд байдаг. Танд туслах зорилгоор байнга хэрэглэгддэг болон өргөн "
 "тархсан нэмэгдлүүдийг энд жагсаав. Таалан соёрхоно уу!"
 
-#: controllers/addons_controller.php:1357
-#: controllers/addons_controller.php:1364
+#: controllers/addons_controller.php:1462
+#: controllers/addons_controller.php:1469
 msgid "addons_recommended_pagetitle"
 msgstr "Санал болгогдсон нэмэгдлүүд"
 
-#: controllers/addons_controller.php:1360
+#: controllers/addons_controller.php:1465
 msgid "addons_recommended_title"
 msgstr "Санал болгогдсон нэмэгдлүүд"
 
-#: views/addons/searchengines.thtml:136
+#: views/addons/searchengines.thtml:83
 msgid "addons_searchengines_additional_resources"
 msgstr "Нэмэлт эх сурвалж"
 
 #. link text devmo
-#: views/addons/searchengines.thtml:141
+#: views/addons/searchengines.thtml:90
 msgid "addons_searchengines_devmo_link"
 msgstr "Мозилаг хөгжүүлэгчдийн төв"
 
@@ -908,7 +1111,7 @@ msgstr ""
 "Уулчаарай, хайгч плагиныг суулгахын тулд Мозила үндэстэй (жишээ нь Firefox) "
 "хөтлөгч суулгах хэрэгтэй."
 
-#: views/addons/searchengines.thtml:49
+#: views/addons/searchengines.thtml:51
 msgid "addons_searchengines_error_nojavascript"
 msgstr ""
 "Плагин суулгахын тулд Жаавасрипт шаардлагатай байдаг бөгөөд та түүнийг "
@@ -917,67 +1120,67 @@ msgstr ""
 
 #. %1 is "make your own" link
 #. %2 is MDC link
-#: views/addons/searchengines.thtml:139
+#: views/addons/searchengines.thtml:88
 msgid "addons_searchengines_learn_howto"
 msgstr "Хэрхэн %2$s дээр %1$s-н тухай сурах."
 
 #. link path to search plugins instructions, relative to devmo
-#: views/addons/searchengines.thtml:140
+#: views/addons/searchengines.thtml:89
 msgid "addons_searchengines_makeyourown_href"
 msgstr "/en/docs/Creating_OpenSearch_plugins_for_Firefox"
 
 #. link text for "make your own" (opensearch engine)
-#: views/addons/searchengines.thtml:140
+#: views/addons/searchengines.thtml:89
 msgid "addons_searchengines_makeyourown_link"
 msgstr "өөрийн болгох"
 
 #. %1 is the link to mycroft.mozdev.org
-#: views/addons/searchengines.thtml:138
+#: views/addons/searchengines.thtml:87
 msgid "addons_searchengines_more"
 msgstr "%1$s дээр буй бусад хайгчдыг сонирхоно уу."
 
 #. link text to mycroft.mozdev.org
-#: views/addons/searchengines.thtml:138
+#: views/addons/searchengines.thtml:87
 msgid "addons_searchengines_mycroft_link"
 msgstr "mycroft.mozdev.org"
 
-#: controllers/addons_controller.php:1100
-#: controllers/addons_controller.php:1110
+#: controllers/addons_controller.php:1204
+#: controllers/addons_controller.php:1214
 msgid "addons_searchengines_pagetitle"
 msgstr "Хайлт хийгчид"
 
-#: views/addons/searchengines.thtml:143
+#: views/addons/searchengines.thtml:93
 msgid "addons_searchengines_thanks"
 msgstr ""
 "Firefox-н хайлт хийгчдэд зориулж ажилласан Mycroft төслийн хамт олонд онцгой "
 "талархал дэвшүүлж байна."
 
-#: views/addons/display.thtml:154
+#: views/addons/display.thtml:98
 #, fuzzy
-msgid "addons_share_button_text"
-msgstr "Share this"
+msgid "addons_share_button_a_text"
+msgstr "Share this Add-on"
 
-#: controllers/addons_controller.php:89
+#: controllers/addons_controller.php:88
 #, fuzzy
 msgid "addons_share_label_delicious"
 msgstr "Add to Delicious"
 
-#: controllers/addons_controller.php:77
+#: controllers/addons_controller.php:76
 #, fuzzy
 msgid "addons_share_label_digg"
 msgstr "Digg this!"
 
-#: controllers/addons_controller.php:83
+#: controllers/addons_controller.php:82
 #, fuzzy
 msgid "addons_share_label_facebook"
 msgstr "Post to Facebook"
 
-#: controllers/addons_controller.php:101
+#: controllers/addons_controller.php:100
 #, fuzzy
 msgid "addons_share_label_friendfeed"
 msgstr "Share on FriendFeed"
 
-#: controllers/addons_controller.php:95
+#: controllers/addons_controller.php:94
 #, fuzzy
 msgid "addons_share_label_myspace"
 msgstr "Post to MySpace"
@@ -1020,7 +1223,9 @@ msgstr "In Sandbox"
 msgid "addons_status_unknown"
 msgstr "Unknown"
 
-#: views/elements/amo2009/teaser_collections.thtml:91
+#: views/elements/amo2009/teaser_collections.thtml:92
+#: views/elements/amo2009/results_addon.thtml:105
+#: views/elements/amo2009/results_addon.thtml:107
 #: views/elements/amo2009/homepage_addon.thtml:99
 #: views/elements/feature.thtml:94
 #, fuzzy
@@ -1047,12 +1252,12 @@ msgstr ""
 "Эдгээр хувилбар нь шалгах юмуу лавлагаа зориулалтаар харуулагдсан болно.  Та "
 "үргэлж шинэ хувилбарыг нь илүүд тооцох хэрэгтэй."
 
-#: controllers/addons_controller.php:1549
+#: controllers/addons_controller.php:1637
 msgid "addons_versions_history"
 msgstr "Өөрчлөлтийн бүртгэл агуулсан хувилбарын түүх"
 
 #. %1$s is the add-on name
-#: controllers/addons_controller.php:1535
+#: controllers/addons_controller.php:1623
 #, php-format
 msgid "addons_versions_pagetitle"
 msgstr "%1$s хувилбарын түүх"
@@ -1087,7 +1292,7 @@ msgstr "Бүлэг зохицуулагч"
 msgid "admin_group_saved"
 msgstr "Бүлэг хадгалагдав"
 
-#: views/elements/amo2009/search.thtml:257 views/elements/search.thtml:239
+#: views/elements/amo2009/search.thtml:263 views/elements/search.thtml:239
 msgid "advanced_search_form"
 msgstr "Нэмэлт"
 
@@ -1101,27 +1306,30 @@ msgstr "бүх хугацаанд"
 msgid "advanced_search_form_any_type"
 msgstr "бүх төрөлд"
 
-#: views/elements/amo2009/search.thtml:275 views/elements/search.thtml:254
+#: views/elements/amo2009/search.thtml:281 views/elements/search.thtml:254
 msgid "advanced_search_form_any_version"
 msgstr "бүх хувилбарт"
 
-#: views/elements/amo2009/search.thtml:217 views/elements/search.thtml:212
+#: views/elements/amo2009/search.thtml:223 views/elements/search.thtml:212
 msgid "advanced_search_form_application"
 msgstr "Програм"
 
 #: views/elements/amo2009/search.thtml:143 views/elements/search.thtml:142
+#: views/search/index.thtml:99
 msgid "advanced_search_form_keyword_match"
 msgstr "Хайх үгтэй тохирсон"
 
-#: views/elements/amo2009/search.thtml:251 views/elements/search.thtml:225
+#: views/elements/amo2009/search.thtml:257 views/elements/search.thtml:225
 msgid "advanced_search_form_lastupdate"
 msgstr "Сүүлд шинэчлэгдсэн"
 
 #: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:144
+#: views/tags/display.thtml:77 views/search/index.thtml:101
 msgid "advanced_search_form_name"
 msgstr "Нэр"
 
 #: views/elements/amo2009/search.thtml:144 views/elements/search.thtml:143
+#: views/tags/display.thtml:76 views/search/index.thtml:100
 msgid "advanced_search_form_newest"
 msgstr "Хамгийн сүүлийн"
 
@@ -1149,40 +1357,44 @@ msgstr "Өнгөрсөн долоо хоног"
 msgid "advanced_search_form_past_year"
 msgstr "Өнгөрсөн жил"
 
-#: views/elements/amo2009/search.thtml:239 views/elements/search.thtml:230
+#: views/elements/amo2009/search.thtml:245 views/elements/search.thtml:230
 msgid "advanced_search_form_perpage"
 msgstr "Нэг хуудсанд"
 
-#: views/elements/amo2009/search.thtml:243 views/elements/search.thtml:224
+#: views/elements/amo2009/search.thtml:249 views/elements/search.thtml:224
 msgid "advanced_search_form_platform"
 msgstr "Системийн төрөл"
 
 #: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:146
+#: views/tags/display.thtml:79 views/search/index.thtml:103
 msgid "advanced_search_form_popularity"
 msgstr "Олонд тархсанаар нь"
 
 #: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:145
+#: views/tags/display.thtml:78 views/search/index.thtml:102
+#: views/addons/display.thtml:209
 msgid "advanced_search_form_rating"
 msgstr "Үнэлгээгээр нь"
 
-#: views/elements/amo2009/search.thtml:247 views/elements/search.thtml:231
+#: views/elements/amo2009/search.thtml:253 views/elements/search.thtml:231
+#: views/tags/display.thtml:73 views/search/index.thtml:96
 msgid "advanced_search_form_sortby"
 msgstr "Эрэмбэлэлт"
 
-#: views/elements/amo2009/search.thtml:227 views/elements/search.thtml:216
+#: views/elements/amo2009/search.thtml:233 views/elements/search.thtml:216
 msgid "advanced_search_form_to"
 msgstr "-с эхлээд"
 
-#: views/elements/amo2009/search.thtml:257 views/elements/search.thtml:237
+#: views/elements/amo2009/search.thtml:263 views/elements/search.thtml:237
 #, fuzzy
 msgid "advanced_search_form_toggle_tooltip"
 msgstr "Toggle advanced search mode"
 
-#: views/elements/amo2009/search.thtml:235 views/elements/search.thtml:223
+#: views/elements/amo2009/search.thtml:241 views/elements/search.thtml:223
 msgid "advanced_search_form_type"
 msgstr "Төрөл"
 
-#: views/elements/amo2009/search.thtml:222 views/elements/search.thtml:214
+#: views/elements/amo2009/search.thtml:228 views/elements/search.thtml:214
 msgid "advanced_search_form_version"
 msgstr "хувилбар"
 
@@ -1283,6 +1495,28 @@ msgstr "%1$s created version %2$s for %3$s"
 #, fuzzy
 msgid "audit_appversion_delete"
 msgstr "%1$s deleted version %2$s for %3$s"
+
+#. %1$s is <a>user name</a>
+#. %2$s is a category name, like <a>Search Tools</a>
+#: controllers/components/audit.php:118
+#, fuzzy
+msgid "audit_category_create"
+msgstr "%1$s created tag %2$s"
+
+#. %1$s is <a>user name</a>
+#. %2$s is a category name, like <a>Search Tools</a>
+#. %3$s is a numeric id.
+#: controllers/components/audit.php:126
+#, fuzzy
+msgid "audit_category_delete"
+msgstr "%1$s deleted category %2$s (ID %3$s)"
+
+#. %1$s is <a>user name</a>
+#. %2$s is a category name, like <a>Search Tools</a>
+#: controllers/components/audit.php:121
+#, fuzzy
+msgid "audit_category_edit"
+msgstr "%1$s edited category %2$s"
 
 #. %1$s is <a>user name</a>
 #. %2$s is a config field, like "awesomeness".
@@ -1477,28 +1711,6 @@ msgid "audit_security_default"
 msgstr "%1$s committed unknown security action %2$s to ID %3$s"
 
 #. %1$s is <a>user name</a>
-#. %2$s is a category name, like <a>Search Tools</a>
-#: controllers/components/audit.php:118
-#, fuzzy
-msgid "audit_category_create"
-msgstr "%1$s created tag %2$s"
-
-#. %1$s is <a>user name</a>
-#. %2$s is a category name, like <a>Search Tools</a>
-#. %3$s is a numeric id.
-#: controllers/components/audit.php:126
-#, fuzzy
-msgid "audit_category_delete"
-msgstr "%1$s deleted category %2$s (ID %3$s)"
-
-#. %1$s is <a>user name</a>
-#. %2$s is a category name, like <a>Search Tools</a>
-#: controllers/components/audit.php:121
-#, fuzzy
-msgid "audit_category_edit"
-msgstr "%1$s edited category %2$s"
-
-#. %1$s is <a>user name</a>
 #. %2$s is a locale, like en-US.
 #: controllers/components/audit.php:266
 #, fuzzy
@@ -1512,6 +1724,10 @@ msgstr "%1$s updated application translations for %2$s"
 msgid "audit_update_blog"
 msgstr "%1$s updated blog post translations for %2$s"
 
+#: controllers/components/audit.php:270
+msgid "audit_update_categories"
+msgstr ""
+
 #. %1$s is <a>user name</a>
 #. %2$s is a locale, like en-US.
 #: controllers/components/audit.php:274
@@ -1520,36 +1736,29 @@ msgid "audit_update_platforms"
 msgstr "%1$s updated platform translations for %2$s"
 
 #. %1$s is <a>user name</a>
-#. %2$s is a locale, like en-US.
-#: controllers/components/audit.php:270
-#, fuzzy
-msgid "audit_update_tags"
-msgstr "%1$s updated category translations for %2$s"
-
-#. %1$s is <a>user name</a>
 #. %2$s is <a>user name</a>
 #: controllers/components/audit.php:217
 #, fuzzy
 msgid "audit_user_edit"
 msgstr "%1$s edited %2$s's user information"
 
-#: controllers/addons_controller.php:1012
+#: controllers/addons_controller.php:1122
 msgid "browse_addons_name"
 msgstr "Нэрээр нь эрэмбэлж харах"
 
-#: controllers/addons_controller.php:1010
+#: controllers/addons_controller.php:1120
 msgid "browse_addons_newest"
 msgstr "Шинэхэн нэмэгдлүүд"
 
-#: controllers/addons_controller.php:1008
+#: controllers/addons_controller.php:1118
 msgid "browse_addons_popular"
 msgstr "Өргөн тархсан нэмэгдлүүд"
 
-#: controllers/addons_controller.php:1011
+#: controllers/addons_controller.php:1121
 msgid "browse_addons_rated"
 msgstr "Үнэлгээгээр нь эрэмбэлж харах"
 
-#: controllers/addons_controller.php:1009
+#: controllers/addons_controller.php:1119
 msgid "browse_addons_updated"
 msgstr "Саяхан шинэчлэгдсэн нэмэгдлүүд"
 
@@ -1569,7 +1778,7 @@ msgid "categories_header_title"
 msgstr "Төрөл сонгох"
 
 #. %1$s is the category name
-#: views/addons/searchengines.thtml:129
+#: views/addons/searchengines.thtml:86
 #, php-format
 msgid "category_extra_see_all"
 msgstr "%1$s төрлөөс бүгдийг нь харуул"
@@ -1581,22 +1790,22 @@ msgid "collection_description_limit"
 msgstr "The description should be less than %1$s characters."
 
 #. %1$s is the name of the collection
-#: controllers/collections_controller.php:392
+#: controllers/collections_controller.php:398
 #, fuzzy
 msgid "collection_detail_rss_title"
 msgstr "%s Collection"
 
-#: controllers/collections_controller.php:1065
+#: controllers/collections_controller.php:1075
 #, fuzzy
 msgid "collection_error_deleting_addon"
 msgstr "Error deleting add-on!"
 
-#: controllers/collections_controller.php:1051
+#: controllers/collections_controller.php:1061
 #, fuzzy
 msgid "collection_error_saving_addon"
 msgstr "Error saving add-on!"
 
-#: controllers/collections_controller.php:1080
+#: controllers/collections_controller.php:1090
 #, fuzzy
 msgid "collection_error_saving_comment"
 msgstr "Error saving comment!"
@@ -1607,8 +1816,8 @@ msgstr "Error saving comment!"
 msgid "collection_name_limit"
 msgstr "The name should be less than %1$s characters."
 
-#: controllers/collections_controller.php:352
-#: controllers/collections_controller.php:487
+#: controllers/collections_controller.php:358
+#: controllers/collections_controller.php:493
 #, fuzzy
 msgid "collection_not_found"
 msgstr "Collection not found!"
@@ -1651,11 +1860,12 @@ msgstr "Create Collection"
 
 #: views/pages/collector_faq.thtml:50 views/pages/collector_firstrun.thtml:43
 #: views/pages/collector.thtml:47 views/pages/collector_features.thtml:55
-#: controllers/search_controller.php:302
-#: controllers/collections_controller.php:206
-#: controllers/collections_controller.php:405
-#: controllers/collections_controller.php:467
-#: controllers/collections_controller.php:539
+#: controllers/search_controller.php:303
+#: controllers/collections_controller.php:189
+#: controllers/collections_controller.php:208
+#: controllers/collections_controller.php:411
+#: controllers/collections_controller.php:473
+#: controllers/collections_controller.php:545
 #, fuzzy
 msgid "collections_breadcrumb"
 msgstr "Collections"
@@ -1738,17 +1948,17 @@ msgstr "<a href=\"%1$s\">Log in</a> to add this collection to your favorites."
 msgid "collections_detail_manage"
 msgstr "Manage Collection"
 
-#: controllers/collections_controller.php:298
+#: controllers/collections_controller.php:301
 #, fuzzy
 msgid "collections_detail_sort_date"
 msgstr "Date Added"
 
-#: controllers/collections_controller.php:299
+#: controllers/collections_controller.php:302
 #, fuzzy
 msgid "collections_detail_sort_name"
 msgstr "Name"
 
-#: controllers/collections_controller.php:300
+#: controllers/collections_controller.php:303
 #, fuzzy
 msgid "collections_detail_sort_popularity"
 msgstr "Popularity"
@@ -1833,13 +2043,13 @@ msgstr "Add to Collection"
 msgid "collections_edit_check_nickname"
 msgstr "Check Availability"
 
-#: views/collections/edit.thtml:299
+#: views/collections/edit.thtml:298
 #, fuzzy
 msgid "collections_edit_confirm_deletecollection"
 msgstr "Yes, I would like to delete this collection."
 
 #. %1$s is the label of the edit form's submit button
-#: views/collections/edit.thtml:300
+#: views/collections/edit.thtml:299 views/collections/edit.thtml:300
 #, fuzzy
 msgid "collections_edit_confirm_deletecollection_description"
 msgstr "Check the box, then click on \"%1$s\" to delete this collection."
@@ -1900,12 +2110,12 @@ msgstr "Select the application that your collection supports."
 msgid "collections_edit_formfield_collectiontype"
 msgstr "Collection Type"
 
-#: views/collections/edit.thtml:295
+#: views/collections/edit.thtml:294
 #, fuzzy
 msgid "collections_edit_formfield_deletecollection"
 msgstr "Delete Collection"
 
-#: views/collections/edit.thtml:296
+#: views/collections/edit.thtml:295
 #, fuzzy
 msgid "collections_edit_formfield_deletecollection_description"
 msgstr "Deleting your collection will permanently erase it."
@@ -2084,7 +2294,7 @@ msgstr "Icon will be removed when \"%1$s\" is clicked below"
 msgid "collections_edit_nickname_available"
 msgstr "Nickname Available"
 
-#: controllers/collections_controller.php:943
+#: controllers/collections_controller.php:950
 #, fuzzy
 msgid "collections_edit_nickname_error"
 msgstr ""
@@ -2108,13 +2318,13 @@ msgid "collections_edit_saved_success"
 msgstr "Your collection was successfully saved!"
 
 #: views/collections/edit.thtml:169 views/collections/edit.thtml:300
-#: views/collections/edit.thtml:308 views/pages/js_constants.js.thtml:99
+#: views/collections/edit.thtml:307 views/pages/js_constants.js.thtml:99
 #, fuzzy
 msgid "collections_edit_submit"
 msgstr "Update Collection"
 
-#: views/collections/edit.thtml:96 views/collections/edit.thtml:297
-#: views/pages/js_constants.js.thtml:100
+#: views/collections/edit.thtml:96 views/collections/edit.thtml:296
+#: views/collections/edit.thtml:299 views/pages/js_constants.js.thtml:100
 #, fuzzy
 msgid "collections_edit_submit_deletecollection"
 msgstr "Delete Collection"
@@ -2139,16 +2349,6 @@ msgstr "Name &amp; Details"
 msgid "collections_edit_tabheader_permissions"
 msgstr "Permissions"
 
-#: models/collection_promo.php:53
-#, fuzzy
-msgid "collections_family_tagline"
-msgstr "Add-ons can keep an eye on your kids and your calendar."
-
-#: models/collection_promo.php:53
-#, fuzzy
-msgid "collections_family_title"
-msgstr "Family"
-
 #: views/elements/amo2009/collector_info_secondary.thtml:70
 #, fuzzy
 msgid "collections_index_a_check_out"
@@ -2159,14 +2359,15 @@ msgstr "Check out Add-on Collector"
 msgid "collections_index_a_create"
 msgstr "Create a Collection"
 
-#: views/collections/detail.thtml:139 views/collections/listing.thtml:85
-#: views/search/collections.thtml:84
+#: views/elements/amo2009/collections_sort_form.thtml:55
+#: views/collections/detail.thtml:139 views/tags/display.thtml:83
+#: views/search/index.thtml:107
 #, fuzzy
 msgid "collections_index_button_go"
 msgstr "Go"
 
 #. %1$s is a URL.
-#: controllers/collections_controller.php:182
+#: controllers/collections_controller.php:163
 #, fuzzy
 msgid "collections_index_filler_favorites"
 msgstr ""
@@ -2176,14 +2377,20 @@ msgstr ""
 "installed it.</p>"
 
 #. %1$s is a URL.
-#: controllers/collections_controller.php:167
+#: controllers/collections_controller.php:148
 #, fuzzy
 msgid "collections_index_filler_mine"
 msgstr ""
 "<p>You haven't created any collections yet. Collections are easy to create "
 "and fill with your favorite add-ons.  <a href='%1$s'>Try it out</a>!</p>"
 
-#: views/collections/listing.thtml:51
+#. %1$s is an add-on's name
+#: controllers/collections_controller.php:185
+#, fuzzy
+msgid "collections_index_header_addon"
+msgstr "Collections containing %1$s"
+
+#: views/collections/listing.thtml:52
 #, fuzzy
 msgid "collections_index_header_collections"
 msgstr "Collections"
@@ -2205,49 +2412,49 @@ msgstr "created by %1$s"
 msgid "collections_index_header_what"
 msgstr "What are Collections?"
 
-#: views/collections/detail.thtml:132 views/collections/listing.thtml:78
-#: views/search/collections.thtml:66
+#: views/elements/amo2009/collections_sort_form.thtml:48
+#: views/collections/detail.thtml:132
 #, fuzzy
 msgid "collections_index_label_sortby"
 msgstr "Sort by"
 
-#: controllers/collections_controller.php:130
+#: controllers/collections_controller.php:109
 #, fuzzy
 msgid "collections_index_li_editors"
 msgstr "Editor's Picks"
 
 #: views/collections/subscribe.thtml:64
-#: controllers/collections_controller.php:140
+#: controllers/collections_controller.php:119
 #, fuzzy
 msgid "collections_index_li_favorites"
 msgstr "My Favorites"
 
-#: controllers/collections_controller.php:138
+#: controllers/collections_controller.php:117
 #, fuzzy
 msgid "collections_index_li_mine"
 msgstr "My Collections"
 
-#: controllers/collections_controller.php:132
+#: controllers/collections_controller.php:111
 #, fuzzy
 msgid "collections_index_li_popular"
 msgstr "Popular"
 
-#: views/search/collections.thtml:74 controllers/collections_controller.php:81
+#: controllers/components/collections_listing.php:68
 #, fuzzy
 msgid "collections_index_option_all"
 msgstr "Most popular all time"
 
-#: views/search/collections.thtml:72 controllers/collections_controller.php:78
+#: controllers/components/collections_listing.php:65
 #, fuzzy
 msgid "collections_index_option_month"
 msgstr "Most popular this month"
 
-#: views/search/collections.thtml:76 controllers/collections_controller.php:84
+#: controllers/components/collections_listing.php:71
 #, fuzzy
 msgid "collections_index_option_newest"
 msgstr "Newest"
 
-#: views/search/collections.thtml:70 controllers/collections_controller.php:75
+#: controllers/components/collections_listing.php:62
 #, fuzzy
 msgid "collections_index_option_week"
 msgstr "Most popular this week"
@@ -2269,26 +2476,6 @@ msgstr "Collections are groups of related add-ons assembled for easy sharing."
 #, fuzzy, php-format
 msgid "collections_interactive_addon_added"
 msgstr "Added %s"
-
-#: models/collection_promo.php:55
-#, fuzzy
-msgid "collections_reference_tagline"
-msgstr "Add-ons can do better research online."
-
-#: models/collection_promo.php:55
-#, fuzzy
-msgid "collections_reference_title"
-msgstr "Reference"
-
-#: models/collection_promo.php:52
-#, fuzzy
-msgid "collections_social_tagline"
-msgstr "Add-ons can manage your social network."
-
-#: models/collection_promo.php:52
-#, fuzzy
-msgid "collections_social_title"
-msgstr "Social"
 
 #: views/collections/subscribe.thtml:91
 #, fuzzy
@@ -2325,34 +2512,24 @@ msgstr ""
 "collections, try out our <a href=\"%3$s\">Add-on Collector</a> extension for "
 "Firefox."
 
-#: views/collections/listing.thtml:55
+#: views/collections/listing.thtml:59
 #, fuzzy
 msgid "collections_success_delete"
 msgstr "The collection has been deleted."
 
-#: models/collection_promo.php:54
-#, fuzzy
-msgid "collections_travel_tagline"
-msgstr "Add-ons can turn you into a travel agent."
-
-#: models/collection_promo.php:54
-#, fuzzy
-msgid "collections_travel_title"
-msgstr "Travel"
-
 #. A collection of add-ons that is automatically built for a user.  They are "automatically published" to this collection.
-#: controllers/collections_controller.php:581
+#: controllers/collections_controller.php:587
 #, fuzzy
 msgid "collections_type_autopublisher"
 msgstr "Auto-publisher"
 
 #. A collection that has been chosen by an Editor as notable or exceptional
-#: controllers/collections_controller.php:582
+#: controllers/collections_controller.php:588
 #, fuzzy
 msgid "collections_type_editorspick"
 msgstr "Editor's Pick"
 
-#: controllers/collections_controller.php:580
+#: controllers/collections_controller.php:586
 #, fuzzy
 msgid "collections_type_normal"
 msgstr "Normal"
@@ -2369,16 +2546,6 @@ msgstr ""
 #, fuzzy
 msgid "collections_unsubscribe_success"
 msgstr "%1$s has been removed from your favorite collections."
-
-#: models/collection_promo.php:56
-#, fuzzy
-msgid "collections_webdev_tagline"
-msgstr "Add-ons make it easier to build the perfect website."
-
-#: models/collection_promo.php:56
-#, fuzzy
-msgid "collections_webdev_title"
-msgstr "Web Development"
 
 #: views/elements/amo2009/collections_sidebar_whatare.thtml:40
 #, fuzzy
@@ -2640,20 +2807,24 @@ msgstr ""
 #. date format string as used in PHP's strftime():
 #. http://php.net/strftime
 #: views/elements/collections_interactive_addon.thtml:85
+#: views/elements/amo2009/user_vcard.thtml:78
 #: views/elements/amo2009/addon_version_detail.thtml:53
+#: views/elements/amo2009/results_addon.thtml:96
+#: views/elements/amo2009/results_addon.thtml:117
 #: views/elements/amo2009/homepage_addon.thtml:115
 #: views/elements/addon_version_detail.thtml:54
 #: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
-#: views/collections/detail.thtml:118 views/collections/edit.thtml:325
-#: views/users/info.thtml:76 views/editors/reviews_queue.thtml:57
-#: views/editors/reviews_queue.thtml:68 views/developers/dashboard.thtml:65
+#: views/collections/detail.thtml:118 views/collections/detail.thtml:194
+#: views/collections/edit.thtml:324 views/users/info.thtml:76
+#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
+#: views/developers/dashboard.thtml:65
 #: views/developers/versions_edit.thtml:208 views/developers/versions.thtml:67
 #: views/search/rss/index.thtml:5 views/addons/rss/versions.thtml:42
-#: views/addons/display.thtml:104 views/addons/display.thtml:356
-#: views/addons/browse_thumbs.thtml:75 views/reviews/add.thtml:63
+#: views/addons/display.thtml:187 views/addons/display.thtml:292
+#: views/addons/browse_thumbs.thtml:120 views/reviews/add.thtml:63
 #: views/reviews/display.thtml:74 views/reviews/display.thtml:160
 #: views/reviews/delete.thtml:54 controllers/statistics_controller.php:244
-#: controllers/collections_controller.php:1047
+#: controllers/collections_controller.php:1057
 msgid "date"
 msgstr "%Y оны %B %e "
 
@@ -2661,7 +2832,7 @@ msgstr "%Y оны %B %e "
 #. http://php.net/strftime
 #: views/elements/addon_version_detail.thtml:53
 #: views/developers/discuss.thtml:52 views/developers/discuss.thtml:62
-#: views/admin/addons_status.thtml:57
+#: views/admin/addons_status.thtml:57 views/addons/display.thtml:186
 msgid "datetime"
 msgstr "%Y оны %B %e, %I:%M %p"
 
@@ -2688,30 +2859,30 @@ msgstr "Судалгааны самбар"
 #. %1$s is a filename, e.g. "foo.txt"
 #. %2$s is the extension, e.g. ".txt"
 #. %3$s is a list of valid extensions, like ".png, .jpg, .gif"
-#: controllers/developers_controller.php:1361
+#: controllers/developers_controller.php:1472
 #, fuzzy
 msgid "devcp_add_previews_extension_error"
 msgstr "File %1$s has an invalid extension (%2$s). Allowed extensions: %3$s"
 
 #. %s is the filename.
-#: controllers/developers_controller.php:1394
+#: controllers/developers_controller.php:1505
 #, fuzzy
 msgid "devcp_add_previews_save_error"
 msgstr "File %s could not be saved to the database. Please try again."
 
 #. %1$s is the preview ID number, %2$s is the filename.
-#: controllers/developers_controller.php:1389
+#: controllers/developers_controller.php:1500
 #, fuzzy
 msgid "devcp_add_previews_success_replace"
 msgstr "Preview %1$s was replaced with file %2$s successfully."
 
 #. %s is the filename.
-#: controllers/developers_controller.php:1391
+#: controllers/developers_controller.php:1502
 #, fuzzy
 msgid "devcp_add_previews_success_upload"
 msgstr "File %s was uploaded successfully. You can add a caption below."
 
-#: controllers/components/developers.php:1163
+#: controllers/components/developers.php:1187
 msgid "devcp_additem_addontype_autodetect"
 msgstr "(автоматаар тань)"
 
@@ -3086,18 +3257,18 @@ msgid "devcp_dashboard_versions_new"
 msgstr "Upload a new version"
 
 #. %s is the preview ID number.
-#: controllers/developers_controller.php:1415
+#: controllers/developers_controller.php:1526
 #, fuzzy
 msgid "devcp_delete_previews_error"
 msgstr "Preview %s could not be deleted from the database. Please try again."
 
 #. %s is the preview ID number.
-#: controllers/developers_controller.php:1413
+#: controllers/developers_controller.php:1524
 #, fuzzy
 msgid "devcp_delete_previews_success"
 msgstr "Preview %s has been deleted successfully."
 
-#: controllers/developers_controller.php:1089
+#: controllers/developers_controller.php:1200
 #, fuzzy
 msgid "devcp_delete_version_priv_error"
 msgstr "You do not have privileges to delete versions or files."
@@ -3317,6 +3488,167 @@ msgstr ""
 msgid "devcp_edit_categories_select_application_categories"
 msgstr "Select up to three %s categories for your add-on"
 
+#. %1$s is a URL.
+#: views/developers/addon_edit_contributions.thtml:104
+#, fuzzy
+msgid "devcp_edit_contrib_account"
+msgstr ""
+"Your contribution account is the <a href=\"%1$s\">PayPal account</a> where "
+"user contributions will be deposited."
+
+#: views/developers/addon_edit_contributions.thtml:131
+#, fuzzy
+msgid "devcp_edit_contrib_amount"
+msgstr "Users have the option of contributing more or less than this amount."
+
+#: views/developers/addon_edit_contributions.thtml:122
+#, fuzzy
+msgid "devcp_edit_contrib_asking"
+msgstr ""
+"Specify how much users will be asked to contribute and where they will be "
+"asked."
+
+#: views/developers/addon_edit_contributions.thtml:69
+#, fuzzy
+msgid "devcp_edit_contrib_before"
+msgstr "Before you begin, you must create a developer profile."
+
+#: views/developers/addon_edit_contributions.thtml:71
+#, fuzzy
+msgid "devcp_edit_contrib_button_profile"
+msgstr "Create a Developer Profile First"
+
+#: views/developers/addon_edit_contributions.thtml:66
+#: views/developers/addon_edit_contributions.thtml:150
+#, fuzzy
+msgid "devcp_edit_contrib_button_start"
+msgstr "Start Asking for Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:152
+#, fuzzy
+msgid "devcp_edit_contrib_button_update"
+msgstr "Update Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:89
+#, fuzzy
+msgid "devcp_edit_contrib_currently_asking"
+msgstr ""
+"You are currently <strong>asking for contributions</strong> from users of "
+"this add-on."
+
+#: views/developers/addon_edit_contributions.thtml:92
+#, fuzzy
+msgid "devcp_edit_contrib_currently_not_asking"
+msgstr ""
+"You are currently <strong>not asking for contributions</strong> from users "
+"of this add-on."
+
+#: controllers/developers_controller.php:1636
+#, fuzzy
+msgid "devcp_edit_contrib_example_after"
+msgstr ""
+"When users begin downloading this add-on they are taken to your Developer "
+"Profile, where they are asked to make a contribution."
+
+#: controllers/developers_controller.php:1633
+#, fuzzy
+msgid "devcp_edit_contrib_example_passive"
+msgstr ""
+"A new section is added to your add-on's page and Developer Profile "
+"requesting a contribution from your users."
+
+#: controllers/developers_controller.php:1639
+#, fuzzy
+msgid "devcp_edit_contrib_example_roadblock"
+msgstr ""
+"When users try to install this add-on they are taken to your Developer "
+"Profile first, where they will be asked to make a contribution. Users must "
+"click the install button again to complete the installation."
+
+#: views/developers/addon_edit_contributions.thtml:103
+#, fuzzy
+msgid "devcp_edit_contrib_header_account"
+msgstr "Contribution Account"
+
+#: views/developers/addon_edit_contributions.thtml:121
+#, fuzzy
+msgid "devcp_edit_contrib_header_asking"
+msgstr "Asking for Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:62
+#, fuzzy
+msgid "devcp_edit_contrib_header_start"
+msgstr "Start Asking for Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:107
+#, fuzzy
+msgid "devcp_edit_contrib_label_pp_id"
+msgstr "PayPal ID"
+
+#: views/developers/addon_edit_contributions.thtml:125
+#, fuzzy
+msgid "devcp_edit_contrib_label_suggested"
+msgstr "Suggested amount"
+
+#: views/developers/addon_edit_contributions.thtml:135
+#, fuzzy
+msgid "devcp_edit_contrib_label_where"
+msgstr "Where to ask"
+
+#: views/developers/addon_edit_contributions.thtml:115
+#, fuzzy
+msgid "devcp_edit_contrib_pp_signup"
+msgstr "Sign up for PayPal"
+
+#. %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:139
+#, fuzzy
+msgid "devcp_edit_contrib_radio_ask_after_example"
+msgstr ""
+"Ask after users start downloading this add-on (<a href=\"%1$s\">example</a>)"
+
+#. %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:138
+#, fuzzy
+msgid "devcp_edit_contrib_radio_ask_passive_example"
+msgstr ""
+"Only ask on this add-on's page and developer profile (<a href=\"%1$s"
+"\">example</a>)"
+
+#. %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:140
+#, fuzzy
+msgid "devcp_edit_contrib_radio_ask_roadblock_example"
+msgstr ""
+"Ask before users can download this add-on (<a href=\"%1$s\">example</a>)"
+
+#: views/developers/addon_edit_contributions.thtml:63
+#, fuzzy
+msgid "devcp_edit_contrib_start"
+msgstr ""
+"<p>Contributions provide a way for users to support your add-on financially. "
+"With contributions, you can:</p><ul><li>Ask users for donations on your add-"
+"on's listing.</li><li>Offer users the ability to contribute using a credit "
+"card or PayPal account.</li><li>Deposit contributions in a <a href='https://"
+"www.paypal.com/' target='_blank'>PayPal account</a> of your choice.</li></"
+"ul><p>Ready to get started? Click below to start asking for contributions.</"
+"p>"
+
+#: views/developers/addon_edit_contributions.thtml:93
+#, fuzzy
+msgid "devcp_edit_contrib_start_asking"
+msgstr "Start asking for contributions"
+
+#: views/developers/addon_edit_contributions.thtml:90
+#, fuzzy
+msgid "devcp_edit_contrib_stop_asking"
+msgstr "Stop asking for contributions"
+
+#: views/developers/addon_edit_contributions.thtml:128
+#, fuzzy
+msgid "devcp_edit_contrib_suggested_amount_error"
+msgstr "Should be a positive number between 0.00 and 99.99."
+
 #: views/developers/addon_edit.thtml:47
 #, fuzzy
 msgid "devcp_edit_dd_manage_authors"
@@ -3328,17 +3660,33 @@ msgid "devcp_edit_dd_manage_categories"
 msgstr ""
 "Select the relevant categories for each application your add-on supports."
 
-#: views/developers/addon_edit.thtml:51
+#: views/developers/addon_edit.thtml:67
+#, fuzzy
+msgid "devcp_edit_dd_manage_contributions"
+msgstr "Provide a way for users to make monetary donations to your project."
+
+#: views/developers/addon_edit.thtml:53
 #, fuzzy
 msgid "devcp_edit_dd_manage_description"
 msgstr ""
 "Add and modify translations for your add-on's summary, description, end-user "
 "license, and privacy policy."
 
-#: views/developers/addon_edit.thtml:53
+#: views/developers/addon_edit.thtml:61
+#, fuzzy
+msgid "devcp_edit_dd_manage_profile"
+msgstr ""
+"Create or update a profile of yourself and your work in making this add-on."
+
+#: views/developers/addon_edit.thtml:55
 #, fuzzy
 msgid "devcp_edit_dd_manage_properties"
 msgstr "Change your add-on's name, homepage, icon, and other flags."
+
+#: views/developers/addon_edit.thtml:51
+#, fuzzy
+msgid "devcp_edit_dd_manage_tags"
+msgstr "Add tags to your add-on."
 
 #: views/developers/addon_edit_descriptions.thtml:116
 #, fuzzy
@@ -3431,15 +3779,30 @@ msgstr "Manage Add-on Authors"
 msgid "devcp_edit_dt_manage_categories"
 msgstr "Manage Add-on Categories"
 
-#: views/developers/addon_edit.thtml:50
+#: views/developers/addon_edit.thtml:63
+#, fuzzy
+msgid "devcp_edit_dt_manage_contributions"
+msgstr "Manage Contributions"
+
+#: views/developers/addon_edit.thtml:52
 #, fuzzy
 msgid "devcp_edit_dt_manage_descriptions"
 msgstr "Manage Add-on Descriptions"
 
-#: views/developers/addon_edit.thtml:52
+#: views/developers/addon_edit.thtml:57
+#, fuzzy
+msgid "devcp_edit_dt_manage_profile"
+msgstr "Manage Developer Profile"
+
+#: views/developers/addon_edit.thtml:54
 #, fuzzy
 msgid "devcp_edit_dt_manage_properties"
 msgstr "Manage Add-on Properties"
+
+#: views/developers/addon_edit.thtml:50
+#, fuzzy
+msgid "devcp_edit_dt_manage_tag"
+msgstr "Manage Add-on Tags"
 
 #: views/developers/addon_edit_properties.thtml:170
 msgid "devcp_edit_label_externalsoftware"
@@ -3461,6 +3824,61 @@ msgstr "Энэ нь тусгай хуудсанд зориулсан нэмэг�
 msgid "devcp_edit_label_target_locale"
 msgstr "Хэрэглэх хэл"
 
+#: views/developers/addon_edit_profile.thtml:80
+#, fuzzy
+msgid "devcp_edit_profile_button_create"
+msgstr "Create a Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:114
+#, fuzzy
+msgid "devcp_edit_profile_button_create_profile"
+msgstr "Create Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:112
+#, fuzzy
+msgid "devcp_edit_profile_button_save"
+msgstr "Save Changes to Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:78
+#, fuzzy
+msgid "devcp_edit_profile_create"
+msgstr ""
+"<p>Introduce yourself to your users with a Developer Profile.</"
+"p><ul><li>Explain why you created this add-on.</li><li>Tell your users "
+"what's next.</li><li>Build more awareness of your efforts.</li></ul><p>Ready "
+"to create your Developer Profile? Click the button below to begin.</p>"
+
+#: views/developers/addon_edit_profile.thtml:77
+#, fuzzy
+msgid "devcp_edit_profile_header_create"
+msgstr "Create a Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:105
+#, fuzzy
+msgid "devcp_edit_profile_trans_future_description"
+msgstr ""
+"Whether or not you request contributions for future development of your add-"
+"on, telling your users what's coming soon will give them something to look "
+"forward to."
+
+#: views/developers/addon_edit_profile.thtml:104
+#, fuzzy
+msgid "devcp_edit_profile_trans_future_name"
+msgstr "What's Next for this Add-on"
+
+#: views/developers/addon_edit_profile.thtml:95
+#, fuzzy
+msgid "devcp_edit_profile_trans_reason_description"
+msgstr ""
+"Let your users know why you created an add-on.  Whether it was an idea while "
+"in line at the grocery store or the solution to one of life's great "
+"problems, share your story."
+
+#: views/developers/addon_edit_profile.thtml:94
+#, fuzzy
+msgid "devcp_edit_profile_trans_reason_name"
+msgstr "Why I Made this Add-on"
+
 #: views/developers/addon_edit_properties.thtml:212
 #, fuzzy
 msgid "devcp_edit_properties_button_update"
@@ -3480,8 +3898,8 @@ msgstr "Current Icon"
 #, fuzzy
 msgid "devcp_edit_properties_default_locale"
 msgstr ""
-"Information about your add-on is displayed on this website in the default"
-"locale unless you override it with a locale-specific translation."
+"Information about your add-on is displayed on this website in the "
+"defaultlocale unless you override it with a locale-specific translation."
 
 #: views/developers/addon_edit_properties.thtml:167
 #, fuzzy
@@ -3660,6 +4078,11 @@ msgstr "Allow online source viewing"
 msgid "devcp_edit_properties_view_source_do_not_allow"
 msgstr "Do not allow online source viewing"
 
+#: views/developers/addon_edit_tags.thtml:49
+#, fuzzy
+msgid "devcp_edit_tags_header_manage"
+msgstr "Manage Tags"
+
 #: views/elements/developers/editbox.thtml:46
 #, fuzzy
 msgid "devcp_editbox_authors"
@@ -3670,12 +4093,17 @@ msgstr "Authors"
 msgid "devcp_editbox_categories"
 msgstr "Categories"
 
-#: views/elements/developers/editbox.thtml:52
+#: views/elements/developers/editbox.thtml:62
 #, fuzzy
 msgid "devcp_editbox_change_status"
 msgstr "Change Status"
 
-#: views/elements/developers/editbox.thtml:48
+#: views/elements/developers/editbox.thtml:58
+#, fuzzy
+msgid "devcp_editbox_contributions"
+msgstr "Contributions"
+
+#: views/elements/developers/editbox.thtml:50
 #, fuzzy
 msgid "devcp_editbox_descriptions"
 msgstr "Descriptions"
@@ -3685,27 +4113,37 @@ msgstr "Descriptions"
 msgid "devcp_editbox_edit_addon"
 msgstr "Edit Add-on"
 
-#: views/elements/developers/editbox.thtml:57
+#: views/elements/developers/editbox.thtml:67
 #, fuzzy
 msgid "devcp_editbox_new_version"
 msgstr "New Version"
 
-#: views/elements/developers/editbox.thtml:49
+#: views/elements/developers/editbox.thtml:54
+#, fuzzy
+msgid "devcp_editbox_profile"
+msgstr "Developer Profile"
+
+#: views/elements/developers/editbox.thtml:51
 #, fuzzy
 msgid "devcp_editbox_properties"
 msgstr "Properties"
 
-#: views/elements/developers/editbox.thtml:60
+#: views/elements/developers/editbox.thtml:70
 #, fuzzy
 msgid "devcp_editbox_screenshots"
 msgstr "Preview Screenshots"
 
-#: views/elements/developers/editbox.thtml:53
+#: views/elements/developers/editbox.thtml:63
 #, fuzzy
 msgid "devcp_editbox_statistics_dashboard"
 msgstr "Statistics Dashboard"
 
-#: views/elements/developers/editbox.thtml:54
+#: views/elements/developers/editbox.thtml:48
+#, fuzzy
+msgid "devcp_editbox_tags"
+msgstr "Tags"
+
+#: views/elements/developers/editbox.thtml:64
 #, fuzzy
 msgid "devcp_editbox_versions"
 msgstr "Versions and Files"
@@ -3756,14 +4194,14 @@ msgstr "Танд энэ нэмэгдэлд хандах эрх байхгүй б
 
 #. %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 #. in the <a> tag.  This should be fixed.
-#: controllers/components/developers.php:591
+#: controllers/components/developers.php:615
 #, php-format
 msgid "devcp_error_appversion_reference_link"
 msgstr "%s хуудаснаас лавлаж харна уу."
 
 #. This is the link text in the <a> for devcp_error_appversion_reference_link.  This
 #. should be fixed.
-#: controllers/components/developers.php:591
+#: controllers/components/developers.php:615
 msgid "devcp_error_appversion_reference_link_text"
 msgstr "энэ хуудас"
 
@@ -3773,7 +4211,7 @@ msgid "devcp_error_empty_authors"
 msgstr "Your add-on must have at least one owner."
 
 #. %1$s is the name of the file
-#: controllers/components/developers.php:658
+#: controllers/components/developers.php:682
 #, fuzzy
 msgid "devcp_error_file_exists"
 msgstr ""
@@ -3782,41 +4220,38 @@ msgstr ""
 
 #. %1$s is a file extension.  Example:  .exe
 #. %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:355
+#: controllers/components/developers.php:358
 #, php-format
 msgid "devcp_error_file_extension"
 msgstr ""
 "Ийм файлын өргөтгөл (%s) нь сонгогдсон нэмэгдлийн төрөлд зөвшөөрөгдөөгүй. Та "
 "дараах төрлөөс нэгийг нь сонгоно уу: %s"
 
-#: controllers/components/developers.php:64
+#: controllers/components/developers.php:73
 msgid "devcp_error_five_categories"
 msgstr "Таваас илүүгүй төрөл сонгоно уу."
 
-#: controllers/components/developers.php:526
+#: controllers/components/developers.php:550
 msgid "devcp_error_guid_application"
 msgstr "Энэ нэмэгдлийн таних дугаар нь програмд өмнө нь ашиглагдсан байна."
 
-#: controllers/components/developers.php:337
-#: controllers/components/developers.php:389
+#: controllers/components/developers.php:54
 msgid "devcp_error_http_incomplete"
 msgstr "Бүрэн дамжуулалт хийгдсэнгүй"
 
-#: controllers/components/developers.php:335
-#: controllers/components/developers.php:336
-#: controllers/components/developers.php:387
-#: controllers/components/developers.php:388
+#: controllers/components/developers.php:52
+#: controllers/components/developers.php:53
 msgid "devcp_error_http_maxupload"
 msgstr "Илгээх дээд хэмжээнээс хэтэрсэн"
 
-#: controllers/components/developers.php:338
-#: controllers/components/developers.php:390
+#: controllers/components/developers.php:55
 msgid "devcp_error_http_nofile"
 msgstr "Ямар ч файл илгээгдсэнгүй"
 
 #. %1$s is a file extension.  Example:  .exe
 #. %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:401
+#: controllers/components/developers.php:396
+#: controllers/components/developers.php:425
 #, php-format
 msgid "devcp_error_icon_extension"
 msgstr ""
@@ -3827,118 +4262,118 @@ msgstr ""
 msgid "devcp_error_index_rdf_notfound"
 msgstr "install.rdf файл байхгүй байна."
 
-#: controllers/components/developers.php:601
+#: controllers/components/developers.php:625
 msgid "devcp_error_install_manifest"
 msgstr "Дараах алдаанууд install.rdf файлд олдов:"
 
-#: controllers/developers_controller.php:1463
+#: controllers/developers_controller.php:1574
 msgid "devcp_error_invalid_addontype"
 msgstr "Нэмэгдлийн зөв төрлийг сонгоно уу."
 
 #. %$1s is a version.  Example: 3.1.1
 #. %$2s is an add-on name.
-#: controllers/components/developers.php:569
-#: controllers/components/developers.php:581
+#: controllers/components/developers.php:593
+#: controllers/components/developers.php:605
 #, php-format
 msgid "devcp_error_invalid_appversion"
 msgstr "%s нь %s-д тохирсон зөв хувилбар биш байна"
 
 #. %s is a string
-#: controllers/components/developers.php:521
+#: controllers/components/developers.php:545
 #, php-format
 msgid "devcp_error_invalid_guid"
 msgstr "Энэ нэмэгдлийн таних дугаар нь зөв биш байна: %s"
 
 #. %$1s is a version.  Example: 3.1.1
 #. %$2s is an add-on name.
-#: controllers/components/developers.php:572
+#: controllers/components/developers.php:596
 #, php-format
 msgid "devcp_error_invalid_minversion"
 msgstr ""
 "%s нь %s-д тохирсон зөв хувилбар биш байна: бага хувилбарын дугаар * гэсэн "
 "тэмдэгт агуулж болохгүй"
 
-#: controllers/components/developers.php:536
+#: controllers/components/developers.php:560
 msgid "devcp_error_invalid_version"
 msgstr ""
 "Энэ нэмэгдлийн хувилбар нь зөв биш байна: Та <a href=\"http://developer."
 "mozilla.org/en/docs/Toolkit_version_format\">хуудаснаас </a> харна уу"
 
-#: controllers/components/developers.php:531
+#: controllers/components/developers.php:555
 msgid "devcp_error_invalid_version_spaces"
 msgstr ""
 "Энэ нэмэгдлийн хувилбар нь зөв биш байна: хувилбарын дугаар хоосон зай "
 "агуулах ёсгүй."
 
 #. %s is an error message from the parser.
-#: controllers/components/developers.php:501
+#: controllers/components/developers.php:525
 #, php-format
 msgid "devcp_error_manifest_parse"
 msgstr "install.rdf файлыг уншиж байхад дараах алдаанууд гарав: %s"
 
-#: controllers/components/developers.php:373
+#: controllers/components/developers.php:376
 msgid "devcp_error_move_file"
 msgstr "Файлыг зөөж чадахгүй байна"
 
 #. %s is the name of a file
-#: controllers/components/developers.php:650
-#: controllers/components/developers.php:662
-#: controllers/components/developers.php:667
-#: controllers/components/developers.php:727
-#: controllers/components/developers.php:738
-#: controllers/components/developers.php:743
+#: controllers/components/developers.php:674
+#: controllers/components/developers.php:686
+#: controllers/components/developers.php:691
+#: controllers/components/developers.php:751
+#: controllers/components/developers.php:762
+#: controllers/components/developers.php:767
 #, php-format
 msgid "devcp_error_moving_file"
 msgstr "Алдаа гарсан тул %s-г зөөж байна."
 
-#: controllers/components/developers.php:595
+#: controllers/components/developers.php:619
 msgid "devcp_error_mozilla_application"
 msgstr "Та ядаж суулгах нэг мозилла програмтай байх ёстой."
 
-#: controllers/components/developers.php:516
+#: controllers/components/developers.php:540
 msgid "devcp_error_no_guid"
 msgstr ""
 "install.rdf файл дотор энэ нэмэгдэлд зориулсан таних дугаар байхгүй байна."
 
-#: controllers/components/developers.php:287
+#: controllers/components/developers.php:296
 msgid "devcp_error_no_platform"
 msgstr "Үйлдлийн систем сонгогдоогүй байна"
 
-#: controllers/components/developers.php:59
+#: controllers/components/developers.php:68
 msgid "devcp_error_one_category"
 msgstr "Ядаж нэг төрөл сонгоно уу."
 
-#: controllers/components/developers.php:92
+#: controllers/components/developers.php:101
 msgid "devcp_error_one_user"
 msgstr "Энэ нэмэгдэлд ядаж нэг зохиогч байх ёстой."
 
 #. %1$s is a file extension.  Example:  .exe
 #. %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:1081
+#: controllers/components/developers.php:1105
 #, php-format
 msgid "devcp_error_preview_extension"
 msgstr ""
 "Ийм файлын өргөтгөл (%s) нь харуулагдах боломжгүй байна. Дараах төрлөөс "
 "нэгийг сонгоно уу: %s"
 
-#: controllers/components/developers.php:511
+#: controllers/components/developers.php:535
 msgid "devcp_error_updatekey"
 msgstr ""
 "Нэмэгдлүүд шинэчлэх түлхүүр ашиглаж чадахгүй. Уг түлхүүр install.rdf файлаас "
 "устгаад дахин оролдоно уу."
 
-#: controllers/components/developers.php:506
+#: controllers/components/developers.php:530
 msgid "devcp_error_updateurl"
 msgstr ""
 "Нэмэгдлүүд нь гаднын шинэчлэх хаяг ашиглаж болохгүй. Та түүнийг install.rdf "
 "файлаас устгаад дахин оролдоно уу."
 
 #: controllers/developers_controller.php:465
-#: controllers/components/developers.php:271
+#: controllers/components/developers.php:280
 msgid "devcp_error_upload_file"
 msgstr "Файлаа илгээнэ үү."
 
-#: views/developers/uploader.thtml:135
+#: views/developers/uploader.thtml:138
 #, fuzzy
 msgid "devcp_input_upload_file"
 msgstr "Upload File"
@@ -4020,7 +4455,7 @@ msgstr "You must select a file to upload."
 
 #. %1$s is an addon id, like 32.
 #. %2$s is a version number, like 3.5.
-#: controllers/components/developers.php:1212
+#: controllers/components/developers.php:1237
 #, fuzzy
 msgid "devcp_license_existing"
 msgstr "Custom license for add-on %1$s v%2$s"
@@ -4102,6 +4537,7 @@ msgstr ""
 "for the errors below. The rest of your changes were successfully saved."
 
 #: views/developers/addon_edit_authors.thtml:47
+#: views/developers/addon_edit_tags.thtml:46
 #: views/developers/addon_edit_properties.thtml:47
 #: views/developers/addon_status.thtml:46
 #: views/developers/addon_edit_descriptions.thtml:47
@@ -4316,7 +4752,7 @@ msgstr ""
 "<span>You do not have sufficient privileges to make changes on this page.</"
 "span><br />Contact the Add-on Owner if you need to make changes."
 
-#: controllers/developers_controller.php:1315
+#: controllers/developers_controller.php:1426
 #, fuzzy
 msgid "devcp_several_hours"
 msgstr ""
@@ -4438,7 +4874,10 @@ msgstr "Сүүлийн хувилбар:"
 #. %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
+#: views/developers/addon_edit_tags.thtml:43
+#: views/developers/addon_edit_contributions.thtml:46
 #: views/developers/versions_delete.thtml:43
+#: views/developers/addon_edit_profile.thtml:69
 #: views/developers/addon_edit_properties.thtml:44
 #: views/developers/addon_edit_descriptions.thtml:44
 #: views/developers/versions_edit.thtml:44
@@ -4582,33 +5021,33 @@ msgstr ""
 msgid "devcp_uploader_a_start"
 msgstr "Get Started"
 
-#: views/developers/uploader.thtml:137
+#: views/developers/uploader.thtml:140
 #, fuzzy
 msgid "devcp_uploader_ajax_loading"
 msgstr "Uploading file..."
 
-#: views/developers/uploader.thtml:82
+#: views/developers/uploader.thtml:102
 #, fuzzy
 msgid "devcp_uploader_button_agree"
 msgstr "Agree and continue"
 
-#: views/developers/uploader.thtml:157
+#: views/developers/uploader.thtml:160
 #, fuzzy
 msgid "devcp_uploader_button_edit"
 msgstr "Edit My Add-on"
 
-#: views/developers/uploader.thtml:158
+#: views/developers/uploader.thtml:161
 #, fuzzy
 msgid "devcp_uploader_button_later"
 msgstr "I'll complete my add-on later."
 
-#: views/developers/uploader.thtml:168
+#: views/developers/uploader.thtml:171
 #, fuzzy
 msgid "devcp_uploader_button_release"
 msgstr "Add Release Notes"
 
 #. %s is href=... and should stay in the <a> tag.
-#: views/developers/uploader.thtml:156
+#: views/developers/uploader.thtml:159
 #, fuzzy
 msgid "devcp_uploader_created_results"
 msgstr ""
@@ -4621,29 +5060,29 @@ msgstr ""
 "using the link below and check the status of your add-on at any time on the "
 "<a %s>status page</a>."
 
-#: views/developers/uploader.thtml:143
+#: views/developers/uploader.thtml:146
 #, fuzzy
 msgid "devcp_uploader_error_correct"
 msgstr "Please correct this problem and upload your file again."
 
 #. %1$s is a version number, %2$s is a status, e.g Public or Incomplete.
-#: views/developers/uploader.thtml:175
+#: views/developers/uploader.thtml:178
 #, fuzzy
 msgid "devcp_uploader_file_created"
 msgstr ""
 "Your new file has been added to version %1$s and is currently marked as %2$s."
 
-#: views/developers/uploader.thtml:154
+#: views/developers/uploader.thtml:157
 #, fuzzy
 msgid "devcp_uploader_header_created"
 msgstr "Add-on Created!"
 
-#: views/developers/uploader.thtml:141
+#: views/developers/uploader.thtml:144
 #, fuzzy
 msgid "devcp_uploader_header_error"
 msgstr "Oops! There seems to be a problem with this file..."
 
-#: views/developers/uploader.thtml:173
+#: views/developers/uploader.thtml:176
 #, fuzzy
 msgid "devcp_uploader_header_file_added"
 msgstr "File Added!"
@@ -4654,12 +5093,12 @@ msgid "devcp_uploader_header_how"
 msgstr "How does it all work?"
 
 #. %s is the version number, e.g. 3.2.
-#: views/developers/uploader.thtml:163
+#: views/developers/uploader.thtml:166
 #, fuzzy
 msgid "devcp_uploader_header_update_created"
 msgstr "Version %s Created"
 
-#: views/developers/uploader.thtml:117
+#: views/developers/uploader.thtml:120
 #, fuzzy
 msgid "devcp_uploader_header_upload"
 msgstr "Upload Your File"
@@ -4683,23 +5122,23 @@ msgstr ""
 "the features listed above. If you're ready to start the process and have "
 "your add-on package ready for upload, just click on Get Started below!</p>"
 
-#: views/developers/uploader.thtml:125
+#: views/developers/uploader.thtml:128
 #, fuzzy
 msgid "devcp_uploader_label_platformtype"
 msgstr "Supported Platforms:"
 
-#: views/developers/uploader.thtml:124
+#: views/developers/uploader.thtml:127
 #, fuzzy
 msgid "devcp_uploader_label_upload_field"
 msgstr "Add-on File: "
 
-#: controllers/components/developers.php:1221
+#: controllers/components/developers.php:1246
 #, fuzzy
 msgid "devcp_uploader_option_other"
 msgstr "Other"
 
 #. %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:176
+#: views/developers/uploader.thtml:179
 #, fuzzy
 msgid "devcp_uploader_p_pending_file"
 msgstr ""
@@ -4708,7 +5147,7 @@ msgstr ""
 "reviewed faster? Consider <a %2$s>becoming an editor</a>."
 
 #. %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:166
+#: views/developers/uploader.thtml:169
 #, fuzzy
 msgid "devcp_uploader_p_pending_version"
 msgstr ""
@@ -4717,24 +5156,14 @@ msgstr ""
 "be reviewed faster? Consider <a %2$s>becoming an editor</a>."
 
 #. %s is a status, e.g Public or Incomplete.
-#: views/developers/uploader.thtml:165
+#: views/developers/uploader.thtml:168
 #, fuzzy
 msgid "devcp_uploader_p_update_created"
 msgstr "Your new version has been created and is currently marked as %s."
 
 #. %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
 #. %2$s is href="..." and should stay in the 'current status' <a> tag.
-#: views/developers/uploader.thtml:177
-#, fuzzy
-msgid "devcp_uploader_p_update_file"
-msgstr ""
-"View your new file in the <a %1$s>Versions and Files page</a>, check out "
-"your add-on's <a %2$s>current status</a>, or <b>add release notes</b> by "
-"clicking the button below (highly recommended)."
-
-#. %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
-#. %2$s is href="..." and should stay in the 'current status' <a> tag.
-#: views/developers/uploader.thtml:167
+#: views/developers/uploader.thtml:170
 #, fuzzy
 msgid "devcp_uploader_p_update_version"
 msgstr ""
@@ -4742,7 +5171,7 @@ msgstr ""
 "your add-on's <a %2$s>current status</a>, or <b>add release notes</b> by "
 "clicking the button below (highly recommended)."
 
-#: views/developers/uploader.thtml:118
+#: views/developers/uploader.thtml:121
 #, fuzzy
 msgid "devcp_uploader_p_upload"
 msgstr ""
@@ -4750,18 +5179,18 @@ msgstr ""
 "specific files to upload, choose a single file and then upload the others "
 "using the Versions and Files Manager."
 
-#: views/developers/uploader.thtml:125
+#: views/developers/uploader.thtml:128
 #, fuzzy
 msgid "devcp_uploader_platformtype_all"
 msgstr "All"
 
-#: views/developers/uploader.thtml:126
+#: views/developers/uploader.thtml:129
 #, fuzzy
 msgid "devcp_uploader_platformtype_specific"
 msgstr "Specific:"
 
 #. Used as first item in a <select>.
-#: controllers/components/developers.php:1185
+#: views/elements/developers/license_picker.thtml:42
 #, fuzzy
 msgid "devcp_uploader_please_choose"
 msgstr "Please Choose..."
@@ -4782,6 +5211,15 @@ msgstr "Submit New Add-on"
 #, fuzzy
 msgid "devcp_uploader_title_update"
 msgstr "Update %s"
+
+#. %1$s is the 'Versions and Files' link target URL.
+#. %2$s is 'current status' link target URL.
+#: views/developers/uploader.thtml:180
+#, fuzzy
+msgid "devcp_uploader_update_file_nextsteps"
+msgstr ""
+"View your new file on the <a href=\"%1$s\">Versions and Files page</a>, "
+"orcheck out your add-on's <a href=\"%2$s\">current status</a>."
 
 #. %s is a full <a> tag
 #: controllers/developers_controller.php:503
@@ -5080,10 +5518,15 @@ msgstr "Created"
 msgid "devcp_versions_th_status"
 msgstr "Status"
 
-#: views/developers/versions.thtml:56
+#: views/developers/versions.thtml:56 views/addons/display.thtml:172
 #, fuzzy
 msgid "devcp_versions_th_version"
 msgstr "Version"
+
+#: views/elements/developers/license_picker.thtml:51
+#, fuzzy
+msgid "devcp_view_license"
+msgstr "View License"
 
 #: controllers/downloads_controller.php:91
 msgid "downloads_disable_warning"
@@ -5093,6 +5536,21 @@ msgstr "Энэ нэмэгдэл хоригдсон"
 #, fuzzy
 msgid "editor_review_error_addon_not_nominated"
 msgstr "This add-on has not been nominated."
+
+#: controllers/components/editors.php:349
+#, fuzzy
+msgid "editor_review_error_comment_body_required"
+msgstr "Comment body is required"
+
+#: controllers/components/editors.php:361
+#, fuzzy
+msgid "editor_review_error_comment_save_fail"
+msgstr "Failed to save comment"
+
+#: controllers/components/editors.php:346
+#, fuzzy
+msgid "editor_review_error_comment_subject_required"
+msgstr "Comment subject is required"
 
 #: controllers/components/editors.php:213
 #, fuzzy
@@ -5128,25 +5586,40 @@ msgstr "Please select at least one file to review."
 msgid "editor_review_error_no_operating_system"
 msgstr "Please enter the operating systems you tested."
 
-#: views/editors/logs.thtml:51
+#: views/editors/logs.thtml:56
 msgid "editorcp_logs_button_filter"
 msgstr "Шүүлт"
 
-#: views/editors/logs.thtml:44
+#: views/editors/logs.thtml:50
 msgid "editorcp_logs_filter_by"
 msgstr "Төрөл/Үйлдлээр нь шүүх"
 
-#: views/editors/logs.thtml:42 controllers/editors_controller.php:964
+#: views/editors/logs.thtml:42 controllers/editors_controller.php:1553
 msgid "editorcp_logs_page_heading"
 msgstr "Үйл явдлын бүртгэл бичлэг"
+
+#: controllers/editors_controller.php:1603
+#, fuzzy
+msgid "editorcp_logs_review_approve"
+msgstr "Approved reviews"
+
+#: controllers/editors_controller.php:1604
+#, fuzzy
+msgid "editorcp_logs_review_delete"
+msgstr "Deleted reviews"
 
 #: views/elements/developers/editorsmenu.thtml:60
 msgid "editorcp_menu_eventlog_link"
 msgstr "Үйл явдлын бүртгэл бичлэг"
 
-#: views/elements/developers/editorsmenu.thtml:62
+#: views/elements/developers/editorsmenu.thtml:63
 msgid "editorcp_menu_mainpage_link"
 msgstr "Үндсэн хуудас руу буцах"
+
+#: views/elements/developers/editorsmenu.thtml:62
+#, fuzzy
+msgid "editorcp_menu_performance_link"
+msgstr "Performance"
 
 #: views/elements/developers/editorsmenu.thtml:61
 msgid "editorcp_menu_reviewlog_link"
@@ -5160,19 +5633,141 @@ msgstr "Засварлагчийн дүгнэлт"
 msgid "editorcp_menu_title"
 msgstr "Засварлагчын багаж"
 
-#: views/editors/reviewlog.thtml:49
+#: views/editors/performance_charts.thtml:48
+#, fuzzy
+msgid "editorcp_performance_category_breakdown"
+msgstr "Category Breakdown"
+
+#: views/editors/performance_table.thtml:70
+#, fuzzy
+msgid "editorcp_performance_column_application"
+msgstr "Application"
+
+#: views/editors/performance_table.thtml:71
+#, fuzzy
+msgid "editorcp_performance_column_category"
+msgstr "Category"
+
+#: views/editors/performance_table.thtml:119
+#: views/editors/performance_charts.thtml:71
+#: views/editors/performance_charts.thtml:96
+#, fuzzy
+msgid "editorcp_performance_column_teamaverage"
+msgstr "Team Average"
+
+#: views/editors/performance_table.thtml:118
+#, fuzzy
+msgid "editorcp_performance_column_total"
+msgstr "Total"
+
+#: views/editors/performance_table.thtml:117
+#, fuzzy
+msgid "editorcp_performance_column_week"
+msgstr "Week"
+
+#. %1$s is a date
+#. %2$s is a date
+#: views/editors/performance_table.thtml:124
+#, fuzzy
+msgid "editorcp_performance_date_range"
+msgstr "%1$s to %2$s"
+
+#: views/editors/performance_charts.thtml:75
+#, fuzzy
+msgid "editorcp_performance_legend"
+msgstr "Legend"
+
+#: views/editors/performance_charts.thtml:45
+#, fuzzy
+msgid "editorcp_performance_month_activity"
+msgstr "Activity By Month"
+
+#. %1$s is the number of reviews the person has done
+#. %2$s is the average number of reviews the team has done
+#: views/editors/performance_table.thtml:132
+#, fuzzy
+msgid "editorcp_performance_mtd_totals"
+msgstr "Month To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
+
+#: views/editors/performance_table.thtml:66
+#, fuzzy
+msgid "editorcp_performance_multisort_tip"
+msgstr "Shift-click to sort by multiple columns"
+
+#: views/editors/performance_charts.thtml:109
+#, fuzzy
+msgid "editorcp_performance_nodata"
+msgstr "No Data"
+
+#. %1$s is a person's name
+#: views/elements/developers/performanceheader.thtml:57
+#, fuzzy
+msgid "editorcp_performance_page_heading"
+msgstr "Performance Report For %1$s"
+
+#: views/editors/performance_charts.thtml:80
+#, fuzzy
+msgid "editorcp_performance_select_all"
+msgstr "Select All"
+
+#: views/editors/performance_charts.thtml:81
+#, fuzzy
+msgid "editorcp_performance_select_none"
+msgstr "Select None"
+
+#: views/editors/performance_charts.thtml:82
+#, fuzzy
+msgid "editorcp_performance_toggle_labels"
+msgstr "Toggle Labels"
+
+#: views/editors/performance_charts.thtml:79
+#, fuzzy
+msgid "editorcp_performance_top_team_categories"
+msgstr "Top Team Categories"
+
+#: views/editors/performance_charts.thtml:78
+#, fuzzy
+msgid "editorcp_performance_top_user_categories"
+msgstr "Top User Categories"
+
+#. %1$s is the number of reviews the person has done
+#. %2$s is the average number of reviews the team has done
+#: views/editors/performance_table.thtml:61
+#, fuzzy
+msgid "editorcp_performance_totals"
+msgstr "Total Reviews: %1$s &nbsp;&nbsp;Team Average: %2$s"
+
+#: views/editors/performance_charts.thtml:108
+#, fuzzy
+msgid "editorcp_performance_unselected"
+msgstr "Unselected"
+
+#: views/editors/performance_table.thtml:114
+#, fuzzy
+msgid "editorcp_performance_weekly_heading"
+msgstr "Weekly Totals"
+
+#. %1$s is the number of reviews the person has done
+#. %2$s is the average number of reviews the team has done
+#: views/editors/performance_table.thtml:134
+#, fuzzy
+msgid "editorcp_performance_ytd_totals"
+msgstr "Year To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
+
+#: views/editors/performance_table.thtml:52
+#: views/editors/performance_charts.thtml:65 views/editors/reviewlog.thtml:49
 msgid "editorcp_reviewlog_button_filter"
 msgstr "Шүүгч"
 
-#: views/editors/reviewlog.thtml:58
+#: views/editors/performance_table.thtml:72 views/editors/reviewlog.thtml:58
 msgid "editorcp_reviewlog_column_action"
 msgstr "Үйлдэл"
 
-#: views/editors/reviewlog.thtml:56
+#: views/editors/performance_table.thtml:69 views/editors/reviewlog.thtml:56
 msgid "editorcp_reviewlog_column_addon"
 msgstr "Нэмэгдэл"
 
-#: views/editors/reviewlog.thtml:55
+#: views/editors/performance_table.thtml:68 views/editors/reviewlog.thtml:55
 msgid "editorcp_reviewlog_column_date"
 msgstr "Огноо"
 
@@ -5189,12 +5784,13 @@ msgid "editorcp_reviewlog_comments_show"
 msgstr "Сэтгэгдлийг харуул"
 
 #. %1$s and %2$s are full <input> tags for dates
-#: views/editors/reviewlog.thtml:45
+#: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
+#: views/editors/logs.thtml:45
 #, php-format
 msgid "editorcp_reviewlog_entries_between"
 msgstr "%s-с %s хүртэлх оруулгыг харуул"
 
-#: views/editors/reviewlog.thtml:104
+#: views/editors/performance_table.thtml:63 views/editors/reviewlog.thtml:104
 msgid "editorcp_reviewlog_none_found"
 msgstr "Энэ хугацаанд ямар ч үнэлгээ олдсонгүй."
 
@@ -5222,24 +5818,38 @@ msgstr "Засварлагчийн сүүлийн үеийн төлөв"
 msgid "editorcp_summary_totalreviews_heading"
 msgstr "Нийт үнэлгээ"
 
-#: controllers/editors_controller.php:248
-#: controllers/editors_controller.php:249
+#: controllers/editors_controller.php:251
+#: controllers/editors_controller.php:252
 msgid "editors_addon_review_pagetitle"
 msgstr "Нэмэгдлийг үнэлж дүгнэх"
 
-#: controllers/editors_controller.php:349
+#: controllers/editors_controller.php:312
+#, fuzzy
+msgid "editors_comment_posted"
+msgstr "Comment successfully posted"
+
+#. This is a placeholder for a date in the Year-Month-Day format.  This is 
+#. NOT a php format string.  Dates going into this box need to remain in the
+#. YYYY-MM-DD format so please localize that if necessary or just leave as is.
+#: controllers/editors_controller.php:573
+#: controllers/editors_controller.php:1560
+#, fuzzy
+msgid "editors_date_filter_placeholder"
+msgstr "YYYY-MM-DD"
+
+#: controllers/editors_controller.php:371
 msgid "editors_error_js-formerror"
 msgstr "Дараах талбаруудыг бөглөнө үү:"
 
-#: controllers/editors_controller.php:350
+#: controllers/editors_controller.php:372
 msgid "editors_error_review_one_file"
 msgstr "Ядаж нэг файлыг үнэлж дүгнэхээр сонгоно уу."
 
-#: controllers/editors_controller.php:274
+#: controllers/editors_controller.php:278
 msgid "editors_error_self_reviews_forbidden"
 msgstr "Өөрсдөө үнэлж дүгнэх хориотой."
 
-#: controllers/editors_controller.php:699
+#: controllers/editors_controller.php:1282
 msgid "editors_external_software"
 msgstr "Гадаад програм"
 
@@ -5251,39 +5861,39 @@ msgstr "Шинэ чадвар нэмэх"
 msgid "editors_featured_add_feature_submit"
 msgstr "Нэм"
 
-#: views/editors/featured.thtml:49 controllers/editors_controller.php:832
-#: controllers/editors_controller.php:848
+#: views/editors/featured.thtml:49 controllers/editors_controller.php:1415
+#: controllers/editors_controller.php:1431
 msgid "editors_featured_addon_add_failure"
 msgstr "Чадвар нэмэхэд алдаа гарав."
 
-#: controllers/editors_controller.php:851
+#: controllers/editors_controller.php:1434
 msgid "editors_featured_addon_add_success"
 msgstr "Чадварыг амжилттай нэмэв."
 
-#: views/editors/featured.thtml:50 controllers/editors_controller.php:839
-#: controllers/editors_controller.php:868
-#: controllers/editors_controller.php:886
+#: views/editors/featured.thtml:50 controllers/editors_controller.php:1422
+#: controllers/editors_controller.php:1451
+#: controllers/editors_controller.php:1469
 msgid "editors_featured_addon_edit_failure"
 msgstr "Чадварыг засварлахад алдаа гарав."
 
-#: views/editors/featured.thtml:51 controllers/editors_controller.php:888
+#: views/editors/featured.thtml:51 controllers/editors_controller.php:1471
 msgid "editors_featured_addon_edit_success"
 msgstr "Чадварыг амжилттай засварлав."
 
-#: views/editors/featured.thtml:53 controllers/editors_controller.php:861
+#: views/editors/featured.thtml:53 controllers/editors_controller.php:1444
 msgid "editors_featured_addon_invalid_locale"
 msgstr "Нэг юмуу эсвэл олон орон нутгийн тохиргоо буруу байна."
 
-#: views/editors/featured.thtml:52 controllers/editors_controller.php:906
+#: views/editors/featured.thtml:52 controllers/editors_controller.php:1489
 msgid "editors_featured_addon_remove_failure"
 msgstr "Чадварыг устгахад алдаа гарав."
 
-#: controllers/editors_controller.php:901
+#: controllers/editors_controller.php:1484
 msgid "editors_featured_addon_remove_success"
 msgstr "Чадварыг амжилттай устгав."
 
-#: controllers/editors_controller.php:915
-#: controllers/editors_controller.php:917
+#: controllers/editors_controller.php:1498
+#: controllers/editors_controller.php:1500
 msgid "editors_featured_addons_pagetitle"
 msgstr "Чадвараар хангагдсан нэмэгдлүүд"
 
@@ -5320,31 +5930,41 @@ msgstr "Эдгээр шүүлтүүрүүд нь энэ хэсэгтээ эсв�
 msgid "editors_notice_none_found"
 msgstr "Дүгнэлт хийгдэхээр %s доторх нэмэгдлүүд байхгүй байна."
 
-#: controllers/editors_controller.php:1040
+#: controllers/editors_controller.php:1662
 msgid "editors_one_day"
 msgstr "1 өдрийн"
 
-#: controllers/editors_controller.php:1048
+#: controllers/editors_controller.php:1670
 msgid "editors_one_hour"
 msgstr "1 цагийн"
 
-#: controllers/editors_controller.php:1056
+#: controllers/editors_controller.php:1678
 msgid "editors_one_minute"
 msgstr "1 минутын"
 
-#: controllers/editors_controller.php:64 controllers/editors_controller.php:73
-#: controllers/editors_controller.php:77
+#: controllers/editors_controller.php:64 controllers/editors_controller.php:76
+#: controllers/editors_controller.php:80
 msgid "editors_pagetitle"
 msgstr "Засварлагч хянах самбар"
 
+#: controllers/editors_controller.php:531
+#, fuzzy
+msgid "editors_performance_pagetitle"
+msgstr "Performance Reports"
+
+#: controllers/editors_controller.php:487
+#, fuzzy
+msgid "editors_performance_user_not_found"
+msgstr "User not found"
+
 #. %s is a comma separated list of platforms.  Example:  Windows, OS X
-#: controllers/editors_controller.php:680
-#: controllers/editors_controller.php:683
+#: controllers/editors_controller.php:1263
+#: controllers/editors_controller.php:1266
 #, php-format
 msgid "editors_platform_x_only"
 msgstr "зөвхөн %s "
 
-#: controllers/editors_controller.php:695
+#: controllers/editors_controller.php:1278
 msgid "editors_pre-release"
 msgstr "Урьдчилсан хувилбар"
 
@@ -5400,9 +6020,14 @@ msgstr "Цэвэрхэн"
 msgid "editors_queue_submit_filter"
 msgstr "Шүүлтүүр"
 
-#: controllers/editors_controller.php:133
+#: controllers/editors_controller.php:136
 msgid "editors_queues_disabled"
 msgstr "Одоогоор бүх үнэлж дүгнэх дараалал хоригдсон. Дараа дахин шалгана уу."
+
+#: views/editors/review.thtml:150
+#, fuzzy
+msgid "editors_review_a_comments"
+msgstr "Editor Comments"
 
 #: views/editors/review.thtml:149
 #, fuzzy
@@ -5429,32 +6054,32 @@ msgstr "Item Overview"
 msgid "editors_review_a_previews"
 msgstr "Previews"
 
-#: controllers/editors_controller.php:345
+#: controllers/editors_controller.php:367
 msgid "editors_review_action"
 msgstr "Үнэлж дүгнэх явц"
 
-#: views/editors/review.thtml:159
+#: views/editors/review.thtml:160
 #, fuzzy
 msgid "editors_review_action_info"
 msgstr "Request More Information"
 
-#: views/editors/review.thtml:157
+#: views/editors/review.thtml:158
 msgid "editors_review_action_public"
 msgstr "Нийтийн хуудас руу оруулах"
 
-#: views/editors/review.thtml:160
+#: views/editors/review.thtml:161
 msgid "editors_review_action_request_superreview"
 msgstr "Супер дүгнэгчийн хүсэлт"
 
-#: views/editors/review.thtml:158
+#: views/editors/review.thtml:159
 msgid "editors_review_action_sandbox"
 msgstr "Түр хайрцагт үлдээх"
 
-#: controllers/editors_controller.php:346
+#: controllers/editors_controller.php:368
 msgid "editors_review_comments"
 msgstr "Тайлбарт үнэлгээ дүгнэлт хийх"
 
-#: views/editors/review.thtml:182
+#: views/editors/review.thtml:183
 #, fuzzy
 msgid "editors_review_details_info_request"
 msgstr ""
@@ -5462,30 +6087,30 @@ msgstr ""
 "an email and be able to answer here. You will be notified by email when they "
 "reply."
 
-#: views/editors/review.thtml:174
+#: views/editors/review.thtml:175
 msgid "editors_review_details_nominated_public"
 msgstr ""
 "Энэ нь нэмэгдэл болон түүний хамгийн сүүлийн хувилбар ба файлуудыг олон "
 "нийтийн хуудсанд тэмдэглэдэг. Дараагийн хувилбарууд нь завсарлагчаар "
 "хянагдах хүртэл түр хайрцагт байрлах болно."
 
-#: views/editors/review.thtml:177
+#: views/editors/review.thtml:178
 msgid "editors_review_details_nominated_sandbox"
 msgstr "Энэ нь нэмэгдлийг түр хайрцагт үлдээнэ."
 
-#: views/editors/review.thtml:166
+#: views/editors/review.thtml:167
 msgid "editors_review_details_pending_public"
 msgstr ""
 "Энэ нь нийтийн түр байрлуулах хайрцагт буй нэмэгдлийн хувилбарыг нийтийн "
 "хуудсанд харуулагдах эрх өгдөг."
 
-#: views/editors/review.thtml:169
+#: views/editors/review.thtml:170
 msgid "editors_review_details_pending_sandbox"
 msgstr ""
 "Энэ нь нийтийн түр байрлуулах хайрцагт буй нэмэгдлийн хувилбарыг түр "
 "хайрцагт үлдээдэг."
 
-#: views/editors/review.thtml:185
+#: views/editors/review.thtml:186
 msgid "editors_review_details_superreview"
 msgstr ""
 "Хэрэв та энэ нэмэгдлийн нууцлал юмуу эсвэл зохиогчийн эрхтэй холбоотой "
@@ -5510,19 +6135,24 @@ msgstr "Зохиогч:"
 msgid "editors_review_header_categories"
 msgstr "Төрлүүд:"
 
+#: views/editors/review.thtml:330
+#, fuzzy
+msgid "editors_review_header_comments"
+msgstr "Editor Comments"
+
 #: views/editors/review.thtml:92
 msgid "editors_review_header_compatibility"
 msgstr "Зохицох системүүд:"
 
-#: views/editors/review.thtml:251
+#: views/editors/review.thtml:252
 msgid "editors_review_header_description"
 msgstr "Тодорхойлолт"
 
-#: views/editors/review.thtml:275
+#: views/editors/review.thtml:276
 msgid "editors_review_header_devcomments"
 msgstr "Хөгжүүлэгчийн тайлбар"
 
-#: views/editors/review.thtml:263
+#: views/editors/review.thtml:264
 msgid "editors_review_header_eula"
 msgstr "EULA"
 
@@ -5530,19 +6160,19 @@ msgstr "EULA"
 msgid "editors_review_header_files"
 msgstr "Файлууд:"
 
-#: views/editors/review.thtml:284
+#: views/editors/review.thtml:285
 msgid "editors_review_header_itemhistory"
 msgstr "Түүх"
 
-#: views/editors/review.thtml:232
+#: views/editors/review.thtml:233
 msgid "editors_review_header_nominationmessage"
 msgstr "Нэр дэвшүүлэлтийн тодорхойлолт"
 
-#: views/editors/review.thtml:311
+#: views/editors/review.thtml:312
 msgid "editors_review_header_previews"
 msgstr "Үзүүлбэр"
 
-#: views/editors/review.thtml:269
+#: views/editors/review.thtml:270
 msgid "editors_review_header_privacy"
 msgstr "Хувь хүнд холбогдох мэдээллийг хамгааалах журам"
 
@@ -5552,91 +6182,127 @@ msgstr "Хувь хүнд холбогдох мэдээллийг хамгааа
 msgid "editors_review_header_review"
 msgstr "%s үнэлгээ дүгнэлт хийх"
 
-#: views/editors/review.thtml:239
+#: views/editors/review.thtml:240
 msgid "editors_review_header_reviewernotes"
 msgstr "Үнэлэгчдэд зориулсан тэмдэглэл"
 
-#: views/editors/review.thtml:245
+#: views/editors/review.thtml:246
 msgid "editors_review_header_summary"
 msgstr "Нэгтгэсэн мэдээлэл"
 
-#: views/editors/review.thtml:257
+#: views/editors/review.thtml:258
 msgid "editors_review_header_versionnotes"
 msgstr "Хувилбарын тэмдэглэл"
 
+#. %1$s is the comment count
+#: views/elements/developers/editors_review_history_item.thtml:53
+#, fuzzy, php-format
+msgid "editors_review_history_comment_count"
+msgid_plural "editors_review_history_comment_count"
+msgstr[0] "Comments (%1$s)"
+msgstr[1] "Comments (%1$s)"
+
 #. a noun: shown in an add-on's editor review history
-#: views/elements/developers/editors_review_history_item.thtml:80
+#: views/elements/developers/editors_review_history_item.thtml:86
 #, fuzzy
 msgid "editors_review_history_info_reply"
 msgstr "Reply"
 
-#: views/elements/developers/editors_review_history_item.thtml:78
+#: views/elements/developers/editors_review_history_item.thtml:84
 #, fuzzy
 msgid "editors_review_history_info_request"
 msgstr "Information Request"
 
-#: views/elements/developers/editors_review_history_item.thtml:62
-#: views/editors/reviewlog.thtml:77
+#: views/elements/developers/editors_review_history_item.thtml:68
+#: views/editors/performance_table.thtml:92 views/editors/reviewlog.thtml:77
 msgid "editors_review_history_nominated_adminreview"
 msgstr "Зохицуулагчийн үнэлгээ"
 
-#: views/elements/developers/editors_review_history_item.thtml:56
-#: views/editors/reviewlog.thtml:71
+#: views/elements/developers/editors_review_history_item.thtml:62
+#: views/editors/performance_table.thtml:86 views/editors/reviewlog.thtml:71
 msgid "editors_review_history_nominated_approved"
 msgstr "Нэр дэвшүүлэлт зөвшөөрөгдсөн/Нийтийн хуудсанд"
 
-#: views/elements/developers/editors_review_history_item.thtml:59
-#: views/editors/reviewlog.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:65
+#: views/editors/performance_table.thtml:89 views/editors/reviewlog.thtml:74
 msgid "editors_review_history_nominated_denied"
 msgstr "Нэр дэвшүүлэлт цуцлагдсан/Түр хайрцагт"
 
-#: views/editors/review.thtml:303
+#: views/editors/review.thtml:304
 msgid "editors_review_history_nonefound"
 msgstr "Ямар ч өмнөх үнэлгээний оруулга олдсонгүй."
 
-#: views/elements/developers/editors_review_history_item.thtml:73
-#: views/editors/reviewlog.thtml:88
+#: views/elements/developers/editors_review_history_item.thtml:79
+#: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:88
 msgid "editors_review_history_pending_adminreview"
 msgstr "Зохицуулагчийн үнэлгээ"
 
-#: views/elements/developers/editors_review_history_item.thtml:67
-#: views/editors/reviewlog.thtml:82
+#: views/elements/developers/editors_review_history_item.thtml:73
+#: views/editors/performance_table.thtml:97 views/editors/reviewlog.thtml:82
 msgid "editors_review_history_pending_approved"
 msgstr "Зөвшөөрөгдсөн/Нийтийн хуудсанд"
 
-#: views/elements/developers/editors_review_history_item.thtml:70
-#: views/editors/reviewlog.thtml:85
+#: views/elements/developers/editors_review_history_item.thtml:76
+#: views/editors/performance_table.thtml:100 views/editors/reviewlog.thtml:85
 msgid "editors_review_history_pending_denied"
 msgstr "Цуцлагдсан/Түр хайрцагт"
 
 #. link text in an add-on's editor review history, allowing to hide and show an information request's replies
 #. %1 is the number of replies
-#: views/elements/developers/editors_review_history_item.thtml:90
+#: views/elements/developers/editors_review_history_item.thtml:96
 #, fuzzy
 msgid "editors_review_history_show_hide_replies"
 msgid_plural "editors_review_history_show_hide_replies"
 msgstr[0] "Show/Hide Replies (%1$s)"
 msgstr[1] "Show/Hide Replies (%1$s)"
 
-#: views/editors/review.thtml:208
+#: views/editors/review.thtml:359
+#, fuzzy
+msgid "editors_review_input_cancel"
+msgstr "Cancel"
+
+#: views/editors/review.thtml:358
+#, fuzzy
+msgid "editors_review_input_post_comment"
+msgstr "Post Comment"
+
+#: views/editors/review.thtml:209
 msgid "editors_review_label_applications"
 msgstr "Програмууд:"
 
-#: views/editors/review.thtml:196
+#: views/editors/review.thtml:197
 msgid "editors_review_label_cannedresponse"
 msgstr "эсвэл урьдчилан хадгалсан хариулт сонгох:"
 
-#: views/editors/review.thtml:190
+#: views/editors/review.thtml:191
 msgid "editors_review_label_comments"
 msgstr "Тайлбар:"
 
-#: views/editors/review.thtml:204
+#: views/editors/review.thtml:205
 msgid "editors_review_label_operating_systems"
 msgstr "Үйлдлийн системүүд:"
 
-#: views/editors/review.thtml:285 views/editors/review.thtml:312
+#: views/editors/review.thtml:353
+#, fuzzy
+msgid "editors_review_label_subject"
+msgstr "Subject"
+
+#. This is text for an <a>, please include the parenthesis
+#: views/editors/review.thtml:349
+#, fuzzy
+msgid "editors_review_link_new_thread"
+msgstr "(New Thread)"
+
+#: views/editors/review.thtml:286 views/editors/review.thtml:313
+#: views/editors/review.thtml:331
 msgid "editors_review_link_pagetop"
 msgstr "Дээд хэсэг рүү"
+
+#. This is text for an <a>, please include the parenthesis
+#: views/editors/review.thtml:344
+#, fuzzy
+msgid "editors_review_link_reply"
+msgstr "(Reply)"
 
 #: views/editors/review.thtml:141
 #, fuzzy
@@ -5650,7 +6316,7 @@ msgstr ""
 msgid "editors_review_next_link"
 msgstr "next &raquo;"
 
-#: views/editors/review.thtml:322
+#: views/editors/review.thtml:323
 msgid "editors_review_previews_notfound"
 msgstr "Үзүүлбэр олдсонгүй."
 
@@ -5659,8 +6325,8 @@ msgstr "Үзүүлбэр олдсонгүй."
 msgid "editors_review_previous_link"
 msgstr "&laquo; prev"
 
-#: controllers/editors_controller.php:144
-#: controllers/editors_controller.php:146
+#: controllers/editors_controller.php:147
+#: controllers/editors_controller.php:149
 msgid "editors_review_queue_pagetitle"
 msgstr "Үнэлгээ дүгнэлтийн дараалал"
 
@@ -5676,38 +6342,38 @@ msgstr "<strong># %1$s</strong> of %2$s in queue"
 msgid "editors_review_rank_in_queue_filtered"
 msgstr "<strong># %1$s</strong> of %2$s in queue (filtered)"
 
-#: views/editors/review.thtml:223
+#: views/editors/review.thtml:224
 msgid "editors_review_submit_process_action"
 msgstr "Үйлдлийн явц"
 
-#: views/editors/review.thtml:293
+#: views/editors/review.thtml:294
 msgid "editors_review_th_action"
 msgstr "Үйлдэл"
 
-#: views/editors/review.thtml:294
+#: views/editors/review.thtml:295
 msgid "editors_review_th_comments"
 msgstr "Тайлбар"
 
-#: views/editors/review.thtml:291
+#: views/editors/review.thtml:292
 msgid "editors_review_th_date"
 msgstr "Огноо"
 
-#: views/editors/review.thtml:292
+#: views/editors/review.thtml:293
 msgid "editors_review_th_reviewer"
 msgstr "Хянаж дүгнэсэн"
 
-#: views/editors/review.thtml:290
+#: views/editors/review.thtml:291
 msgid "editors_review_th_version_file"
 msgstr "Хувилбар/Файл"
 
-#: views/editors/review.thtml:217
+#: views/editors/review.thtml:218
 #, fuzzy
 msgid "editors_review_update_notify_once"
 msgstr ""
 "Notify me the next time this add-on is updated. (Subsequent updates will not "
 "generate an email)"
 
-#: controllers/editors_controller.php:298
+#: controllers/editors_controller.php:320
 msgid "editors_reviewed_successfully"
 msgstr "Хянах дүгнэлт амжилттай гүйцэтгэгдлээ."
 
@@ -5733,7 +6399,7 @@ msgstr "Үйлдэл"
 msgid "editors_reviews_in_reply_to"
 msgstr "Хариу:"
 
-#: controllers/editors_controller.php:748
+#: controllers/editors_controller.php:1331
 msgid "editors_reviews_processed"
 msgstr "Хяналт дүгнэлтүүд амжилттай гүйцэтгэгдлээ!"
 
@@ -5745,15 +6411,15 @@ msgstr "Хянаж дүгнэх ажил байхгүй байна."
 msgid "editors_reviews_submit_process_reviews"
 msgstr "Хянаж дүгнэлт хийх"
 
-#: controllers/editors_controller.php:691
+#: controllers/editors_controller.php:1274
 msgid "editors_site_specific"
 msgstr "Тусгай хуудсанд зориулсан"
 
-#: controllers/editors_controller.php:348
+#: controllers/editors_controller.php:370
 msgid "editors_tested_app"
 msgstr "Шалгагдсан програмууд"
 
-#: controllers/editors_controller.php:347
+#: controllers/editors_controller.php:369
 msgid "editors_tested_os"
 msgstr "Шалгасан үйлдлийн системүүд"
 
@@ -5792,19 +6458,19 @@ msgid "editors_th_sort_descending"
 msgstr "Descending sort"
 
 #. %s is a number
-#: controllers/editors_controller.php:1036
+#: controllers/editors_controller.php:1658
 #, php-format
 msgid "editors_x_days"
 msgstr "%s өдөр"
 
 #. %s is a number
-#: controllers/editors_controller.php:1044
+#: controllers/editors_controller.php:1666
 #, php-format
 msgid "editors_x_hours"
 msgstr "%s цаг"
 
 #. %s is a number
-#: controllers/editors_controller.php:1052
+#: controllers/editors_controller.php:1674
 #, php-format
 msgid "editors_x_minutes"
 msgstr "%s минут"
@@ -5815,12 +6481,12 @@ msgstr "%s минут"
 #: controllers/components/amo.php:608 controllers/components/amo.php:609
 #: controllers/reviews_controller.php:353
 #: controllers/reviews_controller.php:485
-#: controllers/collections_controller.php:438
-#: controllers/collections_controller.php:496
-#: controllers/collections_controller.php:504
-#: controllers/collections_controller.php:971
-#: controllers/collections_controller.php:1034
-#: controllers/collections_controller.php:1077
+#: controllers/collections_controller.php:444
+#: controllers/collections_controller.php:502
+#: controllers/collections_controller.php:510
+#: controllers/collections_controller.php:978
+#: controllers/collections_controller.php:1043
+#: controllers/collections_controller.php:1087
 msgid "error_access_denied"
 msgstr "Хандах эрхгүй"
 
@@ -5828,15 +6494,20 @@ msgstr "Хандах эрхгүй"
 msgid "error_access_denied_message"
 msgstr "Танд энэ хуудсыг үзэх эрх байхгүй байна."
 
-#: controllers/collections_controller.php:1039
+#: controllers/collections_controller.php:1048
 #, fuzzy
 msgid "error_addon_exists"
 msgstr "Add-on already exists!"
 
+#: controllers/addons_controller.php:128
+#, fuzzy
+msgid "error_addon_no_contributions"
+msgstr "The add-on developers have not enabled contributions."
+
 #: controllers/developers_controller.php:200
 #: controllers/developers_controller.php:593
-#: controllers/developers_controller.php:1016
-#: controllers/developers_controller.php:1429
+#: controllers/developers_controller.php:1127
+#: controllers/developers_controller.php:1540
 #: controllers/downloads_controller.php:95
 #: controllers/downloads_controller.php:102
 #: controllers/downloads_controller.php:164
@@ -5847,16 +6518,16 @@ msgstr "Add-on already exists!"
 #: controllers/reviews_controller.php:77
 #: controllers/reviews_controller.php:240
 #: controllers/reviews_controller.php:332
-#: controllers/reviews_controller.php:340 controllers/api_controller.php:123
-#: controllers/api_controller.php:759 controllers/addons_controller.php:131
-#: controllers/addons_controller.php:197
-#: controllers/addons_controller.php:1407
-#: controllers/addons_controller.php:1465
-#: controllers/addons_controller.php:1469
-#: controllers/addons_controller.php:1503
-#: controllers/editors_controller.php:265
-#: controllers/collections_controller.php:1041
-#: controllers/collections_controller.php:1074
+#: controllers/reviews_controller.php:340 controllers/api_controller.php:124
+#: controllers/api_controller.php:762 controllers/addons_controller.php:124
+#: controllers/addons_controller.php:206 controllers/addons_controller.php:272
+#: controllers/addons_controller.php:1494
+#: controllers/addons_controller.php:1553
+#: controllers/addons_controller.php:1557
+#: controllers/addons_controller.php:1591
+#: controllers/editors_controller.php:269
+#: controllers/collections_controller.php:1051
+#: controllers/collections_controller.php:1084
 msgid "error_addon_notfound"
 msgstr "Нэмэгдэл олдсонгүй!"
 
@@ -5869,23 +6540,23 @@ msgstr "Энэ нэмэгдэл энд харуулагдах боломжгүй
 msgid "error_addon_selfreview"
 msgstr "You cannot review your own add-on."
 
-#: controllers/addons_controller.php:970
+#: controllers/addons_controller.php:1080
 msgid "error_browse_no_addons"
 msgstr "Энэ төрөлд ямар ч нэмэгдэл алга!"
 
-#: controllers/api_controller.php:424
+#: controllers/api_controller.php:427
 #, fuzzy
 msgid "error_collection_feed_notfound"
 msgstr "Add-on feed not found."
 
-#: views/users/register.thtml:65 views/users/edit.thtml:194
+#: views/users/register.thtml:65 views/users/edit.thtml:209
 msgid "error_email_invalid"
 msgstr "Энэ хүчинтэй захианы хаяг биш байна."
 
 #: views/users/pwreset.thtml:74 views/users/register.thtml:70
 #: views/users/register.thtml:80 views/users/register.thtml:86
-#: views/users/edit.thtml:105 views/users/edit.thtml:111
-#: views/users/edit.thtml:192 views/admin/users_edit.thtml:78
+#: views/users/edit.thtml:98 views/users/edit.thtml:104
+#: views/users/edit.thtml:207 views/admin/users_edit.thtml:78
 #: views/admin/users_edit.thtml:83 views/reviews/add.thtml:80
 #: views/reviews/add.thtml:104
 msgid "error_field_required"
@@ -5894,18 +6565,18 @@ msgstr "Энэ талбар хоосон байх ёсгүй."
 #: controllers/files_controller.php:75 controllers/files_controller.php:93
 #: controllers/files_controller.php:96 controllers/files_controller.php:163
 #: controllers/files_controller.php:176 controllers/files_controller.php:185
-#: controllers/files_controller.php:204 controllers/editors_controller.php:412
+#: controllers/files_controller.php:204 controllers/editors_controller.php:447
 msgid "error_file_notfound"
 msgstr "Файл олдсонгүй!"
 
 #. %s is a filename
-#: controllers/editors_controller.php:430
+#: controllers/editors_controller.php:465
 #, php-format
 msgid "error_file_x_notfound"
 msgstr "Файлын алдаа: %s гэж байхгүй байна."
 
 #: views/collections/add.thtml:55 views/collections/edit.thtml:89
-#: views/users/register.thtml:54 views/users/edit.thtml:81
+#: views/users/register.thtml:54 views/users/edit.thtml:74
 #: views/reviews/add.thtml:70 controllers/groups_controller.php:80
 #: controllers/groups_controller.php:102
 msgid "error_formerrors"
@@ -5916,8 +6587,8 @@ msgstr "Энэ хүснэгтэнд алдаа байна. Тэдгээрийг 
 msgid "error_invalid_captcha"
 msgstr "Invalid captcha, please try again!"
 
-#: views/users/register.thtml:100 views/users/edit.thtml:125
-#: views/admin/users_edit.thtml:101
+#: views/users/register.thtml:100 views/users/edit.thtml:122
+#: views/admin/users_edit.thtml:109
 msgid "error_invalid_url"
 msgstr ""
 "Энэ хаяг буруу хэлбэршилтэй байна. Зөв хаяг http://example.com/my_page гэсэн "
@@ -5925,33 +6596,34 @@ msgstr ""
 
 #. %s is a string representing what's missing.  Example:  file_id
 #: controllers/downloads_controller.php:65
-#: controllers/users_controller.php:185 controllers/users_controller.php:264
-#: controllers/users_controller.php:559 controllers/users_controller.php:653
-#: controllers/reviews_controller.php:71
+#: controllers/users_controller.php:191 controllers/users_controller.php:270
+#: controllers/users_controller.php:591 controllers/users_controller.php:685
+#: controllers/users_controller.php:860 controllers/reviews_controller.php:71
 #: controllers/reviews_controller.php:234
 #: controllers/reviews_controller.php:325
 #: controllers/reviews_controller.php:473
 #: controllers/reviews_controller.php:475
-#: controllers/addons_controller.php:182
-#: controllers/addons_controller.php:1381
-#: controllers/addons_controller.php:1455
-#: controllers/collections_controller.php:266
-#: controllers/collections_controller.php:285
-#: controllers/collections_controller.php:346
-#: controllers/collections_controller.php:443
-#: controllers/collections_controller.php:482
-#: controllers/collections_controller.php:936
-#: controllers/collections_controller.php:959
-#: controllers/collections_controller.php:960
-#: controllers/collections_controller.php:975
-#: controllers/collections_controller.php:977
-#: controllers/collections_controller.php:994
-#: controllers/collections_controller.php:1003
-#: controllers/collections_controller.php:1016
-#: controllers/collections_controller.php:1017
-#: controllers/collections_controller.php:1024
-#: controllers/collections_controller.php:1070
-#: controllers/collections_controller.php:1090
+#: controllers/addons_controller.php:258
+#: controllers/addons_controller.php:1486
+#: controllers/addons_controller.php:1543
+#: controllers/collections_controller.php:177
+#: controllers/collections_controller.php:269
+#: controllers/collections_controller.php:288
+#: controllers/collections_controller.php:352
+#: controllers/collections_controller.php:449
+#: controllers/collections_controller.php:488
+#: controllers/collections_controller.php:943
+#: controllers/collections_controller.php:966
+#: controllers/collections_controller.php:967
+#: controllers/collections_controller.php:982
+#: controllers/collections_controller.php:984
+#: controllers/collections_controller.php:1001
+#: controllers/collections_controller.php:1010
+#: controllers/collections_controller.php:1025
+#: controllers/collections_controller.php:1026
+#: controllers/collections_controller.php:1033
+#: controllers/collections_controller.php:1080
+#: controllers/collections_controller.php:1100
 #, php-format
 msgid "error_missing_argument"
 msgstr "Байхгүй байгаа аргументууд: %s"
@@ -5961,59 +6633,65 @@ msgstr "Байхгүй байгаа аргументууд: %s"
 msgid "error_no_files_in_addon"
 msgstr "No Files"
 
+#: views/developers/addon_edit_contributions.thtml:56
+#: controllers/addons_controller.php:118
+#, fuzzy
+msgid "error_paypal_disabled"
+msgstr "Sorry, PayPal contributions are temporarily disabled."
+
 #: controllers/previews_controller.php:200
 msgid "error_preview_notfound"
 msgstr "Үзүүлбэр олдсонгүй!"
 
-#: views/addons/display.thtml:400 views/reviews/add.thtml:98
+#: views/reviews/add.thtml:98
 msgid "error_review_rating_required"
 msgstr "Та дүгнэлт өгөхийг сонгох ёстой."
 
-#: controllers/users_controller.php:160
+#: controllers/users_controller.php:166
 msgid "error_user_already_confirmed"
 msgstr "Энэ хэрэглэгчийн эрх өмнө нь батлагдсан байна."
 
-#: controllers/users_controller.php:202 controllers/users_controller.php:276
-#: controllers/users_controller.php:569 controllers/users_controller.php:581
-#: controllers/users_controller.php:587 controllers/users_controller.php:610
-#: controllers/users_controller.php:627
+#: controllers/users_controller.php:208 controllers/users_controller.php:282
+#: controllers/users_controller.php:601 controllers/users_controller.php:613
+#: controllers/users_controller.php:619 controllers/users_controller.php:642
+#: controllers/users_controller.php:659
 msgid "error_user_badconfirmationcode"
 msgstr "Бүртгэлийн буруу батлах код байна!"
 
 #: views/users/pwreset.thtml:79 views/users/register.thtml:75
-#: views/users/edit.thtml:183
+#: views/users/edit.thtml:198
 msgid "error_user_confirmpw_nomatch"
 msgstr "Нууц үгнүүд ижил биш байна."
 
-#: views/users/register.thtml:65 views/users/edit.thtml:190
-#: controllers/users_controller.php:617
+#: views/users/register.thtml:65 views/users/edit.thtml:205
+#: controllers/users_controller.php:649
 msgid "error_user_email_notunique"
 msgstr "Энэ захианы хаяг нь өөр хэрэглэгчээр өмнө нь бүртгэгдсэн байна."
 
-#: controllers/users_controller.php:596
+#: controllers/users_controller.php:628
 msgid "error_user_emailchange_expired"
 msgstr ""
 "Захианы хаягаа солих хугацаа тань хэтэрсэн байна. Хэрэглэгчийн буланд очиж "
 "өөрийнхөө захианы хаягаа өөрчлөөд, батлах захиа ирэнгүүт түүн дотор буй "
 "холбоос дээр дарж баталгаажуулна уу."
 
-#: controllers/collections_controller.php:985
+#: controllers/collections_controller.php:992
 #, fuzzy
 msgid "error_user_exists"
 msgstr ""
 "Users can only have one role at a time.  Please remove the user from any "
 "existing roles before continuing."
 
-#: views/users/register.thtml:91 views/users/edit.thtml:116
+#: views/users/register.thtml:91 views/users/edit.thtml:109
 #: views/admin/users_edit.thtml:88
 msgid "error_user_nickname_notunique"
 msgstr "Энэ нэр нь өөр хүнээр авагдсан байна."
 
-#: views/users/pwreset.thtml:54 controllers/users_controller.php:191
-#: controllers/users_controller.php:270 controllers/users_controller.php:603
-#: controllers/users_controller.php:659
-#: controllers/collections_controller.php:988
-#: controllers/collections_controller.php:998
+#: views/users/pwreset.thtml:54 controllers/users_controller.php:197
+#: controllers/users_controller.php:276 controllers/users_controller.php:635
+#: controllers/users_controller.php:691 controllers/users_controller.php:865
+#: controllers/collections_controller.php:995
+#: controllers/collections_controller.php:1005
 msgid "error_user_notfound"
 msgstr "Хэрэглэгч олдсонгүй!"
 
@@ -6027,20 +6705,22 @@ msgstr ""
 msgid "error_username_or_pw_wrong"
 msgstr "Хэрэглэгчийн нэр эсвэл нууц үг буруу байна!"
 
-#: controllers/editors_controller.php:260
+#: controllers/editors_controller.php:264
 msgid "error_version_notfound"
 msgstr "Хувилбар олдсонгүй!"
 
-#: views/users/delete.thtml:125 views/users/edit.thtml:173
+#: views/users/delete.thtml:125 views/users/edit.thtml:188
 msgid "error_wrong_password"
 msgstr "Буруу нууц үг оруулсан байна!"
 
+#: views/elements/amo2009/results_addon.thtml:124
 #: views/elements/amo2009/homepage_addon.thtml:122
 #: views/elements/feature.thtml:122
 msgid "feature_learnmore"
 msgstr "Нэмэлт мэдээлэл"
 
 #. %1 is the add-on name
+#: views/elements/amo2009/results_addon.thtml:125
 #: views/elements/amo2009/homepage_addon.thtml:123
 #: views/elements/feature.thtml:123
 #, php-format
@@ -6048,15 +6728,16 @@ msgid "feature_learnmore_about_addon"
 msgstr "%1$s-н талаар нэмж мэдэх"
 
 #. %1$s is a number
-#: views/elements/amo2009/reviews.thtml:52
+#: views/elements/amo2009/reviews.thtml:58
 #: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
-#: views/addons/browse_thumbs.thtml:86
+#: views/addons/browse_thumbs.thtml:131
 #, php-format
 msgid "feature_reviews"
 msgid_plural "feature_reviews"
 msgstr[0] "үнэлгээ"
 msgstr[1] "үнэлгээнүүд"
 
+#: views/elements/amo2009/results_addon.thtml:129
 #: views/elements/amo2009/homepage_addon.thtml:127
 #: views/elements/feature.thtml:127
 msgid "feature_view_more_from_category"
@@ -6102,43 +6783,43 @@ msgid "file_browser_toggle_expand_collapse"
 msgstr "+/-"
 
 #. Link text for the AMO About page.
-#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:341
+#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
 #, fuzzy
 msgid "footer_a_about"
 msgstr "About"
 
 #. Link text to the AMO blog.
-#: views/elements/footer.thtml:74 views/layouts/amo2009.thtml:343
+#: views/elements/footer.thtml:74 views/layouts/amo2009.thtml:355
 #, fuzzy
 msgid "footer_a_blog"
 msgstr "Blog"
 
 #. Link text to the Frequently Asked Questions page.
-#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:342
+#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
 #, fuzzy
 msgid "footer_a_faq"
 msgstr "FAQ"
 
 #. Full text for the FAQ abbreviation.
 #: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
-#: views/layouts/amo2009.thtml:342
+#: views/layouts/amo2009.thtml:354
 #, fuzzy
 msgid "footer_abbr_faq"
 msgstr "Frequently Asked Questions"
 
-#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:336
+#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:348
 msgid "footer_all_rights_reserved"
 msgstr "Бүх эрх хуулиар хамгаалагдсан."
 
-#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:336
+#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:348
 msgid "footer_copyright"
 msgstr "Зохиогчийн эрх"
 
-#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:340
+#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
 msgid "footer_credits"
 msgstr "Зохиогчид"
 
-#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:346
+#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:358
 msgid "footer_disclaimer"
 msgstr ""
 "Мозила нь эдгээр холбоосыг танд тусламж болгох зориулалтаар үзүүлж байгаа "
@@ -6146,19 +6827,19 @@ msgstr ""
 "мэдээллээр хангаагүй болно. Програмтай холбоотой асуулт, гомдол хүсэл байвал "
 "програм зохиогчид уруу нь илгээх хэрэгтэй."
 
-#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:332
+#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
 msgid "footer_lang_form_lang_submit_go"
 msgstr "Оч"
 
-#: views/elements/footer.thtml:70 views/layouts/amo2009.thtml:339
+#: views/elements/footer.thtml:70 views/layouts/amo2009.thtml:351
 msgid "footer_legal_notices"
 msgstr "Хуулийн анхааруулга"
 
-#: views/elements/footer.thtml:50 views/layouts/amo2009.thtml:321
+#: views/elements/footer.thtml:50 views/layouts/amo2009.thtml:332
 msgid "footer_other_languages"
 msgstr "Бусад хэл дээр:"
 
-#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:338
+#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
 msgid "footer_privacy_policy"
 msgstr "Хувь хүнд холбогдолтой мэдээллийг хамгаалах журам"
 
@@ -6221,7 +6902,7 @@ msgid "general_addontype_theme"
 msgstr "Харуулах маяг"
 
 #. Plural in this context means many of the add-on type
-#: models/addontype.php:99
+#: models/addontype.php:99 views/addons/browse_thumbs.thtml:56
 msgid "general_addontype_theme_plural"
 msgstr "Харуулах маягууд"
 
@@ -6326,15 +7007,14 @@ msgstr "Нэмэгдлүүд"
 
 #: views/elements/developers/sidebar.thtml:72
 #: views/elements/developers/myaddons.thtml:50 views/elements/header.thtml:159
-#: views/addons/display.thtml:378
 msgid "header_navlink_login"
 msgstr "Нэвтрэх"
 
-#: views/elements/header.thtml:156 views/layouts/amo2009.thtml:304
+#: views/elements/header.thtml:156 views/layouts/amo2009.thtml:314
 msgid "header_navlink_logout"
 msgstr "Гарах"
 
-#: views/elements/header.thtml:145 views/layouts/amo2009.thtml:303
+#: views/elements/header.thtml:145 views/layouts/amo2009.thtml:313
 msgid "header_navlink_myaccount"
 msgstr "Миний бүртгэл"
 
@@ -6349,31 +7029,32 @@ msgstr "Бүртгүүлэх"
 msgid "header_navlink_register_or_login"
 msgstr "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a>"
 
-#: views/layouts/amo2009.thtml:285
+#: views/layouts/amo2009.thtml:298
 #, fuzzy
 msgid "header_navlink_tools"
 msgstr "Tools"
 
 #. %s is the add-on name
 #: views/elements/collections_interactive_addon.thtml:62
+#: views/elements/amo2009/results_addon.thtml:77
 #: views/elements/amo2009/homepage_addon.thtml:77
 #: views/elements/addon_discussionheader.thtml:62
 #: views/elements/addon_listitem.thtml:67 views/elements/feature.thtml:84
-#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:60
+#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:106
 #, php-format
 msgid "img_preview_of"
 msgstr "%s-н үзүүлбэр зураг"
 
 #. %1 is the login URL for the link tag
 #. %2 is the link to an explanatory page.
-#: views/elements/amo2009/install.thtml:307 views/elements/install.thtml:255
+#: views/elements/amo2009/install.thtml:325 views/elements/install.thtml:255
 msgid "install_a_login_to_install"
 msgstr ""
 "Та энэ нэмэгдлийг суулгахын тулд <a href=\"%1$s\">нэвтрэх</a> үйлдэл хийх "
 "хэрэгтэй"
 
 #. %1 is the URL for the Experimental Add-ons section of the FAQ page
-#: views/elements/amo2009/install.thtml:283 views/elements/install.thtml:232
+#: views/elements/amo2009/install.thtml:301 views/elements/install.thtml:232
 #, fuzzy
 msgid "install_button_confirm_exp_install"
 msgstr ""
@@ -6381,16 +7062,16 @@ msgstr ""
 
 #. %1$s is the application name.  Example:  Firefox
 #. %2$s is an optional string used to specify a platform.  Example:  (Windows)
-#: views/elements/amo2009/install.thtml:128 views/elements/install.thtml:75
+#: views/elements/amo2009/install.thtml:135 views/elements/install.thtml:75
 #, php-format
 msgid "install_button_text"
 msgstr "%s %s руу нэм"
 
 #. %1 is the add-on name, %2 is the app name
-#: views/elements/amo2009/install.thtml:191
-#: views/elements/amo2009/install.thtml:206
-#: views/elements/amo2009/install.thtml:249
-#: views/elements/amo2009/install.thtml:298 views/elements/install.thtml:150
+#: views/elements/amo2009/install.thtml:198
+#: views/elements/amo2009/install.thtml:213
+#: views/elements/amo2009/install.thtml:263
+#: views/elements/amo2009/install.thtml:316 views/elements/install.thtml:150
 #: views/elements/install.thtml:165 views/elements/install.thtml:202
 #: views/elements/install.thtml:246
 #, php-format
@@ -6398,12 +7079,12 @@ msgid "install_button_title"
 msgstr "%1$s-г %2$s руу нэм"
 
 #. %1$s is the add-on name
-#: views/elements/amo2009/install.thtml:200 views/elements/install.thtml:159
+#: views/elements/amo2009/install.thtml:207 views/elements/install.thtml:159
 #, php-format
 msgid "install_download"
 msgstr "%1$s-г татаж ав"
 
-#: views/elements/amo2009/install.thtml:147 views/elements/install.thtml:94
+#: views/elements/amo2009/install.thtml:154 views/elements/install.thtml:94
 msgid "install_error_addon_not_found"
 msgstr "Энэ нэмэгдэл боломжгүй байна."
 
@@ -6419,8 +7100,8 @@ msgstr "Үгийн сан татаж авах"
 msgid "langtools_download_langpack"
 msgstr "Хэлний багц татаж авах"
 
-#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:685
-#: controllers/addons_controller.php:1239
+#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:686
+#: controllers/addons_controller.php:1347
 msgid "langtools_header_dicts_and_langpacks"
 msgstr "Үгийн сан болон хэлний багц"
 
@@ -6449,44 +7130,43 @@ msgstr "Хэл"
 msgid "license_custom"
 msgstr "Custom License"
 
-#: config/bootstrap.php:303
+#: config/bootstrap.php:287
 #, fuzzy
 msgid "licenses_bsd"
 msgstr "BSD License"
 
-#: config/bootstrap.php:298
+#: config/bootstrap.php:282
 #, fuzzy
 msgid "licenses_gpl_2.0"
 msgstr "GNU General Public License, version 2.0"
 
-#: config/bootstrap.php:299
+#: config/bootstrap.php:283
 #, fuzzy
 msgid "licenses_gpl_3.0"
 msgstr "GNU General Public License, version 3.0"
 
-#: config/bootstrap.php:300
+#: config/bootstrap.php:284
 #, fuzzy
 msgid "licenses_lgpl_2.1"
 msgstr "GNU Lesser General Public License, version 2.1"
 
-#: config/bootstrap.php:301
+#: config/bootstrap.php:285
 #, fuzzy
 msgid "licenses_lgpl_3.0"
 msgstr "GNU Lesser General Public License, version 3.0"
 
-#: config/bootstrap.php:302
+#: config/bootstrap.php:286
 #, fuzzy
 msgid "licenses_mit"
 msgstr "MIT/X11 License"
 
-#: config/bootstrap.php:297
+#: config/bootstrap.php:281
 #, fuzzy
 msgid "licenses_mpl_1.1"
 msgstr "Mozilla Public License, version 1.1"
 
 #: views/users/emailchange.thtml:51 views/users/delete.thtml:55
-#: views/users/delete.thtml:137 views/users/edit.thtml:74
-#: views/reviews/flag.thtml:54
+#: views/users/delete.thtml:137 views/reviews/flag.thtml:54
 msgid "link_return_to_front_page"
 msgstr "Энд дарж эхлэл хуудас руу буцна уу."
 
@@ -6496,7 +7176,7 @@ msgid "list_sortby_date"
 msgstr "Огноо"
 
 #: views/elements/amo2009/addon_list_options.thtml:47
-#: views/elements/addon_list_options.thtml:47
+#: views/elements/addon_list_options.thtml:47 views/addons/display.thtml:213
 msgid "list_sortby_downloads"
 msgstr "Татаж авалт"
 
@@ -6506,28 +7186,28 @@ msgid "list_sortby_name"
 msgstr "Нэмэгдлийн нэр"
 
 #: views/elements/amo2009/addon_list_options.thtml:48
-#: views/elements/addon_list_options.thtml:48
+#: views/elements/addon_list_options.thtml:48 views/addons/display.thtml:323
 msgid "list_sortby_rating"
 msgstr "Үнэлгээ"
 
-#: config/bootstrap.php:278
+#: config/bootstrap.php:262
 #, fuzzy
 msgid "main_prettyname_fennec"
 msgstr "Fennec"
 
-#: config/bootstrap.php:274
+#: config/bootstrap.php:258
 msgid "main_prettyname_firefox"
 msgstr "Firefox"
 
-#: config/bootstrap.php:277
+#: config/bootstrap.php:261
 msgid "main_prettyname_seamonkey"
 msgstr "SeaMonkey"
 
-#: config/bootstrap.php:276
+#: config/bootstrap.php:260
 msgid "main_prettyname_sunbird"
 msgstr "Sunbird"
 
-#: config/bootstrap.php:275
+#: config/bootstrap.php:259
 msgid "main_prettyname_thunderbird"
 msgstr "Thunderbird"
 
@@ -6559,17 +7239,17 @@ msgstr "Application Versions"
 msgid "page_title_collector"
 msgstr "Add-on Collector"
 
-#: controllers/pages_controller.php:117
+#: controllers/pages_controller.php:118
 #, fuzzy
 msgid "page_title_collector_faq"
 msgstr "Add-on Collector FAQ"
 
-#: controllers/pages_controller.php:119
+#: controllers/pages_controller.php:121
 #, fuzzy
 msgid "page_title_collector_features"
 msgstr "Add-on Collector Features"
 
-#: controllers/pages_controller.php:122
+#: controllers/pages_controller.php:125
 #, fuzzy
 msgid "page_title_collector_firstrun"
 msgstr "Welcome to the Add-on Collector"
@@ -6779,20 +7459,20 @@ msgstr ""
 msgid "reviews_header"
 msgstr "%s-н үнэлгээ дүгнэлт"
 
-#: controllers/addons_controller.php:435
+#: controllers/addons_controller.php:491
 msgid "rss_featuredaddons"
 msgstr "Онцгой шинж чанартай нэмэгдлүүд"
 
-#: controllers/addons_controller.php:432
+#: controllers/addons_controller.php:488
 msgid "rss_newestaddons"
 msgstr "Шинэ нэмэгдлүүд"
 
-#: controllers/addons_controller.php:434
+#: controllers/addons_controller.php:490
 #, fuzzy
 msgid "rss_popularaddons"
 msgstr "Popular Add-ons"
 
-#: controllers/addons_controller.php:433
+#: controllers/addons_controller.php:489
 msgid "rss_updatedaddons"
 msgstr "Шинэчлэгдсэн нэмэгдлүүд"
 
@@ -6806,14 +7486,35 @@ msgstr "Search"
 msgid "search_collections_header"
 msgstr "Collection Search Results"
 
-#: controllers/search_controller.php:297
+#: controllers/search_controller.php:298
 #, fuzzy
 msgid "search_collections_pagetitle"
 msgstr "Collection Search Results"
 
-#: controllers/search_controller.php:99
+#: controllers/search_controller.php:101
 msgid "search_disabled"
 msgstr "Хайлт хийх одоогоор боломжгүй. Дараа дахин оролдоно уу."
+
+#: views/search/index.thtml:170
+#, fuzzy
+msgid "search_filter_categories_header"
+msgstr "Categories"
+
+#. This is the header for a list of links
+#: views/search/index.thtml:125
+#, fuzzy
+msgid "search_filter_compatible_header"
+msgstr "Compatible with"
+
+#: views/search/index.thtml:202
+#, fuzzy
+msgid "search_filter_no_tags"
+msgstr "No tags for these add-ons"
+
+#: views/search/index.thtml:198
+#, fuzzy
+msgid "search_filter_tags_header"
+msgstr "Tags"
 
 #: views/elements/amo2009/search.thtml:188 views/elements/search.thtml:187
 #: views/elements/search_mini.thtml:54
@@ -6827,15 +7528,15 @@ msgid "search_form_all_collections"
 msgstr "all collections"
 
 #: views/elements/amo2009/search.thtml:184
-#: views/elements/amo2009/search.thtml:385
-#: views/elements/amo2009/search.thtml:408 views/elements/search.thtml:171
+#: views/elements/amo2009/search.thtml:389
+#: views/elements/amo2009/search.thtml:412 views/elements/search.thtml:171
 #: views/elements/search.thtml:183 views/elements/search_mini.thtml:43
 #: views/elements/search_mini.thtml:49 views/layouts/mozilla.thtml:188
 msgid "search_form_default_text"
 msgstr "нэмэгдэл хайх"
 
 #: views/elements/amo2009/search.thtml:184
-#: views/elements/amo2009/search.thtml:404
+#: views/elements/amo2009/search.thtml:408
 #, fuzzy
 msgid "search_form_default_text_collections"
 msgstr "search for collections"
@@ -6856,50 +7557,104 @@ msgstr "Click to enter search terms"
 msgid "search_form_within"
 msgstr "хайх талбар"
 
-#: views/addons/searchengines.thtml:118
+#: views/addons/searchengines.thtml:76
 msgid "search_landing_all_search_engines"
 msgstr "Бүх хайлт хийгчдэд"
 
-#: views/addons/searchengines.thtml:114
+#: views/addons/searchengines.thtml:72
 msgid "search_landing_browse_search_engines"
 msgstr "Хайлт хийгчдийг харуул"
 
-#: views/search/collections.thtml:58 views/search/index.thtml:59
+#: views/tags/display.thtml:60 views/search/collections.thtml:62
+#: views/search/index.thtml:84
 msgid "search_nothing_found"
 msgstr "Ямар ч үр дүн олдсонгүй."
 
-#: controllers/search_controller.php:185
+#: controllers/search_controller.php:199
 msgid "search_pagetitle"
 msgstr "Нэмэгдэл хайх"
 
-#: controllers/search_controller.php:242
+#: views/search/index.thtml:132
+#, fuzzy
+msgid "search_refine_all_versions_link"
+msgstr "All Versions"
+
+#: views/search/index.thtml:59
+#, fuzzy
+msgid "search_results_header"
+msgstr "Search Results"
+
+#: views/search/index.thtml:123
+#, fuzzy
+msgid "search_results_refine_header"
+msgstr "Refine Results"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is a word (the add-on is tagged with it)
+#: views/tags/display.thtml:53 views/search/index.thtml:65
+#, fuzzy
+msgid "search_results_showing_x_of_y_for_tags_header"
+msgstr "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is the word the person is searching for
+#. %5$s is a word (the add-on is tagged with it)
+#: views/search/index.thtml:63
+#, fuzzy
+msgid "search_results_showing_x_of_y_for_terms_and_tags_header"
+msgstr ""
+"Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with "
+"<strong>%5$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is the word the person is searching for
+#: views/search/index.thtml:67
+#, fuzzy
+msgid "search_results_showing_x_of_y_for_terms_header"
+msgstr "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#: views/search/index.thtml:69
+#, fuzzy
+msgid "search_results_showing_x_of_y_header"
+msgstr "Showing %1$s - %2$s of %3$s results"
+
+#: controllers/search_controller.php:260
 msgid "search_rss_description"
 msgstr "Хайлтын үр дүнгийн товч мэдээ"
 
 #. %s is the terms the user is searching for (a string)
-#: controllers/search_controller.php:241
+#: controllers/search_controller.php:259
 #, php-format
 msgid "search_rss_results_for"
 msgstr "Хайлтын үр дүн: %s"
 
-#: views/elements/header.thtml:154 views/layouts/amo2009.thtml:296
+#: views/elements/header.thtml:154 views/layouts/amo2009.thtml:292
 msgid "sidebar_navlink_admin_tools"
 msgstr "Зохицуулагчын хэрэгсэл"
 
-#: views/elements/header.thtml:146 views/layouts/amo2009.thtml:288
+#: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
 msgid "sidebar_navlink_developer_tools"
 msgstr "Хөгжүүлэгчийн хэрэгсэл"
 
-#: views/elements/header.thtml:148 views/layouts/amo2009.thtml:290
+#: views/elements/header.thtml:148 views/layouts/amo2009.thtml:288
 msgid "sidebar_navlink_editor_tools"
 msgstr "Засварлагчийн хэрэгсэл"
 
-#: views/layouts/amo2009.thtml:302
+#: views/layouts/amo2009.thtml:312
 msgid "sidebar_navlink_welcome"
 msgstr "Тавтай морилно уу"
 
 #. %s is the user's name
-#: views/layouts/amo2009.thtml:302
+#: views/layouts/amo2009.thtml:312
 #, php-format
 msgid "sidebar_navlink_welcome_name"
 msgstr "Тавтай морилно уу, %s-д"
@@ -7421,28 +8176,76 @@ msgstr "%s from last week"
 msgid "statistics_title_addon_stats"
 msgstr "%1$s судалгаа"
 
-#: views/addons/themes_landing.thtml:113
+#: controllers/tags_controller.php:194
+#, fuzzy
+msgid "tag_message_tag_added"
+msgstr "Tag added"
+
+#: controllers/tags_controller.php:138
+#, fuzzy
+msgid "tag_message_tag_limit_reached"
+msgstr "Tag limit reached"
+
+#: controllers/tags_controller.php:264
+#, fuzzy
+msgid "tag_message_tag_removed"
+msgstr "Tag removed"
+
+#: views/developers/addon_edit_tags.thtml:67 views/addons/display.thtml:482
+#, fuzzy
+msgid "tags_add_tag_button"
+msgstr "Add"
+
+#: views/developers/addon_edit_tags.thtml:54 views/addons/display.thtml:476
+#, fuzzy
+msgid "tags_add_tag_link"
+msgstr "Add a tag"
+
+#. This just shows an example of tags.  The important thing in the example is to show
+#. that tags can be separated with commas and have spaces in them
+#: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:484
+#, fuzzy
+msgid "tags_example_tags"
+msgstr ""
+"Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
+"\">ocean, sail boat, water</span>"
+
+#. %1$s is a URL
+#. %2$s is a URL
+#: views/addons/display.thtml:488
+#, fuzzy
+msgid "tags_register_or_login"
+msgstr ""
+"<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a> to add tags"
+
+#: views/addons/themes_landing.thtml:70
 msgid "themes_landing_all_themes"
 msgstr "Бүх харуулах маяг"
 
-#: views/addons/themes_landing.thtml:109
+#: views/addons/themes_landing.thtml:67 views/addons/browse_thumbs.thtml:86
 msgid "themes_landing_browse_themes"
 msgstr "Харуулах маягуудыг харуул"
 
-#: views/users/edit.thtml:185
+#. %1$s is a number
+#: views/tags/top.thtml:72
+#, fuzzy
+msgid "top_tags_header"
+msgstr "Top %1$s Tags"
+
+#: views/users/edit.thtml:200
 msgid "user_change_email"
 msgstr "Захианы хаягаа өөрчлөх"
 
-#: views/users/edit.thtml:169
+#: views/users/edit.thtml:184
 msgid "user_change_password"
 msgstr "Нууц үгээ солих"
 
-#: views/users/edit.thtml:96
+#: views/users/edit.thtml:89
 #, fuzzy
 msgid "user_change_password_or_email"
 msgstr "Change Password or Email"
 
-#: controllers/users_controller.php:197
+#: controllers/users_controller.php:203
 msgid "user_confirmationcode_resent"
 msgstr "Баталгаажуулах код дахин илгээгдсэн!"
 
@@ -7561,14 +8364,14 @@ msgid "user_deleted_nickname"
 msgstr "Deleted User"
 
 #. %1 is the new email address
-#: views/users/edit.thtml:71
+#: views/users/edit.thtml:68
 msgid "user_edit_confirm_email_sent"
 msgstr ""
 "Таны шинэ захианы хаягийг баталгаажуулах захиа %1$s хаяг руу илгээгдэв. "
 "Өөрчлөлтөө батлахын тулд ирсэн захиан дотор буй холбоос дээр дарах "
 "шаардлагатай. Тэр болтол та одоогийн захианы хаягаараа нэвтэрсэн байж болно."
 
-#: views/users/edit.thtml:201
+#: views/users/edit.thtml:216
 #, fuzzy
 msgid "user_edit_delete_user"
 msgstr "Delete user account"
@@ -7613,7 +8416,7 @@ msgstr ""
 "Танд баярлалаа!\n"
 "-- %2$s нэмэгдэл хариуцсан хэсэг"
 
-#: controllers/users_controller.php:168
+#: controllers/users_controller.php:174
 #, php-format
 msgid "user_email_confirm_subject"
 msgstr "%s нэмэгдлийнхэнтэй хамтарсан танд баярлалаа"
@@ -7637,7 +8440,7 @@ msgstr ""
 "Баярлалаа,\n"
 "-- %2$s нэмэгдлүүд"
 
-#: controllers/users_controller.php:245
+#: controllers/users_controller.php:251
 #, php-format
 msgid "user_email_pwreset_subject"
 msgstr "%s нэмэгдлийн нууц үгээ өөрчлөх"
@@ -7647,7 +8450,7 @@ msgid "user_emailchange_error"
 msgstr "Алдаа!"
 
 #. %1 is the application name
-#: controllers/users_controller.php:533
+#: controllers/users_controller.php:562
 msgid "user_emailchange_subject"
 msgstr "Та %1$s нэмэгдэл дээрх захианы хаягийн өөрчлөлтөө батлана уу"
 
@@ -7662,12 +8465,12 @@ msgstr ""
 "Таны захианы хаяг амжилттай өөрчлөгдлөө. Одооноос эхлэн та %1$s хаягийг "
 "ашиглаж нэвтрэх үйлдэл хийгээрэй."
 
-#: views/users/edit.thtml:134 views/admin/users_edit.thtml:111
+#: views/users/edit.thtml:149 views/admin/users_edit.thtml:131
 #, fuzzy
 msgid "user_form_bio"
 msgstr "About me"
 
-#: views/users/edit.thtml:135 views/admin/users_edit.thtml:112
+#: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
 #, fuzzy
 msgid "user_form_bio_description"
 msgstr ""
@@ -7676,81 +8479,106 @@ msgstr ""
 "is allowed."
 
 #: views/users/pwreset.thtml:77 views/users/register.thtml:73
-#: views/users/edit.thtml:181
+#: views/users/edit.thtml:196
 msgid "user_form_confirmpassword"
 msgstr "Нууц үгийг дахин оруул"
 
-#: views/users/edit.thtml:145
+#: views/users/edit.thtml:134 views/admin/users_edit.thtml:116
+#, fuzzy
+msgid "user_form_delete_picture"
+msgstr "Remove this picture?"
+
+#: views/users/edit.thtml:160
 #, fuzzy
 msgid "user_form_display_collections"
 msgstr "Display the collections I have created in my user profile"
 
-#: views/users/edit.thtml:149
+#: views/users/edit.thtml:164
 #, fuzzy
 msgid "user_form_display_collections_fav"
 msgstr "Display my favorite collections in my user profile"
 
-#: views/users/edit.thtml:86
+#: views/users/edit.thtml:79
 #, php-format
 msgid "user_form_editprofile"
 msgstr "%s-н хэрэглэгчийн мэдээллийг засварла"
 
-#: views/users/pwreset.thtml:52 views/users/login.thtml:81
-#: views/users/register.thtml:63 views/users/edit.thtml:187
+#: views/users/pwreset.thtml:52 views/users/login.thtml:80
+#: views/users/register.thtml:63 views/users/edit.thtml:202
 msgid "user_form_email"
 msgstr "Захианы хаяг"
 
-#: views/users/register.thtml:78 views/users/edit.thtml:103
+#: views/users/register.thtml:78 views/users/edit.thtml:96
 #: views/admin/users_edit.thtml:76
 msgid "user_form_firstname"
 msgstr "Овог нэр"
 
-#: views/users/register.thtml:94 views/users/edit.thtml:119
+#: views/users/register.thtml:94 views/users/edit.thtml:125
 #: views/admin/users_edit.thtml:91
 msgid "user_form_hideemail"
 msgstr "Захианы хаягийг нуу"
 
-#: views/users/register.thtml:98 views/users/edit.thtml:123
-#: views/admin/users_edit.thtml:99
+#: views/users/register.thtml:98 views/users/edit.thtml:120
+#: views/admin/users_edit.thtml:107
 msgid "user_form_homepage"
 msgstr "Вэб хуудасны хаяг"
 
-#: views/users/register.thtml:84 views/users/edit.thtml:109
+#: views/users/register.thtml:84 views/users/edit.thtml:102
 #: views/admin/users_edit.thtml:81
 msgid "user_form_lastname"
 msgstr "Нэр"
 
-#: controllers/users_controller.php:333
+#: views/users/edit.thtml:112 views/admin/users_edit.thtml:99
+#, fuzzy
+msgid "user_form_location"
+msgstr "Location"
+
+#: controllers/users_controller.php:339
 msgid "user_form_login"
 msgstr "Хэрэглэгчийн нэвтрэлт"
 
-#: views/users/pwreset.thtml:72 views/users/edit.thtml:176
+#: views/users/edit.thtml:137 views/admin/users_edit.thtml:118
+#, fuzzy
+msgid "user_form_new_picture"
+msgstr "Upload a new picture?"
+
+#: views/users/pwreset.thtml:72 views/users/edit.thtml:191
 msgid "user_form_newpassword"
 msgstr "Шинэ нууц үг"
 
-#: views/users/register.thtml:89 views/users/edit.thtml:114
+#: views/users/register.thtml:89 views/users/edit.thtml:107
 #: views/admin/users_edit.thtml:86
 msgid "user_form_nickname"
 msgstr "Гоц нэр"
 
-#: views/users/edit.thtml:171
+#: views/users/edit.thtml:116 views/admin/users_edit.thtml:103
+#, fuzzy
+msgid "user_form_occupation"
+msgstr "Occupation"
+
+#: views/users/edit.thtml:186
 msgid "user_form_oldpassword"
 msgstr "Хуучин нууц үг"
 
-#: views/users/edit.thtml:97 views/users/edit.thtml:200
+#: views/users/edit.thtml:90 views/users/edit.thtml:215
 #, fuzzy
 msgid "user_form_otheractions"
 msgstr "Other Actions"
 
-#: views/users/login.thtml:85 views/users/register.thtml:68
+#: views/users/login.thtml:84 views/users/register.thtml:68
 msgid "user_form_password"
 msgstr "Нууц үг"
 
-#: controllers/users_controller.php:93
+#: views/users/edit.thtml:129 views/admin/users_edit.thtml:112
+#, fuzzy
+msgid "user_form_picture"
+msgstr "Picture"
+
+#: controllers/users_controller.php:99
 msgid "user_form_registration"
 msgstr "Шинэ хэрэглэгчийн бүртгэл"
 
-#: views/users/login.thtml:90
+#: views/users/login.thtml:89
 #, fuzzy
 msgid "user_form_remember_me"
 msgstr "Remember me on this computer"
@@ -7759,11 +8587,11 @@ msgstr "Remember me on this computer"
 msgid "user_form_showsandbox"
 msgstr "Түр хайрцгийг харуулах уу?"
 
-#: views/users/edit.thtml:205
+#: views/users/edit.thtml:220
 msgid "user_form_submit_edit"
 msgstr "Хадгал"
 
-#: views/users/login.thtml:93
+#: views/users/login.thtml:92
 msgid "user_form_submit_login"
 msgstr "Нэвтрэх"
 
@@ -7776,45 +8604,56 @@ msgstr "Бүртгүүлэх"
 msgid "user_info_usersince"
 msgstr "%s нэмэгдлийн хэрэглэгчийн бүртгэл"
 
-#: views/users/login.thtml:102
+#: views/users/login.thtml:101
 msgid "user_login_register_link"
 msgstr "Шинэ хэрэглэгчийн бүртгэл үүсгэх"
 
-#: views/users/edit.thtml:160
+#: views/users/edit.thtml:175
 #, fuzzy
 msgid "user_notifications_item_compat"
 msgstr "Add-on Compatibility (strongly recommended)"
 
-#: views/users/edit.thtml:161
+#: views/users/edit.thtml:176
 #, fuzzy
 msgid "user_notifications_item_events"
 msgstr "Upcoming events and contests"
 
-#: views/users/edit.thtml:156
+#: views/users/edit.thtml:171
 #, fuzzy
 msgid "user_notifications_none_available"
 msgstr "There are currently no notifications available for you to configure."
 
-#: views/users/edit.thtml:158
+#: views/users/edit.thtml:173
 #, fuzzy
 msgid "user_notifications_select_topics"
 msgstr ""
 "From time to time, Mozilla may send you email about upcoming releases and "
 "add-on events. Please select the topics you are interested in below:"
 
-#: views/users/edit.thtml:164
+#: views/users/edit.thtml:179
 #, fuzzy
 msgid "user_notifications_specific_contact"
 msgstr ""
 "Mozilla reserves the right to contact you individually about specific "
 "concerns with your hosted add-ons."
 
-#: controllers/users_controller.php:543
+#. %1$s is a user's email address or name
+#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#, fuzzy
+msgid "user_picture_alt_name"
+msgstr "Picture of %1$s"
+
+#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#, fuzzy
+msgid "user_picture_alt_no_picture"
+msgstr "No photo"
+
+#: controllers/users_controller.php:572
 msgid "user_profile_edit_error"
 msgstr ""
 "Таны хийсэн өөрчлөлтөнд алдаа байв. Тэд нарыг засаад дахин илгээнэ үү.."
 
-#: controllers/users_controller.php:540
+#: controllers/users_controller.php:569
 msgid "user_profile_saved"
 msgstr "Мэдээлэл шинэчлэгдсэн."
 
@@ -7823,19 +8662,19 @@ msgstr "Мэдээлэл шинэчлэгдсэн."
 msgid "user_pwreset_for_email"
 msgstr "%s-н нууц үгийг өөрчлөх"
 
-#: controllers/users_controller.php:226
+#: controllers/users_controller.php:232
 msgid "user_pwreset_header"
 msgstr "Нууц үг өөрчлөх"
 
-#: views/users/login.thtml:103
+#: views/users/login.thtml:102
 msgid "user_pwreset_link"
 msgstr "Нууц үгээ мартсан уу?"
 
-#: controllers/users_controller.php:248
+#: controllers/users_controller.php:254
 msgid "user_pwreset_link_sent"
 msgstr "Нууц үгээ өөрчлөх холбоос хаяг таны захиа руу илгээгдлээ."
 
-#: controllers/users_controller.php:304
+#: controllers/users_controller.php:310
 msgid "user_pwreset_okay"
 msgstr "Нууц үг амжилттай өөрчлөгдлөө."
 
@@ -7885,12 +8724,12 @@ msgstr ""
 "to download and install public add-ons.</p><p>You only need to register if:</"
 "p><ul><li>You want to submit reviews for add-ons</li><li>You want to keep "
 "track of your favorite add-on collections or create one yourself</li><li>You "
-"are an add-on developer and want to upload your add-on for hosting on AMO"
-"</li></ul><p>Upon successful registration, you will be sent a confirmation "
+"are an add-on developer and want to upload your add-on for hosting on AMO</"
+"li></ul><p>Upon successful registration, you will be sent a confirmation "
 "email to the address you provided. Please follow the instructions there to "
-"confirm your account.</p><p>If you like, you can read our <a href='%1$s' title='Legal "
-"Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy Policy'>Privacy "
-"Policy</a>.</p>"
+"confirm your account.</p><p>If you like, you can read our <a href='%1$s' "
+"title='Legal Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy "
+"Policy'>Privacy Policy</a>.</p>"
 
 #. %1 is the link to the "resend confirmation code" page
 #: views/users/activatefirst.thtml:51
@@ -7913,36 +8752,36 @@ msgstr "Бүртгүүлсэнд тань баярлалаа. %1$s-д тавта
 msgid "user_register_welcome_header"
 msgstr "Welcome to addons.mozilla.org (AMO)!"
 
-#: views/users/register.thtml:81 views/users/edit.thtml:106
+#: views/users/register.thtml:81 views/users/edit.thtml:99
 #, fuzzy
 msgid "user_required_firstlast_or_nickname"
 msgstr "A first name, last name or nickname is required."
 
-#: views/users/edit.thtml:94 views/users/edit.thtml:142
+#: views/users/edit.thtml:87 views/users/edit.thtml:157
 #, fuzzy
 msgid "user_tab_collections"
 msgstr "Collections"
 
-#: views/users/edit.thtml:95 views/users/edit.thtml:154
+#: views/users/edit.thtml:88 views/users/edit.thtml:169
 #, fuzzy
 msgid "user_tab_notifications"
 msgstr "Notifications"
 
-#: views/users/edit.thtml:93 views/users/edit.thtml:101
+#: views/users/edit.thtml:86 views/users/edit.thtml:94
 #, fuzzy
 msgid "user_tab_profile"
 msgstr "User Profile"
 
-#: controllers/users_controller.php:209
+#: controllers/users_controller.php:215
 msgid "user_verified_okay"
 msgstr "Амжилттай баталгаажсан!"
 
-#: controllers/users_controller.php:723
+#: controllers/users_controller.php:755
 #, fuzzy
 msgid "users_delete_pagetitle"
 msgstr "Delete User Account"
 
-#: controllers/users_controller.php:414
+#: controllers/users_controller.php:421
 msgid "users_edit_pagetitle"
 msgstr "Хэрэглэгчийн бүртгэл засвар"
 
@@ -7987,7 +8826,7 @@ msgstr "Вэб хуудас"
 msgid "users_info_nickname"
 msgstr "Гоц нэр"
 
-#: controllers/users_controller.php:707
+#: controllers/users_controller.php:739
 #, php-format
 msgid "users_info_pagetitle"
 msgstr "%1$s хэрэглэгчийн мэдээлэл"
@@ -7998,7 +8837,7 @@ msgstr "%1$s хэрэглэгчийн мэдээлэл"
 msgid "users_info_reviews_by_user"
 msgstr "Reviews by %s"
 
-#: controllers/users_controller.php:330 controllers/users_controller.php:332
+#: controllers/users_controller.php:336 controllers/users_controller.php:338
 msgid "users_login_pagetitle"
 msgstr "Хэрэглэгчийн нэвтрэлт"
 
@@ -8022,17 +8861,17 @@ msgstr ""
 "бүртгэлд эрх байгаа бол нэвтрэлт хийх эсвэл түр хайрцагны талаар <a href=\"%1"
 "$s\">судлах боломжтой.</a>"
 
-#: controllers/users_controller.php:223 controllers/users_controller.php:225
+#: controllers/users_controller.php:229 controllers/users_controller.php:231
 msgid "users_pwreset_pagetitle"
 msgstr "Нууц үг шинээр оруулах"
 
-#: controllers/users_controller.php:90 controllers/users_controller.php:92
+#: controllers/users_controller.php:96 controllers/users_controller.php:98
 msgid "users_register_pagetitle"
 msgstr "Шинэ хэрэглэгчийн бүртгэл"
 
 #. %1$s is an addon name, like <a>Firebug</a>
 #. %2$s is a version number, like <a>1.2</a>
-#: views/versions/license.thtml:52
+#: views/versions/license.thtml:53 controllers/versions_controller.php:61
 #, fuzzy
 msgid "versions_license_header_source"
 msgstr "Source code license for %1$s %2$s"
@@ -8052,6 +8891,9 @@ msgstr "View all top downloads"
 msgid "view_top_rated"
 msgstr "View all top rated"
 
+#~ msgid "addon_downloads_total"
+#~ msgstr "удаа нийтдээ татагдсан"
+
 #, fuzzy
 #~ msgid "addon_slider_tooltip_next"
 #~ msgstr "Next Add-on"
@@ -8063,8 +8905,46 @@ msgstr "View all top rated"
 #~ msgid "addon_versions_getlatesttext"
 #~ msgstr "Хамгийн сүүлийн тохирох хувилбар"
 
+#~ msgid "addons_display_advanced_details"
+#~ msgstr "Нэмэлт мэдээлэл"
+
+#~ msgid "addons_display_categories"
+#~ msgstr "Төрөл анги"
+
+#~ msgid "addons_display_has_privacy"
+#~ msgstr ""
+#~ "Энэ нэмэгдэлд хувь хүнтэй холбоотой мэдээллийг хамгаалах журам заагдсан "
+#~ "байна."
+
+#~ msgid "addons_display_header_developer_comments"
+#~ msgstr "Зохиогчийн тайлбар"
+
+#~ msgid "addons_display_long_description"
+#~ msgstr "Урт тайлбар"
+
+#~ msgid "addons_display_more_images"
+#~ msgstr "Нэмэлт зурагнууд"
+
+#~ msgid "addons_display_rate_it"
+#~ msgstr "Дүгнэлт өгөх"
+
+#~ msgid "addons_display_review_submit"
+#~ msgstr "Хадгал"
+
+#~ msgid "addons_display_see_all_reviews"
+#~ msgstr "Бүх үнэлгээг харах (%1$s)"
+
+#~ msgid "addons_display_see_all_versions"
+#~ msgstr "Бүх хувилбарыг нь харах"
+
 #~ msgid "addons_display_version_history"
 #~ msgstr "Хувилбарын бүрэн түүх"
+
+#~ msgid "addons_display_view_stats"
+#~ msgstr "Судалгааны үр дүнг харах"
+
+#~ msgid "addons_home_feature_head"
+#~ msgstr "Бидний санал болголт"
 
 #~ msgid "addons_home_newest_header"
 #~ msgstr "Шинэхэн:"
@@ -8080,6 +8960,14 @@ msgstr "View all top rated"
 
 #~ msgid "addons_home_view_all"
 #~ msgstr "Бүгдийг нь харах"
+
+#, fuzzy
+#~ msgid "addons_share_button_text"
+#~ msgstr "Share this"
+
+#, fuzzy
+#~ msgid "audit_update_tags"
+#~ msgstr "%1$s updated category translations for %2$s"
 
 #~ msgid "category_extra_allrecommended"
 #~ msgstr "Бүх санал болгогдсон нэмэдлүүдийг харах"
@@ -8100,6 +8988,46 @@ msgstr "View all top rated"
 #, fuzzy
 #~ msgid "collections_detail_more_info"
 #~ msgstr "Show More Info"
+
+#, fuzzy
+#~ msgid "collections_family_tagline"
+#~ msgstr "Add-ons can keep an eye on your kids and your calendar."
+
+#, fuzzy
+#~ msgid "collections_family_title"
+#~ msgstr "Family"
+
+#, fuzzy
+#~ msgid "collections_reference_tagline"
+#~ msgstr "Add-ons can do better research online."
+
+#, fuzzy
+#~ msgid "collections_reference_title"
+#~ msgstr "Reference"
+
+#, fuzzy
+#~ msgid "collections_social_tagline"
+#~ msgstr "Add-ons can manage your social network."
+
+#, fuzzy
+#~ msgid "collections_social_title"
+#~ msgstr "Social"
+
+#, fuzzy
+#~ msgid "collections_travel_tagline"
+#~ msgstr "Add-ons can turn you into a travel agent."
+
+#, fuzzy
+#~ msgid "collections_travel_title"
+#~ msgstr "Travel"
+
+#, fuzzy
+#~ msgid "collections_webdev_tagline"
+#~ msgstr "Add-ons make it easier to build the perfect website."
+
+#, fuzzy
+#~ msgid "collections_webdev_title"
+#~ msgstr "Web Development"
 
 #~ msgid "devcp_additem_firefox_notice"
 #~ msgstr ""
@@ -8668,6 +9596,13 @@ msgstr "View all top rated"
 
 #~ msgid "devcp_theme_upload_preview_link"
 #~ msgstr "үзүүлбэр нэмж"
+
+#, fuzzy
+#~ msgid "devcp_uploader_p_update_file"
+#~ msgstr ""
+#~ "View your new file in the <a %1$s>Versions and Files page</a>, check out "
+#~ "your add-on's <a %2$s>current status</a>, or <b>add release notes</b> by "
+#~ "clicking the button below (highly recommended)."
 
 #~ msgid "devcp_version_edit_pagetitle"
 #~ msgstr "Хувилбарыг засварла"

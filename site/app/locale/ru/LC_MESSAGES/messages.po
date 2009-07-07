@@ -20,7 +20,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: views/addons/policy.thtml:98
+#: views/addons/policy.thtml:103
 msgid "a_cancel_installation"
 msgstr "Отменить установку"
 
@@ -28,11 +28,12 @@ msgstr "Отменить установку"
 #. %$1s is an optional string that only appears if the add-on is only available for
 #. a certain platform.  Examples:  (Windows)  or  (Linux)
 #. Note that the parentheses are included in the string. :(
-#: views/elements/amo2009/install.thtml:126
-#: views/elements/amo2009/install.thtml:227
-#: views/elements/amo2009/install.thtml:257
-#: views/elements/amo2009/install.thtml:300
-#: views/elements/amo2009/install.thtml:312 views/elements/install.thtml:73
+#: views/elements/amo2009/install.thtml:133
+#: views/elements/amo2009/install.thtml:229
+#: views/elements/amo2009/install.thtml:237
+#: views/elements/amo2009/install.thtml:275
+#: views/elements/amo2009/install.thtml:318
+#: views/elements/amo2009/install.thtml:330 views/elements/install.thtml:73
 #: views/elements/install.thtml:181 views/elements/install.thtml:205
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
 #: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
@@ -52,22 +53,140 @@ msgstr "Принять и установить"
 
 #: views/elements/header.thtml:76 views/elements/header.thtml:82
 #: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
-#: views/sharing_api/addon.thtml:64
+#: views/sharing_api/addon.thtml:63
 msgid "a_header_public"
 msgstr "Публичные"
 
 #: views/elements/header.thtml:58 views/elements/header.thtml:75
 #: views/elements/header.thtml:80 views/api/api_addon.thtml:57
-#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:66
+#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:65
 msgid "a_header_sandbox"
 msgstr "«Песочница»"
 
+#. %1 is an add-on name.
+#: controllers/addons_controller.php:148
+#, fuzzy
+msgid "addon_contribute_item"
+msgstr "Contribution for %1$s"
+
 #. %s is a date in the _('date') format
+#: views/elements/amo2009/results_addon.thtml:94
+#: views/elements/amo2009/results_addon.thtml:117
 #: views/elements/amo2009/homepage_addon.thtml:115
 #: views/elements/addon_listitem.thtml:122 views/elements/feature.thtml:106
-#: views/addons/display.thtml:104 views/addons/browse_thumbs.thtml:73
+#: views/addons/browse_thumbs.thtml:118
 msgid "addon_detail_last_updated"
 msgstr "Обновлено %s"
+
+#: views/addons/developers.thtml:18 views/addons/display.thtml:411
+#: views/addons/display.thtml:419
+#, fuzzy
+msgid "addon_developer_h2_meet"
+msgid_plural "addon_developer_h2_meet"
+msgstr[0] "Meet the Developer"
+msgstr[1] "Meet the Developers"
+
+#: views/elements/amo2009/user_vcard.thtml:46
+#, fuzzy
+msgid "addon_developer_info_summary"
+msgstr "Developer Information"
+
+#: views/elements/amo2009/developer_other_addons.thtml:50
+#, fuzzy
+msgid "addon_developer_other_addons"
+msgid_plural "addon_developer_other_addons"
+msgstr[0] "Other add-ons by this developer"
+msgstr[1] "Other add-ons by these developers"
+
+#. %1 is a number.
+#: views/elements/amo2009/user_vcard.thtml:84
+#, fuzzy
+msgid "addon_developer_td_num_addons"
+msgid_plural "addon_developer_td_num_addons"
+msgstr[0] "%1$s Add-on"
+msgstr[1] "%1$s Add-ons"
+
+#: views/elements/amo2009/user_vcard.thtml:72
+#, fuzzy
+msgid "addon_developer_th_email"
+msgstr "Email address"
+
+#: views/elements/amo2009/user_vcard.thtml:66
+#, fuzzy
+msgid "addon_developer_th_homepage"
+msgstr "Homepage"
+
+#: views/elements/amo2009/user_vcard.thtml:54
+#, fuzzy
+msgid "addon_developer_th_location"
+msgstr "Location"
+
+#: views/elements/amo2009/user_vcard.thtml:49
+#, fuzzy
+msgid "addon_developer_th_name"
+msgstr "Name"
+
+#: views/elements/amo2009/user_vcard.thtml:81
+#, fuzzy
+msgid "addon_developer_th_num_addons"
+msgstr "Number of Add-ons Developed"
+
+#: views/elements/amo2009/user_vcard.thtml:60
+#, fuzzy
+msgid "addon_developer_th_occupation"
+msgstr "Occupation"
+
+#: views/elements/amo2009/user_vcard.thtml:90
+#, fuzzy
+msgid "addon_developer_th_rating"
+msgstr "Average rating for their Add-ons"
+
+#: views/elements/amo2009/user_vcard.thtml:77
+#, fuzzy
+msgid "addon_developer_th_user_since"
+msgstr "User since"
+
+#. %1 is an add-on name.
+#: views/addons/developers.thtml:3
+#, fuzzy
+msgid "addon_developer_title"
+msgid_plural "addon_developer_title"
+msgstr[0] "Meet the %1$s Developer"
+msgstr[1] "Meet the %1$s Developers"
+
+#. %1 is an add-on name.
+#: views/elements/amo2009/developer_about_addon.thtml:50
+#, fuzzy
+msgid "addon_developer_what_next"
+msgstr "What's next for %1$s"
+
+#. %1 is a user's name.
+#: views/addons/developers.thtml:59
+#, fuzzy
+msgid "addon_developer_who_is"
+msgstr "Who is %1$s?"
+
+#. %1 is an add-on name.
+#: views/elements/amo2009/developer_about_addon.thtml:46
+#, fuzzy
+msgid "addon_developer_why_created"
+msgstr "Why was %1$s created?"
+
+#: views/elements/amo2009/contribution.thtml:57
+#, fuzzy
+msgid "addon_display_contribute"
+msgstr "Contribute"
+
+#: views/elements/amo2009/contribution.thtml:99
+#, fuzzy
+msgid "addon_display_contribute_different"
+msgstr "Contribute a Different Amount"
+
+#. %1 is a number like 32 or 47.99.
+#: views/elements/amo2009/contribution.thtml:92
+#, fuzzy
+msgid "addon_display_contribute_suggested"
+msgstr "Contribute $%1$s"
 
 #. %s is the version of the add-on.  Example:  3.2a1
 #: views/elements/amo2009/addon_version_detail.thtml:51
@@ -76,24 +195,52 @@ msgstr "Обновлено %s"
 msgid "addon_display_header_version"
 msgstr "Версия %s"
 
-#: views/addons/browse_thumbs.thtml:80
+#. %1$s is an add-on name.
+#: views/addons/display.thtml:414
+#, fuzzy
+msgid "addon_display_meet_learn"
+msgstr "Learn why %1$s was created and find out what's next for this add-on."
+
+#. %1$s is a a person's name
+#: views/addons/display.thtml:421
+#, fuzzy
+msgid "addon_display_meet_x"
+msgstr "Meet %1$s"
+
+#. This is a separator between the graphical [contribute] button and the 
+#. graphical [download now] button
+#: views/elements/amo2009/contribution.thtml:65
+#, fuzzy
+msgid "addon_display_or"
+msgstr "or"
+
+#: views/elements/amo2009/contribution.thtml:95
+#, fuzzy
+msgid "addon_display_suggested"
+msgstr "Suggested"
+
+#. This is a monetary value like:  $3.99
+#. Note that as of 2009-07-06 this only supports USD
+#: views/elements/amo2009/contribution.thtml:78
+#, fuzzy
+msgid "addon_display_suggested_amount"
+msgstr "Suggested Donation: $%1$s"
+
+#: views/addons/browse_thumbs.thtml:125
 msgid "addon_downloads"
 msgstr "загрузки"
 
-#: views/addons/display.thtml:147
-msgid "addon_downloads_total"
-msgstr "загрузок всего"
-
+#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/amo2009/homepage_addon.thtml:106
 #: views/elements/addon_listitem.thtml:115 views/elements/feature.thtml:101
-#: views/addons/category_landing.thtml:157 views/addons/display.thtml:146
-#: views/addons/browse_thumbs.thtml:80
+#: views/addons/category_landing.thtml:157
+#: views/addons/browse_thumbs.thtml:125
 msgid "addon_downloads_weekly"
 msgstr "загрузок еженедельно"
 
 # %1 is the add-on count, %2 the category name
 #. %1 is the add-on count, %2 the category name
-#: views/addons/browse_thumbs.thtml:104 views/addons/browse.thtml:60
+#: views/addons/browse_thumbs.thtml:91 views/addons/browse.thtml:60
 #, php-format
 msgid "addon_list_category_totalcount"
 msgid_plural "addon_list_category_totalcount"
@@ -112,12 +259,12 @@ msgstr "на страницу"
 msgid "addon_list_sortby"
 msgstr "Сортировать по:"
 
-#: views/helpers/addons_html.php:568 views/elements/amo2009/install.thtml:321
+#: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:339
 #: views/elements/feature.thtml:89
 msgid "addon_listitem_flag_experimental"
 msgstr "экспериментальные"
 
-#: views/helpers/addons_html.php:570
+#: views/helpers/addons_html.php:573 views/elements/amo2009/install.thtml:337
 msgid "addon_listitem_flag_recommended"
 msgstr "рекомендуемые"
 
@@ -129,7 +276,7 @@ msgstr "%1$s недоступен для платформы %2$s."
 
 # %1 is the addon name
 #. %1 is the add-on name
-#: views/addons/policy.thtml:101 views/addons/previews.thtml:60
+#: views/addons/policy.thtml:106 views/addons/previews.thtml:60
 #: views/addons/versions.thtml:130 views/reviews/flag.thtml:61
 #: views/reviews/add.thtml:114 views/reviews/display.thtml:216
 #: views/reviews/review_added.thtml:57
@@ -253,7 +400,8 @@ msgstr "Ответ разработчика:"
 msgid "addon_review_saved_successfully"
 msgstr "Ваш отзыв успешно добавлен. Спасибо!"
 
-#: views/addons/display.thtml:354 views/reviews/display.thtml:72
+#: views/collections/detail.thtml:192 views/addons/display.thtml:290
+#: views/reviews/display.thtml:72
 msgid "addon_reviewed_by_u_on_d"
 msgstr "от %1$s оставлен %2$s"
 
@@ -278,10 +426,11 @@ msgstr "Постоянная ссылка на эту версию"
 msgid "addon_versions_getlatestversion"
 msgstr "Последняя версия, совместимая с %1$s %2$s"
 
-#: views/addons/display.thtml:447
+#: views/addons/display.thtml:451
 msgid "addons_author_addons_submit"
 msgstr "Перейти"
 
+#: views/elements/amo2009/results_addon.thtml:106
 #: views/elements/amo2009/homepage_addon.thtml:100
 #: views/elements/feature.thtml:95
 msgid "addons_author_tooltip"
@@ -289,12 +438,12 @@ msgstr "Просмотреть профиль автора"
 
 # %1 is the name of the Application (eg. Firefox)
 #. %1 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:1296
+#: controllers/addons_controller.php:1397
 msgid "addons_browse_all_themes_title"
 msgstr "Обзор всех тем :: Дополнения %1$s"
 
 #. %s is the name of the category
-#: controllers/addons_controller.php:1016
+#: controllers/addons_controller.php:1126
 #, php-format
 msgid "addons_browse_browse_category"
 msgstr "Обзор категории %s"
@@ -303,11 +452,11 @@ msgstr "Обзор категории %s"
 # %2 is the name of the Application (eg. Firefox)
 #. %1 is the name of the theme category (eg. Modern)
 #. %2 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:664
+#: controllers/addons_controller.php:770
 msgid "addons_browse_categories_header_theme"
 msgstr "Обзор тем в категории %1$s :: Дополнения %2$s"
 
-#: views/addons/display.thtml:249
+#: views/elements/amo2009/contribution.thtml:83 views/addons/display.thtml:378
 msgid "addons_display_a_license_what"
 msgstr "Что это?"
 
@@ -315,49 +464,69 @@ msgstr "Что это?"
 msgid "addons_display_add_review"
 msgstr "Добавить отзыв"
 
-#: views/addons/display.thtml:294
-msgid "addons_display_advanced_details"
-msgstr "Дополнительные детали"
-
-#: views/addons/display.thtml:98
-msgid "addons_display_categories"
-msgstr "Категории"
-
-#: views/addons/display.thtml:482
+#: views/addons/display.thtml:521
 msgid "addons_display_collection_add"
 msgstr "Добавить в подборку:"
 
-#: views/addons/display.thtml:491
+#: views/addons/display.thtml:530
 msgid "addons_display_collection_add_new"
 msgstr "Новая подборка..."
 
-#: views/addons/display.thtml:487
+#: views/addons/display.thtml:526
 msgid "addons_display_collection_add_select_one"
 msgstr "Выбрать подборку..."
 
-#: views/addons/display.thtml:493
+#: views/addons/display.thtml:532
 msgid "addons_display_collection_add_submit"
 msgstr "Опубликовать"
 
 #. %1$s is the add-on name
 #. %2$s is the collection name, linked to the collection's page
-#: views/pages/js_constants.js.thtml:103 views/addons/display.thtml:61
+#: views/pages/js_constants.js.thtml:103 views/addons/display.thtml:70
 msgid "addons_display_collection_publish_success"
 msgstr "%1$s было добавлено в подборку %2$s."
 
-#: views/addons/display.thtml:483
+#: views/addons/display.thtml:522
 msgid "addons_display_collection_whatsthis"
 msgstr "Что это?"
 
 #. %1$s is a number
-#: views/addons/display.thtml:473
+#: views/addons/display.thtml:508
 msgid "addons_display_collections_more"
 msgid_plural "addons_display_collections_more"
 msgstr[0] "и ещё %1$s подборка"
 msgstr[1] "и ещё %1$s подборки"
 msgstr[2] "и ещё %1$s подборок"
 
-#: views/addons/display.thtml:403
+#. This refers to closing a small pop-up window
+#: views/elements/amo2009/contribution.thtml:106
+#, fuzzy
+msgid "addons_display_contribute_close"
+msgstr "close"
+
+#: views/elements/amo2009/contribution.thtml:105
+#, fuzzy
+msgid "addons_display_contribute_why"
+msgstr ""
+"Mozilla is committed to supporting a vibrant and healthy developer "
+"ecosystem. Your optional contribution helps sustain further development of "
+"this add-on."
+
+#: views/addons/developers.thtml:33 views/addons/display.thtml:163
+#, fuzzy
+msgid "addons_display_contribution_ask"
+msgstr ""
+"The developer of this add-on asks that you help support its continued "
+"development by making a small contribution."
+
+#: views/addons/developers.thtml:32
+#, fuzzy
+msgid "addons_display_contribution_roadblock"
+msgstr ""
+"Before downloading this add-on, please consider supporting the development "
+"of this add-on by making a small contribution."
+
+#: views/addons/display.thtml:347
 msgid "addons_display_detailed_review"
 msgstr "подробный отзыв"
 
@@ -369,55 +538,54 @@ msgstr "Не нравится"
 msgid "addons_display_edit_review"
 msgstr "Редактировать ваш отзыв"
 
-#: views/addons/display.thtml:132
-msgid "addons_display_has_privacy"
-msgstr "У данного дополнения есть собственная политика конфиденциальности."
-
 #: views/reviews/add.thtml:87 views/reviews/add.thtml:88
 msgid "addons_display_hate_it"
 msgstr "Ненавижу"
 
-#: views/addons/display.thtml:462
+#: views/addons/display.thtml:496
 msgid "addons_display_header_collections"
 msgstr "Похожие подборки"
 
-#: views/addons/display.thtml:297
-msgid "addons_display_header_developer_comments"
-msgstr "Комментарии разработчика"
-
-#: views/addons/display.thtml:230
+#: views/addons/display.thtml:202
 msgid "addons_display_header_homepage"
 msgstr "Домашняя страница"
 
-#: views/addons/display.thtml:247 views/addons/versions.thtml:110
+#: views/addons/display.thtml:376 views/addons/versions.thtml:110
 msgid "addons_display_header_license"
 msgstr "Лицензия исходного кода"
 
-#: views/addons/display.thtml:337
+#: views/addons/display.thtml:275
 msgid "addons_display_header_reviews"
 msgstr "Отзывы"
 
-#: views/addons/display.thtml:261
+#: views/addons/display.thtml:257
 msgid "addons_display_header_support"
 msgstr "Поддержка"
+
+#: views/addons/display.thtml:236
+#, fuzzy
+msgid "addons_display_image_gallery"
+msgstr "Image Gallery"
+
+#: views/addons/display.thtml:318
+#, fuzzy
+msgid "addons_display_label_review"
+msgstr "Review"
 
 #: views/reviews/add.thtml:91 views/reviews/add.thtml:92
 msgid "addons_display_like_it"
 msgstr "Нравится"
 
-#: views/addons/display.thtml:210
-msgid "addons_display_long_description"
-msgstr "Подробное описание"
-
 #: views/reviews/add.thtml:95 views/reviews/add.thtml:96
 msgid "addons_display_love_it"
 msgstr "Обожаю"
 
-#: views/addons/display.thtml:178
-msgid "addons_display_more_images"
-msgstr "Другие изображения"
+#: views/addons/display.thtml:230
+#, fuzzy
+msgid "addons_display_more_about"
+msgstr "More about this add-on"
 
-#: views/addons/display.thtml:465
+#: views/addons/display.thtml:499
 msgid "addons_display_nocollections"
 msgstr "Это дополнение не входит пока ни в одну подборку."
 
@@ -427,7 +595,7 @@ msgstr "Это дополнение не входит пока ни в одну 
 #. %1$s is either an author's name or a comma separated list of authors. Using
 #. the list doesn't make sense in the English plural form so we ignore the
 #. variable.
-#: views/addons/display.thtml:436
+#: views/addons/display.thtml:440
 msgid "addons_display_other_addons_by"
 msgid_plural "addons_display_other_addons_by"
 msgstr[0] "Другие дополнения созданные %1$s"
@@ -436,14 +604,15 @@ msgstr[1] "Другие дополнения созданные этими ав�
 #. %s is the name of the add-on and the add-on section.  Example:
 #.   Some Add-on :: Firefox Add-ons
 #. This should not be concatenated in the code and should be fixed.
-#: controllers/addons_controller.php:141 controllers/addons_controller.php:280
-#: controllers/addons_controller.php:1442
+#: controllers/tags_controller.php:376 controllers/addons_controller.php:216
+#: controllers/addons_controller.php:357
+#: controllers/addons_controller.php:1530
 #, php-format
 msgid "addons_display_pagetitle"
 msgstr "%s"
 
 #. %s is an email address
-#: views/addons/display.thtml:286
+#: views/addons/display.thtml:267
 #, php-format
 msgid "addons_display_paragraph_supportinfoemail"
 msgstr ""
@@ -452,27 +621,39 @@ msgstr ""
 
 #. %$1s is a URL
 #. %$2s is an email address
-#: views/addons/display.thtml:269
+#: views/addons/display.thtml:260
 #, php-format
 msgid "addons_display_paragraph_supportinfoemailurl"
 msgstr ""
 "Поддержка этого дополнения осуществляется разработчиком по адресу %s или %s."
 
 #. %s is a URL
-#: views/addons/display.thtml:278
+#: views/addons/display.thtml:264
 #, php-format
 msgid "addons_display_paragraph_supportinfourl"
 msgstr "Поддержка этого дополнения осуществляется разработчиком по адресу %s."
 
-#: views/addons/display.thtml:383
-msgid "addons_display_rate_it"
-msgstr "Оценить"
+#. %1 is a URL
+#: views/addons/display.thtml:309
+#, fuzzy
+msgid "addons_display_please_login"
+msgstr "Please <a href=\"%1$s\">log in</a> to submit a review"
+
+#: views/addons/display.thtml:334
+#, fuzzy
+msgid "addons_display_post_review"
+msgstr "Post Review"
 
 #: views/reviews/add.thtml:93 views/reviews/add.thtml:94
 msgid "addons_display_really_like_it"
 msgstr "Очень нравится"
 
-#: views/addons/display.thtml:410
+#: views/addons/display.thtml:354
+#, fuzzy
+msgid "addons_display_release_notes"
+msgstr "Release Notes"
+
+#: views/addons/display.thtml:338
 msgid "addons_display_review_etiquette"
 msgstr ""
 "Пожалуйста не оставляйте в отзывах сообщения об ошибках. Мы не сообщаем ваш "
@@ -481,51 +662,63 @@ msgstr ""
 
 # %1 is the review guidelines link
 #. %1 is the review guidelines link
-#: views/addons/display.thtml:417
+#: views/addons/display.thtml:343
 msgid "addons_display_review_guidelines_link"
 msgstr "<a href=\"%s\">Советы по оставлению отзывов</a>"
 
 # %1 is the support section link
 #. %1 is the support section link
-#: views/addons/display.thtml:414
+#: views/addons/display.thtml:340
 msgid "addons_display_review_see_support"
 msgstr ""
 "Для получения сведений о том, как получить помощь по работе с этим "
 "дополнением, обратитесь в <a href=\"%1$s\">раздел поддержки</a>."
 
-#: views/addons/display.thtml:404
-msgid "addons_display_review_submit"
-msgstr "Сохранить"
-
-#: views/addons/display.thtml:430
+#: views/addons/display.thtml:434
 #, php-format
 msgid "addons_display_see_all_addons"
 msgstr "Просмотреть все дополнения в %1$s"
 
-# %1 is the number of reviews
-#. %1 is the number of reviews
-#: views/addons/display.thtml:364
-#, php-format
-msgid "addons_display_see_all_reviews"
-msgstr "Просмотреть все отзывы (%1$s)"
+#. %1 is a number.
+#: views/addons/display.thtml:298
+#, fuzzy
+msgid "addons_display_see_reviews"
+msgstr "See all %1$s reviews of this add-on"
 
 #: views/addons/display.thtml:219
-msgid "addons_display_see_all_versions"
-msgstr "Отобразить все версии"
+#, fuzzy
+msgid "addons_display_statistics"
+msgstr "Statistics"
 
-#: views/addons/display.thtml:321 views/addons/versions.thtml:117
+#: views/addons/display.thtml:168
+#, fuzzy
+msgid "addons_display_table_summary"
+msgstr "Add-on Information"
+
+#: views/addons/display.thtml:176
+#, fuzzy
+msgid "addons_display_th_workswith"
+msgstr "Works with"
+
+#: views/addons/display.thtml:393
+#, fuzzy
+msgid "addons_display_view_older"
+msgstr "View Older Versions"
+
+#: views/addons/display.thtml:146
+#, fuzzy
+msgid "addons_display_view_privacy"
+msgstr "View privacy policy"
+
+#: views/addons/display.thtml:388 views/addons/versions.thtml:117
 msgid "addons_display_view_source"
 msgstr "Просмотреть исходный текст"
 
-#: views/addons/display.thtml:324
-msgid "addons_display_view_stats"
-msgstr "Просмотреть статистику"
-
-#: views/addons/display.thtml:376
+#: views/addons/display.thtml:306
 msgid "addons_display_what_do_you_think"
 msgstr "Что вы думаете?"
 
-#: views/elements/app_compatibility.thtml:49
+#: views/elements/app_compatibility.thtml:48
 msgid "addons_display_workswith"
 msgstr "Совместимость:"
 
@@ -537,12 +730,15 @@ msgstr "Только что добавленные"
 msgid "addons_home_browse_popular"
 msgstr "Популярные"
 
+#: views/addons/searchengines.thtml:57 views/addons/themes_landing.thtml:54
 #: views/addons/home.thtml:108
 msgid "addons_home_browse_recommended"
 msgstr "Рекомендуемые"
 
-#: views/addons/home.thtml:127 views/addons/home.thtml:134
-#: views/addons/home.thtml:141 views/addons/home.thtml:148
+#: views/elements/amo2009/homepage_addon_listing.thtml:49
+#: views/elements/amo2009/homepage_addon_listing.thtml:56
+#: views/elements/amo2009/homepage_addon_listing.thtml:63
+#: views/elements/amo2009/homepage_addon_listing.thtml:70
 msgid "addons_home_browse_subscribe"
 msgstr "Подписаться"
 
@@ -550,40 +746,41 @@ msgstr "Подписаться"
 msgid "addons_home_browse_title"
 msgstr "Обзор дополнений"
 
-#: views/addons/home.thtml:114
+#: views/addons/display.thtml:183 views/addons/home.thtml:114
 msgid "addons_home_browse_updated"
 msgstr "Обновлённые"
 
+#: views/elements/amo2009/results_addon.thtml:106
 #: views/elements/amo2009/homepage_addon.thtml:100
 #: views/elements/addon_discussionheader.thtml:83
 #: views/elements/addon_listitem.thtml:109 views/elements/feature.thtml:95
 #: views/addons/category_landing.thtml:66 views/addons/policy.thtml:57
-#: views/addons/display.thtml:70 views/addons/home.thtml:178
+#: views/addons/display.thtml:64 views/addons/home.thtml:161
 msgid "addons_home_by"
 msgstr "автор"
 
-#: views/addons/home.thtml:169
+#: views/addons/home.thtml:152
 msgid "addons_home_collection_popular_title"
 msgstr "Популярные подборки"
 
-#: views/elements/amo2009/categories.thtml:69 views/addons/home.thtml:160
+#: views/elements/amo2009/categories.thtml:69 views/addons/home.thtml:142
 msgid "addons_home_collections"
 msgstr "Подборки"
 
 #. %1$s is the count of addons in a collection
 #: views/elements/amo2009/collection_listing_item.thtml:51
-#: views/addons/home.thtml:185
+#: views/addons/home.thtml:168
 msgid "addons_home_collections_addon_count"
 msgid_plural "addons_home_collections_addon_count"
 msgstr[0] "<strong>%1$s</strong> дополнение"
 msgstr[1] "<strong>%1$s</strong> дополнения"
 msgstr[2] "<strong>%1$s</strong> дополнений"
 
-#: views/addons/home.thtml:196
+#: views/addons/home.thtml:179
 msgid "addons_home_collections_all"
 msgstr "Просмотр всех подборок"
 
-#: views/addons/home.thtml:162
+#: views/addons/home.thtml:145
 msgid "addons_home_collections_intro"
 msgstr ""
 "Подборки являются способом категоризации, смешивания и создания коллекций "
@@ -592,23 +789,19 @@ msgstr ""
 
 #. %1$s is the count of subscribers for a collection
 #: views/elements/amo2009/collection_listing_item.thtml:58
-#: views/collections/detail.thtml:96 views/addons/home.thtml:189
+#: views/collections/detail.thtml:96 views/addons/home.thtml:172
 msgid "addons_home_collections_subscribers"
 msgid_plural "addons_home_collections_subscribers"
 msgstr[0] "<strong>%1$s</strong> подписчик"
 msgstr[1] "<strong>%1$s</strong> подписчика"
 msgstr[2] "<strong>%1$s</strong> подписчиков"
 
-#: views/addons/searchengines.thtml:54 views/addons/themes_landing.thtml:49
-msgid "addons_home_feature_head"
-msgstr "Мы рекомендуем"
-
-#: controllers/search_controller.php:218 controllers/addons_controller.php:176
-#: controllers/addons_controller.php:428 controllers/addons_controller.php:671
-#: controllers/addons_controller.php:871
-#: controllers/addons_controller.php:1103
-#: controllers/addons_controller.php:1242
-#: controllers/addons_controller.php:1298
+#: controllers/tags_controller.php:367 controllers/search_controller.php:235
+#: controllers/addons_controller.php:251 controllers/addons_controller.php:484
+#: controllers/addons_controller.php:777 controllers/addons_controller.php:981
+#: controllers/addons_controller.php:1207
+#: controllers/addons_controller.php:1350
+#: controllers/addons_controller.php:1399
 #, php-format
 msgid "addons_home_header_details"
 msgstr ""
@@ -616,7 +809,7 @@ msgstr ""
 "идеальным. Оглянитесь вокруг и сделайте %1$s таким, каким вы этого хотите."
 
 #. %1$s is the HTML collection name link.
-#: views/elements/amo2009/teaser_collections.thtml:107
+#: views/elements/amo2009/teaser_collections.thtml:108
 msgid "addons_home_introduction_collection_link"
 msgstr "Понравились? А в %1$s можно найти ещё больше."
 
@@ -646,7 +839,7 @@ msgstr ""
 "Панели инструментов, темы и плагины для поисковых движков <strong>помогут "
 "вам выполнять повседневные задачи.</strong>"
 
-#: views/addons/home.thtml:161
+#: views/elements/amo2009/new_indicator.thtml:40
 msgid "addons_home_new_indicator"
 msgstr "НОВИНКА!"
 
@@ -659,51 +852,54 @@ msgstr "Другие приложения"
 #: views/pages/collector_faq.thtml:49 views/pages/collector_firstrun.thtml:42
 #: views/pages/collector.thtml:46 views/pages/collector_features.thtml:54
 #: controllers/developers_controller.php:87
+#: controllers/tags_controller.php:376
 #: controllers/compatibility_controller.php:72
 #: controllers/components/simple_acl.php:81 controllers/components/amo.php:607
+#: controllers/versions_controller.php:63
 #: controllers/statistics_controller.php:60
 #: controllers/statistics_controller.php:240
-#: controllers/previews_controller.php:67 controllers/users_controller.php:90
-#: controllers/users_controller.php:223 controllers/users_controller.php:330
-#: controllers/users_controller.php:414 controllers/users_controller.php:708
-#: controllers/users_controller.php:723 controllers/reviews_controller.php:204
+#: controllers/previews_controller.php:67 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:421 controllers/users_controller.php:740
+#: controllers/users_controller.php:755 controllers/reviews_controller.php:204
 #: controllers/reviews_controller.php:251
 #: controllers/reviews_controller.php:346
 #: controllers/reviews_controller.php:425
-#: controllers/search_controller.php:185 controllers/search_controller.php:297
-#: controllers/search_controller.php:301 controllers/addons_controller.php:147
-#: controllers/addons_controller.php:280 controllers/addons_controller.php:370
-#: controllers/addons_controller.php:667 controllers/addons_controller.php:874
-#: controllers/addons_controller.php:1019
-#: controllers/addons_controller.php:1034
-#: controllers/addons_controller.php:1101
-#: controllers/addons_controller.php:1121
-#: controllers/addons_controller.php:1240
-#: controllers/addons_controller.php:1357
-#: controllers/addons_controller.php:1364
-#: controllers/addons_controller.php:1442
-#: controllers/addons_controller.php:1477
-#: controllers/addons_controller.php:1538
-#: controllers/addons_controller.php:1543
-#: controllers/editors_controller.php:64 controllers/pages_controller.php:132
+#: controllers/search_controller.php:199 controllers/search_controller.php:298
+#: controllers/search_controller.php:302 controllers/addons_controller.php:179
+#: controllers/addons_controller.php:222 controllers/addons_controller.php:357
+#: controllers/addons_controller.php:448 controllers/addons_controller.php:459
+#: controllers/addons_controller.php:773 controllers/addons_controller.php:984
+#: controllers/addons_controller.php:1129
+#: controllers/addons_controller.php:1144
+#: controllers/addons_controller.php:1205
+#: controllers/addons_controller.php:1225
+#: controllers/addons_controller.php:1348
+#: controllers/addons_controller.php:1462
+#: controllers/addons_controller.php:1469
+#: controllers/addons_controller.php:1530
+#: controllers/addons_controller.php:1565
+#: controllers/addons_controller.php:1626
+#: controllers/addons_controller.php:1631
+#: controllers/editors_controller.php:64 controllers/pages_controller.php:136
 #: controllers/groups_controller.php:65 controllers/groups_controller.php:71
 #: controllers/groups_controller.php:89 controllers/groups_controller.php:111
 #: controllers/collections_controller.php:57
-#: controllers/collections_controller.php:121
-#: controllers/collections_controller.php:205
-#: controllers/collections_controller.php:365
-#: controllers/collections_controller.php:404
-#: controllers/collections_controller.php:466
-#: controllers/collections_controller.php:538
-#: controllers/collections_controller.php:828
-#: controllers/localizers_controller.php:72
+#: controllers/collections_controller.php:99
+#: controllers/collections_controller.php:188
+#: controllers/collections_controller.php:207
+#: controllers/collections_controller.php:371
+#: controllers/collections_controller.php:410
+#: controllers/collections_controller.php:472
+#: controllers/collections_controller.php:544
+#: controllers/collections_controller.php:835
+#: controllers/localizers_controller.php:73
 #, php-format
 msgid "addons_home_pagetitle"
 msgstr "Дополнения %1$s"
 
 #. %1$s is the number of addons downloaded
 #: views/addons/home.thtml:57
-#, php-format
 msgid "addons_home_stats_downloaded"
 msgid_plural "addons_home_stats_downloaded"
 msgstr[0] "<strong>%1$s</strong> <span>дополнение загружено</span>"
@@ -712,30 +908,36 @@ msgstr[2] "<strong>%1$s</strong> <span>дополнений загружено</
 
 #. %1$s is the number of addons in use
 #: views/addons/home.thtml:63
-#, php-format
 msgid "addons_home_stats_inuse"
 msgid_plural "addons_home_stats_inuse"
 msgstr[0] "<strong>%1$s</strong> <span>дополнение используется</span>"
 msgstr[1] "<strong>%1$s</strong> <span>дополнения используется</span>"
 msgstr[2] "<strong>%1$s</strong> <span>дополнений используется</span>"
 
-#: views/addons/home.thtml:136
+#: views/addons/display.thtml:194
+#, fuzzy
+msgid "addons_home_summary_developer"
+msgid_plural "addons_home_summary_developer"
+msgstr[0] "Developer"
+msgstr[1] "Developers"
+
+#: views/elements/amo2009/homepage_addon_listing.thtml:58
 msgid "addons_home_view_all_newest_title"
 msgstr "Просмотреть все новые дополнения"
 
-#: views/addons/home.thtml:129
+#: views/elements/amo2009/homepage_addon_listing.thtml:51
 msgid "addons_home_view_all_popular_title"
 msgstr "Просмотреть все популярные дополнения"
 
-#: views/addons/home.thtml:150
+#: views/elements/amo2009/homepage_addon_listing.thtml:72
 msgid "addons_home_view_all_recommended_title"
 msgstr "Просмотреть все рекомендуемые дополнения"
 
-#: views/addons/home.thtml:143
+#: views/elements/amo2009/homepage_addon_listing.thtml:65
 msgid "addons_home_view_all_updated_title"
 msgstr "Просмотреть все недавно обновлённые дополнения"
 
-#: views/elements/amo2009/install.thtml:334 views/elements/install.thtml:112
+#: views/elements/amo2009/install.thtml:352 views/elements/install.thtml:112
 msgid "addons_install_in_sunbird"
 msgstr ""
 "<ol><li>Нажмите правой кнопкой мыши на ссылке и выберите «Сохранить ссылку "
@@ -744,11 +946,11 @@ msgstr ""
 "Дополнения».</li><li>Нажмите кнопку «Установить…», найдите и выберите файл, "
 "который вы скачали и нажмите «OK».</li></ol>"
 
-#: views/elements/amo2009/install.thtml:333 views/elements/install.thtml:111
+#: views/elements/amo2009/install.thtml:351 views/elements/install.thtml:111
 msgid "addons_install_in_sunbird_title"
 msgstr "Как установить дополнения в Sunbird"
 
-#: views/elements/amo2009/install.thtml:331 views/elements/install.thtml:106
+#: views/elements/amo2009/install.thtml:349 views/elements/install.thtml:106
 msgid "addons_install_in_thunderbird"
 msgstr ""
 "<ol><li>Нажмите правой кнопкой мыши на ссылке и выберите «Сохранить ссылку "
@@ -757,7 +959,7 @@ msgstr ""
 "Дополнения».</li><li>Нажмите кнопку «Установить…», найдите и выберите файл, "
 "который вы скачали и нажмите «OK».</li></ol>"
 
-#: views/elements/amo2009/install.thtml:330 views/elements/install.thtml:105
+#: views/elements/amo2009/install.thtml:348 views/elements/install.thtml:105
 msgid "addons_install_in_thunderbird_title"
 msgstr "Как установить дополнения в Thunderbird"
 
@@ -813,12 +1015,12 @@ msgstr ""
 "изменяют или расширяют существующую функциональность."
 
 #. %1$s is the application name.  Example: Firefox, Thunderbird, Sunbird
-#: controllers/addons_controller.php:1122
+#: controllers/addons_controller.php:1226
 #, php-format
 msgid "addons_plugins_main_header"
 msgstr "Популярные плагины для %1$s"
 
-#: controllers/components/amo.php:698 controllers/addons_controller.php:1121
+#: controllers/components/amo.php:699 controllers/addons_controller.php:1225
 msgid "addons_plugins_pagetitle"
 msgstr "Плагины"
 
@@ -839,7 +1041,7 @@ msgstr ""
 
 # %1 is the addon name
 #. %1 is the add-on name
-#: controllers/addons_controller.php:1476
+#: controllers/addons_controller.php:1564
 #, php-format
 msgid "addons_previews_pagetitle"
 msgstr "Скриншоты для %s"
@@ -848,29 +1050,29 @@ msgstr "Скриншоты для %s"
 msgid "addons_recently_added"
 msgstr "Недавно добавленные"
 
-#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1365
+#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1470
 msgid "addons_recommended_introduction"
 msgstr ""
 "Среди громадного количества доступных дополнений найдётся что-нибудь "
 "полезное для каждого. Для начала, мы собрали здесь список некоторых самых "
 "популярных дополнений. Удачи!"
 
-#: controllers/addons_controller.php:1357
-#: controllers/addons_controller.php:1364
+#: controllers/addons_controller.php:1462
+#: controllers/addons_controller.php:1469
 msgid "addons_recommended_pagetitle"
 msgstr "Рекомендуемые дополнения"
 
-#: controllers/addons_controller.php:1360
+#: controllers/addons_controller.php:1465
 msgid "addons_recommended_title"
 msgstr "Рекомендуемые дополнения"
 
-#: views/addons/searchengines.thtml:136
+#: views/addons/searchengines.thtml:83
 msgid "addons_searchengines_additional_resources"
 msgstr "Дополнительные ресурсы"
 
 # link text devmo
 #. link text devmo
-#: views/addons/searchengines.thtml:141
+#: views/addons/searchengines.thtml:90
 msgid "addons_searchengines_devmo_link"
 msgstr "Центр разработки Mozilla"
 
@@ -880,7 +1082,7 @@ msgstr ""
 "Извините, для установки поискового плагина вам нужен браузер из семейства "
 "Mozilla (например, Firefox)."
 
-#: views/addons/searchengines.thtml:49
+#: views/addons/searchengines.thtml:51
 msgid "addons_searchengines_error_nojavascript"
 msgstr ""
 "Для установки плагинов требуется JavaScript, но, похоже, вы отключили его. "
@@ -891,66 +1093,67 @@ msgstr ""
 # %2 is MDC link
 #. %1 is "make your own" link
 #. %2 is MDC link
-#: views/addons/searchengines.thtml:139
+#: views/addons/searchengines.thtml:88
 msgid "addons_searchengines_learn_howto"
 msgstr "Вы можете прочитать о том как %1$s на сайте %2$s."
 
 # link path to search plugins instructions, relative to devmo
 #. link path to search plugins instructions, relative to devmo
-#: views/addons/searchengines.thtml:140
+#: views/addons/searchengines.thtml:89
 msgid "addons_searchengines_makeyourown_href"
 msgstr "/en/docs/Creating_OpenSearch_plugins_for_Firefox"
 
 # link text for "make your own" (opensearch engine)
 #. link text for "make your own" (opensearch engine)
-#: views/addons/searchengines.thtml:140
+#: views/addons/searchengines.thtml:89
 msgid "addons_searchengines_makeyourown_link"
 msgstr "сделать свой собственный поисковый плагин"
 
 # %1 is the link to mycroft.mozdev.org
 #. %1 is the link to mycroft.mozdev.org
-#: views/addons/searchengines.thtml:138
+#: views/addons/searchengines.thtml:87
 msgid "addons_searchengines_more"
 msgstr "Вы можете найти другие поисковые плагины на сайте %1$s"
 
 # link text to mycroft.mozdev.org
 #. link text to mycroft.mozdev.org
-#: views/addons/searchengines.thtml:138
+#: views/addons/searchengines.thtml:87
 msgid "addons_searchengines_mycroft_link"
 msgstr "mycroft.mozdev.org"
 
-#: controllers/addons_controller.php:1100
-#: controllers/addons_controller.php:1110
+#: controllers/addons_controller.php:1204
+#: controllers/addons_controller.php:1214
 msgid "addons_searchengines_pagetitle"
 msgstr "Поисковые плагины"
 
-#: views/addons/searchengines.thtml:143
+#: views/addons/searchengines.thtml:93
 msgid "addons_searchengines_thanks"
 msgstr ""
 "Мы выражаем особую благодарность проекту Mycroft за их работу над поисковыми "
 "плагинами для Firefox."
 
-#: views/addons/display.thtml:154
-msgid "addons_share_button_text"
-msgstr "Сообщить другим"
+#: views/addons/display.thtml:98
+#, fuzzy
+msgid "addons_share_button_a_text"
+msgstr "Share this Add-on"
 
-#: controllers/addons_controller.php:89
+#: controllers/addons_controller.php:88
 msgid "addons_share_label_delicious"
 msgstr "Добавить в Delicious"
 
-#: controllers/addons_controller.php:77
+#: controllers/addons_controller.php:76
 msgid "addons_share_label_digg"
 msgstr "Отправить на Digg!"
 
-#: controllers/addons_controller.php:83
+#: controllers/addons_controller.php:82
 msgid "addons_share_label_facebook"
 msgstr "Написать в Facebook"
 
-#: controllers/addons_controller.php:101
+#: controllers/addons_controller.php:100
 msgid "addons_share_label_friendfeed"
 msgstr "Поделиться на FriendFeed"
 
-#: controllers/addons_controller.php:95
+#: controllers/addons_controller.php:94
 msgid "addons_share_label_myspace"
 msgstr "Написать в MySpace"
 
@@ -985,7 +1188,9 @@ msgstr "В «песочнице»"
 msgid "addons_status_unknown"
 msgstr "Статус неизвестен"
 
-#: views/elements/amo2009/teaser_collections.thtml:91
+#: views/elements/amo2009/teaser_collections.thtml:92
+#: views/elements/amo2009/results_addon.thtml:105
+#: views/elements/amo2009/results_addon.thtml:107
 #: views/elements/amo2009/homepage_addon.thtml:99
 #: views/elements/feature.thtml:94
 msgid "addons_title_tooltip"
@@ -1009,12 +1214,12 @@ msgstr ""
 "Эти версии отображаются только для сведения и в целях тестирования. Вам "
 "следует всегда использовать последнюю версию дополнения."
 
-#: controllers/addons_controller.php:1549
+#: controllers/addons_controller.php:1637
 msgid "addons_versions_history"
 msgstr "История версий со списком изменений"
 
 #. %1$s is the add-on name
-#: controllers/addons_controller.php:1535
+#: controllers/addons_controller.php:1623
 #, php-format
 msgid "addons_versions_pagetitle"
 msgstr "История версий %1$s"
@@ -1049,7 +1254,7 @@ msgstr "Администратор группы"
 msgid "admin_group_saved"
 msgstr "Группа сохранена"
 
-#: views/elements/amo2009/search.thtml:257 views/elements/search.thtml:239
+#: views/elements/amo2009/search.thtml:263 views/elements/search.thtml:239
 msgid "advanced_search_form"
 msgstr "Дополнительно"
 
@@ -1063,27 +1268,30 @@ msgstr "В любое время"
 msgid "advanced_search_form_any_type"
 msgstr "Любой"
 
-#: views/elements/amo2009/search.thtml:275 views/elements/search.thtml:254
+#: views/elements/amo2009/search.thtml:281 views/elements/search.thtml:254
 msgid "advanced_search_form_any_version"
 msgstr "любая"
 
-#: views/elements/amo2009/search.thtml:217 views/elements/search.thtml:212
+#: views/elements/amo2009/search.thtml:223 views/elements/search.thtml:212
 msgid "advanced_search_form_application"
 msgstr "Приложение"
 
 #: views/elements/amo2009/search.thtml:143 views/elements/search.thtml:142
+#: views/search/index.thtml:99
 msgid "advanced_search_form_keyword_match"
 msgstr "Ключевым словам"
 
-#: views/elements/amo2009/search.thtml:251 views/elements/search.thtml:225
+#: views/elements/amo2009/search.thtml:257 views/elements/search.thtml:225
 msgid "advanced_search_form_lastupdate"
 msgstr "Были обновлены"
 
 #: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:144
+#: views/tags/display.thtml:77 views/search/index.thtml:101
 msgid "advanced_search_form_name"
 msgstr "Имени"
 
 #: views/elements/amo2009/search.thtml:144 views/elements/search.thtml:143
+#: views/tags/display.thtml:76 views/search/index.thtml:100
 msgid "advanced_search_form_newest"
 msgstr "Новизне"
 
@@ -1111,39 +1319,43 @@ msgstr "В последнюю неделю"
 msgid "advanced_search_form_past_year"
 msgstr "В последний год"
 
-#: views/elements/amo2009/search.thtml:239 views/elements/search.thtml:230
+#: views/elements/amo2009/search.thtml:245 views/elements/search.thtml:230
 msgid "advanced_search_form_perpage"
 msgstr "Дополнений на странице"
 
-#: views/elements/amo2009/search.thtml:243 views/elements/search.thtml:224
+#: views/elements/amo2009/search.thtml:249 views/elements/search.thtml:224
 msgid "advanced_search_form_platform"
 msgstr "Платформа"
 
 #: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:146
+#: views/tags/display.thtml:79 views/search/index.thtml:103
 msgid "advanced_search_form_popularity"
 msgstr "Популярности"
 
 #: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:145
+#: views/tags/display.thtml:78 views/search/index.thtml:102
+#: views/addons/display.thtml:209
 msgid "advanced_search_form_rating"
 msgstr "Рейтингу"
 
-#: views/elements/amo2009/search.thtml:247 views/elements/search.thtml:231
+#: views/elements/amo2009/search.thtml:253 views/elements/search.thtml:231
+#: views/tags/display.thtml:73 views/search/index.thtml:96
 msgid "advanced_search_form_sortby"
 msgstr "Сортировать по"
 
-#: views/elements/amo2009/search.thtml:227 views/elements/search.thtml:216
+#: views/elements/amo2009/search.thtml:233 views/elements/search.thtml:216
 msgid "advanced_search_form_to"
 msgstr "по"
 
-#: views/elements/amo2009/search.thtml:257 views/elements/search.thtml:237
+#: views/elements/amo2009/search.thtml:263 views/elements/search.thtml:237
 msgid "advanced_search_form_toggle_tooltip"
 msgstr "Включить продвинутый режим поиска"
 
-#: views/elements/amo2009/search.thtml:235 views/elements/search.thtml:223
+#: views/elements/amo2009/search.thtml:241 views/elements/search.thtml:223
 msgid "advanced_search_form_type"
 msgstr "Тип"
 
-#: views/elements/amo2009/search.thtml:222 views/elements/search.thtml:214
+#: views/elements/amo2009/search.thtml:228 views/elements/search.thtml:214
 msgid "advanced_search_form_version"
 msgstr "версия с"
 
@@ -1234,6 +1446,25 @@ msgstr "%1$s создал версию %2$s для %3$s"
 #: controllers/components/audit.php:108
 msgid "audit_appversion_delete"
 msgstr "%1$s удалил версию %2$s для %3$s"
+
+#. %1$s is <a>user name</a>
+#. %2$s is a category name, like <a>Search Tools</a>
+#: controllers/components/audit.php:118
+msgid "audit_category_create"
+msgstr "%1$s создал метку %2$s"
+
+#. %1$s is <a>user name</a>
+#. %2$s is a category name, like <a>Search Tools</a>
+#. %3$s is a numeric id.
+#: controllers/components/audit.php:126
+msgid "audit_category_delete"
+msgstr "%1$s удалил категорию %2$s (ID %3$s)"
+
+#. %1$s is <a>user name</a>
+#. %2$s is a category name, like <a>Search Tools</a>
+#: controllers/components/audit.php:121
+msgid "audit_category_edit"
+msgstr "%1$s отредактировал категорию %2$s"
 
 #. %1$s is <a>user name</a>
 #. %2$s is a config field, like "awesomeness".
@@ -1403,25 +1634,6 @@ msgstr ""
 "%1$s произвёл неизвестное действие в системе безопасности %2$s с ID %3$s"
 
 #. %1$s is <a>user name</a>
-#. %2$s is a category name, like <a>Search Tools</a>
-#: controllers/components/audit.php:118
-msgid "audit_category_create"
-msgstr "%1$s создал метку %2$s"
-
-#. %1$s is <a>user name</a>
-#. %2$s is a category name, like <a>Search Tools</a>
-#. %3$s is a numeric id.
-#: controllers/components/audit.php:126
-msgid "audit_category_delete"
-msgstr "%1$s удалил категорию %2$s (ID %3$s)"
-
-#. %1$s is <a>user name</a>
-#. %2$s is a category name, like <a>Search Tools</a>
-#: controllers/components/audit.php:121
-msgid "audit_category_edit"
-msgstr "%1$s отредактировал категорию %2$s"
-
-#. %1$s is <a>user name</a>
 #. %2$s is a locale, like en-US.
 #: controllers/components/audit.php:266
 msgid "audit_update_applications"
@@ -1433,6 +1645,10 @@ msgstr "%1$s обновил переводы приложения для %2$s"
 msgid "audit_update_blog"
 msgstr "%1$s обновил переводы поста в блоге для %2$s"
 
+#: controllers/components/audit.php:270
+msgid "audit_update_categories"
+msgstr ""
+
 #. %1$s is <a>user name</a>
 #. %2$s is a locale, like en-US.
 #: controllers/components/audit.php:274
@@ -1440,34 +1656,28 @@ msgid "audit_update_platforms"
 msgstr "%1$s обновил переводы платформы для %2$s"
 
 #. %1$s is <a>user name</a>
-#. %2$s is a locale, like en-US.
-#: controllers/components/audit.php:270
-msgid "audit_update_tags"
-msgstr "%1$s обновил переводы категории для %2$s"
-
-#. %1$s is <a>user name</a>
 #. %2$s is <a>user name</a>
 #: controllers/components/audit.php:217
 msgid "audit_user_edit"
 msgstr "%1$s отредактировал информацию пользователя %2$s"
 
-#: controllers/addons_controller.php:1012
+#: controllers/addons_controller.php:1122
 msgid "browse_addons_name"
 msgstr "Сортировать дополнения по имени"
 
-#: controllers/addons_controller.php:1010
+#: controllers/addons_controller.php:1120
 msgid "browse_addons_newest"
 msgstr "Новейшие дополнения"
 
-#: controllers/addons_controller.php:1008
+#: controllers/addons_controller.php:1118
 msgid "browse_addons_popular"
 msgstr "Популярные дополнения"
 
-#: controllers/addons_controller.php:1011
+#: controllers/addons_controller.php:1121
 msgid "browse_addons_rated"
 msgstr "Сортировать дополнения по рейтингу"
 
-#: controllers/addons_controller.php:1009
+#: controllers/addons_controller.php:1119
 msgid "browse_addons_updated"
 msgstr "Недавно обновлённые дополнения"
 
@@ -1488,7 +1698,7 @@ msgstr "Выбрать категорию"
 
 # %1 is the category name
 #. %1$s is the category name
-#: views/addons/searchengines.thtml:129
+#: views/addons/searchengines.thtml:86
 #, php-format
 msgid "category_extra_see_all"
 msgstr "Просмотреть всю категорию %1$s"
@@ -1499,19 +1709,19 @@ msgid "collection_description_limit"
 msgstr "Описание не может быть короче %1$s символов."
 
 #. %1$s is the name of the collection
-#: controllers/collections_controller.php:392
+#: controllers/collections_controller.php:398
 msgid "collection_detail_rss_title"
 msgstr "Подборка %s"
 
-#: controllers/collections_controller.php:1065
+#: controllers/collections_controller.php:1075
 msgid "collection_error_deleting_addon"
 msgstr "Ошибка удаления дополнения!"
 
-#: controllers/collections_controller.php:1051
+#: controllers/collections_controller.php:1061
 msgid "collection_error_saving_addon"
 msgstr "Ошибка сохранения!"
 
-#: controllers/collections_controller.php:1080
+#: controllers/collections_controller.php:1090
 msgid "collection_error_saving_comment"
 msgstr "Ошибка сохранения комментария!"
 
@@ -1520,8 +1730,8 @@ msgstr "Ошибка сохранения комментария!"
 msgid "collection_name_limit"
 msgstr "Имя должно быть короче %1$s символов."
 
-#: controllers/collections_controller.php:352
-#: controllers/collections_controller.php:487
+#: controllers/collections_controller.php:358
+#: controllers/collections_controller.php:493
 msgid "collection_not_found"
 msgstr "Коллекция не найдена!"
 
@@ -1557,11 +1767,12 @@ msgstr "Создать подборку"
 
 #: views/pages/collector_faq.thtml:50 views/pages/collector_firstrun.thtml:43
 #: views/pages/collector.thtml:47 views/pages/collector_features.thtml:55
-#: controllers/search_controller.php:302
-#: controllers/collections_controller.php:206
-#: controllers/collections_controller.php:405
-#: controllers/collections_controller.php:467
-#: controllers/collections_controller.php:539
+#: controllers/search_controller.php:303
+#: controllers/collections_controller.php:189
+#: controllers/collections_controller.php:208
+#: controllers/collections_controller.php:411
+#: controllers/collections_controller.php:473
+#: controllers/collections_controller.php:545
 msgid "collections_breadcrumb"
 msgstr "Подборки"
 
@@ -1588,8 +1799,8 @@ msgstr ""
 "<p>Чтобы посмотреть на вашу подборку, посмотрите вниз. Если вы хотите "
 "установить для подборки псевдоним, загрузить значок или изменить "
 "дополнительные настройки, посетите страницу <a href='%1$s'>Управление "
-"подборками</a>.</p><p>Ваша подборка может быть открыта по следующему "
-"адресу: %2$s</p>"
+"подборками</a>.</p><p>Ваша подборка может быть открыта по следующему адресу: "
+"%2$s</p>"
 
 #: views/collections/detail.thtml:61
 msgid "collections_detail_created_msg"
@@ -1626,22 +1837,23 @@ msgstr "Удаляю из Избранного&hellip;"
 #. %1$s is a URL
 #: views/collections/detail.thtml:90
 msgid "collections_detail_login"
-msgstr "<a href=\"%1$s\">Зарегистрируйтесь</a> чтобы добавить эту подборку к "
-"себе в Избранное."
+msgstr ""
+"<a href=\"%1$s\">Зарегистрируйтесь</a> чтобы добавить эту подборку к себе в "
+"Избранное."
 
 #: views/collections/detail.thtml:104
 msgid "collections_detail_manage"
 msgstr "Управление подборкой"
 
-#: controllers/collections_controller.php:298
+#: controllers/collections_controller.php:301
 msgid "collections_detail_sort_date"
 msgstr "Дате добавления"
 
-#: controllers/collections_controller.php:299
+#: controllers/collections_controller.php:302
 msgid "collections_detail_sort_name"
 msgstr "Имени"
 
-#: controllers/collections_controller.php:300
+#: controllers/collections_controller.php:303
 msgid "collections_detail_sort_popularity"
 msgstr "Популярности"
 
@@ -1713,12 +1925,12 @@ msgstr "Добавить в подборку"
 msgid "collections_edit_check_nickname"
 msgstr "Проверить доступность"
 
-#: views/collections/edit.thtml:299
+#: views/collections/edit.thtml:298
 msgid "collections_edit_confirm_deletecollection"
 msgstr "Да, я хочу удалить эту подборку."
 
 #. %1$s is the label of the edit form's submit button
-#: views/collections/edit.thtml:300
+#: views/collections/edit.thtml:299 views/collections/edit.thtml:300
 msgid "collections_edit_confirm_deletecollection_description"
 msgstr ""
 "Установите флажок, затем щёлкните по \"%1$s\" чтобы удалить эту подборку."
@@ -1770,11 +1982,11 @@ msgstr "Выберите приложение, которое поддержив
 msgid "collections_edit_formfield_collectiontype"
 msgstr "Тип подборки"
 
-#: views/collections/edit.thtml:295
+#: views/collections/edit.thtml:294
 msgid "collections_edit_formfield_deletecollection"
 msgstr "Удалить подборку"
 
-#: views/collections/edit.thtml:296
+#: views/collections/edit.thtml:295
 msgid "collections_edit_formfield_deletecollection_description"
 msgstr "При удалении вашей подборки она будет безвозвратно утеряна."
 
@@ -1925,7 +2137,7 @@ msgstr "Значок будет удалён после нажатия расп�
 msgid "collections_edit_nickname_available"
 msgstr "Псевдоним доступен"
 
-#: controllers/collections_controller.php:943
+#: controllers/collections_controller.php:950
 msgid "collections_edit_nickname_error"
 msgstr ""
 "Ваш псевдоним содержал недопустимые символы и был исправлен. Пожалуйста, "
@@ -1945,12 +2157,12 @@ msgid "collections_edit_saved_success"
 msgstr "Ваша подборка была успешно сохранёна!"
 
 #: views/collections/edit.thtml:169 views/collections/edit.thtml:300
-#: views/collections/edit.thtml:308 views/pages/js_constants.js.thtml:99
+#: views/collections/edit.thtml:307 views/pages/js_constants.js.thtml:99
 msgid "collections_edit_submit"
 msgstr "Обновить подборку"
 
-#: views/collections/edit.thtml:96 views/collections/edit.thtml:297
-#: views/pages/js_constants.js.thtml:100
+#: views/collections/edit.thtml:96 views/collections/edit.thtml:296
+#: views/collections/edit.thtml:299 views/pages/js_constants.js.thtml:100
 msgid "collections_edit_submit_deletecollection"
 msgstr "Удалить подборку"
 
@@ -1970,15 +2182,6 @@ msgstr "Имя и подробности"
 msgid "collections_edit_tabheader_permissions"
 msgstr "Разрешения"
 
-#: models/collection_promo.php:53
-msgid "collections_family_tagline"
-msgstr ""
-"Дополнения, которые могут присматривать за вашими детьми и вашим расписанием."
-
-#: models/collection_promo.php:53
-msgid "collections_family_title"
-msgstr "Семейная жизнь"
-
 #: views/elements/amo2009/collector_info_secondary.thtml:70
 msgid "collections_index_a_check_out"
 msgstr "Попробуйте в работе собиратель дополнений"
@@ -1987,27 +2190,36 @@ msgstr "Попробуйте в работе собиратель дополне
 msgid "collections_index_a_create"
 msgstr "Создать подборку"
 
-#: views/collections/detail.thtml:139 views/collections/listing.thtml:85
-#: views/search/collections.thtml:84
+#: views/elements/amo2009/collections_sort_form.thtml:55
+#: views/collections/detail.thtml:139 views/tags/display.thtml:83
+#: views/search/index.thtml:107
 msgid "collections_index_button_go"
 msgstr "Перейти"
 
 #. %1$s is a URL.
-#: controllers/collections_controller.php:182
+#: controllers/collections_controller.php:163
 msgid "collections_index_filler_favorites"
 msgstr ""
-"<p><strong>У вас пока нет ни одной избранной подборки.</strong></p> <p>С этой "
-"страницы можно быстро открыть избранные вами подборки. Они также появятся "
-"в <a href='%1$s'>Собирателе дополнений</a>, если вы его установили.</p>"
+"<p><strong>У вас пока нет ни одной избранной подборки.</strong></p> <p>С "
+"этой страницы можно быстро открыть избранные вами подборки. Они также "
+"появятся в <a href='%1$s'>Собирателе дополнений</a>, если вы его установили."
+"</p>"
 
 #. %1$s is a URL.
-#: controllers/collections_controller.php:167
+#: controllers/collections_controller.php:148
 msgid "collections_index_filler_mine"
 msgstr ""
 "<p>Вы пока не создали ни одной подборки. Вы можете легко создать подборки и "
-"заполнить их своими любимыми дополнениями.  <a href='%1$s'>Попробуйте</a>!</p>"
+"заполнить их своими любимыми дополнениями.  <a href='%1$s'>Попробуйте</a>!</"
+"p>"
 
-#: views/collections/listing.thtml:51
+#. %1$s is an add-on's name
+#: controllers/collections_controller.php:185
+#, fuzzy
+msgid "collections_index_header_addon"
+msgstr "Collections containing %1$s"
+
+#: views/collections/listing.thtml:52
 msgid "collections_index_header_collections"
 msgstr "Подборки"
 
@@ -2025,41 +2237,41 @@ msgstr "создан %1$s"
 msgid "collections_index_header_what"
 msgstr "Что такое подборки?"
 
-#: views/collections/detail.thtml:132 views/collections/listing.thtml:78
-#: views/search/collections.thtml:66
+#: views/elements/amo2009/collections_sort_form.thtml:48
+#: views/collections/detail.thtml:132
 msgid "collections_index_label_sortby"
 msgstr "Сортировать по"
 
-#: controllers/collections_controller.php:130
+#: controllers/collections_controller.php:109
 msgid "collections_index_li_editors"
 msgstr "Выбор редакторов"
 
 #: views/collections/subscribe.thtml:64
-#: controllers/collections_controller.php:140
+#: controllers/collections_controller.php:119
 msgid "collections_index_li_favorites"
 msgstr "Мои любимые"
 
-#: controllers/collections_controller.php:138
+#: controllers/collections_controller.php:117
 msgid "collections_index_li_mine"
 msgstr "Мои подборки"
 
-#: controllers/collections_controller.php:132
+#: controllers/collections_controller.php:111
 msgid "collections_index_li_popular"
 msgstr "Популярные"
 
-#: views/search/collections.thtml:74 controllers/collections_controller.php:81
+#: controllers/components/collections_listing.php:68
 msgid "collections_index_option_all"
 msgstr "Самые популярные за всё время"
 
-#: views/search/collections.thtml:72 controllers/collections_controller.php:78
+#: controllers/components/collections_listing.php:65
 msgid "collections_index_option_month"
 msgstr "Самые популярные за этот месяц"
 
-#: views/search/collections.thtml:76 controllers/collections_controller.php:84
+#: controllers/components/collections_listing.php:71
 msgid "collections_index_option_newest"
 msgstr "Новейшие"
 
-#: views/search/collections.thtml:70 controllers/collections_controller.php:75
+#: controllers/components/collections_listing.php:62
 msgid "collections_index_option_week"
 msgstr "Самые популярные за эту неделю"
 
@@ -2079,22 +2291,6 @@ msgstr "Подборки это группы дополнений, которы�
 #, php-format
 msgid "collections_interactive_addon_added"
 msgstr "Добавлено %s"
-
-#: models/collection_promo.php:55
-msgid "collections_reference_tagline"
-msgstr "Дополнения, которые помогут вам в онлайновых исследованиях."
-
-#: models/collection_promo.php:55
-msgid "collections_reference_title"
-msgstr "Справочная"
-
-#: models/collection_promo.php:52
-msgid "collections_social_tagline"
-msgstr "Дополнения для управления вашими социальными сетями."
-
-#: models/collection_promo.php:52
-msgid "collections_social_title"
-msgstr "Социальный круг"
 
 #: views/collections/subscribe.thtml:91
 msgid "collections_subscribe_button_close"
@@ -2126,29 +2322,21 @@ msgstr ""
 "попробуйте наше расширение для Firefox <a href=\"%3$s\">Собиратель "
 "дополнений</a>."
 
-#: views/collections/listing.thtml:55
+#: views/collections/listing.thtml:59
 msgid "collections_success_delete"
 msgstr "Подборка была удалёна."
 
-#: models/collection_promo.php:54
-msgid "collections_travel_tagline"
-msgstr "Дополнения, которые помогут вам в ваших путешествиях."
-
-#: models/collection_promo.php:54
-msgid "collections_travel_title"
-msgstr "Набор путешественника"
-
 #. A collection of add-ons that is automatically built for a user.  They are "automatically published" to this collection.
-#: controllers/collections_controller.php:581
+#: controllers/collections_controller.php:587
 msgid "collections_type_autopublisher"
 msgstr "Авто-публикатор"
 
 #. A collection that has been chosen by an Editor as notable or exceptional
-#: controllers/collections_controller.php:582
+#: controllers/collections_controller.php:588
 msgid "collections_type_editorspick"
 msgstr "Выбор редакции"
 
-#: controllers/collections_controller.php:580
+#: controllers/collections_controller.php:586
 msgid "collections_type_normal"
 msgstr "Нормальная"
 
@@ -2162,14 +2350,6 @@ msgstr ""
 #: views/collections/subscribe.thtml:78
 msgid "collections_unsubscribe_success"
 msgstr "%1$s была удалена из ваших избранных подборок."
-
-#: models/collection_promo.php:56
-msgid "collections_webdev_tagline"
-msgstr "Дополнения, которые облегчат вам создание идеальных веб-сайтов."
-
-#: models/collection_promo.php:56
-msgid "collections_webdev_title"
-msgstr "Набор инструментов веб-разработчика"
 
 #: views/elements/amo2009/collections_sidebar_whatare.thtml:40
 msgid "collections_whatare_header"
@@ -2402,20 +2582,24 @@ msgstr ""
 #. date format string as used in PHP's strftime():
 #. http://php.net/strftime
 #: views/elements/collections_interactive_addon.thtml:85
+#: views/elements/amo2009/user_vcard.thtml:78
 #: views/elements/amo2009/addon_version_detail.thtml:53
+#: views/elements/amo2009/results_addon.thtml:96
+#: views/elements/amo2009/results_addon.thtml:117
 #: views/elements/amo2009/homepage_addon.thtml:115
 #: views/elements/addon_version_detail.thtml:54
 #: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
-#: views/collections/detail.thtml:118 views/collections/edit.thtml:325
-#: views/users/info.thtml:76 views/editors/reviews_queue.thtml:57
-#: views/editors/reviews_queue.thtml:68 views/developers/dashboard.thtml:65
+#: views/collections/detail.thtml:118 views/collections/detail.thtml:194
+#: views/collections/edit.thtml:324 views/users/info.thtml:76
+#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
+#: views/developers/dashboard.thtml:65
 #: views/developers/versions_edit.thtml:208 views/developers/versions.thtml:67
 #: views/search/rss/index.thtml:5 views/addons/rss/versions.thtml:42
-#: views/addons/display.thtml:104 views/addons/display.thtml:356
-#: views/addons/browse_thumbs.thtml:75 views/reviews/add.thtml:63
+#: views/addons/display.thtml:187 views/addons/display.thtml:292
+#: views/addons/browse_thumbs.thtml:120 views/reviews/add.thtml:63
 #: views/reviews/display.thtml:74 views/reviews/display.thtml:160
 #: views/reviews/delete.thtml:54 controllers/statistics_controller.php:244
-#: controllers/collections_controller.php:1047
+#: controllers/collections_controller.php:1057
 msgid "date"
 msgstr "%e %B %Y"
 
@@ -2424,7 +2608,7 @@ msgstr "%e %B %Y"
 #. http://php.net/strftime
 #: views/elements/addon_version_detail.thtml:53
 #: views/developers/discuss.thtml:52 views/developers/discuss.thtml:62
-#: views/admin/addons_status.thtml:57
+#: views/admin/addons_status.thtml:57 views/addons/display.thtml:186
 msgid "datetime"
 msgstr "%e %B %Y, %H:%M"
 
@@ -2451,28 +2635,28 @@ msgstr "Панель статистики"
 #. %1$s is a filename, e.g. "foo.txt"
 #. %2$s is the extension, e.g. ".txt"
 #. %3$s is a list of valid extensions, like ".png, .jpg, .gif"
-#: controllers/developers_controller.php:1361
+#: controllers/developers_controller.php:1472
 msgid "devcp_add_previews_extension_error"
 msgstr ""
 "Файл %1$s имеет неверное расширение (%2$s). Допустимые расширения: %3$s"
 
 #. %s is the filename.
-#: controllers/developers_controller.php:1394
+#: controllers/developers_controller.php:1505
 msgid "devcp_add_previews_save_error"
 msgstr ""
 "Файл %s не удалось сохранить в базу данных. Пожалуйста, попробуйте снова."
 
 #. %1$s is the preview ID number, %2$s is the filename.
-#: controllers/developers_controller.php:1389
+#: controllers/developers_controller.php:1500
 msgid "devcp_add_previews_success_replace"
 msgstr "Предпросмотр %1$s был успешно заменён файлом %2$s."
 
 #. %s is the filename.
-#: controllers/developers_controller.php:1391
+#: controllers/developers_controller.php:1502
 msgid "devcp_add_previews_success_upload"
 msgstr "Файл %s был успешно загружен. Вы можете добавить к нему описание."
 
-#: controllers/components/developers.php:1163
+#: controllers/components/developers.php:1187
 msgid "devcp_additem_addontype_autodetect"
 msgstr "Автоматическое определение"
 
@@ -2799,18 +2983,18 @@ msgid "devcp_dashboard_versions_new"
 msgstr "Загрузить новую версию"
 
 #. %s is the preview ID number.
-#: controllers/developers_controller.php:1415
+#: controllers/developers_controller.php:1526
 msgid "devcp_delete_previews_error"
 msgstr ""
 "Скриншот %s не получилось удалить из базы данных. Пожалуйста, попробуйте "
 "снова."
 
 #. %s is the preview ID number.
-#: controllers/developers_controller.php:1413
+#: controllers/developers_controller.php:1524
 msgid "devcp_delete_previews_success"
 msgstr "Скриншот %s был успешно удалён."
 
-#: controllers/developers_controller.php:1089
+#: controllers/developers_controller.php:1200
 msgid "devcp_delete_version_priv_error"
 msgstr "У вас нет прав на удаление версий или файлов."
 
@@ -2997,6 +3181,167 @@ msgstr ""
 msgid "devcp_edit_categories_select_application_categories"
 msgstr "Выберите для вашего дополнения не более трёх категорий %s"
 
+#. %1$s is a URL.
+#: views/developers/addon_edit_contributions.thtml:104
+#, fuzzy
+msgid "devcp_edit_contrib_account"
+msgstr ""
+"Your contribution account is the <a href=\"%1$s\">PayPal account</a> where "
+"user contributions will be deposited."
+
+#: views/developers/addon_edit_contributions.thtml:131
+#, fuzzy
+msgid "devcp_edit_contrib_amount"
+msgstr "Users have the option of contributing more or less than this amount."
+
+#: views/developers/addon_edit_contributions.thtml:122
+#, fuzzy
+msgid "devcp_edit_contrib_asking"
+msgstr ""
+"Specify how much users will be asked to contribute and where they will be "
+"asked."
+
+#: views/developers/addon_edit_contributions.thtml:69
+#, fuzzy
+msgid "devcp_edit_contrib_before"
+msgstr "Before you begin, you must create a developer profile."
+
+#: views/developers/addon_edit_contributions.thtml:71
+#, fuzzy
+msgid "devcp_edit_contrib_button_profile"
+msgstr "Create a Developer Profile First"
+
+#: views/developers/addon_edit_contributions.thtml:66
+#: views/developers/addon_edit_contributions.thtml:150
+#, fuzzy
+msgid "devcp_edit_contrib_button_start"
+msgstr "Start Asking for Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:152
+#, fuzzy
+msgid "devcp_edit_contrib_button_update"
+msgstr "Update Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:89
+#, fuzzy
+msgid "devcp_edit_contrib_currently_asking"
+msgstr ""
+"You are currently <strong>asking for contributions</strong> from users of "
+"this add-on."
+
+#: views/developers/addon_edit_contributions.thtml:92
+#, fuzzy
+msgid "devcp_edit_contrib_currently_not_asking"
+msgstr ""
+"You are currently <strong>not asking for contributions</strong> from users "
+"of this add-on."
+
+#: controllers/developers_controller.php:1636
+#, fuzzy
+msgid "devcp_edit_contrib_example_after"
+msgstr ""
+"When users begin downloading this add-on they are taken to your Developer "
+"Profile, where they are asked to make a contribution."
+
+#: controllers/developers_controller.php:1633
+#, fuzzy
+msgid "devcp_edit_contrib_example_passive"
+msgstr ""
+"A new section is added to your add-on's page and Developer Profile "
+"requesting a contribution from your users."
+
+#: controllers/developers_controller.php:1639
+#, fuzzy
+msgid "devcp_edit_contrib_example_roadblock"
+msgstr ""
+"When users try to install this add-on they are taken to your Developer "
+"Profile first, where they will be asked to make a contribution. Users must "
+"click the install button again to complete the installation."
+
+#: views/developers/addon_edit_contributions.thtml:103
+#, fuzzy
+msgid "devcp_edit_contrib_header_account"
+msgstr "Contribution Account"
+
+#: views/developers/addon_edit_contributions.thtml:121
+#, fuzzy
+msgid "devcp_edit_contrib_header_asking"
+msgstr "Asking for Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:62
+#, fuzzy
+msgid "devcp_edit_contrib_header_start"
+msgstr "Start Asking for Contributions"
+
+#: views/developers/addon_edit_contributions.thtml:107
+#, fuzzy
+msgid "devcp_edit_contrib_label_pp_id"
+msgstr "PayPal ID"
+
+#: views/developers/addon_edit_contributions.thtml:125
+#, fuzzy
+msgid "devcp_edit_contrib_label_suggested"
+msgstr "Suggested amount"
+
+#: views/developers/addon_edit_contributions.thtml:135
+#, fuzzy
+msgid "devcp_edit_contrib_label_where"
+msgstr "Where to ask"
+
+#: views/developers/addon_edit_contributions.thtml:115
+#, fuzzy
+msgid "devcp_edit_contrib_pp_signup"
+msgstr "Sign up for PayPal"
+
+#. %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:139
+#, fuzzy
+msgid "devcp_edit_contrib_radio_ask_after_example"
+msgstr ""
+"Ask after users start downloading this add-on (<a href=\"%1$s\">example</a>)"
+
+#. %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:138
+#, fuzzy
+msgid "devcp_edit_contrib_radio_ask_passive_example"
+msgstr ""
+"Only ask on this add-on's page and developer profile (<a href=\"%1$s"
+"\">example</a>)"
+
+#. %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:140
+#, fuzzy
+msgid "devcp_edit_contrib_radio_ask_roadblock_example"
+msgstr ""
+"Ask before users can download this add-on (<a href=\"%1$s\">example</a>)"
+
+#: views/developers/addon_edit_contributions.thtml:63
+#, fuzzy
+msgid "devcp_edit_contrib_start"
+msgstr ""
+"<p>Contributions provide a way for users to support your add-on financially. "
+"With contributions, you can:</p><ul><li>Ask users for donations on your add-"
+"on's listing.</li><li>Offer users the ability to contribute using a credit "
+"card or PayPal account.</li><li>Deposit contributions in a <a href='https://"
+"www.paypal.com/' target='_blank'>PayPal account</a> of your choice.</li></"
+"ul><p>Ready to get started? Click below to start asking for contributions.</"
+"p>"
+
+#: views/developers/addon_edit_contributions.thtml:93
+#, fuzzy
+msgid "devcp_edit_contrib_start_asking"
+msgstr "Start asking for contributions"
+
+#: views/developers/addon_edit_contributions.thtml:90
+#, fuzzy
+msgid "devcp_edit_contrib_stop_asking"
+msgstr "Stop asking for contributions"
+
+#: views/developers/addon_edit_contributions.thtml:128
+#, fuzzy
+msgid "devcp_edit_contrib_suggested_amount_error"
+msgstr "Should be a positive number between 0.00 and 99.99."
+
 #: views/developers/addon_edit.thtml:47
 msgid "devcp_edit_dd_manage_authors"
 msgstr ""
@@ -3009,16 +3354,32 @@ msgstr ""
 "Выберите подходящие категории для каждого приложения, которое поддерживает "
 "ваше дополнение."
 
-#: views/developers/addon_edit.thtml:51
+#: views/developers/addon_edit.thtml:67
+#, fuzzy
+msgid "devcp_edit_dd_manage_contributions"
+msgstr "Provide a way for users to make monetary donations to your project."
+
+#: views/developers/addon_edit.thtml:53
 msgid "devcp_edit_dd_manage_description"
 msgstr ""
 "Добавляйте и изменяйте переводы для сводки, описания, лицензии и политики "
 "приватности вашего дополнения."
 
-#: views/developers/addon_edit.thtml:53
+#: views/developers/addon_edit.thtml:61
+#, fuzzy
+msgid "devcp_edit_dd_manage_profile"
+msgstr ""
+"Create or update a profile of yourself and your work in making this add-on."
+
+#: views/developers/addon_edit.thtml:55
 msgid "devcp_edit_dd_manage_properties"
 msgstr ""
 "Измените имя, домашнюю страницу, значок и другие флаги вашего дополнения."
+
+#: views/developers/addon_edit.thtml:51
+#, fuzzy
+msgid "devcp_edit_dd_manage_tags"
+msgstr "Add tags to your add-on."
 
 #: views/developers/addon_edit_descriptions.thtml:116
 msgid "devcp_edit_description_button_update"
@@ -3097,13 +3458,28 @@ msgstr "Управление авторами дополнения"
 msgid "devcp_edit_dt_manage_categories"
 msgstr "Управление категориями дополнения"
 
-#: views/developers/addon_edit.thtml:50
+#: views/developers/addon_edit.thtml:63
+#, fuzzy
+msgid "devcp_edit_dt_manage_contributions"
+msgstr "Manage Contributions"
+
+#: views/developers/addon_edit.thtml:52
 msgid "devcp_edit_dt_manage_descriptions"
 msgstr "Управление описаниями дополнения"
 
-#: views/developers/addon_edit.thtml:52
+#: views/developers/addon_edit.thtml:57
+#, fuzzy
+msgid "devcp_edit_dt_manage_profile"
+msgstr "Manage Developer Profile"
+
+#: views/developers/addon_edit.thtml:54
 msgid "devcp_edit_dt_manage_properties"
 msgstr "Управление свойствами дополнения"
+
+#: views/developers/addon_edit.thtml:50
+#, fuzzy
+msgid "devcp_edit_dt_manage_tag"
+msgstr "Manage Add-on Tags"
 
 #: views/developers/addon_edit_properties.thtml:170
 msgid "devcp_edit_label_externalsoftware"
@@ -3124,6 +3500,61 @@ msgstr "Дополнение для определённого сайта"
 #: views/developers/addon_edit_properties.thtml:202
 msgid "devcp_edit_label_target_locale"
 msgstr "Указанная локаль"
+
+#: views/developers/addon_edit_profile.thtml:80
+#, fuzzy
+msgid "devcp_edit_profile_button_create"
+msgstr "Create a Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:114
+#, fuzzy
+msgid "devcp_edit_profile_button_create_profile"
+msgstr "Create Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:112
+#, fuzzy
+msgid "devcp_edit_profile_button_save"
+msgstr "Save Changes to Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:78
+#, fuzzy
+msgid "devcp_edit_profile_create"
+msgstr ""
+"<p>Introduce yourself to your users with a Developer Profile.</"
+"p><ul><li>Explain why you created this add-on.</li><li>Tell your users "
+"what's next.</li><li>Build more awareness of your efforts.</li></ul><p>Ready "
+"to create your Developer Profile? Click the button below to begin.</p>"
+
+#: views/developers/addon_edit_profile.thtml:77
+#, fuzzy
+msgid "devcp_edit_profile_header_create"
+msgstr "Create a Developer Profile"
+
+#: views/developers/addon_edit_profile.thtml:105
+#, fuzzy
+msgid "devcp_edit_profile_trans_future_description"
+msgstr ""
+"Whether or not you request contributions for future development of your add-"
+"on, telling your users what's coming soon will give them something to look "
+"forward to."
+
+#: views/developers/addon_edit_profile.thtml:104
+#, fuzzy
+msgid "devcp_edit_profile_trans_future_name"
+msgstr "What's Next for this Add-on"
+
+#: views/developers/addon_edit_profile.thtml:95
+#, fuzzy
+msgid "devcp_edit_profile_trans_reason_description"
+msgstr ""
+"Let your users know why you created an add-on.  Whether it was an idea while "
+"in line at the grocery store or the solution to one of life's great "
+"problems, share your story."
+
+#: views/developers/addon_edit_profile.thtml:94
+#, fuzzy
+msgid "devcp_edit_profile_trans_reason_name"
+msgstr "Why I Made this Add-on"
 
 #: views/developers/addon_edit_properties.thtml:212
 msgid "devcp_edit_properties_button_update"
@@ -3294,6 +3725,11 @@ msgstr "Разрешить онлайновый просмотр исходно�
 msgid "devcp_edit_properties_view_source_do_not_allow"
 msgstr "Не разрешать онлайновый просмотр исходного кода"
 
+#: views/developers/addon_edit_tags.thtml:49
+#, fuzzy
+msgid "devcp_edit_tags_header_manage"
+msgstr "Manage Tags"
+
 #: views/elements/developers/editbox.thtml:46
 msgid "devcp_editbox_authors"
 msgstr "Авторы"
@@ -3302,11 +3738,16 @@ msgstr "Авторы"
 msgid "devcp_editbox_categories"
 msgstr "Категории"
 
-#: views/elements/developers/editbox.thtml:52
+#: views/elements/developers/editbox.thtml:62
 msgid "devcp_editbox_change_status"
 msgstr "Изменить статус"
 
-#: views/elements/developers/editbox.thtml:48
+#: views/elements/developers/editbox.thtml:58
+#, fuzzy
+msgid "devcp_editbox_contributions"
+msgstr "Contributions"
+
+#: views/elements/developers/editbox.thtml:50
 msgid "devcp_editbox_descriptions"
 msgstr "Описания"
 
@@ -3314,23 +3755,33 @@ msgstr "Описания"
 msgid "devcp_editbox_edit_addon"
 msgstr "Редактировать дополнение"
 
-#: views/elements/developers/editbox.thtml:57
+#: views/elements/developers/editbox.thtml:67
 msgid "devcp_editbox_new_version"
 msgstr "Новая версия"
 
-#: views/elements/developers/editbox.thtml:49
+#: views/elements/developers/editbox.thtml:54
+#, fuzzy
+msgid "devcp_editbox_profile"
+msgstr "Developer Profile"
+
+#: views/elements/developers/editbox.thtml:51
 msgid "devcp_editbox_properties"
 msgstr "Свойства"
 
-#: views/elements/developers/editbox.thtml:60
+#: views/elements/developers/editbox.thtml:70
 msgid "devcp_editbox_screenshots"
 msgstr "Скриншоты предпросмотра"
 
-#: views/elements/developers/editbox.thtml:53
+#: views/elements/developers/editbox.thtml:63
 msgid "devcp_editbox_statistics_dashboard"
 msgstr "Панель статистики"
 
-#: views/elements/developers/editbox.thtml:54
+#: views/elements/developers/editbox.thtml:48
+#, fuzzy
+msgid "devcp_editbox_tags"
+msgstr "Tags"
+
+#: views/elements/developers/editbox.thtml:64
 msgid "devcp_editbox_versions"
 msgstr "Версии и файлы"
 
@@ -3385,14 +3836,14 @@ msgstr "Вы не имеете доступа к этому дополнению
 
 #. %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 #. in the <a> tag.  This should be fixed.
-#: controllers/components/developers.php:591
+#: controllers/components/developers.php:615
 #, php-format
 msgid "devcp_error_appversion_reference_link"
 msgstr "Для получения справочной информации посетите %s."
 
 #. This is the link text in the <a> for devcp_error_appversion_reference_link.  This
 #. should be fixed.
-#: controllers/components/developers.php:591
+#: controllers/components/developers.php:615
 msgid "devcp_error_appversion_reference_link_text"
 msgstr "эту страницу"
 
@@ -3401,7 +3852,7 @@ msgid "devcp_error_empty_authors"
 msgstr "Ваше дополнение должно иметь по меньшей мере одного владельца."
 
 #. %1$s is the name of the file
-#: controllers/components/developers.php:658
+#: controllers/components/developers.php:682
 msgid "devcp_error_file_exists"
 msgstr ""
 "Версия этого дополнения уже существует. Чтобы его заменить, вначале вы "
@@ -3409,41 +3860,38 @@ msgstr ""
 
 #. %1$s is a file extension.  Example:  .exe
 #. %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:355
+#: controllers/components/developers.php:358
 #, php-format
 msgid "devcp_error_file_extension"
 msgstr ""
 "Указанное расширение файла (%s) недопустимо для данного типа дополнения. "
 "Пожалуйста, используйте одно из следующих: %s"
 
-#: controllers/components/developers.php:64
+#: controllers/components/developers.php:73
 msgid "devcp_error_five_categories"
 msgstr "Пожалуйста, выберите не более пяти категорий."
 
-#: controllers/components/developers.php:526
+#: controllers/components/developers.php:550
 msgid "devcp_error_guid_application"
 msgstr "ID данного дополнения уже используется приложением."
 
-#: controllers/components/developers.php:337
-#: controllers/components/developers.php:389
+#: controllers/components/developers.php:54
 msgid "devcp_error_http_incomplete"
 msgstr "Незавершенная передача"
 
-#: controllers/components/developers.php:335
-#: controllers/components/developers.php:336
-#: controllers/components/developers.php:387
-#: controllers/components/developers.php:388
+#: controllers/components/developers.php:52
+#: controllers/components/developers.php:53
 msgid "devcp_error_http_maxupload"
 msgstr "Размер дополнения превышает максимальный"
 
-#: controllers/components/developers.php:338
-#: controllers/components/developers.php:390
+#: controllers/components/developers.php:55
 msgid "devcp_error_http_nofile"
 msgstr "Файл не был загружен"
 
 #. %1$s is a file extension.  Example:  .exe
 #. %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:401
+#: controllers/components/developers.php:396
+#: controllers/components/developers.php:425
 #, php-format
 msgid "devcp_error_icon_extension"
 msgstr ""
@@ -3454,118 +3902,118 @@ msgstr ""
 msgid "devcp_error_index_rdf_notfound"
 msgstr "Отсутствует файл install.rdf."
 
-#: controllers/components/developers.php:601
+#: controllers/components/developers.php:625
 msgid "devcp_error_install_manifest"
 msgstr "В install.rdf обнаружены следующие ошибки:"
 
-#: controllers/developers_controller.php:1463
+#: controllers/developers_controller.php:1574
 msgid "devcp_error_invalid_addontype"
 msgstr "Выберите правильный тип дополнения."
 
 #. %$1s is a version.  Example: 3.1.1
 #. %$2s is an add-on name.
-#: controllers/components/developers.php:569
-#: controllers/components/developers.php:581
+#: controllers/components/developers.php:593
+#: controllers/components/developers.php:605
 #, php-format
 msgid "devcp_error_invalid_appversion"
 msgstr "Версия %s не является действительной для %s"
 
 #. %s is a string
-#: controllers/components/developers.php:521
+#: controllers/components/developers.php:545
 #, php-format
 msgid "devcp_error_invalid_guid"
 msgstr "Для данного дополнения указан недействительный ID: %s"
 
 #. %$1s is a version.  Example: 3.1.1
 #. %$2s is an add-on name.
-#: controllers/components/developers.php:572
+#: controllers/components/developers.php:596
 #, php-format
 msgid "devcp_error_invalid_minversion"
 msgstr ""
 "Версия %s не является действительной для %s: минимальная версия не может "
 "содержать *"
 
-#: controllers/components/developers.php:536
+#: controllers/components/developers.php:560
 msgid "devcp_error_invalid_version"
 msgstr ""
 "Указана недопустимая версия дополнения: пожалуйста, сверьтесь со <a href="
 "\"http://developer.mozilla.org/en/docs/Toolkit_version_format"
 "\">спецификацией</a>"
 
-#: controllers/components/developers.php:531
+#: controllers/components/developers.php:555
 msgid "devcp_error_invalid_version_spaces"
 msgstr ""
 "Указана недопустимая версия дополнения: в версии не могут содержаться "
 "пробелы."
 
 #. %s is an error message from the parser.
-#: controllers/components/developers.php:501
+#: controllers/components/developers.php:525
 #, php-format
 msgid "devcp_error_manifest_parse"
 msgstr "Во время обработки файла install.rdf произошла следующая ошибка: %s"
 
-#: controllers/components/developers.php:373
+#: controllers/components/developers.php:376
 msgid "devcp_error_move_file"
 msgstr "Невозможно переместить файл."
 
 #. %s is the name of a file
-#: controllers/components/developers.php:650
-#: controllers/components/developers.php:662
-#: controllers/components/developers.php:667
-#: controllers/components/developers.php:727
-#: controllers/components/developers.php:738
-#: controllers/components/developers.php:743
+#: controllers/components/developers.php:674
+#: controllers/components/developers.php:686
+#: controllers/components/developers.php:691
+#: controllers/components/developers.php:751
+#: controllers/components/developers.php:762
+#: controllers/components/developers.php:767
 #, php-format
 msgid "devcp_error_moving_file"
 msgstr "При перемещении %s возникла ошибка."
 
-#: controllers/components/developers.php:595
+#: controllers/components/developers.php:619
 msgid "devcp_error_mozilla_application"
 msgstr "Должно быть указано по крайней мере одно доступное приложение Mozilla."
 
-#: controllers/components/developers.php:516
+#: controllers/components/developers.php:540
 msgid "devcp_error_no_guid"
 msgstr "В файле install.rdf не найдено ID для данного дополнения."
 
-#: controllers/components/developers.php:287
+#: controllers/components/developers.php:296
 msgid "devcp_error_no_platform"
 msgstr "Платформа не выбрана."
 
-#: controllers/components/developers.php:59
+#: controllers/components/developers.php:68
 msgid "devcp_error_one_category"
 msgstr "Пожалуйста, выберите хотя бы одну категорию."
 
-#: controllers/components/developers.php:92
+#: controllers/components/developers.php:101
 msgid "devcp_error_one_user"
 msgstr "Должен быть хотя бы один автор дополнения."
 
 #. %1$s is a file extension.  Example:  .exe
 #. %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:1081
+#: controllers/components/developers.php:1105
 #, php-format
 msgid "devcp_error_preview_extension"
 msgstr ""
 "Указанное расширение файла (%s) недопустимо для скриншотов. Пожалуйста, "
 "используйте одно из следующих: %s"
 
-#: controllers/components/developers.php:511
+#: controllers/components/developers.php:535
 msgid "devcp_error_updatekey"
 msgstr ""
 "Дополнение не может использовать updateKey. Пожалуйста, удалите этот "
 "параметр из install.rdf и попробуйте снова."
 
-#: controllers/components/developers.php:506
+#: controllers/components/developers.php:530
 msgid "devcp_error_updateurl"
 msgstr ""
 "Дополнения не могут использовать внешнюю ссылку для updateURL. Пожалуйста, "
 "удалите данную ссылку из файла install.rdf и повторите попытку снова."
 
 #: controllers/developers_controller.php:465
-#: controllers/components/developers.php:271
+#: controllers/components/developers.php:280
 msgid "devcp_error_upload_file"
 msgstr "Пожалуйста, загрузите файл."
 
-#: views/developers/uploader.thtml:135
+#: views/developers/uploader.thtml:138
 msgid "devcp_input_upload_file"
 msgstr "Загрузить файл"
 
@@ -3634,7 +4082,7 @@ msgstr "Вы должны выбрать файл для загрузки."
 
 #. %1$s is an addon id, like 32.
 #. %2$s is a version number, like 3.5.
-#: controllers/components/developers.php:1212
+#: controllers/components/developers.php:1237
 msgid "devcp_license_existing"
 msgstr "Своя лицензия для дополнения %1$s v%2$s"
 
@@ -3716,6 +4164,7 @@ msgstr ""
 "Остальная часть сделанных вами изменений была успешно сохранена."
 
 #: views/developers/addon_edit_authors.thtml:47
+#: views/developers/addon_edit_tags.thtml:46
 #: views/developers/addon_edit_properties.thtml:47
 #: views/developers/addon_status.thtml:46
 #: views/developers/addon_edit_descriptions.thtml:47
@@ -3913,7 +4362,7 @@ msgstr ""
 "span><br />Если вам нужно внести изменения, свяжитесь с владельцем "
 "дополнения."
 
-#: controllers/developers_controller.php:1315
+#: controllers/developers_controller.php:1426
 msgid "devcp_several_hours"
 msgstr ""
 "Пожалуйста, обратите внимание, что для появления некоторых изменений во всех "
@@ -4023,7 +4472,10 @@ msgstr "Последняя версия:"
 #. %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
+#: views/developers/addon_edit_tags.thtml:43
+#: views/developers/addon_edit_contributions.thtml:46
 #: views/developers/versions_delete.thtml:43
+#: views/developers/addon_edit_profile.thtml:69
 #: views/developers/addon_edit_properties.thtml:44
 #: views/developers/addon_edit_descriptions.thtml:44
 #: views/developers/versions_edit.thtml:44
@@ -4067,10 +4519,10 @@ msgstr "Скрыть справку"
 msgid "devcp_transbox_help_if"
 msgstr ""
 "Если пользователь открыл страницу дополнения и перевод страницы дополнения "
-"на его языке отсутствует, страница будет отображена на языке вашей Локализации "
-"по умолчанию, указанной в области редактирования свойств дополнения. Если у вас "
-"нет ни одного перевода, просто укажите что можете в Локализации по умолчанию, "
-"которая должна быть языком, на котором вы говорите."
+"на его языке отсутствует, страница будет отображена на языке вашей "
+"Локализации по умолчанию, указанной в области редактирования свойств "
+"дополнения. Если у вас нет ни одного перевода, просто укажите что можете в "
+"Локализации по умолчанию, которая должна быть языком, на котором вы говорите."
 
 #: views/elements/translationbox.thtml:144
 msgid "devcp_transbox_help_transbox"
@@ -4144,58 +4596,59 @@ msgstr ""
 msgid "devcp_uploader_a_start"
 msgstr "начать"
 
-#: views/developers/uploader.thtml:137
+#: views/developers/uploader.thtml:140
 msgid "devcp_uploader_ajax_loading"
 msgstr "Загрузка файла..."
 
-#: views/developers/uploader.thtml:82
+#: views/developers/uploader.thtml:102
 msgid "devcp_uploader_button_agree"
 msgstr "Согласиться и продолжить"
 
-#: views/developers/uploader.thtml:157
+#: views/developers/uploader.thtml:160
 msgid "devcp_uploader_button_edit"
 msgstr "Редактировать моё дополнение"
 
-#: views/developers/uploader.thtml:158
+#: views/developers/uploader.thtml:161
 msgid "devcp_uploader_button_later"
 msgstr "Я оформлю моё дополнение позже."
 
-#: views/developers/uploader.thtml:168
+#: views/developers/uploader.thtml:171
 msgid "devcp_uploader_button_release"
 msgstr "Добавить примечания к выпуску"
 
 #. %s is href=... and should stay in the <a> tag.
-#: views/developers/uploader.thtml:156
+#: views/developers/uploader.thtml:159
 msgid "devcp_uploader_created_results"
 msgstr ""
-"<p>Список ваших дополнений был успешно создан. Базовая информация, полученная "
-"из вашего загруженного файла, была сохранена. Вы можете настроить для вашего "
-"списка множество дополнительных параметров.</p><p>Ваше дополнение помечено как "
-"<strong>Незавершенное</strong>. Чтобы закончить оформление вашего дополнения, "
-"вам нужно убедиться, что указано корректное имя, сводка и описание и что "
-"выбрана по меньшей мере одна категория. Вы можете отредактировать информацию "
-"о вашем дополнении, используя указанную ниже ссылку, и проверить статус вашего "
-"дополнения в любое время на <a %s>странице статуса</a>."
+"<p>Список ваших дополнений был успешно создан. Базовая информация, "
+"полученная из вашего загруженного файла, была сохранена. Вы можете настроить "
+"для вашего списка множество дополнительных параметров.</p><p>Ваше дополнение "
+"помечено как <strong>Незавершенное</strong>. Чтобы закончить оформление "
+"вашего дополнения, вам нужно убедиться, что указано корректное имя, сводка и "
+"описание и что выбрана по меньшей мере одна категория. Вы можете "
+"отредактировать информацию о вашем дополнении, используя указанную ниже "
+"ссылку, и проверить статус вашего дополнения в любое время на <a %s>странице "
+"статуса</a>."
 
-#: views/developers/uploader.thtml:143
+#: views/developers/uploader.thtml:146
 msgid "devcp_uploader_error_correct"
 msgstr "Пожалуйста, устраните эту проблему и снова загрузите ваше файл."
 
 #. %1$s is a version number, %2$s is a status, e.g Public or Incomplete.
-#: views/developers/uploader.thtml:175
+#: views/developers/uploader.thtml:178
 msgid "devcp_uploader_file_created"
 msgstr ""
 "Ваш новый файл был добавлен в версию %1$s и в данный момент помечен как %2$s."
 
-#: views/developers/uploader.thtml:154
+#: views/developers/uploader.thtml:157
 msgid "devcp_uploader_header_created"
 msgstr "Дополнение создано!"
 
-#: views/developers/uploader.thtml:141
+#: views/developers/uploader.thtml:144
 msgid "devcp_uploader_header_error"
 msgstr "Ой! Кажется с этим файлом есть проблема..."
 
-#: views/developers/uploader.thtml:173
+#: views/developers/uploader.thtml:176
 msgid "devcp_uploader_header_file_added"
 msgstr "Файл добавлен!"
 
@@ -4204,11 +4657,11 @@ msgid "devcp_uploader_header_how"
 msgstr "Как всё это работает?"
 
 #. %s is the version number, e.g. 3.2.
-#: views/developers/uploader.thtml:163
+#: views/developers/uploader.thtml:166
 msgid "devcp_uploader_header_update_created"
 msgstr "Создана версия %s"
 
-#: views/developers/uploader.thtml:117
+#: views/developers/uploader.thtml:120
 msgid "devcp_uploader_header_upload"
 msgstr "Загрузить ваш файл"
 
@@ -4216,36 +4669,37 @@ msgstr "Загрузить ваш файл"
 msgid "devcp_uploader_how"
 msgstr ""
 "<p>Спасибо за то, что проявили интерес к отправке вашего дополнения на сайт "
-"дополнений Mozilla. Размещение вашего дополнения на сайте дополнений Mozilla - "
-"это самый легкий способ распространения вашего дополнения. Вот что вы "
+"дополнений Mozilla. Размещение вашего дополнения на сайте дополнений Mozilla "
+"- это самый легкий способ распространения вашего дополнения. Вот что вы "
 "получите:</p><ul><li>Каждое дополнение имеет свою страницу, открытую для "
-"публичного доступа, с информацией, которую вам необходимо предоставить, такую "
-"как: краткая сводка функций дополнения, более длинное описание (опционально) "
-"и набор скриншотов вашего дополнения.</li><li>Ваше дополнение появится в "
-"поиске дополнений и перечнях дополнений на сайте, и даже в менеджере "
-"дополнений Firefox 3.</li><li>Мы позаботимся о хостинге загружаемых "
-"пользователями файлов и обеспечим автоматические обновления для пользователей, "
-"когда вы загрузите новую версию.</li><li>Вы получите доступ к панели "
-"статистики с подробной информацией о вашей пользовательской "
-"базе.</li></ul><p>Дополнения, размещаемые на этом сайте, должны получить "
+"публичного доступа, с информацией, которую вам необходимо предоставить, "
+"такую как: краткая сводка функций дополнения, более длинное описание "
+"(опционально) и набор скриншотов вашего дополнения.</li><li>Ваше дополнение "
+"появится в поиске дополнений и перечнях дополнений на сайте, и даже в "
+"менеджере дополнений Firefox 3.</li><li>Мы позаботимся о хостинге "
+"загружаемых пользователями файлов и обеспечим автоматические обновления для "
+"пользователей, когда вы загрузите новую версию.</li><li>Вы получите доступ к "
+"панели статистики с подробной информацией о вашей пользовательской базе.</"
+"li></ul><p>Дополнения, размещаемые на этом сайте, должны получить "
 "положительный отзыв от  редактора дополнений Mozilla перед тем, как они "
-"получат все перечисленные выше преимущества. Если вы готовы начать это процесс "
-"и ваше дополнение готово для загрузки, просто щёлкните по ссылке Начать!</p>"
+"получат все перечисленные выше преимущества. Если вы готовы начать это "
+"процесс и ваше дополнение готово для загрузки, просто щёлкните по ссылке "
+"Начать!</p>"
 
-#: views/developers/uploader.thtml:125
+#: views/developers/uploader.thtml:128
 msgid "devcp_uploader_label_platformtype"
 msgstr "Поддерживаемые платформы:"
 
-#: views/developers/uploader.thtml:124
+#: views/developers/uploader.thtml:127
 msgid "devcp_uploader_label_upload_field"
 msgstr "Файл дополнения: "
 
-#: controllers/components/developers.php:1221
+#: controllers/components/developers.php:1246
 msgid "devcp_uploader_option_other"
 msgstr "Другое"
 
 #. %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:176
+#: views/developers/uploader.thtml:179
 msgid "devcp_uploader_p_pending_file"
 msgstr ""
 "Новый файл станет доступен в публичном доступе, как только его рассмотрит "
@@ -4254,7 +4708,7 @@ msgstr ""
 "<a %2$s>стать редактором</a>."
 
 #. %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:166
+#: views/developers/uploader.thtml:169
 msgid "devcp_uploader_p_pending_version"
 msgstr ""
 "Новая версия станет доступна в публичном доступе, как только её рассмотрит "
@@ -4263,23 +4717,13 @@ msgstr ""
 "<a %2$s>стать редактором</a>."
 
 #. %s is a status, e.g Public or Incomplete.
-#: views/developers/uploader.thtml:165
+#: views/developers/uploader.thtml:168
 msgid "devcp_uploader_p_update_created"
 msgstr "Новая версия успешно создана и в данный момент помечена как %s."
 
 #. %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
 #. %2$s is href="..." and should stay in the 'current status' <a> tag.
-#: views/developers/uploader.thtml:177
-msgid "devcp_uploader_p_update_file"
-msgstr ""
-"Просмотрите свой новый файл на <a %1$s>странице Версии и Файлы</a>, "
-"проверьте <a %2$s>текущий статус</a> вашего дополнения, или <b>добавьте "
-"примечания к выпуску</b> щёлкнув расположенную ниже кнопку (настоятельно "
-"рекомендуется)."
-
-#. %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
-#. %2$s is href="..." and should stay in the 'current status' <a> tag.
-#: views/developers/uploader.thtml:167
+#: views/developers/uploader.thtml:170
 msgid "devcp_uploader_p_update_version"
 msgstr ""
 "Просмотрите свою новую версию на <a %1$s>странице Версии и Файлы</a>, "
@@ -4287,7 +4731,7 @@ msgstr ""
 "примечания к выпуску</b> щёлкнув расположенную ниже кнопку (настоятельно "
 "рекомендуется)."
 
-#: views/developers/uploader.thtml:118
+#: views/developers/uploader.thtml:121
 msgid "devcp_uploader_p_upload"
 msgstr ""
 "Загрузите файл вашего дополнения, используя расположенную ниже форму. Если у "
@@ -4295,16 +4739,16 @@ msgstr ""
 "системы, выберите один файл и затем загрузите остальные, используя менеджер "
 "Версий и Файлов."
 
-#: views/developers/uploader.thtml:125
+#: views/developers/uploader.thtml:128
 msgid "devcp_uploader_platformtype_all"
 msgstr "Все"
 
-#: views/developers/uploader.thtml:126
+#: views/developers/uploader.thtml:129
 msgid "devcp_uploader_platformtype_specific"
 msgstr "Специфичные:"
 
 #. Used as first item in a <select>.
-#: controllers/components/developers.php:1185
+#: views/elements/developers/license_picker.thtml:42
 msgid "devcp_uploader_please_choose"
 msgstr "Пожалуйста, выберите..."
 
@@ -4321,6 +4765,15 @@ msgstr "Загрузить новое дополнение"
 #: views/developers/uploader.thtml:54
 msgid "devcp_uploader_title_update"
 msgstr "Обновить %s"
+
+#. %1$s is the 'Versions and Files' link target URL.
+#. %2$s is 'current status' link target URL.
+#: views/developers/uploader.thtml:180
+#, fuzzy
+msgid "devcp_uploader_update_file_nextsteps"
+msgstr ""
+"View your new file on the <a href=\"%1$s\">Versions and Files page</a>, "
+"orcheck out your add-on's <a href=\"%2$s\">current status</a>."
 
 #. %s is a full <a> tag
 #: controllers/developers_controller.php:503
@@ -4573,9 +5026,14 @@ msgstr "Создано"
 msgid "devcp_versions_th_status"
 msgstr "Статус"
 
-#: views/developers/versions.thtml:56
+#: views/developers/versions.thtml:56 views/addons/display.thtml:172
 msgid "devcp_versions_th_version"
 msgstr "Версия"
+
+#: views/elements/developers/license_picker.thtml:51
+#, fuzzy
+msgid "devcp_view_license"
+msgstr "View License"
 
 #: controllers/downloads_controller.php:91
 msgid "downloads_disable_warning"
@@ -4584,6 +5042,21 @@ msgstr "Дополнение заблокировано"
 #: controllers/components/editors.php:57
 msgid "editor_review_error_addon_not_nominated"
 msgstr "Это дополнение не было номинировано."
+
+#: controllers/components/editors.php:349
+#, fuzzy
+msgid "editor_review_error_comment_body_required"
+msgstr "Comment body is required"
+
+#: controllers/components/editors.php:361
+#, fuzzy
+msgid "editor_review_error_comment_save_fail"
+msgstr "Failed to save comment"
+
+#: controllers/components/editors.php:346
+#, fuzzy
+msgid "editor_review_error_comment_subject_required"
+msgstr "Comment subject is required"
 
 #: controllers/components/editors.php:213
 msgid "editor_review_error_file_not_pending"
@@ -4613,25 +5086,40 @@ msgstr "Пожалуйста, выберите по крайней мере од
 msgid "editor_review_error_no_operating_system"
 msgstr "Пожалуйста, выберите протестированные вами операционные системы."
 
-#: views/editors/logs.thtml:51
+#: views/editors/logs.thtml:56
 msgid "editorcp_logs_button_filter"
 msgstr "Фильтр"
 
-#: views/editors/logs.thtml:44
+#: views/editors/logs.thtml:50
 msgid "editorcp_logs_filter_by"
 msgstr "Фильтр по типу/действию"
 
-#: views/editors/logs.thtml:42 controllers/editors_controller.php:964
+#: views/editors/logs.thtml:42 controllers/editors_controller.php:1553
 msgid "editorcp_logs_page_heading"
 msgstr "Журнал событий"
+
+#: controllers/editors_controller.php:1603
+#, fuzzy
+msgid "editorcp_logs_review_approve"
+msgstr "Approved reviews"
+
+#: controllers/editors_controller.php:1604
+#, fuzzy
+msgid "editorcp_logs_review_delete"
+msgstr "Deleted reviews"
 
 #: views/elements/developers/editorsmenu.thtml:60
 msgid "editorcp_menu_eventlog_link"
 msgstr "Журнал событий"
 
-#: views/elements/developers/editorsmenu.thtml:62
+#: views/elements/developers/editorsmenu.thtml:63
 msgid "editorcp_menu_mainpage_link"
 msgstr "Вернуться на главную"
+
+#: views/elements/developers/editorsmenu.thtml:62
+#, fuzzy
+msgid "editorcp_menu_performance_link"
+msgstr "Performance"
 
 #: views/elements/developers/editorsmenu.thtml:61
 msgid "editorcp_menu_reviewlog_link"
@@ -4645,19 +5133,141 @@ msgstr "Информация о редакторах"
 msgid "editorcp_menu_title"
 msgstr "Инструменты разработчика"
 
-#: views/editors/reviewlog.thtml:49
+#: views/editors/performance_charts.thtml:48
+#, fuzzy
+msgid "editorcp_performance_category_breakdown"
+msgstr "Category Breakdown"
+
+#: views/editors/performance_table.thtml:70
+#, fuzzy
+msgid "editorcp_performance_column_application"
+msgstr "Application"
+
+#: views/editors/performance_table.thtml:71
+#, fuzzy
+msgid "editorcp_performance_column_category"
+msgstr "Category"
+
+#: views/editors/performance_table.thtml:119
+#: views/editors/performance_charts.thtml:71
+#: views/editors/performance_charts.thtml:96
+#, fuzzy
+msgid "editorcp_performance_column_teamaverage"
+msgstr "Team Average"
+
+#: views/editors/performance_table.thtml:118
+#, fuzzy
+msgid "editorcp_performance_column_total"
+msgstr "Total"
+
+#: views/editors/performance_table.thtml:117
+#, fuzzy
+msgid "editorcp_performance_column_week"
+msgstr "Week"
+
+#. %1$s is a date
+#. %2$s is a date
+#: views/editors/performance_table.thtml:124
+#, fuzzy
+msgid "editorcp_performance_date_range"
+msgstr "%1$s to %2$s"
+
+#: views/editors/performance_charts.thtml:75
+#, fuzzy
+msgid "editorcp_performance_legend"
+msgstr "Legend"
+
+#: views/editors/performance_charts.thtml:45
+#, fuzzy
+msgid "editorcp_performance_month_activity"
+msgstr "Activity By Month"
+
+#. %1$s is the number of reviews the person has done
+#. %2$s is the average number of reviews the team has done
+#: views/editors/performance_table.thtml:132
+#, fuzzy
+msgid "editorcp_performance_mtd_totals"
+msgstr "Month To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
+
+#: views/editors/performance_table.thtml:66
+#, fuzzy
+msgid "editorcp_performance_multisort_tip"
+msgstr "Shift-click to sort by multiple columns"
+
+#: views/editors/performance_charts.thtml:109
+#, fuzzy
+msgid "editorcp_performance_nodata"
+msgstr "No Data"
+
+#. %1$s is a person's name
+#: views/elements/developers/performanceheader.thtml:57
+#, fuzzy
+msgid "editorcp_performance_page_heading"
+msgstr "Performance Report For %1$s"
+
+#: views/editors/performance_charts.thtml:80
+#, fuzzy
+msgid "editorcp_performance_select_all"
+msgstr "Select All"
+
+#: views/editors/performance_charts.thtml:81
+#, fuzzy
+msgid "editorcp_performance_select_none"
+msgstr "Select None"
+
+#: views/editors/performance_charts.thtml:82
+#, fuzzy
+msgid "editorcp_performance_toggle_labels"
+msgstr "Toggle Labels"
+
+#: views/editors/performance_charts.thtml:79
+#, fuzzy
+msgid "editorcp_performance_top_team_categories"
+msgstr "Top Team Categories"
+
+#: views/editors/performance_charts.thtml:78
+#, fuzzy
+msgid "editorcp_performance_top_user_categories"
+msgstr "Top User Categories"
+
+#. %1$s is the number of reviews the person has done
+#. %2$s is the average number of reviews the team has done
+#: views/editors/performance_table.thtml:61
+#, fuzzy
+msgid "editorcp_performance_totals"
+msgstr "Total Reviews: %1$s &nbsp;&nbsp;Team Average: %2$s"
+
+#: views/editors/performance_charts.thtml:108
+#, fuzzy
+msgid "editorcp_performance_unselected"
+msgstr "Unselected"
+
+#: views/editors/performance_table.thtml:114
+#, fuzzy
+msgid "editorcp_performance_weekly_heading"
+msgstr "Weekly Totals"
+
+#. %1$s is the number of reviews the person has done
+#. %2$s is the average number of reviews the team has done
+#: views/editors/performance_table.thtml:134
+#, fuzzy
+msgid "editorcp_performance_ytd_totals"
+msgstr "Year To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
+
+#: views/editors/performance_table.thtml:52
+#: views/editors/performance_charts.thtml:65 views/editors/reviewlog.thtml:49
 msgid "editorcp_reviewlog_button_filter"
 msgstr "Фильтр"
 
-#: views/editors/reviewlog.thtml:58
+#: views/editors/performance_table.thtml:72 views/editors/reviewlog.thtml:58
 msgid "editorcp_reviewlog_column_action"
 msgstr "Действие"
 
-#: views/editors/reviewlog.thtml:56
+#: views/editors/performance_table.thtml:69 views/editors/reviewlog.thtml:56
 msgid "editorcp_reviewlog_column_addon"
 msgstr "Дополнение"
 
-#: views/editors/reviewlog.thtml:55
+#: views/editors/performance_table.thtml:68 views/editors/reviewlog.thtml:55
 msgid "editorcp_reviewlog_column_date"
 msgstr "Дата"
 
@@ -4674,12 +5284,13 @@ msgid "editorcp_reviewlog_comments_show"
 msgstr "Показать комментарии"
 
 #. %1$s and %2$s are full <input> tags for dates
-#: views/editors/reviewlog.thtml:45
+#: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
+#: views/editors/logs.thtml:45
 #, php-format
 msgid "editorcp_reviewlog_entries_between"
 msgstr "Просмотреть записи между %s и %s"
 
-#: views/editors/reviewlog.thtml:104
+#: views/editors/performance_table.thtml:63 views/editors/reviewlog.thtml:104
 msgid "editorcp_reviewlog_none_found"
 msgstr "Отзывы за данный период не найдены."
 
@@ -4707,24 +5318,38 @@ msgstr "Последние действия редактора"
 msgid "editorcp_summary_totalreviews_heading"
 msgstr "Всего отзывов"
 
-#: controllers/editors_controller.php:248
-#: controllers/editors_controller.php:249
+#: controllers/editors_controller.php:251
+#: controllers/editors_controller.php:252
 msgid "editors_addon_review_pagetitle"
 msgstr "Рецензирование дополнения"
 
-#: controllers/editors_controller.php:349
+#: controllers/editors_controller.php:312
+#, fuzzy
+msgid "editors_comment_posted"
+msgstr "Comment successfully posted"
+
+#. This is a placeholder for a date in the Year-Month-Day format.  This is 
+#. NOT a php format string.  Dates going into this box need to remain in the
+#. YYYY-MM-DD format so please localize that if necessary or just leave as is.
+#: controllers/editors_controller.php:573
+#: controllers/editors_controller.php:1560
+#, fuzzy
+msgid "editors_date_filter_placeholder"
+msgstr "YYYY-MM-DD"
+
+#: controllers/editors_controller.php:371
 msgid "editors_error_js-formerror"
 msgstr "Заполните следующие поля:"
 
-#: controllers/editors_controller.php:350
+#: controllers/editors_controller.php:372
 msgid "editors_error_review_one_file"
 msgstr "Выберите по крайней мере один файл для рецензирования."
 
-#: controllers/editors_controller.php:274
+#: controllers/editors_controller.php:278
 msgid "editors_error_self_reviews_forbidden"
 msgstr "Саморецензирование недопустимо."
 
-#: controllers/editors_controller.php:699
+#: controllers/editors_controller.php:1282
 msgid "editors_external_software"
 msgstr "Дополнительное программное обеспечение"
 
@@ -4736,39 +5361,39 @@ msgstr "Добавить избранное"
 msgid "editors_featured_add_feature_submit"
 msgstr "Добавить"
 
-#: views/editors/featured.thtml:49 controllers/editors_controller.php:832
-#: controllers/editors_controller.php:848
+#: views/editors/featured.thtml:49 controllers/editors_controller.php:1415
+#: controllers/editors_controller.php:1431
 msgid "editors_featured_addon_add_failure"
 msgstr "Не удалось добавить избранное."
 
-#: controllers/editors_controller.php:851
+#: controllers/editors_controller.php:1434
 msgid "editors_featured_addon_add_success"
 msgstr "Избранное успешно добавлено."
 
-#: views/editors/featured.thtml:50 controllers/editors_controller.php:839
-#: controllers/editors_controller.php:868
-#: controllers/editors_controller.php:886
+#: views/editors/featured.thtml:50 controllers/editors_controller.php:1422
+#: controllers/editors_controller.php:1451
+#: controllers/editors_controller.php:1469
 msgid "editors_featured_addon_edit_failure"
 msgstr "Не удалось отредактировать избранное."
 
-#: views/editors/featured.thtml:51 controllers/editors_controller.php:888
+#: views/editors/featured.thtml:51 controllers/editors_controller.php:1471
 msgid "editors_featured_addon_edit_success"
 msgstr "Избранное успешно отредактировано."
 
-#: views/editors/featured.thtml:53 controllers/editors_controller.php:861
+#: views/editors/featured.thtml:53 controllers/editors_controller.php:1444
 msgid "editors_featured_addon_invalid_locale"
 msgstr "Одна или несколько локалей некорректны."
 
-#: views/editors/featured.thtml:52 controllers/editors_controller.php:906
+#: views/editors/featured.thtml:52 controllers/editors_controller.php:1489
 msgid "editors_featured_addon_remove_failure"
 msgstr "Не удалось удалить избранное."
 
-#: controllers/editors_controller.php:901
+#: controllers/editors_controller.php:1484
 msgid "editors_featured_addon_remove_success"
 msgstr "Избранное успешно удалено."
 
-#: controllers/editors_controller.php:915
-#: controllers/editors_controller.php:917
+#: controllers/editors_controller.php:1498
+#: controllers/editors_controller.php:1500
 msgid "editors_featured_addons_pagetitle"
 msgstr "Избранные дополнения"
 
@@ -4807,31 +5432,41 @@ msgstr ""
 msgid "editors_notice_none_found"
 msgstr "В настоящее время нет дополнений данного типа для рецензирования."
 
-#: controllers/editors_controller.php:1040
+#: controllers/editors_controller.php:1662
 msgid "editors_one_day"
 msgstr "1 день"
 
-#: controllers/editors_controller.php:1048
+#: controllers/editors_controller.php:1670
 msgid "editors_one_hour"
 msgstr "1 час"
 
-#: controllers/editors_controller.php:1056
+#: controllers/editors_controller.php:1678
 msgid "editors_one_minute"
 msgstr "1 минута"
 
-#: controllers/editors_controller.php:64 controllers/editors_controller.php:73
-#: controllers/editors_controller.php:77
+#: controllers/editors_controller.php:64 controllers/editors_controller.php:76
+#: controllers/editors_controller.php:80
 msgid "editors_pagetitle"
 msgstr "Панель управления рецензента"
 
+#: controllers/editors_controller.php:531
+#, fuzzy
+msgid "editors_performance_pagetitle"
+msgstr "Performance Reports"
+
+#: controllers/editors_controller.php:487
+#, fuzzy
+msgid "editors_performance_user_not_found"
+msgstr "User not found"
+
 #. %s is a comma separated list of platforms.  Example:  Windows, OS X
-#: controllers/editors_controller.php:680
-#: controllers/editors_controller.php:683
+#: controllers/editors_controller.php:1263
+#: controllers/editors_controller.php:1266
 #, php-format
 msgid "editors_platform_x_only"
 msgstr "Только для %s"
 
-#: controllers/editors_controller.php:695
+#: controllers/editors_controller.php:1278
 msgid "editors_pre-release"
 msgstr "Предварительный выпуск"
 
@@ -4882,11 +5517,16 @@ msgstr "Очистить"
 msgid "editors_queue_submit_filter"
 msgstr "Фильтр"
 
-#: controllers/editors_controller.php:133
+#: controllers/editors_controller.php:136
 msgid "editors_queues_disabled"
 msgstr ""
 "В настоящее время все очереди рецензий заблокированы. Попробуйте вернуться и "
 "проверить позднее."
+
+#: views/editors/review.thtml:150
+#, fuzzy
+msgid "editors_review_a_comments"
+msgstr "Editor Comments"
 
 #: views/editors/review.thtml:149
 msgid "editors_review_a_edit_item"
@@ -4908,59 +5548,59 @@ msgstr "Обзор объекта"
 msgid "editors_review_a_previews"
 msgstr "Скриншоты"
 
-#: controllers/editors_controller.php:345
+#: controllers/editors_controller.php:367
 msgid "editors_review_action"
 msgstr "Рецензировать"
 
-#: views/editors/review.thtml:159
+#: views/editors/review.thtml:160
 msgid "editors_review_action_info"
 msgstr "Запросить дополнительную информацию"
 
-#: views/editors/review.thtml:157
+#: views/editors/review.thtml:158
 msgid "editors_review_action_public"
 msgstr "Поместить в общий доступ"
 
-#: views/editors/review.thtml:160
+#: views/editors/review.thtml:161
 msgid "editors_review_action_request_superreview"
 msgstr "Запрос суперрецензии"
 
-#: views/editors/review.thtml:158
+#: views/editors/review.thtml:159
 msgid "editors_review_action_sandbox"
 msgstr "Вернуть в «песочницу»"
 
-#: controllers/editors_controller.php:346
+#: controllers/editors_controller.php:368
 msgid "editors_review_comments"
 msgstr "Просмотреть комментарии"
 
-#: views/editors/review.thtml:182
+#: views/editors/review.thtml:183
 msgid "editors_review_details_info_request"
 msgstr ""
 "Используйте эту форму, чтобы запросить у авторов более подробную информацию. "
 "Они получат письмо по электронной почте и смогут тут ответить. Когда они "
 "ответят, вас уведомят по электронной почте."
 
-#: views/editors/review.thtml:174
+#: views/editors/review.thtml:175
 msgid "editors_review_details_nominated_public"
 msgstr ""
 "Отметить дополнение и его предыдущие версии и файлы как общедоступные. "
 "Будущие версии будут попадать в «песочницу», пока они не будут "
 "отрецензированы редактором."
 
-#: views/editors/review.thtml:177
+#: views/editors/review.thtml:178
 msgid "editors_review_details_nominated_sandbox"
 msgstr "Оставить дополнение в «песочнице»."
 
-#: views/editors/review.thtml:166
+#: views/editors/review.thtml:167
 msgid "editors_review_details_pending_public"
 msgstr ""
 "Одобрить данную версию дополнения из «песочницы» для размещения в общем "
 "доступе."
 
-#: views/editors/review.thtml:169
+#: views/editors/review.thtml:170
 msgid "editors_review_details_pending_sandbox"
 msgstr "Оставить данную версию общедоступного дополнения в «песочнице»."
 
-#: views/editors/review.thtml:185
+#: views/editors/review.thtml:186
 msgid "editors_review_details_superreview"
 msgstr ""
 "Если у вас есть опасения насчет безопасности этого дополнения, проблем с "
@@ -4984,19 +5624,24 @@ msgstr "Авторы:"
 msgid "editors_review_header_categories"
 msgstr "Категории:"
 
+#: views/editors/review.thtml:330
+#, fuzzy
+msgid "editors_review_header_comments"
+msgstr "Editor Comments"
+
 #: views/editors/review.thtml:92
 msgid "editors_review_header_compatibility"
 msgstr "Совместимо с:"
 
-#: views/editors/review.thtml:251
+#: views/editors/review.thtml:252
 msgid "editors_review_header_description"
 msgstr "Описание"
 
-#: views/editors/review.thtml:275
+#: views/editors/review.thtml:276
 msgid "editors_review_header_devcomments"
 msgstr "Комментарии разработчика"
 
-#: views/editors/review.thtml:263
+#: views/editors/review.thtml:264
 msgid "editors_review_header_eula"
 msgstr "Лицензионное соглашение конечного пользователя (EULA)"
 
@@ -5004,19 +5649,19 @@ msgstr "Лицензионное соглашение конечного пол�
 msgid "editors_review_header_files"
 msgstr "Файлы:"
 
-#: views/editors/review.thtml:284
+#: views/editors/review.thtml:285
 msgid "editors_review_header_itemhistory"
 msgstr "История сообщений"
 
-#: views/editors/review.thtml:232
+#: views/editors/review.thtml:233
 msgid "editors_review_header_nominationmessage"
 msgstr "Сообщение о номинации"
 
-#: views/editors/review.thtml:311
+#: views/editors/review.thtml:312
 msgid "editors_review_header_previews"
 msgstr "Скриншоты"
 
-#: views/editors/review.thtml:269
+#: views/editors/review.thtml:270
 msgid "editors_review_header_privacy"
 msgstr "Политика конфиденциальности"
 
@@ -5027,88 +5672,124 @@ msgstr "Политика конфиденциальности"
 msgid "editors_review_header_review"
 msgstr "Рецензирование %s"
 
-#: views/editors/review.thtml:239
+#: views/editors/review.thtml:240
 msgid "editors_review_header_reviewernotes"
 msgstr "Заметки рецензенту"
 
-#: views/editors/review.thtml:245
+#: views/editors/review.thtml:246
 msgid "editors_review_header_summary"
 msgstr "Аннотация"
 
-#: views/editors/review.thtml:257
+#: views/editors/review.thtml:258
 msgid "editors_review_header_versionnotes"
 msgstr "Примечания к версии"
 
+#. %1$s is the comment count
+#: views/elements/developers/editors_review_history_item.thtml:53
+#, fuzzy, php-format
+msgid "editors_review_history_comment_count"
+msgid_plural "editors_review_history_comment_count"
+msgstr[0] "Comments (%1$s)"
+msgstr[1] "Comments (%1$s)"
+
 #. a noun: shown in an add-on's editor review history
-#: views/elements/developers/editors_review_history_item.thtml:80
+#: views/elements/developers/editors_review_history_item.thtml:86
 msgid "editors_review_history_info_reply"
 msgstr "Ответ"
 
-#: views/elements/developers/editors_review_history_item.thtml:78
+#: views/elements/developers/editors_review_history_item.thtml:84
 msgid "editors_review_history_info_request"
 msgstr "Запрос информации"
 
-#: views/elements/developers/editors_review_history_item.thtml:62
-#: views/editors/reviewlog.thtml:77
+#: views/elements/developers/editors_review_history_item.thtml:68
+#: views/editors/performance_table.thtml:92 views/editors/reviewlog.thtml:77
 msgid "editors_review_history_nominated_adminreview"
 msgstr "Рецензия администратора"
 
-#: views/elements/developers/editors_review_history_item.thtml:56
-#: views/editors/reviewlog.thtml:71
+#: views/elements/developers/editors_review_history_item.thtml:62
+#: views/editors/performance_table.thtml:86 views/editors/reviewlog.thtml:71
 msgid "editors_review_history_nominated_approved"
 msgstr "Номинация одобрена/В общий доступ"
 
-#: views/elements/developers/editors_review_history_item.thtml:59
-#: views/editors/reviewlog.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:65
+#: views/editors/performance_table.thtml:89 views/editors/reviewlog.thtml:74
 msgid "editors_review_history_nominated_denied"
 msgstr "Номинация отклонена/В «песочницу»"
 
-#: views/editors/review.thtml:303
+#: views/editors/review.thtml:304
 msgid "editors_review_history_nonefound"
 msgstr "Не найдено ни одной предыдущей рецензии."
 
-#: views/elements/developers/editors_review_history_item.thtml:73
-#: views/editors/reviewlog.thtml:88
+#: views/elements/developers/editors_review_history_item.thtml:79
+#: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:88
 msgid "editors_review_history_pending_adminreview"
 msgstr "Рецензия администратора"
 
-#: views/elements/developers/editors_review_history_item.thtml:67
-#: views/editors/reviewlog.thtml:82
+#: views/elements/developers/editors_review_history_item.thtml:73
+#: views/editors/performance_table.thtml:97 views/editors/reviewlog.thtml:82
 msgid "editors_review_history_pending_approved"
 msgstr "Одобрить/В общий доступ"
 
-#: views/elements/developers/editors_review_history_item.thtml:70
-#: views/editors/reviewlog.thtml:85
+#: views/elements/developers/editors_review_history_item.thtml:76
+#: views/editors/performance_table.thtml:100 views/editors/reviewlog.thtml:85
 msgid "editors_review_history_pending_denied"
 msgstr "Отклонить/В «песочницу»"
 
 #. link text in an add-on's editor review history, allowing to hide and show an information request's replies
 #. %1 is the number of replies
-#: views/elements/developers/editors_review_history_item.thtml:90
+#: views/elements/developers/editors_review_history_item.thtml:96
 msgid "editors_review_history_show_hide_replies"
 msgid_plural "editors_review_history_show_hide_replies"
 msgstr[0] "Показать/Скрыть ответы (%1$s)"
 msgstr[1] "Показать/Скрыть ответы (%1$s)"
 
-#: views/editors/review.thtml:208
+#: views/editors/review.thtml:359
+#, fuzzy
+msgid "editors_review_input_cancel"
+msgstr "Cancel"
+
+#: views/editors/review.thtml:358
+#, fuzzy
+msgid "editors_review_input_post_comment"
+msgstr "Post Comment"
+
+#: views/editors/review.thtml:209
 msgid "editors_review_label_applications"
 msgstr "Приложения:"
 
-#: views/editors/review.thtml:196
+#: views/editors/review.thtml:197
 msgid "editors_review_label_cannedresponse"
 msgstr "или выберите ответ из стандартных:"
 
-#: views/editors/review.thtml:190
+#: views/editors/review.thtml:191
 msgid "editors_review_label_comments"
 msgstr "Комментарии:"
 
-#: views/editors/review.thtml:204
+#: views/editors/review.thtml:205
 msgid "editors_review_label_operating_systems"
 msgstr "Операционные системы:"
 
-#: views/editors/review.thtml:285 views/editors/review.thtml:312
+#: views/editors/review.thtml:353
+#, fuzzy
+msgid "editors_review_label_subject"
+msgstr "Subject"
+
+#. This is text for an <a>, please include the parenthesis
+#: views/editors/review.thtml:349
+#, fuzzy
+msgid "editors_review_link_new_thread"
+msgstr "(New Thread)"
+
+#: views/editors/review.thtml:286 views/editors/review.thtml:313
+#: views/editors/review.thtml:331
 msgid "editors_review_link_pagetop"
 msgstr "Наверх"
+
+#. This is text for an <a>, please include the parenthesis
+#: views/editors/review.thtml:344
+#, fuzzy
+msgid "editors_review_link_reply"
+msgstr "(Reply)"
 
 #: views/editors/review.thtml:141
 msgid "editors_review_mulitple_notice"
@@ -5120,7 +5801,7 @@ msgstr ""
 msgid "editors_review_next_link"
 msgstr "след. &raquo;"
 
-#: views/editors/review.thtml:322
+#: views/editors/review.thtml:323
 msgid "editors_review_previews_notfound"
 msgstr "Рецензии не найдены."
 
@@ -5128,8 +5809,8 @@ msgstr "Рецензии не найдены."
 msgid "editors_review_previous_link"
 msgstr "&laquo; пред."
 
-#: controllers/editors_controller.php:144
-#: controllers/editors_controller.php:146
+#: controllers/editors_controller.php:147
+#: controllers/editors_controller.php:149
 msgid "editors_review_queue_pagetitle"
 msgstr "Очередь рецензий"
 
@@ -5144,37 +5825,37 @@ msgstr "<strong># %1$s-й</strong> из %2$s в очереди"
 msgid "editors_review_rank_in_queue_filtered"
 msgstr "<strong># %1$-й</strong> из %2$s в очереди (с фильтром)"
 
-#: views/editors/review.thtml:223
+#: views/editors/review.thtml:224
 msgid "editors_review_submit_process_action"
 msgstr "Ход действия"
 
-#: views/editors/review.thtml:293
+#: views/editors/review.thtml:294
 msgid "editors_review_th_action"
 msgstr "Действие"
 
-#: views/editors/review.thtml:294
+#: views/editors/review.thtml:295
 msgid "editors_review_th_comments"
 msgstr "Комментарии"
 
-#: views/editors/review.thtml:291
+#: views/editors/review.thtml:292
 msgid "editors_review_th_date"
 msgstr "Дата"
 
-#: views/editors/review.thtml:292
+#: views/editors/review.thtml:293
 msgid "editors_review_th_reviewer"
 msgstr "Рецензент"
 
-#: views/editors/review.thtml:290
+#: views/editors/review.thtml:291
 msgid "editors_review_th_version_file"
 msgstr "Версия/Файл"
 
-#: views/editors/review.thtml:217
+#: views/editors/review.thtml:218
 msgid "editors_review_update_notify_once"
 msgstr ""
 "Послать мне уведомление при следующем обновлении этого дополнения. "
 "(Несколько обновлений подряд приведут к посылке только одного письма)"
 
-#: controllers/editors_controller.php:298
+#: controllers/editors_controller.php:320
 msgid "editors_reviewed_successfully"
 msgstr "Рецензия успешно обработана."
 
@@ -5198,7 +5879,7 @@ msgstr "Действие"
 msgid "editors_reviews_in_reply_to"
 msgstr "В ответ на:"
 
-#: controllers/editors_controller.php:748
+#: controllers/editors_controller.php:1331
 msgid "editors_reviews_processed"
 msgstr "Рецензии успешно обработаны!"
 
@@ -5210,15 +5891,15 @@ msgstr "В настоящее время нет рецензий для моде
 msgid "editors_reviews_submit_process_reviews"
 msgstr "Обработать рецензии"
 
-#: controllers/editors_controller.php:691
+#: controllers/editors_controller.php:1274
 msgid "editors_site_specific"
 msgstr "Для определённого сайта"
 
-#: controllers/editors_controller.php:348
+#: controllers/editors_controller.php:370
 msgid "editors_tested_app"
 msgstr "Проверенные приложения"
 
-#: controllers/editors_controller.php:347
+#: controllers/editors_controller.php:369
 msgid "editors_tested_os"
 msgstr "Проверенные операционные системы"
 
@@ -5254,19 +5935,19 @@ msgid "editors_th_sort_descending"
 msgstr "Сортировка по убыванию"
 
 #. %s is a number
-#: controllers/editors_controller.php:1036
+#: controllers/editors_controller.php:1658
 #, php-format
 msgid "editors_x_days"
 msgstr "%s дня(ей)"
 
 #. %s is a number
-#: controllers/editors_controller.php:1044
+#: controllers/editors_controller.php:1666
 #, php-format
 msgid "editors_x_hours"
 msgstr "%s часа(ов)"
 
 #. %s is a number
-#: controllers/editors_controller.php:1052
+#: controllers/editors_controller.php:1674
 #, php-format
 msgid "editors_x_minutes"
 msgstr "%s минут(ы)"
@@ -5277,12 +5958,12 @@ msgstr "%s минут(ы)"
 #: controllers/components/amo.php:608 controllers/components/amo.php:609
 #: controllers/reviews_controller.php:353
 #: controllers/reviews_controller.php:485
-#: controllers/collections_controller.php:438
-#: controllers/collections_controller.php:496
-#: controllers/collections_controller.php:504
-#: controllers/collections_controller.php:971
-#: controllers/collections_controller.php:1034
-#: controllers/collections_controller.php:1077
+#: controllers/collections_controller.php:444
+#: controllers/collections_controller.php:502
+#: controllers/collections_controller.php:510
+#: controllers/collections_controller.php:978
+#: controllers/collections_controller.php:1043
+#: controllers/collections_controller.php:1087
 msgid "error_access_denied"
 msgstr "В доступе отказано"
 
@@ -5290,14 +5971,19 @@ msgstr "В доступе отказано"
 msgid "error_access_denied_message"
 msgstr "У вас недостаточно прав для просмотра этой страницы."
 
-#: controllers/collections_controller.php:1039
+#: controllers/collections_controller.php:1048
 msgid "error_addon_exists"
 msgstr "Дополнение уже существует!"
 
+#: controllers/addons_controller.php:128
+#, fuzzy
+msgid "error_addon_no_contributions"
+msgstr "The add-on developers have not enabled contributions."
+
 #: controllers/developers_controller.php:200
 #: controllers/developers_controller.php:593
-#: controllers/developers_controller.php:1016
-#: controllers/developers_controller.php:1429
+#: controllers/developers_controller.php:1127
+#: controllers/developers_controller.php:1540
 #: controllers/downloads_controller.php:95
 #: controllers/downloads_controller.php:102
 #: controllers/downloads_controller.php:164
@@ -5308,16 +5994,16 @@ msgstr "Дополнение уже существует!"
 #: controllers/reviews_controller.php:77
 #: controllers/reviews_controller.php:240
 #: controllers/reviews_controller.php:332
-#: controllers/reviews_controller.php:340 controllers/api_controller.php:123
-#: controllers/api_controller.php:759 controllers/addons_controller.php:131
-#: controllers/addons_controller.php:197
-#: controllers/addons_controller.php:1407
-#: controllers/addons_controller.php:1465
-#: controllers/addons_controller.php:1469
-#: controllers/addons_controller.php:1503
-#: controllers/editors_controller.php:265
-#: controllers/collections_controller.php:1041
-#: controllers/collections_controller.php:1074
+#: controllers/reviews_controller.php:340 controllers/api_controller.php:124
+#: controllers/api_controller.php:762 controllers/addons_controller.php:124
+#: controllers/addons_controller.php:206 controllers/addons_controller.php:272
+#: controllers/addons_controller.php:1494
+#: controllers/addons_controller.php:1553
+#: controllers/addons_controller.php:1557
+#: controllers/addons_controller.php:1591
+#: controllers/editors_controller.php:269
+#: controllers/collections_controller.php:1051
+#: controllers/collections_controller.php:1084
 msgid "error_addon_notfound"
 msgstr "Дополнение не найдено!"
 
@@ -5329,22 +6015,22 @@ msgstr "Дополнение нельзя просмотреть через ин
 msgid "error_addon_selfreview"
 msgstr "Вы не можете дать отзыв на своё собственное дополнение."
 
-#: controllers/addons_controller.php:970
+#: controllers/addons_controller.php:1080
 msgid "error_browse_no_addons"
 msgstr "В этой категории дополнения отсутствуют!"
 
-#: controllers/api_controller.php:424
+#: controllers/api_controller.php:427
 msgid "error_collection_feed_notfound"
 msgstr "Лента новостей дополнения не найдена."
 
-#: views/users/register.thtml:65 views/users/edit.thtml:194
+#: views/users/register.thtml:65 views/users/edit.thtml:209
 msgid "error_email_invalid"
 msgstr "Это неправильный адрес электронной почты."
 
 #: views/users/pwreset.thtml:74 views/users/register.thtml:70
 #: views/users/register.thtml:80 views/users/register.thtml:86
-#: views/users/edit.thtml:105 views/users/edit.thtml:111
-#: views/users/edit.thtml:192 views/admin/users_edit.thtml:78
+#: views/users/edit.thtml:98 views/users/edit.thtml:104
+#: views/users/edit.thtml:207 views/admin/users_edit.thtml:78
 #: views/admin/users_edit.thtml:83 views/reviews/add.thtml:80
 #: views/reviews/add.thtml:104
 msgid "error_field_required"
@@ -5353,18 +6039,18 @@ msgstr "Это поле не может быть пустым."
 #: controllers/files_controller.php:75 controllers/files_controller.php:93
 #: controllers/files_controller.php:96 controllers/files_controller.php:163
 #: controllers/files_controller.php:176 controllers/files_controller.php:185
-#: controllers/files_controller.php:204 controllers/editors_controller.php:412
+#: controllers/files_controller.php:204 controllers/editors_controller.php:447
 msgid "error_file_notfound"
 msgstr "Файл не найден!"
 
 #. %s is a filename
-#: controllers/editors_controller.php:430
+#: controllers/editors_controller.php:465
 #, php-format
 msgid "error_file_x_notfound"
 msgstr "Ошибка: файл %s не существует."
 
 #: views/collections/add.thtml:55 views/collections/edit.thtml:89
-#: views/users/register.thtml:54 views/users/edit.thtml:81
+#: views/users/register.thtml:54 views/users/edit.thtml:74
 #: views/reviews/add.thtml:70 controllers/groups_controller.php:80
 #: controllers/groups_controller.php:102
 msgid "error_formerrors"
@@ -5374,8 +6060,8 @@ msgstr "В этой форме имеются ошибки. Исправьте �
 msgid "error_invalid_captcha"
 msgstr "Введённый текст неверен, пожалуйста попробуйте снова!"
 
-#: views/users/register.thtml:100 views/users/edit.thtml:125
-#: views/admin/users_edit.thtml:101
+#: views/users/register.thtml:100 views/users/edit.thtml:122
+#: views/admin/users_edit.thtml:109
 msgid "error_invalid_url"
 msgstr ""
 "Этот URL имеет неверный формат. Правильные URL имеют вид http://example.com/"
@@ -5383,33 +6069,34 @@ msgstr ""
 
 #. %s is a string representing what's missing.  Example:  file_id
 #: controllers/downloads_controller.php:65
-#: controllers/users_controller.php:185 controllers/users_controller.php:264
-#: controllers/users_controller.php:559 controllers/users_controller.php:653
-#: controllers/reviews_controller.php:71
+#: controllers/users_controller.php:191 controllers/users_controller.php:270
+#: controllers/users_controller.php:591 controllers/users_controller.php:685
+#: controllers/users_controller.php:860 controllers/reviews_controller.php:71
 #: controllers/reviews_controller.php:234
 #: controllers/reviews_controller.php:325
 #: controllers/reviews_controller.php:473
 #: controllers/reviews_controller.php:475
-#: controllers/addons_controller.php:182
-#: controllers/addons_controller.php:1381
-#: controllers/addons_controller.php:1455
-#: controllers/collections_controller.php:266
-#: controllers/collections_controller.php:285
-#: controllers/collections_controller.php:346
-#: controllers/collections_controller.php:443
-#: controllers/collections_controller.php:482
-#: controllers/collections_controller.php:936
-#: controllers/collections_controller.php:959
-#: controllers/collections_controller.php:960
-#: controllers/collections_controller.php:975
-#: controllers/collections_controller.php:977
-#: controllers/collections_controller.php:994
-#: controllers/collections_controller.php:1003
-#: controllers/collections_controller.php:1016
-#: controllers/collections_controller.php:1017
-#: controllers/collections_controller.php:1024
-#: controllers/collections_controller.php:1070
-#: controllers/collections_controller.php:1090
+#: controllers/addons_controller.php:258
+#: controllers/addons_controller.php:1486
+#: controllers/addons_controller.php:1543
+#: controllers/collections_controller.php:177
+#: controllers/collections_controller.php:269
+#: controllers/collections_controller.php:288
+#: controllers/collections_controller.php:352
+#: controllers/collections_controller.php:449
+#: controllers/collections_controller.php:488
+#: controllers/collections_controller.php:943
+#: controllers/collections_controller.php:966
+#: controllers/collections_controller.php:967
+#: controllers/collections_controller.php:982
+#: controllers/collections_controller.php:984
+#: controllers/collections_controller.php:1001
+#: controllers/collections_controller.php:1010
+#: controllers/collections_controller.php:1025
+#: controllers/collections_controller.php:1026
+#: controllers/collections_controller.php:1033
+#: controllers/collections_controller.php:1080
+#: controllers/collections_controller.php:1100
 #, php-format
 msgid "error_missing_argument"
 msgstr "Отсутствует аргумент: %s"
@@ -5418,59 +6105,65 @@ msgstr "Отсутствует аргумент: %s"
 msgid "error_no_files_in_addon"
 msgstr "Файлы отсутствуют"
 
+#: views/developers/addon_edit_contributions.thtml:56
+#: controllers/addons_controller.php:118
+#, fuzzy
+msgid "error_paypal_disabled"
+msgstr "Sorry, PayPal contributions are temporarily disabled."
+
 #: controllers/previews_controller.php:200
 msgid "error_preview_notfound"
 msgstr "Скриншот не найден!"
 
-#: views/addons/display.thtml:400 views/reviews/add.thtml:98
+#: views/reviews/add.thtml:98
 msgid "error_review_rating_required"
 msgstr "Вы должны выбрать рейтинг."
 
-#: controllers/users_controller.php:160
+#: controllers/users_controller.php:166
 msgid "error_user_already_confirmed"
 msgstr "Регистрация учётной записи этого пользователя уже была подтверждена."
 
-#: controllers/users_controller.php:202 controllers/users_controller.php:276
-#: controllers/users_controller.php:569 controllers/users_controller.php:581
-#: controllers/users_controller.php:587 controllers/users_controller.php:610
-#: controllers/users_controller.php:627
+#: controllers/users_controller.php:208 controllers/users_controller.php:282
+#: controllers/users_controller.php:601 controllers/users_controller.php:613
+#: controllers/users_controller.php:619 controllers/users_controller.php:642
+#: controllers/users_controller.php:659
 msgid "error_user_badconfirmationcode"
 msgstr "Неверный код подтверждения!"
 
 #: views/users/pwreset.thtml:79 views/users/register.thtml:75
-#: views/users/edit.thtml:183
+#: views/users/edit.thtml:198
 msgid "error_user_confirmpw_nomatch"
 msgstr "Пароли не совпадают."
 
-#: views/users/register.thtml:65 views/users/edit.thtml:190
-#: controllers/users_controller.php:617
+#: views/users/register.thtml:65 views/users/edit.thtml:205
+#: controllers/users_controller.php:649
 msgid "error_user_email_notunique"
 msgstr ""
 "Данный адрес электронной почты уже зарегистрирован другим пользователем."
 
-#: controllers/users_controller.php:596
+#: controllers/users_controller.php:628
 msgid "error_user_emailchange_expired"
 msgstr ""
 "Время, отведённое на смену адреса электронной почты, истекло. Пожалуйста "
 "снова смените свой адрес электронной почты в профиле пользователя и щёлкните "
 "по ссылке в подтверждающем письме, как только вы его получите."
 
-#: controllers/collections_controller.php:985
+#: controllers/collections_controller.php:992
 msgid "error_user_exists"
 msgstr ""
 "Пользователь может иметь только одну роль. Пожалуйста, перед продолжением, "
 "уберите у пользователя любые роли."
 
-#: views/users/register.thtml:91 views/users/edit.thtml:116
+#: views/users/register.thtml:91 views/users/edit.thtml:109
 #: views/admin/users_edit.thtml:88
 msgid "error_user_nickname_notunique"
 msgstr "Такой ник уже существует."
 
-#: views/users/pwreset.thtml:54 controllers/users_controller.php:191
-#: controllers/users_controller.php:270 controllers/users_controller.php:603
-#: controllers/users_controller.php:659
-#: controllers/collections_controller.php:988
-#: controllers/collections_controller.php:998
+#: views/users/pwreset.thtml:54 controllers/users_controller.php:197
+#: controllers/users_controller.php:276 controllers/users_controller.php:635
+#: controllers/users_controller.php:691 controllers/users_controller.php:865
+#: controllers/collections_controller.php:995
+#: controllers/collections_controller.php:1005
 msgid "error_user_notfound"
 msgstr "Пользователь не найден!"
 
@@ -5484,14 +6177,15 @@ msgstr ""
 msgid "error_username_or_pw_wrong"
 msgstr "Неверный логин или пароль!"
 
-#: controllers/editors_controller.php:260
+#: controllers/editors_controller.php:264
 msgid "error_version_notfound"
 msgstr "Версия не найдена!"
 
-#: views/users/delete.thtml:125 views/users/edit.thtml:173
+#: views/users/delete.thtml:125 views/users/edit.thtml:188
 msgid "error_wrong_password"
 msgstr "Введён неверный пароль!"
 
+#: views/elements/amo2009/results_addon.thtml:124
 #: views/elements/amo2009/homepage_addon.thtml:122
 #: views/elements/feature.thtml:122
 msgid "feature_learnmore"
@@ -5499,6 +6193,7 @@ msgstr "Узнать больше"
 
 # %1 is the add-on name
 #. %1 is the add-on name
+#: views/elements/amo2009/results_addon.thtml:125
 #: views/elements/amo2009/homepage_addon.thtml:123
 #: views/elements/feature.thtml:123
 #, php-format
@@ -5506,9 +6201,9 @@ msgid "feature_learnmore_about_addon"
 msgstr "Узнать больше о %1$s"
 
 #. %1$s is a number
-#: views/elements/amo2009/reviews.thtml:52
+#: views/elements/amo2009/reviews.thtml:58
 #: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
-#: views/addons/browse_thumbs.thtml:86
+#: views/addons/browse_thumbs.thtml:131
 #, php-format
 msgid "feature_reviews"
 msgid_plural "feature_reviews"
@@ -5516,6 +6211,7 @@ msgstr[0] "%1$s отзыв"
 msgstr[1] "%1$s отзыва"
 msgstr[2] "%1$s отзывов"
 
+#: views/elements/amo2009/results_addon.thtml:129
 #: views/elements/amo2009/homepage_addon.thtml:127
 #: views/elements/feature.thtml:127
 msgid "feature_view_more_from_category"
@@ -5556,39 +6252,39 @@ msgid "file_browser_toggle_expand_collapse"
 msgstr "+/-"
 
 #. Link text for the AMO About page.
-#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:341
+#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
 msgid "footer_a_about"
 msgstr "О сайте"
 
 #. Link text to the AMO blog.
-#: views/elements/footer.thtml:74 views/layouts/amo2009.thtml:343
+#: views/elements/footer.thtml:74 views/layouts/amo2009.thtml:355
 msgid "footer_a_blog"
 msgstr "Блог"
 
 #. Link text to the Frequently Asked Questions page.
-#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:342
+#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
 msgid "footer_a_faq"
 msgstr "FAQ"
 
 #. Full text for the FAQ abbreviation.
 #: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
-#: views/layouts/amo2009.thtml:342
+#: views/layouts/amo2009.thtml:354
 msgid "footer_abbr_faq"
 msgstr "Часто задаваемые вопросы"
 
-#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:336
+#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:348
 msgid "footer_all_rights_reserved"
 msgstr "Все права защищены."
 
-#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:336
+#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:348
 msgid "footer_copyright"
 msgstr "Copyright"
 
-#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:340
+#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
 msgid "footer_credits"
 msgstr "Сведения об авторах"
 
-#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:346
+#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:358
 msgid "footer_disclaimer"
 msgstr ""
 "Mozilla любезно обеспечивает ссылки на эти приложения и не предоставляет "
@@ -5596,19 +6292,19 @@ msgstr ""
 "ними. Любые вопросы, жалобы или требования относительно приложений должны "
 "направляться соответствующему производителю программного обеспечения."
 
-#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:332
+#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
 msgid "footer_lang_form_lang_submit_go"
 msgstr "Перейти"
 
-#: views/elements/footer.thtml:70 views/layouts/amo2009.thtml:339
+#: views/elements/footer.thtml:70 views/layouts/amo2009.thtml:351
 msgid "footer_legal_notices"
 msgstr "Правовое обеспечение"
 
-#: views/elements/footer.thtml:50 views/layouts/amo2009.thtml:321
+#: views/elements/footer.thtml:50 views/layouts/amo2009.thtml:332
 msgid "footer_other_languages"
 msgstr "Другие языки:"
 
-#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:338
+#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
 msgid "footer_privacy_policy"
 msgstr "Политика конфиденциальности"
 
@@ -5678,7 +6374,7 @@ msgstr "Тема"
 
 # Plural in this context means many of the add-on type
 #. Plural in this context means many of the add-on type
-#: models/addontype.php:99
+#: models/addontype.php:99 views/addons/browse_thumbs.thtml:56
 msgid "general_addontype_theme_plural"
 msgstr "Темы"
 
@@ -5705,8 +6401,8 @@ msgstr "Дополнения Firefox"
 #: views/layouts/amo2009.thtml:218
 msgid "header_main_firefox_header_with_logo"
 msgstr ""
-"Дополнения <em>для</em> <img alt=\"Firefox\" src=\"%1$s\" /> <strong>Firefox</"
-"strong>"
+"Дополнения <em>для</em> <img alt=\"Firefox\" src=\"%1$s\" /> "
+"<strong>Firefox</strong>"
 
 #: views/elements/header.thtml:99
 msgid "header_main_header"
@@ -5736,8 +6432,8 @@ msgstr "Дополнения Sunbird"
 #: views/layouts/amo2009.thtml:230
 msgid "header_main_sunbird_header_with_logo"
 msgstr ""
-"Дополнения <em>для</em> <img alt=\"sunbird\" src=\"%1$s\" /> <strong>Sunbird</"
-"strong>"
+"Дополнения <em>для</em> <img alt=\"sunbird\" src=\"%1$s\" /> "
+"<strong>Sunbird</strong>"
 
 #: views/elements/header.thtml:96
 msgid "header_main_thunderbird_header"
@@ -5772,15 +6468,14 @@ msgstr "Дополнения"
 
 #: views/elements/developers/sidebar.thtml:72
 #: views/elements/developers/myaddons.thtml:50 views/elements/header.thtml:159
-#: views/addons/display.thtml:378
 msgid "header_navlink_login"
 msgstr "Войти"
 
-#: views/elements/header.thtml:156 views/layouts/amo2009.thtml:304
+#: views/elements/header.thtml:156 views/layouts/amo2009.thtml:314
 msgid "header_navlink_logout"
 msgstr "Выйти"
 
-#: views/elements/header.thtml:145 views/layouts/amo2009.thtml:303
+#: views/elements/header.thtml:145 views/layouts/amo2009.thtml:313
 msgid "header_navlink_myaccount"
 msgstr "Моя учётная запись"
 
@@ -5795,16 +6490,17 @@ msgid "header_navlink_register_or_login"
 msgstr ""
 "<a href=\"%1$s\">Зарегистрируйтесь</a> или <a href=\"%2$s\">Войдите</a>"
 
-#: views/layouts/amo2009.thtml:285
+#: views/layouts/amo2009.thtml:298
 msgid "header_navlink_tools"
 msgstr "Инструменты"
 
 #. %s is the add-on name
 #: views/elements/collections_interactive_addon.thtml:62
+#: views/elements/amo2009/results_addon.thtml:77
 #: views/elements/amo2009/homepage_addon.thtml:77
 #: views/elements/addon_discussionheader.thtml:62
 #: views/elements/addon_listitem.thtml:67 views/elements/feature.thtml:84
-#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:60
+#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:106
 #, php-format
 msgid "img_preview_of"
 msgstr "Предварительный просмотр %s"
@@ -5813,14 +6509,14 @@ msgstr "Предварительный просмотр %s"
 # %2 is the link to an explanatory page.
 #. %1 is the login URL for the link tag
 #. %2 is the link to an explanatory page.
-#: views/elements/amo2009/install.thtml:307 views/elements/install.thtml:255
+#: views/elements/amo2009/install.thtml:325 views/elements/install.thtml:255
 msgid "install_a_login_to_install"
 msgstr ""
 "<a href=\"%1$s\">Зарегистрируйтесь</a>, чтобы установить это "
 "экспериментальное дополнение. <a href=\"%2$s\">Но почему</a>?"
 
 #. %1 is the URL for the Experimental Add-ons section of the FAQ page
-#: views/elements/amo2009/install.thtml:283 views/elements/install.thtml:232
+#: views/elements/amo2009/install.thtml:301 views/elements/install.thtml:232
 msgid "install_button_confirm_exp_install"
 msgstr ""
 "Дайте мне установить это экспериментальное дополнение. <a href=\"%1$s\">Что "
@@ -5828,17 +6524,17 @@ msgstr ""
 
 #. %1$s is the application name.  Example:  Firefox
 #. %2$s is an optional string used to specify a platform.  Example:  (Windows)
-#: views/elements/amo2009/install.thtml:128 views/elements/install.thtml:75
+#: views/elements/amo2009/install.thtml:135 views/elements/install.thtml:75
 #, php-format
 msgid "install_button_text"
 msgstr "Добавить в %s %s"
 
 # %1 is the add-on name, %2 is the app name
 #. %1 is the add-on name, %2 is the app name
-#: views/elements/amo2009/install.thtml:191
-#: views/elements/amo2009/install.thtml:206
-#: views/elements/amo2009/install.thtml:249
-#: views/elements/amo2009/install.thtml:298 views/elements/install.thtml:150
+#: views/elements/amo2009/install.thtml:198
+#: views/elements/amo2009/install.thtml:213
+#: views/elements/amo2009/install.thtml:263
+#: views/elements/amo2009/install.thtml:316 views/elements/install.thtml:150
 #: views/elements/install.thtml:165 views/elements/install.thtml:202
 #: views/elements/install.thtml:246
 #, php-format
@@ -5846,12 +6542,12 @@ msgid "install_button_title"
 msgstr "Добавить %1$s в %2$s"
 
 #. %1$s is the add-on name
-#: views/elements/amo2009/install.thtml:200 views/elements/install.thtml:159
+#: views/elements/amo2009/install.thtml:207 views/elements/install.thtml:159
 #, php-format
 msgid "install_download"
 msgstr "Загрузить %1$s"
 
-#: views/elements/amo2009/install.thtml:147 views/elements/install.thtml:94
+#: views/elements/amo2009/install.thtml:154 views/elements/install.thtml:94
 msgid "install_error_addon_not_found"
 msgstr "Дополнение недоступно."
 
@@ -5867,8 +6563,8 @@ msgstr "Загрузить словарь"
 msgid "langtools_download_langpack"
 msgstr "Загрузить локализацию"
 
-#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:685
-#: controllers/addons_controller.php:1239
+#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:686
+#: controllers/addons_controller.php:1347
 msgid "langtools_header_dicts_and_langpacks"
 msgstr "Словари и локализации"
 
@@ -5896,37 +6592,36 @@ msgstr "Язык"
 msgid "license_custom"
 msgstr "Своя лицензия"
 
-#: config/bootstrap.php:303
+#: config/bootstrap.php:287
 msgid "licenses_bsd"
 msgstr "BSD License"
 
-#: config/bootstrap.php:298
+#: config/bootstrap.php:282
 msgid "licenses_gpl_2.0"
 msgstr "GNU General Public License, версия 2.0"
 
-#: config/bootstrap.php:299
+#: config/bootstrap.php:283
 msgid "licenses_gpl_3.0"
 msgstr "GNU General Public License, версия 3.0"
 
-#: config/bootstrap.php:300
+#: config/bootstrap.php:284
 msgid "licenses_lgpl_2.1"
 msgstr "GNU Lesser General Public License, версия 2.1"
 
-#: config/bootstrap.php:301
+#: config/bootstrap.php:285
 msgid "licenses_lgpl_3.0"
 msgstr "GNU Lesser General Public License, версия 3.0"
 
-#: config/bootstrap.php:302
+#: config/bootstrap.php:286
 msgid "licenses_mit"
 msgstr "MIT/X11 License"
 
-#: config/bootstrap.php:297
+#: config/bootstrap.php:281
 msgid "licenses_mpl_1.1"
 msgstr "Mozilla Public License, версия 1.1"
 
 #: views/users/emailchange.thtml:51 views/users/delete.thtml:55
-#: views/users/delete.thtml:137 views/users/edit.thtml:74
-#: views/reviews/flag.thtml:54
+#: views/users/delete.thtml:137 views/reviews/flag.thtml:54
 msgid "link_return_to_front_page"
 msgstr "Для возврата на первую страницу щёлкните здесь."
 
@@ -5936,7 +6631,7 @@ msgid "list_sortby_date"
 msgstr "дате"
 
 #: views/elements/amo2009/addon_list_options.thtml:47
-#: views/elements/addon_list_options.thtml:47
+#: views/elements/addon_list_options.thtml:47 views/addons/display.thtml:213
 msgid "list_sortby_downloads"
 msgstr "загрузкам"
 
@@ -5946,27 +6641,27 @@ msgid "list_sortby_name"
 msgstr "названию"
 
 #: views/elements/amo2009/addon_list_options.thtml:48
-#: views/elements/addon_list_options.thtml:48
+#: views/elements/addon_list_options.thtml:48 views/addons/display.thtml:323
 msgid "list_sortby_rating"
 msgstr "рейтингу"
 
-#: config/bootstrap.php:278
+#: config/bootstrap.php:262
 msgid "main_prettyname_fennec"
 msgstr "Fennec"
 
-#: config/bootstrap.php:274
+#: config/bootstrap.php:258
 msgid "main_prettyname_firefox"
 msgstr "Firefox"
 
-#: config/bootstrap.php:277
+#: config/bootstrap.php:261
 msgid "main_prettyname_seamonkey"
 msgstr "SeaMonkey"
 
-#: config/bootstrap.php:276
+#: config/bootstrap.php:260
 msgid "main_prettyname_sunbird"
 msgstr "Sunbird"
 
-#: config/bootstrap.php:275
+#: config/bootstrap.php:259
 msgid "main_prettyname_thunderbird"
 msgstr "Thunderbird"
 
@@ -5996,15 +6691,15 @@ msgstr "Версии приложения"
 msgid "page_title_collector"
 msgstr "Собиратель дополнений"
 
-#: controllers/pages_controller.php:117
+#: controllers/pages_controller.php:118
 msgid "page_title_collector_faq"
 msgstr "FAQ собирателя дополнений"
 
-#: controllers/pages_controller.php:119
+#: controllers/pages_controller.php:121
 msgid "page_title_collector_features"
 msgstr "Возможности собирателя дополнений"
 
-#: controllers/pages_controller.php:122
+#: controllers/pages_controller.php:125
 msgid "page_title_collector_firstrun"
 msgstr "Добро пожаловать в собиратель дополнений"
 
@@ -6203,19 +6898,19 @@ msgstr ""
 msgid "reviews_header"
 msgstr "Отзывы о %s"
 
-#: controllers/addons_controller.php:435
+#: controllers/addons_controller.php:491
 msgid "rss_featuredaddons"
 msgstr "Популярные дополнения"
 
-#: controllers/addons_controller.php:432
+#: controllers/addons_controller.php:488
 msgid "rss_newestaddons"
 msgstr "Новейшие дополнения"
 
-#: controllers/addons_controller.php:434
+#: controllers/addons_controller.php:490
 msgid "rss_popularaddons"
 msgstr "Популярные дополнения"
 
-#: controllers/addons_controller.php:433
+#: controllers/addons_controller.php:489
 msgid "rss_updatedaddons"
 msgstr "Обновлённые дополнения"
 
@@ -6227,13 +6922,34 @@ msgstr "Поиск"
 msgid "search_collections_header"
 msgstr "Результаты поиска подборки"
 
-#: controllers/search_controller.php:297
+#: controllers/search_controller.php:298
 msgid "search_collections_pagetitle"
 msgstr "Результаты поиска подборки"
 
-#: controllers/search_controller.php:99
+#: controllers/search_controller.php:101
 msgid "search_disabled"
 msgstr "В данный момент поиск отключен. Пожалуйста, попробуйте позже."
+
+#: views/search/index.thtml:170
+#, fuzzy
+msgid "search_filter_categories_header"
+msgstr "Categories"
+
+#. This is the header for a list of links
+#: views/search/index.thtml:125
+#, fuzzy
+msgid "search_filter_compatible_header"
+msgstr "Compatible with"
+
+#: views/search/index.thtml:202
+#, fuzzy
+msgid "search_filter_no_tags"
+msgstr "No tags for these add-ons"
+
+#: views/search/index.thtml:198
+#, fuzzy
+msgid "search_filter_tags_header"
+msgstr "Tags"
 
 #: views/elements/amo2009/search.thtml:188 views/elements/search.thtml:187
 #: views/elements/search_mini.thtml:54
@@ -6246,15 +6962,15 @@ msgid "search_form_all_collections"
 msgstr "Всех подборок"
 
 #: views/elements/amo2009/search.thtml:184
-#: views/elements/amo2009/search.thtml:385
-#: views/elements/amo2009/search.thtml:408 views/elements/search.thtml:171
+#: views/elements/amo2009/search.thtml:389
+#: views/elements/amo2009/search.thtml:412 views/elements/search.thtml:171
 #: views/elements/search.thtml:183 views/elements/search_mini.thtml:43
 #: views/elements/search_mini.thtml:49 views/layouts/mozilla.thtml:188
 msgid "search_form_default_text"
 msgstr "поиск дополнений"
 
 #: views/elements/amo2009/search.thtml:184
-#: views/elements/amo2009/search.thtml:404
+#: views/elements/amo2009/search.thtml:408
 msgid "search_form_default_text_collections"
 msgstr "поиск подборок"
 
@@ -6272,50 +6988,104 @@ msgstr "Щёлкните, чтобы ввести запрос на поиск"
 msgid "search_form_within"
 msgstr "среди"
 
-#: views/addons/searchengines.thtml:118
+#: views/addons/searchengines.thtml:76
 msgid "search_landing_all_search_engines"
 msgstr "Все поисковые плагины"
 
-#: views/addons/searchengines.thtml:114
+#: views/addons/searchengines.thtml:72
 msgid "search_landing_browse_search_engines"
 msgstr "Обзор поисковых плагинов"
 
-#: views/search/collections.thtml:58 views/search/index.thtml:59
+#: views/tags/display.thtml:60 views/search/collections.thtml:62
+#: views/search/index.thtml:84
 msgid "search_nothing_found"
 msgstr "Поиск не дал результатов."
 
-#: controllers/search_controller.php:185
+#: controllers/search_controller.php:199
 msgid "search_pagetitle"
 msgstr "Поиск дополнений"
 
-#: controllers/search_controller.php:242
+#: views/search/index.thtml:132
+#, fuzzy
+msgid "search_refine_all_versions_link"
+msgstr "All Versions"
+
+#: views/search/index.thtml:59
+#, fuzzy
+msgid "search_results_header"
+msgstr "Search Results"
+
+#: views/search/index.thtml:123
+#, fuzzy
+msgid "search_results_refine_header"
+msgstr "Refine Results"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is a word (the add-on is tagged with it)
+#: views/tags/display.thtml:53 views/search/index.thtml:65
+#, fuzzy
+msgid "search_results_showing_x_of_y_for_tags_header"
+msgstr "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is the word the person is searching for
+#. %5$s is a word (the add-on is tagged with it)
+#: views/search/index.thtml:63
+#, fuzzy
+msgid "search_results_showing_x_of_y_for_terms_and_tags_header"
+msgstr ""
+"Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with "
+"<strong>%5$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#. %4$s is the word the person is searching for
+#: views/search/index.thtml:67
+#, fuzzy
+msgid "search_results_showing_x_of_y_for_terms_header"
+msgstr "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>"
+
+#. %1$s is a number
+#. %2$s is a number
+#. %3$s is a number
+#: views/search/index.thtml:69
+#, fuzzy
+msgid "search_results_showing_x_of_y_header"
+msgstr "Showing %1$s - %2$s of %3$s results"
+
+#: controllers/search_controller.php:260
 msgid "search_rss_description"
 msgstr "Выдача результатов поиска"
 
 #. %s is the terms the user is searching for (a string)
-#: controllers/search_controller.php:241
+#: controllers/search_controller.php:259
 #, php-format
 msgid "search_rss_results_for"
 msgstr "Результаты поиска: %s"
 
-#: views/elements/header.thtml:154 views/layouts/amo2009.thtml:296
+#: views/elements/header.thtml:154 views/layouts/amo2009.thtml:292
 msgid "sidebar_navlink_admin_tools"
 msgstr "Инструменты для администрирования"
 
-#: views/elements/header.thtml:146 views/layouts/amo2009.thtml:288
+#: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
 msgid "sidebar_navlink_developer_tools"
 msgstr "Инструменты разработчика"
 
-#: views/elements/header.thtml:148 views/layouts/amo2009.thtml:290
+#: views/elements/header.thtml:148 views/layouts/amo2009.thtml:288
 msgid "sidebar_navlink_editor_tools"
 msgstr "Инструменты для редактирования"
 
-#: views/layouts/amo2009.thtml:302
+#: views/layouts/amo2009.thtml:312
 msgid "sidebar_navlink_welcome"
 msgstr "Добро пожаловать"
 
 #. %s is the user's name
-#: views/layouts/amo2009.thtml:302
+#: views/layouts/amo2009.thtml:312
 #, php-format
 msgid "sidebar_navlink_welcome_name"
 msgstr "Добро пожаловать, %s"
@@ -6830,27 +7600,75 @@ msgstr "%s с прошлой недели"
 msgid "statistics_title_addon_stats"
 msgstr "Статистика %1$s"
 
-#: views/addons/themes_landing.thtml:113
+#: controllers/tags_controller.php:194
+#, fuzzy
+msgid "tag_message_tag_added"
+msgstr "Tag added"
+
+#: controllers/tags_controller.php:138
+#, fuzzy
+msgid "tag_message_tag_limit_reached"
+msgstr "Tag limit reached"
+
+#: controllers/tags_controller.php:264
+#, fuzzy
+msgid "tag_message_tag_removed"
+msgstr "Tag removed"
+
+#: views/developers/addon_edit_tags.thtml:67 views/addons/display.thtml:482
+#, fuzzy
+msgid "tags_add_tag_button"
+msgstr "Add"
+
+#: views/developers/addon_edit_tags.thtml:54 views/addons/display.thtml:476
+#, fuzzy
+msgid "tags_add_tag_link"
+msgstr "Add a tag"
+
+#. This just shows an example of tags.  The important thing in the example is to show
+#. that tags can be separated with commas and have spaces in them
+#: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:484
+#, fuzzy
+msgid "tags_example_tags"
+msgstr ""
+"Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
+"\">ocean, sail boat, water</span>"
+
+#. %1$s is a URL
+#. %2$s is a URL
+#: views/addons/display.thtml:488
+#, fuzzy
+msgid "tags_register_or_login"
+msgstr ""
+"<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a> to add tags"
+
+#: views/addons/themes_landing.thtml:70
 msgid "themes_landing_all_themes"
 msgstr "Все темы"
 
-#: views/addons/themes_landing.thtml:109
+#: views/addons/themes_landing.thtml:67 views/addons/browse_thumbs.thtml:86
 msgid "themes_landing_browse_themes"
 msgstr "Обзор тем"
 
-#: views/users/edit.thtml:185
+#. %1$s is a number
+#: views/tags/top.thtml:72
+#, fuzzy
+msgid "top_tags_header"
+msgstr "Top %1$s Tags"
+
+#: views/users/edit.thtml:200
 msgid "user_change_email"
 msgstr "Сменить адрес электронной почты"
 
-#: views/users/edit.thtml:169
+#: views/users/edit.thtml:184
 msgid "user_change_password"
 msgstr "Сменить пароль"
 
-#: views/users/edit.thtml:96
+#: views/users/edit.thtml:89
 msgid "user_change_password_or_email"
 msgstr "Сменить пароль или адрес электронной почты"
 
-#: controllers/users_controller.php:197
+#: controllers/users_controller.php:203
 msgid "user_confirmationcode_resent"
 msgstr "Код подтверждения был отправлен повторно!"
 
@@ -6958,7 +7776,7 @@ msgstr "Удалённый пользователь"
 
 # %1 is the new email address
 #. %1 is the new email address
-#: views/users/edit.thtml:71
+#: views/users/edit.thtml:68
 msgid "user_edit_confirm_email_sent"
 msgstr ""
 "Для подтверждения вашего нового адреса электронной почты на адрес %1$s было "
@@ -6966,7 +7784,7 @@ msgstr ""
 "ссылке, указанной в этом письме. До этих пор, вы можете входить, используя "
 "ваш текущий адрес электронной почты."
 
-#: views/users/edit.thtml:201
+#: views/users/edit.thtml:216
 msgid "user_edit_delete_user"
 msgstr "Удалить учётную запись"
 
@@ -7014,7 +7832,7 @@ msgstr ""
 "Спасибо!\n"
 "-- Администрация %2$s Add-ons"
 
-#: controllers/users_controller.php:168
+#: controllers/users_controller.php:174
 #, php-format
 msgid "user_email_confirm_subject"
 msgstr "Благодарим за регистрацию на %s Add-ons"
@@ -7040,7 +7858,7 @@ msgstr ""
 "Спасибо,\n"
 "-- Администрация %2$s Add-ons"
 
-#: controllers/users_controller.php:245
+#: controllers/users_controller.php:251
 #, php-format
 msgid "user_email_pwreset_subject"
 msgstr "Сбросить пароль для входа на %s Add-ons"
@@ -7051,7 +7869,7 @@ msgstr "Ошибка!"
 
 # %1 is the application name
 #. %1 is the application name
-#: controllers/users_controller.php:533
+#: controllers/users_controller.php:562
 msgid "user_emailchange_subject"
 msgstr ""
 "Пожалуйста, подтвердите изменение своего адреса электронной почты на %1$s "
@@ -7069,11 +7887,11 @@ msgstr ""
 "Ваш адрес электронной почты был успешно изменён. С этих пор для входа "
 "пожалуйста используйте адрес %1$s."
 
-#: views/users/edit.thtml:134 views/admin/users_edit.thtml:111
+#: views/users/edit.thtml:149 views/admin/users_edit.thtml:131
 msgid "user_form_bio"
 msgstr "О мне"
 
-#: views/users/edit.thtml:135 views/admin/users_edit.thtml:112
+#: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
 msgid "user_form_bio_description"
 msgstr ""
 "Если хотите, представьтесь сообществу! Этот текст появится в публичном "
@@ -7081,78 +7899,103 @@ msgstr ""
 "сохранены, но использование HTML не разрешено."
 
 #: views/users/pwreset.thtml:77 views/users/register.thtml:73
-#: views/users/edit.thtml:181
+#: views/users/edit.thtml:196
 msgid "user_form_confirmpassword"
 msgstr "Подтвердить пароль"
 
-#: views/users/edit.thtml:145
+#: views/users/edit.thtml:134 views/admin/users_edit.thtml:116
+#, fuzzy
+msgid "user_form_delete_picture"
+msgstr "Remove this picture?"
+
+#: views/users/edit.thtml:160
 msgid "user_form_display_collections"
 msgstr "Отобразить созданные мной подборки в моем профиле"
 
-#: views/users/edit.thtml:149
+#: views/users/edit.thtml:164
 msgid "user_form_display_collections_fav"
 msgstr "Отобразить мои любимые подборки в моем профиле"
 
-#: views/users/edit.thtml:86
+#: views/users/edit.thtml:79
 #, php-format
 msgid "user_form_editprofile"
 msgstr "Редактировать профиль %s"
 
-#: views/users/pwreset.thtml:52 views/users/login.thtml:81
-#: views/users/register.thtml:63 views/users/edit.thtml:187
+#: views/users/pwreset.thtml:52 views/users/login.thtml:80
+#: views/users/register.thtml:63 views/users/edit.thtml:202
 msgid "user_form_email"
 msgstr "Адрес эл. почты"
 
-#: views/users/register.thtml:78 views/users/edit.thtml:103
+#: views/users/register.thtml:78 views/users/edit.thtml:96
 #: views/admin/users_edit.thtml:76
 msgid "user_form_firstname"
 msgstr "Имя"
 
-#: views/users/register.thtml:94 views/users/edit.thtml:119
+#: views/users/register.thtml:94 views/users/edit.thtml:125
 #: views/admin/users_edit.thtml:91
 msgid "user_form_hideemail"
 msgstr "Скрывать адрес эл. почты "
 
-#: views/users/register.thtml:98 views/users/edit.thtml:123
-#: views/admin/users_edit.thtml:99
+#: views/users/register.thtml:98 views/users/edit.thtml:120
+#: views/admin/users_edit.thtml:107
 msgid "user_form_homepage"
 msgstr "URL веб-сайта"
 
-#: views/users/register.thtml:84 views/users/edit.thtml:109
+#: views/users/register.thtml:84 views/users/edit.thtml:102
 #: views/admin/users_edit.thtml:81
 msgid "user_form_lastname"
 msgstr "Фамилия"
 
-#: controllers/users_controller.php:333
+#: views/users/edit.thtml:112 views/admin/users_edit.thtml:99
+#, fuzzy
+msgid "user_form_location"
+msgstr "Location"
+
+#: controllers/users_controller.php:339
 msgid "user_form_login"
 msgstr "Вход в систему"
 
-#: views/users/pwreset.thtml:72 views/users/edit.thtml:176
+#: views/users/edit.thtml:137 views/admin/users_edit.thtml:118
+#, fuzzy
+msgid "user_form_new_picture"
+msgstr "Upload a new picture?"
+
+#: views/users/pwreset.thtml:72 views/users/edit.thtml:191
 msgid "user_form_newpassword"
 msgstr "Новый пароль"
 
-#: views/users/register.thtml:89 views/users/edit.thtml:114
+#: views/users/register.thtml:89 views/users/edit.thtml:107
 #: views/admin/users_edit.thtml:86
 msgid "user_form_nickname"
 msgstr "Ник"
 
-#: views/users/edit.thtml:171
+#: views/users/edit.thtml:116 views/admin/users_edit.thtml:103
+#, fuzzy
+msgid "user_form_occupation"
+msgstr "Occupation"
+
+#: views/users/edit.thtml:186
 msgid "user_form_oldpassword"
 msgstr "Старый пароль"
 
-#: views/users/edit.thtml:97 views/users/edit.thtml:200
+#: views/users/edit.thtml:90 views/users/edit.thtml:215
 msgid "user_form_otheractions"
 msgstr "Другие действия"
 
-#: views/users/login.thtml:85 views/users/register.thtml:68
+#: views/users/login.thtml:84 views/users/register.thtml:68
 msgid "user_form_password"
 msgstr "Пароль"
 
-#: controllers/users_controller.php:93
+#: views/users/edit.thtml:129 views/admin/users_edit.thtml:112
+#, fuzzy
+msgid "user_form_picture"
+msgstr "Picture"
+
+#: controllers/users_controller.php:99
 msgid "user_form_registration"
 msgstr "Регистрация нового пользователя"
 
-#: views/users/login.thtml:90
+#: views/users/login.thtml:89
 msgid "user_form_remember_me"
 msgstr "Запомнить меня на этом компьютере"
 
@@ -7160,11 +8003,11 @@ msgstr "Запомнить меня на этом компьютере"
 msgid "user_form_showsandbox"
 msgstr "Показать «песочницу»?"
 
-#: views/users/edit.thtml:205
+#: views/users/edit.thtml:220
 msgid "user_form_submit_edit"
 msgstr "Сохранить"
 
-#: views/users/login.thtml:93
+#: views/users/login.thtml:92
 msgid "user_form_submit_login"
 msgstr "Войти"
 
@@ -7177,42 +8020,53 @@ msgstr "Регистрация"
 msgid "user_info_usersince"
 msgstr "Пользователь Mozilla Add-ons с"
 
-#: views/users/login.thtml:102
+#: views/users/login.thtml:101
 msgid "user_login_register_link"
 msgstr "Создать новую учётную запись"
 
-#: views/users/edit.thtml:160
+#: views/users/edit.thtml:175
 msgid "user_notifications_item_compat"
 msgstr "Совместимость дополнений (настоятельно рекомендуем для подписки)"
 
-#: views/users/edit.thtml:161
+#: views/users/edit.thtml:176
 msgid "user_notifications_item_events"
 msgstr "Предстоящие события и конкурсы"
 
-#: views/users/edit.thtml:156
+#: views/users/edit.thtml:171
 msgid "user_notifications_none_available"
 msgstr "В данное время у вас нет уведомлений, которые можно настроить."
 
-#: views/users/edit.thtml:158
+#: views/users/edit.thtml:173
 msgid "user_notifications_select_topics"
 msgstr ""
 "Время от времени Mozilla может посылать вам письма с информацией о выходящих "
 "в скором времени версиях приложений и событиях, касающихся дополнений. "
 "Пожалуйста, выберите темы, в которых вы заинтересованы:"
 
-#: views/users/edit.thtml:164
+#: views/users/edit.thtml:179
 msgid "user_notifications_specific_contact"
 msgstr ""
 "Mozilla оставляет за собой право связаться с вами лично, в случае, если "
 "возникнут вопросы по размещенным вами дополнениям."
 
-#: controllers/users_controller.php:543
+#. %1$s is a user's email address or name
+#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#, fuzzy
+msgid "user_picture_alt_name"
+msgstr "Picture of %1$s"
+
+#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#, fuzzy
+msgid "user_picture_alt_no_picture"
+msgstr "No photo"
+
+#: controllers/users_controller.php:572
 msgid "user_profile_edit_error"
 msgstr ""
 "В изменениях, которые вы сделали, имеются ошибки. Исправьте их и отправьте "
 "данные заново…"
 
-#: controllers/users_controller.php:540
+#: controllers/users_controller.php:569
 msgid "user_profile_saved"
 msgstr "Профиль обновлён."
 
@@ -7221,20 +8075,20 @@ msgstr "Профиль обновлён."
 msgid "user_pwreset_for_email"
 msgstr "Сброс пароля для %s"
 
-#: controllers/users_controller.php:226
+#: controllers/users_controller.php:232
 msgid "user_pwreset_header"
 msgstr "Сброс пароля"
 
-#: views/users/login.thtml:103
+#: views/users/login.thtml:102
 msgid "user_pwreset_link"
 msgstr "Забыли пароль?"
 
-#: controllers/users_controller.php:248
+#: controllers/users_controller.php:254
 msgid "user_pwreset_link_sent"
 msgstr ""
 "Ссылка для сброса пароля была отправлена на адрес вашей электронной почты."
 
-#: controllers/users_controller.php:304
+#: controllers/users_controller.php:310
 msgid "user_pwreset_okay"
 msgstr "Пароль успешно сброшен."
 
@@ -7315,31 +8169,31 @@ msgstr "Спасибо за регистрацию! Добро пожалова�
 msgid "user_register_welcome_header"
 msgstr "Добро пожаловать на addons.mozilla.org (AMO)!"
 
-#: views/users/register.thtml:81 views/users/edit.thtml:106
+#: views/users/register.thtml:81 views/users/edit.thtml:99
 msgid "user_required_firstlast_or_nickname"
 msgstr "Требуется имя, фамилия или ник."
 
-#: views/users/edit.thtml:94 views/users/edit.thtml:142
+#: views/users/edit.thtml:87 views/users/edit.thtml:157
 msgid "user_tab_collections"
 msgstr "Подборки"
 
-#: views/users/edit.thtml:95 views/users/edit.thtml:154
+#: views/users/edit.thtml:88 views/users/edit.thtml:169
 msgid "user_tab_notifications"
 msgstr "Уведомления"
 
-#: views/users/edit.thtml:93 views/users/edit.thtml:101
+#: views/users/edit.thtml:86 views/users/edit.thtml:94
 msgid "user_tab_profile"
 msgstr "Профиль пользователя"
 
-#: controllers/users_controller.php:209
+#: controllers/users_controller.php:215
 msgid "user_verified_okay"
 msgstr "Проверка успешно завершена!"
 
-#: controllers/users_controller.php:723
+#: controllers/users_controller.php:755
 msgid "users_delete_pagetitle"
 msgstr "Удаление учётной записи"
 
-#: controllers/users_controller.php:414
+#: controllers/users_controller.php:421
 msgid "users_edit_pagetitle"
 msgstr "Изменение настроек учётной записи пользователя"
 
@@ -7381,7 +8235,7 @@ msgstr "Домашняя страница"
 msgid "users_info_nickname"
 msgstr "Ник"
 
-#: controllers/users_controller.php:707
+#: controllers/users_controller.php:739
 #, php-format
 msgid "users_info_pagetitle"
 msgstr "Информация о пользователе %1$s"
@@ -7392,7 +8246,7 @@ msgstr "Информация о пользователе %1$s"
 msgid "users_info_reviews_by_user"
 msgstr "Отзывы от %s"
 
-#: controllers/users_controller.php:330 controllers/users_controller.php:332
+#: controllers/users_controller.php:336 controllers/users_controller.php:338
 msgid "users_login_pagetitle"
 msgstr "Вход пользователя в систему"
 
@@ -7420,17 +8274,17 @@ msgstr ""
 "учётная запись на Mozilla Add-ons, пожалуйста войдите в систему или <a href="
 "\"%1$s\">почитайте больше о «песочнице»</a>."
 
-#: controllers/users_controller.php:223 controllers/users_controller.php:225
+#: controllers/users_controller.php:229 controllers/users_controller.php:231
 msgid "users_pwreset_pagetitle"
 msgstr "Сброс пароля пользователя"
 
-#: controllers/users_controller.php:90 controllers/users_controller.php:92
+#: controllers/users_controller.php:96 controllers/users_controller.php:98
 msgid "users_register_pagetitle"
 msgstr "Регистрация нового пользователя"
 
 #. %1$s is an addon name, like <a>Firebug</a>
 #. %2$s is a version number, like <a>1.2</a>
-#: views/versions/license.thtml:52
+#: views/versions/license.thtml:53 controllers/versions_controller.php:61
 msgid "versions_license_header_source"
 msgstr "Лицензия на исходный код для %1$s %2$s"
 
@@ -7446,6 +8300,9 @@ msgstr "Просмотреть по кол-ву загрузок"
 msgid "view_top_rated"
 msgstr "Просмотреть по рейтингу"
 
+#~ msgid "addon_downloads_total"
+#~ msgstr "загрузок всего"
+
 #~ msgid "addon_slider_tooltip_next"
 #~ msgstr "Следующее дополнение"
 
@@ -7455,8 +8312,45 @@ msgstr "Просмотреть по рейтингу"
 #~ msgid "addon_versions_getlatesttext"
 #~ msgstr "Самая последняя версия совместима с"
 
+#~ msgid "addons_display_advanced_details"
+#~ msgstr "Дополнительные детали"
+
+#~ msgid "addons_display_categories"
+#~ msgstr "Категории"
+
+#~ msgid "addons_display_has_privacy"
+#~ msgstr "У данного дополнения есть собственная политика конфиденциальности."
+
+#~ msgid "addons_display_header_developer_comments"
+#~ msgstr "Комментарии разработчика"
+
+#~ msgid "addons_display_long_description"
+#~ msgstr "Подробное описание"
+
+#~ msgid "addons_display_more_images"
+#~ msgstr "Другие изображения"
+
+#~ msgid "addons_display_rate_it"
+#~ msgstr "Оценить"
+
+#~ msgid "addons_display_review_submit"
+#~ msgstr "Сохранить"
+
+# %1 is the number of reviews
+#~ msgid "addons_display_see_all_reviews"
+#~ msgstr "Просмотреть все отзывы (%1$s)"
+
+#~ msgid "addons_display_see_all_versions"
+#~ msgstr "Отобразить все версии"
+
 #~ msgid "addons_display_version_history"
 #~ msgstr "Полная история версий"
+
+#~ msgid "addons_display_view_stats"
+#~ msgstr "Просмотреть статистику"
+
+#~ msgid "addons_home_feature_head"
+#~ msgstr "Мы рекомендуем"
 
 #~ msgid "addons_home_newest_header"
 #~ msgstr "Новейшие:"
@@ -7472,6 +8366,12 @@ msgstr "Просмотреть по рейтингу"
 
 #~ msgid "addons_home_view_all"
 #~ msgstr "Просмотреть все"
+
+#~ msgid "addons_share_button_text"
+#~ msgstr "Сообщить другим"
+
+#~ msgid "audit_update_tags"
+#~ msgstr "%1$s обновил переводы категории для %2$s"
 
 #~ msgid "category_extra_allrecommended"
 #~ msgstr "Просмотреть все рекомендуемые дополнения"
@@ -7490,6 +8390,38 @@ msgstr "Просмотреть по рейтингу"
 
 #~ msgid "collections_detail_more_info"
 #~ msgstr "Подробнее"
+
+#~ msgid "collections_family_tagline"
+#~ msgstr ""
+#~ "Дополнения, которые могут присматривать за вашими детьми и вашим "
+#~ "расписанием."
+
+#~ msgid "collections_family_title"
+#~ msgstr "Семейная жизнь"
+
+#~ msgid "collections_reference_tagline"
+#~ msgstr "Дополнения, которые помогут вам в онлайновых исследованиях."
+
+#~ msgid "collections_reference_title"
+#~ msgstr "Справочная"
+
+#~ msgid "collections_social_tagline"
+#~ msgstr "Дополнения для управления вашими социальными сетями."
+
+#~ msgid "collections_social_title"
+#~ msgstr "Социальный круг"
+
+#~ msgid "collections_travel_tagline"
+#~ msgstr "Дополнения, которые помогут вам в ваших путешествиях."
+
+#~ msgid "collections_travel_title"
+#~ msgstr "Набор путешественника"
+
+#~ msgid "collections_webdev_tagline"
+#~ msgstr "Дополнения, которые облегчат вам создание идеальных веб-сайтов."
+
+#~ msgid "collections_webdev_title"
+#~ msgstr "Набор инструментов веб-разработчика"
 
 #~ msgid "devcp_additem_firefox_notice"
 #~ msgstr ""
@@ -8074,6 +9006,13 @@ msgstr "Просмотреть по рейтингу"
 
 #~ msgid "devcp_theme_upload_preview_link"
 #~ msgstr "загрузили иллюстрацию"
+
+#~ msgid "devcp_uploader_p_update_file"
+#~ msgstr ""
+#~ "Просмотрите свой новый файл на <a %1$s>странице Версии и Файлы</a>, "
+#~ "проверьте <a %2$s>текущий статус</a> вашего дополнения, или <b>добавьте "
+#~ "примечания к выпуску</b> щёлкнув расположенную ниже кнопку (настоятельно "
+#~ "рекомендуется)."
 
 #~ msgid "devcp_version_edit_pagetitle"
 #~ msgstr "Изменить версию"
