@@ -135,9 +135,9 @@
                 <th><label><?=___('devcp_edit_contrib_label_where')?></label></th>
                 <td>
                   <?=$html->radio('Addon/annoying', array(
-                      Addon::CONTRIBUTIONS_PASSIVE => ___('devcp_edit_contrib_radio_ask_passive'),
-                      Addon::CONTRIBUTIONS_AFTER => ___('devcp_edit_contrib_radio_ask_after'),
-                      Addon::CONTRIBUTIONS_ROADBLOCK => ___('devcp_edit_contrib_radio_ask_roadblock')
+                      Addon::CONTRIBUTIONS_PASSIVE => sprintf(___('devcp_edit_contrib_radio_ask_passive_example'), $html->url('/developers/contributions/example/passive')),
+                      Addon::CONTRIBUTIONS_AFTER => sprintf(___('devcp_edit_contrib_radio_ask_after_example'), $html->url('/developers/contributions/example/after')),
+                      Addon::CONTRIBUTIONS_ROADBLOCK => sprintf(___('devcp_edit_contrib_radio_ask_roadblock_example'), $html->url('/developers/contributions/example/roadblock'))
                   ))?>
                 </td>
               </tr>
@@ -156,4 +156,14 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">$(document).ready(edit_contributions);</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    edit_contributions();
+    $('input[id^=annoying] + label a').click(function(e){
+        e.preventDefault();
+        $.get(this.href, function(content){
+            $(content).addClass('jqmWindow').appendTo(document.body).jqm().jqmShow();
+        })
+    });
+});
+</script>

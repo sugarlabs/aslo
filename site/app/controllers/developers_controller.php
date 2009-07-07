@@ -89,7 +89,7 @@ class DevelopersController extends AppController
         $this->cssAdd = array('developers');
         $this->publish('cssAdd', $this->cssAdd);
 
-        $this->jsAdd = array('developers', 'json');
+        $this->jsAdd = array('developers', 'json', 'jquery-ui/jqModal.js');
         $this->publish('jsAdd', $this->jsAdd);
         
         $this->publish('expand_categories', true);
@@ -1617,6 +1617,33 @@ class DevelopersController extends AppController
             }
         }
         $this->render();
+    }
+
+    /**
+     * Endpoint: /developers/contributions/example/(passive|after|roadblock)
+     *
+     * Displays an image and caption showing the workflows of different
+     * contribution annoyance levels.  Mostly intended for xhr modal dialog,
+     * but can also be a barebones fallback for non-js.
+     */
+    function contributions($ignored='/example/', $example) {
+        // Need separate cases for the text so gettext can see each one.
+        switch ($example) {
+        case 'passive':
+            $text = ___('devcp_edit_contrib_example_passive');
+            break;
+        case 'after':
+            $text = ___('devcp_edit_contrib_example_after');
+            break;
+        case 'roadblock':
+            $text = ___('devcp_edit_contrib_example_roadblock');
+            break;
+        default:
+            return $this->cakeError('error404');
+        }
+        $this->set('text', $text);
+        $this->set('image', $example);
+        $this->render('contrib_example');
     }
 }
 ?>
