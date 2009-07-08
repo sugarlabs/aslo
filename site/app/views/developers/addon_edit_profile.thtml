@@ -59,7 +59,7 @@ $this->translationBox = array(
     <?php if (isset($updated)) {
         echo $this->renderElement('notification', array(
             'type' => 'success',
-            'msg' => sprintf('Your <a href="%s">Developer Profile</a> has been updated.',
+            'msg' => sprintf(___('devcp_edit_profile_success_notification'),
                             $html->url("/addon/{$addon_id}/developers"))
         ));
     }
