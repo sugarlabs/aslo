@@ -113,7 +113,8 @@ class User extends AppModel
     var $default_fields = array('id', 'email', 'password', 'firstname',
         'lastname', 'nickname', 'bio', 'emailhidden', 'sandboxshown',
         'homepage', 'display_collections', 'display_collections_fav',
-        'confirmationcode', 'created', 'modified', 'notes', 'location',
+        'confirmationcode', 'resetcode', 'resetcode_expires', 
+        'created', 'modified', 'notes', 'location',
         'occupation');
 
     var $validate = array(
