@@ -152,13 +152,17 @@ class AddonsController extends AppController
     }
 
     function developers($addon_id, $extra=null) {
+        global $valid_status; 
+
         foreach ($this->Addon->getAuthors($addon_id) as $a) {
             $authors[] = $this->User->getUser($a['User']['id'], array('addons',));
         }
 
         foreach ($authors as $a) {
             foreach ($a['Addon'] as $addon) {
-                $other_addons[$addon['Addon']['id']] = $addon;
+                if (in_array($addon['Addon']['status'], $valid_status)) {
+                    $other_addons[$addon['Addon']['id']] = $addon;
+                }
             }
         }
 
