@@ -3081,14 +3081,13 @@ msgstr ""
 "あなたの寄付用口座は、ユーザの寄付が入金される <a href=\"%1$s\">PayPal の口座"
 "</a> です。"
 
-#: views/developers/addon_edit_contributions.thtml:131
+#: views/developers/addon_edit_contributions.thtml:135
 msgid "devcp_edit_contrib_amount"
 msgstr "ユーザはこの金額にとらわれない額の寄付を行う選択肢を持っています。"
 
 #: views/developers/addon_edit_contributions.thtml:122
 msgid "devcp_edit_contrib_asking"
-msgstr ""
-"ユーザに寄付を求めるときの希望金額を指定します。"
+msgstr "ユーザに寄付を求めるときの希望金額を指定します。"
 
 #: views/developers/addon_edit_contributions.thtml:69
 msgid "devcp_edit_contrib_before"
@@ -3099,13 +3098,18 @@ msgid "devcp_edit_contrib_button_profile"
 msgstr "開発者プロフィールを作成"
 
 #: views/developers/addon_edit_contributions.thtml:66
-#: views/developers/addon_edit_contributions.thtml:150
+#: views/developers/addon_edit_contributions.thtml:154
 msgid "devcp_edit_contrib_button_start"
 msgstr "寄付のお願いを始める"
 
-#: views/developers/addon_edit_contributions.thtml:152
+#: views/developers/addon_edit_contributions.thtml:156
 msgid "devcp_edit_contrib_button_update"
 msgstr "寄付の設定を更新"
+
+#: views/developers/addon_edit_contributions.thtml:132
+#, fuzzy
+msgid "devcp_edit_contrib_currency_example"
+msgstr "(US Dollars.  Example: 3.99)"
 
 #: views/developers/addon_edit_contributions.thtml:89
 msgid "devcp_edit_contrib_currently_asking"
@@ -3156,7 +3160,7 @@ msgstr "PayPal ID"
 msgid "devcp_edit_contrib_label_suggested"
 msgstr "希望する金額"
 
-#: views/developers/addon_edit_contributions.thtml:135
+#: views/developers/addon_edit_contributions.thtml:139
 msgid "devcp_edit_contrib_label_where"
 msgstr "お願いする場所"
 
@@ -3165,22 +3169,19 @@ msgid "devcp_edit_contrib_pp_signup"
 msgstr "PayPal へログイン"
 
 #. %1$s is a URL where the user can see an example
-#: views/developers/addon_edit_contributions.thtml:139
+#: views/developers/addon_edit_contributions.thtml:143
 msgid "devcp_edit_contrib_radio_ask_after_example"
-msgstr ""
-"ユーザがこのアドオンのダウンロードを始めた後 (<a href=\"%1$s\">例</a>)"
+msgstr "ユーザがこのアドオンのダウンロードを始めた後 (<a href=\"%1$s\">例</a>)"
 
 #. %1$s is a URL where the user can see an example
-#: views/developers/addon_edit_contributions.thtml:138
+#: views/developers/addon_edit_contributions.thtml:142
 msgid "devcp_edit_contrib_radio_ask_passive_example"
-msgstr ""
-"アドオンのページおよび開発者プロフィールのみ (<a href=\"%1$s\">例</a>)"
+msgstr "アドオンのページおよび開発者プロフィールのみ (<a href=\"%1$s\">例</a>)"
 
 #. %1$s is a URL where the user can see an example
-#: views/developers/addon_edit_contributions.thtml:140
+#: views/developers/addon_edit_contributions.thtml:144
 msgid "devcp_edit_contrib_radio_ask_roadblock_example"
-msgstr ""
-"ユーザがこのアドオンのダウンロードを始める前 (<a href=\"%1$s\">例</a>)"
+msgstr "ユーザがこのアドオンのダウンロードを始める前 (<a href=\"%1$s\">例</a>)"
 
 #: views/developers/addon_edit_contributions.thtml:63
 msgid "devcp_edit_contrib_start"
@@ -3188,9 +3189,9 @@ msgstr ""
 "<p>寄付は、あなたのアドオンを金銭的に支援する方法をユーザに提供します。寄付の"
 "設定を行うと、以下のようなことができます。</p><ul><li>アドオンの公開ページで"
 "ユーザに寄付を求める</li><li>クレジットカードもしくは PayPal 口座を利用した寄"
-"付の方法をユーザに提供する</li><li>指定した <a href='https://www.paypal.com/'"
-" target='_blank'>PayPal 口座</a> への寄付の振り込み</li></ul><p>用意はできま"
-"したか？ 以下のボタンをクリックして寄付のお願いを始めましょう。</p>"
+"付の方法をユーザに提供する</li><li>指定した <a href='https://www.paypal."
+"com/' target='_blank'>PayPal 口座</a> への寄付の振り込み</li></ul><p>用意はで"
+"きましたか？ 以下のボタンをクリックして寄付のお願いを始めましょう。</p>"
 
 #: views/developers/addon_edit_contributions.thtml:93
 msgid "devcp_edit_contrib_start_asking"
@@ -3369,12 +3370,18 @@ msgid "devcp_edit_profile_create"
 msgstr ""
 "<p>開発者プロフィールを利用してユーザに自己紹介をしませんか。</p><ul><li>この"
 "アドオンを作った経緯を説明しましょう。</li><li>今後の開発計画を伝えましょう。"
-"</li><li>あなたの取り組みの認知度を高めましょう。</li></ul><p>開発者プロフィ"
-"ールを作成する用意はできましたか？ 下のボタンをクリックして始めましょう。"
+"</li><li>あなたの取り組みの認知度を高めましょう。</li></ul><p>開発者プロ"
+"フィールを作成する用意はできましたか？ 下のボタンをクリックして始めましょう。"
 
 #: views/developers/addon_edit_profile.thtml:77
 msgid "devcp_edit_profile_header_create"
 msgstr "開発者プロフィールを作成"
+
+#. %1 is a URL.
+#: views/developers/addon_edit_profile.thtml:62
+#, fuzzy
+msgid "devcp_edit_profile_success_notification"
+msgstr "Your <a href=\"%1$s\">Developer Profile</a> has been updated."
 
 #: views/developers/addon_edit_profile.thtml:105
 msgid "devcp_edit_profile_trans_future_description"
