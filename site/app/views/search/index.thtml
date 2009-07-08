@@ -175,7 +175,7 @@ global $app_shortnames, $app_prettynames;
 					} else {
 						$selected = "";
 					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">All</a></li>';
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('search_refine_all_categories_link', 'All').'</a></li>';
 					$results_categories = array();
 					foreach ($search_results as $addon) {
 						if (!empty($addon['Category'])) {
