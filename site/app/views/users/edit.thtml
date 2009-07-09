@@ -128,7 +128,7 @@ $this->translationBox = array(
         <div class="line">
             <label class="amo-label-large" for="UserPictureData"><?=___('user_form_picture', 'Picture')?></label>
             <div class="edit-picture">
-                <img src="<?=$html->url("/user/{$user_id}/picture")?>" alt="<?=empty($this->data['User']['picture_data']) ? ___('user_picture_alt_no_picture', 'No photo') : sprintf(___('user_picture_alt_name', 'Picture of %1$s'), $this->data['User']['email'])?>" class="avatar photo-large photo" />
+                <img src="<?=$html->url("/user/{$user_id}/picture?{$this->data['User']['picture_hash']}{$_how_much_cake_sucks_on_a_scale_of_1_to_10}")?>" alt="<?=empty($this->data['User']['picture_data']) ? ___('user_picture_alt_no_picture', 'No photo') : sprintf(___('user_picture_alt_name', 'Picture of %1$s'), $this->data['User']['email'])?>" class="avatar photo-large photo" />
                 <br />
                 <?php if(!empty($this->data['User']['picture_data'])): ?>
                     <label for="UserRemovepicture"><?=___('user_form_delete_picture', 'Remove this picture?')?></label>

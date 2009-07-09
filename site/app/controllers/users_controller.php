@@ -416,20 +416,27 @@ class UsersController extends AppController
         }
         
         $sessionuser = $this->Session->read('User');
-        $this->publish('user_id', $sessionuser['id']);
+        $_current_user = $this->User->getUser($sessionuser['id']);
+
+        $this->publish('user_id', $_current_user['User']['id']);
         
         $this->pageTitle = _('users_edit_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms', 'jquery-ui/flora/flora.tabs'));
         $this->publish('jsAdd', array('jquery-ui/ui.core.min', 'jquery-ui/ui.tabs.min'));
 
-        $translations = $this->User->getAllTranslations($sessionuser['id']);
+        $translations = $this->User->getAllTranslations($_current_user['User']['id']);
         $this->set('translations', $translations);
 
         if (empty($this->data)) {
-            $this->publish('userAddons', $this->Addon->getAddonsByUser($sessionuser['id']));
+            $this->publish('userAddons', $this->Addon->getAddonsByUser($_current_user['User']['id']));
+
+            // jbalogh isn't going to let me live this one down, but let me explain! Cake doesn't respect us when we ask it not to cache queries
+            // so when we turn off query caching in getUser() it still doesn't actually redo the query.  This means for that page load the image
+            // isn't changed which means the picture_hash field isn't updated.  End result is the user updates their picture and on the first 
+            // reload it isn't changed.  By appending this to the end of the image URL we get an uncached version iff they've updated it.
+            $this->publish('_how_much_cake_sucks_on_a_scale_of_1_to_10', 11);
             
-            $userdata = $this->User->getUser($sessionuser['id']);
-            $this->data['User'] = $userdata['User'];
+            $this->data['User'] = $_current_user['User'];
             $this->data['User']['password'] = '';
             $this->render();
             return;
@@ -448,7 +455,7 @@ class UsersController extends AppController
         $changed['display_collections_fav'] = $this->data['User']['display_collections_fav'];
 
         // Picture fields.
-        if (array_key_exists('removepicture', $this->data['User'])) {
+        if (@$this->data['User']['removepicture'] == 1) {
             $changed['picture_data'] = null;
             $changed['picture_type'] = '';
         } else if ($this->data['User']['picture_data']['error'] != 4) {
@@ -462,15 +469,15 @@ class UsersController extends AppController
             }
         } else {
             // default to the current data
-            $changed['picture_data'] = $sessionuser['picture_data'];
-            $changed['picture_type'] = $sessionuser['picture_type'];
+            $changed['picture_data'] = $_current_user['User']['picture_data'];
+            $changed['picture_type'] = $_current_user['User']['picture_type'];
         }
 
         if (!empty($this->data['User']['password']) &&
             !empty($this->data['User']['newpassword'])) {
             
             // trying to change the password
-            if (!$this->User->checkPassword($sessionuser, $this->data['User']['password']))
+            if (!$this->User->checkPassword($_current_user['User'], $this->data['User']['password']))
                 $this->User->invalidate('password');
             if ($this->data['User']['newpassword'] != $this->data['User']['confirmpw'])
                 $this->User->invalidate('confirmpw');
@@ -488,7 +495,7 @@ class UsersController extends AppController
             
             $allnicks = $this->User->findAllByNickname($changed['nickname']);
             if (count($allnicks) > 1 ||
-                (count($allnicks) == 1 && $allnicks[0]['User']['id'] != $sessionuser['id'])) {
+                (count($allnicks) == 1 && $allnicks[0]['User']['id'] != $_current_user['User']['id'])) {
                 $this->User->invalidate('nickname');
             }
         }
@@ -498,7 +505,7 @@ class UsersController extends AppController
             $this->User->invalidate('email');
             $this->publish('error_email_empty', true);
             
-        } elseif ($this->data['User']['email'] != $sessionuser['email']) {
+        } elseif ($this->data['User']['email'] != $_current_user['User']['email']) {
             
             $newemail = $this->data['User']['email'];
             
@@ -520,7 +527,7 @@ class UsersController extends AppController
         $changed['notifyevents'] = array_key_exists('notifyevents', $this->data['User']) ? $this->data['User']['notifyevents'] : '';
         
         // save it
-        $this->User->id = $sessionuser['id'];
+        $this->User->id = $_current_user['User']['id'];
         $this->User->data['User'] = $changed;
         if (!$this->User->save()) {
             // wipe password fields before returning
@@ -531,25 +538,28 @@ class UsersController extends AppController
             if (!empty($newemail))
                 $this->data['User']['email'] = $newemail;
             else
-                $this->data['User']['email'] = $sessionuser['email'];
+                $this->data['User']['email'] = $_current_user['User']['email'];
 
             $this->publish('errorMessage', true);
+            $this->publish('_how_much_cake_sucks_on_a_scale_of_1_to_10', 11);
             $this->render();
             return;
         }
+        // Get the old user out of memcache so our form looks right
+        if (QUERY_CACHE) $this->User->Cache->flushMarkedLists();
         // if we get here, the data was saved successfully
         
         // save author "about me"
         list($localizedFields, $unlocalizedFields) = $this->User->splitLocalizedFields($this->data['User']);
         $this->Amo->clean($localizedFields);
-        $this->User->saveTranslations($sessionuser['id'], $this->params['form']['data']['User'], $localizedFields);
+        $this->User->saveTranslations($_current_user['User']['id'], $this->params['form']['data']['User'], $localizedFields);
 
         // send out confirmation email if necessary
         if ($newemail !== false) {
             $this->set('newemail', $newemail);
-            $this->set('userid', $sessionuser['id']);
+            $this->set('userid', $_current_user['User']['id']);
             // generate email change code
-            $changedata = array($sessionuser['email'], $newemail, time());
+            $changedata = array($_current_user['User']['email'], $newemail, time());
             $token = implode(',', $changedata);
             // hash with a secret to be able to check for validity later
             $secret = $this->_getSecret();
@@ -563,9 +573,11 @@ class UsersController extends AppController
             $result = $this->Email->send();
         }
         
-        $newprofile = $this->User->getUser($sessionuser['id']);
+        $newprofile = $this->User->getUser($_current_user['User']['id']);
         if (!empty($newprofile)) {
-            $this->Session->write('User', $newprofile['User']);
+            $_new_session_user = $newprofile['User'];
+            $_new_session_user['picture_data'] = $_new_session_user['picture_type'] = '';
+            $this->Session->write('User', $_new_session_user);
             $this->publish('confirmation_message', _('user_profile_saved'));
         } else {
             // this should never happen, but anyway...
@@ -574,6 +586,7 @@ class UsersController extends AppController
 
         $this->data['User'] = $newprofile['User'];
         $this->data['User']['password'] = '';
+        $this->publish('_how_much_cake_sucks_on_a_scale_of_1_to_10', rand(11,10000));
         $this->publish('confirmation_page', true);
         
         $this->render();

@@ -145,7 +145,11 @@ class User extends AppModel
             array('picture_data', 'picture_type')));
 
         // Add anything extra
-        $user['User']['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
+            // Figure out the user's display name.  Nickname if set, otherwise first+last
+            $user['User']['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
+
+            // Calculate their picture's hash - used to expire cache
+            $user['User']['picture_hash'] = md5("{$user['User']['picture_data']}:{$user['User']['picture_type']}");
 
         if (in_array('addons', $associations)) {
             loadModel('Addons');
