@@ -42,7 +42,7 @@ $(document).ready(function(){
 		e.stopPropagation();
 	});
 	
-	$("#tags .remove-tags button").live("click",function(e){
+	$("#tags .remove-tags .removetag").live("click",function(e){
 		var form = $("#tags .remove-tags");
 		form.find(":input[name='ajax']").val("1");
 		

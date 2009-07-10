@@ -55,14 +55,14 @@
 foreach ($developerTags as $_tag) {
     echo "<li id='taglink-".$_tag['Tag']['id']."' class='developertag'>".$html->link($_tag['Tag']['tag_text'], "/tag/".$_tag['Tag']['tag_text'], array('class'=>'tagitem'));
     if (@$_tag['Tag']['OwnerOrDeveloper']==1) {
-        echo '<button type="submit" class="link removetag" name="tagid" value="'.$_tag['Tag']['id'].'"><span>x</span></button>'."\n";
+        echo $html->submitImage("amo2009/icons/cross.png",array("name" => "tagid", "value" => $_tag['Tag']['id'], "alt" => ___('tags_alt_remove_tag', 'Remove this tag'), "title" => ___('tags_alt_remove_tag', 'Remove this tag'), "class" => "removetag"));
 	}
 }
 //  user tag list
 foreach ($userTags as $_tag) {
     echo "<li id='taglink-".$_tag['Tag']['id']."' class='usertag'>".$html->link($_tag['Tag']['tag_text'], "/tag/".$_tag['Tag']['tag_text'], array('class'=>'tagitem'));
     if (@$_tag['Tag']['OwnerOrDeveloper']==1) {
-		echo '<button type="submit" class="link removetag" name="tagid" value="'.$_tag['Tag']['id'].'"><span>x</span></button>'."\n";
+		echo $html->submitImage("amo2009/icons/cross.png",array("name" => "tagid", "value" => $_tag['Tag']['id'], "alt" => ___('tags_alt_remove_tag', 'Remove this tag'), "title" => ___('tags_alt_remove_tag', 'Remove this tag'), "class" => "removetag"));
 	}
 }
 ?>
