@@ -44,6 +44,22 @@ global $app_shortnames, $app_prettynames;
 // This is the string that I pass to 'hrefs' to Filter the results. Has to be a better way:
 // $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp)
 
+// TODO(jbalogh): it turns out duplication is not good. bug 503588
+$params = array(
+    'q' => $search_terms,
+    'appid' => $appid,
+    'cat' => join(',', $category),
+    'tag' => $tag,
+    'atype' => $atype,
+    'pid' => $pid,
+    'lup' => $lup,
+    'sort' => $sort,
+    'hver' => $hver,
+    'lver' => $lver,
+    'vfuz' => $vfuz,
+    'pp' => $pp
+);
+
 ?>
 
 
@@ -104,6 +120,12 @@ global $app_shortnames, $app_prettynames;
 						);
 						$html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
 					?>
+                    <?php foreach ($params as $name => $val): ?>
+                        <?php /* Skip sort, we're changing that above. */ ?>
+                        <?php if ($name != 'sort'): ?>
+                          <input type="hidden" name="<?=$name?>" value="<?=$val?>" />
+                        <?php endif; ?>
+                    <?php endforeach; ?>
 					<button><?=___('collections_index_button_go')?></button>
 		        </form>
 				<script type="text/javascript">collections.init();</script>
