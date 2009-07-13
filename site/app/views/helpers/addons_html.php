@@ -621,7 +621,7 @@ class AddonsHtmlHelper extends HtmlHelper
         return $url;
     }
 
-    function radio($fieldName, $options, $htmlAttributes=array()) {
+    function radio_list($fieldName, $options, $htmlAttributes=array()) {
         $this->setFormTag($fieldName);
 		$value = isset($htmlAttributes['value']) ? $htmlAttributes['value'] : $this->tagValue($fieldName);
         $out = array();
