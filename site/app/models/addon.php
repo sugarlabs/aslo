@@ -871,7 +871,7 @@ class Addon extends AppModel
 	/**
 	 * -trigger trg_tag_stat_dec will update tag_stat
 	 */
-	function removeTagFromAddons($tag_id, $addon_id) {
+	function removeTagFromAddon($tag_id, $addon_id) {
         if (!(is_numeric($tag_id) && is_numeric($addon_id))) {
             return false;
         }

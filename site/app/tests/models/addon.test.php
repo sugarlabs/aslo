@@ -159,18 +159,18 @@ class AddonModelTest extends UnitTestCase {
 	
 	
 	
-	function testRemoveTagFromAddons() {
+	function testRemoveTagFromAddon() {
 		$stat = $this->Addon->Tag->TagStat->findByTagId($this->tag1Id);
 		$this->assertEqual($stat['TagStat']['num_addons'], 3);
 		
 		// removing this tag from this addon should remove 3 instances of them
-		$this->Addon->removeTagFromAddons($this->tag1Id,1);
+		$this->Addon->removeTagFromAddon($this->tag1Id,1);
 		$stat = $this->Addon->Tag->TagStat->findByTagId($this->tag1Id);
 		$this->assertEqual($stat['TagStat']['num_addons'], 0);
 		
 		$stat = $this->Addon->Tag->TagStat->findByTagId($this->tag2Id);
 		$this->assertEqual($stat['TagStat']['num_addons'], 6);
-		$this->Addon->removeTagFromAddons($this->tag2Id,3);
+		$this->Addon->removeTagFromAddon($this->tag2Id,3);
 		$stat = $this->Addon->Tag->TagStat->findByTagId($this->tag2Id);
 		$this->assertEqual($stat['TagStat']['num_addons'], 3);
 		

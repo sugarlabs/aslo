@@ -252,7 +252,7 @@ class TagsController extends AppController
         $user = $this->Session->read('User');
 
         $this->Addon->caching = false;    
-		$this->Addon->removeTagFromAddons($tag_id, $addon_id);
+		$this->Addon->removeTagFromAddon($tag_id, $addon_id);
 		
 		// Get tag list for addon
         $this->Addon->bindOnly('Tag', 'User');
