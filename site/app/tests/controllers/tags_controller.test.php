@@ -45,37 +45,66 @@ class TagsControllerTest extends UnitTestCase {
 		//$this->helper->mockModels($this->controller, $this);
 		$this->helper->mockComponents($this->controller, $this);
 		
-		
-
         loadModel('Addon');
         $this->Addon =& new Addon();
         $this->Addon->caching = false;
         $this->Addon->cacheQueries = false;
-	}
 
-	
-	function testTagAddAjax() {
-		// log in first
-		
-				$username = 'nobody@mozilla.org';
-        $pw = 'test';
         $this->controller->Session =& new MockSessionComponent();
-        
-        $this->usercontroller = $this->helper->getController('Users', $this);
-        $this->helper->mockComponents($this->usercontroller, $this);
-        
-        $this->usercontroller->data = array();
-        $this->usercontroller->data['Login']['email'] = $username;
-        $this->usercontroller->data['Login']['password'] = $pw;
-        $this->helper->callControllerAction($this->usercontroller, 'login', $this);
-		
-        $this->helper->callControllerAction($this->controller, 'add_ajax', $this, array('9','booya'));
-
-	
 	}
-	
-	
-	
+
+    function _addTag($addonid, $tagid, $userid) {
+        $this->Addon->addTag($addonid,$tagid,$userid);
+
+        $_res = $this->Addon->execute("SELECT tag_id FROM users_tags_addons where user_id= {$userid} and tag_id={$tagid} and addon_id={$addonid}");
+
+        $this->assertEqual(count($_res), 1, 'Tag successfully added');
+
+    }
+
+    function _doesTagExist($addonid, $tagid, $userid) {
+        $_res = $this->Addon->execute("SELECT tag_id FROM users_tags_addons where user_id= {$userid} and tag_id={$tagid} and addon_id={$addonid}");
+
+        if (count($_res) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    function testRemove() {
+        $this->helper->login($this->controller);
+
+        // We're user id 5.  Try to remove a tag we create
+            $this->_addTag(4,1,5); // regular user
+            $_POST['addonid'] = 4;
+            $_POST['tagid'] = 1;
+            $this->controller->remove();
+            $this->assertFalse($this->_doesTagExist(4,1,5), 'Tag removed as owner');
+
+        // Try to remove a tag we didn't create (bug 501828)
+            $this->_addTag(2,1,8); // regular user
+            $_POST['addonid'] = 2;
+            $_POST['tagid'] = 1;
+            $this->assertTrue(($this->controller->remove()===false), 'Remove() rejects invalid remove attempts');
+            $this->assertTrue($this->_doesTagExist(2,1,8), 'Tag not removed when user is not an owner');
+
+        // Create a tag as a normal user, attempt to delete it as a developer
+            $this->_addTag(7,1,1); // regular user
+            $_POST['addonid'] = 7;
+            $_POST['tagid'] = 1;
+            $this->controller->remove(); // we're a developer for add-on id 7
+            $this->assertFalse($this->_doesTagExist(7,1,1), 'Tag removed when user is a developer');
+
+        // Create a tag on an add-on as ourselves, add it to another add-on as another user, try to remove it from other add-on as ourselves
+            $this->_addTag(6,1,5); // regular user
+            $this->_addTag(5,1,4); // regular user
+            $_POST['addonid'] = 5;
+            $_POST['tagid'] = 1;
+            $this->assertTrue(($this->controller->remove()===false), 'Remove() rejects invalid remove attempts');
+            $this->assertTrue($this->_doesTagExist(5,1,4), 'Tag not removed when user is not an owner');
+    }
 	
 }
 ?>

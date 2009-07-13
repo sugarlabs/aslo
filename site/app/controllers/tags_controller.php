@@ -251,13 +251,20 @@ class TagsController extends AppController
 
         $user = $this->Session->read('User');
 
+        $addon_data = $this->Addon->getAddon($addon_id, array('authors', 'all_tags'));
+        $tags = $this->Tag->makeTagList($addon_data, $user);
+
+        if (!$this->Tag->userCanModifyTagForAddonFromList($user['id'], $tag_id, $tags)) {
+            return false;
+        }
+
         $this->Addon->caching = false;    
 		$this->Addon->removeTagFromAddon($tag_id, $addon_id);
-		
-		// Get tag list for addon
-        $this->Addon->bindOnly('Tag', 'User');
- 		$addon_data = $this->Addon->findById($addon_id);
+        $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
+
+		// Get tag list for addon, without the extra add-on
         $tags = $this->Tag->makeTagList($addon_data, $user);
+		
         $this->publish('addon_id', $addon_data['Addon']['id']);
         $this->publish('userTags', $tags['userTags']);
         $this->publish('developerTags', $tags['developerTags']);  
@@ -272,8 +279,6 @@ class TagsController extends AppController
  			}
 			$this->redirect('/addon/' . $addon_id);	    
 		}
-     
-		
 	}
 		
 	function splitTags($string) {

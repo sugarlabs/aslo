@@ -86,11 +86,13 @@ class Tag extends AppModel
         // Two queries for the price of one. :(
         return $this->findById($_ret[0]['tags']['id']);
     }
+
  	/**
  	 * 
  	 */
 	function makeTagList($addon_data, $user) {
         $this->caching = false;
+        $this->cacheQueries = false;
 	
       // Make a list of user_ids for the addon owners so we can see if these count as developer tags
        $developers = array();
@@ -109,30 +111,63 @@ class Tag extends AppModel
         } 
 
         if (!empty($_related_tag_ids)) {
+            $this->bindModel(array('hasMany' => array('UserTagAddon' =>
+                array(
+                    'className' => 'UserTagAddon', 
+                    'conditions' => array('addon_id' => $addon_data['Addon']['id'])
+                )))
+            );
             $related_tags = $this->findAll("Tag.id IN (".implode(',', $_related_tag_ids).") and blacklisted=0",null,"Tag.tag_text asc");      	
+            $this->__resetAssociations();
 				// Go through tags and assign developer status and owner status
 				foreach ($related_tags as $tag) {
-					// If the logged in user owns the tag or is a developer of this addon, mark the tag element
-					if ($user) {
-						if (($tag['UserTagAddon'][0]['user_id']==$user['id'])  || (in_array($user['id'],$developers))) {
-							$tag['Tag']['OwnerOrDeveloper'] = 1;
-						}
-						$tag['LoggedInUser']=$user;
-					}
-					if (in_array($tag['UserTagAddon'][0]['user_id'], $developers)) {
-                        $developerTags[] = $tag;			
-					} else {
-                        $userTags[] = $tag;					
-					}
+                    // If the logged in user owns the tag or is a developer of this addon, mark the tag element.  Sometimes this comes back empty
+                    // due to cake caching the Tag association but not the UserTagAddon
+                    if (!empty($tag['UserTagAddon'])) {
+                        if ($user) {
+                            if (($tag['UserTagAddon'][0]['user_id']==$user['id'])  || (in_array($user['id'],$developers))) {
+                                $tag['Tag']['OwnerOrDeveloper'] = 1;
+                            }
+                        }
+                        if (in_array($tag['UserTagAddon'][0]['user_id'], $developers)) {
+                            $developerTags[] = $tag;			
+                        } else {
+                            $userTags[] = $tag;					
+                        }
+                    }
 				}
-        } else {
-            $related_tags = array();
         }
 		
 		$this->caching = true;
-		
+	
 		return array('userTags'=>$userTags, 'developerTags'=>$developerTags);
 	}		 	
+
+ 	/**
+ 	 * Checks if a user can modify a tag if you've already got the output of makeTagList()
+     *
+     * @param int user id
+     * @param int tag id
+     * @param array output from makeTagList()
+     *
+ 	 */
+    function userCanModifyTagForAddonFromList($user_id, $tag_id, $tag_list) {
+
+        $_list = $tag_list['userTags'] + $tag_list['developerTags'];
+
+        foreach ($_list as $tag) {
+
+            if ($tag['Tag']['id'] != $tag_id) {
+                continue;
+            }
+
+            if (@$tag['Tag']['OwnerOrDeveloper'] == 1) {
+                return true;
+            }
+        }
+
+        return false; 
+    }
  	
  	/**
  	 * 
