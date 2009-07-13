@@ -815,34 +815,6 @@ class Addon extends AppModel
         $sql = "UPDATE addons SET sharecount = sharecount + {$number} WHERE id = {$addonid};";
         return $this->execute($sql);
     }
-
-    /* * * * * * deprecated functions * * * * * */
-    /**
-     * Get addons in a category, sorted by name, popularity (weekly downloads)
-     * or "recently updated" (last file approval timestamp).
-     *
-     * @deprecated since 4.0.1, use getAddonsFromCategory along with getAddonList instead
-     */
-    function getAddonsByCategory($fields = null, $status = array(STATUS_PUBLIC),
-        $addontypes = ADDON_EXTENSION, $category = 'all', $sort_by = 'name',
-        $direction = 'ASC', $limit = '5', $page = '1', $friends = '', $includeFiles = false) {
-
-        $associations = array('all_categories', 'authors', 'compatible_apps',
-            'latest_version', 'list_details');
-        if ($includeFiles) {
-            $associations[] = 'files';
-            sort($associations);
-        }
-        // are we just counting the total rows?
-        $counting = (is_string($fields) && strpos(low($fields), 'count') === 0);
-        if (!$counting) {
-            $ids = $this->getAddonsFromCategory($status, $addontypes, $category,
-                $sort_by, $direction, $limit, $page, $friends);
-            return $this->getAddonList($ids, $associations);
-        } else {
-            return $this->countAddonsInCategory($status, $addontypes, $category, $friends);
-        }
-    }
     
     /**
      * adds a tag to an addon
@@ -947,6 +919,34 @@ class Addon extends AppModel
         $config = $this->Config->getConfig();
         return (!$config['paypal_disabled'] && $a['wants_contributions'] &&
                 !empty($a['paypal_id']) && (float)$a['suggested_amount'] > 0);
+    }
+
+    /* * * * * * deprecated functions * * * * * */
+    /**
+     * Get addons in a category, sorted by name, popularity (weekly downloads)
+     * or "recently updated" (last file approval timestamp).
+     *
+     * @deprecated since 4.0.1, use getAddonsFromCategory along with getAddonList instead
+     */
+    function getAddonsByCategory($fields = null, $status = array(STATUS_PUBLIC),
+        $addontypes = ADDON_EXTENSION, $category = 'all', $sort_by = 'name',
+        $direction = 'ASC', $limit = '5', $page = '1', $friends = '', $includeFiles = false) {
+
+        $associations = array('all_categories', 'authors', 'compatible_apps',
+            'latest_version', 'list_details');
+        if ($includeFiles) {
+            $associations[] = 'files';
+            sort($associations);
+        }
+        // are we just counting the total rows?
+        $counting = (is_string($fields) && strpos(low($fields), 'count') === 0);
+        if (!$counting) {
+            $ids = $this->getAddonsFromCategory($status, $addontypes, $category,
+                $sort_by, $direction, $limit, $page, $friends);
+            return $this->getAddonList($ids, $associations);
+        } else {
+            return $this->countAddonsInCategory($status, $addontypes, $category, $friends);
+        }
     }
 }
 ?>
