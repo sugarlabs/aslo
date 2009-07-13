@@ -50,21 +50,24 @@
 	 	<?= $html->hiddenSession(); ?>
 		<input type="hidden" name="addonid" value="<?= $addon_id; ?>" />
 		<input type="hidden" name="ajax" value="0" />
-<?php
-//  developer tag list
-foreach ($developerTags as $_tag) {
-    echo "<li id='taglink-".$_tag['Tag']['id']."' class='developertag'>".$html->link($_tag['Tag']['tag_text'], "/tag/".$_tag['Tag']['tag_text'], array('class'=>'tagitem'));
-    if (@$_tag['Tag']['OwnerOrDeveloper']==1) {
-        echo $html->submitImage("amo2009/icons/cross.png",array("name" => "tagid", "value" => $_tag['Tag']['id'], "alt" => ___('tags_alt_remove_tag', 'Remove this tag'), "title" => ___('tags_alt_remove_tag', 'Remove this tag'), "class" => "removetag"));
-	}
-}
-//  user tag list
-foreach ($userTags as $_tag) {
-    echo "<li id='taglink-".$_tag['Tag']['id']."' class='usertag'>".$html->link($_tag['Tag']['tag_text'], "/tag/".$_tag['Tag']['tag_text'], array('class'=>'tagitem'));
-    if (@$_tag['Tag']['OwnerOrDeveloper']==1) {
-		echo $html->submitImage("amo2009/icons/cross.png",array("name" => "tagid", "value" => $_tag['Tag']['id'], "alt" => ___('tags_alt_remove_tag', 'Remove this tag'), "title" => ___('tags_alt_remove_tag', 'Remove this tag'), "class" => "removetag"));
-	}
-}
-?>
+        <?php
+        $tags = array('developertag' => $developerTags,
+                      'usertag' => $userTags);
+        foreach ($tags as $class => $taglist) {
+            foreach ($taglist as $tag) {
+                $t = $tag['Tag'];
+        ?>
+                <li id="taglink-<?=$t['id']?>" class="<?=$class?>">
+                    <a href="<?=$html->url('/tag/'.$t['tag_text'])?>" class="tagitem"><?=$t['tag_text']?></a>
+                    <?php if (@$t['OwnerOrDeveloper'] == 1): ?>
+                        <input type="submit" alt="<?=___('tags_alt_remove_tag')?>"
+                               name="tagid" value="<?=$t['id']?>"
+                               class="removetag" />
+                    <?php endif; ?>
+                </li>
+        <?php
+            }
+        }
+        ?>
 	</form>
 </ul>
