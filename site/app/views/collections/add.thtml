@@ -113,7 +113,11 @@
                 <?php
                 // add pre-selected add-ons
                 foreach ($initial_addons as &$_addon): ?>
-                collections_add.addAddon(['<?=$_addon['name']?>', '<?=$_addon['id']?>', '<?=$_addon['preview']?>']);
+                    collections_add.addAddon({
+                        id: '<?=$_addon['id']?>',
+                        html_name: '<?=$_addon['name']?>',
+                        iconpath: '<?=$_addon['preview']?>'
+                    });
                 <?php endforeach; ?>
             });
         </script>
