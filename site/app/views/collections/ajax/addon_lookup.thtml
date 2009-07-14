@@ -38,10 +38,10 @@
 
 
 header('Content-type: text/plain');
-define('NO_MICROTIME', true);
+if (!defined('NO_MICROTIME')) define('NO_MICROTIME', true);
 
+echo "[\n";
 if (!empty($addons)) {
-    echo "[\n";
     $addoncount = 0;
     foreach ($addons as &$addon) {
         if ($addoncount++ > 0) echo ',';
@@ -52,5 +52,5 @@ if (!empty($addons)) {
             'iconpath' => $addon['Addon']['iconpath']
         ));
     }
-    echo "]\n";
 }
+echo "]\n";
