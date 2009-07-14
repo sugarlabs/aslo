@@ -86,6 +86,12 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
 }
 ?>
 <div class="<?=join(' ', $flags)?> item">
+    <h3>
+        <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><?=$addonName?></a>
+        <span title="<?=___('addons_author_tooltip') ?>"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></span>
+	    <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonIconPath?>" width="32" height="32" alt="<?=$_alt?>" title="<?=$_alt?>" class="icon"/></a>
+    </h3>
+    
     <div class="item-info">
         <?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?>
         <span class="downloads"><strong><?=$html->number_format($addonWeeklyDownloads, 0)?></strong> <?=___('addon_downloads_weekly')?></span>
@@ -101,11 +107,7 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
 	        'addon' => $addon
 	    ))?>
     </div>
-    <h3>
-        <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><?=$addonName?></a>
-        <span title="<?=___('addons_author_tooltip') ?>"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></span>
-	    <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonIconPath?>" width="32" height="32" alt="<?=$_alt?>" title="<?=$_alt?>" class="icon"/></a>
-    </h3>
+    
     <blockquote cite="#"><p><?=$addonSummary?></p></blockquote>
 </div>
 
