@@ -175,14 +175,17 @@ class AddonsController extends AppController
         $this->set('authors', $authors);
         $this->set('num_authors', count($authors));
         $this->set('multiple', count($authors) > 1);
-        $this->set('addon', $addon);
-        $this->set('other_addons', $other_addons);
+        $this->publish('addon', $addon);
+        $this->publish('other_addons', $other_addons);
         $this->set('post_install', $extra === 'post_install');
         $this->set('roadblock', $extra === 'roadblock');
         $this->publish('breadcrumbs', array(
             sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
             $addon['Translation']['name']['string'] => '/addon/'.$addon['Addon']['id'],
         ));
+
+        $this->pageTitle = sprintf(n___('addon_developer_title', 'addon_developer_title',
+                                count($authors)), $addon['Translation']['name']['string']);
     }
 
     /**
