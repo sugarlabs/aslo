@@ -709,8 +709,9 @@ class CollectionsController extends AppController
         }
 
         if (isset($this->data[$type][$onlyme_fieldid]) && $this->data[$type][$onlyme_fieldid]) {
-            // remove all existing users with this role
-            $this->Collection->removeAllUsersByRole($id, $role);
+            // remove all existing users with this role, except ourselves
+            $user = $this->Session->read('User');
+            $this->Collection->removeAllUsersByRoleExcept($id, $role, $user['id']);
         } else {
             // remove old users
             if (!empty($this->data[$type]['delete'])) {

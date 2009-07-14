@@ -339,6 +339,22 @@ class Collection extends AppModel
     }
 
     /**
+     * Remove all user rights from a collection, by role
+     *
+     * @param int $collection_id
+     * @param int $role user role to remove, for example COLLECTION_ROLE_ADMIN
+     * @param int $userid user id, or array of user ids to exempt from deletion
+     */
+    function removeAllUsersByRoleExcept($collection_id, $role, $userid = array()) {
+        if (!is_array($userid)) $userid = array($userid);
+        return $this->execute(
+            "DELETE FROM collections_users "
+            ."WHERE collection_id={$collection_id} "
+            ."AND role={$role} "
+            ."AND user_id NOT IN (".implode(',', $userid).');');
+    }
+
+    /**
      * Deletes a collection
      *
      * @param int $id - collection id
