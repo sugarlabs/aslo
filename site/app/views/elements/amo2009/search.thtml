@@ -96,10 +96,10 @@ if(!isset($hver)) {
 array_shift($AmoPlatforms); // get rid of PLATFORM_ALL
 $platforms = array_merge(array(PLATFORM_ANY => ___('advanced_search_form_any_type')), $AmoPlatforms); //add semantically happy PLATFORM_ANY
 $pid = 0;
-if (isset($this->params['url']['pid'])
-    && in_array($this->params['url']['pid'], array_keys($platforms))) {
+if (isset($this->params['pid'])
+    && in_array($this->params['pid'], array_keys($platforms))) {
 
-    $pid = $this->params['url']['pid'];
+    $pid = $this->params['pid'];
 }
 
 // AmoAddonTypes is from controller->beforeRender()
@@ -133,10 +133,11 @@ $updates = array(
 );
 
 $lup = "";
-if (isset($this->params['url']['lup'])
-    && in_array($this->params['url']['lup'], array_keys($updates))) {
+// $this->params is encoded by default and turns our - into a &#45;
+if (isset($this->params['lup'])
+    && in_array(html_entity_decode($this->params['lup']), array_keys($updates))) {
 
-    $lup = $this->params['url']['lup'];
+    $lup = html_entity_decode($this->params['lup']);
 }
 
 $sort_orders = array(
@@ -155,7 +156,7 @@ if (!isset($sort)) {
 
 $toggle_uri = $_SERVER['REQUEST_URI'];
 
-if (@$advancedSearch || isset($this->params['url']['as'])) {
+if (@$advancedSearch || isset($this->params['as'])) {
     $toggle_uri = str_replace("advancedsearch=", "nor=", $toggle_uri);
     $toggle_uri = str_replace("as=", "nor=", $toggle_uri);
     $two_form = "";
