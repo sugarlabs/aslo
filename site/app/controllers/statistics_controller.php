@@ -131,6 +131,7 @@ class StatisticsController extends AppController
         $this->publish('addon_id', $addon_id);
         
         $this->Addon->id = $addon_id;
+        $this->Addon->unbindFully();
         if (!$addon = $this->Addon->read()) {
             $this->flash(_('error_addon_notfound'), '/statistics/index');
             return;
