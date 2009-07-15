@@ -605,13 +605,13 @@ class AddonsController extends AppController
                 $id = $id[0];
 
                 if($bindFully) {
+                    $this->Collection->unbindFully();
                     $promoCatList[$pid] = $this->Collection->findById($id);
                 } else {
                     $promoCatList[$pid] = $id;
                 }
             }
         }
-
         return $promoCatList;
     }
 
