@@ -611,9 +611,9 @@ class ApiController extends AppController
             }
 
             // Gather a list of platforms for files
-            $this->Platform->unbindFully();
             $platforms = array();
             foreach($fileinfo as &$file) {
+                $this->Platform->unbindFully();
                 $this_plat = $this->Platform->findById($file['Platform']['id']);
                 $file['Platform']['apiname'] = $this_plat['Translation']['name']['string'];
                 $platforms[] = $this_plat;
@@ -959,7 +959,6 @@ class ApiController extends AppController
     */
     function _getAddons($ids) {
        $addonsdata = array();
-       $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonCategory');
        foreach ($ids as $id) {
         $_conditions = array(
             'Addon.id' => $id,
@@ -969,6 +968,7 @@ class ApiController extends AppController
 
         // get basic addon data
         // same criteria as used by the amo display action 
+        $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonCategory');
         $addon_data = $this->Addon->find($_conditions, null , null , 1);
 
         if (empty($addon_data)) {
@@ -1040,9 +1040,9 @@ class ApiController extends AppController
         
 
         // get compatible platforms
-        $this->Platform->unbindFully();
          
         foreach($fileinfo as &$file) {
+            $this->Platform->unbindFully();
             $this_plat = $this->Platform->findById($file['Platform']['id']);
             $file['Platform']['apiname'] = $this_plat['Translation']['name']['string'];
             $platforms[] = $this_plat;
