@@ -806,7 +806,7 @@ class AddonsController extends AppController
         if (!in_array($type, $app_listedtypes[APP_ID])) {
             // @TODO throw some error
             $this->redirect('/');
-            break;
+            return;
         }
 
         if (!isset($this->namedArgs['cat'])) {
