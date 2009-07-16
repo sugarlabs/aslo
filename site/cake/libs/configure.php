@@ -135,7 +135,10 @@ class Configure extends Object {
 					ini_set('display_errors', 1);
 				}
 			} else {
-				error_reporting(0);
+                // MOZILLA PATCH (clouserw)
+                ini_set('display_errors', 0);
+                ini_set('display_startup_errors', 0);
+				error_reporting(E_ERROR);
 			}
 		}
 	}
