@@ -125,14 +125,14 @@ class UsersController extends AppController
             if ($this->data['User']['password'] == '')
                 $this->User->invalidate('password');
             // email has to be unique
-            $allemail = $this->User->findAllByEmail($this->data['User']['email']);
+            $allemail = $this->User->findAll("email='{$this->User->data['User']['email']}'");
             if (!empty($allemail)) {
                 $this->User->invalidate('email');
                 $this->publish('error_email_notunique', true);
             }
             // if nickname is defined it has to be unique
             if (!$this->data['User']['nickname'] == '') {
-                $allnicks = $this->User->findAllByNickname($this->data['User']['nickname']);
+                $allnicks = $this->User->findAll("nickname='{$this->User->data['User']['nickname']}'");
                 if (!empty($allnicks))
                     $this->User->invalidate('nickname');
             }
