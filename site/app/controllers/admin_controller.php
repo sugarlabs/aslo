@@ -1816,6 +1816,10 @@ class AdminController extends AppController
 
         $this->set('constants', $_constants);
 
+        $_variables = ini_get_all();
+
+        $this->set('variables', $_variables);
+
         $this->set('page', 'variables');
         $this->set('subpage', '');
         $this->render('variables');

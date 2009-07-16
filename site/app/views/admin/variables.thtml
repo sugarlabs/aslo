@@ -39,9 +39,9 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>Constants</h3>
+        <h2>Constants</h2>
         <div>
-        <?php        
+        <?php
             foreach ($constants as $var => $val) {
                 if ($val === true) {
                     $val = '<em>true</em>';
@@ -53,5 +53,25 @@
             }
         ?>
         </div>
+
+        <h2>Variables</h2>
+        <?php
+            foreach ($variables as $var => $val) {
+                $val['global_value'] = empty($val['global_value']) ? '<em>empty</em>' : $val['global_value'];
+                $val['global_value'] = ($val['global_value'] === true) ? '<em>true</em>' : $val['global_value'];
+                $val['global_value'] = ($val['global_value'] === false) ? '<em>false</em>' : $val['global_value'];
+
+                $val['local_value'] = empty($val['local_value']) ? '<em>empty</em>' : $val['local_value'];
+                $val['local_value'] = ($val['local_value'] === true) ? '<em>true</em>' : $val['local_value'];
+                $val['local_value'] = ($val['local_value'] === false) ? '<em>false</em>' : $val['local_value'];
+
+                if ($val['global_value'] == $val['local_value']) {
+                    $printval = $val['global_value'];
+                } else {
+                    $printval = "{$val['global_value']} but <em>overridden locally with {$val['local_value']}</em>";
+                }
+                echo "<b>{$var}</b>: {$printval}<br />";
+            }
+        ?>
     </div>
 </div>
