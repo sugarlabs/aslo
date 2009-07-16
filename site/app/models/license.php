@@ -60,6 +60,7 @@ class License extends AppModel {
     }
 
     function getName($license_id) {
+        $this->unbindFully();
         $license = $this->findById($license_id);
         if ($license['License']['name'] == -1) {
             return ___('license_custom');
