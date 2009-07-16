@@ -65,9 +65,11 @@ class License extends AppModel {
             return ___('license_custom');
         } else {
             $licenses = $this->getNamesAndUrls();
-            return $licenses[$license_id]['name'];
+            
+            return $licenses[$license['License']['name']]['name'];
         }
     }
+    
 
     function getText($license_id) {
         $license = $this->findById($license_id);
