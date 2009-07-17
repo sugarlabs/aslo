@@ -68,7 +68,7 @@ class FilesController extends AppController
     * @param int $id the file
     */
     function browse($file_id, $review = 0) {
-       $this->Amo->clean($file_id);
+	$this->Amo->clean($file_id);
         
         $this->File->id = $file_id;
         if (!$file = $this->File->read()) {
@@ -138,6 +138,12 @@ class FilesController extends AppController
                 }
             }
         }
+
+		//If a specific start file is requested, override it
+		//We use the query string since the file could be in a directory
+		if (!empty($_GET['start'])) {
+			$startfile = $_GET['start'];
+		}
 
         $this->publish('id', $file_id);
         $this->publish('files', $files);

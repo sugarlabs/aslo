@@ -313,7 +313,15 @@ if(defined('ROOT')) {
 define('PASSWORD_RESET_EXPIRES', 3);
 
 /**
+ * Test Result flags
+ */
+define('TEST_PASS', 0);
+define('TEST_WARN', 1);
+define('TEST_FAIL', 2);
+
+/**
  * Paypal
  */
 define('PAYPAL_API_VERSION', '50');
+
 ?>

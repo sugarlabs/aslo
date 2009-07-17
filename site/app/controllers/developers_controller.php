@@ -62,9 +62,10 @@ class DevelopersController extends AppController
     var $name = 'Developers';
     var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion','Category',
         'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview', 'Review',
-        'Tag', 'Translation', 'User', 'Version');
+        'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error',
-        'Image', 'Opensearch', 'Paypal', 'Rdf', 'Src', 'Versioncompare');
+        'Image', 'Opensearch', 'Paypal', 'Rdf', 'Src', 'Validation', 'Versioncompare');
+
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Link', 'Listing', 'Localization', 'Form');
     var $addVars = array(); //variables accessible to all additem steps
 
@@ -114,7 +115,7 @@ class DevelopersController extends AppController
         // Include the dev_agreement column on developer pages.
         array_push($this->Addon->default_fields, 'dev_agreement');
     }
-    
+
     /**
     * Developer Dashboard
     */
@@ -1144,6 +1145,10 @@ class DevelopersController extends AppController
             case 'edit':
                 $this->setAction('_editVersion', $version);
                 break;
+
+	    case 'validate':
+		$this->setAction('_validateVersion', $version);
+		break;
             
             default:
                 $this->setAction('_versionsIndex', $addon_id);
@@ -1336,6 +1341,103 @@ class DevelopersController extends AppController
         $this->publish('platforms', $this->Platform->getNames());
         
         $this->render('versions_edit');
+    }
+
+    /**
+     * View or run validation tests for a version
+     * @param array version the version info
+     */
+    function _validateVersion($version) {
+
+		// Load in all the version info we need
+		$version = $this->Version->findById($version['Version']['id']);
+		$addon = $this->Addon->getAddon($version['Version']['addon_id'], array('list_details'));
+		
+		$fileIds = array();
+		
+		// Pull in the files, which also brings in test result data
+		if (!empty($version['File'])) {
+			foreach($version['File'] as $file) {
+				$fileIds[] = $file['id'];
+			}
+		}
+		$files = $this->File->findAll(array('File.id' => $fileIds));
+		
+		$test_groups = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id']);
+  
+		$test_groupIds = array();
+		// Use the test group ids to pull in the results
+		if (!empty($test_groups)) {
+			foreach($test_groups as $id => $group) {
+				$test_groupIds[] = $group['TestGroup']['id'];
+				$test_groups[$id]['results'] = array();
+			}
+		}
+		$test_results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_groupIds, 'TestResult.file_id' => $fileIds));
+
+		// Store the results in the associated test group
+		if (!empty($test_results)) {
+			foreach ($test_results as $result) {
+				$id = $result['TestCase']['test_group_id'];
+				foreach ($test_groups as $group_id => $group) {
+					if ($group['TestGroup']['id'] == $id) { 
+						$test_groups[$group_id]['results'][] = $result;
+					}
+				}
+			}
+		}
+
+		$this->publish('files', $files);
+		$this->publish('test_groups', $test_groups);
+		$this->publish('version', $version);
+		
+		$this->render('versions_validate');
+    }
+	
+    /**
+     * Verifies the addon using the test cases given by the validation component
+     * @param int $file_id the id of the file to verify
+     * @param int $test_group_id the id of the test group to run
+     */
+    function verify($file_id, $test_group_id) {
+
+		// Pull in the test group
+		$test_group = $this->TestGroup->findById($test_group_id);
+		
+		// Grab the file to pass over to the view
+		$this->File->cacheQueries = false;
+		$file = $this->File->findById($file_id);
+		
+		// Do whatever tests were specified, then find the next tests
+		// if we need to continue
+		$next_tests = array();
+		if ($this->Validation->runTest($file_id, $test_group_id)) {
+			$addon = $this->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
+			
+			$next_tier = $test_group['TestGroup']['tier'] + 1;
+			$conditions = array('TestGroup.tier' => $next_tier);
+			$next_cat = $test_group['TestGroup']['category'];
+			if ($test_group_id != 1) 
+				$conditions['TestGroup.category'] = $next_cat;
+			
+			$next_tests = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id'], $conditions, array('id'));
+		}
+
+		// Load the results into the group
+		$results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));
+		$test_group['results'] = $results;
+		
+		// We need a view to call renderElement, see                                                                 
+		// https://trac.cakephp.org/ticket/3132                                                                      
+		$view = new View($this);
+		
+		// Render the result, then return it via json
+		$testresult = $view->renderElement('developers/testresults_group', 
+					  array('file' => $file, 'group' => $test_group));
+		$json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests);
+		
+		$this->set('json', $json);
+		$this->render('json', 'ajax');
     }
     
     /**

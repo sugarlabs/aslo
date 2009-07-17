@@ -340,6 +340,48 @@ var addon_edit_categories = {
     }
 };
 
+var versions_validate = {
+    runTest: function(fileId) {
+	
+	var sendRequest = function(file, testNum, name) {
+            $.ajax({
+                type: 'GET',
+                url: '../../verify/' + fileId + '/' + testNum,
+                success: displayResults,
+                error: displayError
+            });
+	    $('#tests-table-' + file + ' tbody').append('<tr id="test-results-' + file + '-' + testNum + '"><td colspan="4">' + $('#loading-master').html() + '</td></tr>');
+	    $('#test-results-' + file + '-' + testNum + ' h4').html(name);	    
+        }
+
+	var displayResults = function(response, status) {
+	    // JSON parser chokes on ', since it uses eval().  
+	    // Since the result is just a big tree, we can simply replace them.
+	    response = response.replace(/'/g, '"');
+	    var result = JSON.parse(response);
+
+	    var id = '#test-results-' + result.file_id + '-' + result.test_group_id;
+	    $(id).hide();
+	    $(id).after(result.result);		
+
+	    for (var i in result.next_tests) {
+		var testInfo = result.next_tests[i].TestGroup;
+		sendRequest(result.file_id, testInfo.id, testInfo.name);
+	    }
+	    
+	};
+	
+        var displayError = function(req, status, errorThrown) {
+            //TODO : Better error display alert('Error: ' + status + ' - ' + errorThrown);
+	}
+
+	$('#test-results-' + fileId + ' tbody').slideUp('slow', function () {
+		$(this).empty().css('display', '');
+		sendRequest(fileId, 1, 'General');
+	});
+    }
+};
+
 var versions = {
     deleteVersion: function(a) {
         var container = $(a).parent();

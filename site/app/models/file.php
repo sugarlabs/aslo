@@ -72,8 +72,19 @@ class File extends AppModel
                                'dependent'   => true,
                                'exclusive'   => false,
                                'finderSql'   => ''
-                         )
-                  );
+						 ),
+				   'TestResult' =>
+				   array(
+					   'className'   => 'TestResult',
+					   'conditions'  => '',
+					   'order'       => '',
+					   'limit'       => '',
+					   'foreignKey'  => 'file_id',
+					   'dependent'   => true,
+					   'exclusive'   => false,
+					   'finderSql'   => ''
+				   )
+	);
     
     /**
      * Returns the latest public file of the add-on with the specified platform

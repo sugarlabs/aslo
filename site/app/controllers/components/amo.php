@@ -87,7 +87,7 @@ class AmoComponent extends Object {
     
     /**
      * Gets the author role of the current user for the given add-on
-     * @param int $addon_id id of the add-on
+	 * @param int $addon_id id of the add-on
      */
     function getAuthorRole($addon_id) {
         $session = $this->controller->Session->read('User');
@@ -228,6 +228,17 @@ class AmoComponent extends Object {
             STATUS_PUBLIC    => ___('addons_status_public', 'Public'),
             STATUS_DISABLED  => ___('addons_status_disabled', 'Admin Disabled')
         );
+    }
+
+    /**
+     * Returns an array of possible test result names
+     */
+    function getTestResultNames() {
+	return array(
+	    TEST_PASS => ___('test_result_status_pass', 'Pass'),
+	    TEST_WARN => ___('test_result_status_warn', 'Warn'),
+	    TEST_FAIL => ___('test_result_status_fail', 'Fail')
+	);
     }
     
    /**
@@ -554,6 +565,47 @@ class AmoComponent extends Object {
         }
     }
     
+    /**
+     * Provide the validation status as a readable string
+     * @param array $files the file array for the version, in model format
+     */
+    function describeValidationStatus($files) {
+	
+	if (count($files) == 0) {
+	    return ___('error_no_test_results_in_addon', 'No Test Results');
+	}
+
+	$fileIds = array();
+	foreach ($files as $file) {
+	    $fileIds[] = $file['id'];
+	}
+	
+	$statuses = $this->getTestResultNames();
+	$testStatuses = array();
+	$counts = array();
+	
+	$results = $this->controller->TestResult->findAll(array('file_id' => $fileIds));
+	if (count($results) == 0) {
+	    return ___('error_no_test_results_in_addon', 'No Test Results');
+	}
+
+	foreach ($results as $test_result) {
+	    if (!empty($testStatuses[$test_result['TestResult']['result']])) {
+		$testStatuses[$test_result['TestResult']['result']]++;
+	    }
+	    else {
+		$testStatuses[$test_result['TestResult']['result']] = 1;
+	    }
+	}
+
+	foreach ($testStatuses as $status => $count) {
+	    $string = n___('devcp_describe_validation_status', 'devcp_describe_validation_status', $count, '%1$s %2$s result(s)');
+	    $counts[] = sprintf($string, $count, $statuses[$status]);
+	}
+
+	return implode('<br/>', $counts);
+    }
+
    /**
     * Returns the date in MySQL NOW() format
     */

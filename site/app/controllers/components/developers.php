@@ -21,6 +21,7 @@
  *
  * Contributor(s):
  *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   RJ Walsh <rwalsh@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -37,6 +38,7 @@
  * ***** END LICENSE BLOCK ***** */
 class DevelopersComponent extends Object {
     var $controller;
+    var $components = array( "Validation" );
     var $imageExtensions = array('.png', '.jpg', '.gif');
 
     var $uploadErrors = array();
@@ -273,6 +275,9 @@ class DevelopersComponent extends Object {
     * @deprecated
     */
     function validateFiles() {
+
+	/* Should be removed */
+
         $errors =& $this->controller->Error;
         
         //Make sure the first file was uploaded
