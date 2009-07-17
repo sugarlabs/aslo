@@ -143,7 +143,8 @@ class ValidationComponent extends Object {
 
         $extension = substr($file['File']['filename'], strrpos($file['File']['filename'], '.'));
 		$type = 0;
-
+		
+		// Double-check the extension
         switch ($extension) {
 			case '.xpi':
 				// Dictionaries have a .dic file in the dictionaries directory
@@ -171,10 +172,15 @@ class ValidationComponent extends Object {
 				break;
         }
 
+		// Verify that this matches the type we store
 		$addon = $this->controller->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
-
 		if ($addon['Addon']['addontype_id'] != $type) {
 			return $this->_resultFail(0, '', ___('devcp_error_mismatched_extension', 'The extension does not match the type of the add-on'));
+		}
+
+		// Verify that the file exits
+		if (!file_exists(REPO_PATH . '/' . $addon['Addon']['id'] . '/' . $file['File']['filename'])) {
+			return $this->_resultFail(0, '', ___('devcp_error_missing_addon_file', 'The add-on could not be found on the server'));
 		}
 
         return $this->_resultPass();
