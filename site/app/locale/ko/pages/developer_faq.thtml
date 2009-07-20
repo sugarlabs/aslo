@@ -1,0 +1,271 @@
+<h1>부가 기능 개발자 FAQ</h1>
+
+<h2>부가 기능 개발</h2>
+<dl>
+<dt>부가 기능은 어떻게 만드나요?</dt>
+<dd>
+<p>Mozilla에선 Mozilla 개발자 센터를 통해 부가 기능 개발 관련 문서를 제공하고 있습니다. 입문서로, <a href="https://developer.mozilla.org/En/Building_an_Extension">확장 기능 만들기</a>가 작업 환경을 설정하는 방법에 대해 도와줄 것이며 부가 기능 제작을 일보 전진시킬 것입니다.</p> 
+<p>그 외 문서들:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/En/Firefox_addons_dev_guide">Firefox 부가 기능 개발자 가이드</a></li>
+<li><a href="http://blog.mozilla.com/addons/2009/01/28/how-to-develop-a-firefox-extension/">Robert Nyman의 글 "Firefox 확장 기능 만드는 방법"</a></li>
+<li><a href="http://blog.mozilla.com/addons/2009/03/18/video-tutorial-extensions-bootcamp-zero-to-hello-world-in-45-minutes/">Myk Melez의 동영상 튜토리얼 "동영상 튜토리얼 - 확장 기능 훈련소: 45분 만에 제로에서 “Hello World”까지 도달하기"</a></li>
+</ul>
+</dd>
+
+<dt>부가 기능 제작에 필요한 도구는 어떤 것이 있습니까?</dt>
+<dd>
+<p>제작 중인 부가 기능에 알맞은 버전의 Mozilla 소프트웨어와 자신에게 맞는 코드 편집기가 필요할 겁니다. 거의 모든 Mozilla 소프트웨어용 부가 기능을 만들 수 있지만, 우선적인 대상으론 다음의 소프트웨어가 선정되었습니다:</p>
+<ul>
+<li><a href="http://www.mozilla.com/en-US/firefox/">Firefox</a></li>
+<li><a href="http://www.mozillamessaging.com/en-US/thunderbird/">Thunderbird</a></li>
+<li><a href="http://www.seamonkey-project.org/">SeaMonkey</a></li>
+<li><a href="http://www.mozilla.org/projects/calendar/sunbird/">SunBird</a></li>
+</ul>
+<p>인기 코드 편집기:</p>
+<ul>
+<li><a href="http://www.activestate.com/komodo_edit/">Komodo Edit</a></li>
+<li><a href="http://macromates.com/">TextMate</a></li>
+<li><a href="http://notepad-plus.sourceforge.net/uk/site.htm">Notepad++</a></li>
+<li><a href="http://www.eclipse.org/">Eclipse IDE</a></li>
+</ul>
+<p>또한, MDC의 글 <a href="https://developer.mozilla.org/en/Setting_up_extension_development_environment">확장 기능 개발 환경 설정법</a>을 통해 개발 환경 설정에 대해 보다 많이 배울 수 있습니다.</p>
+</dd>
+
+<dt>부가 기능 제작에 관한 문서는 어디서 찾을 수 있습니까?</dt>
+<dd><a href="https://developer.mozilla.org/En">Mozilla 개발자 센터</a>를 통해 튜토리얼과 API가 포함된 Mozilla의 부가 기능 개발 문서를 전부 찾아볼 수 있습니다.</dd>
+
+<dt>".xpi" 파일이 뭐죠?</dt>
+<dd>확장 기능은 압축되어 ZIP 파일로 배포되거나 XPI (“지피”로 발음)확장자로 묶여 있습니다.</dd>
+
+<dt>XUL은 뭐죠?</dt>
+<dd>XUL (XML 사용자 인터페이스 언어)은 Mozilla의 XML 기반 언어로, 다양한 기능을 가진 크로스 플랫폼 애플리케이션을 제작할 수 있게 해줍니다. 버튼, 메뉴, 툴바, 트리 및 기타 웹 브라우저 UI의 각 부위를 조정해 부가 기능을 향상시키는데 쓰이는 사용자 인터페이스 위젯을 제공합니다.</dd>
+
+<dt>"install.rdf" 파일은 어디에 쓰는 건가요?</dt>
+<dd><a href="https://developer.mozilla.org/en/Install_Manifests">설치 명세서</a>라 불리는 이 파일은, 설치시 부가 기능에 대한 정보를 식별하기 위한 용도로 부가 기능 관리자가 활성화 한 XUL 애플리케이션에 의해 사용됩니다. 부가 기능 식별용 메타 데이터가 포함되어 있고, 제작자 및 위치, 호환되는 버전, 업데이트 하는 법과 같은 정보가 제공됩니다. 설치 명세서의 형식은 RDF/XML입니다.</dd>
+
+<dt>"maxVersion"이 의미하는 것은 뭐지요?</dt>
+<dd>이 변수는 이 확장 기능이 작동할 Firefox의 최고 버전을 결정합니다. 절대 현재 최신 버전보다 높게 설정하지 마세요!</dd>
+
+<dt>제 부가 기능이 바이너리 컴포넌트를 포함할 수 있나요?</dt>
+<dd>예. 부가 기능을 강화하기 위해 Mozilla의 <a href="https://developer.mozilla.org/en/XPCOM">XPCOM component object model</a>을 사용할 수 있습니다. XPCOM 컴포넌트는 자바 스크립트, 자바, 파이썬 및 추가로 C++로 작성할 수 있습니다.</dd>
+
+<dt>jQuery, MooTools나 Prototype 같은 자바 스크립트 라이브러리를 부가 기능 제작에 사용할 수 있나요?</dt>
+<dd>예. 가능하지만, 이들 라이브러리가 제공하는 기능중 일부는 XPCOM, XUL, JS 1.8 등을 통해 사용할 수 있습니다. 추가로, 라이브러리가 초기 protoype 오브젝트(String.prototype, Date.prototype, 기타 등등...) 및 global 함수 정의 (예. $ 함수)를 조정한다면 제작자는 매우 신중해야 할 것입니다. 이것들은 다른 부가 기능과 충돌을 일으키는 경향이 있는데, 특히 다른 부가 기능이 동일 라이브러리의 다른 버전을 사용할 경우에 그렇습니다. 개발자는 이것을 사용할 때 매우, 매우 신중해질 필요가 있습니다.  Mozilla는 부가 기능 제작에서 이것들을 사용하는 것에 대한 문서를 제공하지 않습니다.</dd>
+
+<dt>내가 만든 부가 기능을 테스트하려면 어떻게 해야 합니까?</dt>
+<dd><a href="https://developer.mozilla.org/en/Building_an_Extension">확장 기능 제작 튜토리얼</a> 항목의 <a href="https://developer.mozilla.org/en/Building_an_Extension#Test">테스팅</a>과 <a href="https://developer.mozilla.org/en/Building_an_Extension#Debugging_Extensions">확장 기능 디버깅</a>에서 부가 기능 테스트의 관한 자세한 정보가 제공되고 있습니다.</dd>
+
+<dt>Mozilla 소프트웨어의 최신 버전과 호환성 테스트를 하려면 어떻게 해야죠?</dt>
+<dd>최신 Mozilla 소프트웨어와 호환성을 확보하려면, 사용 가능한 상태로 만들어 업데이트를 다운로드 할 수 있도록 하는게 중요하며 부가 기능이 원하는대로 작동하는지 테스트 해보면 됩니다. <a href="https://developer.mozilla.org/en/Building_an_Extension">확장 기능 제작하기</a> 튜토리얼에서 <a href="https://developer.mozilla.org/en/Building_an_Extension#Test">부가 기능 테스트하기</a>를 따라해 보는게 가장 좋은 방법입니다.  Mozilla 소프트웨어의 여러 버전 중, 최신 버전은 베타 버전입니다. 이따금씩 이 릴리즈부터 구조적인 변경점이 소개되며, 부가 기능에도 영향이 있게 됩니다. Mozilla 소프트웨어가 최종 릴리즈 됐을 때, 부가 기능 사용자에게 부정적인 영향을 끼치지 않도록 베타 단계에서부터 능동적으로 작업하는 것이 중요합니다.</dd>
+
+<dt>메모리 누출 테스트가 무엇입니까?</dt>
+<dd>메모리 누출은 애플리케이션 제작시 사용된 소스 코드의 전형적인 버그로, 애플리케이션이 종료되도 완전히 릴리즈 되지 않고 시스템 메모리를 잡아먹게 됩니다. 누출 테스트는 메모리 누출을 유발하는 코드의 정확한 위치를 찾아낼 수 있게 합니다. 누출 테스트 관리는 다음의 <a href="https://wiki.mozilla.org/Performance:Leak_Tools">도구 검색 및 전략 가이드</a>가 매우 도움이 됩니다.  Mozilla의 Carsten 책 역시 <a href="https://wiki.mozilla.org/QA:Home_Page:Firefox_3.0_TestPlan:Leaks:LeakTesting-How-To">Firefox의 메모리 누출 테스트 하기</a>를 주제로 한 매우 뛰어난 하우-투 문서로 작성되어 있습니다.</dd>
+
+<dt>제 부가 기능이 여러 언어를 지원할 수 있나요?</dt>
+<dd>예. 부가 기능 지역화에 대한 자세한 정보는 <a href="https://developer.mozilla.org/en/Building_an_Extension#Localization">확장 기능 제작하기</a> 튜토리얼 및 <a href="https://developer.mozilla.org/en/Localization">Mozilla 개발자 센터 지역화 페이지</a>에 나와 있습니다.  또한 <a href="http://www.babelzilla.org/">BabelZilla 프로젝트</a>에서 지역화에 대해 익히고 부가 기능 번역에 지원할 수 있습니다.</dd>
+</dl>
+
+<h2>기술 지원 정보</h2>
+<dl>
+<dt>부가 기능 개발에 조언이 필요합니다. 어디서 도움을 받을 수 있을까요?</dt>
+<dd><p>Mozilla는 부가 기능 개발자를 위해 아래의 기술 지원 옵션을 제공하고 있습니다:</p>
+<ul>
+<li>irc://irc.mozilla.org/
+  <ul>
+    <li>#extdev (부가 기능 개발 토론용 채널)</li>
+    <li>#amo (AMO의 부가 기능 호스팅 관련 기술 지원용 채널)</li>
+  </ul>
+</li>
+<li><a href="https://lists.mozilla.org/listinfo/dev-extensions">메일링 리스트</a></li>
+<li><a href="news://news.mozilla.org/mozilla.dev.extensions">뉴스그룹</a></li>
+<li><a href="http://groups.google.com/group/mozilla.dev.extensions">Google 그룹스</a></li>
+</ul>
+</dd>
+
+<dt>Mozilla에선 개발 서비스를 제공하나요?</dt>
+<dd>아니오.</dd>
+
+<dt>부가 기능 제작에 고용할 써드파티 개발자도 있나요?</dt>
+<dd>예. <a href="http://www.mozilla.org/community/developer-forums.html#projectwide-forums">mozilla.jobs list</a>, <a href="http://forums.mozillazine.org/">mozillaZine 포럼</a> 또는 <a href="http://consultants.mozdev.org/">MozDev</a>를 통해서 써드파티 개발자를 찾을 수 있습니다. Mozilla에선 개발자 추천을 하지 않는다는 점을 양지해 주세요.</dd>
+</dl>
+
+<h2>부가 기능 업로드</h2>
+<dl>
+<dt>제가 만든 부가 기능을 호스팅 할 수 있나요?</dt>
+<dd>예. 많은 개발자들이 자신들의 부가 기능을 호스팅 하는 쪽을 선택하고 있습니다. Mozilla의 AMO (<a href="https://addons.mozilla.org">https://addons.mozilla.org</a>)에 부가 기능을 호스팅하면, 매우 많은 방문자로 인해 부가 기능을 보다 널리 노출시킬 수 있습니다.  <a href="http://mozdev.org/">mozdev.org</a> 사이트에선 무료로 Mozilla 애플리케이션용 프로젝트의 호스팅을 제공하며 개발자에게 소스 코드 관리, 버전 제어, 버그 추적 및 문서화를 위한 도구가 담긴 확장 기능도 제공합니다.</dd>
+
+<dt>Mozilla에서 제 부가 기능을 호스팅 해 줄 수 있나요?</dt>
+<dd>예. Mozilla의 AMO (<a href="https://addons.mozilla.org">https://addons.mozilla.org</a>) 웹사이트에서 부가 기능을 호스팅 할 수 있습니다.</dd>
+
+<dt>AMO가 뭐죠?</dt>
+<dd>Mozilla의 AMO (<a href="https://addons.mozilla.org">https://addons.mozilla.org</a>)는 개발자 빌드, 배포 등을 도와주며 Mozilla가 제공하는 환상적인 소비자 제품을 지원하는 일종의 인큐베이터입니다.</dd>
+
+<dt>Mozilla가 제 계정의 개인 정보를 보유하나요?</dt>
+<dd>예. 저희 <a href="https://addons.mozilla.org/ko/firefox/pages/privacy">개인 정보 보호 정책</a>에서 Mozilla가 어떻게 당신의 정보를 관리하는지 설명하고 있습니다.</dd>
+
+<dt>AMO에 있는 "개발자 도구"란 무엇인가요?</dt>
+<dd>"개발자 도구" 대시보드는 부가 기능을 성공적으로 관리하기 위해 제공된 곳입니다. AMO에 부가 기능 올리기, 부가 기능 정보 관리 및 통계 분석 같은 기능이 제공됩니다.</dd>
+
+<dt>Mozilla는 적합한 정책 문서를 보유하고 있나요?</dt>
+<dd>예. Mozilla의 <a href="https://addons.mozilla.org/ko/firefox/pages/policy">부가 기능 정책</a>이 적합한 내용을 명시하고 있습니다. 이 정책은 사전 고지 없이 변경될 수 있습니다.  추가로, AMO 편집자 팀은 부가 기능이 기능성 및 안정성을 확실히 충족했음을 보증하기 위한 <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">편집자 검토 가이드</a>를 사용하고 있습니다.</dd>
+
+<dt>제 부가 기능을 검토받기 위해 제출하려면 어떻게 해야죠?</dt>
+<dd>개발자 도구 대시보드로 부가 기능을 AMO에 업로드해서 제출할 수 있습니다. 부가 기능을 제출하기 전에 반드시 AMO 사용자로 등록해야 합니다. 부가 기능을 등록하기 전에 부가 기능이 편집자들이 사용한 가이드라인에 충족됐음을 보증하는 AMO <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">편집자 검토 가이드</a>를 읽고 확인해야 합니다.</dd>
+
+<dt>어떤 운영 체제를 선택해야 제 부가 기능에 맞을까요?</dt>
+<dd>당신의 부가 기능이 제대로 작동하는 운영 체제면 됩니다.</dd>
+
+<dt>제 부가 기능엔 어떤 분류를 선택해야 할까요?</dt>
+<dd>분류 선정은 당신이 목표로 한 사용자들의 종류와 부가 기능의 기능성에 좌우됩니다. 어떤 항목으로 분류해야 할 지 모르겠다면, "기타"를 선택하면 됩니다. AMo 팀이 다른 분류에 있는게 더 어울린다고 판단할 경우, 재분류될 수 있습니다.</dd>
+
+<dt>제 부가 기능에 붙어있는 "공개 후보"는 무슨 뜻입니까?</dt>
+<dd>공개 후보로 등록된 부가 기능은 제작자가 개발자 도구를 통해 공개 상태가 되기 위한 후보로 등록한 신규 부가 기능을 말합니다.</dd>
+
+<dt>제 부가 기능을 사용할 때 라이센스 동의서를 받을 수 있나요?</dt>
+<dd>예. 부가 기능 제출시 라이센스 동의서를 입력할 수 있습니다. 부가 기능이 제출된 후에도 개발자 도구 대시보드를 통해 라이센스 동의서를 추가 및 갱신할 수 있습니다.</dd>
+
+<dt>제 부가 기능에 개인 정보 보호 정책을 넣을 수 있나요?</dt>
+<dd>예. 부가 기능 제출시 개인 정보 보호 정책을 입력할 수 있습니다. 부가 기능이 제출된 후에도 개발자 도구 대시보드를 통해 개인 정보 보호 정책을 추가 및 갱신할 수 있습니다.</dd>
+</dl>
+
+<h2>부가 기능 심사 과정</h2>
+<dl>
+<dt>제 부가 기능이 왜 심사받아야 하는 건가요?</dt>
+<dd>제출된 모든 부가 기능은 신규 등록이건 업데이트건 Mozilla 사용자에게 안정적이고 안전한 사용을 보증하기 위한 심사를 받습니다. 모든 부가 기능은 제출시 <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">편집자 심사 가이드</a>에 명시된 가이드라인을 사용해 심사를 받게 됩니다.</dd>
+
+<dt>누가 제 부가 기능을 심사합니까?</dt>
+<dd>부가 기능은 AMO 편집자가 심사하며, 재능있는 개발자 그룹으로 이루어져 있습니다. 이들은 Mozilla 사용자에게 안정적이고 안전한 사용을 보증할 목적으로 진행되는 부가 기능 심사를 맡아 Mozilla 프로젝트를 돕고 있는 자원봉사자들입니다.  편집자와 대화를 나눌 땐, 정중한 자세를 갖춰주시기 바랍니다. 이들은 당신의 부가 기능이 제대로 설정되는지, <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">편집자 심사 가이드</a>에 명시된 가이드라인을 따르고 있는지 등을 보증하기 위해 고생하고 있으니까요.</dd>
+
+<dt>샌드박스가 무엇입니까?</dt>
+<dd><a href="https://addons.mozilla.org/ko/firefox/pages/sandbox">AMO 샌드박스</a>의 완전한 설명은 <a href="https://addons.mozilla.org/ko/firefox/pages/sandbox">여기</a>서 볼 수 있습니다.</dd>
+
+<dt>제 부가 기능이 왜 "시험용" 표시가 되는 건가요?</dt>
+<dd>새로 제출됐거나 공개 후보로 등록된 부가 기능은 편집자 팀원에 의해 완전히 심사받기 전까진 "시험용" 목록에 오르게 됩니다. 이는 사용자가 심사가 끝나지 않은 부가 기능 설치를 결정했을 때 부가 기능의 상태를 알 수 있도록 보증하는 것입니다.</dd>
+
+<dt>제 부가 기능을 심사하는데 사용된 가이드라인이라는건 무엇 입니까?</dt>
+<dd>Mozilla 편집 팀은 부가 기능이 AMO에 적합한가 테스트 할 때 <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">편집자 심사 가이드</a>를 따르고 있습니다. 부가 기능 개발자는 자신들의 부가 기능을 심사를 위해 제출하기에 앞서 일반적인 문제 범위가 명시된 이 가이드를 검토해보는 것이 중요합니다. 이는 심사 과정이 신속히 처리되는데 있어 큰 도움이 될 것입니다.</dd>
+
+<dt>제 부가 기능이 심사받는 데 얼마나 걸리나요?</dt>
+<dd><p>부가 기능 심사가 끝나기 전엔 얼마나 걸릴지 예상 시간을 알 수 없습니다. 다음의 여러 요소들이 걸리는 시간에 영향을 줍니다:</p>
+<ul>
+<li>제출된 부가 기능 수</li>
+<li>부가 기능 코드의 복잡성</li>
+<li>문제 위치가 발견된 갯수</li>
+</ul>
+<p>부가 기능이 제대로 설치되는 것을 보증하는 <a href="https://wiki.mozilla.org/AMO:Editors/ReviewingGuide">편집자 심사 가이드</a>를 읽는게 매우 중요한 이유가 바로 이겁니다. 블로그 글을 읽는것도 좋은 생각입니다. <a href="http://blog.mozilla.com/addons/2009/01/14/successfully-getting-your-addon-reviewed/">성공적으로 부가 기능 심사받기</a>에선 부가 기능의 순조로운 심사를 통해 뛰어난 식견을 보여주고 있습니다.</p></dd>
+</dl>
+
+<h2>부가 기능 관리</h2>
+<dl>
+<dt>제 부가 기능이 몇회 다운로드 됐는지 볼 수 있는 방법이 있나요?</dt>
+<dd>개발자 도구 대시보드의 통계 대시보드에서 AMO에 올린 날부터 부가 기능 다운로드 횟수를 알려주는 정보를 제공하고 있습니다.</dd>
+
+<dt>제 부가 기능을 사용중인 실제 사용자 수를 볼 수 있는 방법이 있나요?</dt>
+<dd>개발자 도구 대시보드의 통계 대시보드에서 AMO에 올린 날부터 얼마나 많은 사용자가 실제로 사용중인지를 알려주는 정보를 제공하고 있습니다.</dd>
+
+<dt>제 부가 기능을 업데이트 하려면 어떻게 해야하나요?</dt>
+<dd>개발자 도구 대시보드에서 "새 버전 올리기"를 선택 후 부가 기능의 새 .xpi 파일을 올리면 업데이트를 제출할 수 있습니다.</dd>
+
+<dt>업데이트도 편집자 심사가 필요한가요?</dt>
+<dd>경우에 따라 다릅니다. 단지 부가 기능의 설명만 바꾼다거나 새 Mozilla 소프트웨어 업데이트와의 호환성을 보장하는 "maxVersion"만 갱신한다면, 당신의 부가 기능은 다시 심사받을 필요가 없어집니다.</dd>
+</dl>
+
+<h2>추천 부가 기능</h2>
+<dl>
+<dt>추천 부가 기능 목록이란 어떤 것입니까?</dt>
+<dd>추천 부가 기능 목록은 유용하고 칭찬받을만한 부가 기능만 모아놓은 작은 목록으로, AMO 방문자에게 노출되는 중요 부분입니다. 이곳엔 독창적으로 만들었거나 Mozilla 소프트웨어를 멋지게 강화시킨 부가 기능이 소개되며 AMO에서 호스팅되고 있는 수천개의 부가 기능의 존재에 대해 새삼 깨닫게 될 것입니다.  추천 목록은 전체 추천과 분류별 추천 두가지로 다시 나뉘어 집니다. 전자는 AMO 첫 페이지에 표시되며 40개의 부가 기능으로 제한됩니다. 후자는 각 분류 단계에서 추천하는 부가 기능 목록입니다. 두 목록간 유일한 차이는 분류별 추천 부가 기능은 첫 페이지에 표시되지 않는다는 것입니다. 이와는 별개로, 양쪽 목록 모두 각각의 부가 기능 개발자의 업적과 이들이 생산한 작업을 인정한다는 의미를 가지고 있습니다.</dd>
+
+<dt>특색있는 부가 기능이란 어떤거죠?</dt>
+<dd>AMO의 메인 페이지와 각 분류별 메인 페이지엔 특색에 맞춰 설정된 3가지 부가 기능 목록이 표시되 있습니다. 이 부가 기능들은 전체 추천 목록 및 분류별 추천 목록에서 각자 선별되며 추천 부가 기능이 사용자에게 노출될 기회는 <a href="https://wiki.mozilla.org/AMO:Editors/Featured_and_Recommended#Featured_Add-Ons">특색있는 부가 기능 FAQ</a>에 의거해 주기적으로 돌아가며 주어집니다. 이는 진부해지는 것을 막기 위함입니다.</dd>
+
+<dt>제 부가 기능이 추천 목록에 들어가려면 어떻게 해야죠?</dt>
+<dd>추천 목록 관리자의 <a href="http://blog.mozilla.com/addons/2009/03/10/the-hows-whys-of-the-amo-recommended-rotation/">블로그 글</a>에 절차가 설명되있습니다.</dd>
+
+<dt>추천 목록에 들어가려면 금액을 지불해야 하나요?</dt>
+<dd>아니오.</dd>
+
+<dt>제 부가 기능이 더이상 추천 목록에 들어갈 수 없는 이유가 무엇인가요?</dt>
+<dd>추천 목록 관리자의 <a href="http://blog.mozilla.com/addons/2009/03/10/the-hows-whys-of-the-amo-recommended-rotation/">블로그 글</a>에 이유가 설명되있습니다.</dd>
+</dl>
+
+<h2>사용자 평가</h2>
+<dl>
+<dt>제 부가 기능에 부정적인 평을 올린 사용자에게 답글을 달려면 어떻게 해야 하나요?</dt>
+<dd><p>개발자는 자신의 부가 기능에 AMO에 로그인한 사용자가 올린 어떤 평가던지 답글을 달 수 있습니다. 추가로, 모든 사용자는 평가에 아래와 같이 표시할 수 있습니다:</p>
+<ul>
+<li>스팸 또는 평가라 할 수 없는 내용</li>
+<li>부적절한 언어/대화체</li>
+<li>엉뚱한 버그 신고 또는 기술 지원 요청</li>
+<li>기타 (자세한 내용을 적을 수 있는 창이 제공됩니다)</li>
+</ul>
+
+<p>현재 AMO는 평가자에게 바로 연결되는 소통 수단을 제공하고 있지는 않지만, 이 기능으로 향후 업데이트를 위한 연구 및 참고에 도움을 받을 수 있습니다.</p>
+</dd>
+
+<dt>평가가 부정적이면 삭제를 요청할 수 있나요?</dt>
+<dd>아니오. 오류가 있지 않는한 부가 기능의 부정적 평가를 삭제하진 않습니다.</dd>
+
+<dt>정확하지 않은 평가라면 삭제를 요청할 수 있나요?</dt>
+<dd>제작자가 저희에게 연락해서 잘못되었거나 정확하지 않은 정보를 담고 있는 평가의 삭제를 문의한다면, 저희는 글을 심사해서 삭제 여부를 고려할 것입니다.</dd>
+</dl>
+
+<h2>오픈 소스 라이센스에 대한 참고 문서</h2>
+<p>
+  여러 오픈 소스 라이센스에 대한 더욱 많은 정보를 원하시나요? 어떤 라이센스를
+  선택해야 할지 혼란스러우신가요? 라이센스가 정확히 어떤 권리를 부여하는지 궁금
+  하세요? 라이센스 조항을 전부 읽어볼 필요 없이, 아래의 사이트엔 잘 정리된 오픈
+  소스 라이센스 간 중요한 차이점에 대한 정보를 담고 있으므로 당신을 도와줄 수 
+  있을겁니다. 이 사이트는 단지 편의상 개인적 사용시 참고 자료만을 제공하고 있을
+  뿐입니다. 이 자료는 법률 상담에 알맞지 않으며 법률 상담을 대체해서 사용 해서도
+  안됩니다. Mozilla는 이들 사이트의 내용 및 이 내용에 대한 당신의 믿음에 있어
+  이를 보증하거나 책임을 지지 않습니다.
+</p>
+<dl>
+  <dt>
+    <a href="http://www.mozilla.org/MPL/">http://www.mozilla.org/MPL/</a>
+  </dt>
+  <dd>
+    Mozilla Public License (&#8220;MPL&#8221;)의 전문에 추가로, 이 사이트엔
+    MPL의 주석이 달린 버전과 <abbr title="자주 묻는 질문">FAQ</abbr>를 제공하므로
+    라이센스 하에 있는 코드를 사용 또는 배포하려 할 때 도움이 될겁니다.
+  </dd>
+  <dt>
+    <a href="http://developer.kde.org/documentation/licensing/licenses_summary.html">
+      http://developer.kde.org/documentation/licensing/licenses_summary.html
+    </a>
+  </dt>
+  <dd>
+    오픈 소스 라이센스의 배포판 취급, 소유권이 있는 소프트웨어 링크, 재배포된
+    코드의 변경점에 대한 중요 사항을 요약 및 비교해놓은 표입니다.
+  </dd>
+  <dt>
+    <a href="http://www.fsf.org/licensing/licenses/">
+      http://www.fsf.org/licensing/licenses/
+    </a>
+  </dt>
+  <dd>
+    자유 소프트웨어 재단은 자유 소프트웨어 라이센스 자격을 통과한 라이센스 또는
+    카피레프트 라이센스 모두를 포함한 오픈 소스 라이센스의 짤막한 중요 사항 요약을
+    제공하고 있습니다.  또한 자유 소프트웨어 라이센스나 카피레프트 라이센스가
+    어떤 내용으로 구성되야 하는지에 대한 토론장도 있습니다. (예를들면, 카피레프트
+    라이센스는 프로그램 제작이나 자유로운 다른 작업에 대한 일반적인 질서이며,
+    자유롭게 쓸 수 있도록 수정 및 확장된 버전의 모든 프로그램을 필요로 하고 있습니다)
+  </dd>
+  <dt>
+    <a href="http://www.opensource.org/licenses/category">
+      http://www.opensource.org/licenses/category
+    </a>
+  </dt>
+  <dd>
+    오픈 소스 발안은 오픈 소스 라이센스의 중요 조항을 제공하고 있습니다.
+  </dd>
+  <dt>
+    <a href="http://en.wikipedia.org/wiki/Open_source_license">
+      http://en.wikipedia.org/wiki/Open_source_license
+    </a>
+  </dt>
+  <dd>
+    BSD류 라이센스에 대한 위키백과 토론실입니다.
+  </dd>
+</dl>
