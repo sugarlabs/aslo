@@ -110,6 +110,18 @@
     </div>
 </div>
 <br class="clear">
+<div id="flagsbox">
+    <span id="flagsTitle"><?=___('editors_review_header_flags')?></span>
+    <ul id="flags">
+    <?php
+        if ($addon['Addon']['adminreview']) {
+            echo '<li>'.$html->image('developers/admin_review.png', array('title' => ___('editors_review_admin_flag'))).'</li>';
+        } else {
+            echo '<li>' . ___('editors_review_list_none') . '</li>';
+        }
+    ?>
+    </ul>
+</div>
 <?=$html->formTag('/editors/review/'.$version['Version']['id'], 'post')?>
 <div id="filesbox">
     <span id="filesTitle"><?=_('editors_review_header_files')?></span>

@@ -594,6 +594,11 @@ class EditorsComponent extends Object {
                                                 . implode("','", $filter_vals) ."'))";
                 }
             }
+
+            if (isset($filter['AdminFlag'])) {
+                $where .= "\nAND (`Addon`.`adminreview` = '{$filter['AdminFlag']}')";
+            }
+
         }
         //End apply filter
 
@@ -707,13 +712,13 @@ class EditorsComponent extends Object {
 
         // known filter fields
         $filter_fields = array('Addontype', 'Application', 'MaxVersion',
-                                'Platform', 'SubmissionAge', 'AddonOrAuthor');
+                                'Platform', 'SubmissionAge', 'AddonOrAuthor', 'AdminFlag');
         $filter = array();
 
         if (is_array($new_filter)) {
             foreach ($new_filter as $k => $val) {
                 // only save known filter fields
-                if (!empty($val) && in_array($k, $filter_fields)) {
+                if (($val !== '') && in_array($k, $filter_fields)) {
                     $filter[$k] = $val;
                 }
             }

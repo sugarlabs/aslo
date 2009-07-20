@@ -79,6 +79,12 @@
                 <?=$html->selectTag('Filter/Platform', $platforms, $selected['Platform'], array('multiple' => 'multiple', 'size' => 5), null, false)?>
             </div>
         </div>
+        <div class="group">
+            <div>
+                <label for="FilterAdminFlag"><?=___('editors_queue_filter_label_admin_flag')?></label><br/>
+                <?=$html->selectTag('Filter/AdminFlag', $flags, $selected['AdminFlag'], null, null, true)?>
+            </div>
+        </div>
         <div class="buttons">
             <?=$html->submit(_('editors_queue_submit_filter'), array('name' => 'filter'));?>
             <?=$html->submit(_('editors_queue_submit_clean'), array('name' => 'clear'))?>
@@ -148,6 +154,7 @@
             echo $html->link(___('editors_th_nomination_age'), $sorturl);
             echo $sortimg;
         ?></td>
+        <td><?=___('editors_th_flags')?></td>
         <td><?=_('editors_th_additional_info')?></td>
     </tr>
 <?php
@@ -166,6 +173,11 @@
                     }
                 }
                 echo '<td>'.(($mode == 'nominated') ? $addon['nominationage'] : $addon['age']).'</td>';
+                if ($addon['Addon']['adminreview']) {
+                    echo '<td>'.$html->image('developers/admin_review.png', array('title' => ___('editors_flag_admin_review'))).'</td>';
+                } else {
+                    echo '<td>&nbsp;</td>';
+                }
                 echo '<td>'.(!empty($addon['notes']) ? implode('; ', $addon['notes']) : '').'</td>';
             echo '</tr>';
             $num++;

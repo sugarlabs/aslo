@@ -190,7 +190,7 @@ class EditorsController extends AppController
         }
         
         //Setup filter form fields
-        $selected = array('Application'=>'', 'MaxVersion'=>'',
+        $selected = array('Application'=>'', 'MaxVersion'=>'', 'AdminFlag'=>'',
                         'SubmissionAge'=>'', 'Addontype'=>'', 'Platform'=>'',);
         if (is_array($filter)) {
             foreach ($filter as $k => $val) {
@@ -215,6 +215,7 @@ class EditorsController extends AppController
                                 '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10+' => '10+');
         $platforms = $this->Amo->getPlatformName();
         $applications = $this->Amo->getApplicationName();
+        $flags = array('0'=>___('editors_queue_flag_no'), '1'=>___('editors_queue_flag_yes'));
 
         $filtered = !empty($filter);
         $filterChanged = $filtered && array_key_exists('filter', $this->params['form']);
@@ -229,6 +230,7 @@ class EditorsController extends AppController
         $this->set('applications', $applications);
         $this->set('maxVersions', $maxVersions);
         $this->set('submissionAges', $submissionAges);
+        $this->set('flags', $flags);
 
         $this->publish('addonOrAuthor', $addonOrAuthor);
         $this->publish('filtered', $filtered);
@@ -1219,6 +1221,7 @@ class EditorsController extends AppController
                                                   'Addon.name', 'Addon.defaultlocale',
                                                   'Addon.addontype_id', 'Addon.prerelease',
                                                   'Addon.sitespecific', 'Addon.externalsoftware',
+                                                  'Addon.adminreview',
                                                   'Addon.created', 'Addon.nominationdate'), '', 0);
                 $addons[$k] = array_merge_recursive($addons[$k], $addon);
             }
