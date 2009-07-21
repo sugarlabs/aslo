@@ -86,7 +86,7 @@ class ListingHelper extends Helper
         echo "{\n";
         if (!empty($json)) {
             foreach ($json as $key => $value) {
-                echo str_repeat("\t", $tab)."\"{$key}\": ";
+                echo str_repeat("\t", $tab).'"'.addslashes($key).'": ';
                 if (is_array($value))
                     $this->json($value, $tab + 1, $encode);
                 else
