@@ -38,39 +38,39 @@
 
 class TestResult extends AppModel
 {
-	var $name = 'TestResult';
-	var $belongsTo = array(
-		'File' =>
-		array(
-			'className'   => 'File',
-			'conditions'  => '',
-			'order'       => '',
-			'foreignKey'  => 'file_id'
-		),
-		'TestCase' =>
-		array(
-			'className'   => 'TestCase',
-			'conditions'  => '',
-			'order'       => '',
-			'foreignKey'  => 'test_case_id'
-		)
-	);
+    var $name = 'TestResult';
+    var $belongsTo = array(
+        'File' =>
+        array(
+            'className'   => 'File',
+            'conditions'  => '',
+            'order'       => '',
+            'foreignKey'  => 'file_id'
+        ),
+        'TestCase' =>
+        array(
+            'className'   => 'TestCase',
+            'conditions'  => '',
+            'order'       => '',
+            'foreignKey'  => 'test_case_id'
+        )
+    );
 
-	/**
-	 * Deletes old results associated with a test
-	 * @param int $file_id  the file to delete results for
-	 * @param int $test_group_id  the group id to delete results for
-	 */
-	function deleteOldResults($file_id, $test_group_id) {
+    /**
+     * Deletes old results associated with a test
+     * @param int $file_id  the file to delete results for
+     * @param int $test_group_id  the group id to delete results for
+     */
+    function deleteOldResults($file_id, $test_group_id) {
 
-		// We need a custom query here to use the test_cases table as a join table
-		$this->query("DELETE `test_results`
+        // We need a custom query here to use the test_cases table as a join table
+        $this->query("DELETE `test_results`
 FROM `test_results`
 INNER JOIN `test_cases`
 ON `test_results`.`test_case_id` = `test_cases`.`id`
 WHERE `file_id` = $file_id
 AND `test_group_id` = $test_group_id");
-	}
+    }
 
 }
 ?>

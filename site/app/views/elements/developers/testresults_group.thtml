@@ -41,43 +41,50 @@
     <?=sprintf(n___('devcp_versions_validate_header_group', 'devcp_versions_validate_header_group',  count($group['results']), '%s results'), $group['TestGroup']['name'])?>
 </h4></td></tr>
 <?
+
 $i = 0; // For table rows
 if (!empty($group['results'])) :
-	foreach($group['results'] as $test_result) :
+        foreach($group['results'] as $test_result) :
 ?>
     <tr <?=($i % 2 == 0 ? ' class="alt"' : '')?> >
-	<td>
-	<?
+        <td>
+        <?
                 switch ($test_result['TestResult']['result']) {
                     case TEST_PASS:
+                        echo $html->image(SITE_URL . '/img/developers/tick.png', array('alt' => ___('devcp_validate_image_pass', 'Pass'))); 
+                        echo '</td><td>';
                         echo ___('devcp_versions_validate_pass', 'Pass');
                         break;
                     case TEST_WARN:
+                        echo $html->image(SITE_URL . '/img/developers/error.png', array('alt' => ___('devcp_validate_image_pass', 'Warn'))); 
+                        echo '</td><td>';       
                         echo ___('devcp_versions_validate_warn', 'Warn');
                         break;
                     case TEST_FAIL:
+                        echo $html->image(SITE_URL . '/img/developers/exclamation.png', array('alt' => ___('devcp_validate_image_pass', 'Fail'))); 
+                        echo '</td><td>';
                         echo ___('devcp_versions_vaildate_fail', 'Fail');
                         break;
                 }
-	?>
-	</td>
-        <td><?=$test_result['TestCase']['name']?></td>		
-	<td>
-	<?= empty($test_result['TestResult']['message']) ? $test_result['TestCase']['description'] : $test_result['TestResult']['message']?>
-	</td>
-	<? if ($test_result['TestResult']['line'] != 0) : ?>
-	<td><a href="<?=SITE_URL.'/files/browse/'.$file['File']['id'].'/0/?start='.$test_result['TestResult']['filename']?>"><?=$test_result['TestResult']['filename'].':'.$test_result['TestResult']['line']?></a></td>
-	<? else: ?>
-	<td>&nbsp;</td>
-	<? endif; ?>
-	</td>
+        ?>
+        </td>
+        <td><?=$test_result['TestCase']['name']?></td>          
+        <td>
+        <?= empty($test_result['TestResult']['message']) ? $test_result['TestCase']['description'] : $test_result['TestResult']['message']?>
+        </td>
+        <? if ($test_result['TestResult']['line'] != 0) : ?>
+        <td><a href="<?=SITE_URL.'/files/browse/'.$file['File']['id'].'/0/?start='.$test_result['TestResult']['filename']?>"><?=$test_result['TestResult']['filename'].':'.$test_result['TestResult']['line']?></a></td>
+        <? else: ?>
+        <td>&nbsp;</td>
+        <? endif; ?>
+        </td>
 
     </tr>
     <?
-		$i++;
-	endforeach;
+                $i++;
+        endforeach;
 else : ?>
-	<tr><td colspan="4"><i>
-		<?= ___('devcp_versions_validate_no_results', 'No test results found.') ?>
-	</i></td></tr>
+        <tr><td colspan="4"><i>
+                <?= ___('devcp_versions_validate_no_results', 'No test results found.') ?>
+        </i></td></tr>
 <? endif; ?>

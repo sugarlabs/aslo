@@ -38,93 +38,100 @@
 
 class TestCase extends AppModel
 {
-	var $name = 'TestCase';
-	var $belongsTo = array('TestGroup');
-	var $hasMany_full = array(
-		'TestResult' =>
-		array(
-			'className'   => 'TestResult',
-			'conditions'  => '',
-			'order'       => '',
-			'limit'       => '',
-			'foreignKey'  => 'test_case_id',
-			'dependent'   => true,
-			'exclusive'   => false,
-			'finderSql'   => ''
-		)
-	);
+    var $name = 'TestCase';
+    var $belongsTo = array('TestGroup');
+    var $hasMany_full = array(
+        'TestResult' =>
+        array(
+            'className'   => 'TestResult',
+            'conditions'  => '',
+            'order'       => '',
+            'limit'       => '',
+            'foreignKey'  => 'test_case_id',
+            'dependent'   => true,
+            'exclusive'   => false,
+            'finderSql'   => ''
+        )
+    );
 
-	/**
-	 * Tie into Cake's callback to populate the array with localized strings
-	 * @param array $results the results of the find operation
-	 * @return array our modified results
-	 */
-	function afterFind($results) {
+    /**
+     * Tie into Cake's callback to populate the array with localized strings
+     * @param array $results the results of the find operation
+     * @return array our modified results
+     */
+    function afterFind($results) {
 
-		// Don't modify these arrays, as they are used
-		// as a translation mechanism to localize test names
-		$names = array(
-			'11' => ___('test_case_name_all_general_verifyExtension', 'General Verification'),
-			'12' => ___('test_case_name_all_general_verifyInstallRDF', 'install.rdf Verification Tests'),
-			'13' => ___('test_case_name_all_general_verifyFileTypes', 'File type Blacklist'),
-			'21' => ___('test_case_name_all_security_filterUnsafeJS', 'Unsafe JavaScript'),
-			'22' => ___('test_case_name_all_security_filterUnsafeSettings', 'Unsafe Settings'),
-			'23' => ___('test_case_name_all_security_filterRemoteJS', 'Remote JavaScript'),
-			'121' => ___('test_case_name_extension_security_checkGeolocation', 'Geolocation Check'),
-			'122' => ___('test_case_name_extension_security_checkConduit', 'Conduit Toolbar Check'),
-			'211' => ___('test_case_name_dictionary_general_verifyFileLayout', 'File Layout'),
-			'212' => ___('test_case_name_dictionary_general_checkExtraFiles', 'File Type Verification'),
-			'213' => ___('test_case_name_dictionary_general_checkSeaMonkeyFiles', 'SeaMonkey Valid Files Check'),
-			'221' => ___('test_case_name_dictionary_security_checkInstallJS', 'install.js Verification'),
-			'311' => ___('test_case_name_langpack_general_verifyFileLayout', 'File Layout'),
-			'312' => ___('test_case_name_langpack_general_checkExtraFiles', 'File Type Verification'),
-			'321' => ___('test_case_name_langpack_security_filterUnsafeHTML', 'HTML Check'),
-			'322' => ___('test_case_name_langpack_security_checkRemoteLoading', 'Remote Loading Check'),
-			'323' => ___('test_case_name_langpack_security_checkChromeManifest', 'chrome.manifest Check'),
-			'411' => ___('test_case_name_theme_general_verifyFileLayout', 'File Layout'),
-			'421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check')
-		);
+        // Don't modify these arrays, as they are used
+        // as a translation mechanism to localize test names
+        $names = array(
+            '11' => ___('test_case_name_all_general_verifyExtension', 'General Verification'),
+            '12' => ___('test_case_name_all_general_verifyInstallRDF', 'install.rdf Verification Tests'),
+            '13' => ___('test_case_name_all_general_verifyFileTypes', 'File type Blacklist'),
+            '14' => ___('test_case_name_all_general_checkJSPollution', 'JS Namespace Pollution'),
+            '21' => ___('test_case_name_all_security_filterUnsafeJS', 'Unsafe JavaScript'),
+            '22' => ___('test_case_name_all_security_filterUnsafeSettings', 'Unsafe Settings'),
+            '23' => ___('test_case_name_all_security_filterRemoteJS', 'Remote JavaScript'),
+            '24' => ___('test_case_name_all_security_libraryChecksum', 'Common Library Checksum'),
+            '31' => ___('test_case_name_all_l10n_checkCompleteness', 'L10n Completeness Check'),
+            '121' => ___('test_case_name_extension_security_checkGeolocation', 'Geolocation Check'),
+            '122' => ___('test_case_name_extension_security_checkConduit', 'Conduit Toolbar Check'),
+            '211' => ___('test_case_name_dictionary_general_verifyFileLayout', 'File Layout'),
+            '212' => ___('test_case_name_dictionary_general_checkExtraFiles', 'File Type Verification'),
+            '213' => ___('test_case_name_dictionary_general_checkSeaMonkeyFiles', 'SeaMonkey Valid Files Check'),
+            '221' => ___('test_case_name_dictionary_security_checkInstallJS', 'install.js Verification'),
+            '311' => ___('test_case_name_langpack_general_verifyFileLayout', 'File Layout'),
+            '312' => ___('test_case_name_langpack_general_checkExtraFiles', 'File Type Verification'),
+            '321' => ___('test_case_name_langpack_security_filterUnsafeHTML', 'HTML Check'),
+            '322' => ___('test_case_name_langpack_security_checkRemoteLoading', 'Remote Loading Check'),
+            '323' => ___('test_case_name_langpack_security_checkChromeManifest', 'chrome.manifest Check'),
+            '411' => ___('test_case_name_theme_general_verifyFileLayout', 'File Layout'),
+            '421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check')
+        );
 
-		// Might not even need this ...
-		$descriptions = array(
-			'11' => ___('test_case_name_all_general_verifyExtension', 'General Verification'),
-			'12' => ___('test_case_name_all_general_verifyInstallRDF', 'install.rdf Verification Tests'),
-			'13' => ___('test_case_name_all_general_verifyFileTypes', 'File type Blacklist'),
-			'21' => ___('test_case_name_all_security_filterUnsafeJS', 'Unsafe JavaScript'),
-			'22' => ___('test_case_name_all_security_filterUnsafeSettings', 'Unsafe Settings'),
-			'23' => ___('test_case_name_all_security_filterRemoteJS', 'Remote JavaScript'),
-			'121' => ___('test_case_name_extension_security_checkGeolocation', 'Geolocation Check'),
-			'122' => ___('test_case_name_extension_security_checkConduit', 'Conduit Toolbar Check'),
-			'211' => ___('test_case_name_dictionary_general_verifyFileLayout', 'File Layout'),
-			'212' => ___('test_case_name_dictionary_general_checkExtraFiles', 'File Type Verification'),
-			'213' => ___('test_case_name_dictionary_general_checkSeaMonkeyFiles', 'SeaMonkey Valid Files Check'),
-			'221' => ___('test_case_name_dictionary_security_checkInstallJS', 'install.js Verification'),
-			'311' => ___('test_case_name_langpack_general_verifyFileLayout', 'File Layout'),
-			'312' => ___('test_case_name_langpack_general_checkExtraFiles', 'File Type Verification'),
-			'321' => ___('test_case_name_langpack_security_filterUnsafeHTML', 'HTML Check'),
-			'322' => ___('test_case_name_langpack_security_checkRemoteLoading', 'Remote Loading Check'),
-			'323' => ___('test_case_name_langpack_security_checkChromeManifest', 'chrome.manifest Check'),
-			'411' => ___('test_case_name_theme_general_verifyFileLayout', 'File Layout'),
-			'421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check')
-		);
+        // Might not even need this ...
+        $descriptions = array(
+            '11' => ___('test_case_name_all_general_verifyExtension', 'General Verification'),
+            '12' => ___('test_case_name_all_general_verifyInstallRDF', 'install.rdf Verification Tests'),
+            '13' => ___('test_case_name_all_general_verifyFileTypes', 'File type Blacklist'),
+            '14' => ___('test_case_name_all_general_checkJSPollution', 'JS Namespace Pollution'),
+            '21' => ___('test_case_name_all_security_filterUnsafeJS', 'Unsafe JavaScript'),
+            '22' => ___('test_case_name_all_security_filterUnsafeSettings', 'Unsafe Settings'),
+            '23' => ___('test_case_name_all_security_filterRemoteJS', 'Remote JavaScript'),
+            '24' => ___('test_case_name_all_security_libraryChecksum', 'Common Library Checksum'),
+            '31' => ___('test_case_name_all_l10n_checkCompleteness', 'L10n Completeness Check'),
+            '121' => ___('test_case_name_extension_security_checkGeolocation', 'Geolocation Check'),
+            '122' => ___('test_case_name_extension_security_checkConduit', 'Conduit Toolbar Check'),
+            '211' => ___('test_case_name_dictionary_general_verifyFileLayout', 'File Layout'),
+            '212' => ___('test_case_name_dictionary_general_checkExtraFiles', 'File Type Verification'),
+            '213' => ___('test_case_name_dictionary_general_checkSeaMonkeyFiles', 'SeaMonkey Valid Files Check'),
+            '221' => ___('test_case_name_dictionary_security_checkInstallJS', 'install.js Verification'),
+            '311' => ___('test_case_name_langpack_general_verifyFileLayout', 'File Layout'),
+            '312' => ___('test_case_name_langpack_general_checkExtraFiles', 'File Type Verification'),
+            '321' => ___('test_case_name_langpack_security_filterUnsafeHTML', 'HTML Check'),
+            '322' => ___('test_case_name_langpack_security_checkRemoteLoading', 'Remote Loading Check'),
+            '323' => ___('test_case_name_langpack_security_checkChromeManifest', 'chrome.manifest Check'),
+            '411' => ___('test_case_name_theme_general_verifyFileLayout', 'File Layout'),
+            '421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check')
+        );
 
-		foreach ($results as $key => $result) {
-			if (!empty($result['TestCase'][0])) { // Doing a find all...
-				foreach ($result['TestCase'] as $idx => $data) {
-					$id = $result['TestCase'][$idx]['id'];
-					$results[$key]['TestCase'][$idx]['name'] = $names[$id];
-					$results[$key]['TestCase'][$idx]['description'] = $descriptions[$id];
-				}
-			} else {
-				// Temporary hook for missing data
-				if (empty($result['TestCase'])) return $results;
 
-				$id = $result['TestCase']['id'];
-				$results[$key]['TestCase']['name'] = $names[$id];
-				$results[$key]['TestCase']['description'] = $descriptions[$id];
-			}
-		}
-		return $results;
-	}
+        foreach ($results as $key => $result) {
+            if (!empty($result['TestCase'][0])) { // Doing a find all...
+                foreach ($result['TestCase'] as $idx => $data) {
+                    $id = $result['TestCase'][$idx]['id'];
+                    $results[$key]['TestCase'][$idx]['name'] = $names[$id];
+                    $results[$key]['TestCase'][$idx]['description'] = $descriptions[$id];
+                }
+            } else {
+                // Temporary hook for missing data
+                if (empty($result['TestCase'])) return $results;
+
+                $id = $result['TestCase']['id'];
+                $results[$key]['TestCase']['name'] = $names[$id];
+                $results[$key]['TestCase']['description'] = $descriptions[$id];
+            }
+        }
+        return $results;
+    }
 }
 ?>

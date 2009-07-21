@@ -40,20 +40,17 @@
 <div class="graybox rounded spaced field">
     <table id="tests-table-<?=$file['File']['id']?>" class="pretty-table">
     <thead><tr>
-	<th width="10%"><?=___('devcp_versions_validate_th_result', 'Result')?></th>
+        <th width="10%" colspan="2"><?=___('devcp_versions_validate_th_result', 'Result')?></th>
         <th width="20%"><?=___('devcp_versions_validate_th_name', 'Test Name')?></th>
         <th width="50%"><?=___('devcp_versions_validate_th_message', 'Test Message')?></th>
-	<th width="20%"><?=___('devcp_versions_validate_th_line', 'File : Line')?></th>
+        <th width="20%"><?=___('devcp_versions_validate_th_line', 'File : Line')?></th>
     </tr></thead><tbody>
     <? if(!empty($file['TestResult'])) : ?>
         <? foreach($test_groups as $group) : ?>
-	    <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
+            <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
         <? endforeach; ?>
     <? else : ?>
-    	<tr><td colspan="4"><i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i></td></tr>
+        <tr><td colspan="4"><i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i></td></tr>
     <? endif; ?>
     </tbody></table>
 </div>
-
-
- 

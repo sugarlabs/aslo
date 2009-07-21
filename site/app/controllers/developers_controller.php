@@ -21,6 +21,7 @@
  *
  * Contributor(s):
  *    Frederic Wenzel <fwenzel@mozilla.com>
+ *    RJ Walsh <rwalsh@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -1434,13 +1435,16 @@ class DevelopersController extends AppController
 		$results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));
 		$test_group['results'] = $results;
 		
-		// We need a view to call renderElement, see                                                                 
-		// https://trac.cakephp.org/ticket/3132                                                                      
-		$view = new View($this);
-		
+		// We need a view to call renderElement, see                                
+		// https://trac.cakephp.org/ticket/3132                                     
+        // This means we also pull in the HTML helper                                 
+		$view = new View($this, 'helpers');
+        loadHelper('Html');
+        $html = new HtmlHelper();
+
 		// Render the result, then return it via json
-		$testresult = $view->renderElement('developers/testresults_group', 
-					  array('file' => $file, 'group' => $test_group));
+        $testresult = $view->renderElement('developers/testresults_group', 
+					  array('file' => $file, 'group' => $test_group, 'html' => $html));
 		$json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests);
 		
 		$this->set('json', $json);

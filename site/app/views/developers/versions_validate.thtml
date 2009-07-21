@@ -45,13 +45,13 @@
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="versions-validate-form" action="" method="post">
         <?=$html->hiddenSession();?>
-	<div id="loading-master">
-		<h4></h4>
-		<div>
-			<?=$html->image('ajax_loading.gif')?>
-			<?=___('devcp_versions_validate_loading_results', 'Loading results ...')?>
-		</div>
-	</div>
+        <div id="loading-master">
+            <h4></h4>
+            <div>
+                <?=$html->image('ajax_loading.gif')?>
+                <?=___('devcp_versions_validate_loading_results', 'Loading results ...')?>
+            </div>
+        </div>
         <?php if (!empty($files)) {
             foreach($files as $file) {
 		echo '<div id="test-results-'.$file['File']['id'].'">';
@@ -67,7 +67,7 @@
             }
         }
         else {
-	    // They should never actually hit this, but display it just in case
+            // They should never actually hit this, but display it just in case
             echo '<p><i>'.___('devcp_versions_edit_no_files').'</i></p>';
         } ?>
         </form>

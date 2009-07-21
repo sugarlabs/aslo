@@ -38,74 +38,89 @@
 
 class TestGroup extends AppModel
 {
-	var $name = 'TestGroup';
-	var $hasMany_full = array(
-		'TestCase' =>
-		array(
-			'className'   => 'TestCase',
-			'conditions'  => '',
-			'order'       => '',
-			'limit'       => '',
-			'foreignKey'  => 'test_group_id',
-			'dependent'   => true,
-			'exclusive'   => false,
-			'finderSql'   => ''
-		)
-	);
+    var $name = 'TestGroup';
+    var $hasMany_full = array(
+        'TestCase' =>
+        array(
+            'className'   => 'TestCase',
+            'conditions'  => '',
+            'order'       => '',
+            'limit'       => '',
+            'foreignKey'  => 'test_group_id',
+            'dependent'   => true,
+            'exclusive'   => false,
+            'finderSql'   => ''
+        )
+    );
 
 
 
-	/**
-	 * Tie into Cake's callback to populate the array with localized strings
-	 * @param array $results the results of the find operation
-	 * @return array our modified results
-	 */
-	function afterFind($results) {
+    /**
+     * Tie into Cake's callback to populate the array with localized strings
+     * @param array $results the results of the find operation
+     * @return array our modified results
+     */
+    function afterFind($results) {
 
-		// Don't modify these arrays, as they are used
-		// as a translation mechanism to localize test names
-		$names = array(
-			'1' => ___('test_group_name_all_general', 'General'),
-			'2' => ___('test_group_name_all_security', 'Security'),
-			'11' => ___('test_group_name_extension_general', 'Extension-specific'),
-			'12' => ___('test_group_name_extension_security', 'Extension-specific security'),
-			'21' => ___('test_group_name_dictionary_general', 'Dictionary-specific'),
-			'22' => ___('test_group_name_dictionary_security', 'Dictionary-specific security'),
-			'31' => ___('test_group_name_langpack_general', 'Language Pack-specific'),
-			'32' => ___('test_group_name_langpack_security', 'Language Pack-specific security'),
-			'41' => ___('test_group_name_theme_general', 'Theme-specific'),
-			'42' => ___('test_group_name_theme_security', 'Theme-specific security'),
-			'51' => ___('test_group_name_search_general', 'Search Engine-specific'),
-			'52' => ___('test_group_name_search_security', 'Search Engine-specific security')
-		);
+        // Don't modify these arrays, as they are used
+        // as a translation mechanism to localize test names
+        $names = array(
+            '1' => ___('test_group_name_all_general', 'General'),
+            '2' => ___('test_group_name_all_security', 'Security'),
+            '3' => ___('test_group_name_extension_l10n', 'L10n'),
+            '11' => ___('test_group_name_extension_general', 'Extension-specific'),
+            '12' => ___('test_group_name_extension_security', 'Extension-specific security'),
+            '21' => ___('test_group_name_dictionary_general', 'Dictionary-specific'),
+            '22' => ___('test_group_name_dictionary_security', 'Dictionary-specific security'),
+            '31' => ___('test_group_name_langpack_general', 'Language Pack-specific'),
+            '32' => ___('test_group_name_langpack_security', 'Language Pack-specific security'),
+            '41' => ___('test_group_name_theme_general', 'Theme-specific'),
+            '42' => ___('test_group_name_theme_security', 'Theme-specific security'),
+            '51' => ___('test_group_name_search_general', 'Search Engine-specific'),
+            '52' => ___('test_group_name_search_security', 'Search Engine-specific security')
+        );
 
-		foreach ($results as $key => $result) {
-			if (!empty($result['TestGroup'][0])) { // Doing a find all...
-				foreach ($result['TestGroup'] as $idx => $data) {
-					$id = $result['TestGroup'][$idx]['id'];
-					$results[$key]['TestGroup'][$idx]['name'] = $names[$id];
-				}
-			} else {
-				$id = $result['TestGroup']['id'];
-				$results[$key]['TestGroup']['name'] = $names[$id];
-			}
-		}
-		return $results;
-	}
+        foreach ($results as $key => $result) {
+            if (!empty($result['TestGroup'][0])) { // Doing a find all...
+                foreach ($result['TestGroup'] as $idx => $data) {
+                    $id = $result['TestGroup'][$idx]['id'];
+                    $results[$key]['TestGroup'][$idx]['name'] = $names[$id];
+                }
+            } else {
+                $id = $result['TestGroup']['id'];
+                $results[$key]['TestGroup']['name'] = $names[$id];
+            }
+        }
+        return $results;
+    }
 
-	/**
-	 * Test Groups are masked based on the addon type.
-	 * The types field is basically a 1-indexed bitmap
-	 * @param int $addonType the type id for the addon
-	 * @param array $conds any additonal conditions
-	 * @param array $fields fields to fetch
-	 * @return array the test groups for the given addon type
-	 */
-	function getTestGroupsForAddonType($addonType, $conds = array(), $fields = array('*')) {
-	   
-		$mask = pow(2, $addonType - 1);
-		return $this->findAll(array_merge(array("TestGroup.types & $mask = $mask"), $conds), $fields);
+    /**
+     * Test Groups are masked based on the addon type.  The types field is basically a
+     * 1-indexed bitmap, since the addontypes defined in constants.php are 1-indexed.
+     *
+     * For example, if you want to find all the test groups supported for ADDON_THEME, 
+     * a call might look like: 
+     * 
+     *   $groups = $this->TestCase->getTestGroupsForAddonType(ADDON_THEME);
+     *
+     * The extra parameters serve as optional arguments for additional find specificity. 
+     *
+     * @param int $addonType the type id for the addon
+     * @param array $conds any additonal conditions
+     * @param array $fields fields to fetch
+     * @return array the test groups for the given addon type
+     */
+    function getTestGroupsForAddonType($addonType, $conds = array(), $fields = array('*')) {
+       
+        // Subtract 1 to get the 0-indexed value
+        $mask = pow(2, $addonType - 1);
 
-	}
+        // FindAll takes two parameters, conditions and fields, so we need to 
+        // merge our mask condition with the rest of the conditions.  It doesn't look
+        // like a normal condition becasuse cake will reject 'TestGroup.types & $mask' 
+        // as a field name.
+        return $this->findAll(array_merge(array("TestGroup.types & {$mask} = {$mask}"), $conds), $fields);
+
+    }
 }
 ?>

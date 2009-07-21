@@ -1377,7 +1377,7 @@ INSERT INTO `facebook_data` (trait) VALUES
 --
 
 INSERT INTO `test_groups` (`id`, `category`, `tier`, `critical`, `types`) VALUES 
-(1,'general',1,1,127),(2,'security',2,0,127),
+(1,'general',1,1,127),(2,'security',2,0,127),(3,'l10n',2,0,3),
 (11,'general',2,0,1),(12,'security',3,0,1),
 (21,'general',2,0,4),(22,'security',3,0,4),
 (31,'general',2,0,16),(32,'security',3,0,16),
@@ -1390,9 +1390,9 @@ INSERT INTO `test_groups` (`id`, `category`, `tier`, `critical`, `types`) VALUES
 
 INSERT INTO `test_cases` (`id`, `test_group_id`, `help_link`, `function`) VALUES 
 (11,1,NULL,'all_general_verifyExtension'),(12,1,NULL,'all_general_verifyInstallRDF'),
-(13,1,NULL,'all_general_verifyFileTypes'),
+(13,1,NULL,'all_general_verifyFileTypes'),(14,1,NULL,'all_general_checkJSPollution'),
 (21,2,NULL,'all_security_filterUnsafeJS'),(22,2,NULL,'all_security_filterUnsafeSettings'),
-(23,2,NULL,'all_security_filterRemoteJS'),
+(23,2,NULL,'all_security_filterRemoteJS'),(24,2,NULL,'all_security_libraryChecksum'),
 (121,12,NULL,'extension_security_checkGeolocation'),(122,12,NULL,'extension_security_checkConduit'),
 (211,21,NULL,'dictionary_general_verifyFileLayout'),(212,21,NULL,'dictionary_general_checkExtraFiles'),
 (213,21,NULL,'dictionary_general_checkSeaMonkeyFiles'),

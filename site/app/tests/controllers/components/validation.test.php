@@ -20,7 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- * RJ Walsh <rwalsh@mozilla.com>
+ *   RJ Walsh <rwalsh@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -40,50 +40,50 @@
 define('CACHE_PFX', NETAPP_STORAGE . '/validate-');
 
 class ValidationTest extends UnitTestCase {
-	
-	//Setup the Developers Component
-	function setUp() {
-	    $this->controller =& new AppController();
-		loadComponent('Validation');
-		$this->controller->Validation =& new ValidationComponent();
-		$this->controller->Validation->startup($this->controller);
-		loadComponent('Error');
-		$this->controller->Error =& new ErrorComponent();
-		$this->controller->Error->startup($this->controller);
-		loadComponent('Amo');
-		$this->controller->Amo =& new AmoComponent();
-		$this->controller->Amo->startup($this->controller);
-		$this->controller->Validation->Amo =& $this->controller->Amo;
-		loadComponent('Rdf');
-		$this->controller->Validation->Rdf =& new RdfComponent();
-
-		// Load in models
-		$this->controller->File =& new File();
-		$this->controller->TestResult =& new TestResult();
-		$this->controller->TestCase =& new TestCase();
-		$this->controller->TestGroup =& new TestGroup();
-		$this->controller->Addon =& new Addon();
-		$this->controller->Application =& new Application();
-		$this->controller->Appversion =& new Appversion();
-
-		// Prime the cache
-		$fileIds = array(1,3,11,12,13);
-		foreach ($fileIds as $id) {
-			$file = $this->controller->File->findById($id);
-			$this->controller->Validation->_extract($file, 'by_preg', '//');
-		}
-		
-	}
     
-	/** 
-	 * Clears the cache after a test
-	 */
-	function tearDown() {
-		$fileIds = array(1,3,11,12,13);
-		foreach ($fileIds as $id) {
-			$this->controller->Validation->_deleteDir(CACHE_PFX . $id);
-		}
-	}
+    //Setup the Developers Component
+    function setUp() {
+        $this->controller =& new AppController();
+        loadComponent('Validation');
+        $this->controller->Validation =& new ValidationComponent();
+        $this->controller->Validation->startup($this->controller);
+        loadComponent('Error');
+        $this->controller->Error =& new ErrorComponent();
+        $this->controller->Error->startup($this->controller);
+        loadComponent('Amo');
+        $this->controller->Amo =& new AmoComponent();
+        $this->controller->Amo->startup($this->controller);
+        $this->controller->Validation->Amo =& $this->controller->Amo;
+        loadComponent('Rdf');
+        $this->controller->Validation->Rdf =& new RdfComponent();
+
+        // Load in models
+        $this->controller->File =& new File();
+        $this->controller->TestResult =& new TestResult();
+        $this->controller->TestCase =& new TestCase();
+        $this->controller->TestGroup =& new TestGroup();
+        $this->controller->Addon =& new Addon();
+        $this->controller->Application =& new Application();
+        $this->controller->Appversion =& new Appversion();
+
+        // Prime the cache
+        $fileIds = array(1,3,11,12,13);
+        foreach ($fileIds as $id) {
+            $file = $this->controller->File->findById($id);
+            $this->controller->Validation->_extract($file, 'by_preg', '//');
+        }
+        
+    }
+    
+    /** 
+     * Clears the cache after a test
+     */
+    function tearDown() {
+        $fileIds = array(1,3,11,12,13);
+        foreach ($fileIds as $id) {
+            $this->controller->Validation->_deleteDir(CACHE_PFX . $id);
+        }
+    }
 
    /**
     * Start each test with a valid install.rdf copy and add errors after
@@ -209,765 +209,765 @@ class ValidationTest extends UnitTestCase {
         $this->assertIsA($this->controller->Validation->validateTargetApplications($targetApps), 'array', 'Unknown application');
     }
 
-	/**
-	 * Tests the runTest() method
-	 */
-	function testRunTest() {
-																		
-		// Verify failure on bad data
-		$this->assertFalse($this->controller->Validation->runTest(1, -1), 'Test fails on bad test_group_id (return false)');		
-		$this->assertFalse($this->controller->Validation->runTest(-1, 1), 'Test fails on bad file_id (return false)');
+    /**
+     * Tests the runTest() method
+     */
+    function testRunTest() {
+                                                                        
+        // Verify failure on bad data
+        $this->assertFalse($this->controller->Validation->runTest(1, -1), 'Test fails on bad test_group_id (return false)');        
+        $this->assertFalse($this->controller->Validation->runTest(-1, 1), 'Test fails on bad file_id (return false)');
 
-		// Verify pass on good data
-		$this->assertTrue($this->controller->Validation->runTest(1, 1), 'Default addon passes tests: %s');
-		
-		// Verify that we get 3 passes
-		$this->assertEqual(count($this->controller->TestResult->findAll(array('TestResult.file_id' => 1, 'TestCase.test_group_id' => 1, 'TestResult.result' => TEST_PASS))), 3, 'All three tests should pass: %s');
+        // Verify pass on good data
+        $this->assertTrue($this->controller->Validation->runTest(1, 1), 'Default addon passes tests: %s');
+        
+        // Verify that we get 3 passes
+        $this->assertEqual(count($this->controller->TestResult->findAll(array('TestResult.file_id' => 1, 'TestCase.test_group_id' => 1, 'TestResult.result' => TEST_PASS))), 3, 'All three tests should pass: %s');
 
-		// Verify failures on wrong test
-		$this->controller->Validation->runTest(1, 31);
-		$results = $this->controller->TestResult->findAll(array('TestResult.file_id' => 1, 'TestCase.test_group_id' => 31));
-		
-		$this->assertEqual(count($results), 3, 'Tests should fail on wrong test group type: %s');
+        // Verify failures on wrong test
+        $this->controller->Validation->runTest(1, 31);
+        $results = $this->controller->TestResult->findAll(array('TestResult.file_id' => 1, 'TestCase.test_group_id' => 31));
+        
+        $this->assertEqual(count($results), 3, 'Tests should fail on wrong test group type: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the all_general_verifyExtension() method
-	 */
-	function testAll_general_verifyExtension() {
+    /**
+     * Tests the all_general_verifyExtension() method
+     */
+    function testAll_general_verifyExtension() {
 
-		$file = $this->controller->File->findById(1);
-		
-		// Verify default extension
-		$results = $this->controller->Validation->all_general_verifyExtension($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Default extension should have correct file type: %s');
+        $file = $this->controller->File->findById(1);
+        
+        // Verify default extension
+        $results = $this->controller->Validation->all_general_verifyExtension($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Default extension should have correct file type: %s');
 
-		// Try some bad extension
-		$file['File']['filename'] = 'bad.badExt';
-		$results = $this->controller->Validation->all_general_verifyExtension($file);
-		$fail = $this->controller->Validation->_resultFail(0, '', 'The extension does not match the type of the add-on');
-		$this->assertEqual($results, $fail, 'Bad extensions will return a fail result: %s');
-	
-		// Verify theme extension
-		$file = $this->controller->File->findById(13);
-		$results = $this->controller->Validation->all_general_verifyExtension($file);
-		$this->assertEqual($results, $pass, 'Theme files should end in the .jar extension: %s');
-	}
+        // Try some bad extension
+        $file['File']['filename'] = 'bad.badExt';
+        $results = $this->controller->Validation->all_general_verifyExtension($file);
+        $fail = $this->controller->Validation->_resultFail(0, '', 'The extension does not match the type of the add-on');
+        $this->assertEqual($results, $fail, 'Bad extensions will return a fail result: %s');
+    
+        // Verify theme extension
+        $file = $this->controller->File->findById(13);
+        $results = $this->controller->Validation->all_general_verifyExtension($file);
+        $this->assertEqual($results, $pass, 'Theme files should end in the .jar extension: %s');
+    }
 
-	/**
-	 * Tests the all_general_verifyInstallRDF() method
-	 */
-	function testAll_general_verifyInstallRDF() {
+    /**
+     * Tests the all_general_verifyInstallRDF() method
+     */
+    function testAll_general_verifyInstallRDF() {
 
-		$file = $this->controller->File->findById(1);
+        $file = $this->controller->File->findById(1);
 
-		// Verify pass on default extension
-		$results = $this->controller->Validation->all_general_verifyInstallRDF($file);
-		$expected = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $expected, 'Default extension passes tests: %s');
+        // Verify pass on default extension
+        $results = $this->controller->Validation->all_general_verifyInstallRDF($file);
+        $expected = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $expected, 'Default extension passes tests: %s');
 
-		// Verify fail on missing install.rdf
-		@unlink(CACHE_PFX . '1/install.rdf');
+        // Verify fail on missing install.rdf
+        @unlink(CACHE_PFX . '1/install.rdf');
 
-		$results = $this->controller->Validation->all_general_verifyInstallRDF($file);
-		$expected = $this->controller->Validation->_resultFail(0, '', 'No install.rdf present.');
-		$this->assertEqual($results, $expected, 'Missing install.rdf generates a fail result: %s');
+        $results = $this->controller->Validation->all_general_verifyInstallRDF($file);
+        $expected = $this->controller->Validation->_resultFail(0, '', 'No install.rdf present.');
+        $this->assertEqual($results, $expected, 'Missing install.rdf generates a fail result: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the all_general_verifyFileTypes() method
-	 */
-	function testAll_general_verifyFileTypes() {
+    /**
+     * Tests the all_general_verifyFileTypes() method
+     */
+    function testAll_general_verifyFileTypes() {
 
-		$file = $this->controller->File->findById(1);
-		
-		// Verify default extension
-		$results = $this->controller->Validation->all_general_verifyFileTypes($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Default extension should have no blacklisted files: %s');
-		
-		// Make some bad data
-		$extensions = array('.dll', '.exe', '.DYLIB', '.So', '.sH');
-		foreach ($extensions as $ext) {
-			touch(CACHE_PFX . '1/foo' . $ext);
-		}
+        $file = $this->controller->File->findById(1);
+        
+        // Verify default extension
+        $results = $this->controller->Validation->all_general_verifyFileTypes($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Default extension should have no blacklisted files: %s');
+        
+        // Make some bad data
+        $extensions = array('.dll', '.exe', '.DYLIB', '.So', '.sH');
+        foreach ($extensions as $ext) {
+            touch(CACHE_PFX . '1/foo' . $ext);
+        }
 
-		$results = $this->controller->Validation->all_general_verifyFileTypes($file);
-		$this->assertEqual(count($results), 5, 'All blacklisted file types should be flagged: %s');
-		
-		$expected = $this->controller->Validation->_result(TEST_WARN, 0, '', 'The add-on contains a file \'foo.exe\', which is a flagged type.');
-		$this->assertEqual($results[0], $expected, 'Results are warnings mentioning the flagged type: %s');
+        $results = $this->controller->Validation->all_general_verifyFileTypes($file);
+        $this->assertEqual(count($results), 5, 'All blacklisted file types should be flagged: %s');
+        
+        $expected = $this->controller->Validation->_result(TEST_WARN, 0, '', 'The add-on contains a file \'foo.exe\', which is a flagged type.');
+        $this->assertEqual($results[0], $expected, 'Results are warnings mentioning the flagged type: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the all_security_filterUnsafeJS() method
-	 */
-	function testAll_security_filterUnsafeJS() {
+    /**
+     * Tests the all_security_filterUnsafeJS() method
+     */
+    function testAll_security_filterUnsafeJS() {
 
-		$file = $this->controller->File->findById(1);
-		
-		// Verify default extension
-		$results = $this->controller->Validation->all_security_filterUnsafeJS($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Default extension should have no js problems: %s');
-		
-		// Get some bad JS!
-		$badJs = "nsIProcess
-				  .launch
-				  eval
-				  <browser without-type-oh-no>
-				  <iframe without-type-oh-no>
-				  xpcnativewrappers
-				  evalInSandbox
-				  mozIJSSubscriptLoader";
-		file_put_contents(CACHE_PFX . '1/bad.js', $badJs);
-		
-		$results = $this->controller->Validation->all_security_filterUnsafeJS($file);
-		$this->assertEqual(count($results), 8, 'All flagged patters should generate warnings: %s');
-		
-		$expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/nsIProcess/"');
-		$this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
-	}
+        $file = $this->controller->File->findById(1);
+        
+        // Verify default extension
+        $results = $this->controller->Validation->all_security_filterUnsafeJS($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Default extension should have no js problems: %s');
+        
+        // Get some bad JS!
+        $badJs = "nsIProcess
+                  .launch
+                  eval
+                  <browser without-type-oh-no>
+                  <iframe without-type-oh-no>
+                  xpcnativewrappers
+                  evalInSandbox
+                  mozIJSSubscriptLoader";
+        file_put_contents(CACHE_PFX . '1/bad.js', $badJs);
+        
+        $results = $this->controller->Validation->all_security_filterUnsafeJS($file);
+        $this->assertEqual(count($results), 8, 'All flagged patters should generate warnings: %s');
+        
+        $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/nsIProcess/"');
+        $this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
+    }
 
-	/**
-	 * Tests the all_security_filterUnsafeSettings() method
-	 */
-	function testAll_security_filterUnsafeSettings() {
+    /**
+     * Tests the all_security_filterUnsafeSettings() method
+     */
+    function testAll_security_filterUnsafeSettings() {
 
-		$file = $this->controller->File->findById(1);
-		
-		// Verify default extension
-		$results = $this->controller->Validation->all_security_filterUnsafeSettings($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Default extension should have no unsafe settings: %s');
-		
-		// Get some bad JS!
-		$badJs = "extensions.update.url
-				  extensions.update.enabled
-				  extensions.update.interval
-				  extensions.addon-id.update.enabled
-				  extensions.addon-id.update.url
-				  extensions.blocklist.enabled
-				  extensions.blocklist.url
-				  extensions.blocklist.level
-				  extensions.blocklist.interval";
-		file_put_contents(CACHE_PFX . '1/bad.js', $badJs);
-		
-		$results = $this->controller->Validation->all_security_filterUnsafeSettings($file);
-		$this->assertEqual(count($results), 9, 'All flagged patters should generate warnings: %s');
-		
-		$expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/extensions\.update\.url/"');
-		$this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
+        $file = $this->controller->File->findById(1);
+        
+        // Verify default extension
+        $results = $this->controller->Validation->all_security_filterUnsafeSettings($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Default extension should have no unsafe settings: %s');
+        
+        // Get some bad JS!
+        $badJs = "extensions.update.url
+                  extensions.update.enabled
+                  extensions.update.interval
+                  extensions.addon-id.update.enabled
+                  extensions.addon-id.update.url
+                  extensions.blocklist.enabled
+                  extensions.blocklist.url
+                  extensions.blocklist.level
+                  extensions.blocklist.interval";
+        file_put_contents(CACHE_PFX . '1/bad.js', $badJs);
+        
+        $results = $this->controller->Validation->all_security_filterUnsafeSettings($file);
+        $this->assertEqual(count($results), 9, 'All flagged patters should generate warnings: %s');
+        
+        $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/extensions\.update\.url/"');
+        $this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the all_security_filterRemoteJS() method
-	 */
-	function testAll_security_filterRemoteJS() {
-		
-		$file = $this->controller->File->findById(1);
-		
-		// Verify default extension
-		$results = $this->controller->Validation->all_security_filterRemoteJS($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Default extension should have no remote JS: %s');
-		
-		// Inject remote loading code
-		file_put_contents(CACHE_PFX . '1/bad.js', "-moz-binding: non-chrome-url");
-				
-		$results = $this->controller->Validation->all_security_filterRemoteJS($file);
-		$expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:\s+(?!url\(["\']chrome:\/\/.*\/content\/)/"');
-		$this->assertEqual($results, $expected, 'Results are warnings with appropriate file and line numbers: %s');
-	}
+    /**
+     * Tests the all_security_filterRemoteJS() method
+     */
+    function testAll_security_filterRemoteJS() {
+        
+        $file = $this->controller->File->findById(1);
+        
+        // Verify default extension
+        $results = $this->controller->Validation->all_security_filterRemoteJS($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Default extension should have no remote JS: %s');
+        
+        // Inject remote loading code
+        file_put_contents(CACHE_PFX . '1/bad.js', "-moz-binding: non-chrome-url");
+                
+        $results = $this->controller->Validation->all_security_filterRemoteJS($file);
+        $expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:\s+(?!url\(["\']chrome:\/\/.*\/content\/)/"');
+        $this->assertEqual($results, $expected, 'Results are warnings with appropriate file and line numbers: %s');
+    }
 
-	/**
-	 * Tests the dictionary_general_verifyFileLayout() method
-	 */
-	function testDictionary_general_verifyFileLayout() {
-		
-		$file = $this->controller->File->findById(11);
-		
-		// Verify default dictionary 
-		$results = $this->controller->Validation->dictionary_general_verifyFileLayout($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Default dictionary should pass file layout tests: %s');
-		
-		// Make sure all missing files are flagged
-		$this->controller->Validation->_deleteDir(CACHE_PFX . '11');
-		@mkdir(CACHE_PFX . '11');
-		
-		$results = $this->controller->Validation->dictionary_general_verifyFileLayout($file);
-		$this->assertEqual(count($results), 3, 'All three missing types should be flagged: %s');
+    /**
+     * Tests the dictionary_general_verifyFileLayout() method
+     */
+    function testDictionary_general_verifyFileLayout() {
+        
+        $file = $this->controller->File->findById(11);
+        
+        // Verify default dictionary 
+        $results = $this->controller->Validation->dictionary_general_verifyFileLayout($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Default dictionary should pass file layout tests: %s');
+        
+        // Make sure all missing files are flagged
+        $this->controller->Validation->_deleteDir(CACHE_PFX . '11');
+        @mkdir(CACHE_PFX . '11');
+        
+        $results = $this->controller->Validation->dictionary_general_verifyFileLayout($file);
+        $this->assertEqual(count($results), 3, 'All three missing types should be flagged: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Dictionary was missing a required file: install.rdf');
-		$this->assertEqual($results[0], $expected, 'Results are failures mentioning dictionary and the missing file: %s');
-		
-	}
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Dictionary was missing a required file: install.rdf');
+        $this->assertEqual($results[0], $expected, 'Results are failures mentioning dictionary and the missing file: %s');
+        
+    }
 
-	/**
-	 * Tests the dictionary_security_checkInstallJS() method
-	 */
-	function testDictionary_security_checkInstallJS() {
+    /**
+     * Tests the dictionary_security_checkInstallJS() method
+     */
+    function testDictionary_security_checkInstallJS() {
 
-		// Grab the test dictionary - should pass the tests
-		$file = $this->controller->File->findById(11);
-		
-		@unlink(CACHE_PFX . '11/install.js');
-		
-		$results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
-		$this->assertEqual($results, array(), 'Missing install.js produces no results: %s');
+        // Grab the test dictionary - should pass the tests
+        $file = $this->controller->File->findById(11);
+        
+        @unlink(CACHE_PFX . '11/install.js');
+        
+        $results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
+        $this->assertEqual($results, array(), 'Missing install.js produces no results: %s');
 
-		// Short install.js should pass
-		touch(CACHE_PFX . '11/install.js');
-		
-		$results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
-		$expected = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $expected, 'Short install.js is allowed: %s');
+        // Short install.js should pass
+        touch(CACHE_PFX . '11/install.js');
+        
+        $results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
+        $expected = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $expected, 'Short install.js is allowed: %s');
 
-		// Long install.js should be flagged
-		file_put_contents(CACHE_PFX . '11/install.js', "\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-		
-		$results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
-		$expected = $this->controller->Validation->_resultWarn(1, 'install.js', 'Install.js appears to be too long');
-		$this->assertEqual($results, $expected, 'Long install.js is flagged: %s');
-	}
+        // Long install.js should be flagged
+        file_put_contents(CACHE_PFX . '11/install.js', "\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        
+        $results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
+        $expected = $this->controller->Validation->_resultWarn(1, 'install.js', 'Install.js appears to be too long');
+        $this->assertEqual($results, $expected, 'Long install.js is flagged: %s');
+    }
 
-	/**
-	 * Tests the dictionary_general_checkExtraFiles() method
-	 */
-	function testDictionary_general_checkExtraFiles() {
+    /**
+     * Tests the dictionary_general_checkExtraFiles() method
+     */
+    function testDictionary_general_checkExtraFiles() {
 
-		// Grab the test dictionary - should pass the tests
-		$file = $this->controller->File->findById(11);
-			
-		$results = $this->controller->Validation->dictionary_general_checkExtraFiles($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample dictionary has no extra files: %s');
+        // Grab the test dictionary - should pass the tests
+        $file = $this->controller->File->findById(11);
+            
+        $results = $this->controller->Validation->dictionary_general_checkExtraFiles($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample dictionary has no extra files: %s');
 
-		// Use another addon type to break extra files
-		$file = $this->controller->File->findById(3);
-		
-		$results = $this->controller->Validation->dictionary_general_checkExtraFiles($file);
-		$this->assertEqual(count($results), 3, 'Both files should be detected: %s');
+        // Use another addon type to break extra files
+        $file = $this->controller->File->findById(3);
+        
+        $results = $this->controller->Validation->dictionary_general_checkExtraFiles($file);
+        $this->assertEqual(count($results), 3, 'Both files should be detected: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_WARN, 0, 'chrome.manifest', 'The file chrome.manifest does not appear to belong in this add-on');
-		$this->assertEqual($results[0], $expected, 'Results are warnings mentining the offending file: %s');
+        $expected = $this->controller->Validation->_result(TEST_WARN, 0, 'chrome.manifest', 'The file chrome.manifest does not appear to belong in this add-on');
+        $this->assertEqual($results[0], $expected, 'Results are warnings mentining the offending file: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the dictionary_general_checkSeaMonkeyFiles() method
-	 */
-	function testDictionary_general_checkSeaMonkeyFiles() {
-		
-		// Sample extension doesn't support seamonkey
-		$file = $this->controller->File->findById(1);
-		
-		$results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
-		$this->assertEqual($results, array(), 'Add-ons that dont support SeaMonkey generate no results: %s');
+    /**
+     * Tests the dictionary_general_checkSeaMonkeyFiles() method
+     */
+    function testDictionary_general_checkSeaMonkeyFiles() {
+        
+        // Sample extension doesn't support seamonkey
+        $file = $this->controller->File->findById(1);
+        
+        $results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
+        $this->assertEqual($results, array(), 'Add-ons that dont support SeaMonkey generate no results: %s');
 
-		// Sample Dictionary supports seamonkey
-		$file = $this->controller->File->findById(11);
-		
-		$results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
-   		$expected = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $expected, 'Supported add-ons generate pass results: %s');
+        // Sample Dictionary supports seamonkey
+        $file = $this->controller->File->findById(11);
+        
+        $results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
+        $expected = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $expected, 'Supported add-ons generate pass results: %s');
 
-		// Verify fail on missing install.js
-		@unlink(CACHE_PFX . '11/install.js');
-		
-		$results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
-		$expected = $this->controller->Validation->_resultFail(0, '', 'The Dictionary was missing a required file: install.js');
-		$this->assertEqual($results, $expected, 'Supported add-ons fail if missing install.js: %s');
-	}
+        // Verify fail on missing install.js
+        @unlink(CACHE_PFX . '11/install.js');
+        
+        $results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
+        $expected = $this->controller->Validation->_resultFail(0, '', 'The Dictionary was missing a required file: install.js');
+        $this->assertEqual($results, $expected, 'Supported add-ons fail if missing install.js: %s');
+    }
 
-	/**
-	 * Tests the extension_security_checkGeolocation() method
-	 */
-	function testExtension_security_checkGeolocation() {
-		
-		// Sample extension should pass the tests
-		$file = $this->controller->File->findById(1);
-		
-		$results = $this->controller->Validation->extension_security_checkGeolocation($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample extension does not use geolocation: %s');
+    /**
+     * Tests the extension_security_checkGeolocation() method
+     */
+    function testExtension_security_checkGeolocation() {
+        
+        // Sample extension should pass the tests
+        $file = $this->controller->File->findById(1);
+        
+        $results = $this->controller->Validation->extension_security_checkGeolocation($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample extension does not use geolocation: %s');
 
-		// Inject some geolocation and verfiy matches
-		file_put_contents(CACHE_PFX . '1/bad.js', "geolocation\nwifi");
-				
-		$results = $this->controller->Validation->extension_security_checkGeolocation($file);
-		$this->assertEqual(count($results), 2, 'Both flagged patterns should match: %s');
+        // Inject some geolocation and verfiy matches
+        file_put_contents(CACHE_PFX . '1/bad.js', "geolocation\nwifi");
+                
+        $results = $this->controller->Validation->extension_security_checkGeolocation($file);
+        $this->assertEqual(count($results), 2, 'Both flagged patterns should match: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/geolocation/"');
-		$this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
-	}
+        $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/geolocation/"');
+        $this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
+    }
 
-	/**
-	 * Tests the extension_security_checkConduit() method
-	 */
-	function testExtension_security_checkConduit() {
-		
-		// Sample extension is not a conduit toolbar
-		$file = $this->controller->File->findById(1);
-		
-		$results = $this->controller->Validation->extension_security_checkConduit($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample extension is not a conduit toolbar: %s');
+    /**
+     * Tests the extension_security_checkConduit() method
+     */
+    function testExtension_security_checkConduit() {
+        
+        // Sample extension is not a conduit toolbar
+        $file = $this->controller->File->findById(1);
+        
+        $results = $this->controller->Validation->extension_security_checkConduit($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample extension is not a conduit toolbar: %s');
 
-		// Make it look like one!
-		$conduit = "<?xml version=\"1.0\"?>
+        // Make it look like one!
+        $conduit = "<?xml version=\"1.0\"?>
 
 <RDF xmlns=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"
-	xmlns:em=\"http://www.mozilla.org/2004/em-rdf#\">
+    xmlns:em=\"http://www.mozilla.org/2004/em-rdf#\">
   <Description about=\"urn:mozilla:install-manifest\">
-			<em:id>conduit@toolbar</em:id>
-			<em:version>1.2.3.4</em:version>
-			<em:updateURL>https://hosting.conduit.com</em:updateURL>
+            <em:id>conduit@toolbar</em:id>
+            <em:version>1.2.3.4</em:version>
+            <em:updateURL>https://hosting.conduit.com</em:updateURL>
   </Description>
 </RDF>";
-		file_put_contents(CACHE_PFX . '1/install.rdf', $conduit);
-		
-		mkdir(CACHE_PFX . '1/searchplugin');
-		mkdir(CACHE_PFX . '1/components');
-		mkdir(CACHE_PFX . '1/defaults');
-		touch(CACHE_PFX . '1/searchplugin/conduit');
-		touch(CACHE_PFX . '1/components/conduit');
-		touch(CACHE_PFX . '1/defaults/default_radio_skin.xml');
-		touch(CACHE_PFX . '1/version.txt');
+        file_put_contents(CACHE_PFX . '1/install.rdf', $conduit);
+        
+        mkdir(CACHE_PFX . '1/searchplugin');
+        mkdir(CACHE_PFX . '1/components');
+        mkdir(CACHE_PFX . '1/defaults');
+        touch(CACHE_PFX . '1/searchplugin/conduit');
+        touch(CACHE_PFX . '1/components/conduit');
+        touch(CACHE_PFX . '1/defaults/default_radio_skin.xml');
+        touch(CACHE_PFX . '1/version.txt');
 
-		// Poison contents.rdf as well
-		$conduit = "chrome:displayName=\"Conduit Toolbar\"
+        // Poison contents.rdf as well
+        $conduit = "chrome:displayName=\"Conduit Toolbar\"
                     chrome:author=\"Conduit Ltd.\"
                     chrome:authorURL=\"http://www.conduit.com\"
                     chrome:description=\"More than just a toolbar.\"";
-		file_put_contents(CACHE_PFX . '1/contents.rdf', $conduit);
+        file_put_contents(CACHE_PFX . '1/contents.rdf', $conduit);
 
-		// Finally, poison chrome.manifest
-		file_put_contents(CACHE_PFX . '1/chrome.manifest', 'reference: ebtoolbarstyle.css');
+        // Finally, poison chrome.manifest
+        file_put_contents(CACHE_PFX . '1/chrome.manifest', 'reference: ebtoolbarstyle.css');
 
-		// Verify that we catch all the failures
-		$results = $this->controller->Validation->extension_security_checkConduit($file);
-		$this->assertEqual(count($results), 10, 'The tests should catch all 10 conditions: %s');
+        // Verify that we catch all the failures
+        $results = $this->controller->Validation->extension_security_checkConduit($file);
+        $this->assertEqual(count($results), 10, 'The tests should catch all 10 conditions: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_FAIL, 0, 'install.rdf', 'The add-on appears to be a conduit toolbar due to its updateURL element');
-		$this->assertEqual($results[0], $expected, 'Results are failures: %s');
-		
-	}
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, 'install.rdf', 'The add-on appears to be a conduit toolbar due to its updateURL element');
+        $this->assertEqual($results[0], $expected, 'Results are failures: %s');
+        
+    }
 
-	/**
-	 * Tests the langpack_general_verifyFileLayout() method
-	 */
-	function testLangpack_general_verifyFileLayout() {
-		
-		// Sample langpack should validate
-		$file = $this->controller->File->findById(12);
-		
-		$results = $this->controller->Validation->langpack_general_verifyFileLayout($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample Language pack has the correct layout: %s');
+    /**
+     * Tests the langpack_general_verifyFileLayout() method
+     */
+    function testLangpack_general_verifyFileLayout() {
+        
+        // Sample langpack should validate
+        $file = $this->controller->File->findById(12);
+        
+        $results = $this->controller->Validation->langpack_general_verifyFileLayout($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample Language pack has the correct layout: %s');
 
-		// Verify that contents.rdf works instead of chrome.manifest
-		@unlink(CACHE_PFX . '12/chrome.manifest');
-		touch(CACHE_PFX . '12/contents.rdf');
+        // Verify that contents.rdf works instead of chrome.manifest
+        @unlink(CACHE_PFX . '12/chrome.manifest');
+        touch(CACHE_PFX . '12/contents.rdf');
 
-		$results = $this->controller->Validation->langpack_general_verifyFileLayout($file);
-		$this->assertEqual($results, $pass, 'Contents.rdf is OK instead of chrome.manifest: %s');
+        $results = $this->controller->Validation->langpack_general_verifyFileLayout($file);
+        $this->assertEqual($results, $pass, 'Contents.rdf is OK instead of chrome.manifest: %s');
 
-		// Make sure all missing files are flagged
-		$this->controller->Validation->_deleteDir(CACHE_PFX . '12');
-		@mkdir(CACHE_PFX . '12');
-		
-		$results = $this->controller->Validation->langpack_general_verifyFileLayout($file);
-		$this->assertEqual(count($results), 3, 'All three missing types should be flagged: %s');
+        // Make sure all missing files are flagged
+        $this->controller->Validation->_deleteDir(CACHE_PFX . '12');
+        @mkdir(CACHE_PFX . '12');
+        
+        $results = $this->controller->Validation->langpack_general_verifyFileLayout($file);
+        $this->assertEqual(count($results), 3, 'All three missing types should be flagged: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Language Pack (Add-on) was missing a required file: install.rdf');
-		$this->assertEqual($results[0], $expected, 'Results are failures mentioning language pack and the missing file: %s');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Language Pack (Add-on) was missing a required file: install.rdf');
+        $this->assertEqual($results[0], $expected, 'Results are failures mentioning language pack and the missing file: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the langpack_general_checkExtraFiles() method
-	 */
-	function testLangpack_general_checkExtraFiles() {
-		
-		// Grab the test language pack - should pass the tests
-		$file = $this->controller->File->findById(12);
-			
-		$results = $this->controller->Validation->langpack_general_checkExtraFiles($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample language pack has no extra files: %s');
+    /**
+     * Tests the langpack_general_checkExtraFiles() method
+     */
+    function testLangpack_general_checkExtraFiles() {
+        
+        // Grab the test language pack - should pass the tests
+        $file = $this->controller->File->findById(12);
+            
+        $results = $this->controller->Validation->langpack_general_checkExtraFiles($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample language pack has no extra files: %s');
 
-		// Use another addon type to break extra files
-		$file = $this->controller->File->findById(11);
-		
-		$results = $this->controller->Validation->langpack_general_checkExtraFiles($file);
-		$this->assertEqual(count($results), 6, 'Both files should be detected: %s');
+        // Use another addon type to break extra files
+        $file = $this->controller->File->findById(11);
+        
+        $results = $this->controller->Validation->langpack_general_checkExtraFiles($file);
+        $this->assertEqual(count($results), 6, 'Both files should be detected: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_WARN, 0, 'changelog.txt', 'The file changelog.txt does not appear to belong in this add-on');
-		$this->assertEqual($results[0], $expected, 'Results are warnings mentining the offending file: %s');
+        $expected = $this->controller->Validation->_result(TEST_WARN, 0, 'changelog.txt', 'The file changelog.txt does not appear to belong in this add-on');
+        $this->assertEqual($results[0], $expected, 'Results are warnings mentining the offending file: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the langpack_security_filterUnsafeHTML() method
-	 */
-	function testLangpack_security_filterUnsafeHTML() {
+    /**
+     * Tests the langpack_security_filterUnsafeHTML() method
+     */
+    function testLangpack_security_filterUnsafeHTML() {
 
-		// Grab the test language pack - should pass the tests
-		$file = $this->controller->File->findById(12);
-			
-		$results = $this->controller->Validation->langpack_security_filterUnsafeHTML($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample language pack should pass all tests: %s');
+        // Grab the test language pack - should pass the tests
+        $file = $this->controller->File->findById(12);
+            
+        $results = $this->controller->Validation->langpack_security_filterUnsafeHTML($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample language pack should pass all tests: %s');
 
-		// Poison it with some bad HTML
-		$badHTML = "<script>
+        // Poison it with some bad HTML
+        $badHTML = "<script>
 <object>
 <embed>";
-		file_put_contents(CACHE_PFX . '12/bad.xhtml', $badHTML);
-		
-		$results = $this->controller->Validation->langpack_security_filterUnsafeHTML($file);
-		$this->assertEqual(count($results), 3, 'All three flags should be returned: %s');
-		
-		$expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.xhtml', 'Matched Pattern: "/<script/i"');
-		$this->assertEqual($results[0], $expected, 'Results are warnings listing the matched pattern: %s');
-		
-	}
+        file_put_contents(CACHE_PFX . '12/bad.xhtml', $badHTML);
+        
+        $results = $this->controller->Validation->langpack_security_filterUnsafeHTML($file);
+        $this->assertEqual(count($results), 3, 'All three flags should be returned: %s');
+        
+        $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.xhtml', 'Matched Pattern: "/<script/i"');
+        $this->assertEqual($results[0], $expected, 'Results are warnings listing the matched pattern: %s');
+        
+    }
 
-	/**
-	 * Tests the langpack_security_checkRemoteLoading() method
-	 */
-	function testLangpack_security_checkRemoteLoading() {
-		
-		// Grab the test language pack - should pass the tests
-		$file = $this->controller->File->findById(12);
-			
-		$results = $this->controller->Validation->langpack_security_checkRemoteLoading($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample language pack should pass all tests: %s');
+    /**
+     * Tests the langpack_security_checkRemoteLoading() method
+     */
+    function testLangpack_security_checkRemoteLoading() {
+        
+        // Grab the test language pack - should pass the tests
+        $file = $this->controller->File->findById(12);
+            
+        $results = $this->controller->Validation->langpack_security_checkRemoteLoading($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample language pack should pass all tests: %s');
 
-		// Stick some bad data in there 
-		$badHTML = "<a href=\"non-chrome!\">
+        // Stick some bad data in there 
+        $badHTML = "<a href=\"non-chrome!\">
 <img src='also-not-chrome'/>";
-		file_put_contents(CACHE_PFX . '12/bad.xhtml', $badHTML);
-		
-		$results = $this->controller->Validation->langpack_security_checkRemoteLoading($file);
-		$this->assertEqual(count($results), 2, 'Should catch both errors: %s');
+        file_put_contents(CACHE_PFX . '12/bad.xhtml', $badHTML);
+        
+        $results = $this->controller->Validation->langpack_security_checkRemoteLoading($file);
+        $this->assertEqual(count($results), 2, 'Should catch both errors: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.xhtml', 'Matched Pattern: "/(href|src)=["\'](?!chrome:\/\/)/i"');
-		$this->assertEqual($results[0], $expected, 'Results are warnings listing the relevant file and line number: %s');
-		
-	}
+        $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.xhtml', 'Matched Pattern: "/(href|src)=["\'](?!chrome:\/\/)/i"');
+        $this->assertEqual($results[0], $expected, 'Results are warnings listing the relevant file and line number: %s');
+        
+    }
 
-	/**
-	 * Tests the langpack_security_checkChromeManifest() method
-	 */
-	function testLangpack_security_checkChromeManifest() {
-		
-		// Grab the test language pack - should pass the tests
-		$file = $this->controller->File->findById(12);
-			
-		$results = $this->controller->Validation->langpack_security_checkChromeManifest($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample language pack should pass all tests: %s');
+    /**
+     * Tests the langpack_security_checkChromeManifest() method
+     */
+    function testLangpack_security_checkChromeManifest() {
+        
+        // Grab the test language pack - should pass the tests
+        $file = $this->controller->File->findById(12);
+            
+        $results = $this->controller->Validation->langpack_security_checkChromeManifest($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample language pack should pass all tests: %s');
 
-		// mess up the chrome.manifest
-		$data = "# comments are OK
+        // mess up the chrome.manifest
+        $data = "# comments are OK
 locale so is locale
 override chrome://so-is/locale/this
 not so much here!
 override chrome://bad-url";
-		file_put_contents(CACHE_PFX . '12/chrome.manifest', $data);
+        file_put_contents(CACHE_PFX . '12/chrome.manifest', $data);
 
-		$results = $this->controller->Validation->langpack_security_checkChromeManifest($file);
-		$this->assertEqual(count($results), 2, 'Found both bad lines: %s');
+        $results = $this->controller->Validation->langpack_security_checkChromeManifest($file);
+        $this->assertEqual(count($results), 2, 'Found both bad lines: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_WARN, 4, 'chrome.manifest', 'Matched Pattern: "/^(?!(#|locale |override(\s+chrome:\/\/.*\/locale\/[^\s]*)+))/"');
-		$this->assertEqual($results[0], $expected, 'Results are warnings with appropriate line and file: %s');
-	}
+        $expected = $this->controller->Validation->_result(TEST_WARN, 4, 'chrome.manifest', 'Matched Pattern: "/^(?!(#|locale |override(\s+chrome:\/\/.*\/locale\/[^\s]*)+))/"');
+        $this->assertEqual($results[0], $expected, 'Results are warnings with appropriate line and file: %s');
+    }
 
-	/**
-	 * Tests the theme_general_verifyFileLayout() method
-	 */
-	function testTheme_general_verifyFileLayout() {
+    /**
+     * Tests the theme_general_verifyFileLayout() method
+     */
+    function testTheme_general_verifyFileLayout() {
 
-		// Sample langpack should validate
-		$file = $this->controller->File->findById(13);
-		
-		$results = $this->controller->Validation->theme_general_verifyFileLayout($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample theme has the correct layout: %s');
+        // Sample langpack should validate
+        $file = $this->controller->File->findById(13);
+        
+        $results = $this->controller->Validation->theme_general_verifyFileLayout($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample theme has the correct layout: %s');
 
-		// Make sure all missing files are flagged
-		$this->controller->Validation->_deleteDir(CACHE_PFX . '13');
-		@mkdir(CACHE_PFX . '13');
-		
-		$results = $this->controller->Validation->theme_general_verifyFileLayout($file);
-		$this->assertEqual(count($results), 2, 'All two missing types should be flagged: %s');
+        // Make sure all missing files are flagged
+        $this->controller->Validation->_deleteDir(CACHE_PFX . '13');
+        @mkdir(CACHE_PFX . '13');
+        
+        $results = $this->controller->Validation->theme_general_verifyFileLayout($file);
+        $this->assertEqual(count($results), 2, 'All two missing types should be flagged: %s');
 
-		$expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Theme was missing a required file: install.rdf');
-		$this->assertEqual($results[0], $expected, 'Results are failures mentioning language pack and the missing file: %s');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Theme was missing a required file: install.rdf');
+        $this->assertEqual($results[0], $expected, 'Results are failures mentioning language pack and the missing file: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the theme_security_checkChromeManifest() method
-	 */
-	function testTheme_security_checkChromeManifest() {
-	   
-		// Grab the test language pack - should pass the tests
-		$file = $this->controller->File->findById(13);
-			
-		$results = $this->controller->Validation->theme_security_checkChromeManifest($file);
-		$pass = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $pass, 'Sample theme should pass all tests: %s');
+    /**
+     * Tests the theme_security_checkChromeManifest() method
+     */
+    function testTheme_security_checkChromeManifest() {
+       
+        // Grab the test language pack - should pass the tests
+        $file = $this->controller->File->findById(13);
+            
+        $results = $this->controller->Validation->theme_security_checkChromeManifest($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample theme should pass all tests: %s');
 
-		// mess up the chrome.manifest
-		$data = "# comments are OK
+        // mess up the chrome.manifest
+        $data = "# comments are OK
 skin is ok
 style is also
 not so much here!";
-		file_put_contents(CACHE_PFX . '13/chrome.manifest', $data);
+        file_put_contents(CACHE_PFX . '13/chrome.manifest', $data);
 
-		$results = $this->controller->Validation->theme_security_checkChromeManifest($file);
-		$expected = $this->controller->Validation->_resultWarn(4, 'chrome.manifest', 'Matched Pattern: "/^(?!(#|skin |style ))/"');
-		$this->assertEqual($results, $expected, 'Finds the bad line and generates a warning: %s');
-		
-	}
+        $results = $this->controller->Validation->theme_security_checkChromeManifest($file);
+        $expected = $this->controller->Validation->_resultWarn(4, 'chrome.manifest', 'Matched Pattern: "/^(?!(#|skin |style ))/"');
+        $this->assertEqual($results, $expected, 'Finds the bad line and generates a warning: %s');
+        
+    }
 
-	/**
-	 * Tests the _checkExtraFiles() method
-	 */
-	function test_checkExtraFiles() {
-		
-		// Some basic checks
-		$file = $this->controller->File->findById(1);
-		$results = $this->controller->Validation->_checkExtraFiles($file, array('/install\.rdf/'));
-		$expected = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $expected, 'Default addon contains install.rdf: %s');
-		
-		$results = $this->controller->Validation->_checkExtraFiles($file, array());
-		$expected = $this->controller->Validation->_resultWarn(0, 'install.rdf', 'The file install.rdf does not appear to belong in this add-on');
-		$this->assertEqual($results, $expected, 'Empty whitelist returns every file: %s');
-		
-		// More advanced check for hunting add-on
-		$file = $this->controller->File->findById(3);
-		$results = $this->controller->Validation->_checkExtraFiles($file, array('/\.rdf$/', '/\.js$/'));
-		$this->assertEqual(count($results), 3, 'Checking multiple items in whitelist: %s');
+    /**
+     * Tests the _checkExtraFiles() method
+     */
+    function test_checkExtraFiles() {
+        
+        // Some basic checks
+        $file = $this->controller->File->findById(1);
+        $results = $this->controller->Validation->_checkExtraFiles($file, array('/install\.rdf/'));
+        $expected = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $expected, 'Default addon contains install.rdf: %s');
+        
+        $results = $this->controller->Validation->_checkExtraFiles($file, array());
+        $expected = $this->controller->Validation->_resultWarn(0, 'install.rdf', 'The file install.rdf does not appear to belong in this add-on');
+        $this->assertEqual($results, $expected, 'Empty whitelist returns every file: %s');
+        
+        // More advanced check for hunting add-on
+        $file = $this->controller->File->findById(3);
+        $results = $this->controller->Validation->_checkExtraFiles($file, array('/\.rdf$/', '/\.js$/'));
+        $this->assertEqual(count($results), 3, 'Checking multiple items in whitelist: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the _verifyFilesExist() method
-	 */
-	function test_verifyFilesExist() {
-		
-		// Basic checks with empty/default parameters
-		$file = $this->controller->File->findById(1);
-		$results = $this->controller->Validation->_verifyFilesExist($file, array(), 'by_name', 'Extension');
-		$this->assertEqual($results, array(), 'No names returns an empty result: %s');
+    /**
+     * Tests the _verifyFilesExist() method
+     */
+    function test_verifyFilesExist() {
+        
+        // Basic checks with empty/default parameters
+        $file = $this->controller->File->findById(1);
+        $results = $this->controller->Validation->_verifyFilesExist($file, array(), 'by_name', 'Extension');
+        $this->assertEqual($results, array(), 'No names returns an empty result: %s');
 
-		// Test by_name and by_preg
-		$results = $this->controller->Validation->_verifyFilesExist($file, array('install.rdf'), 'by_name', 'Extension');
-		$this->assertEqual($results, array(), 'Default add-on should contain install.rdf: %s');
-		
-		$results = $this->controller->Validation->_verifyFilesExist($file, array('/\.rdf$/i'), 'by_preg', 'Extension');
-		$this->assertEqual($results, array(), 'Extracting by regex finds install.rdf: %s');
+        // Test by_name and by_preg
+        $results = $this->controller->Validation->_verifyFilesExist($file, array('install.rdf'), 'by_name', 'Extension');
+        $this->assertEqual($results, array(), 'Default add-on should contain install.rdf: %s');
+        
+        $results = $this->controller->Validation->_verifyFilesExist($file, array('/\.rdf$/i'), 'by_preg', 'Extension');
+        $this->assertEqual($results, array(), 'Extracting by regex finds install.rdf: %s');
 
-		// Verify failures on missing files
-		$results = $this->controller->Validation->_verifyFilesExist($file, array('doesnt-exist'), 'by_name', 'Extension');
-		$expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Extension was missing a required file: doesnt-exist');
-		$this->assertEqual($results[0], $expected, 'Results are failures mentioning the missing file: %s');
+        // Verify failures on missing files
+        $results = $this->controller->Validation->_verifyFilesExist($file, array('doesnt-exist'), 'by_name', 'Extension');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Extension was missing a required file: doesnt-exist');
+        $this->assertEqual($results[0], $expected, 'Results are failures mentioning the missing file: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the _grepExtractedFiles() method
-	 */
-	function test_grepExtractedFiles() {
+    /**
+     * Tests the _grepExtractedFiles() method
+     */
+    function test_grepExtractedFiles() {
 
-		// Test some bad data to ensure no errors
-		$results = $this->controller->Validation->_grepExtractedFiles(array(), array('/foo/'));
-		$expected = $this->controller->Validation->_resultPass();
-		$this->assertEqual($results, $expected, 'Empty files array returns pass result: %s');
+        // Test some bad data to ensure no errors
+        $results = $this->controller->Validation->_grepExtractedFiles(array(), array('/foo/'));
+        $expected = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $expected, 'Empty files array returns pass result: %s');
 
-		$file = $this->controller->File->findById(1);
-		$extracted = $this->controller->Validation->_extract($file, 'by_preg', '//');
-		$results = $this->controller->Validation->_grepExtractedFiles($extracted, array());
-		$this->assertEqual($results, $expected, 'Empty patterns array returns pass result: %s');
+        $file = $this->controller->File->findById(1);
+        $extracted = $this->controller->Validation->_extract($file, 'by_preg', '//');
+        $results = $this->controller->Validation->_grepExtractedFiles($extracted, array());
+        $this->assertEqual($results, $expected, 'Empty patterns array returns pass result: %s');
 
-		// Do some basic greps on the default add-on
-		$results = $this->controller->Validation->_grepExtractedFiles($extracted, array('/MicroFarmer/'));
-		$expected = $this->controller->Validation->_resultWarn(10, 'install.rdf', 'Matched Pattern: "/MicroFarmer/"');
-		$this->assertEqual($results, $expected, 'Greps return warnings with the matched pattern: %s');
+        // Do some basic greps on the default add-on
+        $results = $this->controller->Validation->_grepExtractedFiles($extracted, array('/MicroFarmer/'));
+        $expected = $this->controller->Validation->_resultWarn(10, 'install.rdf', 'Matched Pattern: "/MicroFarmer/"');
+        $this->assertEqual($results, $expected, 'Greps return warnings with the matched pattern: %s');
 
-		// Make sure multiple patterns work
-		$results = $this->controller->Validation->_grepExtractedFiles($extracted, array('/Firefox/', '/Thunderbird/'));
-		$this->assertEqual(count($results), 2, 'There should be two results for the default extension: %s');
-				
-		$expected = $this->controller->Validation->_result(TEST_WARN, 15, 'install.rdf', 'Matched Pattern: "/Firefox/"');
-		$this->assertEqual($results[0], $expected, 'The results are warnings with appropriate file and line: %s');
+        // Make sure multiple patterns work
+        $results = $this->controller->Validation->_grepExtractedFiles($extracted, array('/Firefox/', '/Thunderbird/'));
+        $this->assertEqual(count($results), 2, 'There should be two results for the default extension: %s');
+                
+        $expected = $this->controller->Validation->_result(TEST_WARN, 15, 'install.rdf', 'Matched Pattern: "/Firefox/"');
+        $this->assertEqual($results[0], $expected, 'The results are warnings with appropriate file and line: %s');
 
-		// Test overriding parameters
-		$results = $this->controller->Validation->_grepExtractedFiles($extracted, array('/Extension/'), TEST_PASS, 'Foo bar');
-		$expected = $this->controller->Validation->_result(TEST_PASS, 10, 'install.rdf', 'Foo bar');
-		$this->assertEqual($results[0], $expected, 'Overrding parameters: %s');
-		
-	}
+        // Test overriding parameters
+        $results = $this->controller->Validation->_grepExtractedFiles($extracted, array('/Extension/'), TEST_PASS, 'Foo bar');
+        $expected = $this->controller->Validation->_result(TEST_PASS, 10, 'install.rdf', 'Foo bar');
+        $this->assertEqual($results[0], $expected, 'Overrding parameters: %s');
+        
+    }
 
-	/**
-	 * Tests the _extract() method
-	 */
-	function test_extract() {
-		
-		$file = $this->controller->File->findById(1);
+    /**
+     * Tests the _extract() method
+     */
+    function test_extract() {
+        
+        $file = $this->controller->File->findById(1);
 
-		// Extract the default data
-		$files = $this->controller->Validation->_extract($file, 'by_preg', '//');
-		$this->assertEqual(count($files), 1, 'Default addon should extract 1 file: %s');
-		
-		// Verify caching is appening
-		$this->assertTrue(file_exists(NETAPP_STORAGE . '/validate-1'), 'Verify caching (return true)');
+        // Extract the default data
+        $files = $this->controller->Validation->_extract($file, 'by_preg', '//');
+        $this->assertEqual(count($files), 1, 'Default addon should extract 1 file: %s');
+        
+        // Verify caching is appening
+        $this->assertTrue(file_exists(NETAPP_STORAGE . '/validate-1'), 'Verify caching (return true)');
 
-		// Do some advanced regex extractions
-		$file = $this->controller->File->findById(3);
-		$files = $this->controller->Validation->_extract($file, 'by_preg', '/\.js$/i');
-		
-		$this->assertEqual(count($files), 2, 'Default add-on contains 2 JS files: %s');
-		
-		// Test bad extraction
-		$files = $this->controller->Validation->_extract($file, 'by_name', 'this-doesnt-exist');
-		$this->assertEqual($files, array(), 'Missing extractions should generate empty result set: %s');
+        // Do some advanced regex extractions
+        $file = $this->controller->File->findById(3);
+        $files = $this->controller->Validation->_extract($file, 'by_preg', '/\.js$/i');
+        
+        $this->assertEqual(count($files), 2, 'Default add-on contains 2 JS files: %s');
+        
+        // Test bad extraction
+        $files = $this->controller->Validation->_extract($file, 'by_name', 'this-doesnt-exist');
+        $this->assertEqual($files, array(), 'Missing extractions should generate empty result set: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the _findFiles() method
-	 */
-	function test_findFiles() {
+    /**
+     * Tests the _findFiles() method
+     */
+    function test_findFiles() {
 
-		// Get some test data
-		@mkdir(NETAPP_STORAGE . '/foo');
-		@mkdir(NETAPP_STORAGE . '/foo/bar');
-		@touch(NETAPP_STORAGE . '/foo/bar/baz');
-		@touch(NETAPP_STORAGE . '/foo/bing');
-		@touch(NETAPP_STORAGE . '/foo/bing2');
+        // Get some test data
+        @mkdir(NETAPP_STORAGE . '/foo');
+        @mkdir(NETAPP_STORAGE . '/foo/bar');
+        @touch(NETAPP_STORAGE . '/foo/bar/baz');
+        @touch(NETAPP_STORAGE . '/foo/bing');
+        @touch(NETAPP_STORAGE . '/foo/bing2');
 
-		// Basic find
-		$results = $this->controller->Validation->_findFiles(NETAPP_STORAGE . '/foo', '', array('/bing/'));
-		$this->assertEqual($results, array('bing', 'bing2'), 'Finding files in the root folder: %s');
+        // Basic find
+        $results = $this->controller->Validation->_findFiles(NETAPP_STORAGE . '/foo', '', array('/bing/'));
+        $this->assertEqual($results, array('bing', 'bing2'), 'Finding files in the root folder: %s');
 
-		// Find in directories
-		$results = $this->controller->Validation->_findFiles(NETAPP_STORAGE . '/foo', '', array('/baz/'));
-		$this->assertEqual($results, array('bar/baz'), 'Finding files in directories: %s');
+        // Find in directories
+        $results = $this->controller->Validation->_findFiles(NETAPP_STORAGE . '/foo', '', array('/baz/'));
+        $this->assertEqual($results, array('bar/baz'), 'Finding files in directories: %s');
 
-		// Finding directory names
-		$results = $this->controller->Validation->_findFiles(NETAPP_STORAGE . '/foo', '', array('/bar/'));
-		$this->assertEqual($results, array('bar/baz'), 'Finding directory names: %s');
-	}
+        // Finding directory names
+        $results = $this->controller->Validation->_findFiles(NETAPP_STORAGE . '/foo', '', array('/bar/'));
+        $this->assertEqual($results, array('bar/baz'), 'Finding directory names: %s');
+    }
 
-	/**
-	 * Tests the _deleteDir() method
-	 */
-	function test_deleteDir() {
-		
-		@mkdir(NETAPP_STORAGE . '/foo');
-		@mkdir(NETAPP_STORAGE . '/foo/bar');
-		@touch(NETAPP_STORAGE . '/foo/bar/baz');
-		@touch(NETAPP_STORAGE . '/foo/bing');
-		@touch(NETAPP_STORAGE . '/foo/bing2');
+    /**
+     * Tests the _deleteDir() method
+     */
+    function test_deleteDir() {
+        
+        @mkdir(NETAPP_STORAGE . '/foo');
+        @mkdir(NETAPP_STORAGE . '/foo/bar');
+        @touch(NETAPP_STORAGE . '/foo/bar/baz');
+        @touch(NETAPP_STORAGE . '/foo/bing');
+        @touch(NETAPP_STORAGE . '/foo/bing2');
 
-		$this->assertTrue($this->controller->Validation->_deleteDir(NETAPP_STORAGE . '/foo'));
-		$this->assertFalse(file_exists(NETAPP_STORAGE . '/foo'));
-	}
+        $this->assertTrue($this->controller->Validation->_deleteDir(NETAPP_STORAGE . '/foo'));
+        $this->assertFalse(file_exists(NETAPP_STORAGE . '/foo'));
+    }
 
-	/**
-	 * Tests the _passIfEmpty() method
-	 */
-	function test_passIfEmpty() {
+    /**
+     * Tests the _passIfEmpty() method
+     */
+    function test_passIfEmpty() {
 
-		// Array data is preserved
-		$arr = array('Not', 'Empty');
-		$this->assertEqual($this->controller->Validation->_passIfEmpty($arr), $arr, 'Non-empty array is unmodified: %s');
-		
-		// Empty array gives a pass result
-		$expected = $this->controller->Validation->_resultPass();
-		$this->assertEqual($this->controller->Validation->_passIfEmpty(array()), $expected, 'Empty array returns a pass result: %s');
-		
+        // Array data is preserved
+        $arr = array('Not', 'Empty');
+        $this->assertEqual($this->controller->Validation->_passIfEmpty($arr), $arr, 'Non-empty array is unmodified: %s');
+        
+        // Empty array gives a pass result
+        $expected = $this->controller->Validation->_resultPass();
+        $this->assertEqual($this->controller->Validation->_passIfEmpty(array()), $expected, 'Empty array returns a pass result: %s');
+        
 
-	}
+    }
 
-	/**
-	 * Tests the _result() method
-	 */
-	function test_result() {
+    /**
+     * Tests the _result() method
+     */
+    function test_result() {
 
-		$expected = array(
-			'result' => TEST_PASS,
-			'line' => 3456,
-			'filename' => 'foo',
-			'message' => 'bar'
-		);
-		$this->assertEqual($this->controller->Validation->_result(TEST_PASS, 3456, 'foo', 'bar'), $expected, 'Single result is a matching array: %s');
+        $expected = array(
+            'result' => TEST_PASS,
+            'line' => 3456,
+            'filename' => 'foo',
+            'message' => 'bar'
+        );
+        $this->assertEqual($this->controller->Validation->_result(TEST_PASS, 3456, 'foo', 'bar'), $expected, 'Single result is a matching array: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the _resultFail() method
-	 */
-	function test_resultFail() {
-		
-		$expected = array(
-			array(
-				'result' => TEST_FAIL,
-				'line' => 1234,
-				'filename' => 'foo',
-				'message' => 'bar'
-			)
-		);
-		$this->assertEqual($this->controller->Validation->_resultFail(1234, 'foo', 'bar'), $expected, 'Fail result is a matching array: %s');
+    /**
+     * Tests the _resultFail() method
+     */
+    function test_resultFail() {
+        
+        $expected = array(
+            array(
+                'result' => TEST_FAIL,
+                'line' => 1234,
+                'filename' => 'foo',
+                'message' => 'bar'
+            )
+        );
+        $this->assertEqual($this->controller->Validation->_resultFail(1234, 'foo', 'bar'), $expected, 'Fail result is a matching array: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the _resultWarn() method
-	 */
-	function test_resultWarn() {
+    /**
+     * Tests the _resultWarn() method
+     */
+    function test_resultWarn() {
 
-		$expected = array(
-			array(
-				'result' => TEST_WARN,
-				'line' => 5678,
-				'filename' => 'foo',
-				'message' => 'bar'
-			)
-		);
-		$this->assertEqual($this->controller->Validation->_resultWarn(5678, 'foo', 'bar'), $expected, 'Warn result is a matching array: %s');
+        $expected = array(
+            array(
+                'result' => TEST_WARN,
+                'line' => 5678,
+                'filename' => 'foo',
+                'message' => 'bar'
+            )
+        );
+        $this->assertEqual($this->controller->Validation->_resultWarn(5678, 'foo', 'bar'), $expected, 'Warn result is a matching array: %s');
 
-	}
+    }
 
-	/**
-	 * Tests the _resultPass() method
-	 */
-	function test_resultPass() {
+    /**
+     * Tests the _resultPass() method
+     */
+    function test_resultPass() {
 
-		$expected = array(
-			array(
-				'result' => TEST_PASS,
-				'line' => 0,
-				'filename' => '',
-				'message' => ''
-			)
-		);
-		$this->assertEqual($this->controller->Validation->_resultPass(), $expected, 'Pass result is a matching array: %s');
+        $expected = array(
+            array(
+                'result' => TEST_PASS,
+                'line' => 0,
+                'filename' => '',
+                'message' => ''
+            )
+        );
+        $this->assertEqual($this->controller->Validation->_resultPass(), $expected, 'Pass result is a matching array: %s');
 
-	}	
+    }   
 
 }
 ?>

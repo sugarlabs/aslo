@@ -21,6 +21,7 @@
  *
  * Contributor(s):
  *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   RJ Walsh <rwalsh@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -72,6 +73,7 @@ class InstallationTest extends UnitTestCase {
         $this->assertTrue(function_exists('mb_substr'), 'PHP: mb_substr is available');
         $this->assertTrue(function_exists('mb_strrpos'), 'PHP: mb_strrpos is available');
         $this->assertTrue(in_array('sha512', hash_algos()), 'PHP: sha512 is available');
+        $this->assertTrue(in_array('sha1', hash_algos()), 'PHP: sha1 is available');
 
         $_memlimit_wanted = '16M';
         $_memlimit_actual = $this->_return_bytes(ini_get('memory_limit'));
@@ -215,6 +217,13 @@ class InstallationTest extends UnitTestCase {
             $this->fail('Database: test - Your database configuration file is not up to date. Please re-copy the default.');
         }
     }
+
+	/**
+	 * Tests that JSHydra is installed
+	 */
+	function testJSHydra() {
+		$this->assertTrue(file_exists(JSHYDRA_PATH), 'JSHydra is installed at JSHYDRA_PATH: (return true)');
+	}
 
 }
 ?>
