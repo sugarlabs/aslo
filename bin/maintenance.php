@@ -165,6 +165,7 @@ switch ($action) {
         $total_count_sql = "
             SELECT
                 download_counts.addon_id as addon_id,
+                AVG(download_counts.count) as avg_count,
                 SUM(download_counts.count) as total_count
             FROM
                 `download_counts`
@@ -180,14 +181,15 @@ switch ($action) {
         $affected_rows = mysql_num_rows($total_count_result);
     
         if ($affected_rows > 0 ) {
-            $total_counts = array();
+            $counts = array();
             while ($row = mysql_fetch_array($total_count_result)) {
-                $total_counts[$row['addon_id']] = ($row['total_count'] > 0) ? $row['total_count'] : 0;
+                $counts[$row['addon_id']]['total']   = ($row['total_count'] > 0) ? $row['total_count'] : 0;
+                $counts[$row['addon_id']]['average'] = ($row['avg_count'] > 0) ? $row['avg_count'] : 0;
             }
 
-            foreach ($total_counts as $id => $total_count) {
+            foreach ($counts as $id => $count) {
                 $total_count_update_sql = "
-                    UPDATE `addons` SET `totaldownloads`='{$total_count}' WHERE `id`='{$id}'
+                    UPDATE `addons` SET `totaldownloads`='{$count['total']}', `average_daily_downloads`='{$count['average']}' WHERE `id`='{$id}'
                 ";
 
                 $total_count_update_result =
@@ -195,6 +197,48 @@ switch ($action) {
             }
         }
         
+        // Unlock stats dashboard
+        $db->unlockStats();
+    break;
+
+    case 'ADU':
+        // Lock stats dashboard
+        $db->lockStats();
+
+        // Get total counts from the download table.
+        $adu_count_sql = "
+            SELECT
+                update_counts.addon_id as addon_id,
+                AVG(update_counts.count) as avg_count
+            FROM
+                `update_counts`
+            GROUP BY
+                update_counts.addon_id
+            ORDER BY
+                update_counts.addon_id
+        ";
+
+        echo 'Retrieving ADU counts from `update_counts` ...'."\n";
+        $adu_count_result = $db->read($adu_count_sql);
+
+        $affected_rows = mysql_num_rows($adu_count_result);
+
+        if ($affected_rows > 0 ) {
+            $counts = array();
+            while ($row = mysql_fetch_array($adu_count_result)) {
+                $counts[$row['addon_id']] = ($row['avg_count'] > 0) ? $row['avg_count'] : 0;
+            }
+
+            foreach ($counts as $id => $count) {
+                $adu_count_update_sql = "
+                    UPDATE `addons` SET `average_daily_users`='{$count}'  WHERE `id`='{$id}'
+                ";
+
+                $adu_count_update_result =
+                $db->write($adu_count_update_sql);
+            }
+        }
+
         // Unlock stats dashboard
         $db->unlockStats();
     break;

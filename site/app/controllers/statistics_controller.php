@@ -200,14 +200,12 @@ class StatisticsController extends AppController
         // Data for overview
         $stats = array('totaldownloads' => 0);
         if (!$this->Config->getValue('stats_disabled') || $this->SimpleAcl->actionAllowed('*', '*', $this->Session->read('User'))) {
-            if ($statsQry = $this->Addon->query("SELECT totaldownloads, weeklydownloads FROM addons WHERE id={$addon_id}", true)) {      
+            if ($statsQry = $this->Addon->query("SELECT totaldownloads, weeklydownloads, average_daily_downloads, average_daily_users FROM addons WHERE id={$addon_id}", true)) {      
                 $stats['totaldownloads'] = $statsQry[0]['addons']['totaldownloads'];
+                $stats['avg_downloads']  = $statsQry[0]['addons']['average_daily_downloads'];
                 $stats['weeklydownloads'] = $statsQry[0]['addons']['weeklydownloads'];
+                $stats['avg_updatepings'] = $statsQry[0]['addons']['average_daily_users'];
             }
-            if ($statsQry = $this->Addon->query("SELECT AVG(count) FROM update_counts WHERE addon_id={$addon_id}", true))       
-                $stats['avg_updatepings'] = $statsQry[0][0]['AVG(count)'];
-            if ($statsQry = $this->Addon->query("SELECT AVG(count) FROM download_counts WHERE addon_id={$addon_id}", true))
-                $stats['avg_downloads'] = $statsQry[0][0]['AVG(count)'];
             if ($statsQry = $this->Addon->query("SELECT count, date FROM update_counts WHERE addon_id={$addon_id} ORDER BY date DESC LIMIT 2" ,true)) {
                 $stats['last_updatepings'] = $statsQry[0]['update_counts']['count'];
                 $stats['last_updatepings_date'] = $statsQry[0]['update_counts']['date'];

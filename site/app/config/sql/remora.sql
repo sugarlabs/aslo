@@ -40,6 +40,8 @@ CREATE TABLE `addons` (
   `totalreviews` int(11) unsigned NOT NULL default '0',
   `weeklydownloads` int(11) unsigned NOT NULL default '0',
   `totaldownloads` int(11) unsigned NOT NULL default '0',
+  `average_daily_downloads` int(11) unsigned NOT NULL default '0',
+  `average_daily_users` int(11) unsigned NOT NULL default '0',
   `sharecount` int(11) unsigned NOT NULL,
   `developercomments` int(11) unsigned default NULL,
   `inactive` tinyint(1) unsigned NOT NULL default '0',
