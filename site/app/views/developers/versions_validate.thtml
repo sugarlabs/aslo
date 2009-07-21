@@ -57,8 +57,12 @@
 		echo '<div id="test-results-'.$file['File']['id'].'">';
         	echo '<h2>'.sprintf(___('devcp_versions_validate_header', 'Validate File %s'), $file['File']['filename']).'</h2>';
 	        echo $this->renderElement('developers/testresults', array('file' => $file, 'test_groups' => $test_groups));
+                if (!$validation_disabled) {
+                    echo '<div class="action-button-container"><a href="#" onclick="versions_validate.runTest(' . $file['File']['id'] . '); return false;" class="action-button rounded">' . ___('devcp_versions_validate_button', 'Validate') . '</a></div>';
+                } else {
+                    echo ___('devcp_validation_disabled', 'Validation temporarily disabled, try again later');
+                }
 		
-		echo '<div class="action-button-container"><a href="#" onclick="versions_validate.runTest(' . $file['File']['id'] . '); return false;" class="action-button rounded">' . ___('devcp_versions_validate_button', 'Validate') . '</a></div>';
 		echo '</div><br/>';
             }
         }

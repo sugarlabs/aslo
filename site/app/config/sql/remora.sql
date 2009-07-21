@@ -388,7 +388,8 @@ VALUES ('site_notice', ''),
 ('stats_updating', '0'),
 ('firefox_notice_version', ''),
 ('firefox_notice_url', ''),
-('stats_disabled', '0');
+('stats_disabled', '0'),
+('validation_disabled', '0');
 
 -- --------------------------------------------------------
 

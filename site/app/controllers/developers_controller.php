@@ -1146,9 +1146,9 @@ class DevelopersController extends AppController
                 $this->setAction('_editVersion', $version);
                 break;
 
-	    case 'validate':
-		$this->setAction('_validateVersion', $version);
-		break;
+            case 'validate':
+                $this->setAction('_validateVersion', $version);
+                break;
             
             default:
                 $this->setAction('_versionsIndex', $addon_id);
@@ -1390,6 +1390,7 @@ class DevelopersController extends AppController
 		$this->publish('files', $files);
 		$this->publish('test_groups', $test_groups);
 		$this->publish('version', $version);
+        $this->publish('validation_disabled',$this->Config->getValue('validation_disabled'));
 		
 		$this->render('versions_validate');
     }
@@ -1400,6 +1401,12 @@ class DevelopersController extends AppController
      * @param int $test_group_id the id of the test group to run
      */
     function verify($file_id, $test_group_id) {
+
+        // Don't show the view if validation is disabled.  OK to return
+        // nothing here, since this view is just the AJAX handle
+        if ($this->Config->getValue('validation_disabled')) {
+            return;
+        }
 
 		// Pull in the test group
 		$test_group = $this->TestGroup->findById($test_group_id);
