@@ -666,6 +666,13 @@ class DevelopersController extends AppController
             if (isset($this->data['Addon']['paypal_id'])) {
                 $this->_checkPaypalID($addon_id, $this->data['Addon']['paypal_id']);
             }
+
+            // convert local decimal separators to point (bug 503033)
+            $locale_info = localeconv();
+            $this->data['Addon']['suggested_amount'] = str_replace(
+                array($locale_info['decimal_point'], $locale_info['mon_decimal_point']),
+                '.', $this->data['Addon']['suggested_amount']);
+
             if ($this->Addon->validates($this->data)) {
                 $this->Addon->save($this->data);
                 $this->redirect("/developers/addon/edit/{$addon_id}/contributions");
