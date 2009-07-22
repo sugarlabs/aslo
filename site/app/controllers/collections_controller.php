@@ -360,6 +360,7 @@ class CollectionsController extends AppController
         }
         $_conditions['Collection.id'] = $id;
 
+        $this->Collection->bindOnly('Users');
         $collection = $this->Collection->find($_conditions, null, null, 1);
 
         list($addons, $sort_options, $sortby) = $this->_getSortedAddons($collection['Collection']['id']);
