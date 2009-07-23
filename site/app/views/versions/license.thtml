@@ -38,11 +38,12 @@
 <div class="secondary" role="complementary">
     <?=$this->renderElement('amo2009/categories')?>
 </div>
-<div class="stand-alone-options">
-    <?=$this->renderElement('amo2009/search')?>
-</div>
+
 
 <div id="version-license" class="primary prose" role="main">
+    <div class="stand-alone-options">
+        <?=$this->renderElement('amo2009/search')?>
+    </div>
     <?php
     $addon_id = $version['Version']['addon_id'];
     $version_id = $version['Version']['id'];
