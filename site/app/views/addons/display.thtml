@@ -97,13 +97,16 @@ if (!empty($coll_addon_added)) {
                 $flags = array($html->byStatus($addon, array('experimental' => 'experimental',
                                                              'recommended' => 'recommended',
                                                              'default' => '')));
+                // Only api is valid right now
+                $src = (array_key_exists('src', $_GET) && in_array($_GET['src'], array('api'))) ? $_GET['src'] : 'addondetail';
+
                 echo $this->renderElement('amo2009/install', array(
                     'flags' => $flags,
                     'buttonClass' => 'significant',
                     'buttonSize'  => '16x16',
                     'addon' => $addon,
                     'collection_uuid' => $_collection_uuid,
-                    'src' => 'addondetail',
+                    'src' => $src,
                     'annoying' => $addon['Addon']['wants_contributions'] ? $addon['Addon']['annoying'] : 0,
                     'addonFiles' => $addon['Version'][0]['File']
                 ));
