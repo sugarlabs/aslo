@@ -142,7 +142,7 @@ class AddonsController extends AppController
                 VALUES
                 ({$db->value($addon_id)}, {$db->value($amount)},
                  {$db->value($source)}, {$a['annoying']},
-                  NOW(), '${uuid}')";
+                  NOW(), '{$uuid}')";
         $this->Addon->execute($sql);
 
         $return_url = $this->url("/addons/after_contribute/{$a['id']}/{$uuid}");
