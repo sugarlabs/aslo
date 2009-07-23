@@ -86,12 +86,12 @@ class PaypalComponent extends Object {
      * @param return_url: the callback after paypal is done
      * @param amount: optional donation amount, figured out on paypal's side if blank
      */
-    function contribute($business, $item_name, $return_url, $amount=null) {
+    function contribute($business, $addon_id, $item_name, $return_url, $amount=null) {
         $data = array(
             'cmd' => '_donations',
             'business' => $business,
             'item_name' => $item_name,
-            'bn' => PAYPAL_BN,
+            'bn' => PAYPAL_BN . '-AddonID' . $addon_id,
             'no_shipping' => '1',
             'return' => $return_url
         );

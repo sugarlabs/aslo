@@ -147,6 +147,7 @@ class AddonsController extends AppController
 
         $return_url = $this->url("/addons/after_contribute/{$a['id']}/{$uuid}");
         $this->Paypal->contribute($a['paypal_id'],
+                                  $a['id'],
                                   sprintf(___('addon_contribute_item'),
                                           $addon['Translation']['name']['string']),
                                   SITE_URL . $return_url,
