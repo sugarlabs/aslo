@@ -79,151 +79,155 @@ if (!empty($coll_addon_added)) {
 <div id="addon" class="primary" role="main">
   <div class="featured">
     <div class="featured-inner object-lead inverse">
-      <div class="secondary">
-        <?php if (count($previews) > 0): ?>
-          <?php
-          $thumb = $this->controller->Image->getPreviewURL($previews[0]['Preview']['id']);
-          $full = $this->controller->Image->getPreviewURL($previews[0]['Preview']['id'], 'full');
-          $caption = $previews[0]['Translation']['caption']['string'];
-          ?>
-          <a class="screenshot thumbnail" rel="lightbox" href="<?=$full?>" title="<?=$caption?>">
-            <img alt="" src="<?=$thumb?>" />
-          </a>
-        <?php else: ?>
-          <img class="screenshot thumbnail" src="<?=$html->urlImage('no-preview.png')?>"
-               alt="" width="200" height="150" />
-        <?php endif ?>
+      
+    <div id="addon-summary-wrapper">
+        <div id="addon-summary" class="primary <?=$html->extraClass($addon)?>">
+            <p <?=$addon['Translation']['summary']['locale_html']?>>
+              <?=nl2br($addon['Translation']['summary']['string'])?>
+            </p>
 
-        <div class="share-this">
-          <a class="share" href="#"><?=___('addons_share_button_a_text')?></a>
-          <div class="share-networks">
-            <ul>
-              <?php foreach ($link_sharing_services as $l_name => $l_details) :?>
-                <li class="<?= $l_name ?>">
-                  <?php $share_url = str_replace('/addon/', '/addon/share/', $html->url()) ?>
-                  <a class="uniquify" target="_blank" href="<?= $share_url . '?service=' . $l_name ?>">
-                    <?php // Escaping here because these details came via set() ?>
-                    <?=htmlentities($l_details['label'], ENT_COMPAT, 'UTF-8')?>
-                  </a>
-                </li>
-              <?php endforeach ?>
-            </ul>
-          </div>
-        </div> <!-- share-this -->
-      </div> <!-- secondary -->
-
-      <div id="addon-summary" class="primary <?=$html->extraClass($addon)?>">
-        <p <?=$addon['Translation']['summary']['locale_html']?>>
-          <?=nl2br($addon['Translation']['summary']['string'])?>
-        </p>
-
-        <?php if ($hasversion): ?>
-        <div id="addon-install">
-            <?php
-            if (array_key_exists('collection_id', $_GET) && $this->controller->Collection->isValidUUID($_GET['collection_id'])) {
-                $_collection_uuid = $_GET['collection_id'];
-            } else {
-                $_collection_uuid = '';
-            }
-            $flags = array($html->byStatus($addon, array('experimental' => 'experimental',
-                                                         'recommended' => 'recommended',
-                                                         'default' => '')));
-            echo $this->renderElement('amo2009/install', array(
-                'flags' => $flags,
-                'buttonClass' => 'significant',
-                'buttonSize'  => '16x16',
-                'addon' => $addon,
-                'collection_uuid' => $_collection_uuid,
-                'src' => 'addondetail',
-                'annoying' => $addon['Addon']['wants_contributions'] ? $addon['Addon']['annoying'] : 0,
-                'addonFiles' => $addon['Version'][0]['File']
-            ));
-
-            /* TODO: align View Privacy Policy w/ recommended & regular */
-            if (!empty($addon['Translation']['privacypolicy']['string'])): ?>
-                <a class="privacy-policy"
-                   href="<?=$html->url('/addons/policy/0/'.$addon['Addon']['id'])?>">
-                  <strong><?=___('addons_display_view_privacy')?></strong>
-                </a>
-            <?php endif; ?>
-        </div>
-            <?php
-            $_version_data = array(
-                'addonid' => $addon['Addon']['id'],
-                'version' => $addon['Version'][0]['Version']['version'],
-                'created' => $addon['Version'][0]['Version']['created'],
-                'fileSize' => $addon['Version'][0]['File'][0]['size']
-            );
-        endif;
-        ?>
-
-        <?php
-        if ($this->controller->Addon->acceptContributions($addon)) {
-            echo $this->renderElement('amo2009/contribution', array(
-                    'text' => ___('addons_display_contribution_ask'),
-                    'source' => 'addon-detail'));
-        }
-        ?>
-
-        <table summary="<?___('addons_display_table_summary')?>">
-          <tbody>
             <?php if ($hasversion): ?>
-                <tr>
-                  <th><?=___('devcp_versions_th_version')?></th>
-                  <td><?=$_version_data['version']?></td>
-                </tr>
-                <tr>
-                  <th><?=___('addons_display_th_workswith')?></th>
-                  <td>
-                    <?=$this->renderElement('app_versions',
-                                            array('app' => $compatible_apps[0]))?>
-                  </td>
-                </tr>
-                <tr>
-                  <th><?=___('addons_home_browse_updated')?></th>
-                  <?php $updated = strtotime(str_replace('&#45;', '-', $_version_data['created'])) ?>
-                  <td>
-                    <span title="<?=strftime(_('datetime'), $updated)?>">
-                      <?=strftime(_('date'), $updated)?>
-                    </span>
-                  </td>
-                </tr>
-            <?php endif; ?>
-            <tr>
-              <th>
-                <?=n___('addons_home_summary_developer',
-                        'addons_home_summary_developer',
-                        count($addon['User']))?>
-              </th>
-              <td><?=$html->linkUsersFromModel($addon['User'])?></td>
-            </tr>
-            <?php if (!empty($addon['Translation']['homepage']['string'])): ?>
-              <tr>
-                <th><?=___('addons_display_header_homepage')?></th>
-                <td><strong>
-                  <?=$html->link($addon['Translation']['homepage']['string'])?>
-                </strong></td>
-              </tr>
-            <?php endif ?>
-            <tr>
-              <th><?=___('advanced_search_form_rating')?></th>
-              <td><?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?></td>
-            </tr>
-            <tr>
-              <th><?=___('list_sortby_downloads')?></th>
-              <td>
-                <strong class="downloads">
-                  <?=$html->number_format($addon['Addon']['totaldownloads'], 0)?>
-                </strong>
-                <?php if ($addon['Addon']['publicstats'] == 1): ?>
-                  <?=$html->link(___('addons_display_statistics'),
-                                 '/statistics/addon/'.$addon['Addon']['id']);?>
+            <div id="addon-install">
+                <?php
+                if (array_key_exists('collection_id', $_GET) && $this->controller->Collection->isValidUUID($_GET['collection_id'])) {
+                    $_collection_uuid = $_GET['collection_id'];
+                } else {
+                    $_collection_uuid = '';
+                }
+                $flags = array($html->byStatus($addon, array('experimental' => 'experimental',
+                                                             'recommended' => 'recommended',
+                                                             'default' => '')));
+                echo $this->renderElement('amo2009/install', array(
+                    'flags' => $flags,
+                    'buttonClass' => 'significant',
+                    'buttonSize'  => '16x16',
+                    'addon' => $addon,
+                    'collection_uuid' => $_collection_uuid,
+                    'src' => 'addondetail',
+                    'annoying' => $addon['Addon']['wants_contributions'] ? $addon['Addon']['annoying'] : 0,
+                    'addonFiles' => $addon['Version'][0]['File']
+                ));
+
+                /* TODO: align View Privacy Policy w/ recommended & regular */
+                if (!empty($addon['Translation']['privacypolicy']['string'])): ?>
+                    <a class="privacy-policy"
+                       href="<?=$html->url('/addons/policy/0/'.$addon['Addon']['id'])?>">
+                      <strong><?=___('addons_display_view_privacy')?></strong>
+                    </a>
                 <?php endif; ?>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div> <!-- addon-summary -->
+            </div>
+                <?php
+                $_version_data = array(
+                    'addonid' => $addon['Addon']['id'],
+                    'version' => $addon['Version'][0]['Version']['version'],
+                    'created' => $addon['Version'][0]['Version']['created'],
+                    'fileSize' => $addon['Version'][0]['File'][0]['size']
+                );
+            endif;
+            ?>
+
+            <?php
+            if ($this->controller->Addon->acceptContributions($addon)) {
+                echo $this->renderElement('amo2009/contribution', array(
+                        'text' => ___('addons_display_contribution_ask'),
+                        'source' => 'addon-detail'));
+            }
+            ?>
+
+            <table summary="<?___('addons_display_table_summary')?>">
+              <tbody>
+                <?php if ($hasversion): ?>
+                    <tr>
+                      <th><?=___('devcp_versions_th_version')?></th>
+                      <td><?=$_version_data['version']?></td>
+                    </tr>
+                    <tr>
+                      <th><?=___('addons_display_th_workswith')?></th>
+                      <td>
+                        <?=$this->renderElement('app_versions',
+                                                array('app' => $compatible_apps[0]))?>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th><?=___('addons_home_browse_updated')?></th>
+                      <?php $updated = strtotime(str_replace('&#45;', '-', $_version_data['created'])) ?>
+                      <td>
+                        <span title="<?=strftime(_('datetime'), $updated)?>">
+                          <?=strftime(_('date'), $updated)?>
+                        </span>
+                      </td>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                  <th>
+                    <?=n___('addons_home_summary_developer',
+                            'addons_home_summary_developer',
+                            count($addon['User']))?>
+                  </th>
+                  <td><?=$html->linkUsersFromModel($addon['User'])?></td>
+                </tr>
+                <?php if (!empty($addon['Translation']['homepage']['string'])): ?>
+                  <tr>
+                    <th><?=___('addons_display_header_homepage')?></th>
+                    <td><strong>
+                      <?=$html->link($addon['Translation']['homepage']['string'])?>
+                    </strong></td>
+                  </tr>
+                <?php endif ?>
+                <tr>
+                  <th><?=___('advanced_search_form_rating')?></th>
+                  <td><?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?></td>
+                </tr>
+                <tr>
+                  <th><?=___('list_sortby_downloads')?></th>
+                  <td>
+                    <strong class="downloads">
+                      <?=$html->number_format($addon['Addon']['totaldownloads'], 0)?>
+                    </strong>
+                    <?php if ($addon['Addon']['publicstats'] == 1): ?>
+                      <?=$html->link(___('addons_display_statistics'),
+                                     '/statistics/addon/'.$addon['Addon']['id']);?>
+                    <?php endif; ?>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div> <!-- addon-summary -->
+    </div> <!-- addon-summary-wrapper -->
+      
+      
+      <div class="secondary">
+          <?php if (count($previews) > 0): ?>
+            <?php
+            $thumb = $this->controller->Image->getPreviewURL($previews[0]['Preview']['id']);
+            $full = $this->controller->Image->getPreviewURL($previews[0]['Preview']['id'], 'full');
+            $caption = $previews[0]['Translation']['caption']['string'];
+            ?>
+            <a class="screenshot thumbnail" rel="lightbox" href="<?=$full?>" title="<?=$caption?>">
+              <img alt="" src="<?=$thumb?>" />
+            </a>
+          <?php else: ?>
+            <img class="screenshot thumbnail" src="<?=$html->urlImage('no-preview.png')?>"
+                 alt="" width="200" height="150" />
+          <?php endif ?>
+
+          <div class="share-this">
+            <a class="share" href="#"><?=___('addons_share_button_a_text')?></a>
+            <div class="share-networks">
+              <ul>
+                <?php foreach ($link_sharing_services as $l_name => $l_details) :?>
+                  <li class="<?= $l_name ?>">
+                    <?php $share_url = str_replace('/addon/', '/addon/share/', $html->url()) ?>
+                    <a class="uniquify" target="_blank" href="<?= $share_url . '?service=' . $l_name ?>">
+                      <?php // Escaping here because these details came via set() ?>
+                      <?=htmlentities($l_details['label'], ENT_COMPAT, 'UTF-8')?>
+                    </a>
+                  </li>
+                <?php endforeach ?>
+              </ul>
+            </div>
+          </div> <!-- share-this -->
+        </div> <!-- secondary -->
     </div> <!-- featured-inner -->
   </div> <!-- featured -->
 
