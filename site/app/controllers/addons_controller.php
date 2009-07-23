@@ -135,20 +135,34 @@ class AddonsController extends AppController
         $amount = ($type === 'suggested' && !empty($a['suggested_amount']))
                     ? $a['suggested_amount'] : null;
 
+        $uuid = md5(uniqid(mt_rand(), true));
         $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
         $sql = "INSERT INTO stats_contributions
-                (addon_id, amount, source, annoying, created)
+                (addon_id, amount, source, annoying, created, uuid)
                 VALUES
                 ({$db->value($addon_id)}, {$db->value($amount)},
                  {$db->value($source)}, {$a['annoying']},
-                  NOW())";
+                  NOW(), '${uuid}')";
         $this->Addon->execute($sql);
 
+        $return_url = $this->url("/addons/after_contribute/{$a['id']}/{$uuid}");
         $this->Paypal->contribute($a['paypal_id'],
                                   sprintf(___('addon_contribute_item'),
                                           $addon['Translation']['name']['string']),
-                                  SITE_URL . $this->url('/addon/'.$a['id']),
+                                  SITE_URL . $return_url,
                                   $amount);
+    }
+
+    /**
+     * Link target when returning from paypal.  We don't do anything but a
+     * redirection; metrics will be processing log data for this URL offline.
+     */
+    function after_contribute($addon_id, $uuid) {
+        if (!$addon_id || !is_numeric($addon_id)) {
+            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            return;
+        }
+        $this->redirect('/addon/'.$addon_id);
     }
 
     function developers($addon_id, $extra=null) {
