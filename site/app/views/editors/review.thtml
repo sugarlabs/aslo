@@ -159,7 +159,7 @@
     <span id="previews_link"><a href="#previews"><?=___('editors_review_a_previews')?></a></span>
     <?=(!empty($addon['Addon']['homepage'])) ? '<span id="homepage_link">'.$html->link(___('editors_review_a_item_homepage'), $addon['Addon']['homepage']).'</span>' : ''?>
     <?=($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $this->controller->Session->read('User'))) ? '<span id="edit_link">'.$html->link(___('editors_review_a_edit_item'), '/developers/edit/'.$addon['Addon']['id']).'</span>' : ''?>
-    <span id="comments_link"><a href="#editorComments"><?=___('editors_review_a_comments', 'Editor Comments')?></a></span>
+    <span id="comments_link"><a href="#editorComments"><?=___('editors_review_a_comments')?></a></span>
 </div>
 <div id="form">
     <?php
@@ -339,7 +339,7 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <br class="clear">
 <div id="editorComments">
     <div class="sectionHeader">
-        <div class="name"><a name="editorComments"></a><?=___('editors_review_header_comments', 'Editor Comments')?></div>
+        <div class="name"><a name="editorComments"></a><?=___('editors_review_header_comments')?></div>
         <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
     </div>
     <br class="clear">
@@ -353,25 +353,61 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
         </div>
         <div class="commentBody">
             <?=$c['Versioncomment']['comment']?>
-            <div class="commentFooter"><a href="#editorComment<?=$c['Versioncomment']['id']?>" class="replyLink"><?=___('editors_review_link_reply', '(Reply)')?></a></div>
+            <div class="commentFooter"><a href="#editorComment<?=$c['Versioncomment']['id']?>" class="replyLink"><?=___('editors_review_link_reply')?></a></div>
         </div>
     </div>
     <?php endforeach; ?>
 
-    <a href="#" class="newThreadLink"><?=___('editors_review_link_new_thread', '(New Thread)')?></a>
-    <?=$html->formTag('/editors/review/'.$version['Version']['id'], 'post', array('id'=>'editorCommentForm', 'class'=>'hidden'))?>
+    <a href="#" class="newThreadLink"><?=___('editors_review_link_new_thread')?></a>
+    <?=$html->formTag('/editors/review/'.$version['Version']['id'].($queueRank ? "?num={$queueRank}" : ''), 'post', array('id'=>'editorCommentForm', 'class'=>'hidden'))?>
     <div>
         <?=$html->input('Versioncomment/subject', array('size'=>'50'))?>
-        <label for="VersioncommentSubject"><?=___('editors_review_label_subject', 'Subject')?></label><br />
+        <label for="VersioncommentSubject"><?=___('editors_review_label_subject')?></label><br />
 
         <?=$html->textarea('Versioncomment/comment', array('cols'=>'70', 'rows'=>'10'))?><br />
 
         <?=$html->hidden('Versioncomment/reply_to', array('value'=>''))?>
-        <input type="submit" value="<?=___('editors_review_input_post_comment', 'Post Comment')?>" />
-        <input type="button" value="<?=___('editors_review_input_cancel', 'Cancel')?>" id="VersioncommentCancel" />
+        <input type="submit" value="<?=___('editors_review_input_post_comment')?>" />
+        <input type="button" value="<?=___('editors_review_input_cancel')?>" id="VersioncommentCancel" />
+    </div>
+    <div id="markitupHelp" class="hidden">
+        <span id="markitupHelpClose"><?=$html->image('developers/cross.png', array('alt'=>___('editors_review_help_close'), 'title'=>___('editors_review_help_close')))?></span>
+
+        <h1><?=___('editors_review_comment_help_heading', 'Comment Help')?></h1>
+
+        <h2><?=___('editors_review_supported_markdown', 'Supported markdown syntax')?></h2>
+        <dl>
+        <dt><?=___('editors_review_line_breaks', 'Line Breaks:')?></dt>
+        <dd><?=___('editors_review_line_breaks_help', 'End a line with two or more spaces.')?></dd>
+        <dt><?=___('editors_review_italics', 'Italics:')?></dt>
+        <dd><?=___('editors_review_italics_help', 'Wrap text with *asterisks* or _underscores_.')?></dd>
+        <dt><?=___('editors_review_bold', 'Bold:')?></dt>
+        <dd><?=___('editors_review_bold_help', 'Wrap text with **two asterisks** or __two underscores__.')?></dd>
+        <dt><?=___('editors_review_unordered_lists', 'Unordered Lists:')?></dt>
+        <dd><?=___('editors_review_unordered_lists_help', 'Start a line with a single * or + character.')?></dd>
+        <dt><?=___('editors_review_ordered_lists', 'Ordered Lists:')?></dt>
+        <dd><?=___('editors_review_ordered_lists_help', 'Start a line with a number followed by a period.')?></dd>
+        <dt><?=___('editors_review_block_quotes', 'Block Quotes:')?></dt>
+        <dd><?=___('editors_review_block_quotes_help', 'Start lines with a &gt;. Multiple &gt; characters may be used to create nested block quotes.')?></dd>
+        <dt><?=___('editors_review_code_blocks', 'Code Blocks:')?></dt>
+        <dd><?=___('editors_review_code_blocks_help', 'Enclose code with three or more ~ tilde characters on separate lines.')?></dd>
+        <dt><?=___('editors_review_syntax', 'Syntax Highlighting:')?></dt>
+        <dd><?=___('editors_review_syntax_help', 'Append {.syntax} to the opening line of code block ~ tildes, where syntax is one of: html, css, javascript, diff, or sql.')?></dd>
+        </dl>
+
+        <h2><?=___('editors_review_modifier_keys_heading', 'Button Modifier Keys')?></h2>
+        <dl>
+        <dt><?=___('editors_review_ctrl_click', 'Ctrl + Click:')?></dt>
+        <dd><?=___('editors_review_ctrl_click_help', 'Insert markup and retain selection.')?></dd>
+        <dt><?=___('editors_review_shift_click', 'Shift + Click:')?></dt>
+        <dd><?=___('editors_review_shift_click_help', 'Insert markup and retain selection plus added markup.')?></dd>
+        <dt><?=___('editors_review_ctrl_shift_click', 'Ctrl + Shift + Click:')?></dt>
+        <dd><?=___('editors_review_ctrl_shift_click_help', 'Insert markup on every line of selection instead of once on the whole selection.')?></dd>
+        </dl>
     </div>
     </form>
 </div>
+<div id="helpBackground" class="hidden"></div>
 <script type="text/javascript">
 // <![CDATA[
     $(document).ready(function() {

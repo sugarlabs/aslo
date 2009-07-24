@@ -94,6 +94,73 @@ var editors_review = {
         if (window.location.hash.match(/^#editorComment(\d+)$/)) {
             $(window.location.hash).css('background-color', '#efefef');
         }
+
+        // attach Markitup editor to comment textarea (with a basic markdown config)
+        $('#VersioncommentComment').markItUp(this.miuMarkdownConfig);
+
+        // events to close help popup
+        $('#markitupHelpClose').click(this.hideMarkitupHelp);
+        $(document).keypress(function(e) {  
+            if ($('#markitupHelp').is(':visible') && e.keyCode == 27) {
+                editors_review.hideMarkitupHelp();
+            }
+        })  
+    },
+
+    
+    // Markitup markdown configuration (modified)
+    // original code Copyright (C) 2007-2008 Jay Salvat
+    // http://markitup.jaysalvat.com/
+    // Dual licensed under the MIT and GPL licenses.
+    miuMarkdownConfig:  {
+        previewParserPath: '',
+        onShiftEnter: { keepDefault:false, openWith:'\n\n' },
+        markupSet: [
+            { name:'Bold', key:'B', openWith:'**', closeWith:'**' },
+            { name:'Italic', key:'I', openWith:'_', closeWith:'_' },
+            { separator:'---------------' },
+            { name:'Bulleted List', openWith:'* ' },
+            { name:'Numeric List', openWith:function(markItUp) { return markItUp.line+'. '; } },
+            { separator:'---------------' },
+            { name:'Quotes', openWith:'> ' },
+            { name:'Code Block / Code', dropMenu:[
+                    { name:'Plain Text', openWith:'~~~~~ {.text}\n', closeWith:'\n~~~~~\n' },
+                    { name:'HTML', openWith:'~~~~~ {.html}\n', closeWith:'\n~~~~~\n' },
+                    { name:'CSS', openWith:'~~~~~ {.css}\n', closeWith:'\n~~~~~\n' },
+                    { name:'Javascript / XUL', openWith:'~~~~~ {.javascript}\n', closeWith:'\n~~~~~\n' },
+                    { name:'Diff / Patch', openWith:'~~~~~ {.diff}\n', closeWith:'\n~~~~~\n' },
+                    { name:'SQL', openWith:'~~~~~ {.sql}\n', closeWith:'\n~~~~~\n' }
+                ]
+            },
+            { separator:'---------------' },	
+            { name:'Help', openWith:function(h) { editors_review.showMarkitupHelp(); return ''; } }
+        ]
+    },
+
+    // show comment help popup
+    showMarkitupHelp: function() {
+        // get dimensions in order to center popup
+        var winHeight = $(window).height();
+        var winWidth = $(window).width();
+
+        $('#helpBackground').fadeIn('fast');
+        $('#markitupHelp')
+            .css({
+                position: 'fixed',
+                top: 0.1*winHeight,
+                left: 0.2*winWidth,
+                height: 0.8*winHeight,
+                width: 0.6*winWidth,
+                overflow: 'auto',
+                'overflow-x': 'hidden'
+            })
+            .fadeIn('fast');
+    },
+
+    // hide comment help popup
+    hideMarkitupHelp: function() {
+        $('#helpBackground').fadeOut('fast');
+        $('#markitupHelp').fadeOut('fast');
     },
 
     // toggle showing/hiding a single comment body

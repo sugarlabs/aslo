@@ -47,7 +47,7 @@ class EditorsController extends AppController
         'Appversion', 'Cannedresponse', 'EditorSubscription', 'Eventlog', 'Favorite',
         'File', 'Platform', 'Review', 'ReviewsModerationFlag', 'Category', 'Translation',
         'User', 'Version', 'Versioncomment');
-    var $components = array('Amo', 'Audit', 'Developers', 'Editors', 'Email', 'Error', 'Image', 'Pagination');
+    var $components = array('Amo', 'Audit', 'Developers', 'Editors', 'Email', 'Error', 'Image', 'Markdown', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Listing', 'Localization', 'Pagination');
 
    /**
@@ -71,6 +71,7 @@ class EditorsController extends AppController
                                     'jquery.tablesorter.min.js',
                                     'jquery.flot.js',
                                     'jquery.sparkline.min.js',
+                                    '../vendors/markitup/jquery.markitup.pack.js',
                                     'editors'));
 
         $this->breadcrumbs = array(_('editors_pagetitle') => '/editors/index');
@@ -254,6 +255,8 @@ class EditorsController extends AppController
         $this->breadcrumbs[_('editors_addon_review_pagetitle')] = '/editors/review/'.$id;
         $this->publish('breadcrumbs', $this->breadcrumbs);
         $this->publish('collapse_categories', true);
+        $this->cssAdd[] = '../vendors/markitup/skins/simple/style';
+        $this->publish('cssAdd', $this->cssAdd);
 
         //Bind necessary models
         $this->User->bindFully();
@@ -311,7 +314,14 @@ class EditorsController extends AppController
                     // notify subscribed editors of post
                     $this->Editors->versionCommentNotify($commentId, $threadRoot['Versioncomment']['id']);
 
-                    $this->flash(___('editors_comment_posted', 'Comment successfully posted'), '/editors/review/'.$id.'#editorComment'.$commentId);
+                    // propagate queue rank (if any) to the redirect
+                    $redirectUrl = "/editors/review/{$id}";
+                    if (isset($this->params['url']['num']) && is_numeric($this->params['url']['num'])) {
+                        $redirectUrl .= "?num={$this->params['url']['num']}";
+                    }
+                    $redirectUrl .= "#editorComment{$commentId}";
+
+                    $this->flash(___('editors_comment_posted'), $redirectUrl);
                     return;
                 }
 
@@ -399,9 +409,14 @@ class EditorsController extends AppController
 
         //Editor Comments
         $comments = $this->Versioncomment->getThreadTree($version['Version']['id']);
+        $comments = $this->Markdown->htmlForKey($comments, 'comment');
+
+        // skip sanitizing comment fields - they were handled by markdown
+        $this->dontsanitize[] = 'comment';
+        $this->publish('comments', $comments);
+        array_pop($this->dontsanitize);
 
         //pr($comments);
-
         
         if ($addon['Addon']['status'] == STATUS_NOMINATED) {
             $reviewType = 'nominated';
@@ -428,7 +443,6 @@ class EditorsController extends AppController
         $this->publish('addontype', $addon['Addon']['addontype_id']);
         $this->publish('approval', $this->Amo->getApprovalStatus());  
         $this->publish('history', $history); 
-        $this->publish('comments', $comments);
         $this->publish('errors', $this->Error->errors);
         $this->publish('reviewType', $reviewType, false);
         $this->publish('filtered', $filtered);
