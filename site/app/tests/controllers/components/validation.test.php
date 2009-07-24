@@ -306,6 +306,77 @@ class ValidationTest extends UnitTestCase {
     }
 
     /**
+     * Tests the all_general_checkJSPollution() method
+     */
+    function testAll_general_checkJSPollution() {
+
+        $file = $this->controller->File->findById(1);
+        
+        // Verify pass on default extension
+        $results = $this->controller->Validation->all_general_checkJSPollution($file);
+        $this->assertEqual($results, array(), 'Default extension skips tests: %s');
+
+        // Give it some clean JS files that should pass
+        $goodJS = "if (FOO == null) { var FOO = new Object();} 
+                   FOO.BAR = {
+                       baz: function() {
+                           // This is all namespaced!
+                       }
+                   }";
+        file_put_contents(CACHE_PFX . '1/good.js', $goodJS);
+
+        $results = $this->controller->Validation->all_general_checkJSPollution($file);
+        $expected = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $expected, 'Clean javascript files produce no errors: %s');
+
+        // Give it some bad JS and verify failure
+        $badJS = "var GVar;
+                  const GConst = 1;
+                  function GFunc() {
+                      // These are all globals!
+                  }";
+        file_put_contents(CACHE_PFX . '1/bad.js', $badJS);
+        
+        $results = $this->controller->Validation->all_general_checkJSPollution($file);
+        $this->assertEqual(count($results), 3, 'Test finds variables, constants and functions: %s');
+
+        $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'The file contains a global variable: GVar');
+        $this->assertEqual($results[0], $expected, 'Results are warnings mentioning the type of global and its name: %s');
+    }
+
+    /**
+     * Tests the all_security_libraryChecksum() method
+     */
+    function testAll_security_libraryChecksum() {
+
+        $file = $this->controller->File->findById(1);
+        
+        // Verify default extension
+        $results = $this->controller->Validation->all_security_libraryChecksum($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Default Extension passes library tests: %s');
+
+        // Use some test data to check the library checksum
+        copy(TEST_DATA . '/remora-test-log.log', CACHE_PFX . '1/jquery-testing');
+
+        $results = $this->controller->Validation->all_security_libraryChecksum($file);
+        $this->assertEqual($results, $pass, 'Unmodified libraries pass the tests: %s');
+     
+        // Any addon that we don't have a hash for will not generate errors
+        touch(CACHE_PFX . '1/jquery-doesnt-exist.js');
+        
+        $results = $this->controller->Validation->all_security_libraryChecksum($file);
+        $this->assertEqual($results, $pass, 'Missing libraries still pass the tests: %s');
+
+        // Make sure a modified file fails the test
+        file_put_contents(CACHE_PFX . '1/jquery-1.3.1.min.js', 'Modified!');
+        
+        $results = $this->controller->Validation->all_security_libraryChecksum($file);
+        $expected = $this->controller->Validation->_resultWarn(1, 'jquery-1.3.1.min.js', 'The add-on contains a file jquery-1.3.1.min.js, which failed a library checksum');
+        $this->assertEqual($results, $expected, 'Modified libraries fail the tests: %s');
+    }
+
+    /**
      * Tests the all_security_filterUnsafeJS() method
      */
     function testAll_security_filterUnsafeJS() {

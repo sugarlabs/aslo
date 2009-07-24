@@ -156,10 +156,24 @@ define('FB_INSTALL_SITE', 'https://addons.mozilla.org');
 /**
  * Testing configuration
  */
-// Path to JSHydra for javascript tests
+
+/**
+ * Path to the jshydra repository for validation tests.  This is a clone of
+ * the jshydra hg repository, and should be the path to the root directory
+ * where the executable sits.
+ *
+ * Example: /path/to/jshydra
+ */
 define('JSHYDRA_PATH', '');
 
-// Path to python executable for L10n tests : Note: must be >= python 2.5
+/**
+ * Path to the python executable on the system.  Note that this must be
+ * python 2.5 or later for the python-enabled tests to run.  Python 2.6 is 
+ * installed in development and production, so you can most likely leave this 
+ * alone.
+ *
+ * Example: /usr/bin/python26
+ */
 define('PYTHON_PATH', '/usr/bin/python26');
 
 /**

@@ -469,6 +469,7 @@ class ValidationComponent extends Object {
             'prototype-1.5.1.1.js' => 'sha1:21a72032fbddf0f2edf9af79cbdcc2453ebc793d',
             'prototype-1.5.1.js' => 'sha1:c9664029b47f98b41c1606e387605561006c50b7',
             'prototype-1.5.0.js' => 'sha1:4540775a3cb3fd95d5d344f88e74867b6f6c5573',
+            'jquery-testing' => 'md5:e6d085a4cbbcc9c44ae10e6c72d035cf'  // This is for the test cases, just ignore
         );
         $toExtract = '/(jquery|prototype)/i'; 
         $extracted = $this->_extract($file, 'by_preg', $toExtract, false);
