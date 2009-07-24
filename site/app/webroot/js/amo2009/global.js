@@ -320,7 +320,11 @@ jQuery(function($) {
             // initialise dropdown area 
             categories.init();
         }
-	}
+	} else {
+        // Turn the link into a span so it's not deceptively clickable.
+        var e = $('.categories h3');
+        e.html('<span>' + e.text() + '</span>');
+    }
 	
 
 	// advanced form dropdown
