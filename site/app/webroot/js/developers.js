@@ -341,17 +341,27 @@ var addon_edit_categories = {
 };
 
 var versions_validate = {
+
+    showMore: function(a) {
+        // Show more validation results
+        a.parent().parent().children('.hidden-results').slideDown();
+        a.parent().slideUp();
+    },
+
     runTest: function(fileId) {
 	
+        // If tests are running, just bail
+        if($('#test-results-' + fileId + ' .action-button').hasClass('disabled')) return;
+
 	var sendRequest = function(file, testNum, name) {
+            versions_validate.running_tests++;
             $.ajax({
                 type: 'GET',
                 url: '../../verify/' + fileId + '/' + testNum,
                 success: displayResults,
                 error: displayError
             });
-	    $('#tests-table-' + file + ' tbody').append('<tr id="test-results-' + file + '-' + testNum + '"><td colspan="4">' + $('#loading-master').html() + '</td></tr>');
-	    $('#test-results-' + file + '-' + testNum + ' h4').html(name);	    
+            $('#results-summary-' + fileId + '-' + testNum +' .loading-count').show();
         }
 
 	var displayResults = function(response, status) {
@@ -360,25 +370,36 @@ var versions_validate = {
 	    response = response.replace(/'/g, '"');
 	    var result = JSON.parse(response);
 
-	    var id = '#test-results-' + result.file_id + '-' + result.test_group_id;
-	    $(id).hide();
-	    $(id).after(result.result);		
+            $('#test-details-' + result.file_id).append(result.result);
+            $('#results-summary-' + result.file_id + '-' + result.test_group_id + ' .results').fadeOut('slow', function () {
+                $(this).html(result.stats).fadeIn('slow');
+            });
 
 	    for (var i in result.next_tests) {
 		var testInfo = result.next_tests[i].TestGroup;
 		sendRequest(result.file_id, testInfo.id, testInfo.name);
 	    }
 	    
+            versions_validate.running_tests--;
+            if (versions_validate.running_tests == 0) {
+                $('#test-details-' + result.file_id).slideDown('slow');
+                $('#test-results-' + fileId + ' .action-button').removeClass('disabled');
+                $('#test-results-' + fileId + ' .tests-running').hide();
+            }
 	};
 	
         var displayError = function(req, status, errorThrown) {
-            //TODO : Better error display alert('Error: ' + status + ' - ' + errorThrown);
+            $('#test-error .status').html('Error: ' + status + ' - ' + errorThrown).show();
 	}
 
-	$('#test-results-' + fileId + ' tbody').slideUp('slow', function () {
-		$(this).empty().css('display', '');
+        $('#test-details-' + fileId).slideUp('slow', function () {
+            $('#test-details-' + fileId).html('');
+            versions_validate.running_tests = 0;
 		sendRequest(fileId, 1, 'General');
 	});
+        $('#test-results-' + fileId + ' .action-button').addClass('disabled');
+        $('#test-results-' + fileId + ' .tests-running').show();
+        $('#test-summary-' + fileId + ' .results span:not(.loading-count)').remove();
     }
 };
 

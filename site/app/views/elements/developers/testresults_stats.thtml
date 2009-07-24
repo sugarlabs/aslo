@@ -20,7 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *     RJ Walsh <rwalsh@mozilla.com>
+ *    RJ Walsh <rwalsh@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,29 +35,38 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+?>      
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_validate_addon', 'Validate %s version %s'), $addon_name, $version['Version']['version']), 'addon_id' => $addon_id));?>
-        <?=$this->renderElement('noscript')?>
-        <?=$this->renderElement('developers/rolecheck')?>
-        <form id="versions-validate-form" action="" method="post">
-        <?=$html->hiddenSession();?>
-
-        <?php if (!empty($files)) {
-            foreach($files as $file) {
-		echo '<div id="test-results-'.$file['File']['id'].'">';
-        	echo '<h2>'.sprintf(___('devcp_versions_validate_header', 'Validate File %s'), $file['File']['filename']).'</h2>';
-                echo $this->renderElement('developers/testresults', array('file' => $file, 'test_groups' => $file['groups'], 'all_groups' => $all_groups, 'counts' => $file['counts']));
-		echo '</div><br/>';
-            }
-        }
-        else {
-            // They should never actually hit this, but display it just in case
-            echo '<p><i>'.___('devcp_versions_edit_no_files').'</i></p>';
-        } ?>
-        </form>
-    </div>
-</div>
+<? if ($counts[TEST_FAIL] > 0) : ?>        
+    <span class="error-count">
+        <? if ($short) : ?>
+            <?= $counts[TEST_FAIL] ?>
+        <? else: ?>
+            <?=sprintf(n___('devcp_validate_fail_count', 'devcp_validate_fail_count', $counts[TEST_FAIL], '%d errors'), $counts[TEST_FAIL]) ?>
+        <? endif; ?>
+    </span>
+<? endif; ?>
+<? if ($counts[TEST_WARN] > 0) : ?>        
+    <span class="warning-count">
+        <? if ($short) : ?>
+            <?= $counts[TEST_WARN] ?>
+        <? else: ?>
+            <?=sprintf(n___('devcp_validate_warn_count', 'devcp_validate_warn_count', $counts[TEST_WARN], '%d warnings'), $counts[TEST_WARN]) ?>
+        <? endif; ?>
+    </span>
+<? endif; ?>
+<? if ($counts[TEST_PASS] > 0) : ?>        
+    <span class="pass-count">
+        <? if ($short) : ?>
+            <?= $counts[TEST_PASS] ?>
+        <? else: ?>
+            <?=sprintf(n___('devcp_validate_pass_count', 'devcp_validate_pass_count', $counts[TEST_PASS], '%d passes'), $counts[TEST_PASS]) ?>
+        <? endif; ?>
+    </span>
+<? endif; ?>
+<? if ($counts == array(0,0,0)) : ?> 
+    <i><?=___('devcp_error_no_test_results', 'No test results found.')?></i>
+<? endif; ?>
+<? if ($short) : ?>
+    <span class="loading-count">Running test ...</span>
+<? endif; ?>

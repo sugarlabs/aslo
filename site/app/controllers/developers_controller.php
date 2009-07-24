@@ -1371,6 +1371,14 @@ class DevelopersController extends AppController
 		}
 		$files = $this->File->findAll(array('File.id' => $fileIds));
 		
+        // Each file needs its own copy of the test results
+        if (!empty($files)) {
+            foreach ($files as $id => $file) {
+                $files[$id]['groups'] = array();
+                $files[$id]['counts'] = array(0,0,0);
+            }
+        }
+		
 		$test_groups = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id']);
   
 		$test_groupIds = array();
@@ -1378,25 +1386,56 @@ class DevelopersController extends AppController
 		if (!empty($test_groups)) {
 			foreach($test_groups as $id => $group) {
 				$test_groupIds[] = $group['TestGroup']['id'];
-				$test_groups[$id]['results'] = array();
+				$test_groups[$id]['counts'] = array(0,0,0);
+                $test_groups[$id]['cases'] = array();
 			}
 		}
 		$test_results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_groupIds, 'TestResult.file_id' => $fileIds));
 
-		// Store the results in the associated test group
+        // Build a hierarchical view that cake just doesn't give 
+        // us to make life easier in the view
 		if (!empty($test_results)) {
 			foreach ($test_results as $result) {
-				$id = $result['TestCase']['test_group_id'];
+
+                // First, match to the right file
+                $file_id = $result['TestResult']['file_id'];
+                foreach ($files as $f_id => $file) {
+                    if ($file['File']['id'] == $file_id) {
+
+                        // Next match the result to the right group
+                        $test_group_id = $result['TestCase']['test_group_id'];
 				foreach ($test_groups as $group_id => $group) {
-					if ($group['TestGroup']['id'] == $id) { 
-						$test_groups[$group_id]['results'][] = $result;
+                            if ($group['TestGroup']['id'] == $test_group_id) {
+
+                                // Insert this group into the file if needed
+                                if (empty($file['groups'][$test_group_id])) {
+                                    $files[$f_id]['groups'][$test_group_id] = $group;
 					}
+                                
+                                // Insert the case into this view if we haven't seen it yet
+                                $case_id = $result['TestCase']['id'];
+                                if (empty($files[$f_id]['groups'][$test_group_id]['cases'][$case_id])) {
+                                    $files[$f_id]['groups'][$test_group_id]['cases'][$case_id] = $result['TestCase'];
+                                    $files[$f_id]['groups'][$test_group_id]['cases'][$case_id]['results'] = array();
 				}
+                                
+                                // Grab the formatted result view, and then insert into the 
+                                $this->Validation->getResultPreview($result, $files[0]);
+                                $files[$f_id]['groups'][$test_group_id]['cases'][$case_id]['results'][] = $result['TestResult'];
+                                $files[$f_id]['groups'][$test_group_id]['counts'][$result['TestResult']['result']]++;
+                                $files[$f_id]['counts'][$result['TestResult']['result']]++;
 			}
 		}
+                    }
+                }
+            }
+        }
 
+        // Most all of the data is in this array
 		$this->publish('files', $files);
-		$this->publish('test_groups', $test_groups);
+        
+        $this->publish('all_groups', $test_groups);
+		
 		$this->publish('version', $version);
         $this->publish('validation_disabled',$this->Config->getValue('validation_disabled'));
 		
@@ -1438,9 +1477,27 @@ class DevelopersController extends AppController
 			$next_tests = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id'], $conditions, array('id'));
 		}
 
-		// Load the results into the group
+		// Load the results into the group and build the group/case/result hierarchy
 		$results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));
-		$test_group['results'] = $results;
+		
+        // Total results for this test group
+        $counts = array(0,0,0);
+        $test_group['cases'] = array();
+
+        // Build a hierarchical view that cake just doesn't give 
+        // us to make life easier in the view
+        if (!empty($results)) {
+            foreach ($results as $result) {
+                $case_id = $result['TestCase']['id'];
+                if (empty($test_group['cases'][$case_id])) {
+                    $test_group['cases'][$case_id] = $result['TestCase'];
+                    $test_group['cases'][$case_id]['results'] = array();
+                }
+                $this->Validation->getResultPreview($result, $file);
+                $test_group['cases'][$case_id]['results'][] = $result['TestResult'];
+                $counts[$result['TestResult']['result']]++;
+            }
+        }
 		
 		// We need a view to call renderElement, see                                
 		// https://trac.cakephp.org/ticket/3132                                     
@@ -1452,7 +1509,12 @@ class DevelopersController extends AppController
 		// Render the result, then return it via json
         $testresult = $view->renderElement('developers/testresults_group', 
 					  array('file' => $file, 'group' => $test_group, 'html' => $html));
-		$json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests);
+		
+        // Render the statistics for display in the header
+        $stats = $view->renderElement('developers/testresults_stats',
+                 array('counts' => $counts, 'short' => true, 'html' => $html));
+
+		$json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests, 'stats' => $stats);
 		
 		$this->set('json', $json);
 		$this->render('json', 'ajax');

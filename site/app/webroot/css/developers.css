@@ -1409,3 +1409,133 @@ ul.radio input {
 #loading-master {
     display: none;
 }
+
+.validation .error-count,
+.validation .pass-count,
+.validation .warning-count,
+.validation .loading-count {
+	padding-left: 20px;
+	background: transparent no-repeat left top;
+}
+
+.validation .pass-count {
+	color: #080;
+	background-image: url(../img/developers/tick.png);
+}
+
+.validation .warning-count {
+	color: #666;
+    background-image: url(../img/developers/error.png);
+}
+
+.validation .error-count {
+	color: #d00;
+	background-image: url(../img/developers/exclamation.png);
+}
+
+.validation .loading-count {
+	color: #888;
+	background-image: url(../img/ajax_loading.gif);
+    display:none;
+}
+
+
+.validation .test-summary {
+	margin: 32px 0 0 0;
+	-moz-column-count: 2;
+	 -moz-column-gap: 32px;
+}
+
+.validation .test-summary li {
+	display: block;
+	overflow: auto;
+	padding: .5em 0;
+	margin: 0 !important;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+.validation .test-summary .results {
+	float: right;
+	width: 132px;
+}
+
+
+.validation .test-heading {
+	position: relative;
+}
+
+.validation .test-heading h4 {
+	margin: 2em 0 0 0;
+}
+
+.validation .test-heading a {
+	position: absolute;
+	right: 0;
+	top: 0;
+	font-size: 83.3%;
+}
+
+
+.validation .test-results h5 {
+	margin: 1em 0 0 0;
+}
+
+.validation .test-results {
+	margin: 0 0 0 24px;
+}
+
+.validation .test-results li {
+	display: block;
+	margin: .25em 0 0 0;
+	padding: 0 0 0 24px;
+	background: transparent no-repeat left 3px;
+}
+
+.validation .test-results li.pass {
+	background-image: url(../img/developers/tick.png);
+	color: #080;
+}
+
+.validation .test-results li.warning {
+	background-image: url(../img/developers/error.png);
+}
+
+.validation .test-results li.error {
+	background-image: url(../img/developers/exclamation.png);
+}
+
+.validation .test-results .code {
+	font-family: Courier, monospace;
+	background: #eee;
+	border: 1px solid #ddd;
+	margin: 0 0 0 16px;
+	padding: .25em 0 .25em  1em;
+	width: 48em;
+	font-size: 83.3%;
+}
+
+.validation .test-results .code .line {
+	/* white-space: pre; */
+    padding-left:2em;
+    text-indent:-2em;
+	color: #666;
+}
+
+.validation .test-results .code .target {
+	color: #333;
+	font-weight: bold;
+}
+
+.validation .test-results .more a {
+	font-size: 83.3%;
+}
+
+.validation .test-results .hidden-results {
+    display:none;
+}
+
+.validation .tests-running {
+    display:none;
+    margin-left: 0.5em;
+}

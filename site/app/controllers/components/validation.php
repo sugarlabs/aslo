@@ -861,6 +861,36 @@ class ValidationComponent extends Object {
     }
 
     /**
+     * Generates an inline preview for displaying errors
+     * @param array $result the result to generate a preview for 
+     * @param array $file the file in model format
+     */
+    function getResultPreview(&$result, $file) {
+        
+        // Don't get a preview if the result has no line or file
+        if (empty($result['TestResult']['line']) || empty($result['TestResult']['filename'])) return;
+        
+        // Up the limit for extracting files
+        ini_set('memory_limit', '128M');
+
+        // Use the file to do the extraction
+        $data = $this->_extract($file, 'by_name', $result['TestResult']['filename']);
+        
+        if (count($data) == 0) return;
+        $lines = explode("\n", $data[0]['content']);
+        
+        // Grab the two lines around the target line to provide some context
+        // Also shift down by 1 to adjust for index mismatch
+        $targetLine = $result['TestResult']['line'];
+        $result['TestResult']['preview'] = array();
+        for ($i = $targetLine - 2; $i <= $targetLine; $i++) {
+            if ($i >= 0 && $i < count($lines)) {
+                $result['TestResult']['preview'][$i + 1] = rtrim($lines[$i]);
+            }
+        }
+    }        
+
+    /**
      * Check all the files in an add-on and verify that they conform to the
      * given whitelist.
      * @param array $file the file in model format
@@ -931,6 +961,9 @@ class ValidationComponent extends Object {
         $flags = array();
         if (!empty($extracted)) {
             foreach($extracted as $file_info) {
+
+                // Grepping binary files leads to general bad news
+                if (preg_match('/\.(dll|exe|dylib|so|sh)$/i', $file_info['filename'])) continue;
 
                 $lines = explode("\n", $file_info['content']);
                 if (!empty($patterns)) {

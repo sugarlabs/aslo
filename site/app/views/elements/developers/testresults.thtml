@@ -37,20 +37,48 @@
  * ***** END LICENSE BLOCK ***** */
 ?>
       
-<div class="graybox rounded spaced field">
-    <table id="tests-table-<?=$file['File']['id']?>" class="pretty-table">
-    <thead><tr>
-        <th width="10%" colspan="2"><?=___('devcp_versions_validate_th_result', 'Result')?></th>
-        <th width="20%"><?=___('devcp_versions_validate_th_name', 'Test Name')?></th>
-        <th width="50%"><?=___('devcp_versions_validate_th_message', 'Test Message')?></th>
-        <th width="20%"><?=___('devcp_versions_validate_th_line', 'File : Line')?></th>
-    </tr></thead><tbody>
+<div class="graybox rounded spaced field validation">
+    <div>
+        <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => false)) ?>
+    </div>
+    <ul id="test-summary-<?=$file['File']['id']?>" class="test-summary">
+    <? if (!empty($all_groups)) : ?>
+        <? foreach ($all_groups as $group) : ?>
+        <li id="results-summary-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
+            <a href="#test-group-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
+                <?=$group['TestGroup']['name']?>
+            </a>
+            <span class="results">
+                <? if (!empty($test_groups[$group['TestGroup']['id']])) : ?>
+                    <? $group = $test_groups[$group['TestGroup']['id']]; ?>
+                    <?= $this->renderElement('developers/testresults_stats', array('counts' => $group['counts'], 'short' => true)) ?>
+                <? endif; ?>
+            </span>
+        </li>
+        <? endforeach; ?>
+    <? endif; ?>
+    </ul>
+
+    <? if (!$validation_disabled) : ?>
+        <div class="action-button-container">
+            <a href="#" onclick="versions_validate.runTest(<?=$file['File']['id']?>); return false;" class="action-button rounded">
+                <?= ___('devcp_versions_validate_button', 'Validate') ?>
+            </a>
+        <span class="tests-running loading-count">
+            <?= ___('devcp_tests_running', 'Loading Results ...') ?>
+        </span>
+        </div>
+    <? else: ?> 
+        <?= ___('devcp_validation_disabled', 'Validation temporarily disabled, try again later') ?>
+    <? endif; ?>
+
+    <div id="test-details-<?=$file['File']['id']?>">
     <? if(!empty($file['TestResult'])) : ?>
         <? foreach($test_groups as $group) : ?>
             <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
         <? endforeach; ?>
     <? else : ?>
-        <tr><td colspan="4"><i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i></td></tr>
+            <i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i>
     <? endif; ?>
-    </tbody></table>
+</div>
 </div>

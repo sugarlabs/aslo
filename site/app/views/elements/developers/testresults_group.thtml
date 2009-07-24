@@ -37,54 +37,66 @@
  * ***** END LICENSE BLOCK ***** */
 ?>
 
-<tr><td colspan="5"><h4>
-    <?=sprintf(n___('devcp_versions_validate_header_group', 'devcp_versions_validate_header_group',  count($group['results']), '%s results'), $group['TestGroup']['name'])?>
-</h4></td></tr>
+<div class="test-heading" id="test-group-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
+    <h4>
+        <?=sprintf(n___('devcp_versions_validate_header_group', 'devcp_versions_validate_header_group',  count($group['cases']), '%s results'), $group['TestGroup']['name'])?>
+    </h4>
+    <a href="#test-summary-<?=$file['File']['id']?>"><?=___('devcp_back_to_top', 'Back to Top')?></a>
+</div>
+<? if (!empty($group['cases'])) : ?>
+    <? foreach ($group['cases'] as $case) : ?>
+        <h5><?=$case['name']?></h5>
+        <ul class="test-results">
+        <? $resultNum = 0; ?>
+        <? if (!empty($case['results'])) : ?>
+            <? foreach ($case['results'] as $result) : ?>
 <?
-
-$i = 0; // For table rows
-if (!empty($group['results'])) :
-        foreach($group['results'] as $test_result) :
-?>
-    <tr <?=($i % 2 == 0 ? ' class="alt"' : '')?> >
-        <td>
-        <?
-                switch ($test_result['TestResult']['result']) {
+                $resultNum++;
+                switch ($result['result']) {
                     case TEST_PASS:
-                        echo $html->image(SITE_URL . '/img/developers/tick.png', array('alt' => ___('devcp_validate_image_pass', 'Pass'))); 
-                        echo '</td><td>';
-                        echo ___('devcp_versions_validate_pass', 'Pass');
+                        $class = 'pass';
                         break;
                     case TEST_WARN:
-                        echo $html->image(SITE_URL . '/img/developers/error.png', array('alt' => ___('devcp_validate_image_pass', 'Warn'))); 
-                        echo '</td><td>';       
-                        echo ___('devcp_versions_validate_warn', 'Warn');
+                        $class = 'warning';
                         break;
                     case TEST_FAIL:
-                        echo $html->image(SITE_URL . '/img/developers/exclamation.png', array('alt' => ___('devcp_validate_image_pass', 'Fail'))); 
-                        echo '</td><td>';
-                        echo ___('devcp_versions_vaildate_fail', 'Fail');
+                        $class = 'error';
                         break;
+                    default:
+                        $class = '';
                 }
         ?>
-        </td>
-        <td><?=$test_result['TestCase']['name']?></td>          
-        <td>
-        <?= empty($test_result['TestResult']['message']) ? $test_result['TestCase']['description'] : $test_result['TestResult']['message']?>
-        </td>
-        <? if ($test_result['TestResult']['line'] != 0) : ?>
-        <td><a href="<?=SITE_URL.'/files/browse/'.$file['File']['id'].'/0/?start='.$test_result['TestResult']['filename']?>"><?=$test_result['TestResult']['filename'].':'.$test_result['TestResult']['line']?></a></td>
+                <li class="<?=$class?>">
+                    <? if ($result['filename'] != '') : ?>
+                        <a href="<?=$html->url('/files/browse/' . $file['File']['id'] . '/0/?start=' . $result['filename'])?>">
+                        <?=$result['filename']?><?=($result['line'] != 0 ? " ({$result['line']})" : '')?></a> :
+                    <? endif; ?>
+                    <? if (!empty($result['message'])) : ?>
+                        <?=$result['message']?>
         <? else: ?>
-        <td>&nbsp;</td>
+                        <?=$case['description']?>
         <? endif; ?>
-        </td>
-
-    </tr>
-    <?
-                $i++;
-        endforeach;
-else : ?>
-        <tr><td colspan="4"><i>
-                <?= ___('devcp_versions_validate_no_results', 'No test results found.') ?>
-        </i></td></tr>
+                    <? if (!empty($result['preview'])) : ?>
+                        <div class="code">
+                            <? foreach ($result['preview'] as $line => $code) : ?>
+                                <div class="line<?=($line==$result['line'] ? ' target' : '')?>"><?=$code?>&nbsp;</div>
+                            <? endforeach; ?>
+                        </div>
+<? endif; ?>
+                </li>
+                <? if ($resultNum == 3 && count($case['results']) > 3) : ?>
+                <li class="more">
+                    <a href="#" onclick="versions_validate.showMore($(this)); return false;" class="show-more-link"><?=sprintf(___('devcp_more_validation_results', 'Show %d more results'), count($case['results']) - 3)?></a>
+                </li>
+                <div class="hidden-results">
+                <? endif; ?>
+            <? endforeach; ?>
+        <? endif; ?>
+        <? if ($resultNum > 3) : ?>
+            </div>
+        <? endif; ?>
+        </ul>
+    <? endforeach; ?>
+<? else: ?>
+    <i><?= ___('devcp_versions_validate_no_results', 'No test results found.') ?></i>
 <? endif; ?>
