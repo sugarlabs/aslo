@@ -267,6 +267,11 @@ class ValidationComponent extends Object {
             return _('devcp_error_guid_application');
         }
 
+        // Make sure the GUID is not blacklisted 
+        if ($this->controller->BlacklistedGuid->findByGuid($manifestData['id'])) {
+            return sprintf(___('devcp_error_guid_blacklisted', 'Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact'); 
+        }
+
         // Make sure version has no spaces
         if (!isset($manifestData['version']) || preg_match('/.*\s.*/', $manifestData['version'])) {
             return _('devcp_error_invalid_version_spaces');

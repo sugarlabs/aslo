@@ -41,7 +41,7 @@ class AdminController extends AppController
 {
     var $name = 'Admin';
 
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
     var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Versioncompare', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Pagination');
 
@@ -1471,6 +1471,56 @@ class AdminController extends AppController
         $this->set('page', 'groups');
         $this->render('groups_create');
     }
+
+    
+   /**
+    * Guid Manager
+    */
+    function guids() {
+        $this->breadcrumbs['Guid Manager'] = '/admin/guids';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+        
+        // Two options - removing selected guids or adding new guids, newline delimited
+        if (!empty($this->data) && !empty($this->data['BlacklistedGuid'])) {
+            if (!empty($this->data['BlacklistedGuid']['new'])) {
+
+                // Adding new guids, newline delimted.  We read from post because
+                // Cake replaces \n with a literal '\n' 
+                $new = preg_split('/[\n\r]+/', $_POST['data']['BlacklistedGuid']['new']);
+                $guids = array();
+                foreach ($new as $guid) {
+                    $guids[] = trim($guid);
+                }
+                $this->Amo->clean($guids); 
+                $guids = implode('\', NOW()), (\'', $guids);
+ 
+                // One big query since we don't want to pound the DB
+                $query = 'REPLACE INTO `blacklisted_guids` (`guid`, `created`) VALUES (\'' . $guids . '\', NOW());';
+                $this->BlacklistedGuid->execute($query);
+                $this->data['BlacklistedGuid']['new'] = '';
+
+            } else {
+
+                // Removing current guids, same idea as above with one big query
+                $guids = array();
+                foreach ($this->data['BlacklistedGuid'] as $guid => $remove) {
+                    $this->Amo->clean($guid);
+                    if ($remove) $guids[] = $guid;
+                }
+                if (!empty($guids)) {
+                    $this->BlacklistedGuid->execute('DELETE FROM `blacklisted_guids` WHERE `guid` IN (\'' . implode("', '", $guids) . '\');');
+                }
+            }
+        }
+
+        $guids = $this->BlacklistedGuid->findAll('', array(), 'guid');
+
+        $this->set('guids', $guids);
+        $this->set('errors', $this->Error->errors);
+        $this->set('page', 'guids');
+        $this->render('guids');
+    }
+
     
    /**
     * Response Manager

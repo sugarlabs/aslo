@@ -62,6 +62,9 @@
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'groups', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'groups') ? ' class="selected"' : ''?>><?=$html->link('Group Manager', '/admin/groups')?></li>
         <?php endif;
+            if ($this->controller->SimpleAcl->actionAllowed('Admin', 'guids', $this->controller->Session->read('User'))): ?>
+            <li<?=($page == 'guids') ? ' class="selected"' : ''?>><?=$html->link('Guid Manager', '/admin/guids')?></li>
+        <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'lists', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'lists' && empty($subpage)) ? ' class="selected"' : ''?>><?=$html->link('List Manager', '/admin/lists')?></li>
             <?php if ($page == 'lists'): ?>

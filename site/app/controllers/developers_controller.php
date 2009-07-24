@@ -61,7 +61,7 @@ function getitem($object, $name, $default=null) {
 class DevelopersController extends AppController
 {
     var $name = 'Developers';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion','Category',
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category',
         'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview', 'Review',
         'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error',
