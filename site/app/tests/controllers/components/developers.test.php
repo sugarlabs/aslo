@@ -310,6 +310,8 @@ class DevelopersTest extends UnitTestCase {
         loadComponent('Rdf');
         $this->Rdf =& new RdfComponent();
         $this->controller->Application =& new Application();
+        loadModel('BlacklistedGuid');
+        $this->controller->BlacklistedGuid =& new BlacklistedGuid();
         
         //Test a valid manifest file
         $manifestData = $this->setupValidateManifestData();
