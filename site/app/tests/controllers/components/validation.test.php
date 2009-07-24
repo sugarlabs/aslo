@@ -65,6 +65,8 @@ class ValidationTest extends UnitTestCase {
         $this->controller->Addon =& new Addon();
         $this->controller->Application =& new Application();
         $this->controller->Appversion =& new Appversion();
+        loadModel('BlacklistedGuid');
+        $this->controller->BlacklistedGuid =& new BlacklistedGuid();
 
         // Prime the cache
         $fileIds = array(1,3,11,12,13);
