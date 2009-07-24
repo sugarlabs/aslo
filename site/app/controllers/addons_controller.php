@@ -169,23 +169,32 @@ class AddonsController extends AppController
     function developers($addon_id, $extra=null) {
         global $valid_status; 
 
-        foreach ($this->Addon->getAuthors($addon_id) as $a) {
-            $authors[] = $this->User->getUser($a['User']['id'], array('addons',));
-        }
-
-        foreach ($authors as $a) {
-            foreach ($a['Addon'] as $addon) {
-                if (in_array($addon['Addon']['status'], $valid_status)) {
-                    $other_addons[$addon['Addon']['id']] = $addon;
-                }
-            }
-        }
-
         $associations = array(
             'single_category', 'all_categories', 'authors', 'contrib_details',
             'compatible_apps', 'files', 'latest_version', 'list_details'
         );
         $addon = $this->Addon->getAddon($addon_id, $associations);
+
+        // if the latest version is incompatible with the current app, redirect
+        $redirect = $this->_app_redirect($addon['compatible_apps']);
+        if ($redirect) {
+            $redirect .= "/addon/{$addon_id}/developers";
+            if (!empty($extra)) $redirect .= "/{$extra}";
+            $this->redirect($redirect, null, true, false);
+            return;
+        }
+
+        foreach ($this->Addon->getAuthors($addon_id) as $a) {
+            $authors[] = $this->User->getUser($a['User']['id'], array('addons',));
+        }
+
+        foreach ($authors as $a) {
+            foreach ($a['Addon'] as $_addon) {
+                if (in_array($_addon['Addon']['status'], $valid_status)) {
+                    $other_addons[$addon['Addon']['id']] = $_addon;
+                }
+            }
+        }
 
         $this->set('authors', $authors);
         $this->set('num_authors', count($authors));
@@ -314,21 +323,10 @@ class AddonsController extends AppController
         }
 
         // if the latest version is incompatible with the current app, redirect
-        // to a the first valid, compatible version.
-        if (!empty($compat_apps)) {
-            $is_compatible = false;
-            foreach ($compat_apps as $app) {
-                if ($app['Application']['application_id'] == APP_ID) {
-                    $is_compatible = true;
-                    break;
-                }
-            }
-            if (!$is_compatible) {
-                global $app_shortnames;
-                $targetapp = array_search($compat_apps[0]['Application']['application_id'], $app_shortnames);
-                $this->redirect("/{$targetapp}/addon/{$id}", null, true, false);
-                return;
-            }
+        $redirect = $this->_app_redirect($compat_apps);
+        if ($redirect) {
+            $this->redirect("{$redirect}/addon/{$id}", null, true, false);
+            return;
         }
 
         // TODO: Look up the current share totals for this addon.
@@ -469,6 +467,25 @@ class AddonsController extends AppController
         $this->publish('breadcrumbs', array(
             sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
         ));
+    }
+
+    /**
+     * Determine what app to redirect to if add-on is incompatible with current app
+     * @param array $compat_apps app compatibility array
+     * @return mixed app shortname if redirect is necessary, null otherwise
+     */
+    function _app_redirect($compat_apps = array()) {
+        if (empty($compat_apps)) return null;
+
+        foreach ($compat_apps as $app) {
+            if ($app['Application']['application_id'] == APP_ID)
+                return null;
+        }
+
+        // if we make it here, we need to redirect
+        global $app_shortnames;
+        $targetapp = array_search($compat_apps[0]['Application']['application_id'], $app_shortnames);
+        return $targetapp;
     }
 
     /**

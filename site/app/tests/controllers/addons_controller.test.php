@@ -126,7 +126,36 @@ class AddonsTest extends UnitTestCase {
     }
 
 
+    /**
+     * Test if a redirect target is determined correctly if an add-on is
+     * incompatible with the current app.
+     */
+    function testAppRedirect() {
+        global $app_shortnames;
 
+        // partial compatibility arrays for testing
+        $incompatible = array();
+        foreach ($app_shortnames as $_app) {
+            if ($_app == APP_ID) continue; // incompatible only
+            $incompatible[] = array('Application' => array(
+                'application_id' => $_app
+                ));
+        }
+        // add our current app for a "compatible" test
+        $compatible = $incompatible;
+        $compatible[] = array('Application' => array(
+            'application_id' => APP_ID
+            ));
+
+        // compatible
+        $this->assertNull($this->controller->_app_redirect($compatible),
+            'No redirect target for compatible add-ons');
+
+        // incompatible
+        $expected_target = array_search($incompatible[0]['Application']['application_id'], $app_shortnames);
+        $this->assertEqual($this->controller->_app_redirect($incompatible),
+            $expected_target, 'Valid redirect target for incompatible apps');
+    }
 
 
 }
