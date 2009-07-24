@@ -62,7 +62,7 @@ $this->layout = 'amo2009';
             $paging['total'])?></h3>
         <div class="featured listing" id="addon-listing">
             <?php
-            echo $this->renderElement('amo2009/addon_list_options', array('paging' => $paging));
+            echo $this->renderElement('amo2009/addons/list_options', array('paging' => $paging));
             foreach ($addons as $val) {
                 echo $this->renderElement('amo2009/homepage_addon', array('addon' => $val));
             }

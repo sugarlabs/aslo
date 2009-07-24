@@ -34,7 +34,7 @@ if ($multiple) {
   } else {
       $contrib_element = '';
   }
-  $other_addons_element = $this->renderElement('amo2009/developer_other_addons',
+  $other_addons_element = $this->renderElement('amo2009/addons/developers/other_addons',
       array('addons' => $other_addons,
             'skip' => $addon['Addon']['id'],
             'force_output' => false));
@@ -45,8 +45,8 @@ if ($multiple) {
     <div class="secondary" role="complementary">
       <div class="vcard">
         <?php $this->viewVars['user'] = $author['User'];?>
-        <?=$this->renderElement('amo2009/user_avatar')?>
-        <?=$this->renderElement('amo2009/user_vcard')?>
+        <?=$this->renderElement('amo2009/users/avatar')?>
+        <?=$this->renderElement('amo2009/users/vcard')?>
       </div>
     </div>
     <div class="primary" role="main">
@@ -56,7 +56,7 @@ if ($multiple) {
           <h3><?=sprintf(___('addon_developer_who_is', 'Who is %s?'), $author['User']['display_name'])?></h3>
           <p class="intro"><?=$author['Translation']['bio']['string']?></p>
         <?php endif; ?>
-        <?=$this->renderElement('amo2009/developer_about_addon')?>
+        <?=$this->renderElement('amo2009/addons/developers/about_addon')?>
       </div>
       <?=$other_addons_element?>
     </div>
@@ -82,14 +82,14 @@ if ($multiple) {
             <li class="vcard" id="t-author-<?=$user['id']?>">
               <?php $user = $this->viewVars['user'] = $author['User'];?>
               <div class="secondary">
-                <?=$this->renderElement('amo2009/user_avatar')?>
+                <?=$this->renderElement('amo2009/users/avatar')?>
               </div>
               <div class="primary">
                 <h3><?=$user['display_name']?></h3>
                 <?php if($author['Translation']['bio']['string']): ?>
                   <p class="intro"><?=$author['Translation']['bio']['string']?></p>
                 <?php endif; ?>
-                <?=$this->renderElement('amo2009/user_vcard')?>
+                <?=$this->renderElement('amo2009/users/vcard')?>
               </div>
             </li>
           <?php endforeach; ?>
@@ -98,7 +98,7 @@ if ($multiple) {
     </div>
     <?=$other_addons_element?>
     <div class="primary prose">
-      <?=$this->renderElement('amo2009/developer_about_addon')?>
+      <?=$this->renderElement('amo2009/addons/developers/about_addon')?>
     </div>
   <?php endif; ?>
 
