@@ -995,6 +995,7 @@ CREATE TABLE `users` (
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   `notes` text,
+  `averagerating` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `unconfirmed` (`created`,`confirmationcode`),

@@ -343,6 +343,35 @@ switch ($action) {
     break;
 
 
+    case 'user_ratings':
+        echo "Updating user ratings...\n";
+
+        global $valid_status;
+        $status = join(",", $valid_status);
+
+        $ooh = "
+          UPDATE users INNER JOIN (
+              SELECT
+                addons_users.user_id as user_id,
+                AVG(rating) as avg_rating
+              FROM reviews
+                INNER JOIN versions
+                INNER JOIN addons_users
+                INNER JOIN addons
+              ON reviews.version_id = versions.id
+                AND addons.id = versions.addon_id
+                AND addons_users.addon_id = addons.id
+              WHERE reviews.reply_to IS NULL
+                AND reviews.rating > 0
+                AND addons.status IN ({$status})
+              GROUP BY addons_users.user_id
+          ) AS J ON (users.id = J.user_id)
+          SET users.averagerating = ROUND(J.avg_rating, 2)
+        ";
+        $db->write($ooh);
+        $affected_rows = mysql_affected_rows();
+    break;
+
 
     /**
      * Get average ratings and update addons table.

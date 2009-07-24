@@ -115,7 +115,7 @@ class User extends AppModel
         'homepage', 'display_collections', 'display_collections_fav',
         'confirmationcode', 'resetcode', 'resetcode_expires', 
         'created', 'modified', 'notes', 'location',
-        'occupation');
+        'averagerating', 'occupation');
 
     var $validate = array(
         'email'     => VALID_EMAIL,
@@ -158,11 +158,6 @@ class User extends AppModel
             $addons = $this->Addon->getAddonsByUser($id);
             $user['Addon'] = $this->Addon->getAddonList(array_keys($addons), array('list_details'));
             $user['User']['num_addons'] = count($user['Addon']);
-
-            foreach ($user['Addon'] as $r) {
-                $ratings[] = $r['Addon']['averagerating'];
-            }
-            $user['User']['average_rating'] = array_sum($ratings) / count($ratings);
         }
 
         // cache this object...
