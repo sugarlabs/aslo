@@ -191,7 +191,7 @@ class AddonsController extends AppController
         foreach ($authors as $a) {
             foreach ($a['Addon'] as $_addon) {
                 if (in_array($_addon['Addon']['status'], $valid_status)) {
-                    $other_addons[$addon['Addon']['id']] = $_addon;
+                    $other_addons[$_addon['Addon']['id']] = $_addon;
                 }
             }
         }
