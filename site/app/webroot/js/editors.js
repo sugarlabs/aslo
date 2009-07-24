@@ -79,6 +79,9 @@ var editors_review = {
             comments = $('#editorComments .commentDepth'+depth);
         }
 
+        // apply syntax highlighting
+        SyntaxHighlighter.all();
+
         // click a root comment header to toggle showing/hiding the entire thread
         $('#editorComments .commentDepth0 .commentHeader').click(this.toggleThread);
         

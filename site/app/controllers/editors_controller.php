@@ -66,13 +66,13 @@ class EditorsController extends AppController
         $this->cssAdd = array('editors', 'admin');
         $this->publish('cssAdd', $this->cssAdd);
         
-        $this->publish('jsAdd', array('jquery-compressed.js',
-                                    'jquery.autocomplete.pack.js',
-                                    'jquery.tablesorter.min.js',
-                                    'jquery.flot.js',
-                                    'jquery.sparkline.min.js',
-                                    '../vendors/markitup/jquery.markitup.pack.js',
-                                    'editors'));
+        $this->jsAdd = array('jquery-compressed.js',
+                                'jquery.autocomplete.pack.js',
+                                'jquery.tablesorter.min.js',
+                                'jquery.flot.js',
+                                'jquery.sparkline.min.js',
+                                'editors');
+        $this->publish('jsAdd', $this->jsAdd);
 
         $this->breadcrumbs = array(_('editors_pagetitle') => '/editors/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
@@ -256,7 +256,19 @@ class EditorsController extends AppController
         $this->publish('breadcrumbs', $this->breadcrumbs);
         $this->publish('collapse_categories', true);
         $this->cssAdd[] = '../vendors/markitup/skins/simple/style';
+        $this->cssAdd[] = '../vendors/syntaxhighlighter/styles/shCore';
+        $this->cssAdd[] = '../vendors/syntaxhighlighter/styles/shThemeDefault';
         $this->publish('cssAdd', $this->cssAdd);
+
+        $this->jsAdd[] = '../vendors/markitup/jquery.markitup.pack.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shCore.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushCss.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushDiff.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushJScript.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushPlain.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushSql.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushXml.js';
+        $this->publish('jsAdd', $this->jsAdd);
 
         //Bind necessary models
         $this->User->bindFully();

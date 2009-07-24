@@ -54,5 +54,12 @@ class MarkdownTest extends UnitTestCase {
 
     }
 
+    function testFencedCode() {
+        $text = "~~~ {.python}\nimport antigravity\n~~~";
+        $html = $this->Markdown->html($text);
+
+        $this->assertPattern('#<pre class="brush:python">\s*import antigravity\s*</pre>#s', $html, "fenced code is being formatted");
+        $this->assertNoPattern('/~~~|[{}]|\.python/', $html, "no lingering fenced code markers");
+    }
 }
 ?>
