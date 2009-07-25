@@ -42,7 +42,7 @@
         <? if ($short) : ?>
             <?= $counts[TEST_FAIL] ?>
         <? else: ?>
-            <?=sprintf(n___('devcp_validate_fail_count', 'devcp_validate_fail_count', $counts[TEST_FAIL], '%d errors'), $counts[TEST_FAIL]) ?>
+            <?=sprintf(n___('devcp_validate_fail_count', 'devcp_validate_fail_count', $counts[TEST_FAIL], '%d error(s)'), $counts[TEST_FAIL]) ?>
         <? endif; ?>
     </span>
     <? if ($multiline) : ?>
@@ -54,7 +54,7 @@
         <? if ($short) : ?>
             <?= $counts[TEST_WARN] ?>
         <? else: ?>
-            <?=sprintf(n___('devcp_validate_warn_count', 'devcp_validate_warn_count', $counts[TEST_WARN], '%d warnings'), $counts[TEST_WARN]) ?>
+            <?=sprintf(n___('devcp_validate_warn_count', 'devcp_validate_warn_count', $counts[TEST_WARN], '%d warning(s)'), $counts[TEST_WARN]) ?>
         <? endif; ?>
     </span>
     <? if ($multiline) : ?>
@@ -66,7 +66,7 @@
         <? if ($short) : ?>
             <?= $counts[TEST_PASS] ?>
         <? else: ?>
-            <?=sprintf(n___('devcp_validate_pass_count', 'devcp_validate_pass_count', $counts[TEST_PASS], '%d passes'), $counts[TEST_PASS]) ?>
+            <?=sprintf(n___('devcp_validate_pass_count', 'devcp_validate_pass_count', $counts[TEST_PASS], '%d pass(es)'), $counts[TEST_PASS]) ?>
         <? endif; ?>
     </span>
 <? endif; ?>
