@@ -99,6 +99,12 @@ class AddonsController extends AppController
             'friendfeed' => array(
                 'label' => ___('addons_share_label_friendfeed', 'Share on FriendFeed'),
                 'url' => 'http://friendfeed.com/?url={URL}&title={TITLE}'
+            ),
+
+            // See Nick Nguyen
+            'twitter' => array(
+                'label' => ___('addons_share_label_twitter', 'Post to Twitter'),
+                'url' => 'https://twitter.com/home?status={TITLE} {URL}'
             )
 
         );

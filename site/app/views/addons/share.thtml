@@ -10,6 +10,10 @@
         // placeholders with the strings composed above.
         $link_data = compact('url', 'title', 'description');
         foreach ($link_data as $name => $value) {
+            // replace &#42; with -
+            $value = htmlspecialchars_decode($value);
+            $value = html_entity_decode($value);
+            
             $service_url = str_replace(
                 '{'.strtoupper($name).'}', 
                 rawurlencode($value), 
