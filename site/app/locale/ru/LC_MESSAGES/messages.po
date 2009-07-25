@@ -486,8 +486,9 @@ msgstr "Закрыть"
 #: views/elements/amo2009/contribution.thtml:105
 msgid "addons_display_contribute_why"
 msgstr ""
-"Mozilla обещает поддерживать здоровую экосистему разработки. Ваше добровольное "
-"пожертвование поможет поддержать дальнейшее развитие этого дополнения."
+"Mozilla обещает поддерживать здоровую экосистему разработки. Ваше "
+"добровольное пожертвование поможет поддержать дальнейшее развитие этого "
+"дополнения."
 
 #: views/addons/developers.thtml:33 views/addons/display.thtml:163
 msgid "addons_display_contribution_ask"
@@ -1118,6 +1119,10 @@ msgstr "Поделиться на FriendFeed"
 #: controllers/addons_controller.php:94
 msgid "addons_share_label_myspace"
 msgstr "Написать в MySpace"
+
+#, fuzzy
+msgid "addons_share_label_twitter"
+msgstr "Post to Twitter"
 
 #: controllers/components/amo.php:201 controllers/components/amo.php:229
 msgid "addons_status_disabled"
@@ -3240,7 +3245,7 @@ msgstr "PayPal ID"
 
 #: views/developers/addon_edit_contributions.thtml:125
 msgid "devcp_edit_contrib_label_suggested"
-msgstr "Предложенная сумма" 
+msgstr "Предложенная сумма"
 
 #: views/developers/addon_edit_contributions.thtml:139
 msgid "devcp_edit_contrib_label_where"
@@ -3311,8 +3316,8 @@ msgstr ""
 #: views/developers/addon_edit.thtml:67
 msgid "devcp_edit_dd_manage_contributions"
 msgstr ""
-"Обеспечьте способ для пользователей внести денежные пожертвования для "
-"вашего проекта."
+"Обеспечьте способ для пользователей внести денежные пожертвования для вашего "
+"проекта."
 
 #: views/developers/addon_edit.thtml:53
 msgid "devcp_edit_dd_manage_description"
@@ -5331,6 +5336,11 @@ msgstr "Удалить избранное"
 msgid "editors_filter_queue"
 msgstr "Фильтр очереди"
 
+#: views/editors/queue.thtml:176
+#, fuzzy
+msgid "editors_flag_admin_review"
+msgstr "Admin Review"
+
 #: views/editors/queue.thtml:182
 msgid "editors_helpful_links"
 msgstr "Полезные ссылки"
@@ -5405,6 +5415,11 @@ msgstr "Дополнение или адрес эл. почты автора"
 msgid "editors_queue_filter_label_addontypes"
 msgstr "Типы дополнений"
 
+#: views/editors/queue.thtml:83
+#, fuzzy
+msgid "editors_queue_filter_label_admin_flag"
+msgstr "Admin Flag"
+
 #: views/editors/queue.thtml:56
 msgid "editors_queue_filter_label_application"
 msgstr "Приложение"
@@ -5428,6 +5443,16 @@ msgid_plural "editors_queue_filter_result_count"
 msgstr[0] "Результаты поиска с фильтром: <strong>%1$s</strong> дополнение"
 msgstr[1] "Результаты поиска с фильтром: <strong>%1$s</strong> дополнения"
 msgstr[2] "Результаты поиска с фильтром: <strong>%1$s</strong> дополнений"
+
+#: controllers/editors_controller.php:217
+#, fuzzy
+msgid "editors_queue_flag_no"
+msgstr "no"
+
+#: controllers/editors_controller.php:217
+#, fuzzy
+msgid "editors_queue_flag_yes"
+msgstr "yes"
 
 #: views/editors/queue.thtml:84
 msgid "editors_queue_submit_clean"
@@ -5487,9 +5512,73 @@ msgstr "Запрос суперрецензии"
 msgid "editors_review_action_sandbox"
 msgstr "Вернуть в «песочницу»"
 
+#: views/editors/review.thtml:117
+#, fuzzy
+msgid "editors_review_admin_flag"
+msgstr "Admin Review"
+
+#: views/editors/review.thtml:377
+#, fuzzy
+msgid "editors_review_block_quotes"
+msgstr "Block Quotes:"
+
+#: views/editors/review.thtml:378
+#, fuzzy
+msgid "editors_review_block_quotes_help"
+msgstr ""
+"Start lines with a &gt;. Multiple &gt; characters may be used to create "
+"nested block quotes."
+
+#: views/editors/review.thtml:371
+#, fuzzy
+msgid "editors_review_bold"
+msgstr "Bold:"
+
+#: views/editors/review.thtml:372
+#, fuzzy
+msgid "editors_review_bold_help"
+msgstr "Wrap text with **two asterisks** or __two underscores__."
+
+#: views/editors/review.thtml:379
+#, fuzzy
+msgid "editors_review_code_blocks"
+msgstr "Code Blocks:"
+
+#: views/editors/review.thtml:380
+#, fuzzy
+msgid "editors_review_code_blocks_help"
+msgstr "Enclose code with three or more ~ tilde characters on separate lines."
+
+#: views/editors/review.thtml:366
+#, fuzzy
+msgid "editors_review_comment_help_heading"
+msgstr "Comment Help"
+
 #: controllers/editors_controller.php:368
 msgid "editors_review_comments"
 msgstr "Просмотреть комментарии"
+
+#: views/editors/review.thtml:375
+#, fuzzy
+msgid "editors_review_ctrl_click"
+msgstr "Ctrl + Click:"
+
+#: views/editors/review.thtml:388
+#, fuzzy
+msgid "editors_review_ctrl_click_help"
+msgstr "Insert markup and retain selection."
+
+#: views/editors/review.thtml:377
+#, fuzzy
+msgid "editors_review_ctrl_shift_click"
+msgstr "Ctrl + Shift + Click:"
+
+#: views/editors/review.thtml:392
+#, fuzzy
+msgid "editors_review_ctrl_shift_click_help"
+msgstr ""
+"Insert markup on every line of selection instead of once on the whole "
+"selection."
 
 #: views/editors/review.thtml:183
 msgid "editors_review_details_info_request"
@@ -5567,6 +5656,11 @@ msgstr "Лицензионное соглашение конечного пол�
 msgid "editors_review_header_files"
 msgstr "Файлы:"
 
+#: views/editors/review.thtml:113
+#, fuzzy
+msgid "editors_review_header_flags"
+msgstr "Flags:"
+
 #: views/editors/review.thtml:285
 msgid "editors_review_header_itemhistory"
 msgstr "История сообщений"
@@ -5601,6 +5695,11 @@ msgstr "Аннотация"
 #: views/editors/review.thtml:258
 msgid "editors_review_header_versionnotes"
 msgstr "Примечания к версии"
+
+#: views/editors/review.thtml:364
+#, fuzzy
+msgid "editors_review_help_close"
+msgstr "Close"
 
 #. %1$s is the comment count
 #: views/elements/developers/editors_review_history_item.thtml:53
@@ -5670,6 +5769,16 @@ msgstr "Отмена"
 msgid "editors_review_input_post_comment"
 msgstr "Отправить комментарий"
 
+#: views/editors/review.thtml:369
+#, fuzzy
+msgid "editors_review_italics"
+msgstr "Italics:"
+
+#: views/editors/review.thtml:370
+#, fuzzy
+msgid "editors_review_italics_help"
+msgstr "Wrap text with *asterisks* or _underscores_."
+
 #: views/editors/review.thtml:209
 msgid "editors_review_label_applications"
 msgstr "Приложения:"
@@ -5690,6 +5799,16 @@ msgstr "Операционные системы:"
 msgid "editors_review_label_subject"
 msgstr "Тема"
 
+#: views/editors/review.thtml:367
+#, fuzzy
+msgid "editors_review_line_breaks"
+msgstr "Line Breaks:"
+
+#: views/editors/review.thtml:368
+#, fuzzy
+msgid "editors_review_line_breaks_help"
+msgstr "End a line with two or more spaces."
+
 #. This is text for an <a>, please include the parenthesis
 #: views/editors/review.thtml:349
 msgid "editors_review_link_new_thread"
@@ -5705,6 +5824,16 @@ msgstr "Наверх"
 msgid "editors_review_link_reply"
 msgstr "(Ответить)"
 
+#: views/editors/review.thtml:119
+#, fuzzy
+msgid "editors_review_list_none"
+msgstr "none"
+
+#: views/editors/review.thtml:373
+#, fuzzy
+msgid "editors_review_modifier_keys_heading"
+msgstr "Button Modifier Keys"
+
 #: views/editors/review.thtml:141
 msgid "editors_review_mulitple_notice"
 msgstr ""
@@ -5714,6 +5843,16 @@ msgstr ""
 #: views/editors/review.thtml:51
 msgid "editors_review_next_link"
 msgstr "след. &raquo;"
+
+#: views/editors/review.thtml:375
+#, fuzzy
+msgid "editors_review_ordered_lists"
+msgstr "Ordered Lists:"
+
+#: views/editors/review.thtml:376
+#, fuzzy
+msgid "editors_review_ordered_lists_help"
+msgstr "Start a line with a number followed by a period."
 
 #: views/editors/review.thtml:323
 msgid "editors_review_previews_notfound"
@@ -5739,9 +5878,36 @@ msgstr "<strong># %1$s-й</strong> из %2$s в очереди"
 msgid "editors_review_rank_in_queue_filtered"
 msgstr "<strong># %1$-й</strong> из %2$s в очереди (с фильтром)"
 
+#: views/editors/review.thtml:376
+#, fuzzy
+msgid "editors_review_shift_click"
+msgstr "Shift + Click:"
+
+#: views/editors/review.thtml:390
+#, fuzzy
+msgid "editors_review_shift_click_help"
+msgstr "Insert markup and retain selection plus added markup."
+
 #: views/editors/review.thtml:224
 msgid "editors_review_submit_process_action"
 msgstr "Ход действия"
+
+#: views/editors/review.thtml:365
+#, fuzzy
+msgid "editors_review_supported_markdown"
+msgstr "Supported markdown syntax"
+
+#: views/editors/review.thtml:381
+#, fuzzy
+msgid "editors_review_syntax"
+msgstr "Syntax Highlighting:"
+
+#: views/editors/review.thtml:382
+#, fuzzy
+msgid "editors_review_syntax_help"
+msgstr ""
+"Append {.syntax} to the opening line of code block ~ tildes, where syntax is "
+"one of: html, css, javascript, diff, or sql."
 
 #: views/editors/review.thtml:294
 msgid "editors_review_th_action"
@@ -5762,6 +5928,16 @@ msgstr "Рецензент"
 #: views/editors/review.thtml:291
 msgid "editors_review_th_version_file"
 msgstr "Версия/Файл"
+
+#: views/editors/review.thtml:373
+#, fuzzy
+msgid "editors_review_unordered_lists"
+msgstr "Unordered Lists:"
+
+#: views/editors/review.thtml:374
+#, fuzzy
+msgid "editors_review_unordered_lists_help"
+msgstr "Start a line with a single * or + character."
 
 #: views/editors/review.thtml:218
 msgid "editors_review_update_notify_once"
@@ -5829,6 +6005,11 @@ msgstr "Дополнение"
 #: views/editors/queue.thtml:125
 msgid "editors_th_addontype"
 msgstr "Тип"
+
+#: views/editors/queue.thtml:156
+#, fuzzy
+msgid "editors_th_flags"
+msgstr "Flags"
 
 #: views/editors/featured.thtml:64
 msgid "editors_th_locales"
@@ -8158,9 +8339,9 @@ msgstr "Вход пользователя в систему"
 #, php-format
 msgid "users_login_sandbox_display_warning"
 msgstr ""
-"Дополнение, которое вы ищете, находится в данный момент в «песочнице». Если "
-"у вас уже есть учётная запись на Mozilla Add-ons, пожалуйста войдите в "
-"систему или <a href=\"%1$s\">почитайте больше о «песочнице»</a>."
+"Дополнение, которое вы ищете, находится в данный момент в «песочнице». Если у "
+"вас уже есть учётная запись на Mozilla Add-ons, пожалуйста войдите в систему "
+"или <a href=\"%1$s\">почитайте больше о «песочнице»</a>."
 
 # %1 is the link to the sandbox/policy explanation page
 # This message is for any given sandbox-related page not found

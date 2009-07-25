@@ -1241,6 +1241,10 @@ msgstr "Share on FriendFeed"
 msgid "addons_share_label_myspace"
 msgstr "Post to MySpace"
 
+#, fuzzy
+msgid "addons_share_label_twitter"
+msgstr "Post to Twitter"
+
 #: controllers/components/amo.php:201 controllers/components/amo.php:229
 #, fuzzy
 msgid "addons_status_disabled"
@@ -6137,6 +6141,11 @@ msgstr "Remove feature"
 msgid "editors_filter_queue"
 msgstr "Filter Queue"
 
+#: views/editors/queue.thtml:176
+#, fuzzy
+msgid "editors_flag_admin_review"
+msgstr "Admin Review"
+
 #: views/editors/queue.thtml:182
 #, fuzzy
 msgid "editors_helpful_links"
@@ -6222,6 +6231,11 @@ msgstr "Add-on or Author Email"
 msgid "editors_queue_filter_label_addontypes"
 msgstr "Add-on Types"
 
+#: views/editors/queue.thtml:83
+#, fuzzy
+msgid "editors_queue_filter_label_admin_flag"
+msgstr "Admin Flag"
+
 #: views/editors/queue.thtml:56
 #, fuzzy
 msgid "editors_queue_filter_label_application"
@@ -6249,6 +6263,16 @@ msgid "editors_queue_filter_result_count"
 msgid_plural "editors_queue_filter_result_count"
 msgstr[0] "Results of your filtered search: <strong>%1$s</strong> Add-on"
 msgstr[1] "Results of your filtered search: <strong>%1$s</strong> Add-ons"
+
+#: controllers/editors_controller.php:217
+#, fuzzy
+msgid "editors_queue_flag_no"
+msgstr "no"
+
+#: controllers/editors_controller.php:217
+#, fuzzy
+msgid "editors_queue_flag_yes"
+msgstr "yes"
 
 #: views/editors/queue.thtml:84
 #, fuzzy
@@ -6321,10 +6345,74 @@ msgstr "Request Super-Review"
 msgid "editors_review_action_sandbox"
 msgstr "Retain in Sandbox"
 
+#: views/editors/review.thtml:117
+#, fuzzy
+msgid "editors_review_admin_flag"
+msgstr "Admin Review"
+
+#: views/editors/review.thtml:377
+#, fuzzy
+msgid "editors_review_block_quotes"
+msgstr "Block Quotes:"
+
+#: views/editors/review.thtml:378
+#, fuzzy
+msgid "editors_review_block_quotes_help"
+msgstr ""
+"Start lines with a &gt;. Multiple &gt; characters may be used to create "
+"nested block quotes."
+
+#: views/editors/review.thtml:371
+#, fuzzy
+msgid "editors_review_bold"
+msgstr "Bold:"
+
+#: views/editors/review.thtml:372
+#, fuzzy
+msgid "editors_review_bold_help"
+msgstr "Wrap text with **two asterisks** or __two underscores__."
+
+#: views/editors/review.thtml:379
+#, fuzzy
+msgid "editors_review_code_blocks"
+msgstr "Code Blocks:"
+
+#: views/editors/review.thtml:380
+#, fuzzy
+msgid "editors_review_code_blocks_help"
+msgstr "Enclose code with three or more ~ tilde characters on separate lines."
+
+#: views/editors/review.thtml:366
+#, fuzzy
+msgid "editors_review_comment_help_heading"
+msgstr "Comment Help"
+
 #: controllers/editors_controller.php:368
 #, fuzzy
 msgid "editors_review_comments"
 msgstr "Review Comments"
+
+#: views/editors/review.thtml:375
+#, fuzzy
+msgid "editors_review_ctrl_click"
+msgstr "Ctrl + Click:"
+
+#: views/editors/review.thtml:388
+#, fuzzy
+msgid "editors_review_ctrl_click_help"
+msgstr "Insert markup and retain selection."
+
+#: views/editors/review.thtml:377
+#, fuzzy
+msgid "editors_review_ctrl_shift_click"
+msgstr "Ctrl + Shift + Click:"
+
+#: views/editors/review.thtml:392
+#, fuzzy
+msgid "editors_review_ctrl_shift_click_help"
+msgstr ""
+"Insert markup on every line of selection instead of once on the whole "
+"selection."
 
 #: views/editors/review.thtml:183
 #, fuzzy
@@ -6419,6 +6507,11 @@ msgstr "EULA"
 msgid "editors_review_header_files"
 msgstr "Files:"
 
+#: views/editors/review.thtml:113
+#, fuzzy
+msgid "editors_review_header_flags"
+msgstr "Flags:"
+
 #: views/editors/review.thtml:285
 #, fuzzy
 msgid "editors_review_header_itemhistory"
@@ -6459,6 +6552,11 @@ msgstr "Summary"
 #, fuzzy
 msgid "editors_review_header_versionnotes"
 msgstr "Version Notes"
+
+#: views/editors/review.thtml:364
+#, fuzzy
+msgid "editors_review_help_close"
+msgstr "Close"
 
 #. %1$s is the comment count
 #: views/elements/developers/editors_review_history_item.thtml:53
@@ -6539,6 +6637,16 @@ msgstr "Cancel"
 msgid "editors_review_input_post_comment"
 msgstr "Post Comment"
 
+#: views/editors/review.thtml:369
+#, fuzzy
+msgid "editors_review_italics"
+msgstr "Italics:"
+
+#: views/editors/review.thtml:370
+#, fuzzy
+msgid "editors_review_italics_help"
+msgstr "Wrap text with *asterisks* or _underscores_."
+
 #: views/editors/review.thtml:209
 #, fuzzy
 msgid "editors_review_label_applications"
@@ -6564,6 +6672,16 @@ msgstr "Operating Systems:"
 msgid "editors_review_label_subject"
 msgstr "Subject"
 
+#: views/editors/review.thtml:367
+#, fuzzy
+msgid "editors_review_line_breaks"
+msgstr "Line Breaks:"
+
+#: views/editors/review.thtml:368
+#, fuzzy
+msgid "editors_review_line_breaks_help"
+msgstr "End a line with two or more spaces."
+
 #. This is text for an <a>, please include the parenthesis
 #: views/editors/review.thtml:349
 #, fuzzy
@@ -6582,6 +6700,16 @@ msgstr "Top"
 msgid "editors_review_link_reply"
 msgstr "(Reply)"
 
+#: views/editors/review.thtml:119
+#, fuzzy
+msgid "editors_review_list_none"
+msgstr "none"
+
+#: views/editors/review.thtml:373
+#, fuzzy
+msgid "editors_review_modifier_keys_heading"
+msgstr "Button Modifier Keys"
+
 #: views/editors/review.thtml:141
 #, fuzzy
 msgid "editors_review_mulitple_notice"
@@ -6593,6 +6721,16 @@ msgstr ""
 #, fuzzy
 msgid "editors_review_next_link"
 msgstr "next &raquo;"
+
+#: views/editors/review.thtml:375
+#, fuzzy
+msgid "editors_review_ordered_lists"
+msgstr "Ordered Lists:"
+
+#: views/editors/review.thtml:376
+#, fuzzy
+msgid "editors_review_ordered_lists_help"
+msgstr "Start a line with a number followed by a period."
 
 #: views/editors/review.thtml:323
 #, fuzzy
@@ -6622,10 +6760,37 @@ msgstr "<strong># %1$s</strong> of %2$s in queue"
 msgid "editors_review_rank_in_queue_filtered"
 msgstr "<strong># %1$s</strong> of %2$s in queue (filtered)"
 
+#: views/editors/review.thtml:376
+#, fuzzy
+msgid "editors_review_shift_click"
+msgstr "Shift + Click:"
+
+#: views/editors/review.thtml:390
+#, fuzzy
+msgid "editors_review_shift_click_help"
+msgstr "Insert markup and retain selection plus added markup."
+
 #: views/editors/review.thtml:224
 #, fuzzy
 msgid "editors_review_submit_process_action"
 msgstr "Process Action"
+
+#: views/editors/review.thtml:365
+#, fuzzy
+msgid "editors_review_supported_markdown"
+msgstr "Supported markdown syntax"
+
+#: views/editors/review.thtml:381
+#, fuzzy
+msgid "editors_review_syntax"
+msgstr "Syntax Highlighting:"
+
+#: views/editors/review.thtml:382
+#, fuzzy
+msgid "editors_review_syntax_help"
+msgstr ""
+"Append {.syntax} to the opening line of code block ~ tildes, where syntax is "
+"one of: html, css, javascript, diff, or sql."
 
 #: views/editors/review.thtml:294
 #, fuzzy
@@ -6651,6 +6816,16 @@ msgstr "Reviewer"
 #, fuzzy
 msgid "editors_review_th_version_file"
 msgstr "Version/File"
+
+#: views/editors/review.thtml:373
+#, fuzzy
+msgid "editors_review_unordered_lists"
+msgstr "Unordered Lists:"
+
+#: views/editors/review.thtml:374
+#, fuzzy
+msgid "editors_review_unordered_lists_help"
+msgstr "Start a line with a single * or + character."
 
 #: views/editors/review.thtml:218
 #, fuzzy
@@ -6734,6 +6909,11 @@ msgstr "Add-on"
 #, fuzzy
 msgid "editors_th_addontype"
 msgstr "Type"
+
+#: views/editors/queue.thtml:156
+#, fuzzy
+msgid "editors_th_flags"
+msgstr "Flags"
 
 #: views/editors/featured.thtml:64
 #, fuzzy
