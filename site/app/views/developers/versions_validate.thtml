@@ -48,10 +48,10 @@
 
         <?php if (!empty($files)) {
             foreach($files as $file) {
-		echo '<div id="test-results-'.$file['File']['id'].'">';
-        	echo '<h2>'.sprintf(___('devcp_versions_validate_header', 'Validate File %s'), $file['File']['filename']).'</h2>';
+                echo '<div id="test-results-'.$file['File']['id'].'">';
+                echo '<h2>'.sprintf(___('devcp_versions_validate_header', 'Validate File %s'), $file['File']['filename']).'</h2>';
                 echo $this->renderElement('developers/testresults', array('file' => $file, 'test_groups' => $file['groups'], 'all_groups' => $all_groups, 'counts' => $file['counts']));
-		echo '</div><br/>';
+                echo '</div><br/>';
             }
         }
         else {

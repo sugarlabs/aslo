@@ -35,22 +35,32 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
 
+$class = ''; 
+if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
+    $class = 'passed'; 
+} else if ($group['counts'][TEST_FAIL] == 0) { 
+    $class = 'warning';
+} else {
+    $class = 'failed';
+}
+?>
 <div class="test-heading" id="test-group-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
-    <h4>
+    <h4 class="<?=$class?>">
         <?=sprintf(n___('devcp_versions_validate_header_group', 'devcp_versions_validate_header_group',  count($group['cases']), '%s results'), $group['TestGroup']['name'])?>
     </h4>
     <a href="#test-summary-<?=$file['File']['id']?>"><?=___('devcp_back_to_top', 'Back to Top')?></a>
 </div>
+<div id="test-details-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
 <? if (!empty($group['cases'])) : ?>
+    <? if ($class != 'passed') : ?>
     <? foreach ($group['cases'] as $case) : ?>
         <h5><?=$case['name']?></h5>
         <ul class="test-results">
         <? $resultNum = 0; ?>
         <? if (!empty($case['results'])) : ?>
             <? foreach ($case['results'] as $result) : ?>
-<?
+                <? 
                 $resultNum++;
                 switch ($result['result']) {
                     case TEST_PASS:
@@ -65,24 +75,24 @@
                     default:
                         $class = '';
                 }
-        ?>
+                ?>
                 <li class="<?=$class?>">
                     <? if ($result['filename'] != '') : ?>
-                        <a href="<?=$html->url('/files/browse/' . $file['File']['id'] . '/0/?start=' . $result['filename'])?>">
+                        <a href="<?=SITE_URL . '/files/browse/' . $file['File']['id'] . '/0/?start=' . $result['filename']?>">
                         <?=$result['filename']?><?=($result['line'] != 0 ? " ({$result['line']})" : '')?></a> :
                     <? endif; ?>
                     <? if (!empty($result['message'])) : ?>
                         <?=$result['message']?>
-        <? else: ?>
+                    <? else: ?>
                         <?=$case['description']?>
-        <? endif; ?>
+                    <? endif; ?>                   
                     <? if (!empty($result['preview'])) : ?>
                         <div class="code">
                             <? foreach ($result['preview'] as $line => $code) : ?>
                                 <div class="line<?=($line==$result['line'] ? ' target' : '')?>"><?=$code?>&nbsp;</div>
                             <? endforeach; ?>
                         </div>
-<? endif; ?>
+                    <? endif; ?>
                 </li>
                 <? if ($resultNum == 3 && count($case['results']) > 3) : ?>
                 <li class="more">
@@ -97,6 +107,8 @@
         <? endif; ?>
         </ul>
     <? endforeach; ?>
+    <? endif; ?>
 <? else: ?>
     <i><?= ___('devcp_versions_validate_no_results', 'No test results found.') ?></i>
 <? endif; ?>
+</div>

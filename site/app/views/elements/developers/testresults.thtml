@@ -38,8 +38,8 @@
 ?>
       
 <div class="graybox rounded spaced field validation">
-    <div>
-        <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => false)) ?>
+    <div id="test-results-total-<?=$file['File']['id']?>">
+        <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => false, 'multiline' => false)) ?>
     </div>
     <ul id="test-summary-<?=$file['File']['id']?>" class="test-summary">
     <? if (!empty($all_groups)) : ?>
@@ -49,13 +49,16 @@
                 <?=$group['TestGroup']['name']?>
             </a>
             <span class="results">
+                <? $counts = array(0,0,0); ?>
                 <? if (!empty($test_groups[$group['TestGroup']['id']])) : ?>
-                    <? $group = $test_groups[$group['TestGroup']['id']]; ?>
-                    <?= $this->renderElement('developers/testresults_stats', array('counts' => $group['counts'], 'short' => true)) ?>
+                    <? $counts = $test_groups[$group['TestGroup']['id']]['counts']; ?>
                 <? endif; ?>
+                <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => true, 'multiline' => false)) ?>
             </span>
         </li>
         <? endforeach; ?>
+    <? else : ?>
+            <i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i>
     <? endif; ?>
     </ul>
 
@@ -73,12 +76,13 @@
     <? endif; ?>
 
     <div id="test-details-<?=$file['File']['id']?>">
-    <? if(!empty($file['TestResult'])) : ?>
-        <? foreach($test_groups as $group) : ?>
-            <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
-        <? endforeach; ?>
-    <? else : ?>
+        <? if(!empty($file['TestResult'])) : ?>
+            <? foreach($test_groups as $group) : ?>
+                <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
+            <? endforeach; ?>
+        <? else : ?>
             <i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i>
-    <? endif; ?>
+        <? endif; ?>
+    </div>
 </div>
-</div>
+

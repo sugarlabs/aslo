@@ -45,6 +45,9 @@
             <?=sprintf(n___('devcp_validate_fail_count', 'devcp_validate_fail_count', $counts[TEST_FAIL], '%d errors'), $counts[TEST_FAIL]) ?>
         <? endif; ?>
     </span>
+    <? if ($multiline) : ?>
+        <br/>
+    <? endif; ?>
 <? endif; ?>
 <? if ($counts[TEST_WARN] > 0) : ?>        
     <span class="warning-count">
@@ -54,6 +57,9 @@
             <?=sprintf(n___('devcp_validate_warn_count', 'devcp_validate_warn_count', $counts[TEST_WARN], '%d warnings'), $counts[TEST_WARN]) ?>
         <? endif; ?>
     </span>
+    <? if ($multiline) : ?>
+        <br/>
+    <? endif; ?>
 <? endif; ?>
 <? if ($counts[TEST_PASS] > 0) : ?>        
     <span class="pass-count">
@@ -65,7 +71,7 @@
     </span>
 <? endif; ?>
 <? if ($counts == array(0,0,0)) : ?> 
-    <i><?=___('devcp_error_no_test_results', 'No test results found.')?></i>
+    <span><i><?=___('devcp_error_no_test_results', 'No test results found.')?></i></span>
 <? endif; ?>
 <? if ($short) : ?>
     <span class="loading-count">Running test ...</span>

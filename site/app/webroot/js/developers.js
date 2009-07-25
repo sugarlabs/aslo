@@ -349,11 +349,11 @@ var versions_validate = {
     },
 
     runTest: function(fileId) {
-	
+
         // If tests are running, just bail
         if($('#test-results-' + fileId + ' .action-button').hasClass('disabled')) return;
 
-	var sendRequest = function(file, testNum, name) {
+        var sendRequest = function(file, testNum, name) {
             versions_validate.running_tests++;
             $.ajax({
                 type: 'GET',
@@ -364,39 +364,43 @@ var versions_validate = {
             $('#results-summary-' + fileId + '-' + testNum +' .loading-count').show();
         }
 
-	var displayResults = function(response, status) {
-	    // JSON parser chokes on ', since it uses eval().  
-	    // Since the result is just a big tree, we can simply replace them.
-	    response = response.replace(/'/g, '"');
-	    var result = JSON.parse(response);
-
+        var displayResults = function(response, status) {
+            // JSON parser chokes on ', since it uses eval().  
+            // Since the result is just a big tree, we can simply replace them.
+            response = response.replace(/'/g, '"');
+            var result = JSON.parse(response);
+        
             $('#test-details-' + result.file_id).append(result.result);
             $('#results-summary-' + result.file_id + '-' + result.test_group_id + ' .results').fadeOut('slow', function () {
                 $(this).html(result.stats).fadeIn('slow');
             });
 
-	    for (var i in result.next_tests) {
-		var testInfo = result.next_tests[i].TestGroup;
-		sendRequest(result.file_id, testInfo.id, testInfo.name);
-	    }
-	    
+            for (var i in result.next_tests) {
+                var testInfo = result.next_tests[i].TestGroup;
+                sendRequest(result.file_id, testInfo.id, testInfo.name);
+            } 
+
             versions_validate.running_tests--;
             if (versions_validate.running_tests == 0) {
                 $('#test-details-' + result.file_id).slideDown('slow');
                 $('#test-results-' + fileId + ' .action-button').removeClass('disabled');
                 $('#test-results-' + fileId + ' .tests-running').hide();
+                $('#test-results-total-' + fileId).fadeOut('slow', function() {
+                    $(this).html(result.total_stats).fadeIn('slow');
+                });
             }
-	};
-	
+        };
+    
         var displayError = function(req, status, errorThrown) {
             $('#test-error .status').html('Error: ' + status + ' - ' + errorThrown).show();
-	}
+        }
 
         $('#test-details-' + fileId).slideUp('slow', function () {
             $('#test-details-' + fileId).html('');
             versions_validate.running_tests = 0;
-		sendRequest(fileId, 1, 'General');
-	});
+            sendRequest(fileId, 1, 'General');
+        });
+
         $('#test-results-' + fileId + ' .action-button').addClass('disabled');
         $('#test-results-' + fileId + ' .tests-running').show();
         $('#test-summary-' + fileId + ' .results span:not(.loading-count)').remove();

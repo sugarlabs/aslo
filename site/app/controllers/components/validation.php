@@ -871,9 +871,6 @@ class ValidationComponent extends Object {
         // Don't get a preview if the result has no line or file
         if (empty($result['TestResult']['line']) || empty($result['TestResult']['filename'])) return;
         
-        // Up the limit for extracting files
-        ini_set('memory_limit', '128M');
-
         // Use the file to do the extraction
         $data = $this->_extract($file, 'by_name', $result['TestResult']['filename']);
         
@@ -964,7 +961,7 @@ class ValidationComponent extends Object {
             foreach($extracted as $file_info) {
 
                 // Grepping binary files leads to general bad news
-                if (preg_match('/\.(dll|exe|dylib|so|sh)$/i', $file_info['filename'])) continue;
+                if (preg_match('/\.(dll|exe|dylib|so|gif|jpg|jpeg|png|jar|zip|gz|bz2)$/i', $file_info['filename'])) continue;
 
                 $lines = explode("\n", $file_info['content']);
                 if (!empty($patterns)) {
