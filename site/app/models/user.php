@@ -124,8 +124,7 @@ class User extends AppModel
     );
 
     /**
-     * Get a single user and desired associations (TODO: I didn't 
-     * need any associations when I wrote this so there are none yet)
+     * Get a single user and desired associations
      * (uses the object-invalidation framework)
      * @param int user id
      * @param array associations
@@ -144,20 +143,28 @@ class User extends AppModel
         $user = $this->findById($id, array_merge($this->default_fields,
             array('picture_data', 'picture_type')));
 
-        // Add anything extra
-            // Figure out the user's display name.  Nickname if set, otherwise first+last
-            $user['User']['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
+        if (!empty($user)) {
+            // Add anything extra
+                // Figure out the user's display name.  Nickname if set, otherwise first+last
+                $user['User']['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
 
-            // Calculate their picture's hash - used to expire cache
-            $user['User']['picture_hash'] = md5("{$user['User']['picture_data']}:{$user['User']['picture_type']}");
+                // Calculate their picture's hash - used to expire cache
+                $user['User']['picture_hash'] = md5("{$user['User']['picture_data']}:{$user['User']['picture_type']}");
 
-        if (in_array('addons', $associations)) {
-            loadModel('Addons');
-            $this->Addon =& new Addon();
+            if (in_array('addons', $associations)) {
+                loadModel('Addons');
+                $this->Addon =& new Addon();
 
-            $addons = $this->Addon->getAddonsByUser($id);
-            $user['Addon'] = $this->Addon->getAddonList(array_keys($addons), array('list_details'));
-            $user['User']['num_addons'] = count($user['Addon']);
+                $addons = $this->Addon->getAddonsByUser($id);
+                $user['Addon'] = $this->Addon->getAddonList(array_keys($addons), array('default_fields', 'all_categories'));
+                $user['User']['num_addons'] = count($user['Addon']);
+            }
+
+            if (in_array('reviews', $associations)) {
+                loadModel('Reviews');
+                $this->Review =& new Review();
+                $user['Review'] = $this->Review->findAll("Review.user_id = {$id}");
+            }
         }
 
         // cache this object...

@@ -91,33 +91,55 @@
     }
 ?>
 
-<?php if (!empty($addons)): ?>
+<?php if (!empty($profile['Addon'])): ?>
 <div>
 <h3><?=sprintf(_('users_info_addons_by_user'), $displayName)?></h3>
-<dl>
 <?
     global $app_shortnames;
-    foreach($addons as &$addon):
-        if (array_key_exists('Category', $addon) && !empty($addon['Category'])) {
-            $_application = array_search($addon['Category'][0]['application_id'], $app_shortnames);
-        } else {
-            $_application = 'firefox';
-        }
-?>
-    <dt><?=$html->linkNoLocaleNoApp($addon['Translation']['name']['string'], '/'.LANG."/{$_application}/addon/{$addon['Addon']['id']}")?></dt>
-    <dd><?=$addon['Translation']['summary']['string']?></dd>
-<? endforeach; ?>
-</dl>
-</div>
-<?php endif; ?>
+    $pile_o_addons = array();
+    foreach ($profile['Addon'] as &$addon) {
 
-<?php if (!empty($reviews)): ?>
+        $_addon_temp = array(
+            'addon_id' => $addon['Addon']['id'],
+            'name'     => $addon['Translation']['name']['string'],
+            'summary'  => $addon['Translation']['summary']['string']
+        );
+
+        if (array_key_exists('Category', $addon) && !empty($addon['Category'])) {
+            $_addon_temp['application'] = array_search($addon['Category'][0]['Category']['application_id'], $app_shortnames);
+        } else {
+            $_addon_temp['application'] = 'firefox';
+        }
+
+        $pile_o_addons[$addon['Addon']['addontype_id']][] = $_addon_temp;
+        unset($_addon_temp);
+    }
+
+
+    $addontype_names = Addontype::getNames();
+?>
+
+<? foreach (array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_PLUGIN) as $addontype): ?>
+    <? if (array_key_exists($addontype, $pile_o_addons) && !empty($pile_o_addons[$addontype])): ?>
+        <h4><?=$addontype_names[$addontype]?></h4>
+        <dl>
+        <? foreach ($pile_o_addons[$addontype] as &$addon): ?>
+            <dt><?=$html->linkNoLocaleNoApp($addon['name'], '/'.LANG."/{$addon['application']}/addon/{$addon['addon_id']}")?></dt>
+            <dd><?=$addon['summary']?></dd>
+        <? endforeach; ?>
+        </dl>
+    <? endif; ?>
+<? endforeach; ?>
+</div>
+<?php endif; // !empty($profile['Addon']) ?>
+
+<?php if (!empty($profile['Review'])): ?>
 <div>
 <h3><?=sprintf(___('users_info_reviews_by_user', 'Reviews by %s'), $displayName)?></h3>
 <dl>
     <?php
     global $app_shortnames;
-    foreach ($reviews as &$review):
+    foreach ($profile['Review'] as &$review):
         if (!empty($review['Addon']['compatible_apps'])) {
             $_application = array_search($review['Addon']['compatible_apps'][0]['Application']['application_id'], $app_shortnames);
         } else {

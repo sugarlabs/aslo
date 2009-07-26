@@ -690,7 +690,7 @@ class UsersController extends AppController
      * @return void
      */
     function info($userid = null) {
-        global $valid_status;
+        global $valid_status, $app_listedtypes;
         
         $this->Amo->clean($userid);
         
@@ -698,38 +698,34 @@ class UsersController extends AppController
             $this->flash(sprintf(_('error_missing_argument'), 'user_id'), '/', 3);
             return;
         }
-        $this->User->bindFully(); // we need their addons as well
-        $thisuser = $this->User->findById($userid);
+        $thisuser = $this->User->getUser($userid, array('addons', 'reviews'));
         if (empty($thisuser)) {
             $this->flash(_('error_user_notfound'), '/', 3);
             return;
         }
-        
-        // re-fetch the addons to get the translations too
-        $_addonids = array();
-        foreach($thisuser['Addon'] as $_addon) $_addonids[] = $_addon['id'];
-        if (!empty($_addonids)) {
-            $_addoncriteria = array(
-                'Addon.id' => $_addonids,
-                'Addon.addontype_id' => array(ADDON_EXTENSION, ADDON_THEME),
-                'Addon.inactive' => 0,
-                'Addon.status' => $valid_status
-            );
-            $addons = $this->Addon->findAll($_addoncriteria, null, 'Translation.name');
-        } else {
-            $addons = array();
+
+        // Remove the add-ons we don't want
+        foreach ($thisuser['Addon'] as $key => $_addon) {
+            // APP_FIREFOX supports all valid add-on types right now.  If that changes in the future, change this.
+            if (   !in_array($_addon['Addon']['addontype_id'], $app_listedtypes[APP_FIREFOX])
+                || !in_array($_addon['Addon']['status'], $valid_status)
+                || ($_addon['Addon']['inactive'] != 0)) {
+                    unset($thisuser['Addon'][$key]);
+                }
         }
         
-        // get all reviews made by user
-        $reviews = $this->Review->findAll("Review.user_id = {$userid} AND Review.reply_to IS NULL");
-        foreach ($reviews as &$_review) {
+        foreach ($thisuser['Review'] as $key => &$_review) {
+            // Remove the reviews we don't want
+            if (!empty($_review['Review']['reply_to'])) {
+                unset($thisuser['Review'][$key]);
+                continue;
+            }
             $_version = $this->Version->findById($_review['Review']['version_id'], 'Version.addon_id');
             if (!empty($_version)) {
                 $_addon = $this->Addon->getAddon($_version['Version']['addon_id'], array('compatible_apps', 'latest_version'));
                 $_review['Addon'] = $_addon;
             }
         }
-        $this->publish('reviews', $reviews);
 
         // get user's own and favorite collections, if they allowed that
         if ($thisuser['User']['display_collections']) {
@@ -754,7 +750,6 @@ class UsersController extends AppController
         $this->publish('breadcrumbs', array($_title => "/user/{$userid}"));
         $this->publish('subpagetitle', $_title);
         $this->publish('profile', $thisuser);
-        $this->publish('addons', $addons);
         $this->render();
     }
     

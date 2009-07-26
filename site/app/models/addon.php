@@ -366,7 +366,7 @@ class Addon extends AppModel
                 $_category_ids[] = $_category['category_id'];
             $categories = array();
             if (!empty($_category_ids))
-                $categories = $this->Category->findAll(array('Category.id' => $_category_ids, 'Category.application_id' => APP_ID));
+                $categories = $this->Category->findAll(array('Category.id' => $_category_ids));
             $addon['Category'] = $categories;
         }
 
