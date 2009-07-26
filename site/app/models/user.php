@@ -136,6 +136,8 @@ class User extends AppModel
             return $cached;
         }
 
+        global $valid_status;
+
         // deactivate query caching
         $caching_was = $this->caching;
         $this->caching = false;
@@ -158,6 +160,12 @@ class User extends AppModel
                 $addons = $this->Addon->getAddonsByUser($id);
                 $user['Addon'] = $this->Addon->getAddonList(array_keys($addons), array('default_fields', 'all_categories'));
                 $user['User']['num_addons'] = count($user['Addon']);
+                $user['User']['num_valid_addons'] = 0;
+                foreach ($user['Addon'] as $addon => $details) {
+                    if (in_array($details['Addon']['status'], $valid_status)) {
+                        $user['User']['num_valid_addons']++;
+                    }
+                }
             }
 
             if (in_array('reviews', $associations)) {
