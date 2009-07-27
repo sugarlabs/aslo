@@ -162,7 +162,7 @@ class User extends AppModel
                 $user['User']['num_addons'] = count($user['Addon']);
                 $user['User']['num_valid_addons'] = 0;
                 foreach ($user['Addon'] as $addon => $details) {
-                    if (in_array($details['Addon']['status'], $valid_status)) {
+                    if ($details['Addon']['inactive'] != 1 && in_array($details['Addon']['status'], $valid_status)) {
                         $user['User']['num_valid_addons']++;
                     }
                 }
