@@ -46,11 +46,18 @@
  */
 ?>
 
+<?php
+$has_suggested = !empty($addon['Addon']['suggested_amount']);
+?>
+
 <div class="notification">
   <h3><?=$text?></h3>
   <div class="aux">
     <p class="button-wrapper">
-      <a class="button significant" id="contribute-button"
+      <a class="button significant"
+         <?php /* The id triggers a dropdown, so don't expose it if there
+                * isn't a sugested amount (only one choice). */ ?>
+         <?php if ($has_suggested): ?> id="contribute-button" <?php endif; ?>
          href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}")?>">
         <?=$html->image('amo2009/icons/buttons/heart-blue-16x16.gif',
                         array('alt' => ''))
@@ -75,9 +82,11 @@
       <?php endif; ?>
     </p>
     <div class="suggestion">
-      <p><?=sprintf(___('addon_display_suggested_amount'),
-                    $addon['Addon']['suggested_amount'])?>
-      </p>
+      <?php if ($has_suggested): ?>
+        <p><?=sprintf(___('addon_display_suggested_amount'),
+                      $addon['Addon']['suggested_amount'])?>
+        </p>
+      <?php endif; ?>
       <p>
         <a class="toggle-help" href="#contribute-why">
           <?=___('addons_display_a_license_what')?>
@@ -85,22 +94,24 @@
       </p>
     </div>
   </div>
-<div id="contribute-links" class="dropdown">
-  <ul>
-    <li>
-      <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}&type=suggested")?>">
-        <?=sprintf(___('addon_display_contribute_suggested'),
-                   $addon['Addon']['suggested_amount'])?>
-      </a>
-      <span><?=___('addon_display_suggested')?></span>
-    </li>
-    <li>
-      <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}")?>">
-        <?=___('addon_display_contribute_different')?>
-      </a>
-    </li>
-  </ul>
-</div>
+  <?php if ($has_suggested): ?>
+    <div id="contribute-links" class="dropdown">
+      <ul>
+        <li>
+          <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}&type=suggested")?>">
+            <?=sprintf(___('addon_display_contribute_suggested'),
+                       $addon['Addon']['suggested_amount'])?>
+          </a>
+          <span><?=___('addon_display_suggested')?></span>
+        </li>
+        <li>
+          <a href="<?=$html->url("/addons/contribute/{$addon_id}?source={$source}")?>">
+            <?=___('addon_display_contribute_different')?>
+          </a>
+        </li>
+      </ul>
+    </div>
+  <?php endif; ?>
   <div id="contribute-why" class="toggle-info">
     <p class="dropdown"><?=___('addons_display_contribute_why')?></p>
     <a class="close" href="#"><?=___('addons_display_contribute_close')?></a>
