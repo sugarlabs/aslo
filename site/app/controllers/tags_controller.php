@@ -260,7 +260,7 @@ class TagsController extends AppController
 
         $this->Addon->caching = false;    
 		$this->Addon->removeTagFromAddon($tag_id, $addon_id);
-        $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
+        if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 
 		// Get tag list for addon, without the extra add-on
         $tags = $this->Tag->makeTagList($addon_data, $user);
