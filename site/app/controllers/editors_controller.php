@@ -413,8 +413,8 @@ class EditorsController extends AppController
                 if (!empty($hist['Version']['id'])) {
                     $hist['commentCount'] = $this->Versioncomment->getCommentCount($hist['Version']['id']);
                 }
-
             }
+            unset($hist); // PHP bug 35106
         }
         
         //pr($history);

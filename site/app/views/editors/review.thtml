@@ -311,6 +311,7 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
             foreach ($history as &$hist) {
                 echo $this->renderElement('developers/editors_review_history_item', array('hist'=>$hist));
             }
+            unset($hist); // PHP bug 35106
         }
         else {
             echo '<tr><td id="notFound" colspan="5">'._('editors_review_history_nonefound').'</td></tr>';
