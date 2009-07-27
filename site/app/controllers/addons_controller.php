@@ -399,7 +399,7 @@ class AddonsController extends AppController
 
         // Make the tag list, passing in this addon and the currently logged in user
         if (!$loggedIn) { $user = null; }
-        $tags = $this->Tag->makeTagList($addon_data, $user);
+        $tags = $this->Tag->makeTagList($addon_data, $user, $this->SimpleAcl->actionAllowed('Admin', 'DeleteAnyTag', $user));
         $this->publish('tags', $tags);
         $this->publish('userTags', $tags['userTags']);
         $this->publish('developerTags', $tags['developerTags']);   

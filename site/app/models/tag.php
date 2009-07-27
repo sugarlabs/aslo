@@ -90,7 +90,7 @@ class Tag extends AppModel
  	/**
  	 * 
  	 */
-	function makeTagList($addon_data, $user) {
+	function makeTagList($addon_data, $user, $permission_override=false) {
         $this->caching = false;
         $this->cacheQueries = false;
 	
@@ -125,7 +125,7 @@ class Tag extends AppModel
                     // due to cake caching the Tag association but not the UserTagAddon
                     if (!empty($tag['UserTagAddon'])) {
                         if ($user) {
-                            if (($tag['UserTagAddon'][0]['user_id']==$user['id'])  || (in_array($user['id'],$developers))) {
+                            if (($tag['UserTagAddon'][0]['user_id']==$user['id']) || (in_array($user['id'],$developers)) || $permission_override) {
                                 $tag['Tag']['OwnerOrDeveloper'] = 1;
                             }
                         }
@@ -144,7 +144,9 @@ class Tag extends AppModel
 	}		 	
 
  	/**
- 	 * Checks if a user can modify a tag if you've already got the output of makeTagList()
+     * Checks if a user can modify a tag if you've already got the output of makeTagList().
+     * If the user is an admin, makeTagList() will already grant them permissions with the OwnerOrDeveloper
+     * flag
      *
      * @param int user id
      * @param int tag id

@@ -202,7 +202,7 @@ class TagsController extends AppController
 		
  		// Get tag list for addon
  		$addon_data = $this->Addon->getAddon($addon_id, array('authors', 'all_tags'));
-        $tags = $this->Tag->makeTagList($addon_data, $user);
+        $tags = $this->Tag->makeTagList($addon_data, $user, $this->SimpleAcl->actionAllowed('Admin', 'DeleteAnyTag', $user));
         $this->publish('addon_id', $addon_data['Addon']['id']);
         $this->publish('userTags', $tags['userTags']);
         $this->publish('developerTags', $tags['developerTags']);  	
@@ -252,7 +252,7 @@ class TagsController extends AppController
         $user = $this->Session->read('User');
 
         $addon_data = $this->Addon->getAddon($addon_id, array('authors', 'all_tags'));
-        $tags = $this->Tag->makeTagList($addon_data, $user);
+        $tags = $this->Tag->makeTagList($addon_data, $user, $this->SimpleAcl->actionAllowed('Admin', 'DeleteAnyTag', $user));
 
         if (!$this->Tag->userCanModifyTagForAddonFromList($user['id'], $tag_id, $tags)) {
             return false;
@@ -263,7 +263,7 @@ class TagsController extends AppController
         if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 
 		// Get tag list for addon, without the extra add-on
-        $tags = $this->Tag->makeTagList($addon_data, $user);
+        $tags = $this->Tag->makeTagList($addon_data, $user, $this->SimpleAcl->actionAllowed('Admin', 'DeleteAnyTag', $user));
 		
         $this->publish('addon_id', $addon_data['Addon']['id']);
         $this->publish('userTags', $tags['userTags']);

@@ -903,7 +903,7 @@ class DevelopersController extends AppController
         if ($loggedIn) { $user=$this->Session->read('User'); } else { $user=null; }      
         
         // Get all tags
-       $tags = $this->Tag->makeTagList($addon_data, $user);
+        $tags = $this->Tag->makeTagList($addon_data, $user, $this->SimpleAcl->actionAllowed('Admin', 'DeleteAnyTag', $user));
 
         $this->publish('userTags', $tags['userTags']);
         $this->publish('developerTags', $tags['developerTags']);   
