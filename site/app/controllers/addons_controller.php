@@ -1318,7 +1318,7 @@ class AddonsController extends AppController
             $tloc_dicts = array();
             $this->Addon->unbindFully();
             $associations = array(
-                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
+                'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
             $tloc_dicts = $this->Addon->getAddonList($_dict_ids, $associations);

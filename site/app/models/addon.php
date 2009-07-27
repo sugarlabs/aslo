@@ -265,7 +265,7 @@ class Addon extends AppModel
 
             case 'list_details':
                 // add-on details needed for a list item
-                $fields = array_merge($fields, array('summary', 'eula', 'created',
+                $fields = array_merge($fields, array('summary', 'eula', 'created', 'locale_disambiguation',
                     'weeklydownloads', 'addontype_id', 'averagerating', 'totalreviews'));
                 break;
 
