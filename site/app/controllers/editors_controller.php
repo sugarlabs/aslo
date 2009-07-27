@@ -77,7 +77,7 @@ class EditorsController extends AppController
         $this->breadcrumbs = array(_('editors_pagetitle') => '/editors/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         $this->publish('suppressJQuery', 1);
-	
+
         $this->publish('subpagetitle', _('editors_pagetitle'));
 
         // disable query caching so devcp changes are visible immediately
@@ -1372,20 +1372,20 @@ class EditorsController extends AppController
         list($order,$limit,$page) = $this->Pagination->init($criteria);
         $this->Session->write('editor_queue_reviews_show', $limit);
 
-		$_reviews = $this->Review->findAll($criteria, "Review.id", 'Review.modified ASC', $limit, $page, -1);
-		$_review_ids = array();
-		foreach ($_reviews as $_id) $_review_ids[] = $_id['Review']['id'];
-		unset($_reviews);
-		$reviews = $this->Review->getReviews($_review_ids, true);
-		foreach ($reviews as $k => $review) {
-			$reviews[$k]['Addon'] = $this->Addon->findById($review['Review']['addon_id'], array('id', 'name'), null, -1);
-			if (!empty($review['Review']['reply_to'])) {
-				$_replyto = $this->Review->getReviews($review['Review']['reply_to']);
-				if (!empty($_replyto))
-					$reviews[$k]['Review']['reply_to'] = $_replyto[0];
-			}
-		}
-		unset($_replyto);
+        $_reviews = $this->Review->findAll($criteria, "Review.id", 'Review.modified ASC', $limit, $page, -1);
+        $_review_ids = array();
+        foreach ($_reviews as $_id) $_review_ids[] = $_id['Review']['id'];
+        unset($_reviews);
+        $reviews = $this->Review->getReviews($_review_ids, true);
+        foreach ($reviews as $k => $review) {
+            $reviews[$k]['Addon'] = $this->Addon->findById($review['Review']['addon_id'], array('id', 'name'), null, -1);
+            if (!empty($review['Review']['reply_to'])) {
+                $_replyto = $this->Review->getReviews($review['Review']['reply_to']);
+                if (!empty($_replyto))
+                    $reviews[$k]['Review']['reply_to'] = $_replyto[0];
+            }
+        }
+        unset($_replyto);
 
         // Gather and collate all available flags per review on the page.
         // NOTE: User info isn't included here, keeping things anonymous.
