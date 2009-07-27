@@ -54,24 +54,14 @@
         ?>
         </div>
 
-        <h2>Variables</h2>
-        <?php
-            foreach ($variables as $var => $val) {
-                $val['global_value'] = empty($val['global_value']) ? '<em>empty</em>' : $val['global_value'];
-                $val['global_value'] = ($val['global_value'] === true) ? '<em>true</em>' : $val['global_value'];
-                $val['global_value'] = ($val['global_value'] === false) ? '<em>false</em>' : $val['global_value'];
+        <h2>PHP info</h2>
+        <div>
+            <? phpinfo(INFO_GENERAL); ?>
+            <? phpinfo(INFO_CONFIGURATION); ?>
+            <? phpinfo(INFO_MODULES); ?>
+            <? phpinfo(INFO_ENVIRONMENT); ?>
+            <? phpinfo(INFO_VARIABLES); ?>
+        </div>
 
-                $val['local_value'] = empty($val['local_value']) ? '<em>empty</em>' : $val['local_value'];
-                $val['local_value'] = ($val['local_value'] === true) ? '<em>true</em>' : $val['local_value'];
-                $val['local_value'] = ($val['local_value'] === false) ? '<em>false</em>' : $val['local_value'];
-
-                if ($val['global_value'] == $val['local_value']) {
-                    $printval = $val['global_value'];
-                } else {
-                    $printval = "{$val['global_value']} but <em>overridden locally with {$val['local_value']}</em>";
-                }
-                echo "<b>{$var}</b>: {$printval}<br />";
-            }
-        ?>
     </div>
 </div>
