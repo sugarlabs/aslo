@@ -1571,6 +1571,33 @@ class EditorsController extends AppController
     }
 
    /**
+    * Generates a preview of posted markdown data
+    */
+    function markdown() {
+        $this->cssAdd[] = '../vendors/syntaxhighlighter/styles/shCore';
+        $this->cssAdd[] = '../vendors/syntaxhighlighter/styles/shThemeDefault';
+        $this->publish('cssAdd', $this->cssAdd);
+
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shCore.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushCss.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushDiff.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushJScript.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushPlain.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushSql.js';
+        $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushXml.js';
+        $this->publish('jsAdd', $this->jsAdd);
+
+        $markdownHtml = '';
+        if (!empty($this->data['markdown'])) {
+            $markdownHtml = $this->Markdown->html($this->data['markdown']);
+        }
+        // Unescaped html is required here. We are relying on hiddenSession/checkCSRF
+        // and the Markdown component to keep things safe
+        $this->set('markdownHtml', $markdownHtml);
+        $this->render('markdown', 'ajax_with_css');
+    }
+
+   /**
     * Display logs
     */
     function logs() {

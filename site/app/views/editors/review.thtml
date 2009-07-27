@@ -411,6 +411,8 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <script type="text/javascript">
 // <![CDATA[
     $(document).ready(function() {
+        editors_review.miuMarkdownConfig.previewParserPath = '<?=$html->url('/editors/markdown')?>';
+        editors_review.miuMarkdownConfig.previewParserVar = $("input[name='sessionCheck']:first").serialize() + '&data[markdown]';
         editors_review.init();
     });
 // ]]>

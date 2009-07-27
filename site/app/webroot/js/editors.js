@@ -117,6 +117,9 @@ var editors_review = {
     // Dual licensed under the MIT and GPL licenses.
     miuMarkdownConfig:  {
         previewParserPath: '',
+        previewParserVar: '',
+        previewInWindow: false,
+        previewAutoRefresh: false,
         onShiftEnter: { keepDefault:false, openWith:'\n\n' },
         markupSet: [
             { name:'Bold', key:'B', openWith:'**', closeWith:'**' },
@@ -136,6 +139,7 @@ var editors_review = {
                 ]
             },
             { separator:'---------------' },	
+            { name:'Preview', className:'preview',  call:'preview' },
             { name:'Help', openWith:function(h) { editors_review.showMarkitupHelp(); return ''; } }
         ]
     },
