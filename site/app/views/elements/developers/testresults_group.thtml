@@ -55,7 +55,7 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
 <? if (!empty($group['cases'])) : ?>
     <? if ($class != 'passed') : ?>
     <? foreach ($group['cases'] as $case) : ?>
-        <h5><?=$case['name']?></h5>
+        <h5><?=$case['name']?> [<?=$html->link(___('devcp_validation_help', 'help'), '/pages/validation#help-'.$case['id'])?>]</h5>
         <ul class="test-results">
         <? $resultNum = 0; ?>
         <? if (!empty($case['results'])) : ?>

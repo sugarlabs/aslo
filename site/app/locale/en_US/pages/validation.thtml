@@ -1,0 +1,157 @@
+<h1>Validation Help</h1>
+
+<p>This page explains each of the tests used in the add-on validation framework.  Each section below explains the group that a test belongs to, along with details regarding each of the individual tests.  To validate your add-on now, visit the developers control panel, select the version that you wish to validate, and click the "Validate" button.</p>
+
+<h2>What do test results mean?</h2>
+
+<p>Just because an add-on generates warnings doesn't mean it will not be accepted to this site.  This is what you can expect from a particular result:
+
+<ul>
+    <li><strong>Pass:</strong> A pass result indicates that there were no problems found with the add-on in the given area.  No changes are required to your add-on.</li>
+    <li><strong>Warn:</strong> A warn result indicates that something might need to be changed with the add-on.  Most warnings do not require any changes, but simply serve as a flag to add-on editors that there could be a problem with your add-on.  Investigate the details from a warning, and cross-reference them with this page to resolve what is a problem.</li>
+    <li><strong>Fail:</strong> A fail result inidicates that there is a serious problem with your add-on, and it cannot be uploaded to this site until it is resolved.  Failures generally mean that an add-on is unsafe or cannot be installed due to a significant problem.</li>
+</ul>
+
+</p>
+ 
+<dl>
+
+<h2>General Tests</h2>
+
+<p>The general tests verify that an add-on is suitable to be hosted on addons.mozilla.org.  This group includes ensuring that the add-on is in the correct file format, contains required files, and can be extracted and installed.</p>
+
+<dt id="help-11">General Verification Tests</dt>
+<dd>This group of tests ensures that your add-on type matches the specified extension, and that the file has been successfully uploaded to the site</dd>
+
+<dt id="help-12">Install.rdf Verification Tests</dt>
+<dd>This group of tests extracts and parses the install.rdf file found in many add-on types.  The test checks that no illegal elements are included in the file.  This check verifies that the updateURL and updateKey elements are not present, verifies that the id element matches your existing add-on, and ensures that the version element is well-formed.  This test also checks that the applications specified by the targetApplications field are valid.</dd>
+
+<dt id="help-13">File Type Verification</dt>
+<dd>Certain types of files are not commonly allowed in extensions.  These include, but are not necesarrily limited to: .exe, .dll, .dylib, .so, and .sh.  An add-on containing one of these extension types will generate a warning in this test.</dd>
+
+<dt id="help-14">JavaScript Namespace Pollution Tests</dt>
+<dd>JavaScript gives users the ability to define objects in the global namespace, easily overwriting pre-existing data or functions.  This test scans the add-on for any instances where this can occur, and generates a warning for every global variable and function it finds.</dd>
+
+<h2>Security Tests</h2>
+
+<p>This group of tests scans add-ons for potential security vulnerabilities, and flags any occurences it finds.  These tests mostly look for unsafe JavaScript code, but also check for mismatched libraries.</p>
+
+<dl>
+<dt id="help-21">Unsafe JavaScript Tests</dt>
+<dd>This test scans the add-on for the following patterns:
+
+<ul>
+    <li>nsIProcess</li>
+    <li>.launch</li>
+    <li>eval</li>
+    <li>&lt;browser&gt; without a type attribute</li>
+    <li>&lt;iframe&gt; without a type attribute</li>
+    <li>xpcnativewrappers=</li>
+    <li>evalInSandbox</li>
+    <li>mozIJSSubscriptLoader</li>
+</ul>
+
+and generates a warning for each matched occurence.</dd>
+
+<dt id="help-22">Unsafe Settings Tests</dt>
+<dd>This test scans the add-on for the following patterns:
+
+<ul>
+    <li>extensions.update.url</li>
+    <li>extensions.update.enabled</li>
+    <li>extensions.update.interval</li>
+    <li>extensions.your-addon-id.update.enabled</li>
+    <li>extensions.your-addon-id.update.url</li>
+    <li>extensions.blocklist.enabled</li>
+    <li>extensions.blocklist.url</li>
+    <li>extensions.blocklist.level</li>
+    <li>extensions.blocklist.interval</li>
+</ul>
+
+and generates a warning for each matched occurence.</dd>
+
+<dt id="help-23">Remote Javascript Tests</dt>
+<dd>This test searches for any -moz-binding attribute whose url is not of the form chrome://<something>/content/, and generates a warning for every match it finds.</dd>
+
+<dt id="help-24">Common Library Checksum Tests</dt>
+<dd>Many add-ons contain common JavaScript libraries to make development easier and add functionality to the add-on.  This test scans for several well-known libraries, and compares the known public hash to that of the file in the add-on.  A warning is generated if the checksum doesn't match.</dd>
+
+<h2>Extension-specific Tests</h2>
+
+<p>This group of tests scans add-ons for potential problems that are specific to extensions.  This includes verifying the existence of required files, checking for extra files, along with some additional tests described below.</p>
+
+<dt id="help-121">Geolocation Check</dt>
+<dd>This test scans for the use of either geolocation or wifi in an add-on.  This is not banned, but is to ensure that the user must opt-in to any usage of their location.</dd>
+
+<dt id="help-122">Conduit Toolbar Check</dt>
+<dd>Conduit Toolbars are not allowed on addons.mozilla.org, and this test searches for any signs that the add-on could be a Conduit Toolbar.  If any matches are found, they generate warnings.</dd>
+
+<h2>Dictionary Tests</h2>
+
+<p>This group of tests scans add-ons for potential problems that are specific to dictionaries.  This includes verifying the existence of required files, checking for extra files, along with some additional tests described below.</p>
+
+<dt id="help-211">File Layout Check</dt>
+<dd>Dictionaries, at a minimum, must cointain an install.rdf file, along with a .aff and .dic file in the dictionaries folder for the given locale.  This test generates a failure for each missing file in the dictionary.</dd>
+
+<dt id="help-212">File Type Verification</dt>
+<dd>This test verifes that the add-on does not contain any extra files.  For dictionaries, the allowed list of file types is:
+
+<ul>
+    <li>dictionaries/&lt;locale&gt;.aff</li>
+    <li>dictioanries/&lt;locale&gt;.dic</li>
+    <li>install.js</li>
+    <li>install.rdf</li>
+    <li>*.txt</li>
+</ul>
+
+extra files generate warnings.</dd>
+
+<dt id="help-213">SeaMonkey Valid Files Check</dt>
+<dd>If the dictionary's install.rdf file claims to support SeaMonkey, this test verfies that the add-on does in fact support SeaMonkey.  This checks for the existence of the install.js file within the add-on.</dd>
+
+<dt id="help-221">install.js Verification</dt>
+<dd>This test scans the install.js file (if present) for potential security problems and other flaws.  Warnings are generated for each problem found.</dd>
+
+<h2>Language Pack Tests</h2>
+
+<p>This group of tests scans add-ons for potential problems that are specific to language packs.  This includes verifying the existence of required files, checking for extra files, along with some additional tests described below.</p>
+
+<dt id="help-311">File Layout Check</dt>
+<dd>Language Packs, at a minimum, must cointain an install.rdf file, a chrome.manifest file, and at least one .jar file in the chrome folder.  This test generates a failure for each missing file in the dictionary.</dd>
+
+<dt id="help-312">File Type Verification</dt>
+<dd>This test verifes that the add-on does not contain any extra files.  For language packs, the allowed list of file types is:
+
+<ul>
+    <li>*.rdf</li>
+    <li>*.manifest</li>
+    <li>*.jar</li>
+    <li>*.dtd</li>
+    <li>*.properties</li>
+    <li>*.xhtml</li>
+    <li>*.css</li>
+</ul>
+
+extra files generate warnings.</dd>
+
+<dt id="help-321">Unsafe HTML Check</dt>
+<dd>Language packs should not contain any script, object, or embed elements.  Each occurence generates a warning.</dd>
+
+<dt id="help-322">Remote Loading Check</dt>
+<dd>Language pack links should only contain chrome URLs.  Any href or src attribute with a non-chrome URL will generate a warning.</dd>
+
+<dt id="help-323">Chrome.manifest Check</dt>
+<dd>The allowed lines in the chrome.manifest files are comments (#), locale, and override.  override lines must specify a chrome URL that matches chrome://(something)/(locale)</dd>
+
+<h2>Theme Tests</h2>
+
+<p>This group of tests scans add-ons for potential problems that are specific to themes.  This includes verifying the existence of required files, and checking for a valid chrome.manifest file.</p>
+
+<dt id="help-411">File Layout Check</dt>
+<dd>Themes, at a minimum, must cointain an install.rdf file and a chrome.manifest file.  This test generates a failure for each missing file in the theme.</dd>
+
+<dt id="help-421">Chrome.manifest Check</dt>
+<dd>The allowed lines in the chrome.manifest files are comments (#), skin, and style.  Lines that do not match one of these three patterns generate a warning.</dd>
+
+</dl>
+

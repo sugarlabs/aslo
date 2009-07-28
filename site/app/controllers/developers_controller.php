@@ -1398,7 +1398,7 @@ class DevelopersController extends AppController
                 $test_groups[$id]['cases'] = array();
 			}
 		}
-		$test_results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_groupIds, 'TestResult.file_id' => $fileIds));
+		$test_results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_groupIds, 'TestResult.file_id' => $fileIds), array('*'), 'TestCase.test_group_id');
         
         // Build a hierarchical view that cake just doesn't give 
         // us to make life easier in the view
@@ -1438,6 +1438,7 @@ class DevelopersController extends AppController
                 }
             }
         }
+
 
         // Most all of the data is in this array
 		$this->publish('files', $files);
