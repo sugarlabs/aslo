@@ -167,16 +167,44 @@ $this->translationBox = array(
 
     <div id="profile-notifications">
         <h3 class="hidden"><?=___('user_tab_notifications', 'Notifications');?></h3>
-        <?php if (empty($userAddons)): ?>
+        <?php if (empty($userAddons) && empty($userVersionThreads)): ?>
             <p><?=___('user_notifications_none_available', 'There are currently no notifications available for you to configure.')?></p>
-        <?php else: ?>
+        <?php endif; ?>
+        <?php if (!empty($userAddons)): ?>
             <p><?=___('user_notifications_select_topics', 'From time to time, Mozilla may send you email about upcoming releases and add-on events. Please select the topics you are interested in below:')?></p>
             <ul>
                 <li><label for="UserNotifycompat"><?=$html->checkbox('User/notifycompat')?>&nbsp;<?=___('user_notifications_item_compat', 'Add-on Compatibility (strongly recommended)')?></label></li>
-                <li><label for="UserNotifyevents"><?=$html->checkbox('User/notifyevents')?>&nbsp;<?=___('user_notifications_item_events', 'Upcoming events and contests')?></li>
+                <li><label for="UserNotifyevents"><?=$html->checkbox('User/notifyevents')?>&nbsp;<?=___('user_notifications_item_events', 'Upcoming events and contests')?></label></li>
             </ul>
             
             <p><?=___('user_notifications_specific_contact', 'Mozilla reserves the right to contact you individually about specific concerns with your hosted add-ons.')?></p>
+        <?php endif; ?>
+        <?php if (!empty($userVersionThreads)): ?>
+            <div class="line">
+                <div class="graybox rounded spaced">
+                    <h4><?=___('user_notifications_editor_discussions', 'Editor Review Discussions')?></h4>
+                    <p><?=___('user_notifications_unselect_discussions', 'You will be notified when there is activity in any of the following discussions. Please uncheck those you wish to unsubscribe from.')?></p>
+
+                    <table id="editor-subscriptions">
+                    <thead>
+                        <tr>
+                            <th><?php /* jquery will add a check/uncheck all box here */ ?></th>
+                            <th><?=___('user_notifications_th_addon', 'Add-on')?></th>
+                            <th><?=___('user_notifications_th_subject', 'Subject')?></th>
+                            <th><?=___('user_notifications_th_subscription_date', 'Subscription Date')?></th>
+                        </tr>
+                    </thead>
+                    <tbody><?php foreach ($userVersionThreads as $thread): ?>
+                        <tr>
+                            <td><?=$html->checkbox("Subscriptions/{$thread['Subscription']['comment_id']}", null, array('value' => '1'))?></td>
+                            <td><label for="Subscriptions<?=$thread['Subscription']['comment_id']?>"><?=$thread['Addon']['Translation']['name']['string']?> <?=$thread['Version']['version']?></label></td>
+                            <td><?=$html->link($thread['Versioncomment']['subject'], "/editors/review/{$thread['Version']['id']}#editorComment{$thread['Versioncomment']['id']}")?></td>
+                            <td><?=strftime(_('datetime'), strtotime($thread['Subscription']['modified']))?></td>
+                        </tr><?php endforeach; ?>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
         <?php endif; ?>
     </div>
 
@@ -225,5 +253,13 @@ $this->translationBox = array(
 <script type="text/javascript">
     $(document).ready(function(){
         $("#tabbed-editor > ul").tabs();
+        $('#editor-subscriptions th:first').append(
+            // add check/uncheck all box to notification management table
+            $('<input type="checkbox"/>')
+                .attr('checked', 'checked')
+                .change(function(){
+                    $('input:checkbox', $(this).closest('table')).attr('checked', $(this).is(':checked'));
+                })
+            );
     });
 </script>

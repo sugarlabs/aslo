@@ -459,6 +459,7 @@ class EditorsController extends AppController
         $this->publish('reviewType', $reviewType, false);
         $this->publish('filtered', $filtered);
         $this->publish('filteredCount', $filteredCount);
+        $this->publish('subscriptions', $this->Versioncomment->getSubscriptionsByUser($session['id']));
         
         $this->render('review');
     }
@@ -1137,6 +1138,101 @@ class EditorsController extends AppController
         $this->publish('appversions', $appversions);
         $this->render('ajax/appversion_lookup', 'ajax');
     }
+
+
+    /**
+     * Subscribes user to an editor discussion thread
+     */
+    function threadsubscribe($ajax = null) {
+        $this->_thread_subscribe_unsubscribe($ajax);
+    }
+
+    /**
+     * Unsubscribe user from an editor discussion thread
+     */
+    function threadunsubscribe($ajax = null) {
+        $this->_thread_subscribe_unsubscribe($ajax);
+    }
+
+    /**
+     * Combined function for subscribing/unsubscribing. Action is determined by
+     * $this->action.
+     * @access private
+     * @param string $ajax undefined or 'ajax' for no-frills rendering
+     * @return bool render()ed successfully?
+     */
+    function _thread_subscribe_unsubscribe($ajax = null) {
+
+        // check action
+        if (!in_array($this->action, array('threadsubscribe', 'threadunsubscribe'))) {
+            header('HTTP/1.1 400 Bad Request');
+            $this->flash(___('error_access_denied'), '/editors/queue');
+            return;
+        }
+
+        // get posted comment_id
+        if (empty($this->params['form']['comment_id'])) { // id needs to be POSTed
+            header('HTTP/1.1 400 Bad Request');
+            $this->flash(sprintf(_('error_missing_argument'), 'comment_id'), '/editors/queue');
+            return;
+        }
+        $id = $this->params['form']['comment_id'];
+
+        // lookup comment
+        $comment = $this->Versioncomment->findById($id);
+        if (empty($comment)) {
+            header('HTTP/1.1 404 Not Found');
+            $this->flash(___('editors_error_invalid_comment', 'Invalid comment'), '/editors/queue');
+            return;
+        }
+
+        // only allow subscribing to head of the thread
+        if (! empty($comment['Versioncomment']['reply_to'])) {
+            header('HTTP/1.1 400 Bad Request');
+            $this->flash(___('editors_error_starting_comment', 'Comment does not start a thread'),
+                            "/editors/review/{$comment['Version']['id']}", 3);
+            return;
+        }
+
+        $user = $this->Session->read('User');
+
+        // subscribe
+        if ($this->action == 'threadsubscribe') {
+            // make sure user is not an author (or is an admin) of the comment's addon
+            if (!$this->SimpleAcl->actionAllowed('*', '*', $user)) {
+                $addon = $this->Addon->getAddon($comment['Version']['addon_id'], array('authors'));
+                if (!empty($addon['User'])) {
+                    foreach ($addon['User'] as $author) {
+                        if ($author['id'] == $user['id']) {
+                            header('HTTP/1.1 401 Unauthorized');
+                            $this->flash(_('editors_error_self_reviews_forbidden'), '/editors/queue');
+                            return;
+                        }
+                    }
+                }
+            }
+
+            $result = $this->Versioncomment->subscribe($id, $user['id'], true);
+            $message = ($result ? ___('editors_subscription_succeeded', 'Subscription Succeeded')
+                                : ___('editors_subscription_failed', 'Subscription Failed'));
+
+        // unsubscribe
+        } else {
+            $result = $this->Versioncomment->unsubscribe($id, $user['id']);
+            $message = ($result ? ___('editors_unsubscription_succeeded', 'Unsubscription Succeeded')
+                                : ___('editors_unsubscription_failed', 'Unsubscription Failed'));
+        }
+
+        // results!
+        if ($ajax == 'ajax') {
+            $this->set('json', array('success'=>$result));
+            $this->render('ajax/json', 'ajax');
+        } else {
+            $this->flash($message, "/editors/review/{$comment['Version']['id']}"
+                                    ."#editorComment{$comment['Versioncomment']['id']}");
+        }
+    }
+
 
     /**
      * Count the number of (possibly filtered) items in the specified queue

@@ -170,7 +170,7 @@ class Versioncomment extends AppModel
      * @param int $id - the id of a comment
      * @param int $userId - the id of the user
      * @param bool $force - subscribes unconditionally even if already unsubscribed
-     * @return void
+     * @return bool success
      */
     function subscribe($id, $userId, $force=false) {
         // Perform SQL escaping.
@@ -178,35 +178,41 @@ class Versioncomment extends AppModel
         $e_id     = $db->value($id); 
         $e_userId = $db->value($userId);
 
-        // dont overwrite existing subscription
-        if (!$force) {
-            $rows = $this->query("SELECT *
-                                    FROM users_versioncomments AS uvc
-                                    WHERE user_id='{$e_userId}' AND comment_id='{$e_id}'");
-            if (!empty($rows)) return;
-        }
+        $insertOrReplace = ($force ? 'REPLACE' : 'INSERT IGNORE');
 
-        $this->query("REPLACE INTO users_versioncomments
+        $this->query("{$insertOrReplace} INTO users_versioncomments
                         (user_id, comment_id, subscribed, created, modified)
                         VALUES ('{$e_userId}', '{$e_id}', 1, NOW(), NOW())");
+        return ($this->getAffectedRows() > 0);
     }
     
     /**
      * Unsubscribe a user from a comment thread
      *
-     * @param int $id - id of the treads root comment
+     * @param mixed $id - id of the thread's root comment (or array of ids)
      * @param int $userId - id of user
-     * @return void
+     * @return bool success
      */
     function unsubscribe($id, $userId) {
+        if (!is_array($id)) {
+            $id = array($id);
+        }
+        if (count($id) < 1) return;
+
         // Perform SQL escaping.
         $db =& ConnectionManager::getDataSource($this->useDbConfig);
-        $e_id     = $db->value($id); 
         $e_userId = $db->value($userId);
+
+        $valueClauses = array();
+        foreach ($id as $id_val) {
+            $e_id = $db->value($id_val); 
+            $valueClauses[] = "('{$e_userId}', '{$e_id}', 0, NOW(), NOW())";
+        }
 
         $this->query("REPLACE INTO users_versioncomments
                         (user_id, comment_id, subscribed, created, modified)
-                        VALUES ('{$e_userId}', '{$e_id}', 0, NOW(), NOW())");
+                        VALUES ".implode(',', $valueClauses));
+        return ($this->getAffectedRows() > 0);
     }
     
     /**
@@ -217,12 +223,46 @@ class Versioncomment extends AppModel
     function getSubscriptionsByUser($userId) {
         if (!is_numeric($userId)) return false;
 
-        $res = $this->query("SELECT comment_id FROM users_versioncomments WHERE user_id = {$userId}");
+        $res = $this->query("SELECT comment_id FROM users_versioncomments
+                            WHERE user_id = {$userId} AND subscribed = 1");
         if (empty($res)) return array();
 
         $ids = array();
         foreach ($res as &$row) $ids[] = $row['users_versioncomments']['comment_id'];
         return $ids;
+    }
+
+    /**
+     * Get detailed list of all threads subscribed to by a user
+     * @param int $userId
+     * @return array query results, false on error
+     */
+    function getSubscriptionsByUserDetailed($userId) {
+        if (!is_numeric($userId)) return false;
+
+        $sql = "SELECT
+                      `Subscription`.`user_id`,
+                      `Subscription`.`comment_id`,
+                      `Subscription`.`subscribed`,
+                      `Subscription`.`created`,
+                      `Subscription`.`modified`,
+                      `Versioncomment`.`id`,
+                      `Versioncomment`.`subject`,
+                      `Versioncomment`.`version_id`,
+                      `Version`.`id`,
+                      `Version`.`version`,
+                      `Version`.`addon_id`
+                 FROM `users_versioncomments` AS `Subscription`
+                INNER JOIN `versioncomments` AS `Versioncomment`
+                        ON (`Versioncomment`.`id` = `Subscription`.`comment_id`)
+                INNER JOIN `versions` AS `Version`
+                        ON (`Version`.`id` = `Versioncomment`.`version_id`)
+                WHERE `Subscription`.`user_id` = '{$userId}'
+                  AND `Subscription`.`subscribed` = '1'
+                ORDER BY `Subscription`.`modified` DESC
+            ";
+
+        return $this->query($sql);
     }
 
     /**

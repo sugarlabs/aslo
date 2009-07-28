@@ -350,7 +350,14 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
         <div class="commentSubheader">
             <?="{$c['User']['firstname']} {$c['User']['lastname']} "?>
             <?=$html->link("({$c['User']['email']})", "mailto:{$c['User']['email']}")?>
-            <?=(" - " . strftime('%c', strtotime($c['Versioncomment']['created'])))?>
+            <?=(" - " . strftime(_('datetime'), strtotime($c['Versioncomment']['created'])))?>
+        <?php
+            if (! $c['Versioncomment']['reply_to']) { // start of thread
+                $params = array('comment_id' => $c['Versioncomment']['id'],
+                              'is_subscribed' => in_array($c['Versioncomment']['id'], $subscriptions));
+                echo $this->renderElement('developers/editors_comment_add_form', $params);
+            }
+        ?>
         </div>
         <div class="commentBody">
             <?=$c['Versioncomment']['comment']?>
@@ -412,8 +419,16 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <script type="text/javascript">
 // <![CDATA[
     $(document).ready(function() {
+        $.extend(editors_review, {
+            subscribe_url: '<?=$html->url('/editors/threadsubscribe/ajax')?>',
+            unsubscribe_url: '<?=$html->url('/editors/threadunsubscribe/ajax')?>',
+            subscribe_text: '<?=___('editors_review_subscribe_link', '(Subscribe)')?>',
+            unsubscribe_text: '<?=___('editors_review_unsubscribe_link', '(Unsubscribe)')?>',
+        });
+
         editors_review.miuMarkdownConfig.previewParserPath = '<?=$html->url('/editors/markdown')?>';
         editors_review.miuMarkdownConfig.previewParserVar = $("input[name='sessionCheck']:first").serialize() + '&data[markdown]';
+
         editors_review.init();
     });
 // ]]>

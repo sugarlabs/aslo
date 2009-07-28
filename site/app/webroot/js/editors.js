@@ -63,6 +63,13 @@ var editors_queue = {
 
 /*************************************************
 *               editors/review                 *
+*
+* These members must be set prior to calling init()
+*   subscribe_url
+*   unsubscribe_url
+*   subscribe_text
+*   unsubscribe_text
+*
 *************************************************/
 var editors_review = {
     init: function () {
@@ -108,9 +115,23 @@ var editors_review = {
                 editors_review.hideMarkitupHelp();
             }
         })  
+
+        // create subscribe/unsubscribe links based on non-JS hidden forms
+        var self = this;
+        $('form.subscription').each(function(){
+            var alink = $('<a href="#"></a>')
+                .addClass('subscription')
+                .click(self.threadSubscribeUnsubscribe);
+            if ($(this).attr('action').match(/threadsubscribe/)) {
+                alink.text(self.subscribe_text);
+            } else {
+                alink.text(self.unsubscribe_text).addClass('subscribed');
+            }
+            $(this).before(alink);
+        });
     },
 
-    
+
     // Markitup markdown configuration (modified)
     // original code Copyright (C) 2007-2008 Jay Salvat
     // http://markitup.jaysalvat.com/
@@ -239,6 +260,44 @@ var editors_review = {
         $('#VersioncommentReplyTo').val(commentId);
 
         $('#editorCommentForm').slideDown('fast');
+        return false;
+    },
+
+    // subscribe/unsubscribe to a thread via ajax
+    threadSubscribeUnsubscribe: function(e) {
+        // 'this' is the clicked link
+        var alink = $(this);
+        var self = editors_review;
+
+        // already waiting on a request
+        if (alink.hasClass('loading')) {
+            return false;
+        }
+
+        // fire up a new request
+        alink.addClass('loading');
+        $.ajax({
+            type: 'POST',
+            url: alink.hasClass('subscribed') ? self.unsubscribe_url : self.subscribe_url,
+            data: $('form', alink.parent()).serialize(),
+            dataType: 'json',
+            success: function(data, textStatus){
+                if ('success' in data && data.success) {
+                    // toggle link text/subscribed status
+                    if (alink.hasClass('subscribed')) {
+                        alink.removeClass('subscribed');
+                        alink.text(self.subscribe_text);
+                    } else {
+                        alink.addClass('subscribed');
+                        alink.text(self.unsubscribe_text);
+                    }
+                }
+            },
+            complete: function(xhr, textStatus){
+                alink.removeClass('loading'); // all done
+            }
+        });
+
         return false;
     }
 }

@@ -381,7 +381,8 @@ class EditorsComponent extends Object {
 
         // fetch details
         $addon = $this->controller->Addon->getAddon($comment['Version']['addon_id']);
-        $subscribers = $this->controller->User->findAllById($userIds, null, null, null, null, -1);
+        $this->controller->User->bindOnly('Group'); // Groups are needed for the ACL check
+        $subscribers = $this->controller->User->findAllById($userIds);
 
         // send out notification email(s)
         $emailInfo = array(
@@ -398,8 +399,12 @@ class EditorsComponent extends Object {
         $this->controller->Email->template = '../editors/email/notify_version_comment';
         $this->controller->Email->subject = "[AMO] {$emailInfo['subject']}; {$emailInfo['addon']} Review {$emailInfo['versionid']}";
         
-        // fire away
+        // fire away...
         foreach ($subscribers as &$subscriber) {
+            // ... unless subscriber is no longer an editor
+            if (!$this->controller->SimpleAcl->actionAllowed('Editors', 'review', $subscriber)) {
+                continue;
+            }
             $this->controller->Email->to = $subscriber['User']['email'];
             $result = $this->controller->Email->send();
         }

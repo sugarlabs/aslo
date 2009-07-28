@@ -41,7 +41,7 @@
 class UsersController extends AppController
 {
     var $name = 'Users';
-    var $uses = array('User', 'Addon', 'Collection', 'Eventlog', 'Review', 'Version');
+    var $uses = array('User', 'Addon', 'Collection', 'Eventlog', 'Review', 'Version', 'Versioncomment');
     var $components = array('Amo', 'Developers', 'Email', 'Image', 'Ldap', 'Session', 'Pagination', 'Recaptcha');
     var $helpers = array('Html', 'Link', 'Javascript');
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
@@ -435,7 +435,19 @@ class UsersController extends AppController
             // isn't changed which means the picture_hash field isn't updated.  End result is the user updates their picture and on the first 
             // reload it isn't changed.  By appending this to the end of the image URL we get an uncached version iff they've updated it.
             $this->publish('_how_much_cake_sucks_on_a_scale_of_1_to_10', 11);
-            
+
+            // UNsubscribing from editor comments is always allowed even if
+            // the user is no longer an editor
+            $subscriptions = $this->Versioncomment->getSubscriptionsByUserDetailed($sessionuser['id']);
+            $subscribed = array(); // checkbox data for html helper
+            foreach ($subscriptions as $k => $val) {
+                $subscriptions[$k]['Addon'] = $this->Addon->getAddon($val['Version']['addon_id']);
+                $subscribed[$val['Versioncomment']['id']] = '1';
+            }
+            $this->publish('userVersionThreads', $subscriptions); // subscription details
+            $this->data['Subscriptions'] = $subscribed;
+
+
             $this->data['User'] = $_current_user['User'];
             $this->data['User']['password'] = '';
             $this->render();
@@ -553,6 +565,32 @@ class UsersController extends AppController
         list($localizedFields, $unlocalizedFields) = $this->User->splitLocalizedFields($this->data['User']);
         $this->Amo->clean($localizedFields);
         $this->User->saveTranslations($_current_user['User']['id'], $this->params['form']['data']['User'], $localizedFields);
+
+        // process versioncomment unsubscriptions
+        // unsubscribing from editor comments is always allowed even if
+        // the user is no longer an editor
+        if (!empty($this->data['Subscriptions'])) {
+            // get current subscriptions so we dont create any unecessary unsubscribe rows in the DB
+            $subscriptions = $this->Versioncomment->getSubscriptionsByUser($sessionuser['id']);
+
+            $thread_ids = array();
+            foreach ($this->data['Subscriptions'] as $comment_id => $val) {
+                if (in_array($comment_id, $subscriptions) && $val === '0') {
+                    $thread_ids[] = $comment_id;
+                }
+            }
+            $this->Versioncomment->unsubscribe($thread_ids, $sessionuser['id']);
+
+            // requery remaining subscription details for display on success page
+            $subscriptions = $this->Versioncomment->getSubscriptionsByUserDetailed($sessionuser['id']);
+            $subscribed = array(); // checkbox data for html helper
+            foreach ($subscriptions as $k => $val) {
+                $subscriptions[$k]['Addon'] = $this->Addon->getAddon($val['Version']['addon_id']);
+                $subscribed[$val['Versioncomment']['id']] = '1';
+            }
+            $this->publish('userVersionThreads', $subscriptions); // subscription details
+            $this->data['Subscriptions'] = $subscribed;
+        }
 
         // send out confirmation email if necessary
         if ($newemail !== false) {
