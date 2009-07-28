@@ -1356,19 +1356,19 @@ class DevelopersController extends AppController
      */
     function _validateVersion($version) {
 
-		// Load in all the version info we need
-		$version = $this->Version->findById($version['Version']['id']);
-		$addon = $this->Addon->getAddon($version['Version']['addon_id'], array('list_details'));
-		
-		$fileIds = array();
-		
-		// Pull in the files, which also brings in test result data
-		if (!empty($version['File'])) {
-			foreach($version['File'] as $file) {
-				$fileIds[] = $file['id'];
-			}
-		}
-		$files = $this->File->findAll(array('File.id' => $fileIds));
+        // Load in all the version info we need
+        $version = $this->Version->findById($version['Version']['id']);
+        $addon = $this->Addon->getAddon($version['Version']['addon_id'], array('list_details'));
+        
+        $fileIds = array();
+        
+        // Pull in the files, which also brings in test result data
+        if (!empty($version['File'])) {
+            foreach($version['File'] as $file) {
+                $fileIds[] = $file['id'];
+            }
+        }
+        $files = $this->File->findAll(array('File.id' => $fileIds));
 
         // Each file needs its own copy of the test results
         if (!empty($files)) {
@@ -1377,7 +1377,7 @@ class DevelopersController extends AppController
                 $files[$id]['counts'] = array(0,0,0);
             }
         }
-		
+        
         // Each file needs its own copy of the test results
         if (!empty($files)) {
             foreach ($files as $id => $file) {
@@ -1385,15 +1385,15 @@ class DevelopersController extends AppController
                 $files[$id]['counts'] = array(0,0,0);
             }
         }
-		
-		$test_groups = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id']);
+        
+        $test_groups = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id']);
   
-		$test_groupIds = array();
-		// Use the test group ids to pull in the results
-		if (!empty($test_groups)) {
-			foreach($test_groups as $id => $group) {
-				$test_groupIds[] = $group['TestGroup']['id'];
-				$test_groups[$id]['counts'] = array(0,0,0);
+        $test_groupIds = array();
+        // Use the test group ids to pull in the results
+        if (!empty($test_groups)) {
+            foreach($test_groups as $id => $group) {
+                $test_groupIds[] = $group['TestGroup']['id'];
+                $test_groups[$id]['counts'] = array(0,0,0);
                 $test_groups[$id]['cases'] = array();
 			}
 		}
@@ -1440,16 +1440,16 @@ class DevelopersController extends AppController
 
 
         // Most all of the data is in this array
-		$this->publish('files', $files);
+        $this->publish('files', $files);
         
         $this->publish('all_groups', $test_groups);
-		
-		$this->publish('version', $version);
+        
+        $this->publish('version', $version);
         $this->publish('validation_disabled',$this->Config->getValue('validation_disabled'));
-		
-		$this->render('versions_validate');
+        
+        $this->render('versions_validate');
     }
-	
+    
     /**
      * Verifies the addon using the test cases given by the validation component
      * @param int $file_id the id of the file to verify
@@ -1463,30 +1463,30 @@ class DevelopersController extends AppController
             return;
         }
 
-		// Pull in the test group
-		$test_group = $this->TestGroup->findById($test_group_id);
-		
-		// Grab the file to pass over to the view
-		$this->File->cacheQueries = false;
-		$file = $this->File->findById($file_id);
-		
-		// Do whatever tests were specified, then find the next tests
-		// if we need to continue
-		$next_tests = array();
-		if ($this->Validation->runTest($file_id, $test_group_id)) {
-			$addon = $this->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
-			
-			$next_tier = $test_group['TestGroup']['tier'] + 1;
-			$conditions = array('TestGroup.tier' => $next_tier);
-			$next_cat = $test_group['TestGroup']['category'];
-			if ($test_group_id != 1) 
-				$conditions['TestGroup.category'] = $next_cat;
-			
-			$next_tests = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id'], $conditions, array('id'));
-		}
+        // Pull in the test group
+        $test_group = $this->TestGroup->findById($test_group_id);
+        
+        // Grab the file to pass over to the view
+        $this->File->cacheQueries = false;
+        $file = $this->File->findById($file_id);
+        
+        // Do whatever tests were specified, then find the next tests
+        // if we need to continue
+        $next_tests = array();
+        if ($this->Validation->runTest($file_id, $test_group_id)) {
+            $addon = $this->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
+            
+            $next_tier = $test_group['TestGroup']['tier'] + 1;
+            $conditions = array('TestGroup.tier' => $next_tier);
+            $next_cat = $test_group['TestGroup']['category'];
+            if ($test_group_id != 1) 
+                $conditions['TestGroup.category'] = $next_cat;
+            
+            $next_tests = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id'], $conditions, array('id'));
+        }
 
-		// Load the results into the group and build the group/case/result hierarchy
-		$results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));
+        // Load the results into the group and build the group/case/result hierarchy
+        $results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));
 
         // Total results for this test group
         $counts = array(0,0,0);
@@ -1507,7 +1507,7 @@ class DevelopersController extends AppController
             }
         }
         $test_group['counts'] = $counts;
-		
+        
         // Total results for this test group
         $counts = array(0,0,0);
         $test_group['cases'] = array();
@@ -1526,17 +1526,18 @@ class DevelopersController extends AppController
                 $counts[$result['TestResult']['result']]++;
             }
         }
-		
-		// We need a view to call renderElement, see
-		// https://trac.cakephp.org/ticket/3132
+        
+        // We need a view to call renderElement, see
+        // https://trac.cakephp.org/ticket/3132
         // This means we also pull in the HTML helper
-		$view = new View($this, 'helpers');
+        $view = new View($this, 'helpers');
         loadHelper('Html');
         $html = new HtmlHelper();
 
-		// Render the result, then return it via json
+        // Render the result, then return it via json
+        $this->_sanitizeArray($test_group);
         $testresult = $view->renderElement('developers/testresults_group', 
-					  array('file' => $file, 'group' => $test_group, 'html' => $html));
+                      array('file' => $file, 'group' => $test_group, 'html' => $html));
 
         // Render the statistics for display in the header
         $stats = $view->renderElement('developers/testresults_stats',
@@ -1551,10 +1552,10 @@ class DevelopersController extends AppController
         $total_stats = $view->renderElement('developers/testresults_stats',
                        array('counts' => $counts, 'short' => false, 'multiline' => false, 'html' => $html));
 
-		$json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests, 'stats' => $stats, 'total_stats' => $total_stats);
-		
-		$this->set('json', $json);
-		$this->render('json', 'ajax');
+        $json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests, 'stats' => $stats, 'total_stats' => $total_stats);
+        
+        $this->set('json', $json);
+        $this->render('json', 'ajax');
     }
     
     /**

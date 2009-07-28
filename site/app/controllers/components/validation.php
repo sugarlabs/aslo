@@ -87,7 +87,7 @@ class ValidationComponent extends Object {
                     $failed = false;
                     foreach($results as $result) {
                         
-                        $this->Amo->clean($result);
+                        $this->Amo->clean($result, false);
                         $sql[] = "({$result['result']}, {$result['line']}, '{$result['filename']}', '{$result['message']}', {$file_id}, {$case['TestCase']['id']})";
 
                         if ($result['result'] == TEST_FAIL && $test_group['TestGroup']['critical'])
@@ -447,7 +447,7 @@ class ValidationComponent extends Object {
     }
 
     /**
-     * Grep for unsafe javascript
+     * Hashes libraries and compares them with known values
      * @param array $file the file in model format
      * @return array an array of test results, empty if there is no result
      */
@@ -510,7 +510,7 @@ class ValidationComponent extends Object {
                           '/\.launch/',
                           '/eval/',
                           '/<browser\s+(?![^<>]*type=["\'])[^<>]+>/i',
-                          '/<iframe\s+(?![^<>]*type=["\'])[^<>]+>/i',
+                          '/<iframe\s*(?![^<>]*type=["\'])[^<>]*>/i',
                           '/xpcnativewrappers=/',
                           '/evalInSandbox/',
                           '/mozIJSSubscriptLoader/');

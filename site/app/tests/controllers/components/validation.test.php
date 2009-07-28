@@ -814,6 +814,33 @@ not so much here!";
         
     }
 
+    /** 
+     * Tests the getResultPreview() method
+     */
+    function testGetResultPreview() {
+
+        // Load in the data we need
+        $this->controller->Validation->runTest(1, 1);
+        $file = $this->controller->File->findById(1);
+        $result = $this->controller->TestResult->find(array('File.id' => 1));
+        
+        // Basic add-on should not generate a preview
+        $this->controller->Validation->getResultPreview($result, $file);
+        $this->assertFalse(array_key_exists('preview', $result['TestResult']), 'No file or line generates no preview: %s');
+        
+        // Give this some data to generate problems
+        file_put_contents(CACHE_PFX . '1/bad.js', "\nvar bad;\n");
+        
+        $this->controller->Validation->runTest(1, 1);
+        $file = $this->controller->File->findById(1);
+        $result = $this->controller->TestResult->find(array('File.id' => 1, 'TestResult.result' => TEST_WARN));
+
+        // Failed tes should generate a preview
+        $this->controller->Validation->getResultPreview($result, $file);
+        $this->assertTrue(array_key_exists('preview', $result['TestResult']), 'Previews are generated on failed tests: %s');
+        $this->assertEqual(count($result['TestResult']['preview']), 3, 'Previews provide context around data: %s');
+    }
+
     /**
      * Tests the _checkExtraFiles() method
      */
