@@ -502,9 +502,6 @@ class EditorsController extends AppController
      */
     function performance($mode = '') {
         $session = $this->Session->read('User');
-        if (!$this->SimpleAcl->actionAllowed('Editor', '*', $session)) {
-            $this->Amo->accessDenied();
-        }
 
         //Senior Editors can generate reports on anyone
         $isSenior = $this->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $session);
