@@ -46,6 +46,9 @@ $this->layout = 'amo2009';
 <div class="primary prose" role="main">
     <?=$this->renderElement('amo2009/search')?>
     
-    <?=$localization->includeLocalPage('validation')?>
+    <?=$localization->includeLocalPage('validation', array(
+        $html->url('/pages/about#contact'),
+        'http://viewvc.svn.mozilla.org/vc/addons/trunk/site/app/controllers/components/validation.php?view=markup',
+    ))?>
 
 </div>
