@@ -812,7 +812,11 @@ class AddonsController extends AppController
 
         switch($addontype) {
             case ADDON_THEME:
-                $this->pageTitle = sprintf(___('addons_browse_categories_header_theme'), $this_category['Translation']['name']['string'], APP_PRETTYNAME);
+                if ($category == 'all') {
+                    $this->pageTitle = sprintf(___('addons_browse_all_themes_title'), APP_PRETTYNAME);
+                } else {
+                    $this->pageTitle = sprintf(___('addons_browse_categories_header_theme'), $this_category['Translation']['name']['string'], APP_PRETTYNAME);
+                }
                 break;
             default:
                 $this->pageTitle = sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
