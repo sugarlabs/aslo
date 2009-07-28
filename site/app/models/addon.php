@@ -161,7 +161,7 @@ class Addon extends AppModel
     var $default_fields = array('id', 'guid', 'name', 'defaultlocale', 'addontype_id', 'status',
         'higheststatus', 'icontype', 'supportemail', 'supporturl', 'homepage', 'description', 'summary',
         'averagerating', 'weeklydownloads', 'totaldownloads', 'average_daily_downloads', 'average_daily_users',
-        'totalreviews', 'developercomments', 'inactive', 'trusted', 'viewsource', 'publicstats',
+        'totalreviews', 'developercomments', 'dev_agreement', 'inactive', 'trusted', 'viewsource', 'publicstats',
         'prerelease', 'adminreview', 'sitespecific', 'externalsoftware', 'binary',
         'eula', 'privacypolicy', 'nominationmessage', 'target_locale', 'locale_disambiguation',
         'paypal_id', 'suggested_amount', 'wants_contributions', 'annoying',

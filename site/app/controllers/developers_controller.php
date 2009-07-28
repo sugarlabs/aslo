@@ -128,8 +128,7 @@ class DevelopersController extends AppController
         
         if (!empty($addon_ids)) {
             foreach ($addon_ids as $addon_id => $addon_name) {
-                $addon = $this->Addon->find("Addon.id={$addon_id}");
-                
+                $addon = $this->Addon->getAddon($addon_id, array('default_fields', 'latest_version'));
                 if (!empty($addon['Version'][0])) {
                         $files = $this->File->findAll("File.version_id={$addon['Version'][0]['id']}");
                         
@@ -1169,7 +1168,7 @@ class DevelopersController extends AppController
      * @param int $addon_id the add-on id
      */
     function _versionsIndex($addon_id) {
-        $addon = $this->Addon->findById($addon_id);
+        $addon = $this->Addon->getAddon($addon_id, array('default_fields'));
         $this->set('addon', $addon);
         
         $versions = $this->Version->findAll("Version.addon_id={$addon_id}", null, 'Version.created DESC');
@@ -1194,7 +1193,7 @@ class DevelopersController extends AppController
             $this->publish('version', $version['Version']['version']);
         }
         
-        $addon = $this->Addon->findById($addon_id, array('Addon.dev_agreement'));
+        $addon = $this->Addon->getAddon($addon_id, array('default_fields'));
         $this->publish('hasAgreement', $addon['Addon']['dev_agreement']);
 
         $this->render('uploader');
