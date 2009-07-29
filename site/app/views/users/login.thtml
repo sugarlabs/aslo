@@ -45,6 +45,8 @@
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
     
+	<h2><?=___('user_login_header', 'Log In')?></h2>
+	  
 <?php
     //banner warning messages for display
     if(isset($_GET['m'])) {
@@ -67,7 +69,9 @@
         echo $this->renderElement('notification', array('type' => 'error', 'description' => _('error_username_or_pw_wrong')));
 ?>
 <p></p>
-<form action="<?=$html->entities($html->url())?>" method="post" class="amo-form highlight">
+<div class="primary">
+<div class="featured">
+<form action="<?=$html->entities($html->url())?>" method="post" id="login" class="featured-inner object-lead">
     <?=$html->hiddenSession() ?>       
     <div>
         <? 
@@ -77,28 +81,36 @@
         ?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="LoginEmail"><?=_('user_form_email')?></label>
+        <label for="LoginEmail"><?=_('user_form_email')?></label>
         <?=$html->input('Login/email') ?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="LoginPassword"><?=_('user_form_password')?></label>
+        <label for="LoginPassword"><?=_('user_form_password')?></label>
         <?=$html->password('Login/password') ?>
     </div>
-    <div class="container">
-        <?=$html->input('Login/remember', array('type' => 'checkbox', 'value' => '1', 'class' => 'amo-remember'))?>
+    <div class="container remember">
+        <?=$html->input('Login/remember', array('type' => 'checkbox', 'value' => '1'))?>
         <label for="LoginRemember"><?=___('user_form_remember_me')?></label>
     </div>
     <div class="container">
-        <?=$html->submit(_('user_form_submit_login'), array('class'=>'amo-submit')); ?>
+        <button class="prominent"><?= _('user_form_submit_login') ?></button>
     </div>
 </form>
+</div>
+</div>
 <script type="text/javascript" charset="utf-8">
     // focus email field
     $(document).ready(function() { $('#LoginEmail').focus(); });
 </script>
 
-<ul>
-    <li><?= $html->link(_('user_login_register_link'), '/users/register'); ?></li>
-    <li><?= $html->link(_('user_pwreset_link'), '/users/pwreset',null,null,false); ?></li>
-</ul>
+<div class="secondary">
+	<div id="login-help" class="article">
+		<h3><?=___('user_login_problems', 'Login Problems?')?></h3>
+		<ul>
+		    <li><?= $html->link(___('user_login_no_account', "I don't have an account."), '/users/register'); ?></li>
+		    <li><?= $html->link(___('user_login_forgot_password', 'I forgot my password.'), '/users/pwreset'); ?></li>
+		</ul>
+	</div>
+</div>
+
 </div><!-- /.primary -->

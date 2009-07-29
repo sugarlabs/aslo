@@ -94,7 +94,7 @@ class UsersController extends AppController
         $this->disableCache();
     
         $this->pageTitle = _('users_register_pagetitle'). ' :: '. sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
-        $this->publish('cssAdd', array('forms'));
+        // $this->publish('cssAdd', array('forms'));
         $this->publish('breadcrumbs', array(_('users_register_pagetitle') => '/users/register'));
         $this->publish('subpagetitle', _('user_form_registration'));
         if (empty($this->data)) {
@@ -335,7 +335,6 @@ class UsersController extends AppController
     
         $this->pageTitle = _('users_login_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms'));
-        $this->publish('breadcrumbs', array(_('users_login_pagetitle') => '/users/login'));
         $this->publish('subpagetitle', _('user_form_login'));
         $this->publish('loginerror', false);
         
