@@ -674,6 +674,11 @@ class DevelopersController extends AppController
 
             if ($this->Addon->validates($this->data)) {
                 $this->Addon->save($this->data);
+
+                // flush cached add-on objects
+                if (QUERY_CACHE)
+                    $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
+
                 $this->redirect("/developers/addon/edit/{$addon_id}/contributions");
             }
         }
