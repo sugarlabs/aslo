@@ -39,156 +39,92 @@
 ?>
 
 <div class="secondary" role="complementary">
-    <?=$this->renderElement('amo2009/categories')?>
+  <?=$this->renderElement('amo2009/categories')?>
 </div>
 
 <div class="primary" role="main">
-    <?=$this->renderElement('amo2009/search')?>
+  <?=$this->renderElement('amo2009/search')?>
 
-    <h3><?=_('users_info_author_profile')?></h3>
-    <dl>
-        <? if (!empty($profile['User']['firstname']) || !empty($profile['User']['lastname'])): ?>
-        <dt><?=_('users_info_author_name')?></dt>
-        <dd><?=$profile['User']['firstname']?> <?=$profile['User']['lastname']?></dd>
-        <? endif; ?>
+  <?=$this->renderElement('amo2009/breadcrumbs', array(
+      'breadcrumbs' => array(
+          sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/')
+  ))?>
 
-        <? if (!empty($profile['User']['nickname'])): ?>
-        <dt><?=_('users_info_nickname')?></dt>
-        <dd><?=$profile['User']['nickname']?></dd>
-        <? endif; ?>
+  <div class="vcard">
+    <h2 class="fn n"><?=$user['User']['display_name']?></h2>
+    <div class="featured">
+      <div class="featured-inner object-lead">
+        <h3><?=___('users_info_aboutme')?></h3>
+        <img class="avatar thumbnail" alt=""
+             src="<?=$html->url('/users/picture/'.$user['User']['id'])?>"/>
+        <div class="object-content">
+          <?php if (!empty($user['Addon'])): ?>
+            <p class="user-role"><?=___('users_info_developer', 'Add-ons Developer')?></p>
+          <?php endif; ?>
+          <?=$this->renderElement('amo2009/users/vcard',
+              array('user' => $user['User'],
+                    'about_addons' => False,
+                    'table_class' => '',
+                    )
+          )?>
+        </div> <!-- object-content -->
+      <?php $bio = trim($user['Translation']['bio']['string']); ?>
+      <?php if ($bio): ?>
+        <h4><?=___('users_info_in_a_little', 'In a little more detail&hellip;')?></h4>
+        <p class="description"><?=nl2br($bio)?></p>
+      <?php endif; ?>
+      </div> <!-- featured-inner -->
+    </div> <!-- featured -->
+  </div> <!-- vcard -->
 
-        <? if (!empty($profile['User']['homepage'])): ?>
-        <dt><?=_('users_info_homepage')?></dt>
-        <dd><?=$html->link($profile['User']['homepage'], $profile['User']['homepage'])?></dd>
-        <? endif; ?>
+  <?php if (!empty($user['Addon'])): ?>
+    <div class="separated-listing">
+      <?=$this->renderElement('amo2009/separated_list_items', array(
+          'addons' => $user['Addon'],
+      ))?>
+    </div>
+  <?php endif; ?>
 
-        <? if ($profile['User']['emailhidden'] == 0): ?>
-        <dt><?=_('users_info_email')?></dt>
-        <dd><?=$link->email($profile['User']['email'])?></dd>
-        <? endif; ?>
+  <?php if (!empty($user['Review'])): ?>
+    <div class="primary">
+      <h3><?=___('users_info_my_reviews', 'My Reviews')?></h3>
+      <div class="article">
+        <?php foreach ($user['Review'] as $review): ?>
+          <?php $_addon = $review['Addon']; ?>
+          <div class="hreview">
+            <h4 class="summary">
+              <a class="url" href="<?=$html->url('/addon/'.$_addon['id'])?>">
+                <?=$_addon['Translation']['name']['string']?></a>
+            </h4>
+            <p class="description"><?=$review['Translation']['body']['string']?></p>
+            <p>
+              <?=$this->renderElement('amo2009/stars',
+                  array('rating' => $review['Review']['rating']))?>
+              <abbr class="dtreviewed"
+                    title="<?=strftime(ISO8601_DATE, strtotime($review['Review']['created']))?>">
+                <?=strftime(_('date'), strtotime($review['Review']['created']))?>
+              </abbr>
+            </p>
+          </div>
+        <?php endforeach; ?>
+      </div> <!-- article -->
+    </div> <!-- primary -->
+  <?php endif; ?>
 
-        <?php if ($profile['Translation']['bio']['string']): ?>
-        <dt><?=___('users_info_aboutme')?></dt>
-        <dd><?=nl2br($profile['Translation']['bio']['string'])?></dd>
-        <?php endif; ?>
+  <?php if (!empty($favorite_collections) || !empty($own_collections)): ?>
+    <div class="secondary" role="complementary">
+      <h3><?=___('collections_index_li_mine')?></h3>
+      <div class="secondary-item-list">
+        <?=$this->renderElement('amo2009/users/collection_list', array(
+            'heading' => ___('users_info_favorites', 'Favorites'),
+            'collections' => $favorite_collections,
+        ))?>
+        <?=$this->renderElement('amo2009/users/collection_list', array(
+            'heading' => ___('users_info_created_by', 'Created by Me'),
+            'collections' => $own_collections,
+        ))?>
+      </div>
+    </div> <!-- secondary -->
+  <?php endif; ?>
 
-        <dt><?=sprintf(_('user_info_usersince'), APP_PRETTYNAME)?></dt>
-        <dd><?=strftime(_('date'), strtotime($profile['User']['created']))?></dd>
-
-    </dl>
-
-<?php
-    if ($this->controller->SimpleAcl->actionAllowed('Admin', 'users', $this->controller->Session->read('User'))) {
-        echo $html->link('Edit User', "/admin/users/{$profile['User']['id']}");
-    }
-?>
-
-<?php
-    if ($profile['User']['firstname'] == '' && $profile['User']['lastname'] == '') {
-        $displayName = $profile['User']['nickname'];
-    } else {
-        $displayName = $profile['User']['firstname'].' '.$profile['User']['lastname'];
-    }
-?>
-
-<?php if (!empty($profile['Addon'])): ?>
-<div>
-<h3><?=sprintf(_('users_info_addons_by_user'), $displayName)?></h3>
-<?
-    global $app_shortnames;
-    $pile_o_addons = array();
-    foreach ($profile['Addon'] as &$addon) {
-
-        $_addon_temp = array(
-            'addon_id' => $addon['Addon']['id'],
-            'name'     => $addon['Translation']['name']['string'],
-            'summary'  => $addon['Translation']['summary']['string']
-        );
-
-        if (array_key_exists('Category', $addon) && !empty($addon['Category'])) {
-            $_addon_temp['application'] = array_search($addon['Category'][0]['Category']['application_id'], $app_shortnames);
-        } else {
-            $_addon_temp['application'] = 'firefox';
-        }
-
-        $pile_o_addons[$addon['Addon']['addontype_id']][] = $_addon_temp;
-        unset($_addon_temp);
-    }
-
-
-    $addontype_names = Addontype::getNames();
-?>
-
-<? foreach (array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_PLUGIN) as $addontype): ?>
-    <? if (array_key_exists($addontype, $pile_o_addons) && !empty($pile_o_addons[$addontype])): ?>
-        <h4><?=$addontype_names[$addontype]?></h4>
-        <dl>
-        <? foreach ($pile_o_addons[$addontype] as &$addon): ?>
-            <dt><?=$html->linkNoLocaleNoApp($addon['name'], '/'.LANG."/{$addon['application']}/addon/{$addon['addon_id']}")?></dt>
-            <dd><?=$addon['summary']?></dd>
-        <? endforeach; ?>
-        </dl>
-    <? endif; ?>
-<? endforeach; ?>
-</div>
-<?php endif; // !empty($profile['Addon']) ?>
-
-<?php if (!empty($profile['Review'])): ?>
-<div>
-<h3><?=sprintf(___('users_info_reviews_by_user', 'Reviews by %s'), $displayName)?></h3>
-<dl>
-    <?php
-    global $app_shortnames;
-    foreach ($profile['Review'] as &$review):
-        if (!empty($review['Addon']['compatible_apps'])) {
-            $_application = array_search($review['Addon']['compatible_apps'][0]['Application']['application_id'], $app_shortnames);
-        } else {
-            $_application = 'firefox';
-        }
-    ?>
-    <dt><?= $html->linkNoLocaleNoApp($review['Addon']['Translation']['name']['string'],
-        '/'.LANG."/{$_application}/addon/{$review['Addon']['Addon']['id']}"); ?></dt>
-    <dd><?=nl2br($review['Translation']['body']['string'])?></dd>
-    <? endforeach; ?>
-</dl>
-</div>
-<?php endif; ?>
-
-<?php if (!empty($coll)): ?>
-<div>
-<h3><?=sprintf(___('users_info_collections_by_user'), $displayName)?></h3>
-<dl>
-    <?php
-    global $app_shortnames;
-    foreach ($coll as &$c):
-    ?>
-    <dt><?= $html->linkNoLocaleNoApp($c['Translation']['name']['string'],
-        sprintf('/%s/%s/collection/%s', LANG, array_search($c['Collection']['application_id'], $app_shortnames),
-            empty($c['Collection']['nickname'])?$c['Collection']['uuid']:$c['Collection']['nickname'])); ?>
-    </dt>
-    <dd><?=$c['Translation']['description']['string']?></dd>
-    <? endforeach; ?>
-</dl>
-</div>
-<?php endif; ?>
-
-<?php if (!empty($coll_fav)): ?>
-<div>
-<h3><?=___('users_info_fav_collections_by_user')?></h3>
-<dl>
-    <?php
-    global $app_shortnames;
-    foreach ($coll_fav as &$c):
-    ?>
-    <dt><?= $html->linkNoLocaleNoApp($c['Translation']['name']['string'],
-        sprintf('/%s/%s/collection/%s', LANG, array_search($c['Collection']['application_id'], $app_shortnames),
-            empty($c['Collection']['nickname'])?$c['Collection']['uuid']:$c['Collection']['nickname'])); ?>
-    </dt>
-    <dd><?=$c['Translation']['description']['string']?></dd>
-    <? endforeach; ?>
-</dl>
-</div>
-<?php endif; ?>
-
-</div>
-<!-- /#.primary -->
+</div> <!-- primary -->

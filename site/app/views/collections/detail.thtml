@@ -139,65 +139,10 @@ $c = $collection['Collection'];
           <button><?=___('collections_index_button_go')?></button>
         </div>
       </form>
-      <?php foreach ($addons as $addon): ?>
-        <?php $a = $addon['Addon']; ?>
-        <div class="item">
-          <!-- TODO: a11y ordering -->
-          <h4>
-            <a href="<?=$html->url('/addon/'.$a['id'])."?collection_id={$c['uuid']}"?>">
-              <?=$addon['Translation']['name']['string']?>
-            </a>
-            <span>
-              <?=sprintf(___('collections_index_header_created'),
-                 $html->linkUsersFromModel($addon['User']))?>
-            </span>
-          </h4>
-          <div class="item-info">
-            <?php
-            $params = array(
-                'addon' => $addon,
-                'buttonClass' => 'auxillary',
-                'collection_uuid' => $c['uuid']
-            );
-            ?>
-            <?=$this->renderElement('amo2009/install', $params)?>
-            <p class="downloads">
-              <?php $downloads = $a['weeklydownloads']; ?>
-              <?=sprintf(n___('collections_detail_weekly_downloads',
-                              'collections_detail_weekly_downloads',
-                              $downloads),
-                         '<strong>'.$html->number_format($downloads).'</strong>')?>
-            </p>
-            <p class="review">
-              <?=$this->renderElement('amo2009/reviews', array('addon' => $addon, 'collection_uuid' => $c['uuid']))?>
-            </p>
-          </div> <!-- item-info -->
-          <a href="<?=$html->url('/addon/'.$a['id'])?>">
-            <img class="icon" alt=""
-                 src="<?=$this->controller->Image->getAddonIconUrl($a['id'])?>" />
-          </a>
-          <blockquote>
-            <p>
-              <?=$addon['Translation']['summary']['string']?>
-            </p>
-            <p>
-              <a href="<?=$html->url('/addon/'.$a['id'])."?collection_id={$c['uuid']}"?>">
-                <?=___('collections_detail_a_learn')?>
-              </a>
-            </p>
-            <?php
-            if (!empty($a['comment'])) {
-                echo '<blockquote class="publisher-comment">';
-                echo '<p>'.nl2br($a['comment']).'</p>';
-                echo '<p class="by">'.sprintf(___('addon_reviewed_by_u_on_d'),
-                    $html->linkUserFromModel($a['publisher']),
-                    strftime(_('date'), strtotime($a['dateadded']))).'</p>';
-                echo '</blockquote>';
-            }
-            ?>
-          </blockquote>
-        </div> <!-- item -->
-      <?php endforeach; ?>
+      <?=$this->renderElement('amo2009/separated_list_items', array(
+          'addons' => $addons,
+          'extra' => array('collection_uuid' => $c['uuid']),
+      ))?>
     </div> <!-- separated-listing -->
     <?=$this->renderElement('amo2009/pagination');?>
   </div> <!-- primary -->

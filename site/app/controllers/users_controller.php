@@ -41,8 +41,8 @@
 class UsersController extends AppController
 {
     var $name = 'Users';
-    var $uses = array('User', 'Addon', 'Collection', 'Eventlog', 'Review', 'Version', 'Versioncomment');
-    var $components = array('Amo', 'Developers', 'Email', 'Image', 'Ldap', 'Session', 'Pagination', 'Recaptcha');
+    var $uses = array('User', 'Addon', 'Collection', 'Eventlog', 'File', 'Review', 'Version', 'Versioncomment');
+    var $components = array('Amo', 'Developers', 'Email', 'Httplib', 'Image', 'Ldap', 'Session', 'Pagination', 'Recaptcha');
     var $helpers = array('Html', 'Link', 'Javascript');
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
     var $exceptionCSRF = array("/users/login", "/users/register", "/users/pwreset");	
@@ -728,6 +728,10 @@ class UsersController extends AppController
      */
     function info($userid = null) {
         global $valid_status, $app_listedtypes;
+        $addon_associations = array(
+            'single_category', 'all_categories', 'authors', 'contrib_details',
+            'compatible_apps', 'default_fields', 'files', 'latest_version', 'list_details'
+        );
         
         $this->Amo->clean($userid);
         
@@ -735,59 +739,59 @@ class UsersController extends AppController
             $this->flash(sprintf(_('error_missing_argument'), 'user_id'), '/', 3);
             return;
         }
-        $thisuser = $this->User->getUser($userid, array('addons', 'reviews'));
-        if (empty($thisuser)) {
+        $user = $this->User->getUser($userid, array('addons', 'reviews'), $addon_associations);
+        if (empty($user)) {
             $this->flash(_('error_user_notfound'), '/', 3);
             return;
         }
 
         // Remove the add-ons we don't want
-        foreach ($thisuser['Addon'] as $key => $_addon) {
+        foreach ($user['Addon'] as $key => $_addon) {
             // APP_FIREFOX supports all valid add-on types right now.  If that changes in the future, change this.
             if (   !in_array($_addon['Addon']['addontype_id'], $app_listedtypes[APP_FIREFOX])
                 || !in_array($_addon['Addon']['status'], $valid_status)
                 || ($_addon['Addon']['inactive'] != 0)) {
-                    unset($thisuser['Addon'][$key]);
+                    unset($user['Addon'][$key]);
                 }
         }
         
-        foreach ($thisuser['Review'] as $key => &$_review) {
+        foreach ($user['Review'] as $key => &$_review) {
             // Remove the reviews we don't want
             if (!empty($_review['Review']['reply_to'])) {
-                unset($thisuser['Review'][$key]);
+                unset($user['Review'][$key]);
                 continue;
             }
             $_version = $this->Version->findById($_review['Review']['version_id'], 'Version.addon_id');
             if (!empty($_version)) {
-                $_addon = $this->Addon->getAddon($_version['Version']['addon_id'], array('compatible_apps', 'latest_version'));
+                $_addon = $this->Addon->getAddon($_version['Version']['addon_id']);
                 $_review['Addon'] = $_addon;
             }
         }
 
         // get user's own and favorite collections, if they allowed that
-        if ($thisuser['User']['display_collections']) {
-            $coll_ids = $this->Collection->getCollectionsByUser($thisuser['User']['id']);
+        if ($user['User']['display_collections']) {
+            $coll_ids = $this->Collection->getCollectionsByUser($user['User']['id']);
             $coll = $this->Collection->findAll(array('Collection.id'=>$coll_ids, 'listed'=>1),
                 array('name', 'description', 'uuid', 'nickname', 'application_id'), 'Translation.name');
-            $this->publish('coll', $coll);
+            $this->publish('own_collections', $coll);
         }
-        if ($thisuser['User']['display_collections_fav']) {
-            $coll_ids = $this->Collection->getSubscriptionsByUser($thisuser['User']['id']);
+        if ($user['User']['display_collections_fav']) {
+            $coll_ids = $this->Collection->getSubscriptionsByUser($user['User']['id']);
             $coll_fav = $this->Collection->findAll(array('Collection.id'=>$coll_ids, 'listed'=>1),
                 array('name', 'description', 'uuid', 'nickname', 'application_id'), 'Translation.name');
-            $this->publish('coll_fav', $coll_fav);
+            $this->publish('favorite_collections', $coll_fav);
         }
 
-        if (!empty($thisuser['User']['nickname']))
-            $name = $thisuser['User']['nickname'];
-        else
-            $name = $thisuser['User']['firstname'].' '.$thisuser['User']['lastname'];
-        $_title = sprintf(_('users_info_pagetitle'), $name);
+        $this->publish('user', $user);
+
+        $_title = sprintf(_('users_info_pagetitle'), $user['User']['display_name']);
         $this->pageTitle = $_title.' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
-        $this->publish('breadcrumbs', array($_title => "/user/{$userid}"));
-        $this->publish('subpagetitle', $_title);
-        $this->publish('profile', $thisuser);
-        $this->render();
+
+        $this->publish('breadcrumbs', array(
+            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+        ));
+
+        return $this->render();
     }
     
     /**

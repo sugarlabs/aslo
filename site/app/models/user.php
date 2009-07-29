@@ -127,10 +127,14 @@ class User extends AppModel
      * Get a single user and desired associations
      * (uses the object-invalidation framework)
      * @param int user id
-     * @param array associations
+     * @param array associations:
+     *   'addons'
+     *   'reviews'
+     * @param array addon_associations
      */
-    function getUser($id, $associations = array()) {
-        $identifier = array("user:$id", $associations);
+    function getUser($id, $associations = array(),
+                     $addon_associations = array('default_fields', 'all_categories')) {
+        $identifier = array("user:$id", array_merge($associations, $addon_associations));
         if (QUERY_CACHE && $cached = $this->Cache->readCacheObject($identifier)) {
             if (DEBUG >= 2) debug("user $id was cached");
             return $cached;
@@ -158,7 +162,7 @@ class User extends AppModel
                 $this->Addon =& new Addon();
 
                 $addons = $this->Addon->getAddonsByUser($id);
-                $user['Addon'] = $this->Addon->getAddonList(array_keys($addons), array('default_fields', 'all_categories'));
+                $user['Addon'] = $this->Addon->getAddonList(array_keys($addons), $addon_associations);
                 $user['User']['num_addons'] = count($user['Addon']);
                 $user['User']['num_valid_addons'] = 0;
                 foreach ($user['Addon'] as $addon => $details) {

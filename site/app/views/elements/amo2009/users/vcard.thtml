@@ -39,11 +39,25 @@
 /**
  * Required parameters:
  *   $user
+ *
+ * Optional:
+ *   $about_addons: show add-on details, defaults to true
+ *   $table_class: defaults to "person-info"
  */
 ?>
 
+<?php
+if (!isset($about_addons)) {
+    $about_addons = True;
+}
+
+if (!isset($table_class)) {
+    $table_class = 'person-info';
+}
+?>
+
 <div class="vcard">
-  <table class="person-info" summary="<?=___('addon_developer_info_summary', 'Developer Information')?>">
+  <table class="<?=$table_class?>" summary="<?=___('addon_developer_info_summary', 'Developer Information')?>">
     <tbody>
       <tr>
         <th><?=___('addon_developer_th_name')?></th>
@@ -77,19 +91,21 @@
         <th><?=___('addon_developer_th_user_since')?></th>
         <td><?=strftime(_('date'), strtotime($user['created']))?></td>
       </tr>
-      <tr>
-        <th><?=___('addon_developer_th_num_addons')?></th>
-        <td>
-          <a href="<?=$html->url('/user/'.$user['id'])?>">
-            <?=sprintf(n___('addon_developer_td_num_addons', 'addon_developer_td_num_addons', $user['num_valid_addons']),
-                       $user['num_valid_addons'])?>
-          </a>
-        </td>
-      </tr>
-      <tr>
-        <th><?=___('addon_developer_th_rating')?></th>
-        <td><?=$this->renderElement('stars', array('rating' => $user['averagerating']))?></td>
-      </tr>
+      <?php if ($about_addons): ?>
+        <tr>
+          <th><?=___('addon_developer_th_num_addons')?></th>
+          <td>
+            <a href="<?=$html->url('/user/'.$user['id'])?>">
+              <?=sprintf(n___('addon_developer_td_num_addons', 'addon_developer_td_num_addons', $user['num_valid_addons']),
+                         $user['num_valid_addons'])?>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <th><?=___('addon_developer_th_rating')?></th>
+          <td><?=$this->renderElement('stars', array('rating' => $user['averagerating']))?></td>
+        </tr>
+      <?php endif; ?>
     </tbody>
   </table>
 </div>

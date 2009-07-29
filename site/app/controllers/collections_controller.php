@@ -42,7 +42,7 @@ class CollectionsController extends AppController
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
     var $uses = array('Addon', 'AddonCollection', 'Application', 'Collection', 'File',
         'Platform', 'Preview', 'Translation', 'Version');
-    var $components = array('Amo', 'CollectionsListing', 'Developers', 'Error', 'Helper', 'Image', 'Pagination', 'Session');
+    var $components = array('Amo', 'CollectionsListing', 'Developers', 'Error', 'Helper', 'Httplib', 'Image', 'Pagination', 'Session');
     var $actionHelpers = array('Html');
     var $helpers = array('Html', 'Link', 'Listing', 'Time', 'Localization', 'Pagination', 'Number', 'Form');
     var $exceptionCSRF = array("/collections/install");

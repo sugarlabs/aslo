@@ -324,4 +324,9 @@ define('TEST_FAIL', 2);
  */
 define('PAYPAL_API_VERSION', '50');
 
+/**
+ * Date formats.
+ */
+define('ISO8601_DATE', '%Y-%m-%d');
+define('ISO8601_DATETIME', '%Y-%m-%d %H:%M');
 ?>
