@@ -1093,7 +1093,7 @@ function confirmExpInstall(div) {
 
     var href = $(bt).attr('href');
     if (href && href.match(/(policy|\.xml|\.xpi|\.jar)/)) {
-          if (href.match(/collection_id/)) {
+          if (href.match(/(collection_id|\?)/)) {
               href += '&confirmed';
           } else {
               href += '?confirmed';
@@ -1103,7 +1103,7 @@ function confirmExpInstall(div) {
 
     var tmp = $(bt).attr('engineURL');
     if (tmp && tmp.match(/\.xml$/)) {
-          if (tmp.match(/collection_id/)) {
+          if (tmp.match(/(collection_id|\?)/)) {
               tmp += "&confirmed";
           } else {
               tmp += "?confirmed";
