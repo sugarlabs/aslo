@@ -655,6 +655,8 @@ CREATE TABLE `stats_contributions` (
   `source` varchar(255) default '',
   `annoying` int(11) unsigned NOT NULL default '0',
   `uuid` varchar(255) default NULL,
+  `is_suggested` tinyint(1) unsigned NOT NULL default '0',
+  `suggested_amount` varchar(255) default NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   KEY `addon_id` (`addon_id`),
   CONSTRAINT `stats_contributions_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`),

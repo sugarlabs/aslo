@@ -135,20 +135,23 @@ class AddonsController extends AppController
         }
 
         $type = isset($_GET['type']) ? $_GET['type'] : null;
+        $is_suggested = $type === 'suggested';
         $source = isset($_GET['source']) ? $_GET['source'] : null;
 
         $a = $addon['Addon'];
-        $amount = ($type === 'suggested' && !empty($a['suggested_amount']))
+        $amount = ($is_suggested && !empty($a['suggested_amount']))
                     ? $a['suggested_amount'] : null;
 
         $uuid = md5(uniqid(mt_rand(), true));
         $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
         $sql = "INSERT INTO stats_contributions
-                (addon_id, amount, source, annoying, created, uuid)
+                (addon_id, amount, source, annoying, created,
+                 uuid, is_suggested, suggested_amount)
                 VALUES
                 ({$db->value($addon_id)}, {$db->value($amount)},
                  {$db->value($source)}, {$a['annoying']},
-                  NOW(), '{$uuid}')";
+                 NOW(), {$db->value($uuid)}, {$db->value($is_suggested)},
+                 {$db->value($a['suggested_amount'])})";
         $this->Addon->execute($sql);
 
         $return_url = $this->url("/addons/after_contribute/{$a['id']}/{$uuid}");
