@@ -236,7 +236,7 @@ class ReviewsController extends AppController
             return;
         }
         
-        $addon = $this->Addon->findById($id);
+        $addon = $this->Addon->getAddon($id);
         if (empty($addon)) {
             $this->flash(_('error_addon_notfound'), '/', 3);
             return;
