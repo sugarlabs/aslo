@@ -110,33 +110,7 @@ class FilesController extends AppController
             $startfile = $file['File']['filename'];
             $this->Filebrowser->buildContentsArray($startfile, false, false, $files);
         } else {
-            $zip = new Archive_Zip($path);
-            $contents = $zip->listContent();
-
-            foreach ($contents as $content) {
-                $isJar = false;
-
-                if (substr($content['filename'], strrpos($content['filename'], '.')) == '.jar') {
-                    $content['folder'] = 1;
-                    $isJar = true;
-                }
-
-                $this->Filebrowser->buildContentsArray($content['filename'], $content['folder'], false, $files);
-
-                if ($isJar == true) {
-                    $filename = substr($content['filename'], strrpos($content['filename'], '/'));
-                    $jarfile = $zip->extract(array('extract_as_string' => true, 'by_name' => array($content['filename'])));
-
-                    //write a .jar file with the .jar contents to extract in a new Archive_Zip
-                    //I spent a long time trying to figure out an easier way, but no such luck
-                    $jarcontents = $this->Filebrowser->getJarContents(REPO_PATH.'/temp'.$filename, $jarfile[0]['content']);
-
-                    foreach ($jarcontents as $jarcontent) {
-                        $this->Filebrowser->buildContentsArray($content['filename'].'/'.$jarcontent['filename'], $jarcontent['folder'], false, $files);
-                    }
-
-                }
-            }
+            $this->_unwrap($path, $files);
         }
 
 		//If a specific start file is requested, override it
@@ -154,6 +128,90 @@ class FilesController extends AppController
         $this->publish('addontype', $addontype);
         $this->publish('startfile', $startfile);
         $this->render('browse', 'ajax');
+    }
+
+    /* Recursively go through a zippy
+     * @param $path path to .xpi or .jar file
+     * @param $files empty array. Get's populated by buildContentsArray()
+     * @param $basename Leave empty. For internal use to track where we are.
+     */
+    function _unwrap($path, &$files, $basename = '') {
+        $zip = new Archive_Zip($path);
+        $contents = $zip->listContent();
+
+        foreach ($contents as $content) {
+            $isJar = false;
+            $filename = $content['filename'];
+            $ext = substr($filename, strrpos($filename, '.'));
+            $basefilename = ($basename ? $basename . '/' . $filename : $filename);
+
+            if ($ext == '.jar' || $ext == '.xpi') {
+                $content['folder'] = 1;
+                $isJar = true;
+            }
+
+            $this->Filebrowser->buildContentsArray($basefilename, $content['folder'], false, $files);
+
+            if ($isJar == true) {
+                $jarfilename = substr($filename, strrpos($filename, '/'));
+                $jarfile = $zip->extract(array('extract_as_string' => true, 'by_name' => array($filename)));
+                $jarpath = REPO_PATH. '/temp' . $jarfilename;
+
+                file_put_contents($jarpath, $jarfile[0]['content']);
+                $this->_unwrap($jarpath, $files, $basefilename);
+                unlink($jarpath);
+            }
+        }
+    }
+
+    /* Like _unwrap, but kept seperate since this one is much more intensive.
+     * Yeah, duplicate code sucks. sorry.
+     */
+    function _unwrapDiff($sandbox_path, $public_path, &$files, $basename = '') {
+        $zip_sandbox = new Archive_Zip($sandbox_path);
+        $zip_public = new Archive_Zip($public_path);
+
+        $public_contents = $zip_public->extract(array('extract_as_string' => true));
+        $sandbox_contents = $zip_sandbox->extract(array('extract_as_string' => true));
+
+        foreach ($sandbox_contents as $content) {
+            $isJar = false;
+            $changed = false;
+            $filename = $content['filename'];
+            $ext = substr($filename, strrpos($filename, '.'));
+            $basefilename = ($basename ? $basename . '/' . $filename : $filename);
+
+            // Checks if this file exists in the recent public version
+            $i = $this->Filebrowser->getFilenameIndex($public_contents, $filename);
+
+            if ($ext == '.jar' || $ext == '.xpi') {
+                $content['folder'] = 1;
+                $isJar = true;
+            } else if ($content['folder'] == false) {
+                if ($i != -1) {
+                    $sha1_public = sha1($public_contents[$i]['content']);
+                    $sha1 = sha1($content['content']);
+                    $changed = ($sha1_public != $sha1);
+                } else {
+                    $changed = true;
+                }
+            }
+
+            $this->Filebrowser->buildContentsArray($basefilename, $content['folder'], $changed, $files);
+
+            if ($isJar == true && $i != -1) {
+                $jarfilename = substr($filename, strrpos($filename, '/'));
+                $sandbox_jarpath = tempnam(REPO_PATH. '/temp/', $jarfilename);
+                $public_jarpath = tempnam(REPO_PATH. '/temp/', $jarfilename);
+
+                file_put_contents($sandbox_jarpath, $content['content']);
+                file_put_contents($public_jarpath, $public_contents[$i]['content']);
+                $this->_unwrapDiff($sandbox_jarpath, $public_jarpath, $files, $basefilename);
+
+                unlink($sandbox_jarpath);
+                unlink($public_jarpath);
+            }
+        }
     }
     
    /**
@@ -219,69 +277,11 @@ class FilesController extends AppController
             return;
         }
 
-        $zip = new Archive_Zip($path);
-        $zip_public = new Archive_Zip(REPO_PATH.'/'.$this->Addon->id.'/'.$public_file['File'][0]['filename']);
-        $contents = $zip->extract(array('extract_as_string' => true));     
-        $contents_public = $zip_public->extract(array('extract_as_string' => true));
-
         $files = array();
-        foreach ($contents as $content) {
-            $isJar = false;
-            $changed = false;
-
-            /* Checks if this file exists in the recent public version */
-            $i = $this->Filebrowser->getFilenameIndex($contents_public, $content['filename']);
-
-            if (substr($content['filename'], strrpos($content['filename'], '.')) == '.jar') {
-                $content['folder'] = 1;
-                $isJar = true;
-            } else if ($content['folder'] == false) {
-
-                if ($i != -1) {
-                    $sha1_public = sha1($contents_public[$i]['content']);
-                    $sha1 = sha1($content['content']);
-                    $changed = ($sha1_public != $sha1);
-                } else {
-                    $changed = true;
-                }
-            }
-
-            $this->Filebrowser->buildContentsArray($content['filename'], $content['folder'], $changed, $files);
-
-            if ($isJar == true) {
-                $changed = false;
-                $filename = substr($content['filename'], strrpos($content['filename'], '/'));
-
-                //write a .jar file with the .jar contents to extract in a new Archive_Zip
-                //I spent a long time trying to figure out an easier way, but no such luck
-                $jarcontents = $this->Filebrowser->getJarContents(REPO_PATH.'/temp'.$filename, $content['content']);
-                $jarcontents_public = $this->Filebrowser->getJarContents(REPO_PATH.'/temp'.$filename . '-public', $contents_public[$i]['content']);
-
-                foreach ($jarcontents as $jarcontent) {
-                    $changed = false;
-                    $j = $this->Filebrowser->getFilenameIndex($jarcontents_public, $jarcontent['filename']);
-
-                    if ($jarcontent['folder'] == false) {
-                        if ($j != -1) {
-                            $sha1_public = sha1($jarcontents_public[$j]['content']);
-                            $sha1 = sha1($jarcontent['content']);
-                            $changed = ($sha1_public != $sha1);
-                        } else {
-                            $changed = true;
-                        }
-                    }
-
-                    $this->Filebrowser->buildContentsArray($content['filename'].'/'.$jarcontent['filename'], $jarcontent['folder'], $changed, $files);
-                }
-
-            }
-
-            if ($isJar || $content['filename'][ strlen($content['filename']) - 1 ] == '/')
-                $content['content'] = '';
-        }
+        $this->_unwrapDiff($path, REPO_PATH.'/'.$this->Addon->id.'/'.$public_file['File'][0]['filename'], $files);
 
         $this->publish('id', $file_id);
-        $this->publish('contents', $contents);
+        $this->publish('contents', '');
         $this->publish('files', $files);
         $this->publish('version', $file['Version']['id']);
         $this->publish('addon', $this->Addon->id);
@@ -407,7 +407,7 @@ class FilesController extends AppController
     }
 
     /* $path must refer to a file that exists */
-    function _get_contents($path, $file, $addontype) {
+    function &_get_contents($path, $file, $addontype) {
         $this->Amo->clean($path);
 
         // Search engine. Safe to output directly
@@ -421,9 +421,9 @@ class FilesController extends AppController
             }
         }
 
-        if (preg_match("/^(.+\.jar)\/(.+)$/is", $file, $matches)) {
+        if (preg_match("/^(.+?\.(jar|xpi))\/(.+)$/is", $file, $matches)) {
             $file = $matches[1];
-            $jarfile = $matches[2];
+            $jarfile = $matches[3];
             $jarfilename = substr($file, strrpos($file, '/'));
         }
         $zip = new Archive_Zip($path);
@@ -437,13 +437,12 @@ class FilesController extends AppController
         }
 
         if (!empty($jarfile)) {
-            $jarcontents = $this->Filebrowser->getJarContents(REPO_PATH.'/temp'.$jarfilename, $contents, $jarfile);
-            if (is_array($jarcontents) && count($jarcontents) > 0) {
-                $contents = (string)$jarcontents[0]['content'];
-            }
-            else {
-                $contents = false;
-            }
+            $jarpath = REPO_PATH . '/temp' . $jarfilename;
+            file_put_contents($jarpath, $contents);
+
+            $contents = &$this->_get_contents($jarpath, $jarfile, $addontype);
+
+            unlink($jarpath);
         }
 
         return $contents;
