@@ -167,7 +167,7 @@ class AddonCollection extends AppModel
      * @param string $app (optional) application ID to restrict search to, default all
      * @return array collection ids
      */
-    function getPopularCollectionsForAddon($addon_id, $limit = 3, $app = null) {
+    function getPopularCollectionsForAddon($addon_id, $limit = 3, $app = null, $includeprivate = false) {
         if (!is_numeric($addon_id)) return false;
 
         if (is_numeric($limit) && $limit > 0)
@@ -179,6 +179,10 @@ class AddonCollection extends AppModel
             $_where = " AND c.application_id = {$app}";
         } else {
             $_where = '';
+        }
+
+        if (!$includeprivate) {
+            $_where .= ' AND listed=1';
         }
 
         $colls = array();
