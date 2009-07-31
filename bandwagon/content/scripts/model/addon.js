@@ -287,10 +287,14 @@ Bandwagon.Model.Addon.prototype.unserialize = function(xaddon)
         this.compatibleApplications[application.name.toUpperCase()] = application;
     }
 
+    this.authors = {};
+
     for each (var xauthor in xaddon.authors.author)
     {
         this.authors[xauthor.text().toString()] = xauthor.text().toString();
     }
+
+    this.categories = {};
 
     for each (var xcategory in xaddon.categories.category)
     {
