@@ -326,7 +326,12 @@ Bandwagon.RPC.Net.prototype.send = function()
 
     if ('POST' == rpcnet._method)
     {
-        rpcnetrequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        rpcnetrequest.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    }
+
+    if ('POST' == rpcnet._method || 'PUT' == rpcnet._method)
+    {
+        rpcnetrequest.setRequestHeader('Content-length', postData.length);
     }
 
     for (var header in rpcnet._headers)
