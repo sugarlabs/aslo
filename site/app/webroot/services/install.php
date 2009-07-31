@@ -61,6 +61,7 @@
 define('REGEX_MOZILLA', '/^https?:\/\/[^\/]*\.?mozilla\.(com|org)\/?.*/');
 define('REGEX_LOCALHOST', '/https?:\/\/[^\/]*\.?localhost.*/');
 define('REGEX_PERSONAS', '/https?:\/\/[^\/]*\.?getpersonas\.com\/?.*/');
+define('REGEX_LABS', '/https?:\/\/[^\/]*\.?mozillalabs\.com\/?.*/');
 
 // If an add-on's referrers property is set, defaults will not be used unless specified
 $default_referrers = array('document.referrer.match('.REGEX_MOZILLA.')',
@@ -152,6 +153,15 @@ $addons = array(
                     'name' => 'Weave',
                     'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/10868',
                     'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/10868/1236131155'
+            ),
+            
+            'jetpack' => array(
+                    'name' => 'Jetpack',
+                    'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/12025',
+                    'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/12025',
+                    'referrers' => array_merge($default_referrers, array(
+                            'document.referrer.match('.REGEX_LABS.')'
+                    ))
             )
     );
 
