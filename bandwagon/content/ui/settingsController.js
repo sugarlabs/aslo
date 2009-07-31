@@ -563,8 +563,15 @@ Bandwagon.Controller.Settings.doCreateAutoPublisher = function()
         {
             if (event.getError().getMessage() == "invalid_parameters")
             {
-                // this happens when the api doesn't like the collection name or description. TODO do we need a better error her?
-                document.getElementById("auto-error").value = Bandwagon.Controller.Settings.stringBundle.getString("auto.create.internal.error");
+                try
+                {
+                  document.getElementById("auto-error").value = Bandwagon.Controller.Settings.stringBundle.getString("auto.create.invalid.parameters");
+                }
+                catch (e)
+                {
+                  // l10n fallback string
+                  document.getElementById("auto-error").value = Bandwagon.Controller.Settings.stringBundle.getString("auto.create.internal.error");
+                }
             }
             else
             {
