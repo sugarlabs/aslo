@@ -151,10 +151,15 @@ Bandwagon.Controller.Publish.doCancel = function()
 
 Bandwagon.Controller.Publish._publishToCollection = function()
 {
+    var personalNote = document.getElementById("personal-note").value;
+
+    // bug 507327
+    personalNote = personalNote.replace(/([\n\r])/gi, "$1 ");
+    
     bandwagonService.publishToCollection(
         Bandwagon.Controller.Publish.publishExtension,
         Bandwagon.Controller.Publish.publishDestination,
-        document.getElementById("personal-note").value,
+        personalNote,
         Bandwagon.Controller.Publish.finished
         );
 }
