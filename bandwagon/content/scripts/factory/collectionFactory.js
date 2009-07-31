@@ -742,11 +742,12 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddon = function(collection
 
 Bandwagon.Factory.CollectionFactory.prototype._commitAddonCompatibleApplication = function(addonStorageID, application)
 {
-    var statement = this.connection.createStatement("DELETE FROM addonCompatibleApplications WHERE addon = ?1");
+    var statement = this.connection.createStatement("DELETE FROM addonCompatibleApplications WHERE addon = ?1 AND applicationId = ?2");
 
     try
     {
         statement.bindInt32Parameter(0, addonStorageID);
+        statement.bindInt32Parameter(1, application.applicationId);
         statement.execute();
     }
     finally
