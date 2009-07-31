@@ -16,3 +16,5 @@ UPDATE users SET
 TRUNCATE cache;
 
 TRUNCATE cake_sessions;
+
+TRUNCATE tshirt_requests;
