@@ -107,6 +107,8 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
         <? endif; ?>
         </ul>
     <? endforeach; ?>
+    <? else: ?>
+        <i><?= ___('devcp_all_tests_passed', 'All tests passed.') ?></i>
     <? endif; ?>
 <? else: ?>
     <i><?= ___('devcp_versions_validate_no_results', 'No test results found.') ?></i>

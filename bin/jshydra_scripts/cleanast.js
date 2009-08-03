@@ -184,7 +184,7 @@ function make_object(stub) {
   }
   for each (let init in ast.kids) {
     if (init.type != 6) {
-      dump_ast(init);
+      //dump_ast(init);
     }
     assert(init.type == 6); // TOK_COLON
     if (init.kids[0].type == 29) { // TOK_NAME
@@ -212,7 +212,7 @@ function make_object(stub) {
       else
         stub.variables[name] = { loc: get_location(value), init: value };
     } else {
-      dump_ast(init);
+      //dump_ast(init);
     }
   }
   return stub;

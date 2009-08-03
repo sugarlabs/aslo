@@ -454,7 +454,7 @@ class ValidationTest extends UnitTestCase {
         file_put_contents(CACHE_PFX . '1/bad.js', "-moz-binding: non-chrome-url");
                 
         $results = $this->controller->Validation->all_security_filterRemoteJS($file);
-        $expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:\s+(?!url\(["\']chrome:\/\/.*\/content\/)/"');
+        $expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:\s*(?!url\s*\(\s*(["\'])?chrome:\/\/.*\/content\/)/"');
         $this->assertEqual($results, $expected, 'Results are warnings with appropriate file and line numbers: %s');
     }
 
@@ -830,13 +830,16 @@ not so much here!";
         
         // Give this some data to generate problems
         file_put_contents(CACHE_PFX . '1/bad.js', "\nvar bad;\n");
-        
+
+        // Clear any old results
+        $this->controller->TestResult->deleteOldResults(1, 1);
+
         $this->controller->Validation->runTest(1, 1);
         $file = $this->controller->File->findById(1);
         $result = $this->controller->TestResult->find(array('File.id' => 1, 'TestResult.result' => TEST_WARN));
 
-        // Failed tes should generate a preview
-        $this->controller->Validation->getResultPreview($result, $file);
+        // Failed test should generate a preview
+        $this->controller->Validation->getResultPreview($result, $file);        
         $this->assertTrue(array_key_exists('preview', $result['TestResult']), 'Previews are generated on failed tests: %s');
         $this->assertEqual(count($result['TestResult']['preview']), 3, 'Previews provide context around data: %s');
     }
@@ -939,7 +942,7 @@ not so much here!";
         $file = $this->controller->File->findById(3);
         $files = $this->controller->Validation->_extract($file, 'by_preg', '/\.js$/i');
         
-        $this->assertEqual(count($files), 2, 'Default add-on contains 2 JS files: %s');
+        $this->assertEqual(count($files), 4, 'Default add-on contains 4 JS files: %s');
         
         // Test bad extraction
         $files = $this->controller->Validation->_extract($file, 'by_name', 'this-doesnt-exist');

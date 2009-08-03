@@ -391,7 +391,7 @@ class ValidationComponent extends Object {
         }
 
         $extracted = $this->_extract($file, 'by_preg', '/\.js/', false);
-        
+       
         // No JS to be polluted 
         if (empty($extracted)) 
             return array();
@@ -509,11 +509,12 @@ class ValidationComponent extends Object {
         $unsafePatterns = array('/nsIProcess/',
                           '/\.launch/',
                           '/eval/',
-                          '/<browser\s+(?![^<>]*type=["\'])[^<>]+>/i',
+                          '/<browser\s*(?![^<>]*type=["\'])[^<>]*>/i',
                           '/<iframe\s*(?![^<>]*type=["\'])[^<>]*>/i',
                           '/xpcnativewrappers=/',
                           '/evalInSandbox/',
-                          '/mozIJSSubscriptLoader/');
+                          '/mozIJSSubscriptLoader/',
+                          '/wrappedJSObject/');
 
         return $this->_grepExtractedFiles($extracted, $unsafePatterns);
 
@@ -553,7 +554,7 @@ class ValidationComponent extends Object {
         // Grab the location of the file and extract any files, since JS can live in many places
         $extracted = $this->_extract($file, 'by_preg', '//');
 
-        return $this->_grepExtractedFiles($extracted, array('/-moz-binding:\s+(?!url\(["\']chrome:\/\/.*\/content\/)/'));
+        return $this->_grepExtractedFiles($extracted, array('/-moz-binding:(?!\s*url\s*\(\s*["\']?chrome:\/\/.*\/content\/)/'));
     }
 
     /**
@@ -1009,7 +1010,7 @@ class ValidationComponent extends Object {
                 $this->_deleteDir($tmp_loc);
             }
         }
-
+        
         // If the file doesn't exist, do the extraction
         if (!file_exists($tmp_loc)) {
 
@@ -1019,7 +1020,30 @@ class ValidationComponent extends Object {
             
             $file_loc = REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename'];
             $zip = new Archive_Zip($file_loc);
-            $zip->extract(array('add_path' => $tmp_loc));         
+            $extracted = $zip->extract(array('add_path' => $tmp_loc));
+            
+            // We need to recursively extract contents as well
+            while ($fileInfo = array_shift($extracted)) {
+                $name = $fileInfo['filename'];
+                $ext = substr($name, strrpos($name, '.'));
+                if ($ext == '.xpi' || $ext == '.jar') {
+                    // This is a jar, extract this
+                    $tmpjar = $name . '.tmp';
+                    copy($name, $tmpjar);
+                    
+                    // The jar is now a folder on disk
+                    unlink($name);
+                    mkdir($name);
+  
+                    // Finally, extract.  Add the results to our list so that they 
+                    // can be extracted as well if there are nested archives
+                    $zip = new Archive_Zip($tmpjar);
+                    $contents = $zip->extract(array('add_path' => $name));
+                    $extracted = array_merge($extracted, $contents);
+                    
+                    unlink($tmpjar);
+                }
+            }
         }
 
         // Wrap extraction if needed
