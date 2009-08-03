@@ -99,7 +99,9 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
         <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><?=$addonName?></a>
         <span title="<?=___('addons_author_tooltip') ?>"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></span>
     </h3>
-    <img src="<?=$addonIconPath?>" width="32" height="32" alt="<?=$_alt?>" title="<?=$_alt?>" class="icon"/>
+    <a title="<?=___('addons_title_tooltip') ?>" href="<?=$html->url("/addon/{$addonId}")?>">
+	<img src="<?=$addonIconPath?>" width="32" height="32" alt="<?=$_alt?>" title="<?=$_alt?>" class="icon"/>
+    </a>
     <blockquote cite="#"><p><?=$addonSummary?></p></blockquote>
     <div class="meta">
         <?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?>
