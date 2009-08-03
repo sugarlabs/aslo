@@ -1047,7 +1047,10 @@ CREATE TABLE `text_search_summary` (
   `name` text,
   `summary` text,
   `description` text,
-  FULLTEXT KEY `name` (`name`,`summary`,`description`)
+  `tags` text,
+  FULLTEXT KEY `name` (`name`,`summary`,`description`),
+  FULLTEXT KEY `na_su_de_ta` (`name`,`summary`,`description`,`tags`),
+  FULLTEXT KEY `tags` (`tags`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --

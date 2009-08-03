@@ -1054,11 +1054,19 @@ a.averagerating AS averagerating,
 a.weeklydownloads AS weeklydownloads,
 `tr_name`.localized_string AS name, 
 `tr_summary`.localized_string AS summary, 
-`tr_description`.localized_string AS description
+`tr_description`.localized_string AS description,
+`tags`
 FROM addons AS a 
 LEFT JOIN translations AS `tr_name` ON (`tr_name`.id = a.`name`) 
 LEFT JOIN translations AS `tr_summary` ON (`tr_summary`.id = a.`summary` AND  `tr_name`.locale = `tr_summary`.locale) 
 LEFT JOIN translations AS `tr_description` ON (`tr_description`.id = a.`description` AND  `tr_name`.locale = `tr_description`.locale)
+LEFT JOIN (
+  SELECT uta.addon_id,
+         GROUP_CONCAT(DISTINCT REPLACE(t.tag_text, ' ', '')  SEPARATOR ',') AS tags
+  FROM users_tags_addons uta, tags t
+  WHERE uta.tag_id = t.id
+  GROUP BY uta.addon_id
+) addon_tags ON ( a.id = addon_tags.addon_id)
 WHERE `tr_name`.locale IS NOT NULL 
 AND 
 (`tr_name`.localized_string IS NOT NULL 
