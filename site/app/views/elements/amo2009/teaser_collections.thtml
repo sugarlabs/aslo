@@ -86,10 +86,13 @@
                             <?  $flags = array($html->byStatus($addon, array('experimental' => 'experimental', 'recommended' => 'recommended', 'default' => 'default'))); ?>
                             <div class="<?=(0==$idx)?'first ':''?>column">
                                 <div class="column-inner item <?=join(' ', $flags)?>">
-                                <img src="<?=$this->controller->Image->getAddonIconURL($addon['Addon']['id'])?>" 
-                                        alt="<?=$addon['Translation']['name']['string']?>" 
+                                <a title="<?=___('addons_title_tooltip') ?>"
+                                        href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>">
+                                    <img src="<?=$this->controller->Image->getAddonIconURL($addon['Addon']['id'])?>"
+                                        alt="<?=$addon['Translation']['name']['string']?>"
                                         width="32" height="32" class="icon" />
-                                    <h3><a title="<?=___('addons_title_tooltip') ?>" 
+                                </a>
+                                <h3><a title="<?=___('addons_title_tooltip') ?>"
                                         href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><?=$addon['Translation']['name']['string']?></a></h3>
                                     <p><?=$html->truncateChars(80, $addon['Translation']['summary']['string'], true)?></p>
                                     <p>
