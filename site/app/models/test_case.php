@@ -85,7 +85,9 @@ class TestCase extends AppModel
             '322' => ___('test_case_name_langpack_security_checkRemoteLoading', 'Remote Loading Check'),
             '323' => ___('test_case_name_langpack_security_checkChromeManifest', 'chrome.manifest Check'),
             '411' => ___('test_case_name_theme_general_verifyFileLayout', 'File Layout Check'),
-            '421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check')
+            '421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check'),
+            '511' => ___('test_case_name_search_general_checkFormat', 'Opensearch Format Check'),
+            '521' => ___('test_case_name_search_security_checkUpdateURL', 'UpdateURL Check')
         );
 
         // Might not even need this ...
@@ -111,7 +113,9 @@ class TestCase extends AppModel
             '322' => ___('test_case_name_langpack_security_checkRemoteLoading', 'Remote Loading Check'),
             '323' => ___('test_case_name_langpack_security_checkChromeManifest', 'chrome.manifest Check'),
             '411' => ___('test_case_name_theme_general_verifyFileLayout', 'File Layout Check'),
-            '421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check')
+            '421' => ___('test_case_name_theme_security_checkChromeManifest', 'chrome.manifest Check'),
+            '511' => ___('test_case_name_search_general_checkFormat', 'Opensearch Format Check'),
+            '521' => ___('test_case_name_search_security_checkUpdateURL', 'UpdateURL Check')
         );
 
 

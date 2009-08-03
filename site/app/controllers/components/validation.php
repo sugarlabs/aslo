@@ -39,7 +39,7 @@ require_once('Archive/Zip.php');
 
 class ValidationComponent extends Object {
     var $controller;
-    var $components = array('Amo', 'Developers', 'Rdf');
+    var $components = array('Amo', 'Opensearch', 'Rdf');
 
     /**
      * Save a reference to the controller on startup
@@ -837,6 +837,38 @@ class ValidationComponent extends Object {
     }
 
     /**
+     * Verifies that the search engine conforms to Opensearch format
+     * @param array $file the file in model format
+     * @return array an arrat of test results, empty if there is no result
+     */
+    function search_general_checkFormat($file) {
+        
+        $result = $this->Opensearch->parse(REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename']);
+        if ($result == null) {
+            return $this->_resultFail(0, '', ___('devcp_error_search_wrong_format', 'The search engine could not be parsed according to the OpenSearch format.'));
+        } 
+
+        return $this->_resultPass();
+    }
+
+    /**
+     * Disallows updateURLs as part of the search plugin
+     * @param array $file the file in model format
+     * @return array an arrat of test results, empty if there is no result
+     */
+    function search_security_checkUpdateURL($file) {
+        
+        $search = $this->Opensearch->parse(REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename']);
+        if ($search == null) return array();
+
+        if ($search->updateUrl != '') {
+            return $this->_resultFail(0, '', ___('devcp_error_search_upadteurl', 'The search engine contains an updateURL element, which is not allowed.'));
+        }
+
+        return $this->_resultPass();
+    }
+
+    /**
      * Verfies the reqired files are present for a theme
      * @param array $file the file in model format
      * @return array an arrat of test results, empty if there is no result
@@ -997,7 +1029,7 @@ class ValidationComponent extends Object {
      * @return array the result of the extraction
      */
     function _extract($file, $extract_by, $extract_what, $get_contents = true, $expires = '+1 day') {
-
+        
         // Cache location
         $tmp_loc = NETAPP_STORAGE . '/validate-' . $file['File']['id'];
 
@@ -1020,8 +1052,11 @@ class ValidationComponent extends Object {
             
             $file_loc = REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename'];
             $zip = new Archive_Zip($file_loc);
+            if ($zip->errorCode()) return array();
+
             $extracted = $zip->extract(array('add_path' => $tmp_loc));
-            
+            if ($zip->errorCode()) return array();
+
             // We need to recursively extract contents as well
             while ($fileInfo = array_shift($extracted)) {
                 $name = $fileInfo['filename'];

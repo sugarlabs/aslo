@@ -142,6 +142,18 @@ Any other files will generate warnings.</dd>
 <dd>The allowed lines in the chrome.manifest files are comments (#), locale, and override.</dd>
 </dl>
 
+<h2>Search Engine Tests</h2>
+<p>This group of tests scans add-ons for potential problems that are specific to search engines.  This includes parsing and verifying the format of the search engine's XML file.</p>
+
+<dl>
+<dt id="help-511>OpenSearch Check</dt>
+<dd>Search engines should conform to the OpenSearch format.  Search engines that cannot be parsed using OpenSearch will be rejected.</dd>
+
+<dt id="help-521">UpdateURL check</dt>
+<dd>Search engines are not allowed to specify an updateURL, as all updates are handled through the AMO update service</dd>
+
+</dl>
+
 <h2>Theme Tests</h2>
 <p>This group of tests scans add-ons for potential problems that are specific to themes.  This includes verifying the existence of required files, and checking for a valid chrome.manifest file.</p>
 

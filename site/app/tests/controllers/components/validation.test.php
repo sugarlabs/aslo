@@ -54,6 +54,8 @@ class ValidationTest extends UnitTestCase {
         $this->controller->Amo =& new AmoComponent();
         $this->controller->Amo->startup($this->controller);
         $this->controller->Validation->Amo =& $this->controller->Amo;
+        loadComponent('Opensearch');
+        $this->controller->Validation->Opensearch =& new OpensearchComponent();
         loadComponent('Rdf');
         $this->controller->Validation->Rdf =& new RdfComponent();
 
@@ -763,6 +765,93 @@ override chrome://bad-url";
 
         $expected = $this->controller->Validation->_result(TEST_WARN, 4, 'chrome.manifest', 'Matched Pattern: "/^(?!(#|locale |override(\s+chrome:\/\/.*\/locale\/[^\s]*)+))/"');
         $this->assertEqual($results[0], $expected, 'Results are warnings with appropriate line and file: %s');
+    }
+
+
+    /**
+     * Tests the search_general_checkFormat() method
+     */
+    function testSearch_general_checkFormat() {
+        
+        // Create a sample search engine to pass
+        $file = $this->controller->File->findById(4);
+        $file['Version']['addon_id'] = 'temp';
+        $file['File']['filename'] = 'test-search';
+        $data = "<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearchdescription/1.1/\">
+             <ShortName>OpenSearch Test</ShortName>
+             <Alias>OST</Alias>
+             <Description>This is a test plugin.</Description>
+             <InputEncoding>UTF-8</InputEncoding>
+             <Image width=\"16\" height=\"16\">data:image/x-icon;base64,</Image>
+             <Url type=\"text/html\" method=\"get\" template=\"http://test.template.url/search/\">
+               <Param name=\"q\" value=\"{searchTerms}\"/>
+               <Param name=\"sourceid\" value=\"firefox\"/>
+             </Url>
+             </OpenSearchDescription>";
+        file_put_contents(REPO_PATH . '/temp/test-search', $data);
+        
+        $results = $this->controller->Validation->search_general_checkFormat($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample search engine should validate: %s');
+
+        // Use another addon to test for failure
+        $file = $this->controller->File->findById(1);
+        
+        $results = $this->controller->Validation->search_general_checkFormat($file);
+        $expected = $this->controller->Validation->_resultFail(0, '', 'The search engine could not be parsed according to the OpenSearch format.');
+        $this->assertEqual($results, $expected, 'Results are failures if the search engine cannot be parsed: %s');
+
+        unlink(REPO_PATH . '/temp/test-search');
+    }
+
+    /**
+     * Tests the search_security_checkUpdateURL() method
+     */
+    function testSearch_security_checkUpdateURL() {
+
+        // Sample search engine should pass
+        $file = $this->controller->File->findById(4);
+        $file['Version']['addon_id'] = 'temp';
+        $file['File']['filename'] = 'test-search';
+        $data = "<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearchdescription/1.1/\">
+             <ShortName>OpenSearch Test</ShortName>
+             <Alias>OST</Alias>
+             <Description>This is a test plugin.</Description>
+             <InputEncoding>UTF-8</InputEncoding>
+             <Image width=\"16\" height=\"16\">data:image/x-icon;base64,</Image>
+             <Url type=\"text/html\" method=\"get\" template=\"http://test.template.url/search/\">
+               <Param name=\"q\" value=\"{searchTerms}\"/>
+               <Param name=\"sourceid\" value=\"firefox\"/>
+             </Url>
+             </OpenSearchDescription>";
+        file_put_contents(REPO_PATH . '/temp/test-search', $data);        
+        
+        $results = $this->controller->Validation->search_security_checkUpdateURL($file);
+        $pass = $this->controller->Validation->_resultPass();
+        $this->assertEqual($results, $pass, 'Sample search engine should not have an updateURL: %s');
+
+        // Create a bad UpdateURL element
+        $data = "<OpenSearchDescription xmlns=\"http://a9.com/-/spec/opensearchdescription/1.1/\">
+             <ShortName>OpenSearch Test</ShortName>
+             <Alias>OST</Alias>
+             <Description>This is a test plugin.</Description>
+             <InputEncoding>UTF-8</InputEncoding>
+             <Image width=\"16\" height=\"16\">data:image/x-icon;base64,</Image>
+             <Url type=\"text/html\" method=\"get\" template=\"http://test.template.url/search/\">
+               <Param name=\"q\" value=\"{searchTerms}\"/>
+               <Param name=\"sourceid\" value=\"firefox\"/>
+             </Url>
+             <UpdateUrl>http://fake.update.url/</UpdateUrl>
+             <UpdateInterval>7</UpdateInterval>
+             <IconUpdateUrl>http://fake.icon.update.url/</IconUpdateUrl>
+             </OpenSearchDescription>";
+        file_put_contents(REPO_PATH . '/temp/test-search', $data);
+        
+        $results = $this->controller->Validation->search_security_checkUpdateURL($file);
+        $expected = $this->controller->Validation->_resultFail(0, '', 'The search engine contains an updateURL element, which is not allowed.');
+        $this->assertEqual($results, $expected, 'Results are failures if the search engine contains an updateURL: %s');
+
+        unlink(REPO_PATH . '/temp/test-search');
     }
 
     /**

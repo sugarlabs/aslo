@@ -1423,7 +1423,9 @@ INSERT INTO `test_cases` (`id`, `test_group_id`, `help_link`, `function`) VALUES
 (321,32,NULL,'langpack_security_filterUnsafeHTML'),(322,32,NULL,'langpack_security_checkRemoteLoading'),
 (323,32,NULL,'langpack_security_checkChromeManifest'),
 (411,41,NULL,'theme_general_verifyFileLayout'),
-(421,42,NULL,'theme_security_checkChromeManifest');
+(421,42,NULL,'theme_security_checkChromeManifest'),
+(511,51,NULL,'search_general_checkFormat'),
+(521,52,NULL,'search_security_checkUpdateURL');
 
 --
 -- Initialize `translations_seq` to be the number of the last entry
