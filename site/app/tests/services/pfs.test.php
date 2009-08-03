@@ -171,7 +171,7 @@ class  PluginFinderServiceTest extends UnitTestCase {
                 'chromeLocale'=>'en-US'
             )
         );
-        $this->assertNoPattern('/.*'.preg_quote('http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-linux.xpi','/').'.*/',$_xml,'No Flash XPI offered for Firefox 3 on Linux.');
+        $this->assertPattern('/.*'.preg_quote('http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-linux.xpi','/').'.*/',$_xml,'Flash XPI offered for Firefox 3 on Linux.');
 
         $_xml = $this->_getXml(
             array(
@@ -183,7 +183,7 @@ class  PluginFinderServiceTest extends UnitTestCase {
                 'chromeLocale'=>'en-US'
             )
         );
-        $this->assertNoPattern('/.*'.preg_quote('http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-mac.xpi','/').'.*/',$_xml,'No Flash XPI offered for Firefox 3 on Intel Mac OS X.');
+        $this->assertPattern('/.*'.preg_quote('http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-mac.xpi','/').'.*/',$_xml,'Flash XPI offered for Firefox 3 on Intel Mac OS X.');
     }
 
     /**

@@ -116,7 +116,7 @@ if (!empty($mimetype) &&
             $licenseURL = 'http://www.adobe.com/go/eula_flashplayer_jp';
         }
 
-        if (preg_match('/^Windows NT 6\.0/', $clientOS) &&  preg_match('/^3\.5.+/', $appRelease)) {
+        if (preg_match('/^Windows NT 6\.0/', $clientOS) && preg_match('/^3\.5.*/', $appRelease)) {
             $guid = '{4cfaef8a-a6c9-41a0-8e6f-967eb8f49143}';
             $XPILocation = null;
             $licenseURL = null;
@@ -377,7 +377,7 @@ $plugin['needsRestart'] = !empty($needsRestart) ? $needsRestart : 'true';
  *
  * This is a one-off fix for bug 433592.
  */
-if (!empty($appRelease) && preg_match('/^3\.0.+/', $appRelease) && preg_match('/^Windows NT 6\.0/', $clientOS)) {
+if (!empty($appRelease) && preg_match('/^(3\.0|2\.0).*/', $appRelease) && preg_match('/^Windows NT 6\.0/', $clientOS)) {
     $plugin['XPILocation'] = null;
     $plugin['InstallerLocation'] = null;
     $plugin['InstallerHash'] = null;
