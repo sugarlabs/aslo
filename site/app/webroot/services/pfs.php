@@ -116,10 +116,13 @@ if (!empty($mimetype) &&
             $licenseURL = 'http://www.adobe.com/go/eula_flashplayer_jp';
         }
 
-        if (preg_match('/^Windows NT 6\.0/', $clientOS)) {
+        if (preg_match('/^Windows NT 6\.0/', $clientOS) &&  preg_match('/^3\.5.+/', $appRelease)) {
             $guid = '{4cfaef8a-a6c9-41a0-8e6f-967eb8f49143}';
             $XPILocation = null;
             $licenseURL = null;
+            $InstallerHash = 'sha256:f158f44911146b61f0dea0851fb35cdc812f0786297ba11745fba32a4f8b06d2';
+            $InstallerLocation = 'http://fpdownload2.macromedia.com/pub/flashplayer/current/FP_PL_PFS_INSTALLER.exe';
+            $iconUrl = 'http://fpdownload2.macromedia.com/pub/flashplayer/current/fp_win_installer.ico';
         } else if (preg_match('/^Win/', $clientOS)) {
             $guid = '{4cfaef8a-a6c9-41a0-8e6f-967eb8f49143}';
             $XPILocation = 'http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-win.xpi';
@@ -370,11 +373,11 @@ $plugin['licenseURL'] = !empty($licenseURL) ? $licenseURL : null;
 $plugin['needsRestart'] = !empty($needsRestart) ? $needsRestart : 'true';
 
 /**
- * If we have Firefox 3, force fallback to the manual install URL.
+ * If we have Firefox 3.0.x on windows, force fallback to the manual install URL.
  *
  * This is a one-off fix for bug 433592.
  */
-if (!empty($appRelease) && preg_match('/^3\..+/', $appRelease)) {
+if (!empty($appRelease) && preg_match('/^3\.0.+/', $appRelease) && preg_match('/^Windows NT 6\.0/', $clientOS)) {
     $plugin['XPILocation'] = null;
     $plugin['InstallerLocation'] = null;
     $plugin['InstallerHash'] = null;
