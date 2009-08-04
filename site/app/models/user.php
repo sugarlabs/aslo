@@ -175,7 +175,23 @@ class User extends AppModel
             if (in_array('reviews', $associations)) {
                 loadModel('Reviews');
                 $this->Review =& new Review();
-                $user['Review'] = $this->Review->findAll("Review.user_id = {$id}");
+
+                /* Jumping through hoops so we always have text in the review.
+                 * Reviews are entered in the user's language and never
+                 * translated, so the normal mechanisms won't pick up foreign
+                 * locales when delivering en-US, for example.
+                 */
+                $_reviews = $this->Review->findAll("Review.user_id = {$id}", 'Review.id');
+                $_review_ids = array();
+                foreach ($_reviews as $review) {
+                        $_review_ids[] = $review['Review']['id'];
+                }
+                $user['Review'] = $this->Review->getReviews($_review_ids);
+
+                foreach ($user['Review'] as &$review) {
+                    $review['Translation'] = (array_key_exists(LANG, $review['Translation']) ?
+                        $review['Translation'][LANG] : current($review['Translation']));
+                }
             }
         }
 

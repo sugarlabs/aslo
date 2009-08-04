@@ -96,7 +96,10 @@
               <a class="url" href="<?=$html->url('/addon/'.$_addon['Addon']['id'])?>">
                 <?=$_addon['Translation']['name']['string']?></a>
             </h4>
-            <p class="description"><?=$review['Translation']['body']['string']?></p>
+            <p class="description"
+               <?=$review['Translation']['body']['locale_html']?>>
+              <?=$review['Translation']['body']['string']?>
+            </p>
             <p>
               <?=$this->renderElement('amo2009/stars',
                   array('rating' => $review['Review']['rating']))?>
