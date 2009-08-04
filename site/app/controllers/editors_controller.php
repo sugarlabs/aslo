@@ -460,6 +460,22 @@ class EditorsController extends AppController
         $this->publish('filtered', $filtered);
         $this->publish('filteredCount', $filteredCount);
         $this->publish('subscriptions', $this->Versioncomment->getSubscriptionsByUser($session['id']));
+        $this->publish('jsLocalization', array(
+            'editors_review_bold' => ___('editors_review_bold', 'Bold'),
+            'editors_review_italics' => ___('editors_review_italics', 'Italics'),
+            'editors_review_unordered_lists' => ___('editors_review_unordered_lists', 'Unordered List'),
+            'editors_review_ordered_lists' => ___('editors_review_ordered_lists', 'Ordered List'),
+            'editors_review_block_quotes' => ___('editors_review_block_quotes', 'Block Quote'),
+            'editors_review_code_blocks' => ___('editors_review_code_blocks', 'Code Block'),
+            'editors_review_code_text' => ___('editors_review_code_text', 'Plain Text'),
+            'editors_review_code_html' => ___('editors_review_code_html', 'HTML'),
+            'editors_review_code_css' => ___('editors_review_code_css', 'CSS'),
+            'editors_review_code_javascript_xul' => ___('editors_review_code_javascript_xul', 'Javascript / XUL'),
+            'editors_review_code_diff' => ___('editors_review_code_diff', 'Diff / Patch'),
+            'editors_review_code_sql' => ___('editors_review_code_sql', 'SQL'),
+            'editors_markdown_preview' => ___('editors_markdown_preview', 'Preview'),
+            'editors_review_comment_help_heading' => ___('editors_review_comment_help_heading', 'Comment Help'),
+        ));
         
         $this->render('review');
     }

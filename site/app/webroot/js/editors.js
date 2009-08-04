@@ -105,6 +105,28 @@ var editors_review = {
             $(window.location.hash).css('background-color', '#efefef');
         }
 
+        this.miuMarkdownConfig.markupSet = [
+            { name:localized['editors_review_bold'], key:'B', openWith:'**', closeWith:'**' },
+            { name:localized['editors_review_italics'], key:'I', openWith:'_', closeWith:'_' },
+            { separator:'---------------' },
+            { name:localized['editors_review_unordered_lists'], openWith:'* ' },
+            { name:localized['editors_review_ordered_lists'], openWith:function(markItUp) { return markItUp.line+'. '; } },
+            { separator:'---------------' },
+            { name:localized['editors_review_block_quotes'], openWith:'> ' },
+            { name:localized['editors_review_code_blocks'], dropMenu:[
+                    { name:localized['editors_review_code_text'], openWith:'~~~~~ {.text}\n', closeWith:'\n~~~~~\n' },
+                    { name:localized['editors_review_code_html'], openWith:'~~~~~ {.html}\n', closeWith:'\n~~~~~\n' },
+                    { name:localized['editors_review_code_css'], openWith:'~~~~~ {.css}\n', closeWith:'\n~~~~~\n' },
+                    { name:localized['editors_review_code_javascript_xul'], openWith:'~~~~~ {.javascript}\n', closeWith:'\n~~~~~\n' },
+                    { name:localized['editors_review_code_diff'], openWith:'~~~~~ {.diff}\n', closeWith:'\n~~~~~\n' },
+                    { name:localized['editors_review_code_sql'], openWith:'~~~~~ {.sql}\n', closeWith:'\n~~~~~\n' }
+                ]
+            },
+            { separator:'---------------' },	
+            { name:localized['editors_markdown_preview'], className:'preview',  call:'preview' },
+            { name:localized['editors_review_comment_help_heading'], openWith:function(h) { editors_review.showMarkitupHelp(); return ''; } }
+        ];
+
         // attach Markitup editor to comment textarea (with a basic markdown config)
         $('#VersioncommentComment').markItUp(this.miuMarkdownConfig);
 
@@ -131,7 +153,6 @@ var editors_review = {
         });
     },
 
-
     // Markitup markdown configuration (modified)
     // original code Copyright (C) 2007-2008 Jay Salvat
     // http://markitup.jaysalvat.com/
@@ -142,27 +163,7 @@ var editors_review = {
         previewInWindow: false,
         previewAutoRefresh: false,
         onShiftEnter: { keepDefault:false, openWith:'\n\n' },
-        markupSet: [
-            { name:'Bold', key:'B', openWith:'**', closeWith:'**' },
-            { name:'Italic', key:'I', openWith:'_', closeWith:'_' },
-            { separator:'---------------' },
-            { name:'Bulleted List', openWith:'* ' },
-            { name:'Numeric List', openWith:function(markItUp) { return markItUp.line+'. '; } },
-            { separator:'---------------' },
-            { name:'Quotes', openWith:'> ' },
-            { name:'Code Block / Code', dropMenu:[
-                    { name:'Plain Text', openWith:'~~~~~ {.text}\n', closeWith:'\n~~~~~\n' },
-                    { name:'HTML', openWith:'~~~~~ {.html}\n', closeWith:'\n~~~~~\n' },
-                    { name:'CSS', openWith:'~~~~~ {.css}\n', closeWith:'\n~~~~~\n' },
-                    { name:'Javascript / XUL', openWith:'~~~~~ {.javascript}\n', closeWith:'\n~~~~~\n' },
-                    { name:'Diff / Patch', openWith:'~~~~~ {.diff}\n', closeWith:'\n~~~~~\n' },
-                    { name:'SQL', openWith:'~~~~~ {.sql}\n', closeWith:'\n~~~~~\n' }
-                ]
-            },
-            { separator:'---------------' },	
-            { name:'Preview', className:'preview',  call:'preview' },
-            { name:'Help', openWith:function(h) { editors_review.showMarkitupHelp(); return ''; } }
-        ]
+        markupSet: []
     },
 
     // show comment help popup
