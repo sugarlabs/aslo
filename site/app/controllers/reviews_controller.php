@@ -336,7 +336,7 @@ class ReviewsController extends AppController
         $this->publish('reply_to', $review);
 
         $version = $this->Version->findById($review['Review']['version_id']);
-        $addon = $this->Addon->findById($version['Version']['addon_id']);
+        $addon = $this->Addon->getAddon($version['Version']['addon_id']);
         if (empty($addon)) {
             $this->flash(_('error_addon_notfound'), '/', 3);
             return;
