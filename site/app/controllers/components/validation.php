@@ -1052,10 +1052,10 @@ class ValidationComponent extends Object {
             
             $file_loc = REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename'];
             $zip = new Archive_Zip($file_loc);
-            if ($zip->errorCode()) return array();
-
             $extracted = $zip->extract(array('add_path' => $tmp_loc));
-            if ($zip->errorCode()) return array();
+            
+            // This will return 0 if the extraction fails
+            if (!$extracted) return array();
 
             // We need to recursively extract contents as well
             while ($fileInfo = array_shift($extracted)) {
