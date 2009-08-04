@@ -62,7 +62,11 @@ echo '<div id="content">';
             </div>
             <div>
                 <img id="addon-icon" src="<?=$addonIcon?>" alt="<?=$addon_name?> Icon">
-                <h3 id="addon-title"><?=sprintf(_('statistics_title_addon_stats'), $addon_name)?></h3>
+                <h3 id="addon-title">
+                    <a href="<?=$html->url('/addon/'.$addon_id)?>">
+                        <?=sprintf(_('statistics_title_addon_stats'), $addon_name)?>
+                    </a>
+                </h3>
             </div>
         </div>
         
