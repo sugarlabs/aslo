@@ -1190,13 +1190,15 @@ CREATE TABLE `collection_promos` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `collection_id` int(11) unsigned NOT NULL default '0',
   `locale` varchar(10) default NULL,
-  `title_tagline` int(11) unsigned NOT NULL default '0',
+  `collection_feature_id` int(11) unsigned NOT NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
+  UNIQUE KEY `one_collection_per_tagline_per_locale` (`collection_id`,`locale`,`collection_feature_id`),
   KEY `collection_id` (`collection_id`),
-  UNIQUE KEY `one_collection_per_tagline_per_locale` (`collection_id`,`locale`,`title_tagline`),
-  CONSTRAINT `collection_promos_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`)
+  KEY `collection_promos_ibfk_2` (`collection_feature_id`),
+  CONSTRAINT `collection_promos_ibfk_1` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`),
+  CONSTRAINT `collection_promos_ibfk_2` FOREIGN KEY (`collection_feature_id`) REFERENCES `collection_features` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `collections_categories`;
