@@ -144,6 +144,41 @@ class  PluginFinderServiceTest extends UnitTestCase {
         $this->assertPattern('/.*'.preg_quote('http://www.adobe.com/go/eula_flashplayer','/').'.*/',$_xml,'licenseURL exists in XML.');
      }
 
+    /**
+     * Test that installerLocation is offered for Flash on any Windows XP for Firefox 3.5.
+     */
+    function testInstallerForWinXPFirefox35() {
+        $_xml = $this->_getXml(
+            array(
+                'mimetype'=>'application/x-shockwave-flash',
+                'appID'=>'{ec8030f7-c20a-464f-9b0e-13a3a9e97384}',
+                'appVersion'=>'2007020307',
+                'appRelease'=>'3.5',
+                'clientOS'=>'Windows%20NT%205.1',
+                'chromeLocale'=>'en-US'
+            )
+        );
+        $this->assertPattern('/.*'.preg_quote('http://fpdownload2.macromedia.com/pub/flashplayer/current/FP_PL_PFS_INSTALLER.exe','/').'.*/',$_xml,'External installer offered for Firefox 3 on Vista.');
+    }
+
+
+    /**
+     * Test that installerLocation is offered for Flash on any Windows Vista for Firefox 3.5.
+     */
+    function testInstallerForWinVistaFirefox35() {
+        $_xml = $this->_getXml(
+            array(
+                'mimetype'=>'application/x-shockwave-flash',
+                'appID'=>'{ec8030f7-c20a-464f-9b0e-13a3a9e97384}',
+                'appVersion'=>'2007020307',
+                'appRelease'=>'3.5',
+                'clientOS'=>'Windows%20NT%206.0',
+                'chromeLocale'=>'en-US'
+            )
+        );
+        $this->assertPattern('/.*'.preg_quote('http://fpdownload2.macromedia.com/pub/flashplayer/current/FP_PL_PFS_INSTALLER.exe','/').'.*/',$_xml,'External installer offered for Firefox 3 on Vista.');
+    }
+
 
     /**
      * Test that no XPI is offered for Flash on any platform for Firefox 3.
@@ -201,19 +236,6 @@ class  PluginFinderServiceTest extends UnitTestCase {
             )
         );
         $this->assertPattern('/.*'.preg_quote('http://fpdownload.macromedia.com/get/flashplayer/xpi/current/flashplayer-win.xpi','/').'.*/',$_xml,'Flash XPI offered for Firefox 2 on XP.');
-
-        $_xml = $this->_getXml(
-            array(
-                'mimetype'=>'application/x-shockwave-flash',
-                'appID'=>'{ec8030f7-c20a-464f-9b0e-13a3a9e97384}',
-                'appVersion'=>'2007020307',
-                'appRelease'=>'2.0',
-                'clientOS'=>'Windows%20NT%206.0',
-                'chromeLocale'=>'en-US'
-            )
-        );
-        $this->assertNoPattern('/.*'.preg_quote('flashplayer-win.xpi','/').'.*/',$_xml,'Flash XPI _NOT_ offered for Firefox 2 on Vista.');
-        $this->assertNoPattern('/.*'.preg_quote('http://www.adobe.com/go/eula_flashplayer','/').'.*/',$_xml,'Flash licenseURL _NOT_ offered for Firefox 2 on Vista.');
 
         $_xml = $this->_getXml(
             array(
