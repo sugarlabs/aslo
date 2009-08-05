@@ -448,9 +448,10 @@ BandwagonService.prototype = {
                 {
                     var collection = collections[id];
 
-                    if (bandwagonService.collections[collection.resourceURL])
+                    if (bandwagonService.collections[collection.resourceURL]
+                        && (bandwagonService.collections[collection.resourceURL].subscribed == collection.subscribed))
                     {
-                        // we have already added this collection
+                        // we have already added this collection and its subscribed status hasn't changed
                     }
                     else
                     {
@@ -712,6 +713,8 @@ BandwagonService.prototype = {
         for (var id in this.collections)
         {
             var collection = this.collections[id];
+
+            Bandwagon.Logger.debug("in forceCheckAllForUpdates() with collection = " + collection.toString() + ", subscribed = " + collection.subscribed);
 
             if (!collection.subscribed)
                 continue;
