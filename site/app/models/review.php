@@ -95,7 +95,7 @@ class Review extends AppModel
         // This needs to be a manual query because of bug 442208.
         $reviews = $this->query("
             SELECT 
-                `Review`.`id`, `Review`.`version_id`, `Review`.`body`, `Review`.`title`,
+                `Review`.`id`, `Review`.`version_id`, `Review`.`body`, `Review`.`title`, Review.reply_to,
                 `Review`.`created`, `Review`.`rating`, `User`.`id`, `User`.`nickname`,
                 `User`.`firstname`, `User`.`lastname` FROM `reviews` AS `Review` LEFT JOIN
                 `versions` AS `Version` ON (`Review`.`version_id` = `Version`.`id`) LEFT JOIN
