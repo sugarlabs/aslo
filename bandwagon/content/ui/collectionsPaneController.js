@@ -44,6 +44,7 @@ Bandwagon.Controller.CollectionsPane = new function()
     this.elemBandwagonCollections = null;
     this.elemBandwagonAddons = null;
     this.elemBandwagonButtonViewSite = null;
+    this.elemBandwagonButtonManageCollection = null;
     //this.elemBandwagonButtonUpdate = null;
     this.elemBandwagonButtonRemove = null;
     this.elemBandwagonCollectionTitle = null;
@@ -66,6 +67,7 @@ Bandwagon.Controller.CollectionsPane.init = function()
     this.elemBandwagonCollections = document.getElementById("bandwagon-collections-list");
     this.elemBandwagonAddons = document.getElementById("bandwagon-addons-list");
     this.elemBandwagonButtonViewSite = document.getElementById("bandwagon-button-viewsite");
+    this.elemBandwagonButtonManageCollection = document.getElementById("bandwagon-button-manage");
     //this.elemBandwagonButtonUpdate = document.getElementById("bandwagon-button-update");
     this.elemBandwagonButtonRemove = document.getElementById("bandwagon-button-remove");
     this.elemBandwagonExtensionsDeck = document.getElementById("bandwagon-extensions-deck");
@@ -163,6 +165,9 @@ Bandwagon.Controller.CollectionsPane.invalidate = function()
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionTitle.collapsed = true;
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDescription.collapsed = true;
 
+        Bandwagon.Controller.CollectionsPane.elemBandwagonButtonManageCollection.collapsed = true;
+        document.getElementById("bandwagon-link-splitter2").collapsed = true;
+
         Bandwagon.Controller.CollectionsPane._repopulateAddonsList(null);
 
         Bandwagon.Controller.CollectionsPane._invalidateExtensionsDeck();
@@ -193,6 +198,9 @@ Bandwagon.Controller.CollectionsPane.invalidate = function()
         {
             Bandwagon.Controller.CollectionsPane.elemBandwagonCollectionDeck.selectedIndex = 0;
         }
+
+        document.getElementById("bandwagon-link-splitter2").collapsed = !collection.writable;
+        Bandwagon.Controller.CollectionsPane.elemBandwagonButtonManageCollection.collapsed = !collection.writable;
     }
 }
 
@@ -377,6 +385,19 @@ Bandwagon.Controller.CollectionsPane.doViewSite = function(event)
         return;
 
     Bandwagon.Controller.CollectionsPane._openURL(collection.links["view"]);
+}
+
+Bandwagon.Controller.CollectionsPane.doManageCollection = function(event)
+{
+    if (Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem == null)
+        return;
+
+    var collection = Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem.collection;
+
+    if (collection == null || !collection.links["manage"])
+        return;
+
+    Bandwagon.Controller.CollectionsPane._openURL(collection.links["manage"]);
 }
 
 Bandwagon.Controller.CollectionsPane.doUpdate = function(event)
