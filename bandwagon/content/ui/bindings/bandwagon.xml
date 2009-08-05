@@ -46,6 +46,10 @@
 
     <binding id="bandwagon-collection" extends="chrome://global/content/bindings/richlistbox.xml#richlistitem">
 
+        <handlers>
+            <handler event="dblclick" action="Bandwagon.Controller.CollectionsPane.doViewSite()"/>
+        </handlers>
+
         <resources>
             <stylesheet src="chrome://bandwagon/skin/extensionsOverlay.css"/>
             <stylesheet src="chrome://bandwagon/skin/extensionsOverlayIcons.css"/>
@@ -134,6 +138,10 @@
 
 
     <binding id="bandwagon-addon" extends="chrome://global/content/bindings/richlistbox.xml#richlistitem">
+
+        <handlers>
+            <handler event="dblclick" action="Bandwagon.Controller.CollectionsPane.doMoreInfo()"/>
+        </handlers>
 
         <resources>
             <stylesheet src="chrome://bandwagon/skin/extensionsOverlay.css"/>
