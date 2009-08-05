@@ -119,7 +119,6 @@ if (!empty($mimetype) &&
         if (preg_match('/^Win/', $clientOS) && preg_match('/^(3\.5|3\.0).*/', $appRelease)) {
             $guid = '{4cfaef8a-a6c9-41a0-8e6f-967eb8f49143}';
             $XPILocation = null;
-            $licenseURL = null;
             $version = '10.0.32';
             $InstallerHash = 'sha256:f158f44911146b61f0dea0851fb35cdc812f0786297ba11745fba32a4f8b06d2';
             $InstallerLocation = 'http://fpdownload2.macromedia.com/pub/flashplayer/current/FP_PL_PFS_INSTALLER.exe';
