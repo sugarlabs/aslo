@@ -468,8 +468,9 @@ class OpensearchComponent extends Object {
           return NULL;
       }
 
-      // Check to ensure we found all required elements (name and valid Url)
+      // Check to ensure we found all required elements (name, description, and valid Url)
       if ($this->attrs['ShortName'] == '' ||
+          $this->attrs['Description'] == '' || 
           !isset($this->engine->urls['text/html'])) {
 
           return NULL;
