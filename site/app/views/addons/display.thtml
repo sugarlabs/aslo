@@ -276,6 +276,14 @@ if (!empty($coll_addon_added)) {
         <?php endif; ?>
       </p>
     <?php endif; ?>
+
+    <?php $comments = $addon['Translation']['developercomments']['string'] ?>
+    <?php if (!empty($comments)): ?>
+      <h4><?=___('addons_display_developer_comments', 'Developer Comments')?></h4>
+      <p <?=$addon['Translation']['developercomments']['locale_html']?>>
+        <?=nl2br($addon['Translation']['developercomments']['string'])?>
+      </p>
+    <?php endif; ?>
   </div> <!-- article -->
 
   <?php if (!empty($reviews)): ?>
@@ -361,12 +369,6 @@ if (!empty($coll_addon_added)) {
       <h3><?=___('addons_display_release_notes')?></h3>
       <div class="article">
         <?=$this->renderElement('addon_version_detail', $_version_data)?>
-        <?php $comments = $addon['Translation']['developercomments']['string'] ?>
-        <?php if (!empty($comments)): ?>
-          <p <?=$addon['Translation']['developercomments']['locale_html']?>>
-            <?=nl2br($addon['Translation']['developercomments']['string'])?>
-          </p>
-        <?php endif; ?>
         <p id="release-notes" <?=$addon['Version'][0]['Translation']['releasenotes']['locale_html']?>>
           <?=nl2br($addon['Version'][0]['Translation']['releasenotes']['string'])?>
         </p>
