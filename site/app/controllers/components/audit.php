@@ -65,8 +65,11 @@ class AuditComponent extends Object {
         
         if (!empty($logs)) {
             foreach ($logs as $log) {
-                $userInfo = $this->controller->User->findById($log['Eventlog']['user_id'], null, null, -1);
-                $user = $this->link($userInfo['User']['firstname'].' '.$userInfo['User']['lastname'], '/users/info/'.$log['Eventlog']['user_id']);
+                $userInfo = $this->controller->User->getUser($log['Eventlog']['user_id']);
+                $name = trim($userInfo['User']['display_name']);
+                if(empty($name)) $name = $userInfo['User']['email'];
+                
+                $user = $this->link($name, '/users/info/'.$log['Eventlog']['user_id']);
                 
                 switch ($log['Eventlog']['type']) {
                     case 'admin':
@@ -176,14 +179,20 @@ class AuditComponent extends Object {
                                 $group = $this->link($groupInfo['Group']['name'], '/admin/groups');
                                 
                                 if ($log['Eventlog']['action'] == 'group_addmember') {
-                                    $memberInfo = $this->controller->User->findById($log['Eventlog']['added'], null, null, -1);
-                                    $member = $this->link($memberInfo['User']['firstname'].' '.$memberInfo['User']['lastname'], '/admin/users/'.$log['Eventlog']['added']);
+                                    $memberInfo = $this->controller->User->getUser($log['Eventlog']['added']);
+                                    $name = trim($memberInfo['User']['display_name']);
+                                    if(empty($name)) $name = $memberInfo['User']['email'];
+
+                                    $member = $this->link($name, '/admin/users/'.$log['Eventlog']['added']);
                                     
                                     $entry = sprintf(___('audit_group_addmember'), $user, $member, $group);
                                 }
                                 elseif ($log['Eventlog']['action'] == 'group_removemember') {
-                                    $memberInfo = $this->controller->User->findById($log['Eventlog']['removed'], null, null, -1);
-                                    $member = $this->link($memberInfo['User']['firstname'].' '.$memberInfo['User']['lastname'], '/admin/users/'.$log['Eventlog']['removed']);
+                                    $memberInfo = $this->controller->User->getUser($log['Eventlog']['removed']);
+                                    $name = trim($memberInfo['User']['display_name']);
+                                    if(empty($name)) $name = $memberInfo['User']['email'];
+
+                                    $member = $this->link($name, '/admin/users/'.$log['Eventlog']['removed']);
                                     
                                     $entry = sprintf(___('audit_group_removemember'), $user, $member, $group);
                                 }
@@ -211,8 +220,11 @@ class AuditComponent extends Object {
                                 break;
                             
                             case 'user_edit':
-                                $userInfo = $this->controller->User->findById($log['Eventlog']['changed_id'], null, null, -1);
-                                $userLink = $this->link($userInfo['User']['firstname'].' '.$userInfo['User']['lastname'], '/admin/users/'.$log['Eventlog']['changed_id']);
+                                $userInfo = $this->controller->User->getUser($log['Eventlog']['changed_id']);
+                                $name = trim($userInfo['User']['display_name']);
+                                if(empty($name)) $name = $userInfo['User']['email'];
+
+                                $userLink = $this->link($name, '/admin/users/'.$log['Eventlog']['changed_id']);
                                 
                                 $entry = sprintf(___('audit_user_edit'), $user, $userLink);
                                 break;
