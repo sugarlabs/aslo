@@ -96,7 +96,7 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
                 </li>
                 <? if ($resultNum == 3 && count($case['results']) > 3) : ?>
                 <li class="more">
-                    <a href="#" onclick="versions_validate.showMore($(this)); return false;" class="show-more-link"><?=sprintf(___('devcp_more_validation_results', 'Show %d more results'), count($case['results']) - 3)?></a>
+                    <a href="#" onclick="versions_validate.showMore($(this)); return false;" class="show-more-link"><?=sprintf(n___('devcp_more_validation_results', 'devcp_more_validation_results', count($case['results']) - 3, 'Show %d more result(s)'), count($case['results']) - 3)?></a>
                 </li>
                 <div class="hidden-results">
                 <? endif; ?>

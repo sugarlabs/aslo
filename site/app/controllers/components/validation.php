@@ -604,10 +604,10 @@ class ValidationComponent extends Object {
                 
                 // We are concerned with unmodified and missing entities
                 if (property_exists($info, 'unmodifiedEntities')) {
-                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(___('devcp_error_addon_translations_unmodified', 'The %1$s locale contains %2$s unmodified translations'), $code, $info->unmodifiedEntities));
+                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('devcp_error_addon_translations_unmodified', 'devcp_error_addon_translations_unmodified', $info->unmodifiedEntities, 'The %1$s locale contains %2$s unmodified translation(s)'), $code, $info->unmodifiedEntities));
                 }
                 if (property_exists($info, 'missingEntities')) {
-                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(___('devcp_error_addon_translations_missing', 'The %1$s locale is missing %2$s translations'), $code, $info->missingEntities));
+                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('devcp_error_addon_translations_missing', 'devcp_error_addon_translations_missing', $info->missingEntities, 'The %1$s locale is missing %2$s translations'), $code, $info->missingEntities));
                 }
             }
         }
