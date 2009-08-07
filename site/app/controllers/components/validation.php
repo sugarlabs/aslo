@@ -39,7 +39,7 @@ require_once('Archive/Zip.php');
 
 class ValidationComponent extends Object {
     var $controller;
-    var $components = array('Amo', 'Opensearch', 'Rdf');
+    var $components = array('Amo', 'Opensearch', 'Rdf', 'Versioncompare');
 
     /**
      * Save a reference to the controller on startup
@@ -681,9 +681,9 @@ class ValidationComponent extends Object {
         $supportedApps = $manifestData['targetApplication'];
         $mozApps = $this->controller->Application->getGuidList();
         foreach ($supportedApps as $guid => $app) {
-
+            
             // There's almost certainly a better way to check this ...
-            if ($mozApps[$guid] == 'SeaMonkey') {
+            if ($mozApps[$guid] == 'SeaMonkey' && $this->Versioncompare->compareVersions($app['minVersion'], '2.0a1') == -1) {
                 $flags = $this->_verifyFilesExist($file, array('install.js'), 'by_name');
                 return $this->_passIfEmpty($flags);
             }

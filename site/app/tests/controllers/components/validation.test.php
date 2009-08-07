@@ -58,6 +58,8 @@ class ValidationTest extends UnitTestCase {
         $this->controller->Validation->Opensearch =& new OpensearchComponent();
         loadComponent('Rdf');
         $this->controller->Validation->Rdf =& new RdfComponent();
+        loadComponent('Versioncompare');
+        $this->controller->Validation->Versioncompare =& new VersioncompareComponent();
 
         // Load in models
         $this->controller->File =& new File();
@@ -558,6 +560,31 @@ class ValidationTest extends UnitTestCase {
         $results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
         $expected = $this->controller->Validation->_resultPass();
         $this->assertEqual($results, $expected, 'Supported add-ons generate pass results: %s');
+
+        // Verify test is skipped on unsupported version
+        $old = file_get_contents(CACHE_PFX . '11/install.rdf');
+        $bad = "<?xml version=\"1.0\"?>
+<RDF xmlns=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"
+    xmlns:em=\"http://www.mozilla.org/2004/em-rdf#\">
+  <Description about=\"urn:mozilla:install-manifest\">
+            <em:id>en-AU@dictionaries.addons.mozilla.org</em:id>
+            <em:version>2.1.1</em:version>
+  <em:targetApplication>
+      <Description>
+      <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
+      <em:minVersion>2.0a1</em:minVersion>
+      <em:maxVersion>2.0a2</em:maxVersion>
+      </Description>
+  </em:targetApplication>
+  <em:name>English (Australian) Dictionary</em:name>
+  <em:description>I'm sick of all my favoUrite coloUrful language being marked incorrect.</em:description>
+  <em:homepageURL>http://justcameron.com/incoming/en-au-dictionary/</em:homepageURL>
+  </Description>
+</RDF>";
+        file_put_contents(CACHE_PFX . '11/install.rdf', $bad);
+        $results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
+        $this->assertEqual($results, array(), 'Version 2.x does not require install.js: %s');
+        file_put_contents(CACHE_PFX . '11/install.rdf', $old);
 
         // Verify fail on missing install.js
         @unlink(CACHE_PFX . '11/install.js');
