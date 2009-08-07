@@ -507,8 +507,8 @@ class ValidationComponent extends Object {
         $extracted = $this->_extract($file, 'by_preg', '//');
 
         $unsafePatterns = array('/nsIProcess/',
-                          '/\.launch/',
-                          '/eval/',
+                          '/\.launch\s*\(/',
+                          '/\beval\s*\(/',
                           '/<browser\s*(?![^<>]*type=["\'])[^<>]*>/i',
                           '/<iframe\s*(?![^<>]*type=["\'])[^<>]*>/i',
                           '/xpcnativewrappers=/',
@@ -554,7 +554,7 @@ class ValidationComponent extends Object {
         // Grab the location of the file and extract any files, since JS can live in many places
         $extracted = $this->_extract($file, 'by_preg', '//');
 
-        return $this->_grepExtractedFiles($extracted, array('/-moz-binding:(?!\s*url\s*\(\s*["\']?chrome:\/\/.*\/content\/)/'));
+        return $this->_grepExtractedFiles($extracted, array('/-moz-binding:(?!\s*(url\s*\(\s*["\']?chrome:\/\/.*\/content\/|none))/'));
     }
 
     /**

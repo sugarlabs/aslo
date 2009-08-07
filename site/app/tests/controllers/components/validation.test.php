@@ -392,17 +392,18 @@ class ValidationTest extends UnitTestCase {
         
         // Get some bad JS!
         $badJs = "nsIProcess
-                  .launch
-                  eval
+                  .launch();
+                  eval();
                   <browser without-type-oh-no>
                   <iframe without-type-oh-no>
-                  xpcnativewrappers
+                  xpcnativewrappers=
                   evalInSandbox
-                  mozIJSSubscriptLoader";
+                  mozIJSSubscriptLoader
+                  wrappedJSObject";
         file_put_contents(CACHE_PFX . '1/bad.js', $badJs);
         
         $results = $this->controller->Validation->all_security_filterUnsafeJS($file);
-        $this->assertEqual(count($results), 8, 'All flagged patters should generate warnings: %s');
+        $this->assertEqual(count($results), 9, 'All flagged patters should generate warnings: %s');
         
         $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/nsIProcess/"');
         $this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
@@ -452,11 +453,16 @@ class ValidationTest extends UnitTestCase {
         $pass = $this->controller->Validation->_resultPass();
         $this->assertEqual($results, $pass, 'Default extension should have no remote JS: %s');
         
+        // Make sure none also passes
+        file_put_contents(CACHE_PFX . '1/bad.js', "-moz-binding: none;");
+        $results = $this->controller->Validation->all_security_filterRemoteJS($file);
+        $this->assertEqual($results, $pass, 'None is an allowed binding: %s');
+
         // Inject remote loading code
         file_put_contents(CACHE_PFX . '1/bad.js', "-moz-binding: non-chrome-url");
                 
         $results = $this->controller->Validation->all_security_filterRemoteJS($file);
-        $expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:\s*(?!url\s*\(\s*(["\'])?chrome:\/\/.*\/content\/)/"');
+        $expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:(?!\s*(url\s*\(\s*["\']?chrome:\/\/.*\/content\/|none))/"');
         $this->assertEqual($results, $expected, 'Results are warnings with appropriate file and line numbers: %s');
     }
 
