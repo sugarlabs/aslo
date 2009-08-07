@@ -251,7 +251,7 @@ class ValidationTest extends UnitTestCase {
         // Try some bad extension
         $file['File']['filename'] = 'bad.badExt';
         $results = $this->controller->Validation->all_general_verifyExtension($file);
-        $fail = $this->controller->Validation->_resultFail(0, '', 'The extension does not match the type of the add-on');
+        $fail = $this->controller->Validation->_resultFail(0, '', 'The extension does not match the type of the add-on.');
         $this->assertEqual($results, $fail, 'Bad extensions will return a fail result: %s');
     
         // Verify theme extension
@@ -374,7 +374,7 @@ class ValidationTest extends UnitTestCase {
         file_put_contents(CACHE_PFX . '1/jquery-1.3.1.min.js', 'Modified!');
         
         $results = $this->controller->Validation->all_security_libraryChecksum($file);
-        $expected = $this->controller->Validation->_resultWarn(1, 'jquery-1.3.1.min.js', 'The add-on contains a file jquery-1.3.1.min.js, which failed a library checksum');
+        $expected = $this->controller->Validation->_resultWarn(1, 'jquery-1.3.1.min.js', 'The add-on contains a file \'jquery-1.3.1.min.js\', which failed a library checksum');
         $this->assertEqual($results, $expected, 'Modified libraries fail the tests: %s');
     }
 
@@ -485,7 +485,7 @@ class ValidationTest extends UnitTestCase {
         $results = $this->controller->Validation->dictionary_general_verifyFileLayout($file);
         $this->assertEqual(count($results), 3, 'All three missing types should be flagged: %s');
 
-        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Dictionary was missing a required file: install.rdf');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The add-on was missing a required file: install.rdf');
         $this->assertEqual($results[0], $expected, 'Results are failures mentioning dictionary and the missing file: %s');
         
     }
@@ -563,7 +563,7 @@ class ValidationTest extends UnitTestCase {
         @unlink(CACHE_PFX . '11/install.js');
         
         $results = $this->controller->Validation->dictionary_general_checkSeaMonkeyFiles($file);
-        $expected = $this->controller->Validation->_resultFail(0, '', 'The Dictionary was missing a required file: install.js');
+        $expected = $this->controller->Validation->_resultFail(0, '', 'The add-on was missing a required file: install.js');
         $this->assertEqual($results, $expected, 'Supported add-ons fail if missing install.js: %s');
     }
 
@@ -636,7 +636,7 @@ class ValidationTest extends UnitTestCase {
         $results = $this->controller->Validation->extension_security_checkConduit($file);
         $this->assertEqual(count($results), 10, 'The tests should catch all 10 conditions: %s');
 
-        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, 'install.rdf', 'The add-on appears to be a conduit toolbar due to its updateURL element');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, 'install.rdf', 'The add-on appears to be a conduit toolbar due to its updateURL element.');
         $this->assertEqual($results[0], $expected, 'Results are failures: %s');
         
     }
@@ -667,7 +667,7 @@ class ValidationTest extends UnitTestCase {
         $results = $this->controller->Validation->langpack_general_verifyFileLayout($file);
         $this->assertEqual(count($results), 3, 'All three missing types should be flagged: %s');
 
-        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Language Pack (Add-on) was missing a required file: install.rdf');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The add-on was missing a required file: install.rdf');
         $this->assertEqual($results[0], $expected, 'Results are failures mentioning language pack and the missing file: %s');
 
     }
@@ -879,7 +879,7 @@ override chrome://bad-url";
         $results = $this->controller->Validation->theme_general_verifyFileLayout($file);
         $this->assertEqual(count($results), 2, 'All two missing types should be flagged: %s');
 
-        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Theme was missing a required file: install.rdf');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The add-on was missing a required file: install.rdf');
         $this->assertEqual($results[0], $expected, 'Results are failures mentioning language pack and the missing file: %s');
 
     }
@@ -980,7 +980,7 @@ not so much here!";
 
         // Verify failures on missing files
         $results = $this->controller->Validation->_verifyFilesExist($file, array('doesnt-exist'), 'by_name', 'Extension');
-        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The Extension was missing a required file: doesnt-exist');
+        $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The add-on was missing a required file: doesnt-exist');
         $this->assertEqual($results[0], $expected, 'Results are failures mentioning the missing file: %s');
 
     }

@@ -415,9 +415,9 @@ class ValidationComponent extends Object {
 
             // jshydra ouputs variables in three groups, so we use this to track state
             $states = array(
-                ___('devcp_error_global_type_variable', 'variable'),
-                ___('devcp_error_global_type_constant', 'constant'),
-                ___('devcp_error_global_type_function', 'function')
+                ___('devcp_error_global_variable', 'The file contains a global variable: %s'),
+                ___('devcp_error_global_constant', 'The file contains a global constant: %s'),
+                ___('devcp_error_global_function', 'The file contains a global function: %s')
             );
             $currentState = -1;
             foreach ($lines as $line) {
@@ -438,7 +438,7 @@ class ValidationComponent extends Object {
                 // Lines look like <global-name> at <line-no>
                 $data = explode(' ', $line);
                 
-                $results[] = $this->_result(TEST_WARN, $data[2], $fileInfo['filename'], sprintf(___('devcp_error_js_global', 'The file contains a global %s: %s'), $states[$currentState], $data[0]));
+                $results[] = $this->_result(TEST_WARN, $data[2], $fileInfo['filename'], sprintf($states[$currentState], $data[0]));
             }   
         
         }
@@ -623,8 +623,8 @@ class ValidationComponent extends Object {
         $names = array('install.rdf');
         $regex = array('/dictionaries\/.*\.aff/i', '/dictionaries\/.*\.dic/i');
 
-        $flags = $this->_verifyFilesExist($file, $names, 'by_name', ___('general_addontype_dict'));
-        $flags = array_merge($flags, $this->_verifyFilesExist($file, $regex, 'by_preg', ___('general_addontype_dict')));
+        $flags = $this->_verifyFilesExist($file, $names, 'by_name');
+        $flags = array_merge($flags, $this->_verifyFilesExist($file, $regex, 'by_preg'));
 
         return $this->_passIfEmpty($flags);
     }
@@ -684,7 +684,7 @@ class ValidationComponent extends Object {
 
             // There's almost certainly a better way to check this ...
             if ($mozApps[$guid] == 'SeaMonkey') {
-                $flags = $this->_verifyFilesExist($file, array('install.js'), 'by_name', ___('general_addontype_dict'));
+                $flags = $this->_verifyFilesExist($file, array('install.js'), 'by_name');
                 return $this->_passIfEmpty($flags);
             }
         }
@@ -773,8 +773,8 @@ class ValidationComponent extends Object {
         $names = array('install.rdf');
         $regex = array('/chrome\/.*\.jar/i', '/(chrome\.manifest|contents\.rdf)/i');
 
-        $flags = $this->_verifyFilesExist($file, $names, 'by_name', ___('general_addontype_lpaddon'));
-        $flags = array_merge($flags, $this->_verifyFilesExist($file, $regex, 'by_preg', ___('general_addontype_lpaddon')));
+        $flags = $this->_verifyFilesExist($file, $names, 'by_name');
+        $flags = array_merge($flags, $this->_verifyFilesExist($file, $regex, 'by_preg'));
 
         return $this->_passIfEmpty($flags);
     }
@@ -877,7 +877,7 @@ class ValidationComponent extends Object {
 
         $names = array('install.rdf', 'chrome.manifest');
 
-        return $this->_passIfEmpty($this->_verifyFilesExist($file, $names, 'by_name', ___('general_addontype_theme')));
+        return $this->_passIfEmpty($this->_verifyFilesExist($file, $names, 'by_name'));
     }
 
     /**
@@ -963,15 +963,14 @@ class ValidationComponent extends Object {
      * @param array $file the file in model format
      * @param array $names the names to search for as strings or regexes
      * @param string $extract_how how to extract the files
-     * @param string $type the type of the add-on (extension, dictionary, etc.)
      */
-    function _verifyFilesExist($file, $names, $extract_how, $type) {
+    function _verifyFilesExist($file, $names, $extract_how) {
 
         $flags = array();
         if (!empty($names)) {
             foreach ($names as $name) {
                 if (count($this->_extract($file, $extract_how, $name, false)) == 0)
-                    $flags[] = $this->_result(TEST_FAIL, 0, '', sprintf(___('devcp_error_missing_file', 'The %1$s was missing a required file: %2$s'), $type, $name));
+                    $flags[] = $this->_result(TEST_FAIL, 0, '', sprintf(___('devcp_error_missing_file', 'The add-on was missing a required file: %s'), $name));
             }
         }
 
