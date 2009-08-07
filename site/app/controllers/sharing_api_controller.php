@@ -1425,7 +1425,10 @@ class SharingApiController extends AppController
                 !empty($_SERVER['PHP_AUTH_PW'])) {
             // Try validating the user by HTTP Basic auth username and password.
             $someone = $this->User->findByEmail($_SERVER['PHP_AUTH_USER']);
-            if ($this->User->checkPassword($someone['User'], $_SERVER['PHP_AUTH_PW'])) {
+            if (!empty($someone['User']['id']) && $someone['User']['confirmationcode'] != '') {
+                // User not yet verified.
+                $auth_user = null;
+            } else if ($this->User->checkPassword($someone['User'], $_SERVER['PHP_AUTH_PW'])) {
                 $auth_user = $someone['User'];
                 $auth_user['Group'] = $someone['Group'];
             }

@@ -113,15 +113,20 @@ class SharingApiTest extends WebTestHelper {
         $this->assertAuthentication('Basic');
         $this->assertResponse(401);
 
-        // Use website cookie login and assert that auth is satisfied.
-        $this->login();
-        $this->get($this->service_url);
-        $this->assertResponse(200);
-
         // Logout, and assert that auth is required again.
         $this->get($this->actionURI('/users/logout'));
         $this->get($this->service_url);
         $this->assertAuthentication('Basic');
+        $this->assertResponse(401);
+
+        // Bug 493302: try HTTP Basic Auth with some known unverified users
+        // and assert failure.
+        $this->authenticate('fligtar@gmail.com', 'test');
+        $doc = $this->getXml($this->service_url);
+        $this->assertResponse(401);
+
+        $this->authenticate('bill@ms.com', 'logmein');
+        $doc = $this->getXml($this->service_url);
         $this->assertResponse(401);
 
         // Now, try HTTP Basic Auth and assert auth is satisfied.
