@@ -505,19 +505,25 @@ class ValidationTest extends UnitTestCase {
         $results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
         $this->assertEqual($results, array(), 'Missing install.js produces no results: %s');
 
-        // Short install.js should pass
-        touch(CACHE_PFX . '11/install.js');
+        // install.js should pass when it only contains valid functions
+        $valid = "initInstall();
+           cancelInstall();
+           getFolder();
+           addDirectory();
+           performInstall();";
+        file_put_contents(CACHE_PFX . '11/install.js', $valid);
         
         $results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
         $expected = $this->controller->Validation->_resultPass();
-        $this->assertEqual($results, $expected, 'Short install.js is allowed: %s');
+        $this->assertEqual($results, $expected, 'Five whitelist functions are allowed: %s');
 
-        // Long install.js should be flagged
-        file_put_contents(CACHE_PFX . '11/install.js', "\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        // Bad functions in install.js get flagged
+        $badjs = "functionNotAllowed();";
+        file_put_contents(CACHE_PFX . '11/install.js', $badjs);
         
         $results = $this->controller->Validation->dictionary_security_checkInstallJS($file);
-        $expected = $this->controller->Validation->_resultWarn(1, 'install.js', 'Install.js appears to be too long');
-        $this->assertEqual($results, $expected, 'Long install.js is flagged: %s');
+        $expected = $this->controller->Validation->_resultWarn(1, 'install.js', 'Install.js contains a function missing from the whitelist: functionNotAllowed');
+        $this->assertEqual($results, $expected, 'Bad functions are flagged: %s');
     }
 
     /**

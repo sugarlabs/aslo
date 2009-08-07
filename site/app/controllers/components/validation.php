@@ -635,18 +635,50 @@ class ValidationComponent extends Object {
      * @return array an array of test results, empty if there is no result
      */
     function dictionary_security_checkInstallJS($file) {
-        $extracted = $this->_extract($file, 'by_name', array('install.js'));
 
-        // Just return if there isn't a file
+        // Bail if jsydra doesn't exist
+        if (!defined('JSHYDRA_PATH')) return array();
+
+        // Find the executables and make sure we can read them.
+        // If not, skip the jsHydra tests
+        $jshydra = JSHYDRA_PATH . '/jshydra';
+        $script = ROOT . '/../bin/jshydra_scripts/install_js_test.js';
+        if (!file_exists($jshydra) || !is_readable($jshydra)
+            || !file_exists($script) || !is_readable($script)) {
+            return array();
+        }
+
+        // Get the install.js file
+        $extracted = $this->_extract($file, 'by_name', array('install.js'), false);
+
+        // Just return if it doesn't exist
         if (count($extracted) == 0) return array();
+        
+        $fileInfo = $extracted[0];
 
-        $contents = $extracted[0]['content'];
-        $lines = explode("\n", $contents);
+        // Make sure that the user input is quoted
+        $safeFile = escapeshellarg($fileInfo['path']);
 
-        if (count($lines) > 10)
-            return $this->_resultWarn(1, 'install.js', ___('devcp_error_install_js_too_long', 'Install.js appears to be too long'));
+        // Skip the file if for some reason it doesn't exist
+        if (!file_exists($fileInfo['path']) || !is_readable($fileInfo['path'])) {
+            continue;
+        }
+            
+        // Build and excute the command
+        $command = $jshydra . ' ' . $script . ' ' . $safeFile;
+        $output = shell_exec($command);
+        $lines = explode("\n", $output);
+                
+        // One warning for each function found
+        $results = array();
+        foreach ($lines as $line) {
+            if ($line != '') {
+                list($num, $func) = explode(':', $line);
+                $results[] = $this->_result(TEST_WARN, $num, 'install.js', sprintf(___('devcp_error_install_js_wrong_func', 'Install.js contains a function missing from the whitelist: %s'), $func));
+            }
+        }
 
-        return $this->_resultPass();
+        return $this->_passIfEmpty($results);
     }
 
     /**
