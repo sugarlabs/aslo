@@ -237,7 +237,7 @@ var addon_edit_authors = {
     },
     
     checkAddForm: function() {
-        var email = $('#add-email').val();
+        var email = encodeURIComponent($('#add-email').val());
         
         if (email != '') {
             $('#add-error').slideUp();
