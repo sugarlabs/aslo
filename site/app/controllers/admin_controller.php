@@ -1998,6 +1998,9 @@ class AdminController extends AppController
                             $this->data['User']['picture_data'] = $fileinfo['picture_data'];
                             $this->data['User']['picture_type'] = $fileinfo['picture_type'];
                         }
+                    } else {
+                        // Don't mess with the picture data
+                        unset($this->data['User']['picture_data']);
                     }
 
                     $this->User->save($this->data['User']);
@@ -2035,7 +2038,7 @@ class AdminController extends AppController
         $this->set('page', 'users');
         
         if (!empty($user)) {
-            $this->set('user', $user);
+            $this->publish('user', $user);
             $this->render('users_edit');
         }
         else {

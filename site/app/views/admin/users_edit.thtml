@@ -97,11 +97,11 @@ $this->translationBox = array(
             </div>
             <div class="line">
                 <label class="amo-label-large" for="UserLocation"><?=___('user_form_location', 'Location')?></label>
-                <?=$html->input('User/location', array('value' => $user['User']['location'])) ?>
+                <?=$html->input('User/location', array('value' => stripslashes($user['User']['location']))) ?>
             </div>
             <div class="line">
                 <label class="amo-label-large" for="UserOccupation"><?=___('user_form_occupation', 'Occupation')?></label>
-                <?=$html->input('User/occupation', array('value' => $user['User']['occupation'])) ?>
+                <?=$html->input('User/occupation', array('value' => stripslashes($user['User']['occupation']))) ?>
             </div>
             <div>
                 <label for="UserHomepage"><?=_('user_form_homepage')?></label>
@@ -141,7 +141,7 @@ $this->translationBox = array(
             
             <div>
                 <label for="UserNotes">Notes</label>
-                <?=$html->textarea('User/notes', array('value' => $user['User']['notes'], 'cols' => 60, 'rows' => 3)) ?>
+                <?=$html->textarea('User/notes', array('value' => stripslashes($user['User']['notes']), 'cols' => 60, 'rows' => 3)) ?>
             </div>
             
             <div class="buttonBox">
