@@ -82,12 +82,14 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearchdescription/1.1/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search/{searchTerms}"/>
              </OpenSearchDescription>';
     $expected = '<SEARCH
   name="OpenSearch Test"
   action="http://test.template.url/search/"
   method="GET"
+  description="Testing OpenSearch"
 >
 <input user>
 </SEARCH>
@@ -99,6 +101,7 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearchdescription/1.1/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search/{searchTerms}/"/>
              </OpenSearchDescription>';
     $expected = NULL;
@@ -109,6 +112,7 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearchdescription/1.1/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search/"/>
              </OpenSearchDescription>';
     $expected = NULL;
@@ -152,6 +156,7 @@ class OpensearchTest extends UnitTestCase {
   function testSubstitution() {
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearchdescription/1.1/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <InputEncoding>Shift_JIS</InputEncoding>
              <Url type="text/html" method="get" template="http://test.template.url/search/">
                <Param name="inputEncoding" value="{inputEncoding}"/>
@@ -183,6 +188,7 @@ class OpensearchTest extends UnitTestCase {
   function testURLs() {
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search/">
                <Param name="q" value="{searchTerms}"/>
                <Param name="sourceid" value="firefox"/>
@@ -216,6 +222,7 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search1/">
                <Param name="q" value="{searchTerms}-1"/>
                <Param name="sourceid" value="firefox-1"/>
@@ -236,6 +243,7 @@ class OpensearchTest extends UnitTestCase {
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
              <ShortName>Second OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search/">
                <Param name="q" value="{searchTerms}"/>
                <Param name="sourceid" value="firefox"/>
@@ -259,6 +267,7 @@ class OpensearchTest extends UnitTestCase {
     $this->assertFalse($engine, "Invalid namespace");
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search/">
                <Param name="q" value="{searchTerms}"/>
                <Param name="sourceid" value="firefox"/>
@@ -270,6 +279,18 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Url type="text/html" method="get" template="http://test.template.url/search/">
+               <Param name="q" value="{searchTerms}"/>
+               <Param name="sourceid" value="firefox"/>
+             </Url>
+             </OpenSearchDescription>';
+
+    $engine = $this->Os->parse($data);
+    $this->assertFalse($engine, "No description");
+
+    $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
+             <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              </OpenSearchDescription>';
 
     $engine = $this->Os->parse($data);
@@ -277,6 +298,7 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="application/x-suggestions+json" method="get" template="http://test.template.url/suggest/">
                <Param name="q" value="{searchTerms}"/>
                <Param name="sourceid" value="firefox-suggest"/>
@@ -288,6 +310,7 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="invalid" template="http://test.template.url/search/"/>
              </OpenSearchDescription>';
 
@@ -296,6 +319,7 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="mailto://test.template.url/search/"/>
              </OpenSearchDescription>';
 
@@ -305,6 +329,7 @@ class OpensearchTest extends UnitTestCase {
     $data = '<OpenSearchDescription/>
              <OpenSearchDescription>
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="text/html" method="get" template="http://test.template.url/search/">
                <Param name="q" value="{searchTerms}"/>
                <Param name="sourceid" value="firefox"/>
@@ -317,6 +342,7 @@ class OpensearchTest extends UnitTestCase {
   function testUrlAttrHandling() {
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Url type="TEXT/HTML" template="http://test.template.url/Search/"/>
              </OpenSearchDescription>';
 
@@ -329,6 +355,7 @@ class OpensearchTest extends UnitTestCase {
   function testImage() {
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Image>data:image/x-icon;base64,Qk02AwAAAAAAADYAAAAoAAAAEAAAABAAAAABABgAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////////AAAAAAAA////////AAAAAAAA////////AAAA////AAAA////////AAAA////AAAA////////////AAAA////////AAAA////AAAA////AAAA////////AAAA////AAAA////////////AAAA////////AAAA////AAAAAAAAAAAA////////AAAA////////AAAAAAAA////////AAAAAAAA////////AAAA////AAAA////////////////////////////////////////////////////////////////////////////AAAA////////////AAAA////AAAA////////AAAA////////////////////////AAAAAAAA////////AAAAAAAAAAAA////AAAA////AAAA////////////////////AAAA////////////AAAA////AAAA////AAAA////AAAA////////////////////AAAAAAAAAAAA////////AAAA////////AAAA////AAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</Image>
              <Url type="TEXT/HTML" template="http://test.template.url/Search/"/>
              </OpenSearchDescription>';
@@ -338,6 +365,7 @@ class OpensearchTest extends UnitTestCase {
 
     $data = '<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.0/">
              <ShortName>OpenSearch Test</ShortName>
+             <Description>Testing OpenSearch</Description>
              <Image height="16" width="16">data:image/x-icon;base64,Qk02AwAAAAAAADYAAAAoAAAAEAAAABAAAAABABgAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AAAA////////AAAAAAAA////////AAAAAAAA////////AAAA////AAAA////////AAAA////AAAA////////////AAAA////////AAAA////AAAA////AAAA////////AAAA////AAAA////////////AAAA////////AAAA////AAAAAAAAAAAA////////AAAA////////AAAAAAAA////////AAAAAAAA////////AAAA////AAAA////////////////////////////////////////////////////////////////////////////AAAA////////////AAAA////AAAA////////AAAA////////////////////////AAAAAAAA////////AAAAAAAAAAAA////AAAA////AAAA////////////////////AAAA////////////AAAA////AAAA////AAAA////AAAA////////////////////AAAAAAAAAAAA////////AAAA////////AAAA////AAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</Image>
              <Url type="text/html" template="http://test.template.url/Search/"/>
              </OpenSearchDescription>';
