@@ -82,7 +82,8 @@
                 <?=$html->radio('Collection/listed', array(
                     true => '<label for="listed_1">'.___('collections_edit_formfield_listed_true').'</label>',
                     false => '<label for="listed_0">'.___('collections_edit_formfield_listed_false').'</label>'
-                    ), '<br/>', array('value' => true)
+                    ), '<br/>', array('value' => (int)(!isset($this->data['Collection']['listed']) || $this->data['Collection']['listed']))
+                                // defaults to true, or previously selected value on postback
                 )?>
                 </div>
 
@@ -118,7 +119,10 @@
                         html_name: '<?=$_addon['name']?>',
                         iconpath: '<?=$_addon['preview']?>'
                     });
-                <?php endforeach; ?>
+                <?php
+                endforeach;
+                unset($_addon);
+                ?>
             });
         </script>
     </div><!-- /main -->

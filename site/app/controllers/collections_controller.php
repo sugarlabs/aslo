@@ -208,19 +208,29 @@ class CollectionsController extends AppController
             ___('collections_breadcrumb') => '/collections'
         ));
 
-        $initial_addons = array();
+        // pick initially selected add-ons both from the URI and possible form choices
+        $initial_addons = $_init_ids = $_form_ids = array();
         if (!empty($this->params['url']['addons'])) {
             $_init_ids = explode(',', $this->params['url']['addons']);
-            foreach ($_init_ids as &$_init_id) {
-                if (!is_numeric($_init_id)) continue;
-                $_addon = $this->Addon->getAddon($_init_id);
+        }
+        if (!empty($this->params['form']['addons'])) {
+            $_form_ids = $this->params['form']['addons'];
+        }
+        $_addon_ids = array_unique(array_merge($_init_ids, $_form_ids));
+        unset($_init_ids, $_form_ids);
+
+        if (!empty($_addon_ids)) {
+            foreach ($_addon_ids as &$_addon_id) {
+                if (!is_numeric($_addon_id)) continue;
+                $_addon = $this->Addon->getAddon($_addon_id);
                 if (empty($_addon)) continue;
                 $initial_addons[] = array(
                     'id' => $_addon['Addon']['id'],
                     'name' => $_addon['Translation']['name']['string'],
-                    'preview' => $this->Image->getAddonIconURL($_init_id)
+                    'preview' => $this->Image->getAddonIconURL($_addon_id)
                 );
             }
+            unset($_addon_id);
         }
         $this->publish('initial_addons', $initial_addons);
 
