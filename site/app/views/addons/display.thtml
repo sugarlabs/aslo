@@ -434,7 +434,6 @@ if (!empty($coll_addon_added)) {
 </div>
 <?php endif; ?>
 
-<?php $authorAddons = array(); ?>
 <?php if (!empty($relatedCategories) || count($authorAddons) > 1): ?>
     <div class="highlight">
 
@@ -448,24 +447,23 @@ if (!empty($coll_addon_added)) {
       ?>
 
       <?php if (count($authorAddons) > 1): ?>
-          <h4 class="other-author-addons"><?=sprintf(n___('addons_display_other_addons_by', 'addons_display_other_addons_by', count($addon['User'])),
-                         $html->linkUsersFromModel($addon['User'], 0));?>
-          </h4>
-          <div class="prose">
-              <ul>
-               <?php
-                  if (count($authorAddons) > 3) {
-                      echo '<form id="addons-author-addons" method="get" action="">';
-                      echo '<select id="addons-author-addons-select" name="addons-author-addons-select" onchange="this.form.submit()">';
-                      echo $this->renderElement('addon_author_addons', array('tag' => 'option'));
-                      echo '</select>';
-                      echo '<input class="hidden" type="submit" value="'._('addons_author_addons_submit').'"/>';
-                      echo '</form>';
-                  } else {
-                      echo $this->renderElement('addon_author_addons', array('tag' => 'li'));
-                  }
-               ?>
-               </ul>
+          <div class="other-author-addons">
+              <h4><?=sprintf(n___('addons_display_other_addons_by', 'addons_display_other_addons_by', count($addon['User'])),
+                             $html->linkUsersFromModel($addon['User'], 0));?>
+              </h4>
+          <?php if (count($authorAddons) > 3) {
+              echo '<form id="addons-author-addons" method="get" action="">';
+              echo '<select id="addons-author-addons-select" name="addons-author-addons-select" onchange="this.form.submit()">';
+              echo $this->renderElement('addon_author_addons', array('tag' => 'option'));
+              echo '</select>';
+              echo '<input class="hidden" type="submit" value="'._('addons_author_addons_submit').'"/>';
+              echo '</form>';
+          } else {
+              echo '<ul class="xoxo">';
+              echo $this->renderElement('addon_author_addons', array('tag' => 'li'));
+              echo '</ul>';
+          }
+          ?>
           </div>
       <?php endif; ?>
     </div>
