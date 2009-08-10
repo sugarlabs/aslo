@@ -634,9 +634,9 @@ class CollectionsController extends AppController
             }
         }
 
+        $this->Amo->clean($localizedFields);
         $valid_translations = $this->Collection->validateTranslations($localizedFields);
         if ($valid_translations) {
-            $this->Amo->clean($localizedFields);
             $this->Collection->saveTranslations($id, $this->params['form']['data']['Collection'], $localizedFields);
         }
 
