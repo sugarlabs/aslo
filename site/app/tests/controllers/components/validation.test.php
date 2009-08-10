@@ -578,7 +578,7 @@ class ValidationTest extends UnitTestCase {
   <em:targetApplication>
       <Description>
       <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
-      <em:minVersion>2.0a1</em:minVersion>
+      <em:minVersion>2.0a1pre</em:minVersion>
       <em:maxVersion>2.0a2</em:maxVersion>
       </Description>
   </em:targetApplication>

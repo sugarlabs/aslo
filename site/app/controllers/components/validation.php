@@ -715,7 +715,7 @@ class ValidationComponent extends Object {
         foreach ($supportedApps as $guid => $app) {
             
             // There's almost certainly a better way to check this ...
-            if ($mozApps[$guid] == 'SeaMonkey' && $this->Versioncompare->compareVersions($app['minVersion'], '2.0a1') == -1) {
+            if ($mozApps[$guid] == 'SeaMonkey' && $this->Versioncompare->compareVersions($app['minVersion'], '2.0a1pre') == -1) {
                 $flags = $this->_verifyFilesExist($file, array('install.js'), 'by_name');
                 return $this->_passIfEmpty($flags);
             }
