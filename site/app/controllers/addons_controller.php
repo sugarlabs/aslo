@@ -1585,46 +1585,6 @@ class AddonsController extends AppController
     }
 
     /**
-     * Display previews for an addon
-     */
-    function previews($id) {
-        $this->Amo->clean($id);
-        $this->layout = 'mozilla';
-
-        if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
-            return;
-        }
-
-        $addon_data = $this->Addon->find(array(
-            'Addon.id' => $id,
-            'Addon.inactive' => '0',
-            'Addon.status' => array(STATUS_PUBLIC, STATUS_SANDBOX, STATUS_NOMINATED)),
-            null , null , 1);
-        if (empty($addon_data)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
-            return;
-        }
-        if ($addon_data['Addon']['status'] != STATUS_PUBLIC && !$this->sandboxAccess) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
-            return;
-        }
-
-        $previews = $this->Preview->findAllByAddon_Id($id, array('id', 'addon_id', 'caption'));
-        $this->publish('previews', $previews);
-        $this->publish('addon', $addon_data);
-        $_title = sprintf(_('addons_previews_pagetitle'), $addon_data['Translation']['name']['string']);
-        $this->pageTitle = $_title. ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
-        $this->publish('subpagetitle', $_title);
-
-        // Pretty previews
-        $this->set('includeSlimbox', 1);
-        $this->set('suppressJQuery', 1);
-
-        $this->render();
-    }
-
-    /**
      * Display previously released versions of an addon
      */
     function versions($id) {
@@ -1709,6 +1669,22 @@ class AddonsController extends AppController
             return;
         }
     }
+
+    /**
+     * LEGACY: Display previews for an addon
+     * The previews are now shown on the add-ons details page.
+     * @deprecated in AMO 5.0.9
+     */
+    function previews($id) {
+        $this->Amo->clean($id);
+        if (!$id || !is_numeric($id)) {
+            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            return;
+        }
+
+        $this->redirect("/addon/{$id}", 301);
+    }
+
 }
 
 ?>
