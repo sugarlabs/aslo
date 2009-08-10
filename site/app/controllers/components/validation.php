@@ -554,7 +554,7 @@ class ValidationComponent extends Object {
         // Grab the location of the file and extract any files, since JS can live in many places
         $extracted = $this->_extract($file, 'by_preg', '//');
 
-        return $this->_grepExtractedFiles($extracted, array('/-moz-binding:(?!\s*(url\s*\(\s*["\']?chrome:\/\/.*\/content\/|none))/'));
+        return $this->_grepExtractedFiles($extracted, array('/-moz-binding:(?!\s*(url\s*\(\s*["\']?chrome:\/\/.*\/(content|skin)\/|none))/'));
     }
 
     /**
@@ -920,7 +920,7 @@ class ValidationComponent extends Object {
     function theme_security_checkChromeManifest($file) {
 
         // See above for justification on this regex
-        $patterns = array('/^(?!(#|skin |style ))/');
+        $patterns = array('/^(?!(#|skin\s|style\s))/');
         $extracted = $this->_extract($file, 'by_name', array('chrome.manifest'));
 
         return $this->_grepExtractedFiles($extracted, $patterns);
