@@ -104,15 +104,15 @@ switch ($action) {
         $addons_sql = "SELECT id FROM addons";
         echo "Retrieving all add-on ids...\n";
         $addons_result = $db->read($addons_sql);
-        
+
         $affected_rows = mysql_num_rows($addons_result);
-    
+
         if ($affected_rows > 0 ) {
             while ($row = mysql_fetch_array($addons_result)) {
                 $seven_day_counts[$row['id']] = 0;
             }
         }
-        
+
         // Get 7 day counts from the download table.
         $seven_day_count_sql = "
             SELECT
@@ -132,7 +132,7 @@ switch ($action) {
         $seven_day_count_result = $db->read($seven_day_count_sql);
 
         $affected_rows = mysql_num_rows($seven_day_count_result);
-    
+
         if ($affected_rows > 0 ) {
             while ($row = mysql_fetch_array($seven_day_count_result)) {
                 $seven_day_counts[$row['addon_id']] = ($row['seven_day_count']>0) ? $row['seven_day_count'] : 0;
@@ -149,7 +149,7 @@ switch ($action) {
                 $db->write($seven_day_count_update_sql);
             }
         }
-        
+
         // Unlock stats dashboard
         $db->unlockStats();
     break;
@@ -160,7 +160,7 @@ switch ($action) {
     case 'total':
         // Lock stats dashboard
         $db->lockStats();
-        
+
         // Get total counts from the download table.
         $total_count_sql = "
             SELECT
@@ -179,7 +179,7 @@ switch ($action) {
         $total_count_result = $db->read($total_count_sql);
 
         $affected_rows = mysql_num_rows($total_count_result);
-    
+
         if ($affected_rows > 0 ) {
             $counts = array();
             while ($row = mysql_fetch_array($total_count_result)) {
@@ -196,7 +196,7 @@ switch ($action) {
                 $db->write($total_count_update_sql);
             }
         }
-        
+
         // Unlock stats dashboard
         $db->unlockStats();
     break;
@@ -249,7 +249,7 @@ switch ($action) {
     case 'gc':
         echo 'Starting garbage collection ...'."\n";
         $affected_rows = 0;
-        
+
         /* Disabling download count clean-up for better statistics
         echo 'Cleaning up download_counts table ...'."\n";
         $gc_sql = "
@@ -258,8 +258,8 @@ switch ($action) {
             WHERE
                 `date` < DATE_SUB(CURDATE(), INTERVAL 31 DAY)
         ";
-        $gc_result = mysql_query($gc_sql, $write) 
-            or trigger_error('MySQL Error '.mysql_errno().': '.mysql_error()."", 
+        $gc_result = mysql_query($gc_sql, $write)
+            or trigger_error('MySQL Error '.mysql_errno().': '.mysql_error()."",
                              E_USER_NOTICE);
 
         $affected_rows = mysql_affected_rows($write);*/
@@ -291,7 +291,7 @@ switch ($action) {
                 addons.id as addon_id,
                 files.filename as filename
             FROM
-                versions 
+                versions
             INNER JOIN addons ON versions.addon_id = addons.id AND addons.status = 4 AND addons.inactive = 0
             INNER JOIN files ON files.version_id = versions.id AND files.status = 4
             ORDER BY
@@ -300,7 +300,7 @@ switch ($action) {
 
         // Get file names and IDs of all files to copy.
         $files_result = $db->read($files_sql);
-    
+
         $affected_rows = 0;
 
         while ($row = mysql_fetch_array($files_result)) {
@@ -321,18 +321,18 @@ switch ($action) {
      */
     case 'reviews':
         echo 'Starting review total updates...'."\n";
-        
+
         $reviews_sql = "
             UPDATE addons AS a
             INNER JOIN (
                 SELECT
                     versions.addon_id as addon_id,
                     COUNT(*) as count
-                FROM reviews 
-                INNER JOIN versions ON reviews.version_id = versions.id 
+                FROM reviews
+                INNER JOIN versions ON reviews.version_id = versions.id
                 WHERE reviews.reply_to IS NULL
                     AND reviews.rating > 0
-                GROUP BY versions.addon_id 
+                GROUP BY versions.addon_id
             ) AS c ON (a.id = c.addon_id)
             SET a.totalreviews = c.count
         ";
@@ -384,11 +384,11 @@ switch ($action) {
                 SELECT
                     versions.addon_id as addon_id,
                     AVG(rating) as avg_rating
-                FROM reviews 
-                INNER JOIN versions ON reviews.version_id = versions.id 
+                FROM reviews
+                INNER JOIN versions ON reviews.version_id = versions.id
                 WHERE reviews.reply_to IS NULL
                     AND reviews.rating > 0
-                GROUP BY versions.addon_id 
+                GROUP BY versions.addon_id
             ) AS c ON (a.id = c.addon_id)
             SET a.averagerating = ROUND(c.avg_rating, 2)
         ";
@@ -397,7 +397,7 @@ switch ($action) {
         echo 'Updating bayesian ratings...'."\n";
         // get average review count and average rating
         $rows = $db->read("
-            SELECT AVG(a.cnt) AS avg_cnt 
+            SELECT AVG(a.cnt) AS avg_cnt
             FROM (
                 SELECT COUNT(*) AS cnt
                 FROM reviews AS r
@@ -409,9 +409,9 @@ switch ($action) {
         ");
         $row = mysql_fetch_array($rows);
         $avg_num_votes = $row['avg_cnt'];
-        
+
         $rows = $db->read("
-            SELECT AVG(a.addon_rating) AS avg_rating 
+            SELECT AVG(a.addon_rating) AS avg_rating
             FROM (
                 SELECT AVG(rating) AS addon_rating
                 FROM reviews AS r
@@ -423,7 +423,7 @@ switch ($action) {
         ");
         $row = mysql_fetch_array($rows);
         $avg_rating = $row['avg_rating'];
-        
+
         // calculate and store bayesian rating
         $rating_sql = "
             UPDATE addons AS a
@@ -535,41 +535,43 @@ switch ($action) {
      */
     case 'category_totals':
         echo "Starting category counts update...\n";
-        // HACK: Wish I had $valid_status from constants.php
-        $valid_status = join(',', array(1, 2, 3, 4));
+
+        global $valid_status;
+        $valid_status = join(',', $valid_status);
+
         // Modified query inspired by countAddonsInAllCategories()
         // in site/app/models/addon.php
         $tag_counts_sql = "
-            UPDATE 
+            UPDATE
                 categories AS t
-            INNER JOIN ( 
-                SELECT 
-                    at.category_id, 
+            INNER JOIN (
+                SELECT
+                    at.category_id,
                     COUNT(DISTINCT Addon.id) AS ct
-                FROM 
-                    addons AS Addon 
-                INNER JOIN versions AS Version 
+                FROM
+                    addons AS Addon
+                INNER JOIN versions AS Version
                     ON (Addon.id = Version.addon_id)
-                INNER JOIN applications_versions AS av 
+                INNER JOIN applications_versions AS av
                     ON (av.version_id = Version.id)
-                INNER JOIN addons_categories AS at 
+                INNER JOIN addons_categories AS at
                     ON (at.addon_id = Addon.id)
-                INNER JOIN files AS File 
-                    ON (Version.id = File.version_id 
-                        AND File.status IN ({$valid_status})) 
-                WHERE 
-                    Addon.status IN ({$valid_status}) 
+                INNER JOIN files AS File
+                    ON (Version.id = File.version_id
+                        AND File.status IN ({$valid_status}))
+                WHERE
+                    Addon.status IN ({$valid_status})
                         AND Addon.inactive = 0
                 GROUP BY at.category_id
             ) AS j ON (t.id = j.category_id)
-            SET 
+            SET
                 t.count = j.ct
         ";
         $db->write($tag_counts_sql);
         $affected_rows = mysql_affected_rows();
     break;
 
-        
+
 
 
     /**
@@ -579,17 +581,17 @@ switch ($action) {
         echo "Starting global stats update...\n";
 
         $affected_rows = 0;
-        
+
         $stats = array(
             // Total downloads
             'addon_total_downloads'             => 'SELECT SUM(count) FROM download_counts',
-            
+
             // Add-on counts
             'addon_count_public'                => 'SELECT COUNT(*) FROM addons WHERE status = 4 AND inactive = 0',
             'addon_count_pending'               => 'SELECT COUNT(*) FROM versions INNER JOIN files ON versions.id = files.version_id WHERE files.status = 2',
             'addon_count_experimental'          => 'SELECT COUNT(*) FROM addons WHERE status = 1 AND inactive = 0',
             'addon_count_nominated'             => 'SELECT COUNT(*) FROM addons WHERE status = 3 AND inactive = 0',
-            
+
             // Collection counts
             'collection_count_total'            => 'SELECT COUNT(*) FROM collections',
             'collection_count_private'          => 'SELECT COUNT(*) FROM collections WHERE listed = 0',
@@ -598,36 +600,36 @@ switch ($action) {
             'collection_count_editorspicks'     => 'SELECT COUNT(*) FROM collections WHERE collection_type = 2',
             'collection_count_normal'           => 'SELECT COUNT(*) FROM collections WHERE collection_type = 0',
             'collection_addon_downloads'        => 'SELECT SUM(count) FROM stats_addons_collections_counts',
-            
+
             // Add-on Collector
             'collector_total_downloads'         => 'SELECT SUM(count) FROM download_counts WHERE addon_id = 11950'
         );
-        
+
         $date = date('Y-m-d');
-        
+
         // Update all "total" stats that don't require a date
         foreach ($stats as $stat => $query) {
             echo "Updating {$stat}...\n";
-            
+
             $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), '{$date}')");
-            
+
             $affected_rows += mysql_affected_rows();
         }
-        
+
         // These stats are specific to the latest available metrics data import
-        
+
         $date = 'SELECT MAX(date) FROM update_counts';
-        
+
         $variable_date_stats = array(
             'addon_total_updatepings'           => "SELECT SUM(count) FROM update_counts WHERE date = ({$date})",
             'collector_updatepings'             => "SELECT count FROM update_counts WHERE addon_id = 11950 AND date = ({$date})"
         );
-        
+
         foreach ($variable_date_stats as $stat => $query) {
             echo "Updating {$stat}...\n";
-            
+
             $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), ({$date}))");
-            
+
             $affected_rows += mysql_affected_rows();
         }
 
@@ -705,29 +707,29 @@ function copyFileToPublic($addon_id, $filename, $overwrite = true) {
         // return true because false indicates error
         return false;
     }
-    
+
     $currentFile = REPO_PATH."/{$addon_id}/{$filename}";
     $newDir = PUBLIC_STAGING_PATH."/{$addon_id}";
     $newFile = $newDir."/{$filename}";
-    
+
     // Make sure source file exists
     if (!file_exists($currentFile)) {
         return false;
     }
-    
+
     // If we don't want to overwrite, make sure we don't
     if (!$overwrite && file_exists($newFile)) {
         // return true because this is not treated as an error
         return false;
     }
-    
+
     // Make directory if necessary
     if (!file_exists($newDir)) {
         if (!mkdir($newDir)) {
             return false;
         }
     }
-    
+
     return copy($currentFile, $newFile);
 }
 
