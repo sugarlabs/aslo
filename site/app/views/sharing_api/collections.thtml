@@ -40,22 +40,11 @@
 <collections xmlns="http://addons.mozilla.org/" 
     xml:base="<?php echo $base_url ?>">
     <?php foreach($collections as $c): ?>
-
-    <collection href="<?php echo $c['uuid'] ?>" 
-        name="<?php echo $c['name'] ?>" 
-        icon="<?php echo $c['icon'] ?>"
-        type="<?php echo $c['type'] ?>"
-        description="<?php echo $c['description'] ?>"
-        app="<?php echo $c['app']?>"
-        creator="<?php echo $c['creator'] ?>" 
-        listed="<?php echo $c['listed'] ?>" writable="<?php echo $c['writable'] ?>" subscribed="<?php echo $c['subscribed'] ?>" 
-        lastmodified="<?php echo $c['lastmodified'] ?>">
-            <links xml:base="<?php echo $site_base_url ?>">
-                <link id="view" href="<?php echo 'collections/view/' . $c['uuid'] ?>" />
-                <link id="subscribe" href="<?php echo 'collections/subscribe/' . $c['uuid'] ?>" />
-                <link id="unsubscribe" href="<?php echo 'collections/unsubscribe/' . $c['uuid'] ?>" />
-            </links>
-    </collection>
+        <?php
+            $omit_addon_detail = true;
+            unset($base_url);
+            include 'collection_detail.thtml';
+        ?>
     <?php endforeach ?>
 
 </collections>

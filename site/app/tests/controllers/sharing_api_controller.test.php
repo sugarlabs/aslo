@@ -253,6 +253,37 @@ class SharingApiTest extends WebTestHelper {
         $resp_doc = $this->getXml($result_url);
         $this->assertExpectedCollectionNodes(array($test_collection), array($resp_doc));
 
+        // Look for the <link> element and find expected links.
+        $links = $resp_doc->links;
+        $this->assertTrue(!empty($links), "Links element should be found.");
+        $uuid = basename($result_url); // HACK: Carve the UUID out of the collection URL.
+        $expected_links = array(
+            'view'        => "collections/view/{$uuid}",
+            'edit'        => "collections/edit/{$uuid}",
+            'subscribe'   => "collections/subscribe/{$uuid}",
+        );
+        foreach ($links->link as $link) {
+            $result_id = (string)$link['id'];
+            $result_href = (string)$link['href'];
+
+            $this->assertTrue(!empty($result_id),
+                "Link @id = {$result_id} should not be empty");
+            $this->assertTrue(!empty($result_href),
+                "Link @href = {$result_href} should not be empty");
+            $this->assertTrue(!empty($expected_links[$result_id]),
+                "Link should be expected.");
+
+            $this->assertEqual(
+                $expected_links[$result_id], $result_href,
+                "Link {$result_id} {$result_href} should match ".
+                "expected {$expected_links[$result_id]}"
+            );
+
+            unset($expected_links[$result_id]);
+        }
+        $this->assertTrue(empty($expected_links),
+            "All expected links should have been seen.");
+
         // Ensure that the same content is found at the service doc URL.
         $resp_doc = $this->getXml($this->service_url);
         $nodes = $resp_doc->collections->children();
@@ -669,7 +700,7 @@ class SharingApiTest extends WebTestHelper {
     /**
      * Bug 486125:  Sharing API should accept names with apostrophes
      */
-    public function testCollectionNamesWithApostrophesShouldBeAccepted()
+    function testCollectionNamesWithApostrophesShouldBeAccepted()
     {
         $this->login();
         $doc = $this->getXml($this->service_url);
@@ -762,7 +793,8 @@ class SharingApiTest extends WebTestHelper {
             $content = $this->getBrowser()->getContent();
 
             $resp_doc = simplexml_load_string($content);
-            $this->assertTrue(!empty($resp_doc));
+            $this->assertTrue(!empty($resp_doc), 
+                "Response document should not be empty");
 
             $headers = $this->getBrowserHeaders();
             $addon_url = $headers['location'];
@@ -985,7 +1017,9 @@ class SharingApiTest extends WebTestHelper {
             'Initial known collection should not yet be subscribed'
         );
 
+        $expected_count = 0;
         foreach ($collection_urls as $collection_url) {
+            $expected_count++;
             $this->put($collection_url, array('subscribed' => 'yes'));
             $this->assertResponse(200,
                 "PUT to set collection 'subscribed' flag should yield 200 OK, ".
@@ -994,9 +1028,11 @@ class SharingApiTest extends WebTestHelper {
 
         $service_doc = $this->getXml($this->service_url);
         $base_url = $this->getBaseUrl($this->service_url, $service_doc);
+        $result_count = count($service_doc->collections->children());
         $this->assertEqual(
-            6, count($service_doc->collections->children()),
-            'Main test user should now see 5 collections'
+            $expected_count, $result_count,
+            "Main test user should now see {$expected_count} collections ".
+            "(saw {$result_count})"
         );
 
         foreach ($service_doc->collections->collection as $collection) {
@@ -1004,6 +1040,16 @@ class SharingApiTest extends WebTestHelper {
                 'yes', (string)$collection['subscribed'],
                 'Known collections should be subscribed now'
             );
+            $found_unsubscribe = false;
+            foreach ($collection->links->link as $link) {
+                if ('unsubscribe' == (string)$link['id']) {
+                    $found_unsubscribe = true;
+                }
+                if ('subscribe' == (string)$link['id']) {
+                    $this->fail("No subscribe link should appear on subscribed collection");
+                }
+            }
+            $this->assertTrue($found_unsubscribe, "Unsubscribe link should be found.");
         }
 
         foreach ($collection_urls as $idx=>$collection_url) {
@@ -1098,7 +1144,9 @@ class SharingApiTest extends WebTestHelper {
             $this->assertEqual(
                 $addon->meta->comments, 
                 "notes for addon {$addon_guid} by {$user['User']['email']}", 
-                "Addon comments should match what was added"
+                "Addon comments should match what was added -- " .
+                    " {$addon->meta->comments} != ".
+                    "notes for addon {$addon_guid} by {$user['User']['email']}"
             );
 
             $user_display_name = !empty($user['User']['nickname']) ?
@@ -1106,7 +1154,8 @@ class SharingApiTest extends WebTestHelper {
                 "{$user['User']['firstname']} {$user['User']['lastname']}";
             $this->assertEqual(
                 $addon->meta->addedby, $user_display_name,
-                "Addon user name should match what was added"
+                "Addon user name should match what was added " .
+                    " {$addon->meta->addedby} != {$user_display_name}"
             );
             
         }
@@ -1408,18 +1457,19 @@ class SharingApiTest extends WebTestHelper {
    /**
     * Logs in with test account info.
     */
-    function login($username='nobody@mozilla.org', $password='test') {
+    function login($username=null, $password=null) {
+        if (null==$username) $username = $this->username;
+        if (null==$password) $password = $this->password;
+
         $this->restart();
-        $path = $this->actionURI('/users/login');
-        $data = array(
-            'data[Login][email]' => $username,
-            'data[Login][password]' => $password
-        );
-        $this->post($path, $data);
-        $this->assertNoUnwantedText(
-            _('error_username_or_pw_wrong'), 
-            'Logged in with '.$username.' account'
-        );
+
+        // HACK: Not sure why, but the web tester seems to require an initial 
+        // 401 to get the idea that Basic auth is needed.
+        $this->get($this->service_url);
+        $this->assertAuthentication('Basic');
+        $this->assertResponse(401);
+
+        $this->authenticate($username, $password);
     }
 
     /**

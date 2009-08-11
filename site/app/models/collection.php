@@ -438,9 +438,8 @@ class Collection extends AppModel
         $rows = $this->execute($sql);
         $user_map = array();
         foreach ($rows as $row) {
-            if (is_array($exclude) && !in_array($row['collections_users']['user_id'], $exclude)) {
-                $user_map[$row['collections_users']['user_id']] = $row['collections_users'];
-            }
+            if (is_array($exclude) && in_array($row['collections_users']['user_id'], $exclude)) continue;
+            $user_map[$row['collections_users']['user_id']] = $row['collections_users'];
         }
 
         // Look up users with user IDs, merge the role info into each found.

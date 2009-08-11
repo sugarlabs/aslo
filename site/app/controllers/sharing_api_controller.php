@@ -307,7 +307,7 @@ class SharingApiController extends AppController
 
         // Make the auth user a manager of this new collection.
         $this->Collection->addUser(
-            $new_collection['Collection']['id'], $this->auth_user['id'], COLLECTION_ROLE_ADMIN
+            $this->Collection->id, $this->auth_user['id'], COLLECTION_ROLE_ADMIN
         );
 
         $new_url = ( empty($_SERVER['HTTPS']) ? 'http' : 'https' ) .
