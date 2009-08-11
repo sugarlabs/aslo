@@ -86,7 +86,10 @@ var editors_review = {
             comments = $('#editorComments .commentDepth'+depth);
         }
 
-        // apply syntax highlighting
+        // apply syntax highlighting (and localize its strings)
+        SyntaxHighlighter.config.strings.viewSource = localized['editors_syntax_view_source'];
+        SyntaxHighlighter.config.strings.print = localized['editors_syntax_print'];
+        SyntaxHighlighter.config.strings.help = localized['editors_syntax_about'];
         SyntaxHighlighter.all();
 
         // click a root comment header to toggle showing/hiding the entire thread

@@ -475,6 +475,9 @@ class EditorsController extends AppController
             'editors_review_code_sql' => ___('editors_review_code_sql', 'SQL'),
             'editors_markdown_preview' => ___('editors_markdown_preview', 'Preview'),
             'editors_review_comment_help_heading' => ___('editors_review_comment_help_heading', 'Comment Help'),
+            'editors_syntax_view_source' => ___('editors_syntax_view_source', 'View Source'),
+            'editors_syntax_print' => ___('editors_syntax_print', 'Print'),
+            'editors_syntax_about' => ___('editors_syntax_about', 'About'),
         ));
         
         $this->render('review');
