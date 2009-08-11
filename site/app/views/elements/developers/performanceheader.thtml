@@ -57,8 +57,8 @@
     <h3><?=sprintf(___('editorcp_performance_page_heading', 'Performance Report For %1$s'), $userName)?></h3>
     <table id="tabTable">
         <tr>
-            <td id="details"><div class="tab<?=($mode == '') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/performance'.($showUserLookup ? "?user={$user['User']['email']}" : ''))?>">Details</a></div></td>
-            <td id="charts"><div class="tab<?=($mode == 'charts') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/performance/charts'.($showUserLookup ? "?user={$user['User']['email']}" : ''))?>">Charts</a></div></td>
+            <td id="details"><div class="tab<?=($mode == '') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/performance'.($showUserLookup ? "?user={$user['User']['email']}" : ''))?>"><?=___('editorcp_performance_details', 'Details')?></a></div></td>
+            <td id="charts"><div class="tab<?=($mode == 'charts') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/performance/charts'.($showUserLookup ? "?user={$user['User']['email']}" : ''))?>"><?=___('editorcp_performance_charts', 'Charts')?></a></div></td>
         </tr>
     </table>
 </div>
