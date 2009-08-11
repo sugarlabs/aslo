@@ -531,17 +531,17 @@ switch ($action) {
 
 
     /**
-     * Update tag counts for sidebar navigation
+     * Update category counts for sidebar navigation
      */
-    case 'tag_totals':
-        echo "Starting tag counts update...\n";
+    case 'category_totals':
+        echo "Starting category counts update...\n";
         // HACK: Wish I had $valid_status from constants.php
         $valid_status = join(',', array(1, 2, 3, 4));
         // Modified query inspired by countAddonsInAllCategories()
         // in site/app/models/addon.php
         $tag_counts_sql = "
             UPDATE 
-                tags AS t 
+                categories AS t
             INNER JOIN ( 
                 SELECT 
                     at.category_id, 
