@@ -115,12 +115,26 @@ class TestGroup extends AppModel
         // Subtract 1 to get the 0-indexed value
         $mask = pow(2, $addonType - 1);
 
+        // Bind fully to pull in test case data.  This will let us 
+        // determine which groups have no cases, and exclude them.
+        $this->bindFully();
+
         // FindAll takes two parameters, conditions and fields, so we need to 
         // merge our mask condition with the rest of the conditions.  It doesn't look
         // like a normal condition becasuse cake will reject 'TestGroup.types & $mask' 
         // as a field name.
-        return $this->findAll(array_merge(array("TestGroup.types & {$mask} = {$mask}"), $conds), $fields);
+        $results =  $this->findAll(array_merge(array("TestGroup.types & {$mask} = {$mask}"), $conds), $fields);
 
+        // Unset anything with no test cases
+        if (!empty($results)) {
+            foreach ($results as $key => $item) {
+                if (empty($item['TestCase'])) {
+                    unset($results[$key]);
+                }
+            }
+        }
+
+        return $results;
     }
 }
 ?>
