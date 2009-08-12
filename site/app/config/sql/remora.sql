@@ -228,6 +228,7 @@ CREATE TABLE `appversions` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `application_id` int(11) unsigned NOT NULL default '0',
   `version` varchar(255) NOT NULL default '',
+  `version_int` bigint(20) unsigned DEFAULT NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
