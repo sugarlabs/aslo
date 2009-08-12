@@ -77,9 +77,21 @@ class FilesController extends AppController
         }
         $this->Addon->id = $file['Version']['addon_id'];
         $addon = $this->Addon->read();
+        
+        $isDeveloper = false;
+        $user = $this->Session->read('User');
+        if (!empty($addon['User'])) {
+            foreach ($addon['User'] as $userInfo) {
+                if ($user['id'] == $userInfo['id']) {
+                    $isDeveloper = true;
+                    break;
+                }
+            }
+        }
 
-        //Only display add-on if opted in or if the user is a reviewer
-        if ($addon['Addon']['viewsource'] != 1 && !$this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User'))) {
+        //Only display add-on if: 1) opted in 2) user owns this plugin 3) user is an editor/admin
+        if ($addon['Addon']['viewsource'] != 1 && !$isDeveloper &&            
+            !$this->SimpleAcl->actionAllowed('Editors', '*', $user)) {
             $this->flash(_('error_addon_notviewable'), '/addon/'.$this->Addon->id);
             return;
         }
