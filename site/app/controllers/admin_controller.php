@@ -37,6 +37,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+vendor('sphinx/addonsSearch');
+
 class AdminController extends AppController
 {
     var $name = 'Admin';
@@ -336,7 +338,8 @@ class AdminController extends AppController
             if (!empty($_POST['add'])) {
                 $version = $_POST['app'.$id.'_new'];
                 if (!empty($version)) {
-                    $this->Appversion->execute("INSERT INTO appversions (application_id, version) VALUES('{$id}', '{$version}')");
+                    $version_int = AddonSearch::convert_version($version);
+                    $this->Appversion->execute("INSERT INTO appversions (application_id, version, version_int) VALUES('{$id}', '{$version}', '{$version_int}')");
                     
                     //Log admin action
                     $this->Eventlog->log($this, 'admin', 'appversion_create', null, mysql_insert_id(), $version, null, $id);
