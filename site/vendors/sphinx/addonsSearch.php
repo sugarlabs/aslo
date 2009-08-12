@@ -1,5 +1,7 @@
 <?php
 
+require_once('api/sphinxsearch.php');
+
 /**
 * AddonSearch
 */
