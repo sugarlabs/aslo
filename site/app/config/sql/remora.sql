@@ -69,6 +69,7 @@ CREATE TABLE `addons` (
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`),
   KEY `addontype_id` (`addontype_id`),
   KEY `addons_ibfk_2` (`name`),
   KEY `addons_ibfk_3` (`homepage`),
@@ -928,13 +929,17 @@ CREATE TABLE `categories` (
 
 DROP TABLE IF EXISTS `translations`;
 CREATE TABLE `translations` (
+  `autoid` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `id` int(11) unsigned NOT NULL default '0',
   `locale` varchar(10) NOT NULL default '',
   `localized_string` text,
   `created` datetime default NULL,
   `modified` datetime default NULL,
-  PRIMARY KEY  (`id`,`locale`)
+  PRIMARY KEY (`autoid`),
+  UNIQUE KEY `id` (`id`,`locale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 --
 -- Table structure for table `translations_seq`
@@ -1509,3 +1514,60 @@ CREATE TRIGGER trg_tag_stat_dec AFTER DELETE ON `users_tags_addons`
 
 |
 DELIMITER ;
+
+-- This is the main view that will seed our Sphinx index.
+CREATE OR REPLACE VIEW translated_addons 
+AS
+SELECT 
+    name.autoid AS id,
+    a.id AS addon_id, 
+    a.addontype_id AS addontype, 
+    a.status, 
+    name.locale, 
+    CRC32(name.locale) AS locale_ord,
+    a.averagerating,
+    a.weeklydownloads,
+    a.totaldownloads,
+    a.inactive,
+    name.localized_string AS name,
+    (SELECT localized_string FROM translations WHERE id = a.homepage AND locale = name.locale) AS homepage,
+    (SELECT localized_string FROM translations WHERE id = a.description AND locale = name.locale) AS description,
+    (SELECT localized_string FROM translations WHERE id = a.summary AND locale = name.locale) AS summary,
+    (SELECT localized_string FROM translations WHERE id = a.developercomments AND locale = name.locale) AS developercomments,
+    (SELECT max(version_int) FROM versions v, applications_versions av, appversions max WHERE v.addon_id = a.id AND av.version_id = v.id AND av.max = max.id) AS max_ver,
+    (SELECT min(version_int) FROM versions v, applications_versions av, appversions min WHERE v.addon_id = a.id AND av.version_id = v.id AND av.min = min.id) AS min_ver,
+    UNIX_TIMESTAMP(a.created) AS created,
+    UNIX_TIMESTAMP(a.modified) AS modified
+FROM 
+    translations name, 
+    addons a
+WHERE a.name                = name.id
+
+-- This view is used to extract some version-related data
+
+CREATE OR REPLACE VIEW versions_summary_view AS
+
+SELECT DISTINCT 
+    t.autoid AS translation_id, 
+    v.addon_id, 
+    v.id, 
+    av.application_id, 
+    v.created, 
+    v.modified, 
+    min.version_int AS min, 
+    max.version_int AS max, 
+    MAX(v.created)
+FROM versions v, addons a, translations t, applications_versions av, appversions max, appversions min
+WHERE 
+    a.id = v.addon_id AND a.name = t.id AND av.version_id = v.id
+    AND av.min = min.id AND av.max=max.id
+GROUP BY 
+    translation_id, 
+    v.addon_id, 
+    v.id, 
+    av.application_id, 
+    v.created, 
+    v.modified, 
+    min.version_int, 
+    max.version_int;
+
