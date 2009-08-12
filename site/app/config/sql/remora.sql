@@ -1542,7 +1542,7 @@ SELECT
 FROM 
     translations name, 
     addons a
-WHERE a.name                = name.id
+WHERE a.name = name.id;
 
 -- This view is used to extract some version-related data
 
