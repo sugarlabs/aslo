@@ -36,24 +36,24 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-$class = ''; 
+$group_class = ''; 
 if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
-    $class = 'passed'; 
+    $group_class = 'passed'; 
 } else if ($group['counts'][TEST_FAIL] == 0) { 
-    $class = 'warning';
+    $group_class = 'warning';
 } else {
-    $class = 'failed';
+    $group_class = 'failed';
 }
 ?>
 <div class="test-heading" id="test-group-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
-    <h4 class="<?=$class?>">
+    <h4 class="<?=$group_class?>">
         <?=sprintf(n___('devcp_versions_validate_header_group', 'devcp_versions_validate_header_group',  count($group['cases']), '%s results'), $group['TestGroup']['name'])?>
     </h4>
     <a href="#test-summary-<?=$file['File']['id']?>"><?=___('devcp_back_to_top', 'Back to Top')?></a>
 </div>
 <div id="test-details-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
 <? if (!empty($group['cases'])) : ?>
-    <? if ($class != 'passed') : ?>
+    <div class="results-list <?=$group_class?>">
     <? foreach ($group['cases'] as $case) : ?>
         <h5><?=$case['name']?> [<?=$html->link(___('devcp_validation_help', 'help'), '/pages/validation#help-'.$case['id'])?>]</h5>
         <ul class="test-results">
@@ -107,8 +107,9 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
         <? endif; ?>
         </ul>
     <? endforeach; ?>
-    <? else: ?>
-        <i><?= ___('devcp_all_tests_passed', 'All tests passed.') ?></i>
+    </div>
+    <? if ($group_class =='passed') : ?>
+        <i><?= ___('devcp_all_tests_passed', 'All tests passed.') ?> <a href="#" onclick="versions_validate.showPasses($(this)); return false;"><?= n___('devcp_show_validation_passes', 'devcp_show_validation_passes', count($group['cases']), 'Show Pass(es)') ?></a></i>
     <? endif; ?>
 <? else: ?>
     <i><?= ___('devcp_versions_validate_no_results', 'No test results found.') ?></i>

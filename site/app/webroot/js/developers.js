@@ -348,6 +348,12 @@ var versions_validate = {
         a.parent().slideUp();
     },
 
+    showPasses: function(a) {
+        // Show detailed pass results
+        a.parent().parent().children('.results-list').slideDown();
+        a.parent().slideUp();
+    },
+
     runTest: function(fileId) {
 
         // If tests are running, just bail
