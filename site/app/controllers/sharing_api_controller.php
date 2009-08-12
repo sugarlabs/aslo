@@ -526,6 +526,7 @@ class SharingApiController extends AppController
         ));
 
         // Look for the addon, throwing an error if there's none found.
+        $this->Addon->bindOnly('User', 'Category');
         $addon = $this->Addon->findByGuid($params['guid']);
         if (empty($addon)) {
             return $this->renderStatus(
@@ -620,6 +621,7 @@ class SharingApiController extends AppController
             );
         }
 
+        $this->Addon->bindOnly('User', 'Category');
         $addon = $this->Addon->findByGuid($addon_guid);
         $addon_collection = $this->AddonCollection->find(array(
             'AddonCollection.collection_id' => $collection['Collection']['id'],
@@ -771,6 +773,7 @@ class SharingApiController extends AppController
         }
 
         // Look for the addon, throwing an error if there's none found.
+        $this->Addon->bindOnly('User', 'Category');
         $addon = $this->Addon->findByGuid($params['guid']);
         if (empty($addon)) {
             return $this->renderStatus(

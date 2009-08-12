@@ -367,6 +367,7 @@ class User extends AppModel
         }
 
         $criteria = array('Collection.id' => $collectionIds);
+        $this->Collection->unbindFully();
         $subscriptions = $this->Collection->findAll($criteria);
         return $subscriptions;
     }
