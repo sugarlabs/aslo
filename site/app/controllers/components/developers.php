@@ -830,6 +830,9 @@ class DevelopersComponent extends Object {
         // Delete approvals
         $this->controller->File->execute("DELETE FROM approvals WHERE file_id='{$file_id}'");
         
+        // Delete test results
+        $this->controller->File->execute("DELETE FROM test_results WHERE file_id='{$file_id}'");
+        
         // Delete file
         $this->controller->File->execute("DELETE FROM files WHERE id='{$file_id}' LIMIT 1");
     }
@@ -854,7 +857,7 @@ class DevelopersComponent extends Object {
                 }
             }
         }
-        
+
         // Delete any files
         if (!empty($version['File'])) {
             foreach ($version['File'] as $file) {
