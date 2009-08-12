@@ -509,7 +509,10 @@ class DevelopersController extends AppController
             
             // Use RDF Component to parse install.rdf
             $manifestData = $this->Rdf->parseInstallManifest($fileContents);
-            
+            if (isset($manifestData['errors'])) {
+                return $this->Error->getJSONforError($manifestData['errors'][0]);
+            }
+
             // Clean manifest data
             $this->Amo->clean($manifestData);
             

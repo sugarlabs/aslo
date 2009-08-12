@@ -210,9 +210,18 @@ class ValidationComponent extends Object {
 
         // Use RDF Component to parse install.rdf
         $manifestData = $this->Rdf->parseInstallManifest($fileContents);
-
+        
         // Clean manifest data
         $this->Amo->clean($manifestData);
+
+        // Check for any immediate parsing errors
+        if (isset($manifestData['errors'])) {
+            $results = array(); 
+            foreach ($manifestData['errors'] as $error) {
+                $results[] = $this->_result(TEST_FAIL, 0, 'install.rdf', $error);
+            }
+            return $results;
+        }
 
         // Validate manifest data
         $validate = $this->validateManifestData($manifestData);
