@@ -61,7 +61,7 @@ if (empty($addonIconPath)) {
     <?=($hasversion ? $addon['Version'][0]['Version']['version'] : '')?>
   </span>
 </h2>
-<h4 class="author"><?=_('addons_home_by')?> <?= $html->linkUsersFromModel($addon['User'], 0); ?></h4> 
+<h4 class="author"><?=_('addons_home_by')?> <?= $html->linkUsersFromModel($addon['User'], 0); ?></h4>
 
 <?php
 if (!empty($coll_addon_added)) {
@@ -79,7 +79,7 @@ if (!empty($coll_addon_added)) {
 <div id="addon" class="primary" role="main">
   <div class="featured">
     <div class="featured-inner object-lead inverse">
-      
+
     <div id="addon-summary-wrapper">
         <div id="addon-summary" class="primary <?=$html->extraClass($addon)?>">
             <p <?=$addon['Translation']['summary']['locale_html']?>>
@@ -167,7 +167,7 @@ if (!empty($coll_addon_added)) {
                             'addons_home_summary_developer',
                             count($addon['User']))?>
                   </th>
-                  <td><?=$html->linkUsersFromModel($addon['User'])?></td>
+                  <td><?=$html->linkUsersFromModel($addon['User'], 40)?></td>
                 </tr>
                 <?php if (!empty($addon['Translation']['homepage']['string'])): ?>
                   <tr>
@@ -197,8 +197,8 @@ if (!empty($coll_addon_added)) {
             </table>
           </div> <!-- addon-summary -->
     </div> <!-- addon-summary-wrapper -->
-      
-      
+
+
       <div class="secondary">
           <?php if (count($previews) > 0): ?>
             <?php
@@ -490,7 +490,7 @@ if (!empty($coll_addon_added)) {
                 <button id="addtagbutton"><?=___('tags_add_tag_button', 'Add');?></button>
             </form>
             <span class="hint"><?=___('tags_example_tags', 'Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
-        </div>	
+        </div>
     <? else: ?>
         <?echo sprintf(
             ___('tags_register_or_login', '<a href="%1$s">Register</a> or <a href="%2$s">Log in</a> to add tags'),
