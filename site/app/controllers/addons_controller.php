@@ -1478,8 +1478,7 @@ class AddonsController extends AppController
         $_addon_ids = array();
 
 
-        if(isset($this->namedArgs['cat']))
-        {
+        if (isset($this->namedArgs['cat'])) {
            $category = $this->namedArgs['cat'];
            $this->Amo->clean($category);
            $criteria = "feature > 0 AND category_id='".$category."'";
@@ -1489,7 +1488,7 @@ class AddonsController extends AppController
                $_addon_ids[] = $_addon['AddonCategory']['addon_id'];
 
         } else {
-            $featAddons = $this->Feature->findAll($criteria);
+            $featAddons = $this->Feature->findAll($criteria, array('Addon.id'), $order);
             foreach ($featAddons as $_addon)
                $_addon_ids[] = $_addon['Addon']['id'];
         }
