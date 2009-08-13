@@ -582,18 +582,34 @@ switch ($action) {
 
         $affected_rows = 0;
 
+        $date = date('Y-m-d');
+        
         $stats = array(
-            // Total downloads
+            // Add-on downloads
             'addon_total_downloads'             => 'SELECT SUM(count) FROM download_counts',
-
+            'addon_downloads_new'               => "SELECT IFNULL(SUM(count), 0) FROM download_counts WHERE date = '{$date}'",
+            
             // Add-on counts
             'addon_count_public'                => 'SELECT COUNT(*) FROM addons WHERE status = 4 AND inactive = 0',
             'addon_count_pending'               => 'SELECT COUNT(*) FROM versions INNER JOIN files ON versions.id = files.version_id WHERE files.status = 2',
             'addon_count_experimental'          => 'SELECT COUNT(*) FROM addons WHERE status = 1 AND inactive = 0',
             'addon_count_nominated'             => 'SELECT COUNT(*) FROM addons WHERE status = 3 AND inactive = 0',
+            'addon_count_new'                   => "SELECT COUNT(*) FROM addons WHERE DATE(created) = '{$date}'",
 
+            // Version counts
+            'version_count_new'                 => "SELECT COUNT(*) FROM versions WHERE DATE(created) = '{$date}'",
+
+            // User counts
+            'user_count_total'                  => 'SELECT COUNT(*) FROM users',
+            'user_count_new'                    => "SELECT COUNT(*) FROM users WHERE DATE(created) = '{$date}'",
+
+            // Review counts
+            'review_count_total'                => 'SELECT COUNT(*) FROM reviews WHERE editorreview = 0',
+            'review_count_new'                  => "SELECT COUNT(*) FROM reviews WHERE DATE(created) = '{$date}'",
+            
             // Collection counts
             'collection_count_total'            => 'SELECT COUNT(*) FROM collections',
+            'collection_count_new'              => "SELECT COUNT(*) FROM collections WHERE DATE(created) = '{$date}'",
             'collection_count_private'          => 'SELECT COUNT(*) FROM collections WHERE listed = 0',
             'collection_count_public'           => 'SELECT COUNT(*) FROM collections WHERE listed = 1',
             'collection_count_autopublishers'   => 'SELECT COUNT(*) FROM collections WHERE collection_type = 1',
@@ -604,8 +620,6 @@ switch ($action) {
             // Add-on Collector
             'collector_total_downloads'         => 'SELECT SUM(count) FROM download_counts WHERE addon_id = 11950'
         );
-
-        $date = date('Y-m-d');
 
         // Update all "total" stats that don't require a date
         foreach ($stats as $stat => $query) {

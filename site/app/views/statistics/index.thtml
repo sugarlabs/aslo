@@ -35,35 +35,98 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */ 
- 
-echo '<h1>'._('statistics_index_title').'</h1>';
+?> 
+<h1><?=_('statistics_index_title')?></h1>
 
-echo '<div class="secondary" role="complementary">';
-    echo $this->renderElement('developers/myaddons', array('addons' => $addons));
-echo '</div>';
+<div class="secondary" role="complementary">
+  <div class="highlight">
+    <h2><?=___('statistics_index_site_stats', 'Site Statistics')?></h2>
+    <dl>
+      <dt><?=$html->number_format($statsOverview['totalDownloads'])?></dt>
+      <dd><?=___('statistics_index_addons_downloaded', 'Add-ons Downloaded')?></dd>
 
-echo '<div class="primary">';
+      <dt><?=$html->number_format($statsOverview['totalInUse'])?></dt>
+      <dd><?=___('statistics_index_addons_used', 'Add-ons in Use')?></dd>
 
-    echo '<div id="content-main" class="article">';
-        echo '<h4>Current Review Queue Stats:</h4>';
-        echo '<ul>';
-        echo '<li>'.$dailyStats['nomination'].' add-ons currently nominated to become public</li>';
-        echo '<li>'.$dailyStats['pending'].' files currently pending review</li>';
-        echo '<li>'.$dailyStats['flagged'].' add-ons flagged for admin review</li>';
-        echo '<li>'.$dailyStats['reviews'].' user reviews currently flagged</li>';
-        echo '</ul>';
+      <dt><?=$html->number_format($statsOverview['totalUsers'])?></dt>
+      <dd><?=___('statistics_index_registered_users', 'Registered Users')?></dd>
 
-        echo '<h4>Daily Totals for '.$dailyStats['after'].' thru '.$dailyStats['before'].':</h4>';
-        echo '<ul>';
-        echo '<li>'.$dailyStats['dailyAddons'].' new add-ons ('.$dailyStats['totalAddons'].' total)</li>';
-        echo '<li>'.$dailyStats['dailyVersions'].' new add-on versions</li>';
-        echo '<li>'.$dailyStats['dailyUsers'].' new user accounts total</li>';
-        echo '<li>'.$dailyStats['dailyReviews'].' new user reviews</li>';
-        echo '<li>'.$dailyStats['dailyImages'].' new preview images</li>';
-        echo '<li>'.$dailyStats['dailyDownloads'].' add-on downloads yesterday</li>';
-        echo '</ul>';
-    echo '</div>';
+      <dt><?=$html->number_format($statsOverview['totalReviews'])?></dt>
+      <dd><?=___('statistics_index_addon_reviews', 'Add-on Reviews')?></dd>
 
+      <dt><?=$html->number_format($statsOverview['totalCollections'])?></dt>
+      <dd><?=___('statistics_index_addon_collections', 'Add-on Collections')?></dd>
+    </dl>
+  </div>
+
+  <?php /* echo $this->renderElement('developers/myaddons', array('addons' => $addons)); */ ?>
+</div>
+
+<div class="primary">
+  <div id="content-main" class="article">
+    <div id="plot-options" style="display: none;">
+      <div id="plot-selector-area"></div>
+      <div id="plot-selection"></div>
+    </div>
+
+    <div id="timeplot-container">
+      <div id="not-enough-data" class="warning" style="display: none;"><div>
+        <?=_('statistics_notice_data_insufficient')?>
+      </div></div>
+        
+      <noscript>
+        <div class="warning"><div>
+          <?=_('statistics_notice_nojavascript')?>
+        </div></div>
+      </noscript>
+    </div>
+  </div>
+
+  <div id="stats-table-listing" class="featured listing results">
+    <div class="featured-inner">
+      <table id="stats-table-instance">
+        <thead>
+          <tr class="header">
+            <th class="first"><?=_('list_sortby_date')?></th>
+            <th><?=___('statistics_addons_downloaded', 'Add-ons Downloaded')?></th>
+            <th><?=___('statistics_addons_inuse', 'Add-ons In Use')?></th>
+            <th><?=___('statistics_addons_created', 'Add-ons Created')?></th>
+            <th><?=___('statistics_addons_updated', 'Add-ons Updated')?></th>
+            <th><?=___('statistics_users_created', 'Users Created')?></th>
+            <th><?=___('statistics_reviews_created', 'Reviews Created')?></th>
+            <th class="last"><?=___('statistics_collections_created', 'Collections Created')?></th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php
+          $i = 0;
+          foreach ($stats as $row):
+              $i++;
+              if ($i > 30) break; // nonJS case: show the date-range that would initially be charted
+        ?>
+          <tr class="row <?=($i % 2 ? 'odd' : 'even')?>">
+            <td class="col first"><?=strftime(_('date'), strtotime($row['date']))?></td>
+            <td class="col value"><?=$row['addons_downloaded']?></td>
+            <td class="col value"><?=$row['addons_in_use']?></td>
+            <td class="col value"><?=$row['addons_created']?></td>
+            <td class="col value"><?=$row['addons_updated']?></td>
+            <td class="col value"><?=$row['users_created']?></td>
+            <td class="col value"><?=$row['reviews_created']?></td>
+            <td class="col value last"><?=$row['collections_created']?></td>
+          </tr>
+        <?php endforeach; ?>
+        </tbody>
+
+      </table>
+    </div>
+    <div class="listing-footer">
+      <ol id="stats-table-pagination" class="pagination"></ol>
+      <a href="<?=$html->url('/statistics/sitecsv/date')?>" id="stats-csv-download"><? echo ___('statistics_js_download_csv', 'View this table in CSV format') ?></a>
+    </div>
+  </div>
+
+
+<?php
     echo '<h3>Add-on statistics</h3>';
     echo '<div class="featured prose">';
     echo '<div class="featured-inner article">';
@@ -99,5 +162,21 @@ echo '<div class="primary">';
         }
     echo '</div>';
     echo '</div>';
-    ?>
-    </div>
+?>
+</div>
+
+<script type="text/javascript">
+// <![CDATA[
+    var statsURL = '<?=$html->url('/statistics/')?>';
+    $(document).ready(function() {
+        $('#plot-options').show();
+        Plots.dataTable = new PlotDataTable({
+            tableId: 'stats-table-instance',
+            paginationId: 'stats-table-pagination',
+            downloadLinkId: 'stats-csv-download'
+        });
+        Plots.initialize();
+        plotSelection.initialize();
+    });
+// ]]>
+</script>

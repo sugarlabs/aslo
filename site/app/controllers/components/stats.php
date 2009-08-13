@@ -51,6 +51,26 @@ class StatsComponent extends Object {
         'month' => 'date_month',
         'week'  => 'date_week'
     );
+
+    /**
+     * Map internal global_stats entries to public field names for CSV
+     */
+    var $site_stats_field_map = array(
+        'addon_downloads_new'       => 'addons_downloaded',
+        'addon_total_updatepings'   => 'addons_in_use',
+        'addon_count_new'           => 'addons_created',
+        'version_count_new'         => 'addons_updated',
+        'user_count_new'            => 'users_created',
+        'review_count_new'          => 'reviews_created',
+        'collection_count_new'      => 'collections_created',
+    );
+
+    /**
+     * stats where we want a max value rather than sum when grouping by date range
+     */
+    var $use_max_when_grouping = array(
+        'addon_total_updatepings',
+    );
     
     /**
      * Save a reference to the controller on startup
@@ -58,6 +78,11 @@ class StatsComponent extends Object {
      */
     function startup(&$controller) {
         $this->controller =& $controller;
+
+        if (!isset($this->controller->GlobalStat)) {
+            loadModel('GlobalStat');
+            $this->controller->GlobalStat =& new GlobalStat();
+        }
     }
 
     function historicalPlot($addon_id, $plot, $date_grouping='date') {
@@ -610,6 +635,94 @@ class StatsComponent extends Object {
         }
 
         return $ret;
+    }
+
+    /**
+     * @return array Array of count results
+     */
+    function getSiteStatsOverview() {
+
+        $ret = array(
+            'totalDownloads' => $this->controller->GlobalStat->getNamedCount('addon_total_downloads'),
+            'totalInUse' => $this->controller->GlobalStat->getNamedCount('addon_total_updatepings'),
+            'totalUsers' => $this->controller->GlobalStat->getNamedCount('user_count_total'),
+            'totalReviews' => $this->controller->GlobalStat->getNamedCount('review_count_total'),
+            'totalCollections' => $this->controller->GlobalStat->getNamedCount('collection_count_total'),
+        );
+
+        return $ret;
+    }
+
+    /**
+     * @return array Array of count results
+     */
+    function getSiteStats($groupBy='date') {
+        $stats = array();
+
+        switch ($groupBy) {
+        case 'week':
+            $interval = '+1 week';
+            if (date('w') == 0) {
+                // today is sunday
+                $startDate = date('Y-m-d', strtotime('-53 weeks'));
+            } else {
+                $startDate = date('Y-m-d', strtotime('last sunday -53 weeks'));
+            }
+
+            foreach (array_keys($this->site_stats_field_map) as $name) {
+                if (in_array($name, $this->use_max_when_grouping)) {
+                    $stats[$name] = $this->controller->GlobalStat->getNamedWeeklyMax($name, $startDate);
+                } else {
+                    $stats[$name] = $this->controller->GlobalStat->getNamedWeeklySum($name, $startDate);
+                }
+            }
+            break;
+
+        case 'month':
+            $interval = '+1 month';
+            $startDate = date('Y-m-01', strtotime('-35 months'));
+
+            foreach (array_keys($this->site_stats_field_map) as $name) {
+                if (in_array($name, $this->use_max_when_grouping)) {
+                    $stats[$name] = $this->controller->GlobalStat->getNamedMonthlyMax($name, $startDate);
+                } else {
+                    $stats[$name] = $this->controller->GlobalStat->getNamedMonthlySum($name, $startDate);
+                }
+            }
+            break;
+
+        case 'day':
+        case 'date':
+            $interval = '+1 day';
+            $startDate = date('Y-m-d', strtotime('-89 days'));
+
+            foreach (array_keys($this->site_stats_field_map) as $name) {
+                $stats[$name] = $this->controller->GlobalStat->getNamedDaily($name, $startDate);
+            }
+            break;
+
+        default:
+            return false;
+        }
+
+        // prep stats for csv output, filling in any missing days
+        $results = array();
+        $tsEnd = time();
+        for ($ts = strtotime($startDate); $ts < $tsEnd; $ts = strtotime($interval, $ts)) {
+            $dateKey = date('Y-m-d', $ts);
+            $row = array('date' => $dateKey);
+            foreach ($this->site_stats_field_map as $statKey => $csvField) {
+                if (array_key_exists($dateKey, $stats[$statKey])) {
+                    $row[$csvField] = $stats[$statKey][$dateKey];
+                } else {
+                    $row[$csvField] = 0;
+                }
+            }
+            $results[] = $row;
+        }
+        $results = array_reverse($results);
+
+        return $results;
     }
 }
 ?>

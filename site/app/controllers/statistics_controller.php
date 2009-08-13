@@ -43,13 +43,20 @@ class StatisticsController extends AppController
     var $components = array('Amo', 'Image', 'Stats');
     var $helpers = array('Html', 'Javascript', 'Listing', 'Localization', 'Statistics', 'Time');
 
+    function __construct() {
+        if (QUERY_CACHE) {
+            $this->uses[] = 'Memcaching';
+        }
+        parent::__construct();
+    }
+
    /**
     * Require login for all actions
     */
     function beforeFilter() {
         $this->SimpleAuth->enabled = false;
         $this->SimpleAcl->enabled = false;
-        
+
         // beforeFilter() is apparently called before components are initialized. Cake++
         $this->Amo->startup($this);
         
@@ -79,9 +86,6 @@ class StatisticsController extends AppController
     */
     function index($addon_id = 0) {
 
-        // Get public stats for dashboard.
-        $this->publish('dailyStats',$this->Stats->getDailyStats());
-
         // If add-on id was specified, go to its statistics
         if (!empty($addon_id) || !empty($_GET['data']['Addon']['id'])) {
             if (!empty($addon_id))
@@ -91,35 +95,85 @@ class StatisticsController extends AppController
             
             return;
         }
-        // If not, figure out what to do
+        // If not, show the public overview
+
+        $this->jsAdd = array(
+            'jquery-compressed.js',
+            'strftime-min-1.3.js',
+            //'simile/amo-bundle.compressed.js',
+            'simile/amo-bundle.js',
+            'stats/dropdowns.js',
+            'stats/colors.js',
+            'stats/plot-data-table.js',
+            'stats/stats.js',
+            'stats/site-stats.js',
+        );
+        $this->publish('jsAdd', $this->jsAdd);
+        $this->set('prescriptJS', "var Simile_urlPrefix = '{$this->base}/js/simile';");
+        
+        $this->cssAdd = array(
+            'simile/bundle',
+            'stats/stats',
+            'stats/dropdowns',
+        );
+        $this->publish('cssAdd', $this->cssAdd);
+
+        // Get site stats overview
+        $this->publish('statsOverview', $this->_cachedStats('getSiteStatsOverview', array()));
+
+        $this->publish('jsLocalization', array(
+            'addons_downloaded' => ___('statistics_addons_downloaded', 'Add-ons Downloaded'),
+            'addons_in_use' => ___('statistics_addons_inuse', 'Add-ons In Use'),
+            'addons_created' => ___('statistics_addons_created', 'Add-ons Created'),
+            'addons_updated' => ___('statistics_addons_updated', 'Add-ons Updated'),
+            'users_created' => ___('statistics_users_created', 'Users Created'),
+            'reviews_created' => ___('statistics_reviews_created', 'Reviews Created'),
+            'collections_created' => ___('statistics_collections_created', 'Collections Created'),
+            'statistics_js_groupby_selector_date' => ___('statistics_js_groupby_selector_date', 'Group by: Day'),
+            'statistics_js_groupby_selector_week' => ___('statistics_js_groupby_selector_week', 'Group by: Week'),
+            'statistics_js_groupby_selector_month' => ___('statistics_js_groupby_selector_month', 'Group by: Month'),
+            'statistics_js_last_30days' => ___('statistics_js_last_30days', 'Show last: 30 days'),
+            'statistics_js_last_60days' => ___('statistics_js_last_60days', 'Show last: 60 days'),
+            'statistics_js_last_90days' => ___('statistics_js_last_90days', 'Show last: 90 days'),
+            'statistics_js_last_18weeks' => ___('statistics_js_last_18weeks', 'Show last: 18 weeks'),
+            'statistics_js_last_36weeks' => ___('statistics_js_last_36weeks', 'Show last: 36 weeks'),
+            'statistics_js_last_54weeks' => ___('statistics_js_last_54weeks', 'Show last: 54 weeks'),
+            'statistics_js_last_12months' => ___('statistics_js_last_12months', 'Show last: 12 months'),
+            'statistics_js_last_24months' => ___('statistics_js_last_24months', 'Show last: 24 months'),
+            'statistics_js_last_36months' => ___('statistics_js_last_36months', 'Show last: 36 months'),
+            'date' => _('statistics_date_shortmonthwithyear'),
+        ));
+
+        // Get initial chart data (daily) - but check cache first
+        $this->set('stats', $this->_cachedStats('getSiteStats', array('date')));
+
+        // Build drop-down menu for Add-ons with viewable stats
+        $session = $this->Session->read('User');
+        if ($session) {
+            $addons = $this->Addon->getAddonsByUser($session['id']);
+        } else {
+            $addons = array();
+        }
+        $this->publish('addons', $addons);
+        
+        // If user can access all add-on stats, pull all
+        if ($this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User'))) {
+            $otherAddons = $this->Addon->findAll(null, array('Addon.id', 'Addon.name'), null, null, null, -1);
+        }
         else {
-            $session = $this->Session->read('User');
-            if ($session) {
-                $addons = $this->Addon->getAddonsByUser($session['id']);
-            } else {
-                $addons = array();
+            // Otherwise, pull all public stats add-ons
+            $otherAddons = $this->Addon->findAll("Addon.publicstats=1", array('Addon.id', 'Addon.name'), null, null, null, -1);
+        }
+        
+        if (!empty($otherAddons)) {
+            foreach ($otherAddons as $otherAddon) {
+                $name = trim($otherAddon['Translation']['name']['string']);
+                if (!empty($name))
+                    $other_addons[$otherAddon['Addon']['id']] = substr($name, 0, 50);
             }
-            $this->publish('addons', $addons);
+            asort($other_addons);
             
-            // If user can access all add-on stats, pull all
-            if ($this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User'))) {
-                $otherAddons = $this->Addon->findAll(null, array('Addon.id', 'Addon.name'), null, null, null, -1);
-            }
-            else {
-                // Otherwise, pull all public stats add-ons
-                $otherAddons = $this->Addon->findAll("Addon.publicstats=1", array('Addon.id', 'Addon.name'), null, null, null, -1);
-            }
-            
-            if (!empty($otherAddons)) {
-                foreach ($otherAddons as $otherAddon) {
-                    $name = trim($otherAddon['Translation']['name']['string']);
-                    if (!empty($name))
-                        $other_addons[$otherAddon['Addon']['id']] = substr($name, 0, 50);
-                }
-                asort($other_addons);
-                
-                $this->set('otherAddons', $other_addons);
-            }
+            $this->set('otherAddons', $other_addons);
         }
     }
     
@@ -285,6 +339,24 @@ class StatisticsController extends AppController
     }
     
     /**
+     * CSV data for site stats
+     */
+    function sitecsv($plot=null) {
+        if (!in_array($plot, array('date', 'week', 'month'))) {
+            header('HTTP/1.1 404 Not Found');
+            $this->flash(___('statistics_csv_not_found', 'CSV data not found'), "/statistics/");
+            return;
+        }
+
+        $this->publish('plot', $plot);
+        
+        $csv = $this->_cachedStats('getSiteStats', array($plot));
+        
+        $this->set('csv', $csv);
+        $this->render('csv', 'ajax');
+    }
+    
+    /**
      * CSV data
      */
     function csv($addon_id, $plot) {
@@ -402,6 +474,32 @@ class StatisticsController extends AppController
         
         // If no access yet, no access at all
         return false;
+    }
+
+    /**
+     * Wraps caching around Stats component method calls
+     *
+     * @param string $statsMethod method name of Stats component
+     * @param array $args aruments for $statsMethod
+     * @param int $expiration (optional) time to live
+     * @return mixed whatever Stats component returns
+     */
+    function _cachedStats($statsMethod, $args, $expiration=CACHE_PAGES_FOR) {
+        $stats = false;
+
+        if (isset($this->Memcaching)) {
+            $cacheKey = MEMCACHE_PREFIX.md5($statsMethod . serialize($args));
+            $stats = $this->Memcaching->get($cacheKey);
+        }
+
+        if ($stats === false) {
+            $stats = call_user_func_array(array(&$this->Stats, $statsMethod), $args);
+            if (isset($this->Memcaching)) {
+                $this->Memcaching->set($cacheKey, $stats, $expiration);
+            }
+        }
+
+        return $stats;
     }
     
 }
