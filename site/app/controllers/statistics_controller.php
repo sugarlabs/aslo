@@ -141,7 +141,7 @@ class StatisticsController extends AppController
             'statistics_js_last_12months' => ___('statistics_js_last_12months', 'Show last: 12 months'),
             'statistics_js_last_24months' => ___('statistics_js_last_24months', 'Show last: 24 months'),
             'statistics_js_last_36months' => ___('statistics_js_last_36months', 'Show last: 36 months'),
-            'date' => _('statistics_date_shortmonthwithyear'),
+            'date' => _('date'),
         ));
 
         // Get initial chart data (daily) - but check cache first
