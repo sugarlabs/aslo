@@ -22,6 +22,7 @@
  * Contributor(s):
  *   Justin Scott <fligtar@mozilla.com> (Original Author)
  *   l.m.orchard <lorchard@mozilla.com>
+ *   Frederic Wenzel <fwenzel@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -316,7 +317,10 @@ class StatsComponent extends Object {
         // Loop through dates and add each field to the CSV array
         foreach ($dates as $date => $items) {
             $record = array();
-            
+
+            // skip dates with missing data
+            if (!array_key_exists('dynamic', $items)) continue;
+
             foreach ($items as $item => $value) {                
                 // If item is a "normal" field like date or count, add it
                 if ($item != 'dynamic') {
