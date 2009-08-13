@@ -129,10 +129,12 @@
     <?php
         if (!empty($version['File'])) {
             foreach ($version['File'] as $file) {
-                if ($version['pendingCount'] == 1) {
+                // automatically check file if there's only one -- or if this is
+                // a nomination review, in which case all files will be made
+                // public on approval
+                if ($version['pendingCount'] == 1 || $reviewType == 'nominated') {
                     $checked = 'checked';
-                }
-                else {
+                } else {
                     $checked = 'false';
                 }
 
