@@ -163,7 +163,7 @@ JS;
                 <p><?=___('collections_edit_formfield_icon_description')?></p>
 
                 <?php if (!empty($this->data['Collection']['Collection']['icontype'])): ?>
-                <img src="<?=$iconurl?>" alt="Icon"/>
+                <img src="<?=$iconurl.(!empty($collection_saved)?'/updated':'')?>" alt="Icon"/>
                 <?php endif;?>
                 <input id="CollectionIcon" type="file" name="icon"/>
                 <span class="toberemoved" style="display:none"><?=sprintf(___('collections_edit_icon_toberemoved'), ___('collections_edit_submit'))?></span>
