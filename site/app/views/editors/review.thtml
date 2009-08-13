@@ -21,6 +21,7 @@
  *
  * Contributor(s):
  *   Frederic Wenzel <fwenzel@mozilla.com>
+ *   RJ Walsh <rwalsh@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -294,6 +295,19 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 }
 ?>
 </div>
+<br class="clear">
+<div id="validation" class="validation">
+    <div class="sectionHeader">
+        <div class="name"><a name="validation"></a><?=___('editors_review_header_validation', 'Validation Results') . ' [' . $html->link(___('editors_review_header_validation_help', 'help'), '/pages/validation') . ']'?></div>
+        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+    </div>
+    <br class="clear">
+    <? foreach($version['File'] as $file) : ?>
+        <h4><?= $html->link(sprintf(___('editors_file_validation_header', 'Validation results for %s'), $file['filename']), '/developers/versions/validate/' . $version['Version']['id'] . '#test-results-' . $file['id']) ?></h4>
+        <?= $this->renderElement('developers/testresults_header', array('test_groups' => $file['groups'], 'all_groups' => $test_groups, 'file' => array('File' => $file), 'counts' => $file['counts'], 'external_link' => true)); ?>
+    <? endforeach; ?>
+</div>    
+<br class="clear">
 <div id="history">
     <div class="sectionHeader">
         <div class="name"><a name="history"></a><?=_('editors_review_header_itemhistory')?></div>

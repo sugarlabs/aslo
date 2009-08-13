@@ -36,30 +36,29 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
-      
-<div class="graybox rounded spaced field validation">
-    <?= $this->renderElement('developers/testresults_header', array('test_groups' => $test_groups, 'all_groups' => $all_groups, 'file' => $file, 'external_link' => false, 'counts' => $counts)); ?>
-    <? if (!$validation_disabled) : ?>
-        <div class="action-button-container">
-            <a href="#" onclick="versions_validate.runTest(<?=$file['File']['id']?>); return false;" class="action-button rounded">
-                <?= ___('devcp_versions_validate_button', 'Validate') ?>
-            </a>
-        <span class="tests-running loading-count">
-            <?= ___('devcp_tests_running', 'Loading Results ...') ?>
-        </span>
-        </div>
-    <? else: ?> 
-        <?= ___('devcp_validation_disabled', 'Validation temporarily disabled, try again later') ?>
-    <? endif; ?>
 
-    <div id="test-details-<?=$file['File']['id']?>">
-        <? if(!empty($file['TestResult'])) : ?>
-            <? foreach($test_groups as $group) : ?>
-                <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
-            <? endforeach; ?>
-        <? else : ?>
-            <i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i>
-        <? endif; ?>
+    <div id="test-results-total-<?=$file['File']['id']?>">
+        <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => false, 'multiline' => false)) ?>
     </div>
-</div>
-
+    <ul id="test-summary-<?=$file['File']['id']?>" class="test-summary">
+    <? if (!empty($all_groups)) : ?>
+        <? foreach ($all_groups as $group) : ?>
+        <li id="results-summary-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
+            <? 
+                $href = ($external_link ? $html->url('/developers/versions/validate/' . $version['Version']['id']) : ''); ?>
+            <a href="<?=$href?>#test-group-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
+                <?=$group['TestGroup']['name']?>
+            </a>
+            <span class="results">
+                <? $counts = array(0,0,0); ?>
+                <? if (!empty($test_groups[$group['TestGroup']['id']])) : ?>
+                    <? $counts = $test_groups[$group['TestGroup']['id']]['counts']; ?>
+                <? endif; ?>
+                <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => true, 'multiline' => false)) ?>
+            </span>
+        </li>
+        <? endforeach; ?>
+    <? else : ?>
+            <i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i>
+    <? endif; ?>
+    </ul>

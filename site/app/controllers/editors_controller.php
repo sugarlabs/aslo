@@ -46,7 +46,7 @@ class EditorsController extends AppController
     var $uses = array('Addon', 'AddonCategory', 'Addontype', 'Application', 'Approval',
         'Appversion', 'Cannedresponse', 'EditorSubscription', 'Eventlog', 'Favorite',
         'File', 'Platform', 'Review', 'ReviewsModerationFlag', 'Category', 'Translation',
-        'User', 'Version', 'Versioncomment');
+        'User', 'Version', 'Versioncomment', 'TestGroup', 'TestResult');
     var $components = array('Amo', 'Audit', 'Developers', 'Editors', 'Email', 'Error', 'Image', 'Markdown', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Listing', 'Localization', 'Pagination');
 
@@ -63,7 +63,7 @@ class EditorsController extends AppController
         $this->layout = 'mozilla';
         $this->pageTitle = _('editors_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
         
-        $this->cssAdd = array('editors', 'admin');
+        $this->cssAdd = array('editors', 'admin', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
         
         $this->jsAdd = array('jquery-compressed.js',
@@ -368,9 +368,14 @@ class EditorsController extends AppController
             }
         }
         
+        $fileIds = array();
         if (!empty($version['File'])) {
             $version['pendingCount'] = 0;
             foreach ($version['File'] as $k => $file) {
+                $fileIds[] = $file['id'];
+                $version['File'][$k]['counts'] = array(0,0,0);
+                $version['File'][$k]['groups'] = array();
+                        
                 if ($file['status'] == STATUS_PENDING) {
                     $version['File'][$k]['disabled'] = 'false';
                     $version['pendingCount']++;
@@ -395,6 +400,41 @@ class EditorsController extends AppController
                                             'errors' => _('editors_error_js-formerror'),
                                             'files' => _('editors_error_review_one_file')
                                     ));
+        
+        // Validation results
+        $test_groups = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id']);
+        if (!empty($test_groups)) {
+            foreach ($test_groups as &$group) {
+                $group['counts'] = array(0,0,0);
+            }
+        }
+
+        $fileIds = implode(', ', $fileIds);
+
+        $counts = $this->TestResult->query("SELECT `test_group_id`, `result`, `file_id`, count(*) as `count` FROM `test_results` INNER JOIN `test_cases` ON `test_case_id` = `test_cases`.`id` WHERE `file_id` IN ({$fileIds}) GROUP BY `test_group_id`, `result`, `file_id`");
+
+        if (!empty($counts)) {
+            foreach ($counts as $count) {
+
+                if (!empty($version['File'])) {
+                    foreach ($version['File'] as &$file) {
+                        
+                        $file['counts'][$count['test_results']['result']] += $count[0]['count'];
+
+                        if (!empty($test_groups)) {
+                            foreach ($test_groups as $group_id => &$group) {
+                                if ($group['TestGroup']['id'] == $count['test_cases']['test_group_id']) {
+                                    $group['counts'][$count['test_results']['result']] = $count[0]['count'];
+                                    $file['groups'][$group['TestGroup']['id']] = $group;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $this->publish('test_groups', $test_groups);
                                     
         //Review History
         if ($history = $this->Approval->findAll(array('Approval.addon_id' => $addon['Addon']['id'], 'reply_to IS NULL'))) {

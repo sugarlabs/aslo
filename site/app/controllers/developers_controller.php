@@ -88,7 +88,7 @@ class DevelopersController extends AppController
         $this->layout = 'mozilla';
         $this->pageTitle = _('devcp_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
 
-        $this->cssAdd = array('developers');
+        $this->cssAdd = array('developers', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
 
         $this->jsAdd = array('developers', 'json', 'jquery-ui/jqModal.js');
@@ -1131,7 +1131,7 @@ class DevelopersController extends AppController
         if (!empty($addon_id)) {
             // Make sure user has some permissions to view this add-on
             $role = $this->Amo->getAuthorRole($addon_id);
-            if (empty($role)) {
+            if (empty($role) && !($this->SimpleAcl->actionAllowed('Editors', 'ViewValidation', $this->Session->read('User')) &&  $action == 'validate')) {
                 $this->Amo->accessDenied();
             }
             
@@ -1378,14 +1378,6 @@ class DevelopersController extends AppController
         }
         $files = $this->File->findAll(array('File.id' => $fileIds));
 
-        // Each file needs its own copy of the test results
-        if (!empty($files)) {
-            foreach ($files as $id => $file) {
-                $files[$id]['groups'] = array();
-                $files[$id]['counts'] = array(0,0,0);
-            }
-        }
-        
         // Each file needs its own copy of the test results
         if (!empty($files)) {
             foreach ($files as $id => $file) {
