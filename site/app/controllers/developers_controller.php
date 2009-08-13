@@ -1131,8 +1131,12 @@ class DevelopersController extends AppController
         if (!empty($addon_id)) {
             // Make sure user has some permissions to view this add-on
             $role = $this->Amo->getAuthorRole($addon_id);
-            if (empty($role) && !($this->SimpleAcl->actionAllowed('Editors', 'ViewValidation', $this->Session->read('User')) &&  $action == 'validate')) {
-                $this->Amo->accessDenied();
+            if (empty($role)) {
+                if ($this->SimpleAcl->actionAllowed('Editors', 'ViewValidation', $this->Session->read('User')) &&  $action == 'validate') {
+                    $role = AUTHOR_ROLE_DEV;
+                } else {
+                    $this->Amo->accessDenied();
+                }
             }
             
             $this->publish('author_role', $role);
