@@ -54,7 +54,13 @@ else
         }
     ?></td>
     <td><?=$hist['Approval']['created']?></td>
-    <td><?=$html->linkEmail($hist['User']['firstname'].' '.$hist['User']['lastname'], $hist['User']['email'])?></td>
+    <?
+        $display_name = trim($hist['User']['firstname'].' '.$hist['User']['lastname']);
+        if (empty($display_name)) {
+            $display_name = $hist['User']['nickname'];
+        }
+    ?>
+    <td><?=$html->linkEmail($display_name, $hist['User']['email'])?></td>
     <td>
     <?php
     if ($hist['Approval']['reviewtype'] == 'nominated') {
