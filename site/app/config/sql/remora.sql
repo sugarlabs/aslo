@@ -649,6 +649,22 @@ CREATE TABLE `global_stats` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `stats_addons_collections_counts`;
+CREATE TABLE `stats_addons_collections_counts` (
+      `id` int(10) unsigned NOT NULL auto_increment,
+      `addon_id` int(10) unsigned NOT NULL default '0',
+      `collection_id` int(10) unsigned NOT NULL default '0',
+      `count` int(10) unsigned NOT NULL default '0',
+      `date` date NOT NULL default '0000-00-00',
+      PRIMARY KEY  (`id`),
+      KEY `addon_id` (`addon_id`),
+      KEY `collection_id` (`collection_id`),
+      KEY `count` (`count`),
+      KEY `date` (`date`),
+      CONSTRAINT `stats_addons_collections_counts_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`),
+      CONSTRAINT `stats_addons_collections_counts_ibfk_2` FOREIGN KEY (`collection_id`) REFERENCES `collections` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `stats_contributions`;
 CREATE TABLE `stats_contributions` (
   `id` int(11) unsigned NOT NULL auto_increment,
