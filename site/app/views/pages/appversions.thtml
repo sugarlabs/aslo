@@ -52,7 +52,7 @@ foreach ($applications as $application) {
         $versions[$application['Application']['id']]['guid'] = $application['Application']['guid'];
         $versions[$application['Application']['id']]['name'] = $application['Translation']['name']['string'];
     }
-    
+
     if (!empty($application['Appversion'])) {
         $appversions = array();
         //Change array structure for sorting
@@ -60,7 +60,7 @@ foreach ($applications as $application) {
             $appversions[]['Appversion']['version'] = $appversion['version'];
         }
         $versionCompare->sortAppversionArray($appversions);
-        
+
         foreach ($appversions as $appversion) {
             $versions[$application['Application']['id']]['versions'][] = $appversion['Appversion']['version'];
         }
@@ -89,8 +89,8 @@ foreach ($applications as $application) {
             echo '</ul>';
         echo '</div>';
     }
-    
-    echo '<p>'.sprintf(___('If your supported application does not require an install.rdf file, you still must include one with the required properties as specified %s.'), $html->link(___('here'), 'http://developer.mozilla.org/en/docs/Install_Manifests')).'</p>';
+
+    echo '<p>'.sprintf(___('If your supported application does not require an install.rdf file, you still must include one with the required properties as specified <a href="%s">here</a>.'), ___('http://developer.mozilla.org/en/docs/Install_Manifests')).'</p>';
 ?>
 
 </div>

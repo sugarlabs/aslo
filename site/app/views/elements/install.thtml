@@ -36,7 +36,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 ?>
 <?php
 /**
@@ -88,15 +88,15 @@ if (empty($addonIconPath)) {
         break;
     }
 }
-    
+
 if (count($addonFiles) < 1) {
     // This should never happen - this would mean the file didn't exist.
     echo '<p class="install-button">'.___('This add-on is not available.').'</p>';
 
 } else {
-    
+
     $versionId = $addonFiles[0]['version_id'];
-    
+
     // If we're looking at thunderbird pages, and there is no EULA, show the TB
     // install instructions.  Bug 401272 fixed the button so it downloads instead of
     // installs, but it doesn't hurt to have these instructions still.
@@ -112,12 +112,12 @@ if (count($addonFiles) < 1) {
         echo ___('<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, and locate/select the file you downloaded and click "OK".</li></ol>');
         echo '</div>';
     }
-    
+
     echo '<div id="install-'.$versionId.'" class="install-container">';
     foreach ($addonFiles as $file) {
         // never display files with invalid statuses (bug 427176)
         if (!in_array($file['status'], $valid_status)) continue;
-    
+
         // Used for echoing values in our loop
         $_platform_name           = '';
         $_class_platform_string   = '';
@@ -137,10 +137,10 @@ if (count($addonFiles) < 1) {
                 $_install_platform_string = "($_platform_name)";
             }
         }
-    
+
         // run the right javascript action for the addon type in question
         $installTriggerName = "installTrigger" . $file['id'];
-        
+
         if ($addonType != ADDON_SEARCH) {
             /* install for search  */
             if (in_array(APP_ID, $browser_apps)) {
@@ -150,12 +150,12 @@ if (count($addonFiles) < 1) {
                     'title'     => sprintf(___('Add %1$s to %2$s'), $addonName, APP_PRETTYNAME),
                     'addonName' => $addonName,
                     'addonIcon' => $addonIconPath,
-                    'addonHash' => $file['hash'], 
+                    'addonHash' => $file['hash'],
                     'jsInstallMethod' => 'browser_app_addon_install',
                     );
             } else {
                 // prepare link options for non-browser apps
-                $linkOptions = array('id' => $installTriggerName, 
+                $linkOptions = array('id' => $installTriggerName,
                     'title'=>sprintf(___('Download %1$s'),$addonName));
             }
         } else {
@@ -176,7 +176,7 @@ if (count($addonFiles) < 1) {
             // wipe disallowed characters off the displayed filename
             $addon_filename = $html->entities(preg_replace(
                 INVALID_FILENAME_CHARS, '_', $html->unsanitize($file['filename'])));
-                
+
             // if this is the latest public version, use perma-URL. Otherwise, link directly to file.
             $linktitle = '<span><span><span><strong>'.sprintf(___('Download Now %s'),$_install_platform_string).'</strong></span></span></span>';
             if ($is_latest && $file['status'] == STATUS_PUBLIC) {
@@ -222,14 +222,14 @@ if (count($addonFiles) < 1) {
          * Users unfreeze the button client-side by checking a confirmation box.
          * Non-JS users must unfreeze by logging in.
          */
-        else: 
+        else:
         ?>
             <div class="exp-loggedout install">
                 <div class="exp-confirm-install" style="display: none">
                     <input type="checkbox" name="confirm-<?= $addonId ?>" />
                     <div class="exp-desc">
                     <label for="exp-confirm-install-checkbox-<?=$addonId?>"></label>
-                    <span><?= sprintf(___('Let me install this experimental add-on. <a href="%1$s">What's this?</a>'), $html->url('/pages/faq#experimental-addons')) ?></span>
+                    <span><?= sprintf(___('Let me install this experimental add-on. <a href="%1$s">What\'s this?</a>'), $html->url('/pages/faq#experimental-addons')) ?></span>
                     </div>
                 </div>
 
@@ -258,7 +258,7 @@ if (count($addonFiles) < 1) {
         <?php endif; ?>
 	<script type="text/javascript">
         installVersusDownloadCheck("<?=$installTriggerName?>", "<?=sprintf($buttonMessage, $_install_platform_string) ?>", "<?=sprintf(___('Download Now %s'), $_install_platform_string)?>");
-	</script>		
+	</script>
     <?php
     }
     echo "</div>";
@@ -267,15 +267,15 @@ if (count($addonFiles) < 1) {
     // "all versions" page
     // This script will detect which install button should show, and hide the rest
     echo '<script type="text/javascript">'.
-         'setTimeout(function() {'; 
+         'setTimeout(function() {';
     echo "initExpConfirm('{$versionId}');";
-    $versionsPage = false;	  
+    $versionsPage = false;
     if (!($this->name == 'Addons' && $this->action == 'versions')) {
         echo "fixPlatformLinks('{$versionId}', document.getElementById('{$installTriggerName}').getAttribute('addonName'));";
     } else {
         $versionsPage = true;
-    }		
-		
+    }
+
     // show add-on compatibility hints for Firefox
     if (APP_ID == APP_FIREFOX && !empty($compatible_apps)) {
         $fromVer = $toVer = null;
@@ -285,7 +285,7 @@ if (count($addonFiles) < 1) {
                 $toVer = $app['Max_Version']['version'];
             }
         }
-        if ($fromVer && $toVer) { 
+        if ($fromVer && $toVer) {
             // show "ignore" link for logged in users only
             $_loggedin = $this->controller->Session->check('User');
             echo "addCompatibilityHints('{$addonId}', '{$versionId}', "
