@@ -22,7 +22,7 @@
  * Contributor(s):
  *   l.m.orchard <lorchard@mozilla.com> (Original Author)
  *   Ryan Doherty <rdoherty@mozilla.com>
- *   
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -53,27 +53,24 @@
         <ol class="teaser-items">
             <li id="t-introduction">
             <h2><?=___('What are Add-ons?')?></h2>
-                
+
                 <div class="column-wrapper">
                     <div class="first column">
                         <h3><img src="<?=$html->url('/img/amo2009/illustrations/extras.gif', null, false, false)?>" alt="Extras" /></h3>
-                        <p><?=___('addons_home_introduction_extras',
-                            '<strong>Over 5000 free extras</strong> that let you to customize and extend Firefox to meet your needs.')?></p>
+                        <p><?=___('<strong>Over 5000 free extras</strong> that let you to customize and extend Firefox to meet your needs.')?></p>
                     </div>
-                
+
                     <div class="column">
                         <h3><img src="<?=$html->url('/img/amo2009/illustrations/themes.gif', null, false, false)?>" alt="Themes" /></h3>
-                        <p><?=___('addons_home_introduction_themes',
-                            'Toolbars, themes and search providers that <strong>help you perform common tasks.</strong>')?></p>
+                        <p><?=___('Toolbars, themes and search providers that <strong>help you perform common tasks.</strong>')?></p>
                     </div>
-                
+
                     <div class="column">
                         <h3><img src="<?=$html->url('/img/amo2009/illustrations/install.gif', null, false, false)?>" alt="Install" /></h3>
-                        <p><?=___('addons_home_introduction_install',
-                            '<strong>Easy to install</strong>, get notified when updates are available.')?></p>
+                        <p><?=___('<strong>Easy to install</strong>, get notified when updates are available.')?></p>
                     </div>
                 </div>
-                
+
             </li>
 
             <?php foreach($teaser_collections_categories as $id => $tc): ?>
@@ -97,7 +94,7 @@
                                     <p><?=$html->truncateChars(80, $addon['Translation']['summary']['string'], true)?></p>
                                     <p>
                                         <?=$this->renderElement('amo2009/install', array(
-                                            'flags' => $flags, 
+                                            'flags' => $flags,
                                             'collection_uuid' => $promoted_collections[$id]['Collection']['uuid'],
                                             'src' => 'homepagepromo',
                                             'addon' => $addon
@@ -106,12 +103,11 @@
                                 </div>
                             </div>
                         <?php endforeach ?>
-                        
+
                         <?php if (!empty($promoted_collections[$id]['Collection']['uuid'])): ?>
                             <?php $collection = $promoted_collections[$id];?>
                             <p class="lead"><?=sprintf(
-                                ___('addons_home_introduction_collection_link', 
-                                    'Like these? Find more add-ons in %1$s.'),
+                                ___('Like these? Find more add-ons in %1$s.'),
                                 $link->collection(array(
                                     'Collection'  => array('uuid'=>$collection['Collection']['uuid'], 'nickname'=>$collection['Collection']['nickname']),
                                     'Translation' => array('name'=>array('string'=>$collection['Translation']['name']['string']))

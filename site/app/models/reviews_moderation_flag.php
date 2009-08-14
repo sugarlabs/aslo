@@ -58,17 +58,17 @@ class ReviewsModerationFlag extends AppModel
     function __construct() {
         parent::__construct();
 
-        // Constants defined here because the ___() function can't be called in static 
+        // Constants defined here because the ___() function can't be called in static
         // class definition.
         $this->reasons = array(
-            'review_flag_reason_spam' => 
+            'review_flag_reason_spam' =>
                 ___('Spam or otherwise non-review content'),
-            'review_flag_reason_language' => 
+            'review_flag_reason_language' =>
                 ___('Inappropriate language/dialog'),
-            'review_flag_reason_bug_support' => 
+            'review_flag_reason_bug_support' =>
                 ___('Misplaced bug report or support request'),
-            'review_flag_reason_other' => 
-                ___('review_flag_reason_other', 'Other (please specify)') 
+            'review_flag_reason_other' =>
+                ___('Other (please specify)')
         );
 
     }

@@ -37,22 +37,21 @@
 ?>
 <div id="content">
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons));?>
-    
+
     <div id="content-main">
-        
+
         <h3><?=sprintf(___('Provide More Information For the Add-on Review of %1$s'), $addonName)?></h3>
-        
-        
-        <p><?=sprintf(___('devcp_discuss_intro', 'A Mozilla Add-ons Editor requested further '
-            .'information from you regarding version %2$s of your add-on %1$s.'), $addonName, $versionno)?></p>
-        
+
+
+        <p><?=sprintf(___('A Mozilla Add-ons Editor requested further information from you regarding version %2$s of your add-on %1$s.'), $addonName, $versionno)?></p>
+
         <div class="corner-box">
         <p><?=$inforequest['Approval']['comments']?></p>
         <cite>
             <?=sprintf(___('written by %1$s on %2$s'), $html->linkUserFromModel($inforequest['User']), strftime(___('%B %e, %Y, %I:%M %p'), strtotime($inforequest['Approval']['created'])))?>
         </cite>
         </div>
-          
+
         <?php if (!empty($replies)): ?>
         <h4><?=___('Replies')?></h4>
         <?php foreach ($replies as &$reply): ?>
@@ -64,7 +63,7 @@
             </div>
         <?php endforeach; ?>
         <?php endif; ?>
-        
+
         <h4><?=___('Add Reply')?></h4>
         <?php if (!empty($error)): ?>
         <div class="error-notice"><p><?=sprintf(___('There was an error saving your reply. Please contact %1$s about the issue.'), $link->email('amo-editors@mozilla.org'))?></p></div>
@@ -80,6 +79,6 @@
             </div>
         </form>
         <?php endif; ?>
-        
+
     </div> <!-- content-main -->
 </div> <!-- content -->

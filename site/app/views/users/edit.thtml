@@ -35,7 +35,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 
 
 /* Prepare translation box element */
@@ -63,7 +63,7 @@ $this->translationBox = array(
 <?php if (isset($confirmation_page) && $confirmation_page): ?>
 
     <?echo $this->renderElement('notification', array('type' => 'success', 'msg' => $confirmation_message))?>
-    
+
     <?php if (isset($newemail) && $newemail): ?>
         <?echo $this->renderElement('notification', array('type' => 'success', 'description' => sprintf(___('An email has been sent to %1$s to confirm your new email address. For the change to take effect, you need to click on the link provided in this email. Until then, you can keep logging in with your current email address.'), $newemail)));?>
     <?php endif; ?>
@@ -80,7 +80,7 @@ $this->translationBox = array(
 
 <form enctype="multipart/form-data" action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
     <?=$html->hiddenSession() ?>
-    
+
 <div id="tabbed-editor" class="flora">
     <ul class="tabs-nav">
         <li><a href="#profile-user"><span><?=___('User Profile');?></span></a></li>
@@ -89,7 +89,7 @@ $this->translationBox = array(
         <li><a href="#profile-change-pw-email"><span><?=___('Change Password or Email'); ?></span></a></li>
         <li><a href="#profile-other"><span><?=___('Other Actions');?></span></a></li>
     </ul>
-    
+
     <div id="profile-user">
         <h3 class="hidden"><?=___('User Profile');?></h3>
         <div class="line">
@@ -152,7 +152,7 @@ $this->translationBox = array(
             ?>
         </div>
     </div>
-    
+
     <div id="profile-collections">
         <h3 class="hidden"><?=___('Collections');?></h3>
         <div class="line">
@@ -173,10 +173,10 @@ $this->translationBox = array(
         <?php if (!empty($userAddons)): ?>
             <p><?=___('From time to time, Mozilla may send you email about upcoming releases and add-on events. Please select the topics you are interested in below:')?></p>
             <ul>
-                <li><label for="UserNotifycompat"><?=$html->checkbox('User/notifycompat')?>&nbsp;<?=___('user_notifications_item_compat', 'Add-on Compatibility (strongly recommended)')?></label></li>
+                <li><label for="UserNotifycompat"><?=$html->checkbox('User/notifycompat')?>&nbsp;<?=___('Add-on Compatibility (strongly recommended)')?></label></li>
                 <li><label for="UserNotifyevents"><?=$html->checkbox('User/notifyevents')?>&nbsp;<?=___('Upcoming events and contests')?></label></li>
             </ul>
-            
+
             <p><?=___('Mozilla reserves the right to contact you individually about specific concerns with your hosted add-ons.')?></p>
         <?php endif; ?>
         <?php if (!empty($userVersionThreads)): ?>
@@ -238,7 +238,7 @@ $this->translationBox = array(
             ?>
         </div>
     </div>
-    
+
     <div id="profile-other">
         <h3 class="hidden"><?=___('Other Actions');?></h3>
         <p><?=$html->link(___('Delete user account'), '/users/delete');?></p>

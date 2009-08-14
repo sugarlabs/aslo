@@ -43,7 +43,7 @@
     <div class="reviewnav">
         <?php
             if ($filtered) {
-                echo sprintf(___('editors_review_rank_in_queue_filtered', '<strong># %1$s</strong> of %2$s in queue (filtered)'), $queueRank, $filteredCount);
+                echo sprintf(___('<strong># %1$s</strong> of %2$s in queue (filtered)'), $queueRank, $filteredCount);
             } else {
                 echo sprintf(___('<strong># %1$s</strong> of %2$s in queue'), $queueRank, $filteredCount);
             }
@@ -438,8 +438,8 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
         $.extend(editors_review, {
             subscribe_url: '<?=$html->url('/editors/threadsubscribe/ajax')?>',
             unsubscribe_url: '<?=$html->url('/editors/threadunsubscribe/ajax')?>',
-            subscribe_text: '<?=___('editors_review_subscribe_link', '(Subscribe)')?>',
-            unsubscribe_text: '<?=___('editors_review_unsubscribe_link', '(Unsubscribe)')?>',
+            subscribe_text: '<?=___('(Subscribe)')?>',
+            unsubscribe_text: '<?=___('(Unsubscribe)')?>',
         });
 
         editors_review.miuMarkdownConfig.previewParserPath = '<?=$html->url('/editors/markdown')?>';

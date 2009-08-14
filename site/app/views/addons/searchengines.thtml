@@ -35,7 +35,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 
 $this->layout = 'amo2009';
 
@@ -46,7 +46,7 @@ $this->layout = 'amo2009';
     </div><!-- /.stand-alone-options -->
 
     <div class="primary" role="main">
-    
+
         <noscript>
             <?=$this->renderElement('notification', array('type' => 'error', 'description' => ___('JavaScript is required to install plugins, but it looks like you have it disabled.  Please enable JavaScript before trying to install any of the search plugins below.'))); ?>
         </noscript>
@@ -64,7 +64,7 @@ $this->layout = 'amo2009';
                 <?php endforeach; ?>
             </div>
         </div>
-    
+
 </div><!-- /.primary -->
 
 <div class="secondary" role="complementary">
@@ -85,9 +85,7 @@ $this->layout = 'amo2009';
         <ul>
             <li><?=$html->link(sprintf(___('See All %1$s'), $this_category['Translation']['name']['string']), "/browse/type:{$this_category['Category']['addontype_id']}/cat:{$this_category['Category']['id']}?sort=name", array('class'=>'view'))?></li>
             <li><?=sprintf(___('Browse through more search engines at %1$s'), $html->link(___('mycroft.mozdev.org'), 'http://mycroft.mozdev.org/'))?></li>
-            <li><?=sprintf(___('Learn how to %1$s at the %2$s.'), 
-                           $html->link(___('make your own'), 'http://developer.mozilla.org'.___('/en/docs/Creating_OpenSearch_plugins_for_Firefox')),
-                           $html->link(___('Mozilla Developer Center'), 'http://developer.mozilla.org/'))?></li>
+            <li><?=sprintf(___('Learn how to <a href="%1$s">make your own</a> at the <a href="%2$s">Mozilla Developer Center</a>.'), ___('http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox'), 'http://developer.mozilla.org/')?></li>
         </ul>
     </div>
     <div class="article prose highlight"> <?=___('Special thanks to the Mycroft Project for their work on Firefox search engines.')?> </div>
