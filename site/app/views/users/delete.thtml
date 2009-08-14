@@ -48,9 +48,7 @@
 <?php if (isset($success) && $success): ?>
 <?=$this->renderElement('notification', array('type' => 'success',
 'msg' => ___('Farewell!'),
-'description' => sprintf(___('Your user account %1$s '
-        .'has been successfully deleted. If you want to come back some time, '
-        .'you can re-register on the <a href="%2$s">user registration page</a>.')
+'description' => sprintf(___('Your user account %1$s has been successfully deleted. If you want to come back some time, you can re-register on the <a href="%2$s">user registration page</a>.')
         , $useremail, $html->url('/users/register')))); ?>
     <p><?=$html->link(___('Click here to return to the front page.'), '/');?></p>
 
@@ -61,36 +59,26 @@
             echo '<p>';
             echo $this->renderElement('notification',
                 array('type' => 'error',
-                'description' => sprintf(___('You cannot delete your '
-                .'account if you are listed as an <a href="%1$s"> author of any '
-                .'add-ons</a>. To delete your account, please have another person '
-                .'in your development group delete you from the list of authors '
-                .'for your add-ons. Afterwards you will be able to delete your account '
-                .'here.'), $html->url("/user/{$userid}"))));
+                'description' => sprintf(___('You cannot delete your account if you are listed as an <a href="%1$s"> author of any add-ons</a>. To delete your account, please have another person in your development group delete you from the list of authors for your add-ons. Afterwards you will be able to delete your account here.'), $html->url("/user/{$userid}"))));
             echo '</p>';
-            echo sprintf(___('If you '
-                .'have additional questions, please contact %1$s for assistance.'),
+            echo sprintf(___('If you have additional questions, please contact %1$s for assistance.'),
                 $link->email('amo-editors@mozilla.org'));
             break;
         case 'checkbox':
             echo $this->renderElement('notification',
                 array('type' => 'error',
-                'description' => ___('You need to check the box "I '
-                .'understand..." before we can delete your account.')));
+                'description' => ___('You need to check the box "I understand..." before we can delete your account.')));
             break;
         case 'password':
             echo $this->renderElement('notification',
                 array('type' => 'error',
-                'description' => ___('Please enter your password '
-                .'correctly in order to perform this step.')));
+                'description' => ___('Please enter your password correctly in order to perform this step.')));
             break;
         case 'unknown':
         default:
             echo $this->renderElement('notification',
                 array('type' => 'error',
-                'description' => sprintf(___('An unknown error occured '
-                .'deleting your account. Please contact %1$s with the issue and '
-                .'we will delete it for you. We apologize for the inconvenience.'),
+                'description' => sprintf(___('An unknown error occured deleting your account. Please contact %1$s with the issue and we will delete it for you. We apologize for the inconvenience.'),
                 $link->email('amo-admins@mozilla.org'))));
             break;
         }
@@ -101,20 +89,15 @@
 
     <p><?=___('The Mozilla Add-ons community is sad to see you go.')?></p>
 
-    <p><?php sprintf(___('If you have a '
-    .'specific problem we may help you with, please do not delete your account '
-    .'now, but contact us at %1$s and we will do our best to assist you in '
-    .'solving it.'), $link->email('amo-editors@mozilla.org'))?></p>
+    <p><?php sprintf(___('If you have a specific problem we may help you with, please do not delete your account now, but contact us at %1$s and we will do our best to assist you in solving it.'), $link->email('amo-editors@mozilla.org'))?></p>
 
     <div class="highlight">
     <h2><?=___('Confirm account deletion')?></h2>
 
-    <p><?=___('By clicking "delete" your '
-        .'account is going to be <strong>permanently removed</strong>. That means:')?>
+    <p><?=___('By clicking "delete" your account is going to be <strong>permanently removed</strong>. That means:')?>
     <ul>
         <li><?=___('You will not be able to log into Mozilla Add-ons anymore.')?></li>
-        <li><?=___('Your reviews and ratings will '
-            .'not be deleted, but they will no longer be associated with you.')?></li>
+        <li><?=___('Your reviews and ratings will not be deleted, but they will no longer be associated with you.')?></li>
     </ul>
     </p>
     <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
