@@ -41,16 +41,16 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($success)) {
-            echo '<div class="notice-success rounded">'.___('devcp_notice_changes_saved').'</div>';
+            echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
         }
         if (!empty($errors)) {
-            echo '<div class="notice-error rounded">'.___('devcp_notice_changes_error').'</div>';
+            echo '<div class="notice-error rounded">'.___('<span>One or more of your changes couldn\'t be saved.</span><br />Please look for the errors below. The rest of your changes were successfully saved.').'</div>';
         }
         ?>
-        <h2><?=sprintf(___('devcp_versions_edit_header_manage'), $version['Version']['version'])?></h2>
+        <h2><?=sprintf(___('Manage Version %s'), $version['Version']['version'])?></h2>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="versions-edit-form" action="" method="post">
@@ -62,23 +62,23 @@
                 $languages[$key] = $native_languages[$key]['native'];
             }
             ksort($languages);
-            
+
             $this->translationBox = array(
                                 'defaultLocale' => $addon['Addon']['defaultlocale'],
                                 'languages' => $languages,
                                 'table' => 'Version',
                                 'loaded' => false
                             );
-        
+
         echo '<div class="graybox rounded spaced field">';
-        echo '<h4>'.___('devcp_versions_edit_header_file').'</h4>';
+        echo '<h4>'.___('File Information').'</h4>';
         if (!empty($version['File'])) {
             echo '<table id="files-table" class="pretty-table">';
             echo '<thead><tr>';
-            echo '<th>'.___('devcp_versions_edit_th_file').'</th>';
-            echo '<th>'.___('devcp_versions_edit_th_platform').'</th>';
-            echo '<th>'.___('devcp_versions_edit_th_size').'</th>';
-            echo '<th>'.___('devcp_versions_edit_th_status').'</th>';
+            echo '<th>'.___('File').'</th>';
+            echo '<th>'.___('Platform').'</th>';
+            echo '<th>'.___('Size').'</th>';
+            echo '<th>'.___('Status').'</th>';
             echo '<th style="width: 25px;"></th>';
             echo '</tr></thead><tbody>';
             $i = 0;
@@ -92,14 +92,14 @@
                     echo '<option value="'.$platform_id.'"'.($file['platform_id'] == $platform_id ? ' selected="selected"' : '').'>'.$platform_name.'</option>';
                 }
                 echo '</select></td>';
-                echo '<td>'.sprintf(_('size_kb'), $file['size']).'</td>';
+                echo '<td>'.sprintf(___('%1$s KB'), $file['size']).'</td>';
                 echo '<td>'.$statuses[$file['status']].'</td>';
                 echo '<td><div class="inline-delete-button uses-image">';
-                echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('devcp_versions_edit_img_delete'), 'title' => ___('devcp_versions_edit_img_delete'))).'</a>';
+                echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('Delete File'), 'title' => ___('Delete File'))).'</a>';
                 echo '<div class="inline-delete-box">';
-                echo '<p>'.___('devcp_versions_edit_delete_sure').'</p><br />';
-                echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('devcp_versions_edit_a_delete').'</a>&nbsp;&nbsp;';
-                echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('devcp_versions_edit_a_cancel').'</a></p>';
+                echo '<p>'.___('Are you <b>sure</b> you wish to permanently delete this file?').'</p><br />';
+                echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('Delete File').'</a>&nbsp;&nbsp;';
+                echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('Cancel').'</a></p>';
                 echo '</div>';
                 echo '</div></td>';
                 echo '</tr>';
@@ -108,18 +108,18 @@
             echo '</tbody></table>';
         }
         else {
-            echo '<p><i>'.___('devcp_versions_edit_no_files').'</i></p>';
+            echo '<p><i>'.___('No files found.').'</i></p>';
         }
-        echo '<div class="save-changes rounded">'.___('devcp_versions_edit_unsaved_files').'</div>';
-        echo '<div class="add-button-container"><a href="'.$html->url("/developers/versions/addfile/{$version['Version']['id']}").'" class="add-button rounded">'.___('devcp_versions_edit_add').'</a></div>';
+        echo '<div class="save-changes rounded">'.___('<strong>You have unsaved changes.</strong> Files will not be deleted until you click Update Version below.').'</div>';
+        echo '<div class="add-button-container"><a href="'.$html->url("/developers/versions/addfile/{$version['Version']['id']}").'" class="add-button rounded">'.___('Add New File').'</a></div>';
         echo '</div>';
-        
+
         // Compatible applications (hidden for search engines)
         if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
             echo '<div class="graybox rounded spaced field">';
-            echo '<h4>'.___('devcp_versions_edit_header_compat').'</h4>';
-            echo '<p>'.sprintf(___('devcp_versions_edit_adjust'), 'href="'.$html->url('/pages/appversions').'"').'</p>';
-            
+            echo '<h4>'.___('Compatible Applications').'</h4>';
+            echo '<p>'.sprintf(___('Adjusting application information here will allow users to install your add-on even if the install.rdf in the package indicates that the add-on is incompatible. <a %s>List of supported applications</a>'), 'href="'.$html->url('/pages/appversions').'"').'</p>';
+
             echo '<table id="edit-versions-targetapps-table" class="pretty-table"><tbody>';
             $i = 0;
             if (!empty($targetApps)) {
@@ -148,23 +148,23 @@
                     echo '</select></td>';
                     echo '<td style="width: 25px;">';
                     echo '<div class="inline-delete-button uses-image">';
-                    echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('devcp_versions_edit_remove_compat'), 'title' => ___('devcp_versions_edit_remove_compat'))).'</a>';
+                    echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('Remove Application Compatibility'), 'title' => ___('Remove Application Compatibility'))).'</a>';
                     echo '<div class="inline-delete-box">';
-                    echo '<p>'.___('devcp_versions_edit_compat_sure').'</p><br />';
-                    echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('devcp_versions_edit_a_remove_app').'</a>&nbsp;&nbsp;';
-                    echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('devcp_versions_edit_a_cancel').'</a></p>';
+                    echo '<p>'.___('Are you <b>sure</b> you wish to remove compatibility with this application?').'</p><br />';
+                    echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('Remove Application').'</a>&nbsp;&nbsp;';
+                    echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('Cancel').'</a></p>';
                     echo '</div>';
                     echo '</div></td>';
-                    
+
                     echo '</tr>';
                     $i++;
                 }
             }
             echo '</tbody></table>';
-            echo '<div class="save-changes rounded">'.___('devcp_versions_edit_unsaved_compat').'</div>';
-            echo '<div class="add-button-container" style="width: 60%; margin: 10px auto 0;"><a href="#" onclick="versions_edit.showAppPicker(); return false;" class="add-button rounded">'.___('devcp_versions_edit_a_new_app').'</a>';
+            echo '<div class="save-changes rounded">'.___('<strong>You have unsaved changes.</strong> Compatibility will not be deleted until you click Update Version below.').'</div>';
+            echo '<div class="add-button-container" style="width: 60%; margin: 10px auto 0;"><a href="#" onclick="versions_edit.showAppPicker(); return false;" class="add-button rounded">'.___('Add New Application').'</a>';
             echo '<span id="new-app-picker"><select onchange="versions_edit.addApplication(this);">';
-            echo '<option value="">'.___('devcp_versions_edit_select_app').'</option>';
+            echo '<option value="">'.___('Please Select an Application').'</option>';
             foreach ($applications as $application_id => $application_name) {
                 echo '<option value="'.$application_id.'">'.$application_name.'</option>';
             }
@@ -179,15 +179,15 @@
                     'translations' => $translations['releasenotes'],
                     'height' => '130',
                     'width' => 'inherit',
-                    'displayName' => ___('devcp_versions_edit_transbox_releasenotes_name'),
-                    'description' => ___('devcp_versions_edit_transbox_releasenotes_description'),
+                    'displayName' => ___('Release Notes'),
+                    'description' => ___('Information about changes in this release, new features, known bugs, and other useful information specific to this release/version. This information will also be available to users updating the add-on in the Firefox 3 Add-ons Manager interface.'),
                 ));
         ?>
 
         <!-- Source Code License -->
         <div class="graybox rounded spaced">
-            <h4><?=___('devcp_versions_edit_header_license')?></h4>
-            <p><?=___('devcp_versions_edit_license_description')?></p>
+            <h4><?=___('License')?></h4>
+            <p><?=___('Please select the appropriate license for your add-on. This license specifies the rights you grant on your source code.')?></p>
             <?php
             list($licenses, $trans) = $this->controller->Developers->getLicenses($version['Version']['id']);
             echo $this->renderElement('developers/license_picker',
@@ -200,22 +200,22 @@
         </div>
 
         <div class="graybox rounded spaced field">
-        <h4><?=___('devcp_versions_edit_header_approval')?></h4>
+        <h4><?=___('Approval Information')?></h4>
         <?php
         if (!empty($version['File'])) {
             echo '<ul>';
             foreach ($version['File'] as $file) {
-                echo '<li>'.sprintf(___('devcp_versions_edit_li_file'), $file['id'], $platforms[$file['platform_id']], strftime(_('date'), strtotime($file['created'])), $statuses[$file['status']], strftime(_('date'), strtotime($file['datestatuschanged']))).'</li>';
+                echo '<li>'.sprintf(___('File %1$s (%2$s) created on %3$s and changed to %4$s on %5$s'), $file['id'], $platforms[$file['platform_id']], strftime(___('%B %e, %Y'), strtotime($file['created'])), $statuses[$file['status']], strftime(___('%B %e, %Y'), strtotime($file['datestatuschanged']))).'</li>';
             }
             echo '</ul>';
         }
-        echo '<h5>'.___('devcp_versions_edit_header_notes').'</h5>';
-        echo '<p class="smallmargin">'.___('devcp_versions_edit_optional').'</p>';
+        echo '<h5>'.___('Approval Notes').'</h5>';
+        echo '<p class="smallmargin">'.___('Optional information for the Editor that reviews this version.').'</p>';
         echo '<textarea name="data[Version][approvalnotes]" cols="" rows="" style="width: 100%; height: 70px;" class="rounded">'.$version['Version']['approvalnotes'].'</textarea>';
         echo '</div>';
         ?>
-        
-        <div class="action-button-container centered"><a href="#" onclick="versions_edit.save(); return false;" class="action-button rounded"><?=___('devcp_versions_edit_update')?></a></div>
+
+        <div class="action-button-container centered"><a href="#" onclick="versions_edit.save(); return false;" class="action-button rounded"><?=___('Update Versions')?></a></div>
         </form>
     </div>
 </div>
@@ -234,7 +234,7 @@ if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
     echo '};';
     echo 'var imageBase = \''.$html->url('/img/developers', true, false, false).'\'';
     echo '</script>';
-    
+
     // Dropdowns for all applications so they can be added. This must be
     // outside of the <form>
     foreach ($applications as $application_id => $application_name) {

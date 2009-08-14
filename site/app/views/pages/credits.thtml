@@ -96,49 +96,49 @@ ksort($other_contributors);
 <div class="primary prose" role="main">
     <?=$this->renderElement('amo2009/search')?>
 
-<?=_('credits_intro')?>
+<?=___('Mozilla would like to thank the following people for their contributions to the addons.mozilla.org project over the years:')?>
 <br/><br/>
 <div class="corner-box">
 <?php
-    echo '<h4>'._('credits_section_developers').'</h4>';
+    echo '<h4>'.___('Developers').'</h4>';
     echo implode(', ', $developers);
 ?>
 </div>
 <div class="corner-box">
 <?php
-    echo '<h4>'._('credits_section_localizers').'</h4>';
+    echo '<h4>'.___('Localizers').'</h4>';
     echo implode(', ', $localizers);
 ?>
 </div>
 <div class="corner-box">
 <?php
-    echo '<h4>'._('credits_section_editors').'</h4>';
+    echo '<h4>'.___('Editors').'</h4>';
     echo implode(', ', $editors);
 ?>
 </div>
 <div class="corner-box">
 <?php
-    echo '<h4>'._('credits_section_other_contributors').'</h4>';
+    echo '<h4>'.___('Other Contributors').'</h4>';
     echo implode(', ', $other_contributors);
 ?>
 </div>
 <div class="corner-box">
 <?php
-    echo '<h4>'._('credits_section_past_developers').'</h4>';
+    echo '<h4>'.___('Past Developers').'</h4>';
     echo implode(', ', $past_developers);
 ?>
 </div>
 <div class="corner-box">
 <?php
-    echo '<h4>'._('credits_section_software').'</h4>';
+    echo '<h4>'.___('Software and Images').'</h4>';
 ?>
     <ul>
-        <li><?=_('credits_software_famfamfam')?></li>
-        <li><?=___('credits_software_timeplot', 'Some pages use elements of <a href="http://www.simile-widgets.org/timeplot/">Timeplot</a>, licensed under a <a href="http://simile.mit.edu/license.html">BSD License</a>.')?></li>
+        <li><?=___('Some icons used are from the <a href="http://www.famfamfam.com/lab/icons/silk/">famfamfam Silk Icon Set</a>, licensed under a <a href="http://creativecommons.org/licenses/by/2.5/">Creative Commons Attribution 2.5 License</a>.')?></li>
+        <li><?=___('Some pages use elements of <a href="http://www.simile-widgets.org/timeplot/">Timeplot</a>, licensed under a <a href="http://simile.mit.edu/license.html">BSD License</a>.')?></li>
     </ul>
 </div>
 
 <br/>
-<?=sprintf(_('credits_contributing'), $html->link(_('credits_contributing_wikipage'), 'http://wiki.mozilla.org/Update'))?>
+<?=sprintf(___('For information on contributing, please see our %s.'), $html->link(___('wiki page'), 'http://wiki.mozilla.org/Update'))?>
 
 </div>

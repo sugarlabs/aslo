@@ -35,7 +35,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 ?>
 
 <div class="secondary" role="complementary">
@@ -44,18 +44,18 @@
 
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
-    
-	<h2><?=___('user_login_header', 'Log In')?></h2>
-	  
+
+	<h2><?=___('Log In')?></h2>
+
 <?php
     //banner warning messages for display
     if(isset($_GET['m'])) {
         switch ($_GET['m']) {
             case 1:
-            $warn_msg = sprintf(_('users_login_sandbox_display_warning'), '/pages/policy');
+            $warn_msg = sprintf(___('The add-on you\'re looking for is currently in the sandbox. If you already have an account on Mozilla Add-ons, please log in, or <a href="%1$s">learn more about the sandbox.</a>'), '/pages/policy');
             break;
             case 2:
-            $warn_msg = sprintf(_('users_login_sandbox_page_warning'), '/pages/policy');
+            $warn_msg = sprintf(___('The page you\'re looking for is part of the sandbox. If you already have an account on Mozilla Add-ons, please log in, or <a href="%1$s">learn more about the sandbox.</a>'), '/pages/policy');
             break;
             default:
             $warn_msg = null;
@@ -66,34 +66,34 @@
 ?>
 
 <?php if ($loginerror)
-        echo $this->renderElement('notification', array('type' => 'error', 'description' => _('error_username_or_pw_wrong')));
+        echo $this->renderElement('notification', array('type' => 'error', 'description' => ___('Wrong username or password!')));
 ?>
 <p></p>
 <div class="primary">
 <div class="featured">
 <form action="<?=$html->entities($html->url())?>" method="post" id="login" class="featured-inner object-lead">
-    <?=$html->hiddenSession() ?>       
+    <?=$html->hiddenSession() ?>
     <div>
-        <? 
+        <?
         $redir = (isset($_GET['to'])) ? urldecode($_GET['to']) : urldecode(@$this->data['Login']['referer']);
         $redir = $html->entities($redir);
         echo $html->hidden('Login/referer', array('value' => $redir));
         ?>
     </div>
     <div class="container">
-        <label for="LoginEmail"><?=_('user_form_email')?></label>
+        <label for="LoginEmail"><?=___('Email address')?></label>
         <?=$html->input('Login/email') ?>
     </div>
     <div class="container">
-        <label for="LoginPassword"><?=_('user_form_password')?></label>
+        <label for="LoginPassword"><?=___('Password')?></label>
         <?=$html->password('Login/password') ?>
     </div>
     <div class="container remember">
         <?=$html->input('Login/remember', array('type' => 'checkbox', 'value' => '1'))?>
-        <label for="LoginRemember"><?=___('user_form_remember_me')?></label>
+        <label for="LoginRemember"><?=___('Remember me on this computer')?></label>
     </div>
     <div class="container">
-        <button type="submit" class="prominent"><?= _('user_form_submit_login') ?></button>
+        <button type="submit" class="prominent"><?= ___('Log in') ?></button>
     </div>
 </form>
 </div>
@@ -105,10 +105,10 @@
 
 <div class="secondary">
 	<div id="login-help" class="article">
-		<h3><?=___('user_login_problems', 'Login Problems?')?></h3>
+		<h3><?=___('Login Problems?')?></h3>
 		<ul>
-		    <li><?= $html->link(___('user_login_no_account', "I don't have an account."), '/users/register'); ?></li>
-		    <li><?= $html->link(___('user_login_forgot_password', 'I forgot my password.'), '/users/pwreset'); ?></li>
+		    <li><?= $html->link(___('I don\'t have an account.'), '/users/register'); ?></li>
+		    <li><?= $html->link(___('I forgot my password.'), '/users/pwreset'); ?></li>
 		</ul>
 	</div>
 </div>

@@ -54,11 +54,11 @@ else
     <?=$addon['Translation']['name']['string']?><?php if (empty($policy)) {?> <?=$addon['Version'][0]['Version']['version']?><? }?>
   </h2>
 
-  <h3 class="author"> <?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addon['User'], 0);?></h3>
+  <h3 class="author"> <?=___('by')?> <?=$html->linkUsersFromModel($addon['User'], 0);?></h3>
 
   <?php if (empty($policy)) {?>
       <div class="addon-policy-tagline">
-      <p<?=$addon['Translation']['name']['locale_html']?>><?=sprintf(_('addons_policy_eula_require'), $addon['Translation']['name']['string']);?></p> 
+      <p<?=$addon['Translation']['name']['locale_html']?>><?=sprintf(___('%s requires that you accept the following End-User License Agreement before installation can proceed:'), $addon['Translation']['name']['string']);?></p> 
       </div>
   <?php }?>
 
@@ -69,9 +69,9 @@ else
     <?
       global $browser_apps;
       if (!in_array(APP_ID, $browser_apps)) {
-          $buttonMessage = ___('a_eula_download');
+          $buttonMessage = ___('Accept and Download');
       } else {
-          $buttonMessage = _('a_eula_install');
+          $buttonMessage = ___('Accept and Install');
       }
       if (array_key_exists('collection_id', $_GET) && $this->controller->Collection->isValidUUID($_GET['collection_id'])) {
           $_collection_uuid = $_GET['collection_id'];
@@ -100,10 +100,10 @@ else
       </div>
       <!-- /.addon-summary -->
       
-      <p class="policy-link"><?=$html->link(_('a_cancel_installation'), "/addon/{$addon['Addon']['id']}");?></p>
+      <p class="policy-link"><?=$html->link(___('Cancel Installation'), "/addon/{$addon['Addon']['id']}");?></p>
   <?php endif;?>
 
-  <p class="policy-link"><?=$html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></p>
+  <p class="policy-link"><?=$html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></p>
 </div>
 <!-- /#primary -->
 

@@ -48,7 +48,7 @@ $this->layout = 'amo2009';
   </div>
   <div class="primary" role="main">
     <?=$this->renderElement('amo2009/breadcrumbs')?>
-    <h2><?=___('search_collections_header', 'Collection Search Results')?></h2>
+    <h2><?=___('Collection Search Results')?></h2>
     <div class="featured listing">
       <div class="featured-inner">
         <div class="listing-header">
@@ -59,7 +59,7 @@ $this->layout = 'amo2009';
         </script>
         <?php if (count($collections) === 0): ?>
           <div class="item">
-              <p class="addon-search-message"><?=_('search_nothing_found')?></p>
+              <p class="addon-search-message"><?=___('No results found.')?></p>
           </div>
         <?php endif; ?>
         <?php

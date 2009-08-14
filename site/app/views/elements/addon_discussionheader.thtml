@@ -59,7 +59,7 @@ $addonSummary = $addon['Translation']['summary']['string'];
 
 // prepare preview image
 if (isset($addonPreviewPath) && !empty($addonPreviewPath)) {
-    $_alt = sprintf(_('img_preview_of'),$addonName);
+    $_alt = sprintf(___('Preview Image of %s'),$addonName);
     $previmg = '<img src="'.$addonPreviewPath.'" '
         .'alt="'.$_alt.'" title="'.$_alt.'"/>';
     $previmg = '<p class="preview-img">'
@@ -80,7 +80,7 @@ if (!isset($addonSummary) || empty($addonSummary))
 <div class="addon">
     <div class="irk">
         <h3 class="name discussions"><?=$html->link("$icon $addonName", "/addon/{$addonID}");?></h3>
-        <h4 class="author discussions"> <?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonCreators, null, "/addon/{$addonID}#authors")?></h4>
+        <h4 class="author discussions"> <?=___('by')?> <?=$html->linkUsersFromModel($addonCreators, null, "/addon/{$addonID}#authors")?></h4>
         <p class="desc"><?=$addonSummary?></p>
     </div>
     <div class="vex"><span><!-- bottom edge --></span></div>

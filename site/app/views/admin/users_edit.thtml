@@ -73,49 +73,49 @@ $this->translationBox = array(
                 <?=$html->input('User/email', array('value' => $user['User']['email']))?>
             </div>
             <div>
-                <label for="UserFirstname"><?=_('user_form_firstname')?></label>
+                <label for="UserFirstname"><?=___('First name')?></label>
                 <?=$html->input('User/firstname', array('value' => $user['User']['firstname'])) ?>
-                <?=$html->tagErrorMsg('User/firstname', _('error_field_required'))?>
+                <?=$html->tagErrorMsg('User/firstname', ___('This field must not be empty.'))?>
             </div>
             <div>
-                <label for="UserLastname"><?=_('user_form_lastname')?></label>
+                <label for="UserLastname"><?=___('Last name')?></label>
                 <?=$html->input('User/lastname', array('value' => $user['User']['lastname'])) ?>
-                <?=$html->tagErrorMsg('User/lastname', _('error_field_required'))?>
+                <?=$html->tagErrorMsg('User/lastname', ___('This field must not be empty.'))?>
             </div>
             <div>
-                <label for="UserNickname"><?=_('user_form_nickname')?></label>
+                <label for="UserNickname"><?=___('Nickname')?></label>
                 <?=$html->input('User/nickname', array('value' => $user['User']['nickname'])) ?>
-                <?=$html->tagErrorMsg('User/nickname', _('error_user_nickname_notunique'))?>
+                <?=$html->tagErrorMsg('User/nickname', ___('This nickname is already taken.'))?>
             </div>
             <div>
-                <label for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
+                <label for="UserEmailhidden"><?=___('Hide email address')?></label>
                 <?=$html->checkBox('User/emailhidden', null, array('checked' => ($user['User']['emailhidden'] ? 'checked' : false), 'value' => 1)) ?>
             </div>
             <div>
-                <label for="UserSandboxshown"><?=_('user_form_showsandbox')?></label>
+                <label for="UserSandboxshown"><?=___('Show sandbox?')?></label>
                 <?=$html->checkBox('User/sandboxshown', null, array('checked' => ($user['User']['sandboxshown'] ? 'checked' : false), 'value' => 1)) ?>
             </div>
             <div class="line">
-                <label class="amo-label-large" for="UserLocation"><?=___('user_form_location', 'Location')?></label>
+                <label class="amo-label-large" for="UserLocation"><?=___('Location')?></label>
                 <?=$html->input('User/location', array('value' => stripslashes($user['User']['location']))) ?>
             </div>
             <div class="line">
-                <label class="amo-label-large" for="UserOccupation"><?=___('user_form_occupation', 'Occupation')?></label>
+                <label class="amo-label-large" for="UserOccupation"><?=___('Occupation')?></label>
                 <?=$html->input('User/occupation', array('value' => stripslashes($user['User']['occupation']))) ?>
             </div>
             <div>
-                <label for="UserHomepage"><?=_('user_form_homepage')?></label>
+                <label for="UserHomepage"><?=___('Website URL')?></label>
                 <?=$html->input('User/homepage', array('value' => $user['User']['homepage'])) ?>
-                <?=$html->tagErrorMsg('User/homepage', _('error_invalid_url'))?>
+                <?=$html->tagErrorMsg('User/homepage', ___('This URL has an invalid format. Valid URLs look like http://example.com/my_page.'))?>
             </div>
             <div class="line">
-                <label class="amo-label-large" for="UserPictureData"><?=___('user_form_picture', 'Picture')?></label>
+                <label class="amo-label-large" for="UserPictureData"><?=___('Picture')?></label>
                 <div class="edit-picture">
-                    <img src="<?=$html->url("/user/{$user['User']['id']}/picture")?>" alt="<?=empty($user['User']['picture_data']) ? ___('user_picture_alt_no_picture', 'No photo') : ___('user_picture_alt_name', "Picture of {$this->data['User']['email']}")?>" class="avatar photo-large photo" />
+                    <img src="<?=$html->url("/user/{$user['User']['id']}/picture")?>" alt="<?=empty($user['User']['picture_data']) ? ___('No photo') : ___('Picture of %1$s')?>" class="avatar photo-large photo" />
                     <br />
-                    <label for="UserRemovepicture"><?=___('user_form_delete_picture', 'Remove this picture?')?></label>
+                    <label for="UserRemovepicture"><?=___('Remove this picture?')?></label>
                     <?=$html->checkBox('User/removepicture') ?><br />
-                    <label for="UserRemovepicture"><?=___('user_form_new_picture', 'Upload a new picture?')?></label>
+                    <label for="UserRemovepicture"><?=___('Upload a new picture?')?></label>
                     <?=$html->file('User/picture_data') ?>
                     <?=$html->tagErrorMsg('User/picture_data', @$picture_error)?>
                 </div>
@@ -128,8 +128,8 @@ $this->translationBox = array(
                 'translations' => $translations['bio'],
                 'height' => '100',
                 'maxLength' => '500',
-                'displayName' => ___('user_form_bio'),
-                'description' => ___('user_form_bio_description'),
+                'displayName' => ___('About me'),
+                'description' => ___('Introduce yourself to the community, if you like! This text will appear publicly on your user info page. Line breaks will be preserved, but no HTML is allowed.'),
             ));
             ?>
             </div>

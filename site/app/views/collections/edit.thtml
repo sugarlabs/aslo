@@ -65,14 +65,14 @@ $this->translationBox = array(
         <form action="<?=$html->entities($html->url())?>" method="post" id="collections" enctype="multipart/form-data">
         <?=$html->hiddenSession()?>
 
-        <h2><?=sprintf(___('collections_edit_header'), $this->data['Collection']['Translation']['name']['string'])?></h2>
+        <h2><?=sprintf(___('Manage %1$s'), $this->data['Collection']['Translation']['name']['string'])?></h2>
 
         <?php
         if (!empty($collection_saved)) {
             echo $this->renderElement('notification', array(
                 'type' => 'success',
-                'msg' => ___('collections_edit_saved_success'),
-                'description' => ___('collections_edit_saved_nextstep').' '
+                'msg' => ___('Your collection was successfully saved!'),
+                'description' => ___('Your collection can be accessed at this location:').' '
                     .$html->link(SITE_URL.$html->url($collection_url), $collection_url),
                 'htmlattributes' => array('id' => 'saved_success')
             ));
@@ -86,15 +86,15 @@ JS;
         } elseif (!empty($form_errors)) {
             echo $this->renderElement('notification', array(
                 'type' => 'error',
-                'msg' => ___('error_formerrors')
+                'msg' => ___('There are errors in this form. Please correct them and resubmit.')
             ));
         }
         echo $this->renderElement('notification', array(
             'type' => 'warning',
-            'msg' => ___('collections_edit_delete_warning'),
-            'description' => sprintf(___('collections_edit_delete_upon_submit'),
-                    ___('collections_edit_submit_deletecollection'),
-                    ___('collections_edit_tabheader_advanced')),
+            'msg' => ___('Your collection is about to be deleted!'),
+            'description' => sprintf(___('Upon clicking "%1$s" below, your collection will be deleted. If you do not want to delete your collection, uncheck the confirmation box in the "%2$s" tab and continue editing your collection. If you leave this page without saving, your collection will also not be deleted.'),
+                    ___('Delete Collection'),
+                    ___('Advanced')),
             'htmlattributes' => array(
                 'id' => 'delete-warning',
                 'style' => 'display:none'
@@ -105,12 +105,12 @@ JS;
         <div id="coll-edit" class="flora">
             <ul class="tabs-nav">
                 <?php if ($atleast_manager): ?>
-                <li><a href="#details"><span><?=___('collections_edit_tabheader_details')?></span></a></li>
-                <li><a href="#permissions"><span><?=___('collections_edit_tabheader_permissions')?></span></a></li>
+                <li><a href="#details"><span><?=___('Name &amp; Details')?></span></a></li>
+                <li><a href="#permissions"><span><?=___('Permissions')?></span></a></li>
                 <?php endif; ?>
-                <li><a href="#addons"><span><?=___('collections_edit_tabheader_addons')?></span></a></li>
+                <li><a href="#addons"><span><?=___('Add-ons')?></span></a></li>
                 <?php if ($atleast_manager): ?>
-                <li><a href="#advanced"><span><?=___('collections_edit_tabheader_advanced')?></span></a></li>
+                <li><a href="#advanced"><span><?=___('Advanced')?></span></a></li>
                 <?php endif; ?>
             </ul>
 
@@ -123,11 +123,11 @@ JS;
                     'translations' => $translations['name'],
                     'height' => '25',
                     'maxLength' => '50',
-                    'displayName' => ___('collections_edit_formfield_name'),
-                    'description' => ___('collections_edit_formfield_name_description'),
+                    'displayName' => ___('Collection Name'),
+                    'description' => ___('Give your collection a descriptive name, such as "Dave\'s Favorite Travel Add-ons"'),
                 ));
                 ?>
-                <?=$html->tagErrorMsg('Collection/name', ___('collections_edit_form_error_name')) ?>
+                <?=$html->tagErrorMsg('Collection/name', ___('You must give your collection a name.')) ?>
                 </div>
 
                 <div>
@@ -137,60 +137,60 @@ JS;
                     'translations' => $translations['description'],
                     'height' => '100',
                     'maxLength' => '200',
-                    'displayName' => ___('collections_edit_formfield_description'),
-                    'description' => ___('collections_edit_formfield_description_description'),
+                    'displayName' => ___('Collection Description'),
+                    'description' => ___('Briefly describe your collection and the kind of add-ons in it'),
                 ));
                 ?>
-                <?=$html->tagErrorMsg('Collection/description', ___('collections_edit_form_error_description')) ?>
+                <?=$html->tagErrorMsg('Collection/description', ___('You must provide a description of your collection.')) ?>
                 </div>
 
                 <div>
-                <h4><label for="CollectionNickname"><?=___('collections_edit_formfield_nickname')?></label></h4>
-                <p><?=___('collections_edit_formfield_nickname_description')?></p>
+                <h4><label for="CollectionNickname"><?=___('Collection Nickname')?></label></h4>
+                <p><?=___('Optionally, give your collection a unique nickname for quick access:')?></p>
                 <p>
                     <?=SITE_URL.$html->url('/collection/', true, false, false)
                         .$html->input('Collection/nickname', array('maxlength'=>30, 'value'=>$this->data['Collection']['Collection']['nickname']));?>
-                    <input type="button" value="<?=___('collections_edit_check_nickname')?>" style="display:none" id="nick-avail" />
+                    <input type="button" value="<?=___('Check Availability')?>" style="display:none" id="nick-avail" />
                     <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
-                    <span class="available" style="display:none"><?=___('collections_edit_nickname_available')?></span>
-                    <span class="taken error_message" style="display:none"><?=___('collections_edit_nickname_taken')?></span>
+                    <span class="available" style="display:none"><?=___('Nickname Available')?></span>
+                    <span class="taken error_message" style="display:none"><?=___('Nickname Taken')?></span>
                 </p>
-                <?=$html->tagErrorMsg('Collection/nickname', ___('collections_edit_form_error_nickname')) ?>
+                <?=$html->tagErrorMsg('Collection/nickname', ___('If you choose a nickname, it must be unique.')) ?>
                 </div>
 
                 <div id="icon">
-                <h4><label for="CollectionIcon"><?=___('collections_edit_formfield_icon')?></label></h4>
-                <p><?=___('collections_edit_formfield_icon_description')?></p>
+                <h4><label for="CollectionIcon"><?=___('Icon')?></label></h4>
+                <p><?=___('You can upload a JPG, GIF or PNG icon that will be resized to 32x32 pixels.')?></p>
 
                 <?php if (!empty($this->data['Collection']['Collection']['icontype'])): ?>
                 <img src="<?=$iconurl.(!empty($collection_saved)?'/updated':'')?>" alt="Icon"/>
                 <?php endif;?>
                 <input id="CollectionIcon" type="file" name="icon"/>
-                <span class="toberemoved" style="display:none"><?=sprintf(___('collections_edit_icon_toberemoved'), ___('collections_edit_submit'))?></span>
-                <a href="#" class="cancel" style="display:none"><?=___('collections_edit_icon_cancel')?></a>
+                <span class="toberemoved" style="display:none"><?=sprintf(___('Icon will be removed when "%1$s" is clicked below'), ___('Update Collection'))?></span>
+                <a href="#" class="cancel" style="display:none"><?=___('Cancel')?></a>
 
                 <noscript>
                     <p>
-                        <input id="IconDeleteNoScript" type="checkbox" name="data[Icon][delete]"/> <label for="IconDeleteNoScript"><?=___('collections_edit_icon_delete')?></label>
+                        <input id="IconDeleteNoScript" type="checkbox" name="data[Icon][delete]"/> <label for="IconDeleteNoScript"><?=___('Delete Icon')?></label>
                     </p>
                 </noscript>
                 <span class="replaceremove" style="display:none">
-                    <a href="#" id="icon_replace"><?=___('collections_edit_icon_replace')?></a> |
-                    <a href="#" id="icon_remove"><?=___('collections_edit_icon_delete')?></a>
+                    <a href="#" id="icon_replace"><?=___('Replace Icon')?></a> |
+                    <a href="#" id="icon_remove"><?=___('Delete Icon')?></a>
                 </span>
-                <?=$html->tagErrorMsg('Collection/icon', ___('collections_edit_form_error_icon')) ?>
+                <?=$html->tagErrorMsg('Collection/icon', ___('There was an error uploading your icon.')) ?>
                 </div>
             </div>
 
             <div id="permissions">
-            <noscript><h3><?=___('collections_edit_header_permissions')?></h3></noscript>
+            <noscript><h3><?=___('Manage Collection Permissions')?></h3></noscript>
                 <div>
                 <fieldset>
-                <h4><?=___('collections_edit_formfield_listed')?></h4>
-                <p><?=___('collections_edit_formfield_listed_description')?></p>
+                <h4><?=___('Who can view your collection?')?></h4>
+                <p><?=___('By default, collections appear in the public Collection Directory and are discoverable by anyone. If you want to restrict your collection to be viewable only by people who are given a special link, choose that option below.')?></p>
                 <?=$html->radio('Collection/listed', array(
-                    true => '<label for="listed_1">'.___('collections_edit_formfield_listed_true').'</label>',
-                    false => '<label for="listed_0">'.___('collections_edit_formfield_listed_false').'</label>'
+                    true => '<label for="listed_1">'.___('Everyone can view my collection in the directory').'</label>',
+                    false => '<label for="listed_0">'.___('Only people I invite can view my collection').'</label>'
                     ), '<br/>', array('value'=>$this->data['Collection']['Collection']['listed']));
                 ?>
                 </fieldset>
@@ -198,44 +198,44 @@ JS;
 
                 <div>
                 <fieldset>
-                <h4><?=___('collections_edit_formfield_publishers')?></h4>
-                <p><?=___('collections_edit_formfield_publishers_description')?></p>
+                <h4><?=___('Who can publish add-ons to your collection?')?></h4>
+                <p><?=___('These users can publish add-ons to your collection and remove add-ons that they publish.')?></p>
                 <?=$html->radio('Publishers/p_onlyme', array(
-                    true => '<label for="p_onlyme_1">'.___('collections_edit_formfield_users_onlyme').'</label>',
-                    false => '<label for="p_onlyme_0">'.___('collections_edit_formfield_users_otherusers').'</label>'
+                    true => '<label for="p_onlyme_1">'.___('Only me').'</label>',
+                    false => '<label for="p_onlyme_0">'.___('Myself and these users:').'</label>'
                     ), '<br/>', array('value'=>(int)empty($publishers_noscript)));
                 ?>
                 <div id="publishers" class="jsonly">
                     <ul></ul>
-                    <label for="PublishersAdd"><?=___('collections_edit_formfield_users_add')?></label><br/>
-                    <?=$html->input('Publishers/add')?> <input type="button" value="<?=___('collections_edit_formfield_users_submit')?>" />
+                    <label for="PublishersAdd"><?=___('Enter the e-mail address of a Firefox Add-ons account:')?></label><br/>
+                    <?=$html->input('Publishers/add')?> <input type="button" value="<?=___('Add')?>" />
                     <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
                 </div>
                 <noscript><div>
-                    <?=$html->input('Publishers/new')?> <label for="PublishersNew"><?=___('collections_edit_formfield_users_new_noscript')?></label><br/>
-                    <?=$html->selectTag('Publishers/delete', $publishers_noscript, null, array('size'=>3, 'multiple'=>'multiple'), null, false)?> <label for="PublishersDelete"><?=___('collections_edit_formfield_users_delete_noscript')?></label>
+                    <?=$html->input('Publishers/new')?> <label for="PublishersNew"><?=___('Enter a comma-separated list of e-mail addresses of Firefox Add-ons accounts')?></label><br/>
+                    <?=$html->selectTag('Publishers/delete', $publishers_noscript, null, array('size'=>3, 'multiple'=>'multiple'), null, false)?> <label for="PublishersDelete"><?=___('Selected accounts will be removed upon Save')?></label>
                 </div></noscript>
                 </fieldset>
                 </div>
 
                 <div>
                 <fieldset>
-                <h4><?=___('collections_edit_formfield_managers')?></h4>
-                <p><?=___('collections_edit_formfield_managers_description')?></p>
+                <h4><?=___('Who can manage my collection?')?></h4>
+                <p><?=___('These users can publish add-ons to your collection, manage all add-ons and settings, and grant other users permission.')?></p>
                 <?=$html->radio('Managers/m_onlyme', array(
-                    true => '<label for="m_onlyme_1">'.___('collections_edit_formfield_users_onlyme').'</label>',
-                    false => '<label for="m_onlyme_0">'.___('collections_edit_formfield_users_otherusers').'</label>'
+                    true => '<label for="m_onlyme_1">'.___('Only me').'</label>',
+                    false => '<label for="m_onlyme_0">'.___('Myself and these users:').'</label>'
                     ), '<br/>', array('value'=>(int)empty($managers_noscript)));
                 ?>
                 <div id="managers" class="jsonly">
                     <ul></ul>
-                    <label for="ManagersAdd"><?=___('collections_edit_formfield_users_add')?></label><br/>
-                    <?=$html->input('Managers/add')?> <input type="button" value="<?=___('collections_edit_formfield_users_submit')?>" />
+                    <label for="ManagersAdd"><?=___('Enter the e-mail address of a Firefox Add-ons account:')?></label><br/>
+                    <?=$html->input('Managers/add')?> <input type="button" value="<?=___('Add')?>" />
                     <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
                 </div>
                 <noscript><div>
-                    <?=$html->input('Managers/new')?> <label for="ManagersNew"><?=___('collections_edit_formfield_users_new_noscript')?></label><br/>
-                    <?=$html->selectTag('Managers/delete', $managers_noscript, null, array('size'=>3, 'multiple'=>'multiple'), null, false)?> <label for="ManagersDelete"><?=___('collections_edit_formfield_users_delete_noscript')?></label>
+                    <?=$html->input('Managers/new')?> <label for="ManagersNew"><?=___('Enter a comma-separated list of e-mail addresses of Firefox Add-ons accounts')?></label><br/>
+                    <?=$html->selectTag('Managers/delete', $managers_noscript, null, array('size'=>3, 'multiple'=>'multiple'), null, false)?> <label for="ManagersDelete"><?=___('Selected accounts will be removed upon Save')?></label>
                 </div></noscript>
                 </fieldset>
                 </div>
@@ -243,32 +243,32 @@ JS;
             <?php endif; // at least manager ?>
 
             <div id="addons">
-            <noscript><h3><?=___('collections_edit_header_addons')?></h3></noscript>
-            <p class="jsonly"><?=___('collections_edit_addons_description')?> <?=___('collections_edit_addons_description_publish_detailspage')?></p>
-            <noscript><p><?=___('collections_edit_addons_description_noscript')?> <?=___('collections_edit_addons_description_publish_detailspage')?></p></noscript>
-            <label for="addonname" class="jsonly"><?=___('collections_edit_formfield_addons')?></label> <input type="text" name="q" id="addonname"/>
-            <input type="button" onclick="return false;" value="<?=___('collections_edit_addons_submit')?>" id="addon-add"  class="jsonly" />
+            <noscript><h3><?=___('Manage Collection Contents')?></h3></noscript>
+            <p class="jsonly"><?=___('To publish new add-ons to this collection, start typing their names below.')?> <?=___('You can also publish an add-on from its normal listing page.')?></p>
+            <noscript><p><?=___('To publish new add-ons to this collection, enter a comma-separated list of Add-on IDs below.')?> <?=___('You can also publish an add-on from its normal listing page.')?></p></noscript>
+            <label for="addonname" class="jsonly"><?=___('Add-on name:')?></label> <input type="text" name="q" id="addonname"/>
+            <input type="button" onclick="return false;" value="<?=___('Add to Collection')?>" id="addon-add"  class="jsonly" />
             <hr/>
             <noscript><div>
-                <h3><?=___('collections_edit_header_addons_current')?></h3>
+                <h3><?=___('Current Add-ons:')?></h3>
                 <?=$html->selectTag('Addons/delete', $addons_noscript, null, array('size'=>6, 'multiple'=>'multiple'), null, false)?>
-                <label for="AddonsDelete"><?=___('collections_edit_addons_delete_noscript')?></label>
+                <label for="AddonsDelete"><?=___('Selected add-ons will be removed upon Save')?></label>
             </div></noscript>
             <div id="currentaddons"  class="jsonly">
-                <h3><?=___('collections_edit_header_addons_current')?></h3>
+                <h3><?=___('Current Add-ons:')?></h3>
                 <div class="coll-addon" id="addon-new" style="display:none">
-                    <p><img src="" alt=""/><span class="name"></span><span class="added"><?=___('collections_edit_addons_listitem_added')?></span></p>
-                    <a href="#" class="removeaddon"><?=___('collections_edit_addons_listitem_remove')?></a>
+                    <p><img src="" alt=""/><span class="name"></span><span class="added"><?=___('Added %1$s by %2$s')?></span></p>
+                    <a href="#" class="removeaddon"><?=___('Remove')?></a>
                     <blockquote title="publishercomment"></blockquote>
-                    <a href="#" class="addlink"><?=___('collections_edit_addons_listitem_comment_add')?></a>
+                    <a href="#" class="addlink"><?=___('Add publisher comment')?></a>
                     <div class="editdelete">
-                        <a href="#" class="editlink"><?=___('collections_edit_addons_listitem_comment_edit')?></a> |
-                        <a href="#" class="deletelink"><?=___('collections_edit_addons_listitem_comment_delete')?></a>
+                        <a href="#" class="editlink"><?=___('Edit publisher comment')?></a> |
+                        <a href="#" class="deletelink"><?=___('Delete publisher comment')?></a>
                     </div>
                     <div class="editbox">
                         <textarea cols="50" rows="5"></textarea>
-                        <input type="button" value="<?=___('collections_edit_addons_listitem_comment_submit')?>"/>
-                        <p><?=___('collections_edit_addons_listitem_comment_note')?></p>
+                        <input type="button" value="<?=___('Save Comment')?>"/>
+                        <p><?=___('Note: Comment will appear as though written by original publisher on the original publication date')?></p>
                     </div>
                 </div>
             </div>
@@ -276,35 +276,35 @@ JS;
 
             <?php if ($atleast_manager): ?>
             <div id="advanced">
-            <noscript><h3><?=___('collections_edit_header_advanced')?></h3></noscript>
+            <noscript><h3><?=___('Advanced Settings')?></h3></noscript>
             <fieldset>
-                <h4><?=___('collections_edit_formfield_application')?></h4>
-                <p><?=___('collections_edit_formfield_application_description')?></p>
+                <h4><?=___('Associated Application')?></h4>
+                <p><?=___('Select the application that your collection supports.')?></p>
                 <?=$html->selectTag('Collection/application_id', $appoptions, $this->data['Collection']['Collection']['application_id'], null, null, false);?>
             </fieldset>
 
             <?php if ($isadmin): ?>
             <fieldset>
-                <h4><?=___('collections_edit_formfield_collectiontype')?></h4>
+                <h4><?=___('Collection Type')?></h4>
                 <?=$html->selectTag('Collection/collection_type', $collection_types, $this->data['Collection']['Collection']['collection_type'], null, null, false);?>
             </fieldset>
             <?php endif; ?>
 
             <fieldset>
-                <h4><?=___('collections_edit_formfield_deletecollection')?></h4>
-                <p><?=___('collections_edit_formfield_deletecollection_description')?></p>
-                <input id="delete-coll" type="button" class="jsonly" name="data[action]" value="<?=___('collections_edit_submit_deletecollection')?>"/>
+                <h4><?=___('Delete Collection')?></h4>
+                <p><?=___('Deleting your collection will permanently erase it.')?></p>
+                <input id="delete-coll" type="button" class="jsonly" name="data[action]" value="<?=___('Delete Collection')?>"/>
                 <div id="delete-confirm">
-                    <div><input id="delete-coll-noscript" type="checkbox" name="data[action]" value="delete-coll"/> <label for="delete-coll-noscript"><?=___('collections_edit_confirm_deletecollection')?></label></div>
-                    <p class="jsonly"><?=sprintf(___('collections_edit_confirm_deletecollection_description'), ___('collections_edit_submit_deletecollection'))?></p>
-                    <noscript><p><?=sprintf(___('collections_edit_confirm_deletecollection_description'), ___('collections_edit_submit'))?></p></noscript>
+                    <div><input id="delete-coll-noscript" type="checkbox" name="data[action]" value="delete-coll"/> <label for="delete-coll-noscript"><?=___('Yes, I would like to delete this collection.')?></label></div>
+                    <p class="jsonly"><?=sprintf(___('Check the box, then click on "%1$s" to delete this collection.'), ___('Delete Collection'))?></p>
+                    <noscript><p><?=sprintf(___('Check the box, then click on "%1$s" to delete this collection.'), ___('Update Collection'))?></p></noscript>
                 </div>
             </fieldset>
             </div>
             <?php endif; // at least manager ?>
 
         </div><!-- /tabs -->
-        <div><input type="submit" id="submitbutton" value="<?=___('collections_edit_submit')?>"/></div>
+        <div><input type="submit" id="submitbutton" value="<?=___('Update Collection')?>"/></div>
         </form>
 
         <script type="text/javascript">
@@ -321,7 +321,7 @@ JS;
                         $addon['AddonCollection']['addon_id'], // id
                         addslashes($html->unsanitize($addon['Addon']['Translation']['name']['string'])), // name
                         $this->controller->Image->getAddonIconURL($addon['AddonCollection']['addon_id']), // iconurl
-                        strftime(_('date'), strtotime($html->unsanitize($addon['AddonCollection']['added']))), // add date
+                        strftime(___('%B %e, %Y'), strtotime($html->unsanitize($addon['AddonCollection']['added']))), // add date
                         $html->linkUserFromModel($addon['User']), // publisher
                         preg_replace('/\n/', '<br/>', $addon['Translation']['comments']['string']), // comment
                         (($atleast_manager || $addon['User']['id'] == $user['id']) ? 1 : 0), // editable

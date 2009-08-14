@@ -47,7 +47,7 @@ global $hybrid_categories;
 ?>
 
 <div id="categories">
-    <h3 title="<?=_('categories_header_title')?>"><span><?=_('categories_header')?></span></h3>
+    <h3 title="<?=___('Choose a category')?>"><span><?=___('Categories')?></span></h3>
     
     <?php
     if (isset($highlight) && !empty($highlight)) {
@@ -70,7 +70,7 @@ global $hybrid_categories;
                 $_url .= "/cat:{$highlight_cat['cat']}";
             
             echo $html->link($highlight_cat['name'], $_url,
-                array('title'=>_('categories_current_title')));
+                array('title'=>___('Current Category')));
             
             // when appropriate, show sub-category
             if ($highlight_cat['cat'] == 0 && $highlight[1] != 0
@@ -79,7 +79,7 @@ global $hybrid_categories;
                 
                 echo $html->link($this_category['Translation']['name']['string'],
                     $_url."/cat:{$this_category['Category']['id']}",
-                    array('title'=>_('categories_current_title')));
+                    array('title'=>___('Current Category')));
             }
             echo "</p>";
         }

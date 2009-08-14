@@ -57,17 +57,17 @@ if (!$is_ajax):
                 if (!empty($success)) {
                     echo $this->renderElement('notification', array(
                         'type' => 'success',
-                        'msg' => sprintf(___('collections_subscribe_success'),
+                        'msg' => sprintf(___('%1$s has been added to your favorite collections.'),
                             $collection['Translation']['name']['string']),
-                        'description' => sprintf(___('collections_subscribe_success_desc'),
+                        'description' => sprintf(___('You can now quickly find this collection from the <a href="%1$s">%2$s</a> tab in the directory. For an even easier way to keep track of your favorite collections, try out our <a href="%3$s">Add-on Collector</a> extension for Firefox.'),
                             $html->url('/collections/favorites'),
-                            ___('collections_index_li_favorites'),
+                            ___('My Favorites'),
                             $html->url('/pages/collector_features'))
                     ));
                 } else {
                     echo $this->renderElement('notification', array(
                         'type' => 'error',
-                        'msg' => ___('collections_subscribe_error')
+                        'msg' => ___('An error occurred trying to add a favorite collection. Is this collection already a favorite?')
                     ));
                 }
 
@@ -75,25 +75,25 @@ if (!$is_ajax):
                 if (!empty($success)) {
                     echo $this->renderElement('notification', array(
                         'type' => 'success',
-                        'msg' => sprintf(___('collections_unsubscribe_success'),
+                        'msg' => sprintf(___('%1$s has been removed from your favorite collections.'),
                             $collection['Translation']['name']['string'])
                     ));
                 } else {
                     echo $this->renderElement('notification', array(
                         'type' => 'error',
-                        'msg' => ___('collections_unsubscribe_error')
+                        'msg' => ___('An error occurred trying to remove a favorite collection. Was this collection not a favorite?')
                     ));
                 }
             }
             ?>
 
             <div class="footer">
-                <?=$html->link(___('collections_subscribe_button_close'), '/collections',
+                <?=$html->link(___('Close'), '/collections',
                     array('class' => 'button close-button'));?>
                 <div class="bother">
                   <input type="checkbox" id="bothersome" name="bothersome">
                   <label for="bothersome">
-                    <?=___('collections_subscribe_label_bothersome')?>
+                    <?=___('Don\'t show me this message again.')?>
                   </label>
                 </div>
             </div>

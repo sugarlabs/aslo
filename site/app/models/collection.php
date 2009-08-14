@@ -119,7 +119,7 @@ class Collection extends AppModel
      * validate name field
      */
     function clean_name($input) {
-        $msg = sprintf(___('collection_name_limit'), Collection::MAX_NAME_LENGTH);
+        $msg = sprintf(___('The name should be less than %1$s characters.'), Collection::MAX_NAME_LENGTH);
         $this->maxLength('name', $input, Collection::MAX_NAME_LENGTH, $msg);
     }
 
@@ -127,7 +127,7 @@ class Collection extends AppModel
      * validate description field
      */
     function clean_description($input) {
-        $msg = sprintf(___('collection_description_limit'), Collection::MAX_DESC_LENGTH);
+        $msg = sprintf(___('The description should be less than %1$s characters.'), Collection::MAX_DESC_LENGTH);
         $this->maxLength('description', $input, Collection::MAX_DESC_LENGTH, $msg);
     }
 

@@ -52,9 +52,9 @@ class CollectionModelTest extends UnitTestCase {
 
         $errors = $this->Collection->validationErrors;
         $this->assertEqual($errors['name'],
-                           sprintf(___('collection_name_limit'), $name_limit));
+                           sprintf(___('The name should be less than %1$s characters.'), $name_limit));
         $this->assertEqual($errors['description'],
-                           sprintf(___('collection_description_limit'), $desc_limit));
+                           sprintf(___('The description should be less than %1$s characters.'), $desc_limit));
     }
 }
 ?>

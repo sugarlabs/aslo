@@ -64,7 +64,7 @@ class PreviewsController extends AppController
         $this->Amo->clean($this->data); 
 
         $this->layout = 'mozilla';
-        $this->pageTitle = _('devcp_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Developer Tools').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
 		$this->cssAdd = array('developers');
         $this->publish('cssAdd', $this->cssAdd);
@@ -76,10 +76,10 @@ class PreviewsController extends AppController
                              ,'jquery-compressed.js');
         $this->publish('jsAdd', $this->jsAdd);
 
-        $this->breadcrumbs = array(_('devcp_pagetitle') => '/developers/index');
+        $this->breadcrumbs = array(___('Developer Tools') => '/developers/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         
-        $this->publish('subpagetitle', _('devcp_pagetitle'));
+        $this->publish('subpagetitle', ___('Developer Tools'));
 
         global $native_languages;
         $this->publish('nativeLanguages', $native_languages);
@@ -100,19 +100,19 @@ class PreviewsController extends AppController
     */
     function add($addon_id) {
         $this->Amo->clean($addon_id);
-        $this->publish('subpagetitle', _('devcp_preview_add_pagetitle'));
-        $this->breadcrumbs[_('devcp_preview_add_pagetitle')] = '/previews/add/'.$addon_id;
+        $this->publish('subpagetitle', ___('Add Preview'));
+        $this->breadcrumbs[___('Add Preview')] = '/previews/add/'.$addon_id;
         $this->publish('breadcrumbs', $this->breadcrumbs);  
 
         if (!$this->Amo->checkOwnership($addon_id)) {
-            $this->flash(_('devcp_error_addon_access_denied'), '/developers/index');
+            $this->flash(___('You do not have access to that add-on.'), '/developers/index');
             return;
         }
 
         $this->Addon->bindFully();
         $this->Addon->id = $addon_id;
         if (!$addon = $this->Addon->read()) {
-            $this->flash(_('error_addon_notfound'), '/developers/index');
+            $this->flash(___('Add-on not found!'), '/developers/index');
             return;
         }
         
@@ -132,7 +132,7 @@ class PreviewsController extends AppController
                 
                 $this->Developers->saveTranslations($this->data, array('Preview'));
                 
-                $this->flash(_('devcp_preview_added_successfully'), '/previews/edit/'.$id);
+                $this->flash(___('Preview added successfully.'), '/previews/edit/'.$id);
                 return;
             }
         }
@@ -165,7 +165,7 @@ class PreviewsController extends AppController
         $localizedFields = array(
                              'caption' => array(
                                             'type'       => 'input',
-                                            'display'    => _('devcp_addon_field_preview_caption_displaytitle'),
+                                            'display'    => ___('Preview Caption'),
                                             'model'      => 'Preview',
                                             'field'         => 'caption',
                                             'attributes' => array(
@@ -181,7 +181,7 @@ class PreviewsController extends AppController
                                       'localizedFields' => $localizedFields));
         //Javascript localization
         $this->publish('jsLocalization', array(
-                                          'makeDefaultNotice' => _('devcp_notice_makedefault')
+                                          'makeDefaultNotice' => ___('Making this the default preview will remove default status from the current default preview.')
                                           ));
     }
 
@@ -191,24 +191,24 @@ class PreviewsController extends AppController
     */
     function edit($id) {
         $this->Amo->clean($id);
-        $this->set ('subpagetitle', _('devcp_preview_edit_pagetitle'));
-        $this->breadcrumbs[_('devcp_preview_edit_pagetitle')] = '/previews/edit/'.$id;
+        $this->set ('subpagetitle', ___('Edit Preview'));
+        $this->breadcrumbs[___('Edit Preview')] = '/previews/edit/'.$id;
         $this->publish('breadcrumbs', $this->breadcrumbs);  
 
         $this->Preview->id = $id;
         if (!$preview = $this->Preview->read()) {
-            $this->flash(_('error_preview_notfound'), '/developers/index');
+            $this->flash(___('Preview not found!'), '/developers/index');
             return;
         }
 
         $this->Addon->id = $preview['Preview']['addon_id'];
         if (!$addon = $this->Addon->read()) {
-            $this->flash(_('error_addon_notfound'), '/developers/index');
+            $this->flash(___('Add-on not found!'), '/developers/index');
             return;
         }
    
         if (!$this->Amo->checkOwnership($this->Addon->id)) {
-            $this->flash(_('devcp_error_addon_access_denied'), '/developers/index');
+            $this->flash(___('You do not have access to that add-on.'), '/developers/index');
             return;
         }
 
@@ -234,7 +234,7 @@ class PreviewsController extends AppController
             //Save translated fields (caption)
             $this->Developers->saveTranslations($this->data, array('Preview'));
 
-            $this->flash(_('devcp_preview_updated_successfully'), '/previews/edit/'.$id);
+            $this->flash(___('Preview updated successfully.'), '/previews/edit/'.$id);
             return;
         }
 
@@ -248,8 +248,8 @@ class PreviewsController extends AppController
 
         //Javascript localization
         $this->publish('jsLocalization', array(
-                                          'makeDefaultNotice' => _('devcp_notice_makedefault'),
-                                          'clearDefaultNotice' => _('devcp_notice_cleardefault')
+                                          'makeDefaultNotice' => ___('Making this the default preview will remove default status from the current default preview.'),
+                                          'clearDefaultNotice' => ___('Removing this as the default preview will cause another preview to automatically become the default preview.')
                                          ));
 
         //Retrieve language arrays from bootstrap.
@@ -274,7 +274,7 @@ class PreviewsController extends AppController
         $localizedFields = array(
                              'caption' => array(
                                             'type'       => 'input',
-                                            'display'    => _('devcp_addon_field_preview_caption_displaytitle'),
+                                            'display'    => ___('Preview Caption'),
                                             'model'      => 'Preview',
                                             'field'         => 'caption',
                                             'attributes' => array(
@@ -304,12 +304,12 @@ class PreviewsController extends AppController
 
         $this->Addon->id = $preview['Preview']['addon_id'];
         if (!$addon = $this->Addon->read()) {
-            $this->flash(_('error_addon_notfound'), '/developers/index');
+            $this->flash(___('Add-on not found!'), '/developers/index');
             return;
         }
 
         if (!$this->Amo->checkOwnership($addon['Addon']['id'])) {
-            $this->flash(_('devcp_error_addon_access_denied'), '/developers/index');
+            $this->flash(___('You do not have access to that add-on.'), '/developers/index');
             return;
         }
 
@@ -320,7 +320,7 @@ class PreviewsController extends AppController
 
         $this->Preview->delete();
 
-        $this->flash(_('devcp_preview_deleted_successfully'), '/developers/index/'.$addon['Addon']['id']);
+        $this->flash(___('Preview deleted successfully.'), '/developers/index/'.$addon['Addon']['id']);
         return;
     }
 }

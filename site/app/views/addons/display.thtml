@@ -61,13 +61,13 @@ if (empty($addonIconPath)) {
     <?=($hasversion ? $addon['Version'][0]['Version']['version'] : '')?>
   </span>
 </h2>
-<h4 class="author"><?=_('addons_home_by')?> <?= $html->linkUsersFromModel($addon['User'], 0); ?></h4>
+<h4 class="author"><?=___('by')?> <?= $html->linkUsersFromModel($addon['User'], 0); ?></h4>
 
 <?php
 if (!empty($coll_addon_added)) {
     echo $this->renderElement('notification', array(
         'type' => 'success',
-        'msg' => sprintf(___('addons_display_collection_publish_success'),
+        'msg' => sprintf(___('%1$s has been added to the %2$s collection.'),
             $addon['Translation']['name']['string'],
             $html->link($coll_addon_added['Translation']['name']['string'],
                         "/collection/{$coll_addon_added['Collection']['uuid']}")
@@ -115,7 +115,7 @@ if (!empty($coll_addon_added)) {
                 if (!empty($addon['Translation']['privacypolicy']['string'])): ?>
                     <a class="privacy-policy"
                        href="<?=$html->url('/addons/policy/0/'.$addon['Addon']['id'])?>">
-                      <strong><?=___('addons_display_view_privacy')?></strong>
+                      <strong><?=___('View privacy policy')?></strong>
                     </a>
                 <?php endif; ?>
             </div>
@@ -132,63 +132,63 @@ if (!empty($coll_addon_added)) {
             <?php
             if ($this->controller->Addon->acceptContributions($addon)) {
                 echo $this->renderElement('amo2009/contribution', array(
-                        'text' => ___('addons_display_contribution_ask'),
+                        'text' => ___('The developer of this add-on asks that you help support its continued development by making a small contribution.'),
                         'source' => 'addon-detail'));
             }
             ?>
 
-            <table summary="<?___('addons_display_table_summary')?>">
+            <table summary="<?___('Add-on Information')?>">
               <tbody>
                 <?php if ($hasversion): ?>
                     <tr>
-                      <th><?=___('devcp_versions_th_version')?></th>
+                      <th><?=___('Version')?></th>
                       <td><?=$_version_data['version']?></td>
                     </tr>
                     <tr>
-                      <th><?=___('addons_display_th_workswith')?></th>
+                      <th><?=___('Works with')?></th>
                       <td>
                         <?=$this->renderElement('app_versions',
                                                 array('app' => $compatible_apps[0]))?>
                       </td>
                     </tr>
                     <tr>
-                      <th><?=___('addons_home_browse_updated')?></th>
+                      <th><?=___('Updated')?></th>
                       <?php $updated = strtotime(str_replace('&#45;', '-', $_version_data['created'])) ?>
                       <td>
-                        <span title="<?=strftime(_('datetime'), $updated)?>">
-                          <?=strftime(_('date'), $updated)?>
+                        <span title="<?=strftime(___('%B %e, %Y, %I:%M %p'), $updated)?>">
+                          <?=strftime(___('%B %e, %Y'), $updated)?>
                         </span>
                       </td>
                     </tr>
                 <?php endif; ?>
                 <tr>
                   <th>
-                    <?=n___('addons_home_summary_developer',
-                            'addons_home_summary_developer',
+                    <?=n___('Developer',
+                            'Developers',
                             count($addon['User']))?>
                   </th>
                   <td><?=$html->linkUsersFromModel($addon['User'], 40)?></td>
                 </tr>
                 <?php if (!empty($addon['Translation']['homepage']['string'])): ?>
                   <tr>
-                    <th><?=___('addons_display_header_homepage')?></th>
+                    <th><?=___('Homepage')?></th>
                     <td><strong>
                       <?=$html->link($addon['Translation']['homepage']['string'])?>
                     </strong></td>
                   </tr>
                 <?php endif ?>
                 <tr>
-                  <th><?=___('advanced_search_form_rating')?></th>
+                  <th><?=___('Rating')?></th>
                   <td><?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?></td>
                 </tr>
                 <tr>
-                  <th><?=___('list_sortby_downloads')?></th>
+                  <th><?=___('Downloads')?></th>
                   <td>
                     <strong class="downloads">
                       <?=$html->number_format($addon['Addon']['totaldownloads'], 0)?>
                     </strong>
                     <?php if ($addon['Addon']['publicstats'] == 1): ?>
-                      <?=$html->link(___('addons_display_statistics'),
+                      <?=$html->link(___('Statistics'),
                                      '/statistics/addon/'.$addon['Addon']['id']);?>
                     <?php endif; ?>
                   </td>
@@ -215,7 +215,7 @@ if (!empty($coll_addon_added)) {
           <?php endif ?>
 
           <div class="share-this">
-            <a class="share" href="#"><?=___('addons_share_button_a_text')?></a>
+            <a class="share" href="#"><?=___('Share this Add-on')?></a>
             <div class="share-networks">
               <ul>
                 <?php foreach ($link_sharing_services as $l_name => $l_details) :?>
@@ -234,13 +234,13 @@ if (!empty($coll_addon_added)) {
     </div> <!-- featured-inner -->
   </div> <!-- featured -->
 
-  <h3><?=___('addons_display_more_about')?></h3>
+  <h3><?=___('More about this add-on')?></h3>
   <div class="article">
     <p <?=$addon['Translation']['description']['locale_html']?>>
       <?=nl2br($addon['Translation']['description']['string'])?>
     </p>
     <? if (count($previews) > 1): // Only show this if there are 2 or more images. ?>
-      <h4><?=___('addons_display_image_gallery')?></h4>
+      <h4><?=___('Image Gallery')?></h4>
       <?php
       foreach (array_slice($previews, 1) as $preview):
           $thumb = $this->controller->Image->getPreviewURL($preview['Preview']['id']);
@@ -261,17 +261,17 @@ if (!empty($coll_addon_added)) {
     $has_url = !empty($support_url);
     if ($has_email || $has_url):
     ?>
-      <h4><?=___('addons_display_header_support')?></h4>
+      <h4><?=___('Support')?></h4>
       <p>
         <?php if ($has_email && $has_url): ?>
-          <?=sprintf(_('addons_display_paragraph_supportinfoemailurl'),
+          <?=sprintf(___('Support for this add-on is provided by the developer at %1$s or by sending an e-mail to %2$s'),
                      $html->link($support_url),
                      $link->email($support_email));?>
         <?php elseif ($has_url): ?>
-          <?=sprintf(_('addons_display_paragraph_supportinfourl'),
+          <?=sprintf(___('Support for this add-on is provided by the developer at %s'),
                      $html->link($support_url));?>
         <?php elseif ($has_email): ?>
-          <?=sprintf(_('addons_display_paragraph_supportinfoemail'),
+          <?=sprintf(___('Support for this add-on is provided by the developer at %s'),
                      $link->email($support_email));?>
         <?php endif; ?>
       </p>
@@ -279,7 +279,7 @@ if (!empty($coll_addon_added)) {
 
     <?php $comments = $addon['Translation']['developercomments']['string'] ?>
     <?php if (!empty($comments)): ?>
-      <h4><?=___('addons_display_developer_comments', 'Developer Comments')?></h4>
+      <h4><?=___('Developer Comments')?></h4>
       <p <?=$addon['Translation']['developercomments']['locale_html']?>>
         <?=nl2br($addon['Translation']['developercomments']['string'])?>
       </p>
@@ -287,7 +287,7 @@ if (!empty($coll_addon_added)) {
   </div> <!-- article -->
 
   <?php if (!empty($reviews)): ?>
-    <h3 id="reviews"><?=_('addons_display_header_reviews')?></h3>
+    <h3 id="reviews"><?=___('Reviews')?></h3>
     <div class="article">
       <?php
       foreach ($reviews as $rev_no => $review):
@@ -302,15 +302,15 @@ if (!empty($coll_addon_added)) {
           <p>
             <?=$this->renderElement('amo2009/stars',
                                     array('rating' => $review['Review']['rating']));?>
-            <?=sprintf(___('addon_reviewed_by_u_on_d'),
+            <?=sprintf(___('by %1$s on %2$s'),
                        $html->linkUserFromModel($review['User']),
-                       strftime(_('date'), strtotime($review['Review']['created'])))?>
+                       strftime(___('%B %e, %Y'), strtotime($review['Review']['created'])))?>
           </p>
         </div>
       <?php endforeach; ?>
       <p>
         <a class="more-info" href="<?=$html->url('/reviews/display/'.$addon['Addon']['id'])?>">
-          <?=sprintf(___('addons_display_see_reviews'), $review_count)?>
+          <?=sprintf(___('See all %1$s reviews of this add-on'), $review_count)?>
         </a>
       </p>
     </div>
@@ -318,10 +318,10 @@ if (!empty($coll_addon_added)) {
 
 
   <?php if(empty($isAuthor)): ?>
-    <h3><?=_('addons_display_what_do_you_think')?></h3>
+    <h3><?=___('What do you think?')?></h3>
     <div id="review-box" class="highlight">
       <?php if (!$loggedIn): ?>
-        <p><?=sprintf(___('addons_display_please_login'), $html->url($html->login_url()))?></p>
+        <p><?=sprintf(___('Please <a href="%1$s">log in</a> to submit a review'), $html->url($html->login_url()))?></p>
       <?php endif; ?>
 
       <form class="addon-feedback" method="post"
@@ -330,12 +330,12 @@ if (!empty($coll_addon_added)) {
 
         <?php $disabled = $loggedIn ? '' : 'disabled="disabled"'; ?>
         <div class="container">
-          <label for="review"><?=___('addons_display_label_review')?></label>
+          <label for="review"><?=___('Review')?></label>
           <textarea name="data[Review][body]" id="review" <?=$disabled?>
                     cols="30" rows="6"></textarea>
         </div>
         <div class="container">
-          <label for="review-rating"><?=___('list_sortby_rating')?></label>
+          <label for="review-rating"><?=___('Rating')?></label>
           <select id="review-rating" name="data[Review][rating]">
             <option></option>
             <option value="1" class="worst">*</option>
@@ -346,27 +346,27 @@ if (!empty($coll_addon_added)) {
           </select>
           <input type="hidden" name="data[Review][id]"  value="" id="ReviewId"/>
           <input type="hidden" name="data[Review][title]"  value=" " id="ReviewTitle"/>
-          <button <?=$disabled?>><?=___('addons_display_post_review')?></button>
+          <button <?=$disabled?>><?=___('Post Review')?></button>
         </div>
       </form>
 
-      <p><?=___('addons_display_review_etiquette');?></p>
+      <p><?=___('Please do not post bug reports in reviews. We do not make your email address available to add-on developers and they may need to contact you to help resolve your issue.');?></p>
       <?php if ($has_email || $has_url): ?>
-        <p><?=sprintf(___('addons_display_review_see_support'), '#support')?></p>
+        <p><?=sprintf(___('See the <a href="%1$s">support section</a> to find out where to get assistance for this add-on.'), '#support')?></p>
       <?php endif; ?>
       <p>
-        <?=sprintf(___('addons_display_review_guidelines_link'), $html->url('/pages/review_guide'))?>
+        <?=sprintf(___('<a href="%s">Review Guidelines</a>'), $html->url('/pages/review_guide'))?>
       </p>
       <p>
         <a href="<?=$html->url('/reviews/add/'.$addon['Addon']['id'])?>">
-          <?=_('addons_display_detailed_review')?>
+          <?=___('detailed review')?>
         </a>
       </p>
     </div> <!-- highlight -->
   <?php endif; /* isAuthor */ ?>
 
   <?php if ($hasversion): ?>
-      <h3><?=___('addons_display_release_notes')?></h3>
+      <h3><?=___('Release Notes')?></h3>
       <div class="article">
         <?=$this->renderElement('addon_version_detail', $_version_data)?>
         <p id="release-notes" <?=$addon['Version'][0]['Translation']['releasenotes']['locale_html']?>>
@@ -382,9 +382,9 @@ if (!empty($coll_addon_added)) {
                                         '/versions/license/'.$version_id);
         ?>
           <h5 id="license">
-            <?=___('addons_display_header_license')?>
+            <?=___('Source Code License')?>
             <a href="<?=$html->url('/pages/developer_faq#license')?>">
-              <?=___('addons_display_a_license_what')?>
+              <?=___("What's this?")?>
             </a>
           </h5>
           <p><?=$license_link?></p>
@@ -394,12 +394,12 @@ if (!empty($coll_addon_added)) {
           <?php if ($addon['Addon']['viewsource'] == 1 &&
                     $this->controller->Session->check('User')): ?>
             <li>
-              <a href="<?=$html->url('/files/browse/'.$addon['Version'][0]['File'][0]['id'])?>"><?=___('addons_display_view_source')?></a>
+              <a href="<?=$html->url('/files/browse/'.$addon['Version'][0]['File'][0]['id'])?>"><?=___('View the source')?></a>
             </li>
           <?php endif; ?>
           <li>
             <a href="<?=$html->url('/addons/versions/'.$addon['Addon']['id'])?>">
-              <?=___('addons_display_view_older')?>
+              <?=___('View Older Versions')?>
             </a>
           </li>
         </ul>
@@ -417,17 +417,17 @@ if (!empty($coll_addon_added)) {
   $dev = $addon['User'][array_rand($addon['User'])];
   $dev = $this->controller->User->getUser($dev['id']);
   ?>
-  <h3><?=n___('addon_developer_h2_meet', 'addon_developer_h2_meet', count($devs))?></h3>
+  <h3><?=n___('Meet the Developer', 'Meet the Developers', count($devs))?></h3>
   <img class="avatar" alt="<?=$dev['User']['display_name']?>" height="64" width="64"
        src="<?=$html->url('/users/picture/'.$dev['User']['id'])?>" />
-  <p><?=sprintf(___('addon_display_meet_learn'),
+  <p><?=sprintf(___('Learn why %1$s was created and find out what\'s next for this add-on.'),
                 $addon['Translation']['name']['string'])?></p>
   <p>
     <a class="more-info" href="<?=$html->url('/addon/'.$addon_id.'/developers')?>">
         <? if (count($devs) > 1): ?>
-          <?=n___('addon_developer_h2_meet', 'addon_developer_h2_meet', count($devs))?>
+          <?=n___('Meet the Developer', 'Meet the Developers', count($devs))?>
         <? else: ?>
-          <?=sprintf(___('addon_display_meet_x'), $dev['User']['display_name'])?>
+          <?=sprintf(___('Meet %1$s'), $dev['User']['display_name'])?>
         <? endif; ?>
     </a>
   </p>
@@ -441,14 +441,14 @@ if (!empty($coll_addon_added)) {
       if (is_array($relatedCategories)) {
           $_sort_opt = ($addon['Addon']['addontype_id'] == ADDON_SEARCH) ? '?sort=rated' : '';
           foreach ($relatedCategories as $category) {
-              echo $html->link(sprintf(_('addons_display_see_all_addons'),$category['Translation']['name']['string']), '/browse/' . "type:" . $category['Category']['addontype_id'] . '/' . "cat:" . $category['Category']['id'] . $_sort_opt , array('class'=>'more-info')) . "\n";
+              echo $html->link(sprintf(___('See All %1$s Add-ons'),$category['Translation']['name']['string']), '/browse/' . "type:" . $category['Category']['addontype_id'] . '/' . "cat:" . $category['Category']['id'] . $_sort_opt , array('class'=>'more-info')) . "\n";
           }
       }
       ?>
 
       <?php if (count($authorAddons) > 1): ?>
           <div class="other-author-addons">
-              <h4><?=sprintf(n___('addons_display_other_addons_by', 'addons_display_other_addons_by', count($addon['User'])),
+              <h4><?=sprintf(n___('Other add-ons by %1$s', 'Other add-ons by these authors', count($addon['User'])),
                              $html->linkUsersFromModel($addon['User'], 0));?>
               </h4>
           <?php if (count($authorAddons) > 3) {
@@ -456,7 +456,7 @@ if (!empty($coll_addon_added)) {
               echo '<select id="addons-author-addons-select" name="addons-author-addons-select" onchange="this.form.submit()">';
               echo $this->renderElement('addon_author_addons', array('tag' => 'option'));
               echo '</select>';
-              echo '<input class="hidden" type="submit" value="'._('addons_author_addons_submit').'"/>';
+              echo '<input class="hidden" type="submit" value="'.___('Go').'"/>';
               echo '</form>';
           } else {
               echo '<ul class="xoxo">';
@@ -470,7 +470,7 @@ if (!empty($coll_addon_added)) {
 <?php endif; ?>
 
 <div class="highlight">
-<h3><?=___('tags_header_tags_title', 'Tags')?></h3>
+<h3><?=___('Tags')?></h3>
 
     <script type="text/javascript">
         <?=$this->renderElement('tags_js_init')?>
@@ -481,19 +481,19 @@ if (!empty($coll_addon_added)) {
     </div>
 
     <? if ($loggedIn): ?>
-        <a href="#" id="addatag"><?=___('tags_add_tag_link', 'Add a tag');?></a>
+        <a href="#" id="addatag"><?=___('Add a tag');?></a>
         <div class="addtagform ">
             <form id='tagForm' action="<?=$html->url("/tags/add/")?>" method="POST">
                 <?=$html->hiddenSession() ?>
                 <input type="text" id='newTag' name="newTag" />
                 <input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon['Addon']['id']?>" />
-                <button id="addtagbutton"><?=___('tags_add_tag_button', 'Add');?></button>
+                <button id="addtagbutton"><?=___('Add');?></button>
             </form>
-            <span class="hint"><?=___('tags_example_tags', 'Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
+            <span class="hint"><?=___('Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
         </div>
     <? else: ?>
         <?echo sprintf(
-            ___('tags_register_or_login', '<a href="%1$s">Register</a> or <a href="%2$s">Log in</a> to add tags'),
+            ___('<a href="%1$s">Register</a> or <a href="%2$s">Log in</a> to add tags'),
             $html->url('/users/register', false), $html->url($html->login_url())); ?>
     <? endif; ?>
 
@@ -501,10 +501,10 @@ if (!empty($coll_addon_added)) {
 <!-- /.highlight-->
 
     <div class="highlight collections-add prose">
-        <h3><?=___('addons_display_header_collections')?></h3>
+        <h3><?=___('Related Collections')?></h3>
 
         <?php if (empty($pop_collections)): ?>
-            <p><?=___('addons_display_nocollections')?></p>
+            <p><?=___('This add-on is not yet in any collections.')?></p>
         <?php else: ?>
             <ul>
                 <?php foreach($pop_collections as &$_coll): ?>
@@ -513,8 +513,8 @@ if (!empty($coll_addon_added)) {
             <?php if (($_othercolls = $collection_count - count($pop_collections)) > 0): ?>
                 <li>
                     <a href="<?=$html->url('/collections/addon/'.$addon['Addon']['id'])?>">
-                        <?=sprintf(n___('addons_display_collections_more',
-                                        'addons_display_collections_more',
+                        <?=sprintf(n___('and %1$s more collection',
+                                        'and %1$s more collections',
                                         $_othercolls),
                                    $_othercolls)?>
                     </a>
@@ -526,18 +526,18 @@ if (!empty($coll_addon_added)) {
         <?php if ($loggedIn): ?>
         <form action="<?= $html->url('/collections/addtocollection') ?>" method="post" id="coll_publish">
             <div>
-            <h3><label for="publish_to"><?=___('addons_display_collection_add')?></label></h3>
-            <?=$html->link(___('addons_display_collection_whatsthis'), '/collections/')?>
+            <h3><label for="publish_to"><?=___('Add to a collection:')?></label></h3>
+            <?=$html->link(___("What's this?"), '/collections/')?>
             <?=$html->hiddenSession() ?>
             <input name="data[addon_id]" type="hidden" value="<?= $addon['Addon']['id'] ?>" />
             <select name="data[collection_uuid]" id="publish_to">
-                <option value="" selected="selected"><?=___('addons_display_collection_add_select_one')?></option>
+                <option value="" selected="selected"><?=___('Select a collection...')?></option>
                 <?php foreach ($userCollections as $collection): ?>
                 <option value="<?=$collection['Collection']['uuid'] ?>"><?=$collection['Translation']['name']['string'] ?></option>
                 <?php endforeach; ?>
-                <option value="new"><?=___('addons_display_collection_add_new')?></option>
+                <option value="new"><?=___('New Collection...')?></option>
             </select>
-            <button><?=___('addons_display_collection_add_submit')?></button>
+            <button><?=___('Publish')?></button>
             </div>
         </form>
         <?php endif; ?>

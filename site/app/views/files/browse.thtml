@@ -43,7 +43,7 @@
     <?=$javascript->link('listing')?>
     <?=$javascript->link('scriptaculous/prototype')?>
     <?=$javascript->link('scriptaculous/scriptaculous.js')?>
-    <title><?=sprintf(___('file_browser_title', '%s :: File Browser :: %s Add-ons'), $addonname, APP_PRETTYNAME)?></title>
+    <title><?=sprintf(___('%1$s :: File Browser :: %2$s Add-ons'), $addonname, APP_PRETTYNAME)?></title>
 </head>
 <body>
     <?
@@ -61,11 +61,11 @@ $files['filename'] = 'extension.xpi';
         </ul>
     </div>
     <div id="fileFooter">
-        <?=($review == 1) ? $html->link(___('file_browser_link_review', 'Back to Review'), '/editors/review/'.$version) :
-                            $html->link(___('file_browser_link_addon', 'Back to Add-on'), '/addon/'.$addon)?>
+        <?=($review == 1) ? $html->link(___('Back to review'), '/editors/review/'.$version) :
+                            $html->link(___('Back to add-on'), '/addon/'.$addon)?>
         &nbsp;&middot;&nbsp;
-        <?=$html->link(___('file_browser_link_expand_all', 'Expand All'), 'javascript: void(0);', array('onClick' => 'expandNodes();'))?>&nbsp;&middot;&nbsp;
-        <?=$html->link(___('file_browser_toggle_expand_collapse', '+/-'), 'javascript: void(0);', array('onClick' => 'toggleFileListing();', 'id' => 'fileControl'))?>&nbsp;&nbsp;
+        <?=$html->link(___('Expand all'), 'javascript: void(0);', array('onClick' => 'expandNodes();'))?>&nbsp;&middot;&nbsp;
+        <?=$html->link(___('+/-'), 'javascript: void(0);', array('onClick' => 'toggleFileListing();', 'id' => 'fileControl'))?>&nbsp;&nbsp;
     </div>
 </div>
 <script language="JavaScript" type="text/javascript">

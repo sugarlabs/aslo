@@ -42,14 +42,14 @@
     <? if (!$validation_disabled) : ?>
         <div class="action-button-container">
             <a href="#" onclick="versions_validate.runTest(<?=$file['File']['id']?>); return false;" class="action-button rounded">
-                <?= ___('devcp_versions_validate_button', 'Validate') ?>
+                <?= ___('Validate') ?>
             </a>
         <span class="tests-running loading-count">
-            <?= ___('devcp_tests_running', 'Loading Results ...') ?>
+            <?= ___('Loading Results ...') ?>
         </span>
         </div>
     <? else: ?> 
-        <?= ___('devcp_validation_disabled', 'Validation temporarily disabled, try again later') ?>
+        <?= ___('Validation temporarily disabled, try again later.') ?>
     <? endif; ?>
 
     <div id="test-details-<?=$file['File']['id']?>">
@@ -58,7 +58,7 @@
                 <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
             <? endforeach; ?>
         <? else : ?>
-            <i><?=___('devcp_versions_validate_no_results', 'No test results found.')?></i>
+            <i><?=___('No test results found.')?></i>
         <? endif; ?>
     </div>
 </div>

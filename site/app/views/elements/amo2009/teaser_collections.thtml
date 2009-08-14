@@ -42,7 +42,7 @@
     <div class="featured-inner">
         <div class="teaser-header">
             <ol>
-                <li><a href="#t-introduction"><?=___('addons_home_introduction_name','Introduction')?></a></li>
+                <li><a href="#t-introduction"><?=___('Introduction')?></a></li>
                 <?php foreach($teaser_collections_categories as $id => $tc): ?>
                     <?php if (array_key_exists($id, $teaser_collection_promos)): ?>
                         <li><a href="#t-<?=$tc['title']?>"><?=$tc['title']?></a></li>
@@ -52,7 +52,7 @@
         </div>
         <ol class="teaser-items">
             <li id="t-introduction">
-            <h2><?=___('addons_home_introduction_header','What are Add-ons?')?></h2>
+            <h2><?=___('What are Add-ons?')?></h2>
                 
                 <div class="column-wrapper">
                     <div class="first column">
@@ -86,13 +86,13 @@
                             <?  $flags = array($html->byStatus($addon, array('experimental' => 'experimental', 'recommended' => 'recommended', 'default' => 'default'))); ?>
                             <div class="<?=(0==$idx)?'first ':''?>column">
                                 <div class="column-inner item <?=join(' ', $flags)?>">
-                                <a title="<?=___('addons_title_tooltip') ?>"
+                                <a title="<?=___('Learn more about this add-on') ?>"
                                         href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>">
                                     <img src="<?=$this->controller->Image->getAddonIconURL($addon['Addon']['id'])?>"
                                         alt="<?=$addon['Translation']['name']['string']?>"
                                         width="32" height="32" class="icon" />
                                 </a>
-                                <h3><a title="<?=___('addons_title_tooltip') ?>"
+                                <h3><a title="<?=___('Learn more about this add-on') ?>"
                                         href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><?=$addon['Translation']['name']['string']?></a></h3>
                                     <p><?=$html->truncateChars(80, $addon['Translation']['summary']['string'], true)?></p>
                                     <p>

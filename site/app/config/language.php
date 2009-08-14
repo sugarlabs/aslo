@@ -364,7 +364,7 @@ class LANGUAGE_CONFIG
 
         foreach ($xx_YY as $locale) {
             if ($locale == 'all') {
-                $locales[$locale] = ___('general_languages_all_locales','All Locales');
+                $locales[$locale] = ___('All Locales');
             } else if ($names == 'english') {
                 $locales[$locale] = $localeDetails->getEnglishNameForLocale($locale);
             } else if ($names == 'native') {

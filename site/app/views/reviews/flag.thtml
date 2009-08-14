@@ -51,14 +51,14 @@ else:
     
 <?php if (empty($addon)): ?>
     <?=$this->renderElement('notification', array('msg' => $msg));?>
-    <p><?=$html->link(_('link_return_to_front_page'), '/')?></p>
+    <p><?=$html->link(___('Click here to return to the front page.'), '/')?></p>
 <?php else: ?>
-    <h2><?=sprintf(_('reviews_header'), $addon['Translation']['name']['string']);?></h2>
+    <h2><?=sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);?></h2>
     <?=$this->renderElement('notification', array('msg' => $msg));?>
     
     <ul>
-        <li><?= $html->link(sprintf(_('addon_review_a_back_to_reviews'), $addon['Translation']['name']['string']), '/reviews/display/'.$addon['Addon']['id']); ?></li>
-        <li><?=$html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
+        <li><?= $html->link(sprintf(___('Back to the reviews...'), $addon['Translation']['name']['string']), '/reviews/display/'.$addon['Addon']['id']); ?></li>
+        <li><?=$html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
     </ul>
 <?php endif; // if addon found ?>
 

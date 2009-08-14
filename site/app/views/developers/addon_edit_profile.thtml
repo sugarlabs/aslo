@@ -59,14 +59,14 @@ $this->translationBox = array(
     <?php if (isset($updated)) {
         echo $this->renderElement('notification', array(
             'type' => 'success',
-            'msg' => sprintf(___('devcp_edit_profile_success_notification'),
+            'msg' => sprintf(___('Your <a href="%1$s">Developer Profile</a> has been updated.'),
                             $html->url("/addon/{$addon_id}/developers"))
         ));
     }
     ?>
 
     <?=$this->renderElement('developers/addonheader',
-                            array('title' => sprintf(___('devcp_title_edit_addon'),
+                            array('title' => sprintf(___('Edit %s'),
                                                      $addon_name),
                                   'addon_id' => $addon_id));?>
     <?=$this->renderElement('noscript')?>
@@ -74,10 +74,10 @@ $this->translationBox = array(
 
     <?php if (!$has_profile): ?>
       <div id="create-dev-profile" class="graybox field rounded spaced">
-        <h2><?=___('devcp_edit_profile_header_create')?></h2>
-        <?=___('devcp_edit_profile_create')?>
+        <h2><?=___('Create a Developer Profile')?></h2>
+        <?=___('<p>Introduce yourself to your users with a Developer Profile.</p><ul><li>Explain why you created this add-on.</li><li>Tell your users what\'s next.</li><li>Build more awareness of your efforts.</li></ul><p>Ready to create your Developer Profile? Click the button below to begin.</p>')?>
         <div class="button-holder">
-          <button><?=___('devcp_edit_profile_button_create')?></button>
+          <button><?=___('Create a Developer Profile')?></button>
         </div>
       </div>
     <?php endif; ?>
@@ -91,8 +91,8 @@ $this->translationBox = array(
           <?=$this->renderElement('translationbox', array(
               'field' => 'the_reason',
               'translations' => $translations['the_reason'],
-              'displayName' => ___('devcp_edit_profile_trans_reason_name'),
-              'description' => ___('devcp_edit_profile_trans_reason_description'),
+              'displayName' => ___('Why I Made this Add-on'),
+              'description' => ___('Let your users know why you created an add-on.  Whether it was an idea while in line at the grocery store or the solution to one of life\'s great problems, share your story.'),
               'graybox' => false
           ))?>
         </div>
@@ -101,17 +101,17 @@ $this->translationBox = array(
           <?=$this->renderElement('translationbox', array(
               'field' => 'the_future',
               'translations' => $translations['the_future'],
-              'displayName' => ___('devcp_edit_profile_trans_future_name'),
-              'description' => ___('devcp_edit_profile_trans_future_description'),
+              'displayName' => ___('What\'s Next for this Add-on'),
+              'description' => ___('Whether or not you request contributions for future development of your add-on, telling your users what\'s coming soon will give them something to look forward to.'),
               'graybox' => false
           ))?>
         </div>
 
         <div class="button-holder"><button>
           <?php if ($has_profile): ?>
-              <?=___('devcp_edit_profile_button_save')?>
+              <?=___('Save Changes to Developer Profile')?>
           <?php else: ?>
-              <?=___('devcp_edit_profile_button_create_profile')?>
+              <?=___('Create Developer Profile')?>
           <?php endif; ?>
         </button></div>
 

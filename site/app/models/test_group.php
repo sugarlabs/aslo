@@ -65,19 +65,19 @@ class TestGroup extends AppModel
         // Don't modify these arrays, as they are used
         // as a translation mechanism to localize test names
         $names = array(
-            '1' => ___('test_group_name_all_general', 'General'),
-            '2' => ___('test_group_name_all_security', 'Security'),
-            '3' => ___('test_group_name_extension_l10n', 'L10n'),
-            '11' => ___('test_group_name_extension_general', 'Extension-specific'),
-            '12' => ___('test_group_name_extension_security', 'Extension-specific security'),
-            '21' => ___('test_group_name_dictionary_general', 'Dictionary-specific'),
-            '22' => ___('test_group_name_dictionary_security', 'Dictionary-specific security'),
-            '31' => ___('test_group_name_langpack_general', 'Language Pack-specific'),
-            '32' => ___('test_group_name_langpack_security', 'Language Pack-specific security'),
-            '41' => ___('test_group_name_theme_general', 'Theme-specific'),
-            '42' => ___('test_group_name_theme_security', 'Theme-specific security'),
-            '51' => ___('test_group_name_search_general', 'Search Engine-specific'),
-            '52' => ___('test_group_name_search_security', 'Search Engine-specific security')
+            '1' => ___('General'),
+            '2' => ___('Security'),
+            '3' => ___('L10n'),
+            '11' => ___('Extension-specific'),
+            '12' => ___('Extension-specific security'),
+            '21' => ___('Dictionary-specific'),
+            '22' => ___('Dictionary-specific security'),
+            '31' => ___('Language Pack-specific'),
+            '32' => ___('Language Pack-specific security'),
+            '41' => ___('Theme-specific'),
+            '42' => ___('Theme-specific security'),
+            '51' => ___('Search Engine-specific'),
+            '52' => ___('Search Engine-specific security')
         );
 
         foreach ($results as $key => $result) {

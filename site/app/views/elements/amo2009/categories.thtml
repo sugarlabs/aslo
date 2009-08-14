@@ -38,8 +38,8 @@
  * ***** END LICENSE BLOCK ***** */
 ?>
 <div class="categories">
-    <h3 title="<?=_('categories_header_title')?>">
-        <a href="#categoriesdropdown" aria-haspopup="true"><?=_('categories_header')?></a>
+    <h3 title="<?=___('Choose a category')?>">
+        <a href="#categoriesdropdown" aria-haspopup="true"><?=___('Categories')?></a>
     </h3>
     <ul id="categoriesdropdown">
         <li>
@@ -62,7 +62,7 @@
         <li>
             <ul>
                 <li>
-                    <?= $html->link(___('addons_home_collections','Collections'), '/collections/') ?>
+                    <?= $html->link(___('Collections'), '/collections/') ?>
                 </li>
                 <?php foreach ($AmoCategories as $_category): ?>
                     <?php if (0!==$_category['cat'] || ADDON_PLUGIN===$_category['type']) continue ?>

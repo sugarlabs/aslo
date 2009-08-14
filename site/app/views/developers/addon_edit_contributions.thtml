@@ -43,7 +43,7 @@
   <div id="content-main" class="<?=$show_intro ? 'intro' : ''?>">
 
     <?=$this->renderElement('developers/addonheader',
-                            array('title' => sprintf(___('devcp_title_edit_addon'),
+                            array('title' => sprintf(___('Edit %s'),
                                                      $addon_name),
                                   'addon_id' => $addon_id));?>
     <?=$this->renderElement('noscript')?>
@@ -53,22 +53,22 @@
     if ($paypal_disabled) {
         echo $this->renderElement('notification', array(
             'type' => 'notification',
-            'msg' => ___('error_paypal_disabled')));
+            'msg' => ___('Sorry, PayPal contributions are temporarily disabled.')));
     }
     ?>
 
     <?php if ($show_intro): ?>
         <div id="start-asking" class="graybox field rounded spaced">
-          <h2><?=___('devcp_edit_contrib_header_start')?></h2>
-          <?=___('devcp_edit_contrib_start')?>
+          <h2><?=___('Start Asking for Contributions')?></h2>
+          <?=___('<p>Contributions provide a way for users to support your add-on financially. With contributions, you can:</p><ul><li>Ask users for donations on your add-on\'s listing.</li><li>Offer users the ability to contribute using a credit card or PayPal account.</li><li>Deposit contributions in a <a href='https://www.paypal.com/' target='_blank'>PayPal account</a> of your choice.</li></ul><p>Ready to get started? Click below to start asking for contributions.</p>')?>
           <?php if ($has_profile): ?>
               <div class="button-holder">
-                <button><?=___('devcp_edit_contrib_button_start')?></button>
+                <button><?=___('Start Asking for Contributions')?></button>
               </div>
           <?php else: ?>
-              <p><strong><?=___('devcp_edit_contrib_before')?></strong></p>
+              <p><strong><?=___('Before you begin, you must create a developer profile.')?></strong></p>
               <a href="<?=$html->url("/developers/addon/edit/{$addon_id}/profile")?>">
-                <?=___('devcp_edit_contrib_button_profile')?>
+                <?=___('Create a Developer Profile First')?>
               </a>
           <?php endif; ?>
         </div>
@@ -86,11 +86,11 @@
         <div id="currently" class="clearfix <?=$wants_contributions ? 'asking' : 'not-asking'?>">
           <?php
           if ($wants_contributions) {
-              $text = ___('devcp_edit_contrib_currently_asking');
-              $button = ___('devcp_edit_contrib_stop_asking');
+              $text = ___('You are currently <strong>asking for contributions</strong> from users of this add-on.');
+              $button = ___('Stop asking for contributions');
           } else {
-              $text = ___('devcp_edit_contrib_currently_not_asking');
-              $button = ___('devcp_edit_contrib_start_asking');
+              $text = ___('You are currently <strong>not asking for contributions</strong> from users of this add-on.');
+              $button = ___('Start asking for contributions');
           }
           ?>
           <p><?=$text?></p>
@@ -100,11 +100,11 @@
 
       <form method="post" action="">
         <div class="graybox field rounded spaced clearfix" id="contrib-account">
-          <h4><?=___('devcp_edit_contrib_header_account')?></h4>
-          <p><?=sprintf(___('devcp_edit_contrib_account'), 'https://www.paypal.com')?></p>
+          <h4><?=___('Contribution Account')?></h4>
+          <p><?=sprintf(___('Your contribution account is the <a href="%1$s">PayPal account</a> where user contributions will be deposited.'), 'https://www.paypal.com')?></p>
             <?=$html->hiddenSession();?>
             <div>
-              <label for="AddonPaypalId"><?=___('devcp_edit_contrib_label_pp_id')?></label>
+              <label for="AddonPaypalId"><?=___('PayPal ID')?></label>
             </div>
             <div>
               <?=$html->input('Addon/paypal_id')?>
@@ -112,36 +112,36 @@
             </div>
             <div>
               <a href="<?=PAYPAL_CGI_URL?>?cmd=_registration-run">
-                <?=___('devcp_edit_contrib_pp_signup')?>
+                <?=___('Sign up for PayPal')?>
               </a>
             </div>
         </div>
 
         <div class="graybox field rounded spaced">
-          <h4><?=___('devcp_edit_contrib_header_asking')?></h4>
-          <p><?=___('devcp_edit_contrib_asking')?></p>
+          <h4><?=___('Asking for Contributions')?></h4>
+          <p><?=___('Specify how much users will be asked to contribute and where they will be asked.')?></p>
             <table>
               <tr>
-                <th><label for="AddonSuggestedAmount"><?=___('devcp_edit_contrib_label_suggested')?></label></th>
+                <th><label for="AddonSuggestedAmount"><?=___('Suggested amount')?></label></th>
                 <td>
                   <?=$html->tagErrorMsg('Addon/suggested_amount',
-                                        ___('devcp_edit_contrib_suggested_amount_error'))?>
+                                        ___('Should be a positive number between 0.00 and 99.99.'))?>
                   <span class="greed">$</span>
                   <?=$html->input('Addon/suggested_amount')?>
                   <span class="help">
-                    <?=___('devcp_edit_contrib_currency_example')?>
+                    <?=___('(US Dollars.  Example: 3.99)')?>
                   </span>
                   <!-- TODO: currency -->
-                  <p><?=___('devcp_edit_contrib_amount')?></p>
+                  <p><?=___('Users have the option of contributing more or less than this amount.')?></p>
                 </td>
               </tr>
               <tr>
-                <th><label><?=___('devcp_edit_contrib_label_where')?></label></th>
+                <th><label><?=___('Where to ask')?></label></th>
                 <td>
                   <?=$html->radio_list('Addon/annoying', array(
-                      Addon::CONTRIBUTIONS_PASSIVE => sprintf(___('devcp_edit_contrib_radio_ask_passive_example'), $html->url('/developers/contributions/example/passive')),
-                      Addon::CONTRIBUTIONS_AFTER => sprintf(___('devcp_edit_contrib_radio_ask_after_example'), $html->url('/developers/contributions/example/after')),
-                      Addon::CONTRIBUTIONS_ROADBLOCK => sprintf(___('devcp_edit_contrib_radio_ask_roadblock_example'), $html->url('/developers/contributions/example/roadblock'))
+                      Addon::CONTRIBUTIONS_PASSIVE => sprintf(___('Only ask on this add-on\'s page and developer profile (<a href="%1$s">example</a>)'), $html->url('/developers/contributions/example/passive')),
+                      Addon::CONTRIBUTIONS_AFTER => sprintf(___('Ask after users start downloading this add-on (<a href="%1$s">example</a>)'), $html->url('/developers/contributions/example/after')),
+                      Addon::CONTRIBUTIONS_ROADBLOCK => sprintf(___('Ask before users can download this add-on (<a href="%1$s">example</a>)'), $html->url('/developers/contributions/example/roadblock'))
                   ))?>
                 </td>
               </tr>
@@ -151,9 +151,9 @@
         <div class="button-holder">
           <?php if ($show_intro): ?>
             <?=$contribution_toggle?>
-            <button><?=___('devcp_edit_contrib_button_start')?></button>
+            <button><?=___('Start Asking for Contributions')?></button>
           <?php else: ?>
-            <button><?=___('devcp_edit_contrib_button_update')?></button>
+            <button><?=___('Update Contributions')?></button>
           <?php endif; ?>
         </div>
       </form>

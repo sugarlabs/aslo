@@ -45,16 +45,16 @@
     echo $this->renderElement('developers/sidebar', $params);
 
     echo '<div id="content-main" class="'.($type != 'new' && $author_role < AUTHOR_ROLE_DEV ? 'no-privs' : 'privs').'">';
-    
+
     if ($type == 'new') {
-        $title = ___('devcp_uploader_title_submit');
+        $title = ___('Submit New Add-on');
         $addon_id = 0;
     }
     elseif ($type == 'update') {
-        $title = sprintf(___('devcp_uploader_title_update'), $addon_name);
+        $title = sprintf(___('Update %s'), $addon_name);
     }
     elseif ($type == 'file') {
-        $title = sprintf(___('devcp_uploader_title_file'), $addon_name, $version);
+        $title = sprintf(___('Add File to %1$s %2$s'), $addon_name, $version);
     }
     echo $this->renderElement('developers/addonheader', array('title' => $title, 'addon_id' => $addon_id));
     ?>
@@ -63,15 +63,15 @@
     <div id="submission-area" class="rounded graybox">
     <?php if ($type == 'new'): ?>
         <div id="step-intro">
-            <h3><?=___('devcp_uploader_header_how')?></h3>
-            <?=___('devcp_uploader_how')?>
-            <div style="text-align: center;"><a href="#" onclick="upload.showAgreement(); return false;" class="action-button rounded"><?=___('devcp_uploader_a_start')?></a></div>
+            <h3><?=___('How does it all work?')?></h3>
+            <?=___('<p>Thanks for your interest in submitting your add-on to Mozilla Add-ons. Hosting your add-on on Mozilla Add-ons is the easiest way to handle distribution of your add-on. Here\'s what you\'ll get:</p><ul><li>Each add-on will have a public display page with information you provide, such as a brief summary of the add-on\'s functionality, an optional longer description, and a showcase of preview screenshots of your add-on.</li><li>Your add-on will appear in search and browse listings across the site, and even in the Add-ons Manager of Firefox 3.</li><li>We\'ll take care of hosting all of your downloads and providing automatic updates to users when you upload a new version.</li><li>You\'ll have access to a statistics dashboard with detailed information about your user base.</li></ul><p>Add-ons hosted on the site must be reviewed by a Mozilla Add-ons Editor before they will have all of the features listed above. If you\'re ready to start the process and have your add-on package ready for upload, just click on Get Started below!</p>')?>
+            <div style="text-align: center;"><a href="#" onclick="upload.showAgreement(); return false;" class="action-button rounded"><?=___('Get Started')?></a></div>
         </div> <!-- /#step-intro -->
     <?php endif; ?>
     <?php $showAgreement = ($type == 'new' || !$hasAgreement); ?>
     <?php if ($showAgreement): ?>
         <div id="step-agreement" <?=($type != 'new' ? 'style="display:block"' : '')?>>
-            <p><?=_('devcp_review_agreement_please')?></p>
+            <p><?=___('Please review and accept the following Developer Agreement before proceeding.')?></p>
             <?=$localization->includeLocalPage('developer_agreement',array($html->url('/pages/developer_faq')))?>
 
             <?php
@@ -99,7 +99,7 @@
                                             'fieldname' => 'text'));
             ?>
             <div class="submit-area">
-                <input type="button" value="<?=___('devcp_uploader_button_agree')?>"
+                <input type="button" value="<?=___('Agree and continue')?>"
                 id="accept-agreement" disabled="true" onclick="upload.acceptAgreement()"/>
             </div>
             <script type="text/javascript">
@@ -117,16 +117,16 @@
     <?php endif; ?>
 
         <div id="file-upload"<?=($showAgreement ? ' style="display: none;"' : '')?>>
-            <h3><?=___('devcp_uploader_header_upload')?></h3>
-            <p><?=___('devcp_uploader_p_upload')?>
+            <h3><?=___('Upload Your File')?></h3>
+            <p><?=___('Upload your add-on file using the form below. If you have multiple, platform-specific files to upload, choose a single file and then upload the others using the Versions and Files Manager.')?>
             <br />
             <form id="upload-form" method="post" enctype="multipart/form-data" action="<?=$html->url('/developers/json/fileupload/'.$type)?>" target="upload-frame" onsubmit="return upload.uploadFile();">
             <?=$html->hiddenSession();?>
             <?=(!empty($addon_id) ? '<input type="hidden" name="data[Addon][id]" value="'.$addon_id.'" />' : '')?>
             <?=(!empty($version_id) ? '<input type="hidden" name="data[Version][id]" value="'.$version_id.'" />' : '')?>
-            <label><?=___('devcp_uploader_label_upload_field')?><input id="upload-field" type="file" name="file" /></label><br />
-        <?=___('devcp_uploader_label_platformtype')?>&nbsp;&nbsp;<label><input type="radio" name="platformtype" onclick="upload.platformAll();" checked />&nbsp;<?=___('devcp_uploader_platformtype_all')?></label>&nbsp;&nbsp;
-            <label><input type="radio" name="platformtype" onclick="upload.platformSpecific();" />&nbsp;<?=___('devcp_uploader_platformtype_specific')?></label>
+            <label><?=___('Add-on File: ')?><input id="upload-field" type="file" name="file" /></label><br />
+        <?=___('Supported Platforms:')?>&nbsp;&nbsp;<label><input type="radio" name="platformtype" onclick="upload.platformAll();" checked />&nbsp;<?=___('All')?></label>&nbsp;&nbsp;
+            <label><input type="radio" name="platformtype" onclick="upload.platformSpecific();" />&nbsp;<?=___('Specific:')?></label>
             <?php
             $platforms = $this->controller->Platform->getNames();
             foreach ($platforms as $platform_id => $platform_name) {
@@ -135,49 +135,49 @@
             }
             ?>
             <div class="submit">
-                <input type="submit" value="<?=___('devcp_input_upload_file')?>" class="require-privs" />
+                <input type="submit" value="<?=___('Upload File')?>" class="require-privs" />
             </div>
-            <div id="upload-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('devcp_uploader_ajax_loading')?></div>
+            <div id="upload-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('Uploading file...')?></div>
             </form>
             <div id="upload-error" class="redbox-tr"><div class="redbox-tl">
                 <div id="upload-error-content">
-                    <h4><?=___('devcp_uploader_header_error')?></h4>
+                    <h4><?=___('Oops! There seems to be a problem with this file...')?></h4>
                     <p id="upload-error-text" class="smallmargin"></p>
-                    <p class="smallmargin"><?=___('devcp_uploader_error_correct')?></p>
+                    <p class="smallmargin"><?=___('Please correct this problem and upload your file again.')?></p>
                 </div>
                 <div class="redbox-br"><div class="redbox-bl"></div></div>
             </div></div>
         </div><!-- /#file-upload -->
-        
+
     </div><!-- /#submission-area -->
-    
+
     <div id="upload-success" class="greenbox-tr"><div class="greenbox-tl">
     <?php if ($type == 'new'): ?>
         <div id="addon-created-content">
-            <h3><?=___('devcp_uploader_header_created')?></h3>
+            <h3><?=___('Add-on Created!')?></h3>
             <div id="created-results">
-                <?=sprintf(___('devcp_uploader_created_results'), 'href="'.$html->url('/developers/addon/status/').'" id="status-link"')?>
-                <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/addon/edit/')?>" class="action-button rounded"><?=___('devcp_uploader_button_edit')?></a></div>
-                <div style="text-align: center;"><a href="<?=$html->url('/developers')?>"><?=___('devcp_uploader_button_later')?></a></div>
+                <?=sprintf(___('<p>Your add-on listing has been successfully created. The basic information obtained from your uploaded file has been stored, but there\'s a lot more to your listing that can be customized.</p><p>Your add-on is currently marked as <strong>Incomplete</strong>. In order to complete your add-on, you\'ll need to make sure it has an accurate name, summary, and description, as well as at least one selected category. You can edit your add-on\'s information using the link below and check the status of your add-on at any time on the <a %s>status page</a>.'), 'href="'.$html->url('/developers/addon/status/').'" id="status-link"')?>
+                <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/addon/edit/')?>" class="action-button rounded"><?=___('Edit My Add-on')?></a></div>
+                <div style="text-align: center;"><a href="<?=$html->url('/developers')?>"><?=___('I\'ll complete my add-on later.')?></a></div>
             </div>
         </div><!-- /#addon-created-content -->
     <?php elseif ($type == 'update'): ?>
         <div id="version-created-content">
-            <h3><?=sprintf(___('devcp_uploader_header_update_created'), '<span id="new-version-number"></span>')?></h3>
+            <h3><?=sprintf(___('Version %s Created'), '<span id="new-version-number"></span>')?></h3>
             <div id="created-results">
-                <p><?=sprintf(___('devcp_uploader_p_update_created'), '<span id="new-file-status"></span>')?></p>
-                <p id="pending-message"><?=sprintf(___('devcp_uploader_p_pending_version'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
-                <p><?=sprintf(___('devcp_uploader_p_update_version'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
-                <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/versions/edit/')?>" class="action-button rounded"><?=___('devcp_uploader_button_release')?></a></div>
+                <p><?=sprintf(___('Your new version has been created and is currently marked as %s.'), '<span id="new-file-status"></span>')?></p>
+                <p id="pending-message"><?=sprintf(___('The new version will be available to the public as soon as an editor is able to review it. There are currently %1$s other add-ons in the queue. Want to be reviewed faster? Consider <a %2$s>becoming an editor</a>.'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
+                <p><?=sprintf(___('View your new version in the <a %1$s>Versions and Files page</a>, check out your add-on\'s <a %2$s>current status</a>, or <b>add release notes</b> by clicking the button below (highly recommended).'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
+                <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/versions/edit/')?>" class="action-button rounded"><?=___('Add Release Notes')?></a></div>
             </div>
         </div><!-- /#version-created-content -->
     <?php elseif ($type == 'file'): ?>
         <div id="file-created-content">
-            <h3><?=___('devcp_uploader_header_file_added')?></h3>
+            <h3><?=___('File Added!')?></h3>
             <div id="created-results">
-                <p><?=sprintf(___('devcp_uploader_file_created'), $version, '<span id="new-file-status"></span>')?></p>
-                <p id="pending-message"><?=sprintf(___('devcp_uploader_p_pending_file'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
-                <p><?=sprintf(___('devcp_uploader_update_file_nextsteps'),
+                <p><?=sprintf(___('Your new file has been added to version %1$s and is currently marked as %2$s.'), $version, '<span id="new-file-status"></span>')?></p>
+                <p id="pending-message"><?=sprintf(___('The new file will be available to the public as soon as an editor is able to review it. There are currently %1$s other add-ons in the queue. Want to be reviewed faster? Consider <a %2$s>becoming an editor</a>.'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
+                <p><?=sprintf(___('View your new file on the <a href="%1$s">Versions and Files page</a>, or check out your add-on\'s <a href="%2$s">current status</a>.'),
                     $html->url("/developers/versions/edit/{$version_id}"),
                     $html->url("/developers/addon/status/{$addon_id}"))?>
             </div>

@@ -43,22 +43,22 @@
 
 <div id="filterBox">
 <?=$html->formTag("/editors/queue/{$mode}", 'post');?>
-    <div id="filterHeader">&darr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=_('editors_filter_queue')?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;</div>
-    <?php if ($filtered == true) { ?><div id="sessionNotice"><?=_('editors_notice_filter_session')?></div><?php } ?>
+    <div id="filterHeader">&darr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?=___('Filter Queue')?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&darr;</div>
+    <?php if ($filtered == true) { ?><div id="sessionNotice"><?=___('These filters will remain in place for this session or until cleared.')?></div><?php } ?>
     <div id="filterTable" <?=($filterChanged == false ? ' style="display: none;"' : '')?>>
         <div class="group left">
             <div>
-                <label for="FilterAddonOrAuthor"><?=___('editors_queue_filter_label_addon', 'Add-on or Author Email')?></label>
+                <label for="FilterAddonOrAuthor"><?=___('Add-on or Author Email')?></label>
                 <?=$html->input('Filter/AddonOrAuthor', array('value'=>$addonOrAuthor))?>
             </div>
 
             <div>
-                <label for="FilterApplication"><?=___('editors_queue_filter_label_application', 'Application')?></label>
+                <label for="FilterApplication"><?=___('Application')?></label>
                 <?=$html->selectTag('Filter/Application', $applications, $selected['Application'], null, null, true)?>
             </div>
 
             <div>
-                <label for="FilterMaxVersion"><?=___('editors_queue_filter_label_maxversion', 'Max. Version')?></label>
+                <label for="FilterMaxVersion"><?=___('Max. Version')?></label>
                 <?=$html->selectTag('Filter/MaxVersion', $maxVersions, $selected['MaxVersion'], null, null, true)?>
             </div>
 
@@ -69,31 +69,31 @@
         </div>
         <div class="group">
             <div>
-                <label for="FilterAddontype"><?=___('editors_queue_filter_label_addontypes', 'Add-on Types')?></label><br/>
+                <label for="FilterAddontype"><?=___('Add-on Types')?></label><br/>
                 <?=$html->selectTag('Filter/Addontype', $addontypes, $selected['Addontype'], array('multiple' => 'multiple', 'size' => 5), null, false)?>
             </div>
         </div>
         <div class="group">
             <div>
-                <label for="FilterPlatform"><?=___('editors_queue_filter_label_platforms', 'Platforms')?></label><br/>
+                <label for="FilterPlatform"><?=___('Platforms')?></label><br/>
                 <?=$html->selectTag('Filter/Platform', $platforms, $selected['Platform'], array('multiple' => 'multiple', 'size' => 5), null, false)?>
             </div>
         </div>
         <div class="group">
             <div>
-                <label for="FilterAdminFlag"><?=___('editors_queue_filter_label_admin_flag')?></label><br/>
+                <label for="FilterAdminFlag"><?=___('Admin Flag')?></label><br/>
                 <?=$html->selectTag('Filter/AdminFlag', $flags, $selected['AdminFlag'], null, null, true)?>
             </div>
         </div>
         <div class="buttons">
-            <?=$html->submit(_('editors_queue_submit_filter'), array('name' => 'filter'));?>
-            <?=$html->submit(_('editors_queue_submit_clean'), array('name' => 'clear'))?>
+            <?=$html->submit(___('Filter'), array('name' => 'filter'));?>
+            <?=$html->submit(___('Clear'), array('name' => 'clear'))?>
         </div>
     </div>
 </form>
 <?php if ($filtered): ?>
     <div>
-        <?=sprintf(n___('editors_queue_filter_result_count','editors_queue_filter_result_count', $filteredCount, 'Results of Your Filtered Search: <strong>%d</strong> Add-ons'), $filteredCount)?>
+        <?=sprintf(n___('Results of your filtered search: <strong>%1$s</strong> Add-on','Results of your filtered search: <strong>%1$s</strong> Add-ons', $filteredCount), $filteredCount)?>
     </div>
 <?php endif; ?>
 </div>
@@ -104,15 +104,15 @@
             $sortimg = '';
             if ($sortBy == 'name') {
                 if ($sortDir == 'ASC') {
-                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('editors_th_sort_ascending', 'ascending sort')));
+                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('Ascending sort')));
                     $sorturl .= '&dir=desc';
 
                 } else {
-                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('editors_th_sort_descending', 'descending sort')));
+                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('Descending sort')));
                     $sorturl .= '&dir=asc';
                 }
             }
-            echo $html->link(___('editors_th_addon'), $sorturl);
+            echo $html->link(___('Add-on'), $sorturl);
             echo $sortimg;
         ?></td>
         <td><?php
@@ -120,21 +120,21 @@
             $sortimg = '';
             if ($sortBy == 'type') {
                 if ($sortDir == 'ASC') {
-                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('editors_th_sort_ascending', 'ascending sort')));
+                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('Ascending sort')));
                     $sorturl .= '&dir=desc';
 
                 } else {
-                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('editors_th_sort_descending', 'descending sort')));
+                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('Descending sort')));
                     $sorturl .= '&dir=asc';
                 }
             }
-            echo $html->link(___('editors_th_addontype'), $sorturl);
+            echo $html->link(___('Type'), $sorturl);
             echo $sortimg;
         ?></td>
     <?php
         $apps = array('Firefox', 'Thunderbird', 'Mozilla', 'SeaMonkey', 'Sunbird');
         foreach ($apps as $app) {
-            echo '<td>'.$html->image('developers/'.strtolower($app).'.png', array('title' => sprintf(_('editors_queue_app_compatibility'), $app))).'</td>';
+            echo '<td>'.$html->image('developers/'.strtolower($app).'.png', array('title' => sprintf(___('%s Compatibility'), $app))).'</td>';
         }
     ?>
         <td><?php
@@ -143,19 +143,19 @@
             if ($sortBy == 'age') {
                 if ($sortDir == 'ASC') {
                     // age sort is actually on a timestamp, so age direction is opposite
-                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('editors_th_sort_descending', 'descending sort')));
+                    $sortimg = $html->image('developers/arrow_down.png', array('title' => ___('Descending sort')));
                     $sorturl .= '&dir=desc';
 
                 } else {
-                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('editors_th_sort_ascending', 'ascending sort')));
+                    $sortimg = $html->image('developers/arrow_up.png', array('title' => ___('Ascending sort')));
                     $sorturl .= '&dir=asc';
                 }
             }
-            echo $html->link(___('editors_th_nomination_age'), $sorturl);
+            echo $html->link(___('Time in Queue'), $sorturl);
             echo $sortimg;
         ?></td>
-        <td><?=___('editors_th_flags')?></td>
-        <td><?=_('editors_th_additional_info')?></td>
+        <td><?=___('Flags')?></td>
+        <td><?=___('Additional Information')?></td>
     </tr>
 <?php
     if (!empty($addons)) {
@@ -174,7 +174,7 @@
                 }
                 echo '<td>'.(($mode == 'nominated') ? $addon['nominationage'] : $addon['age']).'</td>';
                 if ($addon['Addon']['adminreview']) {
-                    echo '<td>'.$html->image('developers/admin_review.png', array('title' => ___('editors_flag_admin_review'))).'</td>';
+                    echo '<td>'.$html->image('developers/admin_review.png', array('title' => ___('Admin Review'))).'</td>';
                 } else {
                     echo '<td>&nbsp;</td>';
                 }
@@ -186,12 +186,12 @@
         echo $this->renderElement('pagination');
     }
     else {
-        echo '<tr><td colspan=8 class="emptyQueue">'._('editors_notice_none_found').'</td></tr>';
+        echo '<tr><td colspan=8 class="emptyQueue">'.___('There are currently no add-ons of this type to review.').'</td></tr>';
         echo '</table>';
     }
 ?>
 <div id="helpfulLinks">
-<?=_('editors_helpful_links').': '.$html->link(_('editors_link_policy'), '/pages/policy').' | '.$html->link(_('editors_link_guide'), 'http://wiki.mozilla.org/Update:Editors')?>
+<?=___('Helpful Links').': '.$html->link(___('Add-on Policy'), '/pages/policy').' | '.$html->link(___('Editors\' Guide'), 'http://wiki.mozilla.org/Update:Editors')?>
 </div>
 </div>
 <script type="text/javascript">

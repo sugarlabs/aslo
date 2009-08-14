@@ -58,8 +58,8 @@ $c = $collection['Collection'];
     $uuid = $collection['Collection']['uuid'];
     if (!empty($collection_created)) {
         echo $this->renderElement('notification', array(
-            'msg' => ___('collections_detail_created_msg'),
-            'description' => sprintf(___('collections_detail_created_desc'),
+            'msg' => ___('Your collection is now ready!'),
+            'description' => sprintf(___('<p>You can view your new collection below. If you\'d like to set a collection nickname, upload an icon, or change additional settings, please visit the <a href="%1$s">Manage Collections</a> page.</p><p>Your collection can be accessed at this location: %2$s</p>'),
                                      $html->url('/collections/edit/'.$uuid),
                                      $html->link(SITE_URL.$html->rootUrl('/collection/'.$uuid),
                                                  '/collection/'.$uuid)),
@@ -87,35 +87,35 @@ $c = $collection['Collection'];
               </li>
             <?php else: ?>
               <li>
-                <?=sprintf(___('collections_detail_login'),
+                <?=sprintf(___('<a href="%1$s">Log in</a> to add this collection to your favorites.'),
                            $html->url($html->login_url()))?>
               </li>
             <?php endif; ?>
             <li class="subscribers">
               <?php $subscribers = $c['subscribers']; ?>
-              <?=sprintf(n___('addons_home_collections_subscribers',
-                              'addons_home_collections_subscribers',
+              <?=sprintf(n___('<strong>%1$s</strong> subscriber',
+                              '<strong>%1$s</strong> subscribers',
                               $subscribers),
                          $subscribers);?>
             </li>
             <li>
               <?php if ($writable): ?>
                 <a href="<?=$html->url('/collections/edit/'.$c['uuid'])?>">
-                  <?=sprintf(___('collections_detail_manage'))?>
+                  <?=sprintf(___('Manage Collection'))?>
                 </a>
               <?php endif; ?>
           </ul>
         </div> <!-- meta -->
-        <h3><?=___('collections_detail_header_about')?></h3>
+        <h3><?=___('About This Collection')?></h3>
         <p><?=$collection['Translation']['description']['string']?></p>
         <div class="object-info">
           <p>
-            <?=sprintf(___('collections_detail_info_created'),
+            <?=sprintf(___('<strong>Created by:</strong> %1$s'),
                        $html->linkUsersFromModel($collection['Users']))?>
           </p>
           <p>
-            <?=___('collections_detail_info_updated')?>
-            <?=strftime(___('date'), strtotime($c['modified']))?>
+            <?=___('<strong>Updated:</strong>')?>
+            <?=strftime(___('%B %e, %Y'), strtotime($c['modified']))?>
           </p>
         </div>
       </div> <!-- featured-inner -->
@@ -123,20 +123,20 @@ $c = $collection['Collection'];
     <div class="separated-listing">
       <h3>
         <?php $count = $collection['Collection']['addonCount']; ?>
-        <?=sprintf(n___('collections_detail_header_count', 'collections_detail_header_count',
+        <?=sprintf(n___('%1$s Add-on in this Collection', '%1$s Add-ons in this Collection',
                          $count),
                    $count)?>
       </h3>
       <form class="item-sort go" method="get" action="">
         <div>
-          <label for="sortby"><?=___('collections_index_label_sortby')?></label>
+          <label for="sortby"><?=___('Sort by')?></label>
           <select id="sortby" name="sortby">
             <?php foreach($sort_options as $value => $text): ?>
               <?php $selected = ($value == $sortby) ? 'selected="selected"' : ''; ?>
               <option value="<?=$value?>" <?=$selected?>><?=$text?></option>
             <?php endforeach; ?>
           </select>
-          <button><?=___('collections_index_button_go')?></button>
+          <button><?=___('Go')?></button>
         </div>
       </form>
       <?=$this->renderElement('amo2009/separated_list_items', array(

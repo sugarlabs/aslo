@@ -40,22 +40,22 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?=$this->renderElement('noscript')?>
         <form id="versions-delete-form" action="" method="post">
         <?=$html->hiddenSession();?>
         <div class="graybox rounded">
-            <h4><?=sprintf(___('devcp_versions_delete_header'), $version['Version']['version'])?></h4>
-            <p class="smallmargin"><?=sprintf(___('devcp_versions_delete_sure'), $version['Version']['version'])?></p>
-            <p><?=___('devcp_versions_delete_also')?></p>
+            <h4><?=sprintf(___('Delete Version %s?'), $version['Version']['version'])?></h4>
+            <p class="smallmargin"><?=sprintf(___('Are you sure you want to permanently delete version %s?'), $version['Version']['version'])?></p>
+            <p><?=___('This will also delete:')?></p>
             <ul>
-                <li><?=sprintf(n___('devcp_versions_delete_reviews', 'devcp_versions_delete_reviews', count($version['Review'])), count($version['Review']))?></li>
+                <li><?=sprintf(n___('%s review', '%s reviews', count($version['Review'])), count($version['Review']))?></li>
                 <li><?=sprintf(n___('devcp_versions_delete_files', 'devcp_versions_delete_files', count($version['File'])), count($version['File']))?></li>
             </ul>
             <div>
-                <a href="#" onclick="versions_delete.confirm(); return false;" class="remove-button rounded"><?=___('devcp_versions_delete_a_delete')?></a>
+                <a href="#" onclick="versions_delete.confirm(); return false;" class="remove-button rounded"><?=___('Delete Version')?></a>
                 <input type="hidden" name="confirmDelete" value="1"/>&nbsp;&nbsp;
-                <a href="<?=$html->url('/developers/versions/'.$addon_id)?>" class="button rounded"><?=___('devcp_versions_delete_a_cancel')?></a>
+                <a href="<?=$html->url('/developers/versions/'.$addon_id)?>" class="button rounded"><?=___('Cancel')?></a>
             </div>
         </div>
         </form>

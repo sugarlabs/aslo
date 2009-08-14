@@ -34,18 +34,18 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 if (!empty($step)) {
     echo '<div id="translationBox">';
 }
 else {
     echo '<div class="breaklessDivider"></div>';
     echo '<div id="translationBox">';
-        echo '<h3>'._('devcp_localebox_header_localizedfields').'</h3>';
+        echo '<h3>'.___('Localized Fields').'</h3>';
 }
 ?>
     <div id="localeIntro">
-        <?=sprintf(_('devcp_localebox_intro'), $localebox['defaultLocale'])?>
+        <?=sprintf(___('Some of the fields on this page are localized to appear in the end-user\'s native language. Select a locale below to edit your add-on\'s details in that language. If a translation for a locale is not available, it will fall back to the selected default locale (%s).'), $localebox['defaultLocale'])?>
     </div>
 
     <div id="locale-box">

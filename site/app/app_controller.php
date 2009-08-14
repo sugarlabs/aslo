@@ -277,7 +277,7 @@ class AppController extends Controller
             ($_POST['sessionCheck'] != $currentMd5 && $_POST['sessionCheck'] != $previousMd5)) {
             
             header('HTTP/1.1 400 Bad Request');
-            $this->flash( _('error_formerrors'), '/' , 3); //error string is a little non-informative
+            $this->flash( ___('There are errors in this form. Please correct them and resubmit.'), '/' , 3); //error string is a little non-informative
             exit();
         } 
     }

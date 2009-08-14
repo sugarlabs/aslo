@@ -63,7 +63,7 @@ class License extends AppModel {
         $this->unbindFully();
         $license = $this->findById($license_id);
         if ($license['License']['name'] == -1) {
-            return ___('license_custom');
+            return ___('Custom License');
         } else {
             $licenses = $this->getNamesAndUrls();
             

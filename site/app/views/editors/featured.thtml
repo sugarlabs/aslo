@@ -46,12 +46,12 @@
     var addonurl        = '<?php echo $html->url('/addon'); ?>';
     var imageurl        = '<?php echo $html->urlImage(''); ?>';
 
-    var featureaddfailure    = '<?php echo _('editors_featured_addon_add_failure'); ?>';
-    var featureeditfailure   = '<?php echo _('editors_featured_addon_edit_failure'); ?>';
-    var featureeditsuccess   = '<?php echo _('editors_featured_addon_edit_success'); ?>';
-    var featureremovefailure = '<?php echo _('editors_featured_addon_remove_failure'); ?>';
-    var addedinvalidlocale   = '<?php echo _('editors_featured_addon_invalid_locale'); ?>';
-    var featureeditsubmit    = '<?php echo _('editors_featured_edit_feature_submit'); ?>';
+    var featureaddfailure    = '<?php echo ___('Failed to add feature.'); ?>';
+    var featureeditfailure   = '<?php echo ___('Failed to edit feature.'); ?>';
+    var featureeditsuccess   = '<?php echo ___('Successfully edited feature.'); ?>';
+    var featureremovefailure = '<?php echo ___('Failed to remove feature.'); ?>';
+    var addedinvalidlocale   = '<?php echo ___('One or more locales are invalid.'); ?>';
+    var featureeditsubmit    = '<?php echo ___('Go'); ?>';
 </script>
 
 <div id="content">
@@ -60,8 +60,8 @@
     <div id="content-main">
         <table width="100%" id="features">
             <tr class="queueHeader">
-                <td><?=_('editors_th_addon')?></td>
-                <td><?=_('editors_th_locales')?></td>
+                <td><?=___('Add-on')?></td>
+                <td><?=___('Restrict to locales?')?></td>
             </tr>
 <?php
     $current_type = 0;
@@ -87,8 +87,8 @@
                             array('id' => 'feature-remove-form-'.$category['Category']['id'].'-'.$addon['Addon']['id'],
                                   'onsubmit' => 'removeFeature('.$category['Category']['id'].','.$addon['Addon']['id'].'); return false;'));
                         echo $html->submitImage('/developers/delete.png',
-                            array('title'=>_('editors_featured_remove_feature'),
-                                  'alt' => _('editors_featured_remove_feature'),
+                            array('title'=>___('Remove feature'),
+                                  'alt' => ___('Remove feature'),
                                   'class' => 'featureremove',
                                   'id' => 'delete-'.$category['Category']['id'].'-'.$addon['Addon']['id']));
                         echo $html->hidden('Category/id', array('value' => $category['Category']['id']));
@@ -104,7 +104,7 @@
                         echo $html->hidden('Category/id', array('value' => $category['Category']['id']));
                         echo $html->hidden('Addon/id', array('value' => $addon['Addon']['id']));
                         echo $html->input('AddonCategory/feature_locales', array('id' => "edit-addon-locales-{$category['Category']['id']}-{$addon['Addon']['id']}", 'size' => 40, 'value' => $addon['AddonCategory'][0]['feature_locales']));
-                        echo $html->submit(_('editors_featured_edit_feature_submit'), array('id' => 'edit-feature-submit-'.$category['Category']['id'].'-'.$addon['Addon']['id']));
+                        echo $html->submit(___('Go'), array('id' => 'edit-feature-submit-'.$category['Category']['id'].'-'.$addon['Addon']['id']));
                         ?>
                         </form>
                     </td>
@@ -117,13 +117,13 @@
         echo $html->formTag('/editors/featured/add', 'post', array('id' => 'feature-add-form-'.$category['Category']['id'], 'onsubmit' => 'addFeatureSubmit('.$category['Category']['id'].'); return false;'));
         echo $html->hidden('Category/id', array('value' => $category['Category']['id']));
         echo $html->submitImage('developers/add.png',
-            array('title' => _('editors_featured_add_feature'),
-                  'alt' => _('editors_featured_add_feature'),
+            array('title' => ___('Add feature'),
+                  'alt' => ___('Add feature'),
                   'class' => 'featureadd',
                   'id' => 'add-'.$category['Category']['id'],
                   )).'&nbsp;';
         echo '<input type="text" name="data[Addon][id]" id="new-addon-id-'.$category['Category']['id'].'" onfocus="prepAutocomplete('.$category['Category']['id'].');" size="40" />';
-        echo '<noscript>'.$html->submit(_('editors_featured_add_feature_submit'), array('id' => 'new-feature-submit-'.$category['Category']['id'])).'</noscript>';
+        echo '<noscript>'.$html->submit(___('Add'), array('id' => 'new-feature-submit-'.$category['Category']['id'])).'</noscript>';
         echo '</form></td>';
         echo '<td><span id="edit-feature-message-'.$category['Category']['id'].'"></span></td></tr>'; // use the extra space for messages
 

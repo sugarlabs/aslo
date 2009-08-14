@@ -73,12 +73,12 @@ class ValidationComponent extends Object {
 
                 // This should never happen, but just in case
                 if (!method_exists($this, $case['TestCase']['function'])) return false;
-                
+
                 // For each case, run the test, which will be a function in this component
                 $results = call_user_func(array('ValidationComponent', $case['TestCase']['function']), $file);
-                
+
                 if (!empty($results)) {
-                    
+
                     // Cake doesn't give us a nice way to insert multiple
                     // items, so we do it manually
                     $query = 'INSERT INTO `test_results` (`result`, `line`, `filename`, `message`, `file_id`, `test_case_id`) VALUES ';
@@ -86,7 +86,7 @@ class ValidationComponent extends Object {
 
                     $failed = false;
                     foreach($results as $result) {
-                        
+
                         $this->Amo->clean($result, false);
                         $sql[] = "({$result['result']}, {$result['line']}, '{$result['filename']}', '{$result['message']}', {$file_id}, {$case['TestCase']['id']})";
 
@@ -102,7 +102,7 @@ class ValidationComponent extends Object {
                 }
             }
         }
-        
+
         // If we made it here - the test finished successfully!
         return true;
 
@@ -143,7 +143,7 @@ class ValidationComponent extends Object {
 
         $extension = substr($file['File']['filename'], strrpos($file['File']['filename'], '.'));
         $type = 0;
-        
+
         // Double-check the extension
         switch ($extension) {
             case '.xpi':
@@ -175,12 +175,12 @@ class ValidationComponent extends Object {
         // Verify that this matches the type we store
         $addon = $this->controller->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
         if ($addon['Addon']['addontype_id'] != $type) {
-            return $this->_resultFail(0, '', ___('devcp_error_mismatched_extension', 'The extension does not match the type of the add-on'));
+            return $this->_resultFail(0, '', ___('The extension does not match the type of the add-on.'));
         }
 
 		// Verify that the file exits
 		if (!file_exists(REPO_PATH . '/' . $addon['Addon']['id'] . '/' . $file['File']['filename'])) {
-			return $this->_resultFail(0, '', ___('devcp_error_missing_addon_file', 'The add-on could not be found on the server'));
+			return $this->_resultFail(0, '', ___('The add-on could not be found on the server.'));
 		}
 
         return $this->_resultPass();
@@ -203,20 +203,20 @@ class ValidationComponent extends Object {
 
         // Make sure install.rdf is present, fail otherwise
         if (empty($extraction)) {
-            return $this->_resultFail(0, '', _('devcp_error_index_rdf_notfound'));
+            return $this->_resultFail(0, '', ___('No install.rdf present.'));
         }
 
         $fileContents = $extraction[0]['content'];
 
         // Use RDF Component to parse install.rdf
         $manifestData = $this->Rdf->parseInstallManifest($fileContents);
-        
+
         // Clean manifest data
         $this->Amo->clean($manifestData);
 
         // Check for any immediate parsing errors
         if (isset($manifestData['errors'])) {
-            $results = array(); 
+            $results = array();
             foreach ($manifestData['errors'] as $error) {
                 $results[] = $this->_result(TEST_FAIL, 0, 'install.rdf', $error);
             }
@@ -248,47 +248,47 @@ class ValidationComponent extends Object {
     function validateManifestData($manifestData) {
         // If the data is a string, it is an error message
         if (is_string($manifestData)) {
-            return sprintf(_('devcp_error_manifest_parse'), $manifestData);
+            return sprintf(___('The following error occurred while parsing install.rdf: %s'), $manifestData);
         }
 
         // Check if install.rdf has an updateURL
         if (isset($manifestData['updateURL'])) {
-            return _('devcp_error_updateurl');
+            return ___('Add-ons cannot use an external updateURL. Please remove this from install.rdf and try again.');
         }
 
         // Check if install.rdf has an updateKey
         if (isset($manifestData['updateKey'])) {
-            return _('devcp_error_updatekey');
+            return ___('Add-ons cannot use an updateKey. Please remove this from install.rdf and try again.');
         }
 
         // Check the GUID for existence
         if (!isset($manifestData['id'])) {
-            return _('devcp_error_no_guid');
+            return ___('No ID could be found for this add-on in install.rdf.');
         }
 
         // Validate GUID
         if (!preg_match('/^(\{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}|[a-z0-9-\._]*\@[a-z0-9-\._]+)$/i', $manifestData['id'])) {
-            return sprintf(_('devcp_error_invalid_guid'), $manifestData['id']);
+            return sprintf(___('The ID of this add-on is invalid: %s'), $manifestData['id']);
         }
 
         // Make sure GUID is not an application's GUID
         if ($this->controller->Application->findByGuid($manifestData['id'])) {
-            return _('devcp_error_guid_application');
+            return ___('The ID of this add-on is already used by an application.');
         }
 
-        // Make sure the GUID is not blacklisted 
+        // Make sure the GUID is not blacklisted
         if ($this->controller->BlacklistedGuid->findByGuid($manifestData['id'])) {
-            return sprintf(___('devcp_error_guid_blacklisted', 'Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact'); 
+            return sprintf(___('Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact');
         }
 
         // Make sure version has no spaces
         if (!isset($manifestData['version']) || preg_match('/.*\s.*/', $manifestData['version'])) {
-            return _('devcp_error_invalid_version_spaces');
+            return ___('The version of this add-on is invalid: versions cannot contain spaces.');
         }
 
         // Validate version
         if (!preg_match('/^\d+(\+|\w+)?(\.\d+(\+|\w+)?)*$/', $manifestData['version'])) {
-            return _('devcp_error_invalid_version');
+            return ___('The version of this add-on is invalid: please see the <a href="http://developer.mozilla.org/en/docs/Toolkit_version_format">specification</a>');
         }
 
         return true;
@@ -321,10 +321,10 @@ class ValidationComponent extends Object {
                     $matchingMinVers = $this->controller->Appversion->find("application_id={$matchingApp['Application']['id']} AND version='{$appVal['minVersion']}'", null, null, -1);
 
                     if (empty($matchingMinVers)) {
-                        $versionErrors[] = sprintf(_('devcp_error_invalid_appversion'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
+                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
                     }
                     elseif (strpos($appVal['minVersion'], '*') !== false) {
-                        $versionErrors[] = sprintf(_('devcp_error_invalid_minversion'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
+                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s: minimum versions cannot contain *'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
                     }
                     else {
                         $return[$i]['min'] = $matchingMinVers['Appversion']['id'];
@@ -333,7 +333,7 @@ class ValidationComponent extends Object {
                     // Check if the maxVersion is valid
                     $matchingMaxVers = $this->controller->Appversion->find("application_id={$matchingApp['Application']['id']} AND version='{$appVal['maxVersion']}'", null, null, -1);
                     if (empty($matchingMaxVers)) {
-                        $versionErrors[] = sprintf(_('devcp_error_invalid_appversion'), $appVal['maxVersion'], $matchingApp['Translation']['name']['string']);
+                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s'), $appVal['maxVersion'], $matchingApp['Translation']['name']['string']);
                     }
                     else {
                         $return[$i]['max'] = $matchingMaxVers['Appversion']['id'];
@@ -343,17 +343,17 @@ class ValidationComponent extends Object {
             }
         }
 
-        $validAppReference = sprintf(_('devcp_error_appversion_reference_link'), '<a href="'.$this->controller->url('/pages/appversions').'">'._('devcp_error_appversion_reference_link_text').'</a>');
+        $validAppReference = sprintf(___('Please see %s for reference.'), '<a href="'.$this->controller->url('/pages/appversions').'">'.___('this page').'</a>');
 
         // Must have at least one Mozilla app
         if ($noMozApps === true) {
-            return _('devcp_error_mozilla_application').'<br />'.$validAppReference;
+            return ___('You must have at least one valid Mozilla target application.').'<br />'.$validAppReference;
         }
 
         // Max/min version errors
         if (count($versionErrors) > 0) {
             $errorStr = implode($versionErrors, '<br />');
-            return _('devcp_error_install_manifest').'<br />'.$errorStr.'<br />'.$validAppReference;
+            return ___('The following errors were found in install.rdf:').'<br />'.$errorStr.'<br />'.$validAppReference;
         }
 
         return $return;
@@ -373,14 +373,14 @@ class ValidationComponent extends Object {
         if (count($extraction) != 0) {
             foreach ($extraction as $fileInfo) {
                 $filename = $fileInfo['filename'];
-                $results[] = $this->_result(TEST_WARN, 0, '', sprintf(___('devcp_error_blacklisted_file', 'The add-on contains a file \'%s\', which is a flagged type.'), $filename));
+                $results[] = $this->_result(TEST_WARN, 0, '', sprintf(___('The add-on contains a file \'%s\', which is a flagged type.'), $filename));
             }
         }
 
         return $this->_passIfEmpty($results);
     }
 
-    /** 
+    /**
      * Uses jshydra to check for things in the global namespace
      * @param array $file the file in model format
      * @return array an array of test results, empty if there is no result
@@ -400,11 +400,11 @@ class ValidationComponent extends Object {
         }
 
         $extracted = $this->_extract($file, 'by_preg', '/\.js/', false);
-       
-        // No JS to be polluted 
-        if (empty($extracted)) 
+
+        // No JS to be polluted
+        if (empty($extracted))
             return array();
-        
+
         // Run each file through jshydra
         $results = array();
         foreach ($extracted as $fileInfo) {
@@ -416,7 +416,7 @@ class ValidationComponent extends Object {
             if (!file_exists($fileInfo['path']) || !is_readable($fileInfo['path'])) {
                 continue;
             }
-            
+
             // Build and excute the command
             $command = $jshydra . ' ' . $globalsScript . ' ' . $safeFile;
             $output = shell_exec($command);
@@ -424,14 +424,14 @@ class ValidationComponent extends Object {
 
             // jshydra ouputs variables in three groups, so we use this to track state
             $states = array(
-                ___('devcp_error_global_variable', 'The file contains a global variable: %s'),
-                ___('devcp_error_global_constant', 'The file contains a global constant: %s'),
-                ___('devcp_error_global_function', 'The file contains a global function: %s')
+                ___('The file contains a global variable: %s'),
+                ___('The file contains a global constant: %s'),
+                ___('The file contains a global function: %s')
             );
             $currentState = -1;
             foreach ($lines as $line) {
-                
-                // Output format will look like: 
+
+                // Output format will look like:
                 //
                 // Global Variables:
                 //   ...global variables list...
@@ -446,13 +446,13 @@ class ValidationComponent extends Object {
 
                 // Lines look like <global-name> at <line-no>
                 $data = explode(' ', $line);
-                
+
                 $results[] = $this->_result(TEST_WARN, $data[2], $fileInfo['filename'], sprintf($states[$currentState], $data[0]));
-            }   
-        
+            }
+
         }
         return $this->_passIfEmpty($results);
-        
+
     }
 
     /**
@@ -461,7 +461,7 @@ class ValidationComponent extends Object {
      * @return array an array of test results, empty if there is no result
      */
     function all_security_libraryChecksum($file) {
-        
+
         $libraries = array(
             'jquery-1.3.1.min.js' => 'sha1:fed603a4db640b82de54b246de4be7a1cffa8780',
             'jquery-1.3.min.js' => 'sha1:7b9e8594368d30387059e5fdef9d662095dbbf7a',
@@ -480,9 +480,9 @@ class ValidationComponent extends Object {
             'prototype-1.5.0.js' => 'sha1:4540775a3cb3fd95d5d344f88e74867b6f6c5573',
             'jquery-testing' => 'md5:e6d085a4cbbcc9c44ae10e6c72d035cf'  // This is for the test cases, just ignore
         );
-        $toExtract = '/(jquery|prototype)/i'; 
+        $toExtract = '/(jquery|prototype)/i';
         $extracted = $this->_extract($file, 'by_preg', $toExtract, false);
-        
+
         $results = array();
 
         // For every file we can find, check if we can hash it
@@ -494,9 +494,9 @@ class ValidationComponent extends Object {
                 if (array_key_exists($fileName, $libraries)) {
                     list($algo, $knownHash) = explode(':', $libraries[$fileName]);
                     $givenHash = hash_file($algo, $fileInfo['path']);
-                    
+
                     if ($knownHash != $givenHash) {
-                        $results[] = $this->_result(TEST_WARN, 1, $fileInfo['filename'], sprintf(___('devcp_error_file_checksum_mismatch', 'The add-on contains a file %s, which failed a library checksum'), $fileInfo['filename']));
+                        $results[] = $this->_result(TEST_WARN, 1, $fileInfo['filename'], sprintf(___('The add-on contains a file \'%s\', which failed a library checksum'), $fileInfo['filename']));
                     }
                 }
             }
@@ -572,10 +572,10 @@ class ValidationComponent extends Object {
      * @return array an array of test results, empty if there is no result
      */
     function all_l10n_checkCompleteness($file) {
-    
+
         //
-        // This test is not yet ready for production, pending the 
-        // resolution of bug 505260.  Do not remove the return 
+        // This test is not yet ready for production, pending the
+        // resolution of bug 505260.  Do not remove the return
         // statement below until this is good to go
         //
         return array();
@@ -592,12 +592,12 @@ class ValidationComponent extends Object {
 
         // Build the full escaped command
         $command = PYTHON_BINARY . ' ' . $script . ' -i xpi ' . $file_loc . ' --json statistics_json';
-        
+
         // Results are returned as json
         $json = shell_exec($command);
         $result = json_decode($json);
         if (!is_array($result)) {
-            return $this->_testFail(0, '', sprintf(___('devcp_error_l10n_script_error', 'L10n test returned an error: %s'), $json));
+            return $this->_testFail(0, '', sprintf(___('L10n test returned an error: %s'), $json));
         }
 
         // If results didn't parse, it won't be an array
@@ -610,13 +610,13 @@ class ValidationComponent extends Object {
 
                 $code = $data[0];
                 $info = $data[1]->children[0];
-                
+
                 // We are concerned with unmodified and missing entities
                 if (property_exists($info, 'unmodifiedEntities')) {
-                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('devcp_error_addon_translations_unmodified', 'devcp_error_addon_translations_unmodified', $info->unmodifiedEntities, 'The %1$s locale contains %2$s unmodified translation(s)'), $code, $info->unmodifiedEntities));
+                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('The %1$s locale contains %2$s unmodified translation', 'The %1$s locale contains %2$s unmodified translations', $info->unmodifiedEntities), $code, $info->unmodifiedEntities));
                 }
                 if (property_exists($info, 'missingEntities')) {
-                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('devcp_error_addon_translations_missing', 'devcp_error_addon_translations_missing', $info->missingEntities, 'The %1$s locale is missing %2$s translations'), $code, $info->missingEntities));
+                    $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('The %1$s locale is missing %2$s translation', 'The %1$s locale is missing %2$s translations', $info->missingEntities), $code, $info->missingEntities));
                 }
             }
         }
@@ -662,7 +662,7 @@ class ValidationComponent extends Object {
 
         // Just return if it doesn't exist
         if (count($extracted) == 0) return array();
-        
+
         $fileInfo = $extracted[0];
 
         // Make sure that the user input is quoted
@@ -672,18 +672,18 @@ class ValidationComponent extends Object {
         if (!file_exists($fileInfo['path']) || !is_readable($fileInfo['path'])) {
             continue;
         }
-            
+
         // Build and excute the command
         $command = $jshydra . ' ' . $script . ' ' . $safeFile;
         $output = shell_exec($command);
         $lines = explode("\n", $output);
-                
+
         // One warning for each function found
         $results = array();
         foreach ($lines as $line) {
             if ($line != '') {
                 list($num, $func) = explode(':', $line);
-                $results[] = $this->_result(TEST_WARN, $num, 'install.js', sprintf(___('devcp_error_install_js_wrong_func', 'Install.js contains a function missing from the whitelist: %s'), $func));
+                $results[] = $this->_result(TEST_WARN, $num, 'install.js', sprintf(___('Install.js contains a function missing from the whitelist: %s'), $func));
             }
         }
 
@@ -722,7 +722,7 @@ class ValidationComponent extends Object {
         $supportedApps = $manifestData['targetApplication'];
         $mozApps = $this->controller->Application->getGuidList();
         foreach ($supportedApps as $guid => $app) {
-            
+
             // There's almost certainly a better way to check this ...
             if ($mozApps[$guid] == 'SeaMonkey' && $this->Versioncompare->compareVersions($app['minVersion'], '2.0a1pre') == -1) {
                 $flags = $this->_verifyFilesExist($file, array('install.js'), 'by_name');
@@ -767,16 +767,16 @@ class ValidationComponent extends Object {
 
         // Check for a match on the conduit URL
         if (isset($manifestData['updateURL']) && preg_match('/hosting\.conduit\.com/i', $manifestData['updateURL'])) {
-            $results[] = $this->_result(TEST_FAIL, 0, 'install.rdf', ___('devcp_error_conduit_toolbar_updateURL', 'The add-on appears to be a conduit toolbar due to its updateURL element'));
+            $results[] = $this->_result(TEST_FAIL, 0, 'install.rdf', ___('The add-on appears to be a conduit toolbar due to its updateURL element.'));
         }
 
         // Check the searchplugin/components directory, as well as
         // default_radio_skin and version.txt
         $extraction = $this->_extract($file, 'by_preg', '/((searchplugin|components)\/.*conduit|defaults\/.*default_radio_skin.xml|version.txt)/i', false);
-        
+
         if (!empty($extraction)) {
             foreach ($extraction as $fileInfo) {
-                $results[] = $this->_result(TEST_FAIL, 0, $fileInfo['filename'], sprintf(___('devcp_error_conduit_toolbar_badFile', 'The add-on appears to be a conduit toolbar due to the file \'%s\''), $fileInfo['filename']));
+                $results[] = $this->_result(TEST_FAIL, 0, $fileInfo['filename'], sprintf(___('The add-on appears to be a conduit toolbar due to the file \'%s\''), $fileInfo['filename']));
             }
         }
 
@@ -787,7 +787,7 @@ class ValidationComponent extends Object {
                     '/chrome:authorURL="http:\/\/www.conduit.com"/',
                     '/chrome:description="More than just a toolbar\."/');
 
-        $grep = $this->_grepExtractedFiles($extraction, $patterns, TEST_FAIL, ___('devcp_error_conduit_toolbar_contents_rdf', 'The contents.rdf file contains a line identifying the plugin as a conduit toolbar'));
+        $grep = $this->_grepExtractedFiles($extraction, $patterns, TEST_FAIL, ___('The contents.rdf file contains a line identifying the plugin as a conduit toolbar.'));
 
         if ($grep[0]['result'] != TEST_PASS)
             $results = array_merge($results, $grep);
@@ -797,7 +797,7 @@ class ValidationComponent extends Object {
         $extraction = $this->_extract($file, 'by_name', array('chrome.manifest'));
         $patterns = array('/^reference:\s+ebtoolbarstyle\.css$/i');
 
-        $grep = $this->_grepExtractedFiles($extraction, $patterns, TEST_FAIL, ___('devcp_error_conduit_toolbar_chrome_manifest', 'The chrome.manifest file contains a line identifying the plugin as a conduit toolbar'));
+        $grep = $this->_grepExtractedFiles($extraction, $patterns, TEST_FAIL, ___('The chrome.manifest file contains a line identifying the plugin as a conduit toolbar.'));
 
         if ($grep[0]['result'] != TEST_PASS)
             $results = array_merge($results, $grep);
@@ -883,11 +883,11 @@ class ValidationComponent extends Object {
      * @return array an arrat of test results, empty if there is no result
      */
     function search_general_checkFormat($file) {
-        
+
         $result = $this->Opensearch->parse(REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename']);
         if ($result == null) {
-            return $this->_resultFail(0, '', ___('devcp_error_search_wrong_format', 'The search engine could not be parsed according to the OpenSearch format.'));
-        } 
+            return $this->_resultFail(0, '', ___('The search engine could not be parsed according to the OpenSearch format.'));
+        }
 
         return $this->_resultPass();
     }
@@ -898,12 +898,12 @@ class ValidationComponent extends Object {
      * @return array an arrat of test results, empty if there is no result
      */
     function search_security_checkUpdateURL($file) {
-        
+
         $search = $this->Opensearch->parse(REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename']);
         if ($search == null) return array();
 
         if ($search->updateUrl != '') {
-            return $this->_resultFail(0, '', ___('devcp_error_search_upadteurl', 'The search engine contains an updateURL element, which is not allowed.'));
+            return $this->_resultFail(0, '', ___('The search engine contains an updateURL element, which is not allowed.'));
         }
 
         return $this->_resultPass();
@@ -937,20 +937,20 @@ class ValidationComponent extends Object {
 
     /**
      * Generates an inline preview for displaying errors
-     * @param array $result the result to generate a preview for 
+     * @param array $result the result to generate a preview for
      * @param array $file the file in model format
      */
     function getResultPreview(&$result, $file) {
-        
+
         // Don't get a preview if the result has no line or file
         if (empty($result['TestResult']['line']) || empty($result['TestResult']['filename'])) return;
-        
+
         // Use the file to do the extraction
         $data = $this->_extract($file, 'by_name', $result['TestResult']['filename']);
-        
+
         if (count($data) == 0) return;
         $lines = explode("\n", $data[0]['content']);
-        
+
         // Grab the two lines around the target line to provide some context
         // Also shift down by 1 to adjust for index mismatch
         $targetLine = $result['TestResult']['line'];
@@ -960,7 +960,7 @@ class ValidationComponent extends Object {
                 $result['TestResult']['preview'][$i + 1] = rtrim($lines[$i]);
             }
         }
-    }        
+    }
 
     /**
      * Check all the files in an add-on and verify that they conform to the
@@ -992,7 +992,7 @@ class ValidationComponent extends Object {
             }
 
             if (!$fileInfo['folder'] && !$nameOk) {
-                $flags[] = $this->_result(TEST_WARN, 0, $fileInfo['filename'], sprintf(___('devcp_error_unsafe_filename', 'The file %s does not appear to belong in this add-on'), $fileInfo['filename']));
+                $flags[] = $this->_result(TEST_WARN, 0, $fileInfo['filename'], sprintf(___('The file %s does not appear to belong in this add-on'), $fileInfo['filename']));
             }
         }
 
@@ -1011,7 +1011,7 @@ class ValidationComponent extends Object {
         if (!empty($names)) {
             foreach ($names as $name) {
                 if (count($this->_extract($file, $extract_how, $name, false)) == 0)
-                    $flags[] = $this->_result(TEST_FAIL, 0, '', sprintf(___('devcp_error_missing_file', 'The add-on was missing a required file: %s'), $name));
+                    $flags[] = $this->_result(TEST_FAIL, 0, '', sprintf(___('The add-on was missing a required file: %1$s'), $name));
             }
         }
 
@@ -1040,13 +1040,13 @@ class ValidationComponent extends Object {
                 if (!empty($patterns)) {
                     foreach ($patterns as $pattern) {
 
-                        $matches = preg_grep($pattern, $lines);                     
+                        $matches = preg_grep($pattern, $lines);
                         if (!empty($matches)) {
                             foreach(array_keys($matches) as $line_num) {
-                                
+
                                 if($lines[$line_num] != '') {
                                     // Lines are 1-indexed, but the array is 0-indexed
-                                    $flags[] = $this->_result($action, $line_num + 1, $file_info['filename'], empty($message) ? sprintf(___('devcp_error_grep_match', 'Matched Pattern: "%s"'), $pattern) : $message);
+                                    $flags[] = $this->_result($action, $line_num + 1, $file_info['filename'], empty($message) ? sprintf(___('Matched Pattern: "%s"'), $pattern) : $message);
                                 }
                             }
                         }
@@ -1069,7 +1069,7 @@ class ValidationComponent extends Object {
      * @return array the result of the extraction
      */
     function _extract($file, $extract_by, $extract_what, $get_contents = true, $expires = '+1 day') {
-        
+
         // Cache location
         $tmp_loc = NETAPP_STORAGE . '/validate-' . $file['File']['id'];
 
@@ -1077,23 +1077,23 @@ class ValidationComponent extends Object {
         if (file_exists($tmp_loc)) {
             $expires = strtotime($expires);
             $diff = $expires - filemtime($tmp_loc);
-            
+
             if (time() - filemtime($tmp_loc) > $diff) {
                 $this->_deleteDir($tmp_loc);
             }
         }
-        
+
         // If the file doesn't exist, do the extraction
         if (!file_exists($tmp_loc)) {
 
             // We usually die extracting things, so boost the limit since
             // this is an infrequent operation
             ini_set('memory_limit', '128M');
-            
+
             $file_loc = REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename'];
             $zip = new Archive_Zip($file_loc);
             $extracted = $zip->extract(array('add_path' => $tmp_loc));
-            
+
             // This will return 0 if the extraction fails
             if (!$extracted) return array();
 
@@ -1105,17 +1105,17 @@ class ValidationComponent extends Object {
                     // This is a jar, extract this
                     $tmpjar = $name . '.tmp';
                     copy($name, $tmpjar);
-                    
+
                     // The jar is now a folder on disk
                     unlink($name);
                     mkdir($name);
-  
-                    // Finally, extract.  Add the results to our list so that they 
+
+                    // Finally, extract.  Add the results to our list so that they
                     // can be extracted as well if there are nested archives
                     $zip = new Archive_Zip($tmpjar);
                     $contents = $zip->extract(array('add_path' => $name));
                     $extracted = array_merge($extracted, $contents);
-                    
+
                     unlink($tmpjar);
                 }
             }
@@ -1141,7 +1141,7 @@ class ValidationComponent extends Object {
         // Load in all the files we found
         $result = array();
         if (!empty($files)) {
-            foreach ($files as $file) { 
+            foreach ($files as $file) {
                 if (file_exists($tmp_loc . '/' . $file)) {
                     $content = '';
                     $path = $tmp_loc . '/' . $file;
@@ -1151,19 +1151,19 @@ class ValidationComponent extends Object {
                     $result[] = array('filename' => $file, 'content' => $content, 'path' => $path);
                 }
             }
-        }       
+        }
         return $result;
     }
 
     /**
-     * Helper to recursively scan a directory and find any 
+     * Helper to recursively scan a directory and find any
      * files that match the regexes supplied
      * @param string $root_dir the root extraction dir
      * @param string $cur_dir the current extraction dir
      * @param array $names the regexes to match on file names
      * @return array an array of matching filenames
      */
-    function _findFiles($root_dir, $cur_dir, $names) { 
+    function _findFiles($root_dir, $cur_dir, $names) {
         if (is_dir($root_dir . $cur_dir) && $dh = opendir($root_dir . $cur_dir)) {
             $result = array();
             while (($file = readdir($dh)) !== false) {
@@ -1192,7 +1192,7 @@ class ValidationComponent extends Object {
     function _deleteDir($dir_name) {
         if (!file_exists($dir_name)) return true;
         if (is_dir($dir_name)) {
-            foreach (scandir($dir_name) as $item) { 
+            foreach (scandir($dir_name) as $item) {
                 if ($item == '.' || $item == '..') continue;
                 if (!$this->_deleteDir($dir_name . '/' . $item)) return false;
             }

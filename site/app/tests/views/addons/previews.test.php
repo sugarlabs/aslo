@@ -61,7 +61,7 @@ class AddonPreviewsTest extends WebTestHelper {
         $addon = $this->controller->Addon->findById($this->addonid);
         
         // Title
-        $this->title = sprintf(_('addons_previews_pagetitle'), $addon['Translation']['name']['string']) .' :: '. sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->title = sprintf(_('addons_previews_pagetitle'), $addon['Translation']['name']['string']) .' :: '. sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->assertTitle($this->title);
         
         // Header
@@ -77,7 +77,7 @@ class AddonPreviewsTest extends WebTestHelper {
         $this->assertPattern($pattern, htmlentities($pattern));
         
         // link back
-        $this->assertLink(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), 'link back to addon page');
+        $this->assertLink(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), 'link back to addon page');
     }
 }
 ?>

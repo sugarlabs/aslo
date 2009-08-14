@@ -57,52 +57,51 @@ if (!isset($table_class)) {
 ?>
 
 <div class="vcard">
-  <table class="<?=$table_class?>" summary="<?=___('addon_developer_info_summary', 'Developer Information')?>">
+  <table class="<?=$table_class?>" summary="<?=___('Developer Information')?>">
     <tbody>
       <tr>
-        <th><?=___('addon_developer_th_name')?></th>
+        <th><?=___('Name')?></th>
         <td class="fn n"><?=$user['display_name']?></td>
       </tr>
       <? if (!empty($user['location'])): ?>
       <tr>
-        <th><?=___('addon_developer_th_location')?></th>
+        <th><?=___('Location')?></th>
         <td class="adr"><?=$user['location']?></td>
       </tr>
       <? endif; ?>
       <? if (!empty($user['occupation'])): ?>
       <tr>
-        <th><?=___('addon_developer_th_occupation')?></th>
+        <th><?=___('Occupation')?></th>
         <td class="role"><?=$user['occupation']?></td>
       </tr>
       <? endif; ?>
       <? if (!empty($user['homepage'])): ?>
       <tr>
-        <th><?=___('addon_developer_th_homepage')?></th>
+        <th><?=___('Homepage')?></th>
         <td><a class="url" href="<?=$user['homepage']?>"><?=$user['homepage']?></a></td>
       </tr>
       <? endif; ?>
       <?php if (!$user['emailhidden']): ?>
           <tr>
-            <th><?=___('addon_developer_th_email')?></th>
+            <th><?=___('Email address')?></th>
             <td><a class="email" href="mailto:<?=$user['email']?>"><?=$user['email']?></a></td>
           </tr>
       <?php endif; ?>
       <tr>
-        <th><?=___('addon_developer_th_user_since')?></th>
-        <td><?=strftime(_('date'), strtotime($user['created']))?></td>
+        <th><?=___('User since')?></th>
+        <td><?=strftime(___('%B %e, %Y'), strtotime($user['created']))?></td>
       </tr>
       <?php if ($about_addons): ?>
         <tr>
-          <th><?=___('addon_developer_th_num_addons')?></th>
+          <th><?=___('Number of Add-ons Developed')?></th>
           <td>
             <a href="<?=$html->url('/user/'.$user['id'])?>">
-              <?=sprintf(n___('addon_developer_td_num_addons', 'addon_developer_td_num_addons', $user['num_valid_addons']),
-                         $user['num_valid_addons'])?>
+              <?=sprintf(n___('%1$s Add-on', '%1$s Add-ons', $user['num_valid_addons']), $user['num_valid_addons'])?>
             </a>
           </td>
         </tr>
         <tr>
-          <th><?=___('addon_developer_th_rating')?></th>
+          <th><?=___('Average rating for their Add-ons')?></th>
           <td><?=$this->renderElement('stars', array('rating' => $user['averagerating']))?></td>
         </tr>
       <?php endif; ?>

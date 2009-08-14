@@ -39,21 +39,21 @@
     <?=$this->renderElement('developers/editorsmenu');?>
     
     <div id="content-main">
-        <h3><?=_('editorcp_logs_page_heading')?></h3>
+        <h3><?=___('Event Log')?></h3>
         <form id="logFilter" method="get" action="">
         <div>
-        <?=sprintf(_('editorcp_reviewlog_entries_between'),
+        <?=sprintf(___('View entries between %1$s and %2$s'),
             '<input type="text" id="start" name="start" value="'.$startDate.'" size="11" onfocus="clearInput(this)"/>',
             '<input type="text" id="end" name="end" value="'.$endDate.'" size="11" onfocus="clearInput(this)"/>')?>
         </div>
         <div>
-        <?=_('editorcp_logs_filter_by')?>:
+        <?=___('Filter by type/action')?>:
         <select name="filter">
             <?php foreach ($filterOptions as $val => $text): ?>
             <option value="<?=$val?>"<?=($filter == $val ? ' selected="selected"' : '')?>><?=$text?></option>
             <?php endforeach; ?>
         </select>
-        <?=$html->submit(_('editorcp_logs_button_filter'))?>
+        <?=$html->submit(___('Filter'))?>
         </div>
         </form>
         <?php

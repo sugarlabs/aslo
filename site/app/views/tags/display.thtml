@@ -50,14 +50,14 @@
 		<div class="results-head">
 			<h2><span><?= $tag_text; ?></span></h2>
 			<h3 class="result-count">
-				<?=sprintf(___('search_results_showing_x_of_y_for_tags_header', 'Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>'), $offset+1, $offset+count($results), $total_count, $tag_text)?>
+				<?=sprintf(___('Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>'), $offset+1, $offset+count($results), $total_count, $tag_text)?>
 		    </h3>
 		</div>
 		<?php endif; ?>
 		<div class="featured listing results">
 		     <div class="featured-inner">
 				<?php if (empty($results)): ?>
-					<p class="addon-search-message"><?=_('search_nothing_found')?></p>
+					<p class="addon-search-message"><?=___('No results found.')?></p>
 				<?php else: ?>
 					<div class="listing-header">
 						<ul>
@@ -70,17 +70,17 @@
 							?>
 						</ul>
 						<form class="item-sort" method="get" action="<?= $html->url('display/'.$tag_text); ?>">
-			            	<label><?=___('advanced_search_form_sortby'); ?></label>
+			            	<label><?=___('Sort By'); ?></label>
 			            	<?php 
 								$sort_orders = array( 
-								    'newest' => ___('advanced_search_form_newest'),
-								    'name' => ___('advanced_search_form_name'),
-								    'averagerating' => ___('advanced_search_form_rating'),
-								    'weeklydownloads' => ___('advanced_search_form_popularity')
+								    'newest' => ___('Newest'),
+								    'name' => ___('Name'),
+								    'averagerating' => ___('Rating'),
+								    'weeklydownloads' => ___('Popularity')
 								);
 								$html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
 							?>
-							<button><?=___('collections_index_button_go')?></button>
+							<button><?=___('Go')?></button>
 				        </form>
 						<script type="text/javascript">collections.init();</script>
 					</div>

@@ -35,44 +35,44 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>      
+?>
 
-<? if ($counts[TEST_FAIL] > 0) : ?>        
+<? if ($counts[TEST_FAIL] > 0) : ?>
     <span class="error-count">
         <? if ($short) : ?>
             <?= $counts[TEST_FAIL] ?>
         <? else: ?>
-            <?=sprintf(n___('devcp_validate_fail_count', 'devcp_validate_fail_count', $counts[TEST_FAIL], '%d error(s)'), $counts[TEST_FAIL]) ?>
+            <?=sprintf(n___('%1$s error', '%1$s errors', $counts[TEST_FAIL]), $counts[TEST_FAIL]) ?>
         <? endif; ?>
     </span>
     <? if ($multiline) : ?>
         <br/>
     <? endif; ?>
 <? endif; ?>
-<? if ($counts[TEST_WARN] > 0) : ?>        
+<? if ($counts[TEST_WARN] > 0) : ?>
     <span class="warning-count">
         <? if ($short) : ?>
             <?= $counts[TEST_WARN] ?>
         <? else: ?>
-            <?=sprintf(n___('devcp_validate_warn_count', 'devcp_validate_warn_count', $counts[TEST_WARN], '%d warning(s)'), $counts[TEST_WARN]) ?>
+            <?=sprintf(n___('%1$s warning', '%1$s warnings', $counts[TEST_WARN]), $counts[TEST_WARN]) ?>
         <? endif; ?>
     </span>
     <? if ($multiline) : ?>
         <br/>
     <? endif; ?>
 <? endif; ?>
-<? if ($counts[TEST_PASS] > 0) : ?>        
+<? if ($counts[TEST_PASS] > 0) : ?>
     <span class="pass-count">
         <? if ($short) : ?>
             <?= $counts[TEST_PASS] ?>
         <? else: ?>
-            <?=sprintf(n___('devcp_validate_pass_count', 'devcp_validate_pass_count', $counts[TEST_PASS], '%d pass(es)'), $counts[TEST_PASS]) ?>
+            <?=sprintf(n___('%1$s pass', '%1$s pass', $counts[TEST_PASS]), $counts[TEST_PASS]) ?>
         <? endif; ?>
     </span>
 <? endif; ?>
-<? if ($counts == array(0,0,0)) : ?> 
-    <span><i><?=___('devcp_error_no_test_results', 'No test results found.')?></i></span>
+<? if ($counts == array(0,0,0)) : ?>
+    <span><i><?=___('No test results found.')?></i></span>
 <? endif; ?>
 <? if ($short) : ?>
-    <span class="loading-count"><?=___('devcp_validate_running_test', 'Running test ...')?></span>
+    <span class="loading-count"><?=___('Running test...')?></span>
 <? endif; ?>

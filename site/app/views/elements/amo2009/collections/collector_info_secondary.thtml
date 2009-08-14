@@ -44,12 +44,12 @@ $showSecondBox = isset($showSecondBox) ? $showSecondBox : true;
 <div class="secondary" role="complementary">
   <? if ($showFirstBox): ?>
       <div class="highlight">
-        <h3><?=___('collections_index_header_what')?></h3>
-        <p><?=___('collections_index_p_what_are')?></p>
+        <h3><?=___('What are Collections?')?></h3>
+        <p><?=___('Collections are groups of related add-ons assembled for easy sharing.')?></p>
         <? if ($showCreateLink): ?>
             <p>
               <a class="more-info" href="<?=$html->url('/collections/add')?>">
-                <?=___('collections_index_a_create')?>
+                <?=___('Create a Collection')?>
               </a>
             </p>
         <? endif; ?>
@@ -57,17 +57,17 @@ $showSecondBox = isset($showSecondBox) ? $showSecondBox : true;
   <? endif; ?>
   <? if ($showSecondBox && (APP_ID == APP_FIREFOX)): ?>
       <div class="highlight">
-        <h3><?=___('collections_index_header_collector')?></h3>
+        <h3><?=___('Add-on Collector')?></h3>
         <p class="teaser-img">
           <a href="<?=$html->url('/pages/collector')?>">
           <img alt="" src="<?=$html->url('/img/amo2009/illustrations/logo-collections-download-146x159.png',
                                          false, false, false)?>" />
           </a>
         </p>
-        <p><?=___('collections_index_p_collector')?></p>
+        <p><?=___('There\'s a new way to manage and find favorite add-ons. Comment, share and sync collections, all from your browser')?></p>
         <p>
           <a class="more-info" href="<?=$html->url('/pages/collector')?>">
-            <?=___('collections_index_a_check_out')?>
+            <?=___('Check out Add-on Collector')?>
           </a>
         </p>
       </div>

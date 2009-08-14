@@ -62,22 +62,22 @@ class GroupsController extends AppController {
     }
 
 	function index() {
-        $this->pageTitle = _('admin_group_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Group Admin').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 		$this->Group->recursive = 0;
 		$this->set('groups', $this->Group->findAll());
 	}
 
 	function add() {
-        $this->pageTitle = _('admin_group_add_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Add Group').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 		if(empty($this->data)) {
 			$this->render();
 		} else {
 			$this->cleanUpFields();
 			if($this->Group->save($this->data)) {
-				$this->Session->setFlash(_('admin_group_saved'));
+				$this->Session->setFlash(___('The Group has been saved'));
 				$this->redirect('/groups/index');
 			} else {
-				$this->Session->setFlash(_('error_formerrors'));
+				$this->Session->setFlash(___('There are errors in this form. Please correct them and resubmit.'));
 			}
 		}
 	}
@@ -86,20 +86,20 @@ class GroupsController extends AppController {
      * @param int $id
      */
 	function edit($id = null) {
-        $this->pageTitle = _('admin_group_edit_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Edit Group').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 		if(empty($this->data)) {
 			if(!$id) {
-				$this->Session->setFlash(_('admin_group_error_invalid_id'));
+				$this->Session->setFlash(___('Invalid id for Group'));
 				$this->redirect('/groups/index');
 			}
 			$this->data = $this->Group->read(null, $id);
 		} else {
 			$this->cleanUpFields();
 			if($this->Group->save($this->data)) {
-				$this->Session->setFlash(_('admin_group_saved'));
+				$this->Session->setFlash(___('The Group has been saved'));
 				$this->redirect('/groups/index');
 			} else {
-				$this->Session->setFlash(_('error_formerrors'));
+				$this->Session->setFlash(___('There are errors in this form. Please correct them and resubmit.'));
 			}
 		}
 	}
@@ -108,13 +108,13 @@ class GroupsController extends AppController {
      * @param int $id
      */
 	function delete($id = null) {
-        $this->pageTitle = _('admin_group_delete_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Delete Group').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 		if(!$id) {
-			$this->Session->setFlash(_('admin_group_error_invalid_id'));
+			$this->Session->setFlash(___('Invalid id for Group'));
 			$this->redirect('/groups/index');
 		}
 		if($this->Group->del($id)) {
-			$this->Session->setFlash(sprintf(_('admin_group_deleted'), $id));
+			$this->Session->setFlash(sprintf(___('The Group with id %s was deleted'), $id));
 			$this->redirect('/groups/index');
 		}
 	}

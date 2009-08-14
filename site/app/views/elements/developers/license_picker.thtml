@@ -39,7 +39,7 @@
  *    - $licenses: array to populate options (value => array(name, selected))
  */
 ?>
-<p><?php echo ___('devcp_uploader_please_choose') ?></p>
+<p><?php echo ___('Please Choose...') ?></p>
 <ol id="license-name">
     <?php foreach ($licenses as $val => $license): 
     $checked = $license['selected'] ? 'checked="checked"' : '';
@@ -48,7 +48,7 @@
           <input type="radio" name="data[License][name]" value="<?php echo $val?>" id="license_<?php echo $val?>" <?php echo $checked ?>/>
           <label for="license_<?php echo $val?>"><?php echo $license['name']?></label>&nbsp;
           <?php if (strpos($val,'builtin_') === 0): ?>
-            <a target="new" href="<?php echo $license['url'] ?>"><?php echo ___('devcp_view_license', 'View License'); ?></a>
+            <a target="new" href="<?php echo $license['url'] ?>"><?php echo ___('View License'); ?></a>
           <?php endif ?>
       </li>
     <?php endforeach ?>

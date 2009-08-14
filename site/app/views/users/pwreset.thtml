@@ -49,12 +49,12 @@
 <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form corner-box">
     <?=$html->hiddenSession() ?>       
     <div class="container">
-        <label class="amo-label-large" for="UserEmail"><?=_('user_form_email')?></label>
+        <label class="amo-label-large" for="UserEmail"><?=___('Email address')?></label>
         <?=$html->input('User/email') ?>
-        <?=$html->tagErrorMsg('User/email', _('error_user_notfound'))?>
+        <?=$html->tagErrorMsg('User/email', ___('User not found!'))?>
     </div>
     <div class="container">
-        <?=$html->submit(_('user_pwreset_submit_sendlink'), array('class'=>'amo-submit')); ?>
+        <?=$html->submit(___('Send password reset link'), array('class'=>'amo-submit')); ?>
     </div>
 </form>
 <?php 
@@ -62,24 +62,24 @@
 else:
 
 ?>
-<h1><?php echo sprintf(_('user_pwreset_for_email'), $email); ?></h1>
+<h1><?php echo sprintf(___('Password reset for %s'), $email); ?></h1>
 <p></p>
 
 <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form corner-box">
     <?=$html->hiddenSession() ?>       
 
     <div class="container">
-        <label class="amo-label-large" for="UserPassword"><?=_('user_form_newpassword')?></label>
+        <label class="amo-label-large" for="UserPassword"><?=___('New password')?></label>
         <?=$html->password('User/password') ?>
-        <?=$html->tagErrorMsg('User/password', _('error_field_required'))?>
+        <?=$html->tagErrorMsg('User/password', ___('This field must not be empty.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserConfirmpw"><?=_('user_form_confirmpassword')?></label>
+        <label class="amo-label-large" for="UserConfirmpw"><?=___('Confirm password')?></label>
         <?=$html->password('User/confirmpw') ?>
-        <?=$html->tagErrorMsg('User/confirmpw', _('error_user_confirmpw_nomatch'))?>
+        <?=$html->tagErrorMsg('User/confirmpw', ___('The passwords did not match.'))?>
     </div>
     <div class="container">
-        <?=$html->submit(_('user_pwreset_submit_changepw'), array('class'=>'amo-submit'));?>
+        <?=$html->submit(___('Submit password change'), array('class'=>'amo-submit'));?>
     </div>
 </form>
 <?php endif; ?>

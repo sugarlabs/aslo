@@ -72,17 +72,17 @@ $params = array(
         'pid'=>$pid, 'sort'=>$sort, 'hver'=>$hver, 'lver'=>$lver, 'vfuz'=>$vfuz, 'pp'=>$pp))?>
   </div>
   <div class="results-head">
-      <h2><span><?=___('search_results_header', 'Search Results')?></span></h2>
+      <h2><span><?=___('Search Results')?></span></h2>
 <?php if (!empty($search_results)): ?>
     <h3 class="result-count">
         <?php if(!empty($search_terms) && !empty($tag)): ?>
-            <?=sprintf(___('search_results_showing_x_of_y_for_terms_and_tags_header', 'Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with <strong>%5$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms, $tag)?>
+            <?=sprintf(___('Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with <strong>%5$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms, $tag)?>
         <?php elseif(!empty($tag)): ?>
-            <?=sprintf(___('search_results_showing_x_of_y_for_tags_header', 'Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $tag)?>
+            <?=sprintf(___('Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $tag)?>
         <?php elseif(!empty($search_terms)): ?>
-            <?=sprintf(___('search_results_showing_x_of_y_for_terms_header', 'Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms)?>
+            <?=sprintf(___('Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'), $offset+1, $offset+count($search_results), $total_count, $search_terms)?>
         <?php else: ?>
-            <?=sprintf(___('search_results_showing_x_of_y_header', 'Showing %1$s - %2$s of %3$s results'), $offset+1, $offset+count($search_results), $total_count)?>
+            <?=sprintf(___('Showing %1$s - %2$s of %3$s results'), $offset+1, $offset+count($search_results), $total_count)?>
         <?php endif; ?>
     </h3>
 <?php endif; ?>
@@ -97,7 +97,7 @@ $params = array(
       <div class="featured-inner">
         <div class="listing-header">
 	        <?php if (empty($search_results)): ?>
-                <p class="addon-search-message"><?=_('search_nothing_found')?></p>
+                <p class="addon-search-message"><?=___('No results found.')?></p>
 			<?php else : ?>
 				<ul>
 					<?php
@@ -109,14 +109,14 @@ $params = array(
 					?>
 				</ul>
 				<form class="item-sort" method="get" action="">
-	            	<label><?=___('advanced_search_form_sortby'); ?></label>
+	            	<label><?=___('Sort By'); ?></label>
 	            	<?php 
 						$sort_orders = array( 
-						    '' => ___('advanced_search_form_keyword_match'),
-						    'newest' => ___('advanced_search_form_newest'),
-						    'name' => ___('advanced_search_form_name'),
-						    'averagerating' => ___('advanced_search_form_rating'),
-						    'weeklydownloads' => ___('advanced_search_form_popularity')
+						    '' => ___('Keyword Match'),
+						    'newest' => ___('Newest'),
+						    'name' => ___('Name'),
+						    'averagerating' => ___('Rating'),
+						    'weeklydownloads' => ___('Popularity')
 						);
 						$html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
 					?>
@@ -126,7 +126,7 @@ $params = array(
                           <input type="hidden" name="<?=$name?>" value="<?=$val?>" />
                         <?php endif; ?>
                     <?php endforeach; ?>
-					<button><?=___('collections_index_button_go')?></button>
+					<button><?=___('Go')?></button>
 		        </form>
 				<script type="text/javascript">collections.init();</script>
             <?php endif; ?>
@@ -142,16 +142,16 @@ $params = array(
 <?php if (!empty($search_results)): ?>
   <div class="secondary" role="complementary">
 	<div class="highlight">
-        <h2><?=___('search_results_refine_header', 'Refine Results')?></h2>
+        <h2><?=___('Refine Results')?></h2>
 		<div id="refine-compatibility">
-            <h5><?=___('search_filter_compatible_header', 'Compatible with')?></h5>
+            <h5><?=___('Compatible with')?></h5>
 			<ul class="refinements">
 				<?php
 					$selected = "";
 					if ($hver == "any") {
 						$selected = " class='selected'";
 					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('search_refine_all_versions_link', 'All Versions').'</a></li>';
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('All Versions').'</a></li>';
 				?>
 				<?php
 					$min_display_version_by_app = array(
@@ -189,7 +189,7 @@ $params = array(
 			</ul>
 		</div>
 		<div id="refine-category">
-            <h5><?=___('search_filter_categories_header', 'Categories')?></h5>
+            <h5><?=___('Categories')?></h5>
 			<ul class="refinements">
 				<?php
 					if ($category == array(0,0)) {
@@ -197,7 +197,7 @@ $params = array(
 					} else {
 						$selected = "";
 					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('search_refine_all_categories_link', 'All').'</a></li>';
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('All').'</a></li>';
 					$results_categories = array();
 					foreach ($search_results as $addon) {
 						if (!empty($addon['Category'])) {
@@ -217,11 +217,11 @@ $params = array(
 			</ul>
 		</div>
 		<div id="refine-tags">
-            <h5><?=___('search_filter_tags_header', 'Tags')?></h5>
+            <h5><?=___('Tags')?></h5>
 			<ul class="refinements addon-tags">
 				<?php
 					if (empty($top_tags)) {
-						echo '<li>'.___('search_filter_no_tags', 'No tags for these add-ons').'</li>';
+						echo '<li>'.___('No tags for these add-ons').'</li>';
 					} else {
 						foreach($top_tags as $top_tag ) {
 							$_tag = $top_tag['Tag']['tag_text'];

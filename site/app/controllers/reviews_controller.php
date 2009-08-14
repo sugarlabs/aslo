@@ -68,14 +68,14 @@ class ReviewsController extends AppController
         $format = (isset($this->namedArgs['format']) ? $this->namedArgs['format'] : 'html');
     
         if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
         
         $this->Addon->bindOnly('Version');
         $addon = $this->Addon->findById($id);
         if (empty($addon)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
         $this->publish('addon', $addon);
@@ -199,10 +199,10 @@ class ReviewsController extends AppController
         $this->publish('reviews_others_counts', $others_counts);
         $this->publish('reviews', $reviews);
             
-        $_title = sprintf(_('addon_review_pagetitle'), $addon['Translation']['name']['string']);
+        $_title = sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);
 
         if ($format != 'rss') {
-            $this->pageTitle = $_title.' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            $this->pageTitle = $_title.' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('rssAdd', array("/reviews/display/{$id}/format:rss"));
             $this->publish('breadcrumbs', array(
                 $addon['Translation']['name']['string'] => "/addon/{$addon['Addon']['id']}",
@@ -232,24 +232,24 @@ class ReviewsController extends AppController
         $this->set('reviewRating', 0);
         
         if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
         
         $addon = $this->Addon->getAddon($id);
         if (empty($addon)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
 
         $isauthor = $this->Amo->checkOwnership($id, $addon['Addon'], true);
         if($isauthor) {
-            $this->flash(_('error_addon_selfreview'), '/', 3);
+            $this->flash(___('You cannot review your own add-on.'), '/', 3);
         }
 
         $this->publish('addon', $addon);
-        $_title = sprintf(_('addon_review_pagetitle'), $addon['Translation']['name']['string']);
-        $this->pageTitle = $_title .' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $_title = sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);
+        $this->pageTitle = $_title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         // fetch user object from session
         $user = $this->Session->read('User');
@@ -323,14 +323,14 @@ class ReviewsController extends AppController
         $this->publish('cssAdd', array('forms'));
 
         if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
         
         // find review we're replying to (only where reply_to is null, i.e. no replies to replies)
         $review = $this->Review->find("Review.id = $id AND Review.reply_to IS NULL", null, null, 2);
         if (empty($review)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
         $this->publish('reply_to', $review);
@@ -338,20 +338,20 @@ class ReviewsController extends AppController
         $version = $this->Version->findById($review['Review']['version_id']);
         $addon = $this->Addon->getAddon($version['Version']['addon_id']);
         if (empty($addon)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
         $this->publish('addon', $addon);
 
-        $_title = sprintf(_('addon_review_pagetitle'), $addon['Translation']['name']['string']);
-        $this->pageTitle = $_title .' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $_title = sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);
+        $this->pageTitle = $_title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         // fetch user object from session
         $user = $this->Session->read('User');
 
         // only authors are allowed to reply to reviews
         if (!$this->Amo->checkOwnership($addon['Addon']['id'], $addon['Addon'])) {
-            $this->flash(_('error_access_denied'), '/', 3);
+            $this->flash(___('Access Denied'), '/', 3);
             return;
         }
         
@@ -422,8 +422,8 @@ class ReviewsController extends AppController
         $review = $this->Review->findById($id, null, null, 2);
         $review['Addon'] = $this->Addon->findById($review['Version']['addon_id'], array('id', 'name'), null, -1);
         
-        $_title = sprintf(_('addon_review_pagetitle'), $review['Addon']['Translation']['name']['string']);
-        $this->pageTitle = $_title .' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $_title = sprintf(___('Reviews for %s'), $review['Addon']['Translation']['name']['string']);
+        $this->pageTitle = $_title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         $this->publish('breadcrumbs', array(
                 $review['Addon']['Translation']['name']['string'] => "/addon/{$review['Addon']['Addon']['id']}",
@@ -447,7 +447,7 @@ class ReviewsController extends AppController
             debug($review['Addon']['Addon']['id']);
             $this->Review->updateBayesianRating(array($review['Addon']['Addon']['id']));
             
-            $this->flash(_('addon_review_deleted_successfully'), "/reviews/display/{$review['Version']['addon_id']}");
+            $this->flash(___('Review deleted successfully.'), "/reviews/display/{$review['Version']['addon_id']}");
             return;
         }
         
@@ -471,9 +471,9 @@ class ReviewsController extends AppController
         if (!isset($this->data['Review']['id']) || !is_numeric($this->data['Review']['id'])) {
             header('HTTP/1.1 400 Bad Request');
             if (!$ajax)
-                $this->flash(_('error_missing_argument'), "/");
+                $this->flash(___('Missing argument: %s'), "/");
             else {
-                $this->publish('msg', _('error_missing_argument'));
+                $this->publish('msg', ___('Missing argument: %s'));
                 $this->render('flag', 'ajax');
             }
             return;
@@ -483,7 +483,7 @@ class ReviewsController extends AppController
             if (!$ajax)
                 $this->Amo->checkLoggedIn();
             else {
-                $this->publish('msg', _('error_access_denied'));
+                $this->publish('msg', ___('Access Denied'));
                 $this->render('flag', 'ajax');
             }
             return;

@@ -135,7 +135,7 @@ class TagsController extends AppController
         foreach ($split_tags as $tag_text) {
         	// If we're up to 80 tags, then break
         	if ($num_tags > 79) {
-                $this->publish('message', ___('tag_message_tag_limit_reached', 'Tag limit reached'));
+                $this->publish('message', ___('Tag limit reached'));
         		break;
         	}
 
@@ -191,7 +191,7 @@ class TagsController extends AppController
 			} else {
 				// Add Tag to Addon
 				$this->Addon->addTag($addon_id, $tag_id, $user['id']);
-				$this->publish('message', ___('tag_message_tag_added', 'Tag added'));
+				$this->publish('message', ___('Tag added'));
 			}
             $num_tags++;
         } // foreach $tag	
@@ -268,7 +268,7 @@ class TagsController extends AppController
         $this->publish('addon_id', $addon_data['Addon']['id']);
         $this->publish('userTags', $tags['userTags']);
         $this->publish('developerTags', $tags['developerTags']);  
-		$this->publish('message', ___('tag_message_tag_removed', 'Tag removed'));
+		$this->publish('message', ___('Tag removed'));
         
  		if (@$_POST['ajax']==1) {
  			$this->render('tag_added', 'ajax');  
@@ -369,7 +369,7 @@ class TagsController extends AppController
             $results = array();
         }
         $this->publish('bigHeader', true);
-        $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+        $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
         
         /* pull in platforms for install button */
         $this->Platform->unbindFully();
@@ -378,7 +378,7 @@ class TagsController extends AppController
 
         $this->publish('results', $results);
 
-		$this->pageTitle = sprintf(_('addons_display_pagetitle'), $tag['Tag']['tag_text']). ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+		$this->pageTitle = sprintf(___('%s'), $tag['Tag']['tag_text']). ' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 		
 		$this->render();
 		return;

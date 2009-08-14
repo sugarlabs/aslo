@@ -64,7 +64,7 @@ class StatisticsController extends AppController
         $this->Amo->clean($this->data); 
         
         $this->layout = 'amo2009';
-        $this->pageTitle = _('statistics_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Statistics Dashboard').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         $this->cssAdd = array('stats/stats');
         $this->publish('cssAdd', $this->cssAdd);
@@ -75,10 +75,10 @@ class StatisticsController extends AppController
         $prescriptJS = "var statsURL = '".$this->url('/statistics/')."';";
         $this->set('prescriptJS', $prescriptJS);
         
-        $this->breadcrumbs = array(_('statistics_pagetitle') => '/statistics/index');
+        $this->breadcrumbs = array(___('Statistics Dashboard') => '/statistics/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         
-        $this->publish('subpagetitle', _('statistics_pagetitle'));
+        $this->publish('subpagetitle', ___('Statistics Dashboard'));
     }
     
    /**
@@ -122,26 +122,26 @@ class StatisticsController extends AppController
         $this->publish('statsOverview', $this->_cachedStats('getSiteStatsOverview', array()));
 
         $this->publish('jsLocalization', array(
-            'addons_downloaded' => ___('statistics_addons_downloaded', 'Add-ons Downloaded'),
-            'addons_in_use' => ___('statistics_addons_inuse', 'Add-ons In Use'),
-            'addons_created' => ___('statistics_addons_created', 'Add-ons Created'),
-            'addons_updated' => ___('statistics_addons_updated', 'Add-ons Updated'),
-            'users_created' => ___('statistics_users_created', 'Users Created'),
-            'reviews_created' => ___('statistics_reviews_created', 'Reviews Created'),
-            'collections_created' => ___('statistics_collections_created', 'Collections Created'),
-            'statistics_js_groupby_selector_date' => ___('statistics_js_groupby_selector_date', 'Group by: Day'),
-            'statistics_js_groupby_selector_week' => ___('statistics_js_groupby_selector_week', 'Group by: Week'),
-            'statistics_js_groupby_selector_month' => ___('statistics_js_groupby_selector_month', 'Group by: Month'),
-            'statistics_js_last_30days' => ___('statistics_js_last_30days', 'Show last: 30 days'),
-            'statistics_js_last_60days' => ___('statistics_js_last_60days', 'Show last: 60 days'),
-            'statistics_js_last_90days' => ___('statistics_js_last_90days', 'Show last: 90 days'),
-            'statistics_js_last_18weeks' => ___('statistics_js_last_18weeks', 'Show last: 18 weeks'),
-            'statistics_js_last_36weeks' => ___('statistics_js_last_36weeks', 'Show last: 36 weeks'),
-            'statistics_js_last_54weeks' => ___('statistics_js_last_54weeks', 'Show last: 54 weeks'),
-            'statistics_js_last_12months' => ___('statistics_js_last_12months', 'Show last: 12 months'),
-            'statistics_js_last_24months' => ___('statistics_js_last_24months', 'Show last: 24 months'),
-            'statistics_js_last_36months' => ___('statistics_js_last_36months', 'Show last: 36 months'),
-            'date' => _('date'),
+            'addons_downloaded' => ___('Add-ons Downloaded'),
+            'addons_in_use' => ___('Add-ons In Use'),
+            'addons_created' => ___('Add-ons Created'),
+            'addons_updated' => ___('Add-ons Updated'),
+            'users_created' => ___('Users Created'),
+            'reviews_created' => ___('Reviews Created'),
+            'collections_created' => ___('Collections Created'),
+            'statistics_js_groupby_selector_date' => ___('Group by: Day'),
+            'statistics_js_groupby_selector_week' => ___('Group by: Week'),
+            'statistics_js_groupby_selector_month' => ___('Group by: Month'),
+            'statistics_js_last_30days' => ___('Show last: 30 days'),
+            'statistics_js_last_60days' => ___('Show last: 60 days'),
+            'statistics_js_last_90days' => ___('Show last: 90 days'),
+            'statistics_js_last_18weeks' => ___('Show last: 18 weeks'),
+            'statistics_js_last_36weeks' => ___('Show last: 36 weeks'),
+            'statistics_js_last_54weeks' => ___('Show last: 54 weeks'),
+            'statistics_js_last_12months' => ___('Show last: 12 months'),
+            'statistics_js_last_24months' => ___('Show last: 24 months'),
+            'statistics_js_last_36months' => ___('Show last: 36 months'),
+            'date' => ___('%B %e, %Y'),
         ));
 
         // Get initial chart data (daily) - but check cache first
@@ -187,7 +187,7 @@ class StatisticsController extends AppController
         $this->Addon->id = $addon_id;
         $this->Addon->unbindFully();
         if (!$addon = $this->Addon->read()) {
-            $this->flash(_('error_addon_notfound'), '/statistics/index');
+            $this->flash(___('Add-on not found!'), '/statistics/index');
             return;
         }
         
@@ -199,7 +199,7 @@ class StatisticsController extends AppController
         // Make sure user has permission to view this add-on's stats
         if (!$this->_checkAccess($addon_id, $addon) && 
             !($rss && !empty($this->namedArgs['key']) && md5($addon['Addon']['created']) == $this->namedArgs['key'])) {
-            $this->flash(_('devcp_error_addon_access_denied'), '/developers/index');
+            $this->flash(___('You do not have access to that add-on.'), '/developers/index');
             return;
         }
         
@@ -236,7 +236,7 @@ class StatisticsController extends AppController
         $this->publish('addon', $addon);
         $this->publish('addon_name', $addon['Translation']['name']['string']);
         
-        $this->breadcrumbs[sprintf(_('statistics_title_addon_stats'), $addon['Translation']['name']['string'])] = '/statistics/addon/'.$addon_id;
+        $this->breadcrumbs[sprintf(___('%1$s Statistics'), $addon['Translation']['name']['string'])] = '/statistics/addon/'.$addon_id;
         $this->publish('breadcrumbs', $this->breadcrumbs);
         
         $prescriptJS = "var Simile_urlPrefix = '".SITE_URL.$this->base.'/js/simile'."';";
@@ -290,50 +290,50 @@ class StatisticsController extends AppController
             }
         }
         $this->set('stats', $stats);
-        $this->pageTitle = $addon['Translation']['name']['string'].' :: '._('statistics_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = $addon['Translation']['name']['string'].' :: '.___('Statistics Dashboard').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         if (!$rss) {
             $this->publish('jsLocalization', array(
-                    'date' => _('date'),
-                    'statistics_js_dropdowns_removeplot' => _('statistics_js_dropdowns_removeplot'),
-                    'statistics_js_dropdowns_none' => _('statistics_js_dropdowns_none'),
-                    'statistics_js_download_csv' => ___('statistics_js_download_csv', 'View this table in CSV format'),
-                    'statistics_js_groupby_selector_date' => ___('statistics_js_groupby_selector_date', 'Group by: Day'),
-                    'statistics_js_groupby_selector_week' => ___('statistics_js_groupby_selector_week', 'Group by: Week'),
-                    'statistics_js_groupby_selector_week_over_week' => ___('statistics_js_groupby_selector_week_over_week', 'Compare by: Week'),
-                    'statistics_js_groupby_selector_month' => ___('statistics_js_groupby_selector_month', 'Group by: Month'),
-                    'statistics_js_plotselection_selector_summary' => _('statistics_js_plotselection_selector_summary'),
-                    'statistics_js_plotselection_selector_downloads' => _('statistics_js_plotselection_selector_downloads'),
-                    'statistics_js_plotselection_selector_adu' => _('statistics_js_plotselection_selector_adu'),
-                    'statistics_js_plotselection_selector_version' => _('statistics_js_plotselection_selector_version'),
-                    'statistics_js_plotselection_selector_application' => _('statistics_js_plotselection_selector_application'),
-                    'statistics_js_plotselection_selector_status' => _('statistics_js_plotselection_selector_status'),
-                    'statistics_js_plotselection_selector_os' => _('statistics_js_plotselection_selector_os'),
-                    'statistics_js_plotselection_selector_custom' => _('statistics_js_plotselection_selector_custom'),
-                    'statistics_js_plotselection_foundinrange' => _('statistics_js_plotselection_foundinrange'),
-                    'statistics_js_plotselection_options_count_name_checked' => _('statistics_js_plotselection_options_count_name_checked'),
-                    'statistics_js_plotselection_options_count_name_unchecked' => _('statistics_js_plotselection_options_count_name_unchecked'),
-                    'statistics_js_plotselection_options_count_tooltip' => _('statistics_js_plotselection_options_count_tooltip'),
-                    'statistics_js_plotselection_options_events_firefox_name_checked' => _('statistics_js_plotselection_options_events_firefox_name_checked'),
-                    'statistics_js_plotselection_options_events_firefox_name_unchecked' => _('statistics_js_plotselection_options_events_firefox_name_unchecked'),
-                    'statistics_js_plotselection_options_events_firefox_tooltip' => _('statistics_js_plotselection_options_events_firefox_tooltip'),
-                    'statistics_js_plotselection_options_events_addon_name_checked' => _('statistics_js_plotselection_options_events_addon_name_checked'),
-                    'statistics_js_plotselection_options_events_addon_name_unchecked' => _('statistics_js_plotselection_options_events_addon_name_unchecked'),
-                    'statistics_js_plotselection_options_events_addon_tooltip' => _('statistics_js_plotselection_options_events_addon_tooltip'),
-                    'statistics_js_plotselection_options_addplot_name' => _('statistics_js_plotselection_options_addplot_name'),
-                    'statistics_js_plotselection_options_addplot_tooltip' => _('statistics_js_plotselection_options_addplot_tooltip'),
-                    'statistics_js_plotselection_options_resize_name_checked' => _('statistics_js_plotselection_options_resize_name_checked'),
-                    'statistics_js_plotselection_options_resize_name_unchecked' => _('statistics_js_plotselection_options_resize_name_unchecked'),
-                    'statistics_js_plotselection_options_resize_tooltip' => _('statistics_js_plotselection_options_resize_tooltip'),
-                    'statistics_js_plotselection_options_csv_name' => _('statistics_js_plotselection_options_csv_name'),
-                    'statistics_js_plotselection_options_csv_tooltip' => _('statistics_js_plotselection_options_csv_tooltip')
+                    'date' => ___('%B %e, %Y'),
+                    'statistics_js_dropdowns_removeplot' => ___('Remove this plot'),
+                    'statistics_js_dropdowns_none' => ___('none'),
+                    'statistics_js_download_csv' => ___('View this table in CSV format'),
+                    'statistics_js_groupby_selector_date' => ___('Group by: Day'),
+                    'statistics_js_groupby_selector_week' => ___('Group by: Week'),
+                    'statistics_js_groupby_selector_week_over_week' => ___('Compare by: Week'),
+                    'statistics_js_groupby_selector_month' => ___('Group by: Month'),
+                    'statistics_js_plotselection_selector_summary' => ___('Summary'),
+                    'statistics_js_plotselection_selector_downloads' => ___('Downloads'),
+                    'statistics_js_plotselection_selector_adu' => ___('Active Daily Users'),
+                    'statistics_js_plotselection_selector_version' => ___('Add-on Version'),
+                    'statistics_js_plotselection_selector_application' => ___('Application'),
+                    'statistics_js_plotselection_selector_status' => ___('Add-on Status'),
+                    'statistics_js_plotselection_selector_os' => ___('Operating System'),
+                    'statistics_js_plotselection_selector_custom' => ___('Custom'),
+                    'statistics_js_plotselection_foundinrange' => ___('%s found in range'),
+                    'statistics_js_plotselection_options_count_name_checked' => ___('Hide Total Count'),
+                    'statistics_js_plotselection_options_count_name_unchecked' => ___('Show Total Count'),
+                    'statistics_js_plotselection_options_count_tooltip' => ___('Plot the total count on this graph'),
+                    'statistics_js_plotselection_options_events_firefox_name_checked' => ___('Hide Firefox Events'),
+                    'statistics_js_plotselection_options_events_firefox_name_unchecked' => ___('Show Firefox Events'),
+                    'statistics_js_plotselection_options_events_firefox_tooltip' => ___('Overlay Firefox release dates on the plots'),
+                    'statistics_js_plotselection_options_events_addon_name_checked' => ___('Hide %s Events'),
+                    'statistics_js_plotselection_options_events_addon_name_unchecked' => ___('Show %s Events'),
+                    'statistics_js_plotselection_options_events_addon_tooltip' => ___('Overlay add-on release dates on the plots'),
+                    'statistics_js_plotselection_options_addplot_name' => ___('Add Plot'),
+                    'statistics_js_plotselection_options_addplot_tooltip' => ___('Add another plot to this graph'),
+                    'statistics_js_plotselection_options_resize_name_checked' => ___('Collapse Graph'),
+                    'statistics_js_plotselection_options_resize_name_unchecked' => ___('Expand Graph'),
+                    'statistics_js_plotselection_options_resize_tooltip' => ___('Resize the graph'),
+                    'statistics_js_plotselection_options_csv_name' => ___('View Data (CSV)'),
+                    'statistics_js_plotselection_options_csv_tooltip' => ___('Get a Comma Separated Values file of this data')
                 ));
             
             $this->render('addon', 'amo2009');
         }
         else {
-            $this->publish('rss_title', sprintf(_('statistics_title_addon_stats'), $addon['Translation']['name']['string']));
-            $this->publish('rss_description', sprintf(_('statistics_rss_description'), $addon['Translation']['name']['string']));
+            $this->publish('rss_title', sprintf(___('%1$s Statistics'), $addon['Translation']['name']['string']));
+            $this->publish('rss_description', sprintf(___('Daily summary of statistics for %1$s'), $addon['Translation']['name']['string']));
             $this->render('rss/summary', 'rss');
         }
     }
@@ -344,7 +344,7 @@ class StatisticsController extends AppController
     function sitecsv($plot=null) {
         if (!in_array($plot, array('date', 'week', 'month'))) {
             header('HTTP/1.1 404 Not Found');
-            $this->flash(___('statistics_csv_not_found', 'CSV data not found'), "/statistics/");
+            $this->flash(___('CSV data not found'), "/statistics/");
             return;
         }
 
@@ -429,7 +429,7 @@ class StatisticsController extends AppController
         
         // Make sure user is owner in order to change this setting
         if (!$this->Amo->checkOwnership($addon_id, null, true)) {
-            $this->flash(_('devcp_error_addon_access_denied'), '/statistics/addon/'.$addon_id);
+            $this->flash(___('You do not have access to that add-on.'), '/statistics/addon/'.$addon_id);
             return;
         }
         

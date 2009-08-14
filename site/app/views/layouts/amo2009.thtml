@@ -199,10 +199,10 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
 <body id="mozilla-com" class="html-<?=TEXTDIR?> <?=APP_SHORTNAME?> <?= ($this->controller->Session->check('User')) ? 'user-login' : 'user-anon' ?><?= isset($bodyclass) ? ' ' . $bodyclass : '' ?>">
 
     <ul id="nav-access" role="navigation">
-        <li><a href="#content"><?=___('header_navaccess_main_content', 'Skip to main content')?></a></li>
-        <li><a href="#search-form"><?=___('header_navaccess_search_form', 'Skip to search form')?></a></li>
-        <li><a href="#categories"><?=___('header_navaccess_categories_menu', 'Skip to categories menu')?></a></li>
-        <li><a href="#other-apps"><?=___('header_navaccess_applications_menu', 'Skip to other applications menu')?></a></li>
+        <li><a href="#content"><?=___('Skip to main content')?></a></li>
+        <li><a href="#search-form"><?=___('Skip to search form')?></a></li>
+        <li><a href="#categories"><?=___('Skip to categories menu')?></a></li>
+        <li><a href="#other-apps"><?=___('Skip to other applications menu')?></a></li>
     </ul>
 
     <?php if (is_object($this->controller->Config) && $this->controller->Config->getValue('site_notice') != ''): ?>
@@ -215,46 +215,46 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                 switch (APP_SHORTNAME) {
                     case 'firefox':
                         $main_header = sprintf(
-                            ___('header_main_firefox_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Firefox" /> Firefox'),
+                            ___('Add-ons <em>for</em> <img alt="Firefox" src="%1$s" /> <strong>Firefox</strong>'),
                             $html->url('/img/amo2009/app-icons/firefox.png', null, false, false)
                         );
                         break;
                     case 'seamonkey':
                         $main_header = sprintf(
-                            ___('header_main_seamonkey_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Seamonkey" /> Seamonkey'),
+                            ___('Add-ons <em>for</em> <img alt="seamonkey" src="%1$s" /> <strong>SeaMonkey</strong>'),
                             $html->url('/img/amo2009/app-icons/seamonkey.png', null, false, false)
                         );
                         break;
                     case 'sunbird':
                         $main_header = sprintf(
-                            ___('header_main_sunbird_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Sunbird" /> Sunbird'),
+                            ___('Add-ons <em>for</em> <img alt="sunbird" src="%1$s" /> <strong>Sunbird</strong>'),
                             $html->url('/img/amo2009/app-icons/sunbird.png', null, false, false)
                         );
                         break;
                     case 'thunderbird':
                         $main_header = sprintf(
-                            ___('header_main_thunderbird_header_with_logo', 'Add-ons <em>for</em> <img src="%1$s" alt="Thunderbird" /> Thunderbird'),
+                            ___('Add-ons <em>for</em> <img alt="thunderbird" src="%1$s" /> <strong>Thunderbird</strong>'),
                             $html->url('/img/amo2009/app-icons/thunderbird.png', null, false, false)
                         );
                         break;
                     default:
                         $main_header = sprintf(
-                            ___('header_main_header_with_logo', 'Add-ons <img src="%1$s" alt="Add-ons" />'),
+                            ___('Add-ons <img alt="Add-ons" src="%1$s" />'),
                             $html->url('/img/amo2009/app-icons/generic.png', null, false, false)
                         );
                         break;
                 }
             ?>
-            <p id="title"><a href="<?=$html->url('/')?>" title="<?=sprintf(_('header_home_tooltip'), APP_PRETTYNAME)?>"><?= $main_header ?></a></p>
-            <p id="brand"><a href="http://www.mozilla.com/<?=LANG?>/" title="<?=___('header_brand_name', 'Mozilla')?>" accesskey="1"><?=___('header_brand_name', 'Mozilla')?></a></p>
+            <p id="title"><a href="<?=$html->url('/')?>" title="<?=sprintf(___('Return to the %1$s Add-ons homepage'), APP_PRETTYNAME)?>"><?= $main_header ?></a></p>
+            <p id="brand"><a href="http://www.mozilla.com/<?=LANG?>/" title="<?=___('Mozilla')?>" accesskey="1"><?=___('Mozilla')?></a></p>
 
             <?php if (isset($header_extra)) echo $header_extra ?>
 
             <div id="aux-nav" role="navigation">
 
-                <ul id="other-apps" class="change" title="<?=___('other_apps_tooltip');?>">
+                <ul id="other-apps" class="change" title="<?=___('Find add-ons for other applications');?>">
                     <li>
-                        <a href="#" class="controller"><?=_('addons_home_other_applications')?></a>
+                        <a href="#" class="controller"><?=___('Other Applications')?></a>
                         <ul><?php
                             global $app_shortnames, $app_prettynames;
                             $applist = array();
@@ -275,7 +275,7 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                 <?php if (!$this->controller->Session->check('User')): ?>
                     <p class="context">
                         <?= sprintf(
-                            ___('header_navlink_register_or_login', '<a href="%1$s">Register</a> or <a href="%2$s">Log in</a>'),
+                            ___('<a href="%1$s">Register</a> or <a href="%2$s">Log in</a>'),
                             $html->url('/users/register', false), $html->url($html->login_url())
                         ) ?>
                     </p>
@@ -283,19 +283,19 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                 else:
                     $tools_links = array();
                     $user = $this->controller->Session->read('User');
-                    $tools_links[] = $html->link(_('sidebar_navlink_developer_tools'), '/developers');
+                    $tools_links[] = $html->link(___('Developer Tools'), '/developers');
                     if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User')))
-                        $tools_links[] = $html->link(_('sidebar_navlink_editor_tools'), '/editors');
+                        $tools_links[] = $html->link(___('Editor Tools'), '/editors');
                     if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User')))
                         $tools_links[] = $html->link('Localizer Tools', '/localizers');
                     if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User')))
-                        $tools_links[] = $html->link(_('sidebar_navlink_admin_tools'), '/admin');
+                        $tools_links[] = $html->link(___('Admin Tools'), '/admin');
 
                     if (count($tools_links) > 1):
                     ?>
                     <ul class="tools">
                         <li>
-                        <a href="#" class="controller"><?=___('header_navlink_tools', 'Tools')?></a>
+                        <a href="#" class="controller"><?=___('Tools')?></a>
                             <ul>
                                 <?php foreach ($tools_links as $_tl): ?>
                                 <li><?=$_tl?></li>
@@ -309,9 +309,9 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                     </p>
                     <?php endif; // more than one tools link ?>
                     <p class="context">
-                        <span class="greeting"><?=(!empty($welcomeName) ? sprintf(_('sidebar_navlink_welcome_name'), $welcomeName) : _('sidebar_navlink_welcome'))?></span>
-                        <?= $html->link(_('header_navlink_myaccount'), '/users/edit', array('class'=>'settings','title' => $user['email'])) ?>
-                        <?= $html->link(_('header_navlink_logout'), $html->logout_url()) ?>
+                        <span class="greeting"><?=(!empty($welcomeName) ? sprintf(___('Welcome, %s'), $welcomeName) : ___('Welcome'))?></span>
+                        <?= $html->link(___('My Account'), '/users/edit', array('class'=>'settings','title' => $user['email'])) ?>
+                        <?= $html->link(___('Log out'), $html->logout_url()) ?>
                     </p>
                 <?php endif; // logged in ?>
 
@@ -329,7 +329,7 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
         <?php if (!isset($suppressLanguageSelector) || !$suppressLanguageSelector): ?>
             <form class="languages go" method="get" action="">
               <div>
-                <label for="language"><?=_('footer_other_languages')?></label>
+                <label for="language"><?=___('Other languages:')?></label>
                 <select id="language" name="lang" dir="ltr">
                 <?php
                 // Retrieve language arrays from bootstrap.
@@ -340,22 +340,22 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                 }
                 ?>
                 </select>
-                <button type="submit"><?=_('footer_lang_form_lang_submit_go')?></button>
+                <button type="submit"><?=___('Go')?></button>
               </div>
             </form>
         <?php endif; ?>
 
-        <p><strong><?=_('footer_copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla.</strong> <?=_('footer_all_rights_reserved')?></p>
+        <p><strong><?=___('Copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla.</strong> <?=___('All rights reserved.')?></p>
         <ul>
-            <li><?=$html->link(_('footer_privacy_policy'), '/pages/privacy');?></li>
-            <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=_('footer_legal_notices')?></a></li>
-            <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(_('footer_credits'), '/pages/credits')?></li><?php endif; ?>
-            <li><?=$html->link(___('footer_a_about'), '/pages/about')?></li>
-            <li><?=$html->link('<abbr title="'.___('footer_abbr_faq').'">'.___('footer_a_faq').'</abbr>', '/pages/faq')?></li>
-            <li><a href="http://blog.mozilla.com/addons"><?=___('footer_a_blog')?></a></li>
+            <li><?=$html->link(___('Privacy Policy'), '/pages/privacy');?></li>
+            <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=___('Legal Notices')?></a></li>
+            <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(___('Credits'), '/pages/credits')?></li><?php endif; ?>
+            <li><?=$html->link(___('About'), '/pages/about')?></li>
+            <li><?=$html->link('<abbr title="'.___('Frequently Asked Questions').'">'.___('FAQ').'</abbr>', '/pages/faq')?></li>
+            <li><a href="http://blog.mozilla.com/addons"><?=___('Blog')?></a></li>
         </ul>
 
-        <p class="disclaimer"><?=_('footer_disclaimer')?></p>
+        <p class="disclaimer"><?=___('Mozilla is providing links to these applications as a courtesy, and makes no representations regarding the applications or any information related there to. Any questions, complaints or claims regarding the applications must be directed to the appropriate software vendor.')?></p>
         </div>
         <div class="secondary">
             <img src="<?=$html->url('/img/amo2009/illustrations/logo-add-ons-half.png', null, false, false)?>" alt="" />

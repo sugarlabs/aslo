@@ -73,37 +73,37 @@ class AddonsController extends AppController
 
             // see: http://digg.com/tools/integrate#3
             'digg' => array(
-                'label' => ___('addons_share_label_digg', 'Digg this!'),
+                'label' => ___('Digg this!'),
                 'url' => 'http://digg.com/submit?url={URL}&title={TITLE}&bodytext={DESCRIPTION}&media=news&topic=tech_news'
             ),
 
             // see: http://www.facebook.com/share_options.php
             'facebook' => array(
-                'label' => ___('addons_share_label_facebook', 'Post to Facebook'),
+                'label' => ___('Post to Facebook'),
                 'url' => 'http://www.facebook.com/share.php?u={URL}&t={TITLE}'
             ),
 
             // see: http://delicious.com/help/savebuttons
             'delicious' => array(
-                'label' => ___('addons_share_label_delicious', 'Add to Delicious'),
+                'label' => ___('Add to Delicious'),
                 'url' => 'http://delicious.com/save?url={URL}&title={TITLE}&notes={DESCRIPTION}'
             ),
 
             // see: http://www.myspace.com/posttomyspace
             'myspace' => array(
-                'label' => ___('addons_share_label_myspace', 'Post to MySpace'),
+                'label' => ___('Post to MySpace'),
                 'url' => 'http://www.myspace.com/index.cfm?fuseaction=postto&t={TITLE}&c={DESCRIPTION}&u={URL}&l=1'
             ),
 
             // see: http://friendfeed.com/embed/link
             'friendfeed' => array(
-                'label' => ___('addons_share_label_friendfeed', 'Share on FriendFeed'),
+                'label' => ___('Share on FriendFeed'),
                 'url' => 'http://friendfeed.com/?url={URL}&title={TITLE}'
             ),
 
             // See Nick Nguyen
             'twitter' => array(
-                'label' => ___('addons_share_label_twitter', 'Post to Twitter'),
+                'label' => ___('Post to Twitter'),
                 'url' => 'https://twitter.com/home?status={TITLE} {URL}'
             )
 
@@ -121,17 +121,17 @@ class AddonsController extends AppController
      */
     function contribute($addon_id) {
         if ($this->Config->getValue('paypal_disabled')) {
-            return $this->flash(___('error_paypal_disabled'), '/', 3);
+            return $this->flash(___('Sorry, PayPal contributions are temporarily disabled.'), '/', 3);
         }
 
         $this->Addon->unbindFully();
         $addon = $this->Addon->findById($addon_id);
         if (empty($addon)) {
-            return $this->flash(_('error_addon_notfound'), '/', 3);
+            return $this->flash(___('Add-on not found!'), '/', 3);
         }
 
         if (!$this->Addon->acceptContributions($addon)) {
-            return $this->flash(___('error_addon_no_contributions'), '/', 3);
+            return $this->flash(___('The add-on developers have not enabled contributions.'), '/', 3);
         }
 
         $type = isset($_GET['type']) ? $_GET['type'] : null;
@@ -157,7 +157,7 @@ class AddonsController extends AppController
         $return_url = $this->url("/addons/after_contribute/{$a['id']}/{$uuid}");
         $this->Paypal->contribute($a['paypal_id'],
                                   $a['id'],
-                                  sprintf(___('addon_contribute_item'),
+                                  sprintf(___('Contribution for %1$s'),
                                           $addon['Translation']['name']['string']),
                                   SITE_URL . $return_url,
                                   $amount);
@@ -169,14 +169,14 @@ class AddonsController extends AppController
      */
     function after_contribute($addon_id, $uuid) {
         if (!$addon_id || !is_numeric($addon_id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
         $this->redirect('/addon/'.$addon_id);
     }
 
     function developers($addon_id, $extra=null) {
-        global $valid_status; 
+        global $valid_status;
 
         $associations = array(
             'single_category', 'all_categories', 'authors', 'contrib_details',
@@ -213,11 +213,11 @@ class AddonsController extends AppController
         $this->publish('post_install', $extra === 'post_install');
         $this->publish('roadblock', $extra === 'roadblock');
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
             $addon['Translation']['name']['string'] => '/addon/'.$addon['Addon']['id'],
         ));
 
-        $this->pageTitle = sprintf(n___('addon_developer_title', 'addon_developer_title',
+        $this->pageTitle = sprintf(n___('Meet the %1$s Developer', 'Meet the %1$s Developers',
                                 count($authors)), $addon['Translation']['name']['string']);
     }
 
@@ -243,7 +243,7 @@ class AddonsController extends AppController
 
         // Panic if either the addon or the sharing service is not found.
         if (empty($addon) || empty($service)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
 
@@ -253,13 +253,13 @@ class AddonsController extends AppController
         // the site title.
         $title =
             sprintf(
-                _('addons_display_pagetitle'),
+                ___('%s'),
                 $addon['Translation']['name']['string'].' '.
                 $addon['Version'][0]['version']
             ) .
             ' :: '.
             sprintf(
-                _('addons_home_pagetitle'),
+                ___('Add-ons for %1$s'),
                 APP_PRETTYNAME
             );
 
@@ -279,7 +279,7 @@ class AddonsController extends AppController
     */
     function display($id = null) {
         global $valid_status;
-        $this->publish('jsAdd', array('jquery-ui/ui.lightbox','jquery.autocomplete.pack.js','tags.js'));        
+        $this->publish('jsAdd', array('jquery-ui/ui.lightbox','jquery.autocomplete.pack.js','tags.js'));
         $this->publish('cssAdd', array('jquery-lightbox','autocomplete'));
         $this->layout = 'amo2009';
         $this->set('bodyclass', 'inverse');
@@ -288,14 +288,14 @@ class AddonsController extends AppController
         $this->Amo->clean($id);
 
         $this->publish('bigHeader', true);
-        $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+        $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
 
         $loggedIn = $this->Session->check('User')? true : false;
         $this->set('loggedIn', $loggedIn);
-        if ($loggedIn) { $user=$this->Session->read('User'); } 
+        if ($loggedIn) { $user=$this->Session->read('User'); }
 
         if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
 
@@ -309,7 +309,7 @@ class AddonsController extends AppController
             || !in_array($addon_data['Addon']['addontype_id'], array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_LPAPP, ADDON_PLUGIN))
             || !in_array($addon_data['Addon']['status'], $valid_status)) {
 
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
 
@@ -383,7 +383,7 @@ class AddonsController extends AppController
         $this->publish('addon', $addon_data);
         $this->publish('addonIconPath', $this->Image->getAddonIconURL($id), false);
         $this->publish('addonPreviewPath', $this->Image->getHighlightedPreviewURL($id));
-        $this->pageTitle = sprintf(_('addons_display_pagetitle'), $addon_data['Translation']['name']['string']). ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = sprintf(___('%s'), $addon_data['Translation']['name']['string']). ' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         // get the categories that are related to the addon, so that they have translation data
         $_related_category_ids = array();
@@ -398,16 +398,16 @@ class AddonsController extends AppController
 
         $this->publish('relatedCategories', $related_categories);
 
-        
+
 
         // Make the tag list, passing in this addon and the currently logged in user
         if (!$loggedIn) { $user = null; }
         $tags = $this->Tag->makeTagList($addon_data, $user, $this->SimpleAcl->actionAllowed('Admin', 'DeleteAnyTag', $user));
         $this->publish('tags', $tags);
         $this->publish('userTags', $tags['userTags']);
-        $this->publish('developerTags', $tags['developerTags']);   
+        $this->publish('developerTags', $tags['developerTags']);
         $this->publish('addon_id', $addon_data['Addon']['id']);
-             
+
 
         // The platforms section is necessary because of CakePHP bug #1183 (https://trac.cakephp.org/ticket/1183).  We
         // need the translated strings in the model to offer the right platform to users.
@@ -474,7 +474,7 @@ class AddonsController extends AppController
         // Collapse categories menu
         $this->publish('collapse_categories', true);
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
         ));
     }
 
@@ -504,7 +504,7 @@ class AddonsController extends AppController
         $this->forceShadowDb();
 
         $this->layout='amo2009';
-        $this->pageTitle = sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         $this->publish('stats_downloaded',
             $this->GlobalStat->getNamedCount('addon_total_downloads'));
@@ -529,14 +529,14 @@ class AddonsController extends AppController
 
         $this->publish('baseurl', $this->base);
         $this->publish('bigHeader', true);
-        $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+        $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
 
         // add rss links to global feeds
         $this->publish('rssAdd', array(
-            array('/browse/type:1/cat:all/format:rss?sort=newest', _('rss_newestaddons')),
-            array('/browse/type:1/cat:all/format:rss?sort=updated', ___('rss_updatedaddons', 'Updated Add-ons')),
-            array('/browse/type:1/cat:all/format:rss?sort=popular', ___('rss_popularaddons', 'Popular Add-ons')),
-            array('/recommended/format:rss', _('rss_featuredaddons')),
+            array('/browse/type:1/cat:all/format:rss?sort=newest', ___('Newest Add-ons')),
+            array('/browse/type:1/cat:all/format:rss?sort=updated', ___('Updated Add-ons')),
+            array('/browse/type:1/cat:all/format:rss?sort=popular', ___('Popular Add-ons')),
+            array('/recommended/format:rss', ___('Featured Add-ons')),
         ));
     }
 
@@ -816,17 +816,17 @@ class AddonsController extends AppController
         switch($addontype) {
             case ADDON_THEME:
                 if ($category == 'all') {
-                    $this->pageTitle = sprintf(___('addons_browse_all_themes_title'), APP_PRETTYNAME);
+                    $this->pageTitle = sprintf(___('Browse all Themes :: %1$s Add-ons'), APP_PRETTYNAME);
                 } else {
-                    $this->pageTitle = sprintf(___('addons_browse_categories_header_theme'), $this_category['Translation']['name']['string'], APP_PRETTYNAME);
+                    $this->pageTitle = sprintf(___('Browse %1$s Themes :: %2$s Add-ons'), $this_category['Translation']['name']['string'], APP_PRETTYNAME);
                 }
                 break;
             default:
-                $this->pageTitle = sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+                $this->pageTitle = sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         }
 
         $this->publish('bigHeader', true);
-        $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+        $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
 
         $this->layout = 'mozilla';
 
@@ -1030,10 +1030,10 @@ class AddonsController extends AppController
         // set layout details
         $this->publish('bigHeader', true);
         $this->publish('bigHeaderText',
-            sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+            sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
 
         $this->pageTitle = $this_category['Translation']['name']['string']. " :: " .
-            sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('rssAdd', array(
             "/browse/type:{$addontype}/cat:{$category}/format:rss?sort=updated"
         ));
@@ -1129,7 +1129,7 @@ class AddonsController extends AppController
         $addons = $this->Addon->getAddonsByCategory(null, $displaystatuses,
             $addontype, $category, $sort_by, $sort_dir, $_limit, $_page, '', true);
         if ($category!='all' && empty($this_category) || empty($addons)) {
-            $this->flash(_('error_browse_no_addons'), '/browse/type:' . $addontype, 3);
+            $this->flash(___('No add-ons in this category!'), '/browse/type:' . $addontype, 3);
             return;
         }
         $this->publish('addons', $addons);
@@ -1167,18 +1167,18 @@ class AddonsController extends AppController
         // set layout details and render view
         if ($category == 'all') {
             switch ($sort_by) {
-                case 'popular': $_title = ___('browse_addons_popular'); break;
-                case 'updated': $_title = ___('browse_addons_updated'); break;
-                case 'newest': $_title = ___('browse_addons_newest'); break;
-                case 'rated': $_title = ___('browse_addons_rated'); break;
-                case 'name': $_title = ___('browse_addons_name'); break;
+                case 'popular': $_title = ___('Popular Add-ons'); break;
+                case 'updated': $_title = ___('Recently Updated Add-ons'); break;
+                case 'newest': $_title = ___('Newest Add-ons'); break;
+                case 'rated': $_title = ___('Add-ons by Rating'); break;
+                case 'name': $_title = ___('Add-ons by Name'); break;
                 default: $_title = ''; break;
             }
         } else {
-            $_title = sprintf(_('addons_browse_browse_category'), $this_category['Translation']['name']['string']);
+            $_title = sprintf(___('Browse %s'), $this_category['Translation']['name']['string']);
         }
         if ($format != 'rss') {
-            $this->pageTitle = $_title . " :: " . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            $this->pageTitle = $_title . " :: " . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('subpagetitle', $_title);
 
             // preserve GET variables in RSS feed URLs
@@ -1193,7 +1193,7 @@ class AddonsController extends AppController
         } else {
             // RSS feed
             $this->publish('sort_by', $sort_by, false);
-            $this->publish('rss_title', $_title . " :: " .  sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME));
+            $this->publish('rss_title', $_title . " :: " .  sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME));
             $this->publish('rss_description', '');
             $this->render('rss/addons');
         }
@@ -1253,17 +1253,17 @@ class AddonsController extends AppController
         if ($format != 'rss') {
             $this->set('content_wide', true); // display 2 features next to each other
             $this->set('collapse_categories', true);
-            $this->pageTitle = _('addons_searchengines_pagetitle').' :: '
-                .sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            $this->pageTitle = ___('Search Engines').' :: '
+                .sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('bigHeader', true);
-            $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+            $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
             $this->layout='mozilla';
             //$this->publish('rssAdd', array("/browse/type:".ADDON_SEARCH."/format:rss"));
 
             $this->render('searchengines');
         } else {
             // RSS feed
-            $this->publish('rss_title', _('addons_searchengines_pagetitle'));
+            $this->publish('rss_title', ___('Search Engines'));
             $this->publish('rss_description', '');
             $this->render('rss/searchengines', 'rss');
         }
@@ -1274,8 +1274,8 @@ class AddonsController extends AppController
      */
     function _plugins() {
         $this->layout = 'mozilla';
-        $this->pageTitle = _('addons_plugins_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
-        $this->publish('subpagetitle', sprintf(_('addons_plugins_main_header'), APP_PRETTYNAME));
+        $this->pageTitle = ___('Plugins').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->publish('subpagetitle', sprintf(___('Common Plugins for %1$s'), APP_PRETTYNAME));
         $this->render('plugins');
         return;
     }
@@ -1396,10 +1396,10 @@ class AddonsController extends AppController
         $this->publish('platforms', $platforms);
 
         // set layout details
-        $this->pageTitle = _('langtools_header_dicts_and_langpacks') .' :: '
-            . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Dictionaries & Language Packs') .' :: '
+            . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('bigHeader', true);
-        $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+        $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
         $this->layout = 'mozilla';
         $this->set('collapse_categories', true);
 
@@ -1446,9 +1446,9 @@ class AddonsController extends AppController
         // set layout details
         $this->set('content_wide', true); // display 2 features next to each other
         $this->set('collapse_categories', true);
-        $this->pageTitle = sprintf(___('addons_browse_all_themes_title'), APP_PRETTYNAME);
+        $this->pageTitle = sprintf(___('Browse all Themes :: %1$s Add-ons'), APP_PRETTYNAME);
         $this->publish('bigHeader', true);
-        $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+        $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
         $this->layout = 'mozilla';
 
         $this->render('themes_landing');
@@ -1510,15 +1510,15 @@ class AddonsController extends AppController
             $this->publish('platforms', $platforms);
 
             $this->layout='mozilla';
-            $this->pageTitle = _('addons_recommended_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            $this->pageTitle = ___('Recommended Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('addons', $featAddons);
             $this->publish('rssAdd', array('/recommended/format:rss'));
-            $this->publish('subpagetitle', _('addons_recommended_title'));
+            $this->publish('subpagetitle', ___('Recommended Add-ons'));
             $this->render();
         } else {
             $this->publish('addons', $featAddons);
-            $this->publish('rss_title', _('addons_recommended_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME));
-            $this->publish('rss_description', _('addons_recommended_introduction'));
+            $this->publish('rss_title', ___('Recommended Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME));
+            $this->publish('rss_description', ___('With so many great add-ons available, there\'s something for everyone. To get you started, here\'s a list of some of the most popular. Enjoy!'));
             $this->render('rss/addons', 'rss');
         }
     }
@@ -1534,7 +1534,7 @@ class AddonsController extends AppController
         $this->layout='amo2009';
 
         if (!$addon_id || !is_numeric($addon_id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
 
@@ -1542,7 +1542,7 @@ class AddonsController extends AppController
 
         $this_addon = $this->Addon->findById($addon_id);
         if (empty($this_addon)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
 
@@ -1578,7 +1578,7 @@ class AddonsController extends AppController
 
         $this->publish('relatedCategories', $related_categories);
         $this->publish('addon', $this_addon);
-        $this->pageTitle = sprintf(_('addons_display_pagetitle'), $this_addon['Translation']['name']['string']). ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = sprintf(___('%s'), $this_addon['Translation']['name']['string']). ' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
 
     }
@@ -1599,7 +1599,7 @@ class AddonsController extends AppController
             'Addon.status'=>$valid_status, 'Addon.inactive'=>0), null, null,
             null, null, 0);
         if (empty($addon)) {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
 
@@ -1631,21 +1631,21 @@ class AddonsController extends AppController
         $this->publish('versions', $versions);
         $this->publish('platforms', $platforms);
 
-        $_title = sprintf(_('addons_versions_pagetitle'), $addon['Translation']['name']['string']);
+        $_title = sprintf(___('%1$s Version History'), $addon['Translation']['name']['string']);
         if (!isset($this->namedArgs['format']) || $this->namedArgs['format'] != 'rss') {
             $this->publish('addonIconPath', $this->Image->getAddonIconURL($id));
-            $this->pageTitle = $_title. ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            $this->pageTitle = $_title. ' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('subpagetitle', $_title);
             $this->publish('rssAdd', array("/addons/versions/{$id}/format:rss"));
 
             $this->publish('breadcrumbs', array(
-                sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+                sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
                 $addon['Translation']['name']['string'] => "/addon/{$id}"
             ));
             $this->render();
         } else {
             $this->publish('rss_title', $_title);
-            $this->publish('rss_description', _('addons_versions_history'));
+            $this->publish('rss_description', ___('Version History with Changelogs'));
             $this->render('rss/versions', 'rss');
         }
     }
@@ -1677,7 +1677,7 @@ class AddonsController extends AppController
     function previews($id) {
         $this->Amo->clean($id);
         if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
 

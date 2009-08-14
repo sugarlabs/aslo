@@ -61,7 +61,7 @@ class EditorsController extends AppController
         $this->Amo->checkLoggedIn();
         
         $this->layout = 'mozilla';
-        $this->pageTitle = _('editors_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Editor Tools').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         $this->cssAdd = array('editors', 'admin', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
@@ -74,11 +74,11 @@ class EditorsController extends AppController
                                 'editors');
         $this->publish('jsAdd', $this->jsAdd);
 
-        $this->breadcrumbs = array(_('editors_pagetitle') => '/editors/index');
+        $this->breadcrumbs = array(___('Editor Tools') => '/editors/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         $this->publish('suppressJQuery', 1);
 
-        $this->publish('subpagetitle', _('editors_pagetitle'));
+        $this->publish('subpagetitle', ___('Editor Tools'));
 
         // disable query caching so devcp changes are visible immediately
         foreach ($this->uses as $_model) {
@@ -134,7 +134,7 @@ class EditorsController extends AppController
     function queue($mode = 'pending') {
         //If queues are disabled, show appropriate error
         if ($this->Config->getValue('queues_disabled') == 1 && !$this->SimpleAcl->actionAllowed('*', '*', $this->Session->read('User'))) {
-            $this->flash(_('editors_queues_disabled'), '/', 3);
+            $this->flash(___('All review queues are currently disabled. Please check back at a later time.'), '/', 3);
             return;
         }
         
@@ -145,9 +145,9 @@ class EditorsController extends AppController
         $this->publish('collapse_categories', true);
         
         $this->Amo->clean($mode);
-        $this->breadcrumbs[_('editors_review_queue_pagetitle')] = '/editors/queue';
+        $this->breadcrumbs[___('Review Queue')] = '/editors/queue';
         $this->publish('breadcrumbs', $this->breadcrumbs);
-        $this->publish('subpagetitle', _('editors_review_queue_pagetitle'));
+        $this->publish('subpagetitle', ___('Review Queue'));
         
         $this->publish('mode', $mode);
 
@@ -216,7 +216,7 @@ class EditorsController extends AppController
                                 '6' => '6', '7' => '7', '8' => '8', '9' => '9', '10+' => '10+');
         $platforms = $this->Amo->getPlatformName();
         $applications = $this->Amo->getApplicationName();
-        $flags = array('0'=>___('editors_queue_flag_no'), '1'=>___('editors_queue_flag_yes'));
+        $flags = array('0'=>___('no'), '1'=>___('yes'));
 
         $filtered = !empty($filter);
         $filterChanged = $filtered && array_key_exists('filter', $this->params['form']);
@@ -251,8 +251,8 @@ class EditorsController extends AppController
     */
     function review($id) {
         $this->Amo->clean($id);
-        $this->publish('subpagetitle', _('editors_addon_review_pagetitle'));
-        $this->breadcrumbs[_('editors_addon_review_pagetitle')] = '/editors/review/'.$id;
+        $this->publish('subpagetitle', ___('Review Add-on'));
+        $this->breadcrumbs[___('Review Add-on')] = '/editors/review/'.$id;
         $this->publish('breadcrumbs', $this->breadcrumbs);
         $this->publish('collapse_categories', true);
         $this->cssAdd[] = '../vendors/markitup/skins/simple/style';
@@ -278,12 +278,12 @@ class EditorsController extends AppController
         $this->Versioncomment->bindFully();
 
         if (!$version = $this->Version->findById($id, null, null, 1)) {
-            $this->flash(_('error_version_notfound'), '/editors/queue');
+            $this->flash(___('Version not found!'), '/editors/queue');
             return;
         }
         
         if (!$addon = $this->Addon->findById($version['Version']['addon_id'])) {
-            $this->flash(_('error_addon_notfound'), '/editors/queue');
+            $this->flash(___('Add-on not found!'), '/editors/queue');
             return;
         }
         
@@ -292,7 +292,7 @@ class EditorsController extends AppController
         if (!$this->SimpleAcl->actionAllowed('*', '*', $session)) {
             foreach ($addon['User'] as $author) {
                 if ($author['id'] == $session['id']) {
-                    $this->flash(_('editors_error_self_reviews_forbidden'), '/editors/queue');
+                    $this->flash(___('Self-reviews are not allowed.'), '/editors/queue');
                     return;
                 }
             }
@@ -333,7 +333,7 @@ class EditorsController extends AppController
                     }
                     $redirectUrl .= "#editorComment{$commentId}";
 
-                    $this->flash(___('editors_comment_posted'), $redirectUrl);
+                    $this->flash(___('Comment successfully posted'), $redirectUrl);
                     return;
                 }
 
@@ -341,7 +341,7 @@ class EditorsController extends AppController
                 if ($this->data['Approval']['subscribe'])
                     $this->EditorSubscription->subscribeToUpdates($session['id'], $addon['Addon']['id']);
                 
-                $this->flash(_('editors_reviewed_successfully'), '/editors/queue/'.$this->data['Approval']['Type']);
+                $this->flash(___('Review successfully processed.'), '/editors/queue/'.$this->data['Approval']['Type']);
                 return;
             }
         }
@@ -393,12 +393,12 @@ class EditorsController extends AppController
             $this->publish('cannedresponses', $cannedresponses);
         }
         
-        $this->publish('jsLocalization', array( 'action' => _('editors_review_action'),
-                                            'comments' => _('editors_review_comments'),
-                                            'os' => _('editors_tested_os'),
-                                            'applications' => _('editors_tested_app'),
-                                            'errors' => _('editors_error_js-formerror'),
-                                            'files' => _('editors_error_review_one_file')
+        $this->publish('jsLocalization', array( 'action' => ___('Review Action'),
+                                            'comments' => ___('Review Comments'),
+                                            'os' => ___('Tested Operating Systems'),
+                                            'applications' => ___('Tested Application'),
+                                            'errors' => ___('Please complete the following fields:'),
+                                            'files' => ___('Please select at least one file to review.')
                                     ));
         
         // Validation results
@@ -501,23 +501,23 @@ class EditorsController extends AppController
         $this->publish('filteredCount', $filteredCount);
         $this->publish('subscriptions', $this->Versioncomment->getSubscriptionsByUser($session['id']));
         $this->publish('jsLocalization', array(
-            'editors_review_bold' => ___('editors_review_bold', 'Bold'),
-            'editors_review_italics' => ___('editors_review_italics', 'Italics'),
-            'editors_review_unordered_lists' => ___('editors_review_unordered_lists', 'Unordered List'),
-            'editors_review_ordered_lists' => ___('editors_review_ordered_lists', 'Ordered List'),
-            'editors_review_block_quotes' => ___('editors_review_block_quotes', 'Block Quote'),
-            'editors_review_code_blocks' => ___('editors_review_code_blocks', 'Code Block'),
-            'editors_review_code_text' => ___('editors_review_code_text', 'Plain Text'),
-            'editors_review_code_html' => ___('editors_review_code_html', 'HTML'),
-            'editors_review_code_css' => ___('editors_review_code_css', 'CSS'),
-            'editors_review_code_javascript_xul' => ___('editors_review_code_javascript_xul', 'Javascript / XUL'),
-            'editors_review_code_diff' => ___('editors_review_code_diff', 'Diff / Patch'),
-            'editors_review_code_sql' => ___('editors_review_code_sql', 'SQL'),
-            'editors_markdown_preview' => ___('editors_markdown_preview', 'Preview'),
-            'editors_review_comment_help_heading' => ___('editors_review_comment_help_heading', 'Comment Help'),
-            'editors_syntax_view_source' => ___('editors_syntax_view_source', 'View Source'),
-            'editors_syntax_print' => ___('editors_syntax_print', 'Print'),
-            'editors_syntax_about' => ___('editors_syntax_about', 'About'),
+            'editors_review_bold' => ___('Bold'),
+            'editors_review_italics' => ___('Italics'),
+            'editors_review_unordered_lists' => ___('Unordered List'),
+            'editors_review_ordered_lists' => ___('Ordered List'),
+            'editors_review_block_quotes' => ___('Block Quote'),
+            'editors_review_code_blocks' => ___('Code Block'),
+            'editors_review_code_text' => ___('Plain Text'),
+            'editors_review_code_html' => ___('HTML'),
+            'editors_review_code_css' => ___('CSS'),
+            'editors_review_code_javascript_xul' => ___('Javascript / XUL'),
+            'editors_review_code_diff' => ___('Diff / Patch'),
+            'editors_review_code_sql' => ___('SQL'),
+            'editors_markdown_preview' => ___('Preview'),
+            'editors_review_comment_help_heading' => ___('Comment Help'),
+            'editors_syntax_view_source' => ___('View Source'),
+            'editors_syntax_print' => ___('Print'),
+            'editors_syntax_about' => ___('About'),
         ));
         
         $this->render('review');
@@ -532,7 +532,7 @@ class EditorsController extends AppController
         $this->File->id = $id;
         
         if (!$file = $this->File->read()) {
-            $this->flash(_('error_file_notfound'), '/editors/queue');
+            $this->flash(___('File not found!'), '/editors/queue');
         }
         
         $this->Addon->id = $file['Version']['addon_id'];
@@ -550,7 +550,7 @@ class EditorsController extends AppController
             readfile($file);
         }
         else {
-            $this->flash(sprintf(_('error_file_x_notfound'), $file), '/editors/review/'.$this->Version->id);
+            $this->flash(sprintf(___('File error: %s does not exist.'), $file), '/editors/review/'.$this->Version->id);
         }
         exit;
     }
@@ -569,7 +569,7 @@ class EditorsController extends AppController
             $user = $this->User->findByEmail($this->params['url']['user']);
             if (empty($user)) {
                 header('HTTP/1.1 404 Not Found');
-                $this->flash(___('editors_performance_user_not_found', 'User not found'), "/editors/performance/{$mode}");
+                $this->flash(___('User not found'), "/editors/performance/{$mode}");
                 return;
             }
         } else {
@@ -613,7 +613,7 @@ class EditorsController extends AppController
         $this->publish('showUserLookup', $isSenior);
         $this->publish('editors', $isSenior ? $this->_recentEditors() : array());
         $this->publish('collapse_categories', true);
-        $this->publish('subpagetitle', ___('editors_performance_pagetitle', 'Performance Reports'));
+        $this->publish('subpagetitle', ___('Performance Reports'));
         $this->set('page', 'performance');
 
         //Standard text report
@@ -655,7 +655,7 @@ class EditorsController extends AppController
         $ytdEndTime = strtotime('tomorrow');
         $startDate = date('Y-m-01');
         $startTime = strtotime($startDate);
-        $endDate = ___('editors_date_filter_placeholder', 'YYYY-MM-DD');
+        $endDate = ___('YYYY-MM-DD');
         $endTime = $ytdEndTime;
         
         //If user has specified own conditions, use those
@@ -1225,14 +1225,14 @@ class EditorsController extends AppController
         // check action
         if (!in_array($this->action, array('threadsubscribe', 'threadunsubscribe'))) {
             header('HTTP/1.1 400 Bad Request');
-            $this->flash(___('error_access_denied'), '/editors/queue');
+            $this->flash(___('Access Denied'), '/editors/queue');
             return;
         }
 
         // get posted comment_id
         if (empty($this->params['form']['comment_id'])) { // id needs to be POSTed
             header('HTTP/1.1 400 Bad Request');
-            $this->flash(sprintf(_('error_missing_argument'), 'comment_id'), '/editors/queue');
+            $this->flash(sprintf(___('Missing argument: %s'), 'comment_id'), '/editors/queue');
             return;
         }
         $id = $this->params['form']['comment_id'];
@@ -1241,14 +1241,14 @@ class EditorsController extends AppController
         $comment = $this->Versioncomment->findById($id);
         if (empty($comment)) {
             header('HTTP/1.1 404 Not Found');
-            $this->flash(___('editors_error_invalid_comment', 'Invalid comment'), '/editors/queue');
+            $this->flash(___('Invalid comment'), '/editors/queue');
             return;
         }
 
         // only allow subscribing to head of the thread
         if (! empty($comment['Versioncomment']['reply_to'])) {
             header('HTTP/1.1 400 Bad Request');
-            $this->flash(___('editors_error_starting_comment', 'Comment does not start a thread'),
+            $this->flash(___('Comment does not start a thread'),
                             "/editors/review/{$comment['Version']['id']}", 3);
             return;
         }
@@ -1264,7 +1264,7 @@ class EditorsController extends AppController
                     foreach ($addon['User'] as $author) {
                         if ($author['id'] == $user['id']) {
                             header('HTTP/1.1 401 Unauthorized');
-                            $this->flash(_('editors_error_self_reviews_forbidden'), '/editors/queue');
+                            $this->flash(___('Self-reviews are not allowed.'), '/editors/queue');
                             return;
                         }
                     }
@@ -1272,14 +1272,14 @@ class EditorsController extends AppController
             }
 
             $result = $this->Versioncomment->subscribe($id, $user['id'], true);
-            $message = ($result ? ___('editors_subscription_succeeded', 'Subscription Succeeded')
-                                : ___('editors_subscription_failed', 'Subscription Failed'));
+            $message = ($result ? ___('Subscription Succeeded')
+                                : ___('Subscription Failed'));
 
         // unsubscribe
         } else {
             $result = $this->Versioncomment->unsubscribe($id, $user['id']);
-            $message = ($result ? ___('editors_unsubscription_succeeded', 'Unsubscription Succeeded')
-                                : ___('editors_unsubscription_failed', 'Unsubscription Failed'));
+            $message = ($result ? ___('Unsubscription Succeeded')
+                                : ___('Unsubscription Failed'));
         }
 
         // results!
@@ -1436,10 +1436,10 @@ class EditorsController extends AppController
                     foreach ($addon['Version'][0]['File'] as $file) {
                         $os[] = $platforms[$file['platform_id']];
                     }
-                    $addons[$k]['notes'][] = sprintf(_('editors_platform_x_only'), implode(', ', $os));
+                    $addons[$k]['notes'][] = sprintf(___('%s only'), implode(', ', $os));
                 }
                 elseif (!empty($addon['File']['platform_id']) && $addon['File']['platform_id'] != 1) {
-                    $addons[$k]['notes'][] = sprintf(_('editors_platform_x_only'), $platforms[$addon['File']['platform_id']]);
+                    $addons[$k]['notes'][] = sprintf(___('%s only'), $platforms[$addon['File']['platform_id']]);
                 }
                 
                 //Featured?
@@ -1447,15 +1447,15 @@ class EditorsController extends AppController
                 
                 //Site specific?
                 if ($addon['Addon']['sitespecific'] == 1) {
-                    $addons[$k]['notes'][] = _('editors_site_specific');
+                    $addons[$k]['notes'][] = ___('Site Specific');
                 }
                 //Pre-release?
                 if ($addon['Addon']['prerelease'] == 1) {
-                    $addons[$k]['notes'][] = _('editors_pre-release');
+                    $addons[$k]['notes'][] = ___('Pre-release');
                 }
                 //External software?
                 if ($addon['Addon']['externalsoftware'] == 1) {
-                    $addons[$k]['notes'][] = _('editors_external_software');
+                    $addons[$k]['notes'][] = ___('External Software');
                 }
             }
         }
@@ -1504,7 +1504,7 @@ class EditorsController extends AppController
                 }
             }
             
-            $this->flash(_('editors_reviews_processed'), '/editors/queue/reviews');
+            $this->flash(___('Reviews processed successfully!'), '/editors/queue/reviews');
             return;
         }
         
@@ -1588,14 +1588,14 @@ class EditorsController extends AppController
 
                 if (!is_numeric($this->data['Addon']['id']) || !is_numeric($this->data['Category']['id'])) {
                     header('HTTP/1.1 400 Bad Request');
-                    $this->flash(_('editors_featured_addon_add_failure'), '/editors/featured');
+                    $this->flash(___('Failed to add feature.'), '/editors/featured');
                     return;
                 }
 
                 $_addon = $this->Addon->getAddon($this->data['Addon']['id']);
                 if ($_addon['Addon']['status'] != STATUS_PUBLIC) {
                     header('HTTP/1.1 400 Bad Request');
-                    $this->flash(_('editors_featured_addon_edit_failure'), '/editors/featured');
+                    $this->flash(___('Failed to edit feature.'), '/editors/featured');
                     return;
                 }
 
@@ -1604,10 +1604,10 @@ class EditorsController extends AppController
 
                 if ($this->AddonCategory->query($_new_feature_query)) {
                     header('HTTP/1.1 400 Bad Request');
-                    $this->flash(_('editors_featured_addon_add_failure'), '/editors/featured');
+                    $this->flash(___('Failed to add feature.'), '/editors/featured');
                 } else {
                     $this->Eventlog->log($this, 'editor', 'feature_add', '', $this->data['Addon']['id'], $this->data['Addon']['id']);
-                    $this->flash(_('editors_featured_addon_add_success'), '/editors/featured', 3);
+                    $this->flash(___('Successfully added feature.'), '/editors/featured', 3);
                 }
 
                 return;
@@ -1617,14 +1617,14 @@ class EditorsController extends AppController
                 if (!empty($this->data['AddonCategory']['feature_locales'])) {
                     if (count(array_diff(explode(',',$this->data['AddonCategory']['feature_locales']), array_keys($valid_languages))) > 0) {
                         header('HTTP/1.1 400 Bad Request');
-                        $this->flash(_('editors_featured_addon_invalid_locale'), '/editors/featured');
+                        $this->flash(___('One or more locales are invalid.'), '/editors/featured');
                         return;
                     }
                 }
 
                 if (!is_numeric($this->data['Addon']['id']) || !is_numeric($this->data['Category']['id']) || preg_match('/[^A-Za-z,-]/',$this->data['AddonCategory']['feature_locales'])) {
                     header('HTTP/1.1 400 Bad Request');
-                    $this->flash(_('editors_featured_addon_edit_failure'), '/editors/featured');
+                    $this->flash(___('Failed to edit feature.'), '/editors/featured');
                     return;
                 }
 
@@ -1642,9 +1642,9 @@ class EditorsController extends AppController
 
                 if ($this->AddonCategory->query($_edit_feature_query)) {
                     header('HTTP/1.1 400 Bad Request');
-                    $this->flash(_('editors_featured_addon_edit_failure'), '/editors/featured');
+                    $this->flash(___('Failed to edit feature.'), '/editors/featured');
                 } else {
-                    $this->flash(_('editors_featured_addon_edit_success'), '/editors/featured', 3);
+                    $this->flash(___('Successfully edited feature.'), '/editors/featured', 3);
                 }
                 return;
 
@@ -1657,12 +1657,12 @@ class EditorsController extends AppController
                     $this->AddonCategory->execute("DELETE FROM `addons_categories` WHERE addon_id='{$this->data['Addon']['id']}' AND category_id='{$this->data['Category']['id']}' AND feature=1 LIMIT 1");
 
                     // Assume we succeeded
-                    $this->flash(_('editors_featured_addon_remove_success'), '/editors/featured', 3);
+                    $this->flash(___('Successfully removed feature.'), '/editors/featured', 3);
                     return;
                 }
 
                 header('HTTP/1.1 400 Bad Request');
-                $this->flash(_('editors_featured_addon_remove_failure'), '/editors/featured');
+                $this->flash(___('Failed to remove feature.'), '/editors/featured');
 
                 return;
 
@@ -1671,9 +1671,9 @@ class EditorsController extends AppController
         }
 
         // Setup title and breadcrumbs
-        $this->breadcrumbs[_('editors_featured_addons_pagetitle')] = '/editors/featured';
+        $this->breadcrumbs[___('Featured Add-ons')] = '/editors/featured';
         $this->publish('breadcrumbs', $this->breadcrumbs);
-        $this->publish('subpagetitle', _('editors_featured_addons_pagetitle'));
+        $this->publish('subpagetitle', ___('Featured Add-ons'));
 
         // Get all featured Addons
         $features = $this->AddonCategory->findAllByFeature(1, array('addon_id'));
@@ -1748,14 +1748,14 @@ class EditorsController extends AppController
     * Display logs
     */
     function logs() {
-        $this->breadcrumbs[_('editorcp_logs_page_heading')] = '/editors/logs';
+        $this->breadcrumbs[___('Event Log')] = '/editors/logs';
         $this->set('breadcrumbs', $this->breadcrumbs);
 
         //Default conditions are the current month
         $monthStart = date('Y-m-01');
         $conditions = array("Eventlog.created >= '{$monthStart} 00:00:00'");
         $startDate = $monthStart;
-        $endDate = ___('editors_date_filter_placeholder', 'YYYY-MM-DD');
+        $endDate = ___('YYYY-MM-DD');
         $filter = '';
         
         //If user has specified own conditions, use those
@@ -1798,8 +1798,8 @@ class EditorsController extends AppController
 
         $this->publish('filterOptions', array(
                 '' => '',
-                'editor:review_approve' => ___('editorcp_logs_review_approve', 'Approved reviews'),
-                'editor:review_delete' => ___('editorcp_logs_review_delete', 'Deleted reviews')
+                'editor:review_approve' => ___('Approved reviews'),
+                'editor:review_delete' => ___('Deleted reviews')
         ));
         
         $this->set('page', 'logs');
@@ -1853,27 +1853,27 @@ class EditorsController extends AppController
 
         //days
         if ($age >= (60*60*24*2)) {
-            $humanized = sprintf(_('editors_x_days'), floor($age/(60*60*24)));
+            $humanized = sprintf(___('%s days'), floor($age/(60*60*24)));
         }
         //1 day
         elseif ($age >= (60*60*24)) {
-            $humanized = _('editors_one_day');
+            $humanized = ___('1 day');
         }
         //hours
         elseif ($age >= (60*60*2)) {
-            $humanized = sprintf(_('editors_x_hours'), floor($age/(60*60)));
+            $humanized = sprintf(___('%s hours'), floor($age/(60*60)));
         }
         //hour
         elseif ($age >= (60*60)) {
-            $humanized = _('editors_one_hour');
+            $humanized = ___('1 hour');
         }
         //minutes
         elseif ($age > 60) {
-            $humanized = sprintf(_('editors_x_minutes'), floor($age/60));
+            $humanized = sprintf(___('%s minutes'), floor($age/60));
         }
         //minute
         else {
-            $humanized = _('editors_one_minute');
+            $humanized = ___('1 minute');
         }
 
         return $humanized;

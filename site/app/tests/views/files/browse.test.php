@@ -37,7 +37,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-class DevelopersIndexTest extends WebTestHelper {
+class DevelopersBrowseTest extends WebTestHelper {
 
     function ownAddon() {
         // We need to be able to login a non-admin developer
@@ -63,15 +63,15 @@ class DevelopersIndexTest extends WebTestHelper {
 
         $username = 'fligtar@gmail.com';
         $password = 'test';
-        
+
         $path = $this->actionURI('/users/login');
         $data = array(
                     'data[Login][email]' => $username,
                     'data[Login][password]' => $password
                 );
-        
+
         $this->post($path, $data);
-        $this->assertNoUnwantedText(_('error_username_or_pw_wrong'), 'Logged in with developer account');        
+        $this->assertNoUnwantedText(___('Wrong username or password!'), 'Logged in with developer account');
     }
 
     function testAdminBrowsing() {
@@ -93,7 +93,7 @@ class DevelopersIndexTest extends WebTestHelper {
         // The developer should be able to see the add-on as well
         $this->assertWantedPattern('/File Browser/i', 'Header detected');
         $this->assertWantedPattern('/install.rdf/i', 'File names');
-    }    
+    }
 
     function testGeneralBrowsing() {
         // Make sure that general source viewing is not allowed

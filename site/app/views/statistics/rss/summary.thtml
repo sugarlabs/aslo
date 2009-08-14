@@ -36,36 +36,36 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-$summary = '<b>'._('statistics_summary_downloads_heading').'</b><br />';
-$summary .= _('statistics_summary_downloads_total').' ('.sprintf(_('statistics_summary_downloads_total_sincedate'), strftime(_('statistics_date_shortmonthwithyear'), strtotime($addon['Addon']['created']))).'): '.$statistics->number_format($stats, 'totaldownloads').'<br />';
-$summary .= _('statistics_summary_downloads_lastcount').(!empty($stats['last_downloads_date']) ? ' ('.strftime(_('statistics_date_weekdayshortmonth'), strtotime($stats['last_downloads_date'])).')' : '').': '.$statistics->number_format($stats, 'last_downloads').'<br />';
-$summary .= _('statistics_summary_downloads_average').': '.$statistics->number_format($stats, 'avg_downloads').'<br />';
-$summary .= _('statistics_summary_downloads_lastweek').': '.$statistics->number_format($stats, 'weeklydownloads').'<br /><br />';
+$summary = '<b>'.___('Downloads').'</b><br />';
+$summary .= ___('Total Downloads').' ('.sprintf(___('Since %1$s'), strftime(___('%b. %e, %Y'), strtotime($addon['Addon']['created']))).'): '.$statistics->number_format($stats, 'totaldownloads').'<br />';
+$summary .= ___('Last Day Count').(!empty($stats['last_downloads_date']) ? ' ('.strftime(___('%A, %b. %e'), strtotime($stats['last_downloads_date'])).')' : '').': '.$statistics->number_format($stats, 'last_downloads').'<br />';
+$summary .= ___('Average Daily Downloads').': '.$statistics->number_format($stats, 'avg_downloads').'<br />';
+$summary .= ___('Downloads in the last 7 days').': '.$statistics->number_format($stats, 'weeklydownloads').'<br /><br />';
 
-$summary .= '<b>'._('statistics_summary_updatepings_heading').'</b><br />';
-$summary .= _('statistics_summary_updatepings_total').' (';
+$summary .= '<b>'.___('Active Daily Users').'</b><br />';
+$summary .= ___('Active Daily Users').' (';
 if (!empty($stats['last_updatepings_date']))
-    $summary .= sprintf(_('statistics_summary_updatepings_total_ondate'), strftime(_('statistics_date_weekdayshortmonth'), strtotime($stats['last_updatepings_date'])));
+    $summary .= sprintf(___('On %1$s'), strftime(___('%A, %b. %e'), strtotime($stats['last_updatepings_date'])));
 else
-    $summary .= _('statistics_summary_nodata');
+    $summary .= ___('No data yet');
 $summary .= '): '.$statistics->number_format($stats, 'last_updatepings').'<br />';
-$summary .= _('statistics_summary_updatepings_changefromprevious').' (';
+$summary .= ___('Change from previous count').' (';
 if (!empty($stats['previous_updatepings']))
-    $summary .= sprintf(_('statistics_summary_updatepings_changefromprevious_ondate'), $html->number_format($stats['previous_updatepings'], 0), strftime(_('statistics_date_shortmonth'), strtotime($stats['previous_updatepings_date'])));
+    $summary .= sprintf(___('%1$s on %2$s'), $html->number_format($stats['previous_updatepings'], 0), strftime(___('%b. %e'), strtotime($stats['previous_updatepings_date'])));
 else
-    $summary .= _('statistics_summary_nodata');
+    $summary .= ___('No data yet');
 $summary .= '): ';
 $summary .= $statistics->colored_percentage($stats, 'updateping_change');
 $summary .= '<br />';
-$summary .= _('statistics_summary_updatepings_average').': '.$statistics->number_format($stats, 'avg_updatepings').'<br />';
-$summary .= ___('statistics_summary_updatepings_weekly_average').': '.$statistics->number_format($stats, 'weekly_updatepings');
-$summary .= ' ('.sprintf(___('statistics_summary_updatepings_weekly_change'),
+$summary .= ___('Average Daily Active Users').': '.$statistics->number_format($stats, 'avg_updatepings').'<br />';
+$summary .= ___('Average Daily Users this Week').': '.$statistics->number_format($stats, 'weekly_updatepings');
+$summary .= ' ('.sprintf(___('%s from last week'),
                          $statistics->colored_percentage($stats, 'weekly_updatepings_change')).')';
 
 $today = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
 
 echo $this->renderElement('rss_listitem', array(
-    'title' => sprintf(_('statistics_rss_title_statsfordate'), strftime(_('statistics_rss_title_fulldate'))),
+    'title' => sprintf(___('Statistics for %1$s'), strftime(___('%A, %B %e, %Y'))),
     'url' => SITE_URL.$html->url('/statistics/addon/'.$addon['Addon']['id']),
     'description' => "<![CDATA[{$summary}]]>",
     'author' => 'Mozilla Add-ons',

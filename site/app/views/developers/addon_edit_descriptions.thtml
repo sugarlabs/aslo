@@ -41,14 +41,14 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main"  class="edit-addon <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
             if (!empty($success)) {
-                echo '<div class="notice-success rounded">'.___('devcp_notice_changes_saved').'</div>';
+                echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
             }
         ?>
-        
-        <h2><?=___('devcp_edit_descriptions_header')?></h2>
+
+        <h2><?=___('Edit Add-on Descriptions')?></h2>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="addon-edit-descriptions-form" action="" method="post">
@@ -60,60 +60,60 @@
                 $languages[$key] = $native_languages[$key]['native'];
             }
             ksort($languages);
-            
+
             $this->translationBox = array(
                                 'defaultLocale' => $addon['Addon']['defaultlocale'],
                                 'languages' => $languages,
                                 'table' => 'Addon',
                                 'loaded' => false
                             );
-        
+
         // Summary
         echo $this->renderElement('translationbox', array(
                     'field' => 'summary',
                     'translations' => $translations['summary'],
                     'height' => '60',
                     'maxLength' => '250',
-                    'displayName' => ___('devcp_edit_descriptions_transbox_summary_name'),
-                    'description' => ___('devcp_edit_descriptions_transbox_summary_description'),
+                    'displayName' => ___('Add-on Summary'),
+                    'description' => ___('The summary is a short explanation of your add-on\'s basic functionality that is displayed in search and browse listings, as well as at the top of your add-on\'s display page. <strong>Limit of 250 characters.</strong>'),
                 ));
-        
+
         // Description
         echo $this->renderElement('translationbox', array(
                     'field' => 'description',
                     'translations' => $translations['description'],
-                    'displayName' => ___('devcp_edit_descriptions_transbox_description_name'),
-                    'description' => ___('devcp_edit_descriptions_transbox_description_description'),
+                    'displayName' => ___('Add-on Description'),
+                    'description' => ___('The description of your add-on is a longer explanation of features, functionality, and other relevant information. It is displayed under the summary on the add-on\'s display page.'),
                 ));
-        
+
         // Developer Comments
         echo $this->renderElement('translationbox', array(
                     'field' => 'developercomments',
                     'translations' => $translations['developercomments'],
-                    'displayName' => ___('devcp_edit_descriptions_transbox_comments_name'),
-                    'description' => ___('devcp_edit_descriptions_transbox_comments_description'),
+                    'displayName' => ___('Developer Comments'),
+                    'description' => ___('Any information end users may want to know that isn\'t necessarily applicable to the add-on summary or description. Common uses include listing known major bugs, information on how to report bugs, anticipated release date of a new version, etc.'),
                 ));
-        
+
         // EULA
         echo $this->renderElement('translationbox', array(
                     'field' => 'eula',
                     'translations' => $translations['eula'],
                     'height' => '200',
-                    'displayName' => ___('devcp_edit_descriptions_transbox_eula_name'),
-                    'description' => ___('devcp_edit_descriptions_transbox_eula_description'),
+                    'displayName' => ___('End-User License Agreement'),
+                    'description' => ___('If your add-on has an End-User License Agreement (EULA), please enter its text below. If set below, users will be required to agree to this before installing your add-on. Please note that a EULA is not the same as a code license such as GPL or MPL.'),
                 ));
-        
+
         // Privacy Policy
         echo $this->renderElement('translationbox', array(
                     'field' => 'privacypolicy',
                     'translations' => $translations['privacypolicy'],
                     'height' => '200',
-                    'displayName' => ___('devcp_edit_descriptions_transbox_privacy_name'),
-                    'description' => ___('devcp_edit_descriptions_transbox_privacy_description'),
+                    'displayName' => ___('Privacy Policy'),
+                    'description' => ___('If your add-on has a privacy policy, enter its text here. Your add-on\'s display page will display a link to the policy.'),
                 ));
         ?>
-        <div id="edit-error" class="error" style="display: none;"><?=___('devcp_edit_description_correct_error')?></div>
-        <div class="action-button-container centered" style="width: 600px;"><a href="#" onclick="addon_edit_descriptions.save(); return false;" class="action-button rounded"><?=___('devcp_edit_description_button_update')?></a></div>
+        <div id="edit-error" class="error" style="display: none;"><?=___('Please correct the errors above indicated in red.')?></div>
+        <div class="action-button-container centered" style="width: 600px;"><a href="#" onclick="addon_edit_descriptions.save(); return false;" class="action-button rounded"><?=___('Update Descriptions')?></a></div>
         </form>
     </div>
 </div>

@@ -39,7 +39,7 @@
 foreach ($versions as $version):
     // prepare version string
     if (!empty($version['Version']))
-        $itemversion = $version['Version']['version'] .' - '. strftime(_('date'), strtotime($version['Version']['created']));
+        $itemversion = $version['Version']['version'] .' - '. strftime(___('%B %e, %Y'), strtotime($version['Version']['created']));
     else
         $itemversion = '';
 

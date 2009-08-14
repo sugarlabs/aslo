@@ -48,15 +48,15 @@
     <ul>
       <li class="addons">
         <?php $count = $collection['Collection']['addonCount']; ?>
-        <?=sprintf(n___('addons_home_collections_addon_count',
-                        'addons_home_collections_addon_count',
+        <?=sprintf(n___('<strong>%1$s</strong> add-on',
+                        '<strong>%1$s</strong> add-ons',
                         $count),
                    $count);?>
       </li>
       <li class="subscribers">
         <?php $subscribers = $collection['Collection']['subscribers']; ?>
-        <?=sprintf(n___('addons_home_collections_subscribers',
-                        'addons_home_collections_subscribers',
+        <?=sprintf(n___('<strong>%1$s</strong> subscriber',
+                        '<strong>%1$s</strong> subscribers',
                         $subscribers),
                    $subscribers);?>
       </li>
@@ -81,7 +81,7 @@
       <?=$collection['Translation']['name']['string']?>
     </a>
     <span>
-      <?=sprintf(___('collections_index_header_created'),
+      <?=sprintf(___('created by %1$s'),
                  $html->linkUsersFromModel($collection['Users']))?>
     </span>
     <a href="<?=$html->url($link)?>">

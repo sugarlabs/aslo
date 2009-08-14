@@ -78,9 +78,9 @@ class SimpleAclComponent extends Object
                 $this->Controller->set(compact('controller', 'action'));
             
                 $this->Controller->layout = 'mozilla';
-                $this->Controller->pageTitle = _('error_access_denied') . ' :: ' . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
-                $this->Controller->set('breadcrumbs', _('error_access_denied'));
-                $this->Controller->set('subpagetitle', _('error_access_denied'));
+                $this->Controller->pageTitle = ___('Access Denied') . ' :: ' . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+                $this->Controller->set('breadcrumbs', ___('Access Denied'));
+                $this->Controller->set('subpagetitle', ___('Access Denied'));
                 $this->Controller->viewPath = 'errors';            
                 $this->Controller->render('error401');
 

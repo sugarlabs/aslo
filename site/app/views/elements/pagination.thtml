@@ -49,8 +49,8 @@ if (!isset($countstring))
 <?php
 if($pagination->setPaging($paging)):
     
-    $prev = $pagination->prevPage(_('pagination_previous_page'), false);
-    $next = $pagination->nextPage(_('pagination_next_page'), false);
+    $prev = $pagination->prevPage(___('previous'), false);
+    $next = $pagination->nextPage(___('next'), false);
 
     $pages = $pagination->pageNumbers();
 ?>
@@ -64,7 +64,7 @@ if($pagination->setPaging($paging)):
     <?php endif; ?>
     <?php if (!isset($show_perpage) || !$show_perpage): ?>
     <p class="perpage">
-        <?=$pagination->resultsPerPage('').' '._('addon_list_perpage');?>
+        <?=$pagination->resultsPerPage('').' '.___('per page');?>
     </p>
     <?php endif; /* show "per page"? */ ?>
 <?php endif; /* paginated results? */ ?>

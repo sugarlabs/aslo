@@ -54,13 +54,13 @@ $this->viewVars['bodyclass'] = 'home';
     <ul class="stats">
         <?php if (!empty($stats_downloaded)): ?>
             <li><?=sprintf(
-                n___('addons_home_stats_downloaded', 'addons_home_stats_downloaded', $stats_downloaded),
+                n___('<strong>%1$s</strong> <span>add-on downloaded</span>', '<strong>%1$s</strong> <span>add-ons downloaded</span>', $stats_downloaded),
                 $html->number_format($stats_downloaded, 0)
             )?></li>
         <?php endif ?>
         <?php if (!empty($stats_inuse)): ?>
             <li><?=sprintf(
-                n___('addons_home_stats_inuse', 'addons_home_stats_inuse', $stats_inuse),
+                n___('<strong>%1$s</strong> <span>add-on in use</span>', '<strong>%1$s</strong> <span>add-ons in use</span>', $stats_inuse),
                 $html->number_format($stats_inuse, 0)
             )?></li>
         <?php endif ?>
@@ -98,20 +98,20 @@ $this->viewVars['bodyclass'] = 'home';
         ))?>
     <? endif; ?>
 
-    <h2><?=___('addons_home_browse_title', 'Browse Add-ons')?></h2>
+    <h2><?=___('Browse Add-ons')?></h2>
     <div class="primary">
         <div class="featured show-<?=$featured_type?> listing" id="featured">
             <div class="featured-inner">
                 <div class="listing-header">
                     <ul>
                         <li<?= ('recommended'==$featured_type) ? ' class="selected"' : '' ?>>
-                            <a href="?featured=recommended#featured"><?=___('addons_home_browse_recommended', 'Recommended')?></a></li>
+                            <a href="?featured=recommended#featured"><?=___('Recommended')?></a></li>
                         <li<?= ('popular'==$featured_type) ? ' class="selected"' : '' ?>>
-                            <a href="?featured=popular#featured"><?=___('addons_home_browse_popular', 'Popular')?></a></li>
+                            <a href="?featured=popular#featured"><?=___('Popular')?></a></li>
                         <li<?= ('added'==$featured_type) ? ' class="selected"' : '' ?>>
-                            <a href="?featured=added#featured"><?=___('addons_home_browse_new', 'Just Added')?></a></li>
+                            <a href="?featured=added#featured"><?=___('Just Added')?></a></li>
                         <li<?= ('updated'==$featured_type) ? ' class="selected"' : '' ?>>
-                            <a href="?featured=updated#featured"><?=___('addons_home_browse_updated', 'Updated')?></a></li>
+                            <a href="?featured=updated#featured"><?=___('Updated')?></a></li>
                     </ul>
                 </div>
                 <div class="addon-listing">
@@ -139,7 +139,7 @@ $this->viewVars['bodyclass'] = 'home';
 
     <div class="secondary">
         <img class="pull-right" src="<?=$html->url('/img/amo2009/illustrations/logo-collections-100x125.png', null, false, false)?>" alt=""/>
-        <h3><a href="<?=$html->url('/collections')?>"><?=___('addons_home_collections','Collections')?></a>
+        <h3><a href="<?=$html->url('/collections')?>"><?=___('Collections')?></a>
             <?=$this->renderElement('amo2009/new_indicator')?>
         </h3>
         <p><?=___('addons_home_collections_intro', '
@@ -149,7 +149,7 @@ $this->viewVars['bodyclass'] = 'home';
         ')?></p>
 
         <?php if (!empty($popular_collections)): ?>
-        <h4><?=___('addons_home_collection_popular_title', 'Popular Collections')?></h4>
+        <h4><?=___('Popular Collections')?></h4>
         <?php foreach ($popular_collections as $c): ?>
             <div class="item">
                 <h5>
@@ -158,24 +158,24 @@ $this->viewVars['bodyclass'] = 'home';
                         'Collection'  => array('uuid'=>$c['uuid'], 'nickname'=>$c['nickname']),
                         'Translation' => array('name'=>array('string'=>$c['name']))
                     ))?>
-                    <span><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($c['authors'], null);?></span>
+                    <span><?=___('by')?> <?=$html->linkUsersFromModel($c['authors'], null);?></span>
                 </h5>
                 <blockquote cite="#">
                     <p><?=$html->truncateChars(200, $c['description'])?></p>
                 </blockquote>
                 <div class="meta">
                     <span class="addons"><?=sprintf(
-                        n___('addons_home_collections_addon_count','addons_home_collections_addon_count',$c['addons_count']),
+                        n___('<strong>%1$s</strong> add-on','<strong>%1$s</strong> add-ons',$c['addons_count']),
                         $c['addons_count']
                     )?></span>
                     <span class="subscribers"><?=sprintf(
-                        n___('addons_home_collections_subscribers','addons_home_collections_subscribers',$c['subscribers']),
+                        n___('<strong>%1$s</strong> subscriber','<strong>%1$s</strong> subscriber',$c['subscribers']),
                         $c['subscribers'])
                     ?></span>
                 </div>
             </div>
         <?php endforeach ?>
         <?php endif ?>
-        <p><a class="more-info" href="<?=$html->url('/collections')?>"><?=___('addons_home_collections_all', 'View All Collections')?></a></p>
+        <p><a class="more-info" href="<?=$html->url('/collections')?>"><?=___('View All Collections')?></a></p>
     </div>
 </div>

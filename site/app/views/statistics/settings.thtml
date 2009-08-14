@@ -34,7 +34,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 ?>
 <div class="secondary" role="complementary">
     <?=$this->renderElement('developers/myaddons', array('addons' => $all_addons));?>
@@ -43,18 +43,18 @@
 <div class="primary prose">
 
     <div id="content-main" class="article settings-content">
-        <h3><?=sprintf(_('statistics_settings_title'), $addon['Translation']['name']['string'])?></h3><br>
+        <h3><?=sprintf(___('Statistics Dashboard Settings for %1$s'), $addon['Translation']['name']['string'])?></h3><br>
         <?=$html->formTag('/statistics/settings/'.$addon['Addon']['id'], 'post');?>
-        <h4><?=_('statistics_settings_access_heading')?></h4>
-        <p><?=_('statistics_settings_access_description')?></p>
+        <h4><?=___('Dashboard Access')?></h4>
+        <p><?=___('By default, only you and Mozilla can access the information in your dashboard. You can open this up to the public so that anyone can view your add-on\'s data.')?></p>
         <ul class="options">
-            <li><label><input type="radio" name="data[Addon][publicstats]" value="0"<?=($addon['Addon']['publicstats'] != 1 ? ' checked' : '')?>> <?='<b>'._('statistics_settings_access_private').'</b> - '._('statistics_settings_access_private_description')?></label></li>
-            <li><label><input type="radio" name="data[Addon][publicstats]" value="1"<?=($addon['Addon']['publicstats'] == 1 ? ' checked' : '')?>> <?='<b>'._('statistics_settings_access_public').'</b> - '._('statistics_settings_access_public_description')?></label></li>
+            <li><label><input type="radio" name="data[Addon][publicstats]" value="0"<?=($addon['Addon']['publicstats'] != 1 ? ' checked' : '')?>> <?='<b>'.___('Private').'</b> - '.___('Only you and Mozilla can view this add-on\'s statistics')?></label></li>
+            <li><label><input type="radio" name="data[Addon][publicstats]" value="1"<?=($addon['Addon']['publicstats'] == 1 ? ' checked' : '')?>> <?='<b>'.___('Public').'</b> - '.___('Anyone can view this add-on\'s statistics')?></label></li>
         </ul>
-        
+
         <div class="buttons">
-            <input type="submit" name="submit" value="<?=_('statistics_settings_save_button')?>"><br>
-            <?=$html->link(_('statistics_settings_return_link'), '/statistics/addon/'.$addon['Addon']['id'])?>
+            <input type="submit" name="submit" value="<?=___('Save Settings')?>"><br>
+            <?=$html->link(___('Return to Dashboard'), '/statistics/addon/'.$addon['Addon']['id'])?>
         </div>
         </form>
     </div>

@@ -39,8 +39,8 @@
 <table id="tabTable">
     <tr>
         <td id="spacer"></h1></td>
-        <td id="reviews"><div class="tab<?=($mode == 'reviews') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/queue/reviews')?>"><?=sprintf(ngettext('devcp_editorsqueue_moderatedreviews', 'devcp_editorsqueue_moderatedreviews', $count['reviews']), $count['reviews'])?></a></div></td>
-        <td id="pending"><div class="tab<?=($mode == 'pending') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/queue/pending')?>"><?=sprintf(ngettext('devcp_editorsqueue_pendingupdates', 'devcp_editorsqueue_pendingupdates', $count['pending']), $count['pending'])?></a></div></td>
-        <td id="nominated"><div class="tab<?=($mode == 'nominated') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/queue/nominated')?>"><?=sprintf(ngettext('devcp_editorsqueue_nominated', 'devcp_editorsqueue_nominated', $count['nominated']), $count['nominated'])?></a></div></td>
+        <td id="reviews"><div class="tab<?=($mode == 'reviews') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/queue/reviews')?>"><?=sprintf(n___('Moderated Reviews (%s)', 'Moderated Reviews (%s)', $count['reviews']), $count['reviews'])?></a></div></td>
+        <td id="pending"><div class="tab<?=($mode == 'pending') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/queue/pending')?>"><?=sprintf(n___('Pending Updates (%s)', 'Pending Updates (%s)', $count['pending']), $count['pending'])?></a></div></td>
+        <td id="nominated"><div class="tab<?=($mode == 'nominated') ? ' selected' : ''?>"><a href="<?=$html->url('/editors/queue/nominated')?>"><?=sprintf(n___('Nominated Add-ons (%s)', 'Nominated Add-ons (%s)', $count['nominated']), $count['nominated'])?></a></div></td>
     </tr>
 </table>

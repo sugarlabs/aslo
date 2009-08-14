@@ -41,13 +41,13 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-     <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_previews_title'), $addon_name), 'addon_id' => $addon_id));?>
+     <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('%s Preview Manager'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($messages['success'])) {
-            echo '<div class="notice-success rounded"><span>'.___('devcp_previews_notice_success').'</span><br /><ul><li>'.implode('</li><li>', $messages['success']).'</li></ul></div>';
+            echo '<div class="notice-success rounded"><span>'.___('Your previews have been updated successfully.').'</span><br /><ul><li>'.implode('</li><li>', $messages['success']).'</li></ul></div>';
         }
         if (!empty($messages['errors'])) {
-            echo '<div class="notice-error rounded"><span>'.___('devcp_previews_notice_error').'</span><br /><ul><li>'.implode('</li><li>', $messages['errors']).'</li></ul></div>';
+            echo '<div class="notice-error rounded"><span>'.___('One or more of your new previews could not be saved.').'</span><br /><ul><li>'.implode('</li><li>', $messages['errors']).'</li></ul></div>';
         }
         
         echo $this->renderElement('noscript');
@@ -56,7 +56,7 @@
         echo $html->hiddenSession();
         
         if (!empty($previews)) {
-            echo '<p>'.___('devcp_previews_p_screenshots').'</p>';
+            echo '<p>'.___('The preview screenshots for your add-on are shown below. You can make changes to captions or images below. The Default Preview is the preview that is displayed next to your add-on in search and browse listings.').'</p>';
             // Retrieve language arrays from bootstrap.
             global $valid_languages, $native_languages;
             foreach (array_keys($valid_languages) as $key) {
@@ -75,9 +75,9 @@
             ?>
                 <div class="preview-box graybox rounded spaced field">
                 <table style="width: 100%;"><tr><td style="width: 200px; text-align: center; vertical-align: top;">
-                <img src="<?=$this->controller->Image->getPreviewURL($preview['Preview']['id'])?>/0" alt="<?=___('devcp_previews_thumbnail')?>" />
+                <img src="<?=$this->controller->Image->getPreviewURL($preview['Preview']['id'])?>/0" alt="<?=___('Thumbnail')?>" />
                 </td><td style="vertical-align: top;">
-                <h5 style="margin-top: 0; margin-bottom: 2px;"><?=___('devcp_previews_header_caption')?></h5>
+                <h5 style="margin-top: 0; margin-bottom: 2px;"><?=___('Preview Caption')?></h5>
                 <?php
                 echo $this->renderElement('translationbox', array(
                     'field' => 'caption',
@@ -90,21 +90,21 @@
                 
                 <table style="width: 100%; padding-top: 10px;"><tr><td>
                 <label><input type="radio" name="data[Preview][highlight]" value="<?=$preview['Preview']['id']?>" style="vertical-align: top;"<?=($preview['Preview']['highlight'] == 1 ? ' checked="checked"' : '')?>/>
-                <?=___('devcp_previews_label_default')?></label>
+                <?=___('Default Preview')?></label>
                 </td><td class="preview-buttons">
-                <a href="#" onclick="previews.showReplaceBox(this); return false;" class="edit-button rounded"><?=___('devcp_previews_a_replace')?></a>&nbsp;
-                <a href="#" onclick="previews.deletePreview(this); return false;" class="remove-button rounded"><?=___('devcp_previews_a_delete')?></a>
+                <a href="#" onclick="previews.showReplaceBox(this); return false;" class="edit-button rounded"><?=___('Replace Preview')?></a>&nbsp;
+                <a href="#" onclick="previews.deletePreview(this); return false;" class="remove-button rounded"><?=___('Delete Preview')?></a>
                 </td></tr></table>
                 
                 <div class="replace-preview" style="display: none;">
-                <label><?=___('devcp_previews_label_new')?>
+                <label><?=___('New image:')?>
                 <input type="file" name="data[Preview][New][<?=$preview['Preview']['id']?>]" /></label>
-                <p><?=sprintf(___('devcp_previews_click_update'), 'href="#" onclick="previews.cancelReplace(this); return false;"')?></p>
+                <p><?=sprintf(___('Click the Update Previews button below to save this image. (<a %s>Cancel?</a>)'), 'href="#" onclick="previews.cancelReplace(this); return false;"')?></p>
                 </div>
                 
                 </td></tr></table>
                 <input type="hidden" class="delete" name="data[Preview][Delete][<?=$preview['Preview']['id']?>]" value="false" />
-                <div class="error-message"><?=sprintf(___('devcp_previews_error_message'), 'href="#" onclick="previews.cancelDelete(this); return false;"')?></div>
+                <div class="error-message"><?=sprintf(___('This preview will be deleted when Update Previews is clicked below. (<a %s>Cancel?</a>)'), 'href="#" onclick="previews.cancelDelete(this); return false;"')?></div>
                 </div>
         <?php
             }
@@ -112,18 +112,18 @@
         ?>
         
         <div id="add-preview-box" class="graybox rounded spaced field" style="<?=(!empty($previews) ? 'display: none;' : '')?>">
-            <h4><?=___('devcp_previews_add_new')?></h4>
-            <p><?=sprintf(___('devcp_previews_add_select'), implode(', ', $this->controller->Developers->imageExtensions))?></p>
+            <h4><?=___('Add New Preview')?></h4>
+            <p><?=sprintf(___('Select an image to upload below. Images larger than the maximum size of 700 pixels wide by 525 pixels tall will be resized. Allowed file types: %s'), implode(', ', $this->controller->Developers->imageExtensions))?></p>
             <div id="new-preview-container">
-                <label class="new-preview"><?=___('devcp_previews_label_upload')?><input type="file" name="data[Preview][New][]" size="40" /></label>
+                <label class="new-preview"><?=___('Upload Preview: ')?><input type="file" name="data[Preview][New][]" size="40" /></label>
             </div>
-            <div class="add-button-container"><a href="#" onclick="previews.addUploadBox(); return false;" class="add-button rounded"><?=___('devcp_previews_a_another')?></a></div>
-            <div class="preview-add-button-description"><?=___('devcp_previews_click_below')?></div>
+            <div class="add-button-container"><a href="#" onclick="previews.addUploadBox(); return false;" class="add-button rounded"><?=___('Add Another Preview')?></a></div>
+            <div class="preview-add-button-description"><?=___('Click Update Previews below to upload.')?></div>
         </div>
         
-        <div class="add-button-container" style="<?=(empty($previews) ? 'display: none;' : '')?>"><a href="#add-preview-box" onclick="previews.showAddBox(this);" class="add-button rounded"><?=___('devcp_previews_add_new')?></a></div>
+        <div class="add-button-container" style="<?=(empty($previews) ? 'display: none;' : '')?>"><a href="#add-preview-box" onclick="previews.showAddBox(this);" class="add-button rounded"><?=___('Add New Preview')?></a></div>
         
-        <div class="action-button-container centered"><a href="#" onclick="previews.save(); return false;" class="action-button rounded"><?=___('devcp_previews_a_update')?></a></div>
+        <div class="action-button-container centered"><a href="#" onclick="previews.save(); return false;" class="action-button rounded"><?=___('Update Previews')?></a></div>
         </form>
     </div>
 </div>

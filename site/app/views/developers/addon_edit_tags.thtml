@@ -40,18 +40,18 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($success)) {
-            echo '<div class="notice-success rounded">'.___('devcp_notice_changes_saved').'</div>';
+            echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
         }
         ?>
-        <h2><?=___('devcp_edit_tags_header_manage')?></h2>
+        <h2><?=___('Manage Tags')?></h2>
         <?=$this->renderElement('developers/rolecheck')?>
         <div id='tags'>
             <?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags,'addon_id'=>$addon_id, 'origin'=>'developers')); ?>
         </div>
-        <a href="#" id="addatag"><?=___('tags_add_tag_link', 'Add a tag');?></a>
+        <a href="#" id="addatag"><?=___('Add a tag');?></a>
 
        	<script type="text/javascript">
             <?=$this->renderElement('tags_js_init')?>
@@ -64,9 +64,9 @@
                 <input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon_data['Addon']['id']?>"/>
                 <input type="hidden" name="origin" id="origin" value="developers"/>
                 
-                <button id="addtagbutton"><?=___('tags_add_tag_button', 'Add');?></button>
+                <button id="addtagbutton"><?=___('Add');?></button>
             </form>
-            <span class="hint"><?=___('tags_example_tags', 'Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
+            <span class="hint"><?=___('Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
         </div>
      </div>
 </div>

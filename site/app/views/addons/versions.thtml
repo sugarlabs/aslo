@@ -59,8 +59,8 @@ $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']
         <?php
         echo $this->renderElement('notification', array(
             'type' => 'warning',
-            'msg' => ___('addons_versions_careful'),
-            'description' => ___('addons_versions_careful_introduction')
+            'msg' => ___('Be Careful With Old Versions'),
+            'description' => ___('These versions are displayed for reference and testing purposes. You should always use the latest version of an add-on.')
         ));
         ?>
 
@@ -107,14 +107,14 @@ $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']
                             $license_name = $this->controller->License->getName($_version_data['license_id']);
                             $license_link = $html->link($license_name, '/versions/license/'.$version['Version']['id']);
                             echo '<li class="license">'
-                                .___('addons_display_header_license').' '
+                                .___('Source Code License').' '
                                 .$license_link
                                 .'</li>';
                         }
 
                         if ($show_source) {
                             echo '<li class="source">'
-                                .$html->link(_('addons_display_view_source'),
+                                .$html->link(___('View the source'),
                                     "/files/browse/{$version['File'][0]['id']}")
                                 .'</li>';
                         }
@@ -127,7 +127,7 @@ $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']
             <?php endforeach; ?>
         </div><!-- /listing -->
 
-    <p><?=$html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), "/addon/{$addon['Addon']['id']}");?></p>
+    <p><?=$html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), "/addon/{$addon['Addon']['id']}");?></p>
 
     </div><!-- primary -->
 
@@ -137,7 +137,7 @@ $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']
         if (gIsFirefox) {
             addons_history.init();
             addons_history.createLatestVersionElement("<?php
-                echo addslashes(___('addon_versions_getlatestversion'))
+                echo addslashes(___('The most recent version compatible with %1$s %2$s'))
                 ?>", "<?=addslashes(APP_PRETTYNAME)?>");
         }
     });

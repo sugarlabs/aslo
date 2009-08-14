@@ -51,7 +51,7 @@ $this->layout = 'amo2009';
             <div class="featured-inner">
                 <div class="listing-header">
                     <ul>
-                        <li class="selected"><a href="?featured=recommended#featured"><?=___('addons_home_browse_recommended', 'Recommended')?></a></li>
+                        <li class="selected"><a href="?featured=recommended#featured"><?=___('Recommended')?></a></li>
                     </ul>
                 </div>
                 <?php foreach ($featureAddons as $id => $addon): ?>
@@ -64,10 +64,10 @@ $this->layout = 'amo2009';
 </div><!-- /.primary -->
     
 <div class="secondary more-addons" role="navigation">
-    <h3 class="compact"><?=$html->link(_('themes_landing_browse_themes'), "/browse/type:".ADDON_THEME."/cat:all?sort=name", array('class'=>'view'))?></h3>
+    <h3 class="compact"><?=$html->link(___('Browse Themes'), "/browse/type:".ADDON_THEME."/cat:all?sort=name", array('class'=>'view'))?></h3>
 
     <ul class="highlight">
-        <li><?=$html->link(_('themes_landing_all_themes'), "/browse/type:".ADDON_THEME."/cat:all?sort=name")?></li>
+        <li><?=$html->link(___('All Themes'), "/browse/type:".ADDON_THEME."/cat:all?sort=name")?></li>
         <?php foreach ($subcats as $subcat): ?>
             <li class="sub-category"><?=$html->link($subcat['Translation']['name']['string'], "/browse/type:{$subcat['Category']['addontype_id']}/cat:{$subcat['Category']['id']}?sort=name", array('class' => 'category'))?></li>
         <?php endforeach; ?>

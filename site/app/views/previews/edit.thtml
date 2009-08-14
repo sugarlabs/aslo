@@ -40,19 +40,19 @@
     <?=$this->renderElement('developers/myaddons', array('addons' => $all_addons));?>
     
     <div id="content-main">
-        <h3><?=_('devcp_previews_header_edit')?></h3>
+        <h3><?=___('Edit Preview')?></h3>
         <div class="addonName"><?=$addon['Translation']['name']['string']?></div>
         <?=$html->formTag('/previews/edit/'.$id, 'post')?>
             <div id="developersForm">
                 <img src="<?=$previewUrl?>">
                 <div>
                     <?=$html->checkbox('Preview/highlight', null, $highlightCheckbox)?>
-                    <label for="PreviewHighlight" class="nofloat"><?=_('devcp_previews_label_makedefault')?></label>
+                    <label for="PreviewHighlight" class="nofloat"><?=___('Make this the default preview image')?></label>
                 </div>
                 <?=$this->renderElement('developers/localebox')?>
                 <div class="buttonBox">
-                    <?=$html->submit(_('devcp_previews_submit_edit'))?>
-                    <?=$html->submit(_('devcp_previews_submit_delete'), array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\''._('devcp_previews_submit_delete_confirm').'\');'))?>
+                    <?=$html->submit(___('Edit Preview'))?>
+                    <?=$html->submit(___('Delete Preview'), array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\''.___('Are you sure you wish to delete this preview?').'\');'))?>
                 </div>
             </div> <!-- developersForm -->
         </form>

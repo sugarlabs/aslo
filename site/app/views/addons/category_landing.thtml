@@ -63,7 +63,7 @@ $summaryLimit = 70;
                 <li class="addon_block_wrapper">
                     <div class="addon_block item">
                         <h4 class="name"><a href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><?php echo $html->truncateChars(28, $addon['Translation']['name']['string'], true) ?></a></h4>
-                        <p class="authors"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addon['User'], 2,"/addon/{$addon['Addon']['id']}#authors" );?></p>
+                        <p class="authors"><?=___('by')?> <?=$html->linkUsersFromModel($addon['User'], 2,"/addon/{$addon['Addon']['id']}#authors" );?></p>
                         <p class="summary"><?php echo $html->truncateChars($summaryLimit, $addon['Translation']['summary']['string'], true) ?></p>
                         <div class="preview"><a href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><img src="<?php echo $this->controller->Image->getHighlightedPreviewURL($addon['Addon']['id']);?>" alt="" /></a></div>
                         <p class="rating"><?=$this->renderElement('amo2009/stars',array('rating' => $addon['Addon']['averagerating']))?></p>
@@ -84,7 +84,7 @@ $summaryLimit = 70;
 
                                 // prepare preview image
                                 if (isset($addonPreviewPath) && !empty($addonPreviewPath)) {
-                                    $_alt = sprintf(_('img_preview_of'),$addonName);
+                                    $_alt = sprintf(___('Preview Image of %s'),$addonName);
                                     $previmg = '<img src="'.$addonPreviewPath.'" '
                                         .'alt="'.$_alt.'" title="'.$_alt.'"/>';
                                     $previmg = '<p class="preview-img">'
@@ -132,7 +132,7 @@ $summaryLimit = 70;
     </div>
 
     <div id="new_addons" class="addons_column clearfix">
-        <h3><span><?= ___('addons_recently_added') ?></span></h3>
+        <h3><span><?= ___('Recently Added') ?></span></h3>
         <ul>
             <?php foreach ($new_addons as $idx=>$addon): ?>
                 <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
@@ -144,25 +144,25 @@ $summaryLimit = 70;
                 </a></li>
             <?php endforeach ?>
         </ul>
-        <p class="view-all"><?=$html->link(___('view_recently_added').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=newest")?></p>     
+        <p class="view-all"><?=$html->link(___('View all recently added').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=newest")?></p>     
     </div>
 
     <div id="popular_addons" class="addons_column clearfix">
-        <h3><span><?=___('addons_top_downloads') ?></span></h3>
+        <h3><span><?=___('Top Downloads') ?></span></h3>
         <ul>
             <?php foreach ($popular_addons as $idx=>$addon): ?>
                 <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
                     <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
                     <span class="name"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
-                    <span class="meta downloads"><?php echo $html->number_format($addon['weeklydownloads']) ?> <?= _('addon_downloads_weekly') ?></span>
+                    <span class="meta downloads"><?php echo $html->number_format($addon['weeklydownloads']) ?> <?= ___('weekly downloads') ?></span>
                 </a></li>
             <?php endforeach ?>
         </ul>
-        <p class="view-all"><?=$html->link(___('view_top_downloads').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=popular")?></p>       
+        <p class="view-all"><?=$html->link(___('View all top downloads').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=popular")?></p>       
     </div>
 
     <div id="updated_addons" class="addons_column last clearfix">
-        <h3><span><?=___('addons_top_rated') ?></span></h3>
+        <h3><span><?=___('Top Rated') ?></span></h3>
         <ul>
             <?php foreach ($updated_addons as $idx=>$addon): ?>
                 <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
@@ -172,7 +172,7 @@ $summaryLimit = 70;
                 </a></li>
             <?php endforeach ?>
         </ul>
-        <p class="view-all"><?=$html->link(___('view_top_rated').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=rated")?></p>
+        <p class="view-all"><?=$html->link(___('View all top rated').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=rated")?></p>
     </div>
 
 </div>

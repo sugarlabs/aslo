@@ -34,7 +34,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 
 $this->viewVars['bodyclass'] = 'review_add';
 $this->layout = 'amo2009';
@@ -45,73 +45,73 @@ $this->layout = 'amo2009';
 
 <div class="primary prose" role="main">
     <?=$this->renderElement('amo2009/search')?>
-    
+
     <div id="content-main">
-    
-<h2><?=sprintf((@$this->data['Review']['id'] > 0) ? _('addon_review_edit_title') : _('addon_review_add_title'), $addon['Translation']['name']['string']); ?></h2>
+
+<h2><?=sprintf((@$this->data['Review']['id'] > 0) ? ___('Edit Review for %s') : ___('Add a review for %s'), $addon['Translation']['name']['string']); ?></h2>
 <? $reviewRating = @$this->data['Review']['rating']; ?>
-<?php echo sprintf(___('review_guidelines_short'), $html->url("/addon/{$addon['Addon']['id']}#support"), $html->url('/pages/review_guide')); ?>
+<?php echo sprintf(___('<p>Keep these tips in mind:</p><ul><li>Write like you\'re telling a friend about your experience with the add-on.  Give specifics and helpful details, such as what features you liked and/or disliked, how easy to use it is, and any disadvantages it has.  Avoid generic language such as calling it "Great" or "Bad" unless you can give reasons why you believe this is so.</li><li>Please do not post bug reports in reviews. We do not make your email address available to add-on developers and they may need to contact you to help resolve your issue. See the <a href="%1$s">support section</a> to find out where to get assistance for this add-on.</li><li>Please keep reviews clean, avoid the use of improper language and do not post any personal information.</li></ul><p>Please read the <a href="%2$s">Review Guidelines</a> for more detail about user add-on reviews.</p>'), $html->url("/addon/{$addon['Addon']['id']}#support"), $html->url('/pages/review_guide')); ?>
 
 <? // if this is a developer reply, show the original review
 if (!empty($reply_to)) {
-    echo "<p>"._('addon_review_in_reply_to')."</p>";
+    echo "<p>".___('Developer reply to:')."</p>";
     ?>
     <div class="corner-box">
     <h3><?=$reply_to['Translation']['title']['string']?></h3>
-    
+
     <div class="reviewed-on">
-        <?= sprintf(_('addon_reviewed_on_x_rated_y'), $html->linkUserFromModel($reply_to['User']), strftime(_('date'), strtotime($reply_to['Review']['created'])), $reply_to['Review']['rating'])?>
+        <?= sprintf(___('by %1$s on %2$s (rated %3$s)'), $html->linkUserFromModel($reply_to['User']), strftime(___('%B %e, %Y'), strtotime($reply_to['Review']['created'])), $reply_to['Review']['rating'])?>
     </div>
     <?=nl2br($reply_to['Translation']['body']['string'])?>
     </div>
 <? } ?>
 
 <? if (isset($errorMessage)):?>
-<div class="amo-form-error"><?= _('error_formerrors')?></div>
+<div class="amo-form-error"><?= ___('There are errors in this form. Please correct them and resubmit.')?></div>
 <p></p>
 <? endif;?>
 
 <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form corner-box" id="long-review">
-    <?=$html->hiddenSession() ?>       
+    <?=$html->hiddenSession() ?>
     <?=$html->hidden('Review/id'); ?>
     <div>
-        <label class="amo-label-large" for="ReviewTitle"><?=_('addon_review_add_title_field')?></label>
+        <label class="amo-label-large" for="ReviewTitle"><?=___('Title/Summary:')?></label>
         <?=$html->input('Review/title');?>
-        <?=$html->tagErrorMsg('Review/title', _('error_field_required'))?>
+        <?=$html->tagErrorMsg('Review/title', ___('This field must not be empty.'))?>
     </div>
     <? if (empty($reply_to)): ?>
     <div>
-        
-        <label class="amo-label-large rating" for="ReviewRating"><?=_('addon_review_add_rating_field')?></label>
+
+        <label class="amo-label-large rating" for="ReviewRating"><?=___('Rating:')?></label>
 		<div class="stars degrade">
-            <p><input class="star" type="radio" name="data[Review][rating]" value="1" title="<?=_('addons_display_hate_it')?>" 
-            <?php if($reviewRating == 1) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_hate_it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="2" title="<?=_('addons_display_dont_like_it')?>"  
-            <?php if($reviewRating == 2) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_dont_like_it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="3" title="<?=_('addons_display_like_it')?>"  
-            <?php if($reviewRating == 3) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_like_it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="4" title="<?=_('addons_display_really_like_it')?>"
-            <?php if($reviewRating == 4) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_really_like_it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="5" title="<?=_('addons_display_love_it')?>" 
-            <?php if($reviewRating == 5) { ?> checked="checked"<?php } ?>/> <?=_('addons_display_love_it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="1" title="<?=___('Hate it')?>"
+            <?php if($reviewRating == 1) { ?> checked="checked"<?php } ?>/> <?=___('Hate it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="2" title="<?=___('Don\'t like it')?>"
+            <?php if($reviewRating == 2) { ?> checked="checked"<?php } ?>/> <?=___('Don\'t like it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="3" title="<?=___('Like it')?>"
+            <?php if($reviewRating == 3) { ?> checked="checked"<?php } ?>/> <?=___('Like it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="4" title="<?=___('Really like it')?>"
+            <?php if($reviewRating == 4) { ?> checked="checked"<?php } ?>/> <?=___('Really like it')?></p>
+            <p><input class="star" type="radio" name="data[Review][rating]" value="5" title="<?=___('Love it')?>"
+            <?php if($reviewRating == 5) { ?> checked="checked"<?php } ?>/> <?=___('Love it')?></p>
 		</div>
-        <?=$html->tagErrorMsg('Review/rating', _('error_review_rating_required'))?>
+        <?=$html->tagErrorMsg('Review/rating', ___('You must select a rating.'))?>
     </div>
     <? endif; ?>
     <div>
-        <label class="amo-label-large" for="ReviewBody"><?=_('addon_review_add_review_field')?></label>
+        <label class="amo-label-large" for="ReviewBody"><?=___('Review:')?></label>
         <?=$html->textarea('Review/body', array('cols'=>50, 'rows'=>5));?>
-        <?=$html->tagErrorMsg('Review/body', _('error_field_required'))?>
+        <?=$html->tagErrorMsg('Review/body', ___('This field must not be empty.'))?>
     </div>
     <p></p>
-    <?=$html->submit(_('addon_review_add_submit'), array('class'=>'amo-submit'))?>
+    <?=$html->submit(___('Submit your review'), array('class'=>'amo-submit'))?>
 </form>
 
 <div class="divider"><hr></div>
 
 <ul>
-    <li><?= $html->link(sprintf(_('addon_review_a_back_to_reviews'), $addon['Translation']['name']['string']), '/reviews/display/'.$addon['Addon']['id']); ?></li>
-    <li><?= $html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
+    <li><?= $html->link(sprintf(___('Back to the reviews...'), $addon['Translation']['name']['string']), '/reviews/display/'.$addon['Addon']['id']); ?></li>
+    <li><?= $html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
 </ul>
 
      </div>

@@ -54,7 +54,7 @@
         <h3><?=$html->link($review['Addon']['Translation']['name']['string'], '/addons/display/'.$review['Addon']['Addon']['id']).
                 ': '.$review['Translation']['title']['string']?> (<?=$review['Translation']['title']['locale']?>)</h3>
     
-        <div class="reviewed-on"><?= sprintf(_('addon_reviewed_on_x_rated_y'), $html->linkUserFromModel($review['User']), strftime(_('date'), strtotime($review['Review']['created'])), $review['Review']['rating'])?></div>
+        <div class="reviewed-on"><?= sprintf(___('by %1$s on %2$s (rated %3$s)'), $html->linkUserFromModel($review['User']), strftime(___('%B %e, %Y'), strtotime($review['Review']['created'])), $review['Review']['rating'])?></div>
         <?=nl2br($review['Translation']['body']['string'])?>
 
         <? /* Developer reply? */
@@ -64,8 +64,8 @@
                 $replyto['Translation'][LANG] : current($replyto['Translation']));
         ?>
         <div class="review-reply">
-            <h3><?=_('editors_reviews_in_reply_to')?> <?=$replyto['Translation']['title']['string']?></h3>
-            <div class="reviewed-on"><?= sprintf(_('addon_reviewed_on_x_rated_y'), $html->linkUserFromModel($replyto['User']), strftime(_('date'), strtotime($replyto['Review']['created'])), $replyto['Review']['rating'])?></div>
+            <h3><?=___('In reply to:')?> <?=$replyto['Translation']['title']['string']?></h3>
+            <div class="reviewed-on"><?= sprintf(___('by %1$s on %2$s (rated %3$s)'), $html->linkUserFromModel($replyto['User']), strftime(___('%B %e, %Y'), strtotime($replyto['Review']['created'])), $replyto['Review']['rating'])?></div>
             <?=nl2br($replyto['Translation']['body']['string'])?>
         </div>
         <? endif; ?>
@@ -97,24 +97,24 @@
 
         </ul>
         <div class="reviewAction">
-            <b><?=_('editors_reviews_header_action')?></b>:&nbsp;
+            <b><?=___('Action')?></b>:&nbsp;
             <input type="radio" name="data[Reviews][review<?=$review['Review']['id']?>]" value="skip" checked id="skip<?=$review['Review']['id']?>">
-            <label for="skip<?=$review['Review']['id']?>"><?=_('editors_reviews_action_skip')?></label>
+            <label for="skip<?=$review['Review']['id']?>"><?=___('Skip')?></label>
             <input type="radio" name="data[Reviews][review<?=$review['Review']['id']?>]" value="approve" id="approve<?=$review['Review']['id']?>">
-            <label for="approve<?=$review['Review']['id']?>"><?=___('editors_reviews_action_keep', 'Remove flags; keep review')?></label>
+            <label for="approve<?=$review['Review']['id']?>"><?=___('Remove flags; keep review')?></label>
             <input type="radio" name="data[Reviews][review<?=$review['Review']['id']?>]" value="delete" id="deny<?=$review['Review']['id']?>">
-            <label for="deny<?=$review['Review']['id']?>"><?=___('editors_reviews_action_delete_review', 'Delete review')?></label>
+            <label for="deny<?=$review['Review']['id']?>"><?=___('Delete review')?></label>
         </div>
     </div>
 <?
         }
-        echo $html->submit(_('editors_reviews_submit_process_reviews'));
+        echo $html->submit(___('Process Reviews'));
         echo '</form>';
         
         echo $this->renderElement('pagination');
     }
     else {
-        echo '<div class="emptyQueue">'._('editors_reviews_queue_empty').'</div>';
+        echo '<div class="emptyQueue">'.___('There are currently no reviews in moderation.').'</div>';
     }
 ?>
 </div>

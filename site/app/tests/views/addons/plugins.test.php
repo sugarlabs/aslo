@@ -57,34 +57,34 @@ class AddonPluginsTest extends WebTestHelper {
     }
 
     function testPlugins() {
-        $this->title = _('addons_plugins_pagetitle') .' :: '. sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->title = ___('Plugins') .' :: '. sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->assertTitle($this->title);
         
-        $pattern = '#<span>'.sprintf(_('addons_plugins_main_header'), APP_PRETTYNAME).'</span>#';
+        $pattern = '#<span>'.sprintf(___('Common Plugins for %1$s'), APP_PRETTYNAME).'</span>#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#<p class="first">'._('addons_plugins_main_description').'</p>#';
+        $pattern = '#<p class="first">'.___('Plugins help your browser perform specific functions like viewing special graphic formats or playing multimedia files. Plugins are slightly different from extensions, which modify or add to existing functionality.').'</p>#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#<p class="first">'._('addons_plugins_by').'#';
+        $pattern = '#<p class="first">'.___('By').'#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#'._('addons_plugins_for_windows').'<br>#';
+        $pattern = '#'.___('for Windows').'<br>#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#'._('addons_plugins_for_linux').'<br>#';
+        $pattern = '#'.___('for Linux').'<br>#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#'._('addons_plugins_for_macosx').'<br>#';
+        $pattern = '#'.___('for Mac OS X').'<br>#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#'._('addons_plugins_support_documentation').'#';
+        $pattern = '#'.___('Support Documentation: ').'#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#<h2>'._('addons_plugins_looking_for_plugin').'#';
+        $pattern = '#<h2>'.___('Looking for a plugin not listed here?').'#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
-        $pattern = '#<p class="first">'.sprintf(_('addons_plugins_looking_for_more'),'<a href="http://plugindoc.mozdev.org">PluginDoc</a>').'</p>#';
+        $pattern = '#<p class="first">'.sprintf(___('This page only lists some of the most common and most popular plugins. For more information about other plugins available for Mozilla-based Browsers, visit %1$s'),'<a href="http://plugindoc.mozdev.org">PluginDoc</a>').'</p>#';
         $this->assertPattern($pattern, htmlentities($pattern));
     }
 }

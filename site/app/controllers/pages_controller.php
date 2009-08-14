@@ -83,46 +83,46 @@ class PagesController extends AppController{
         if (!empty($path[1])) {
             $subpage = $path[1];
         }
-        
+
         // settings titles for individual pages
         switch ($path_string) {
         case 'appversions':
-            $title = ___('page_title_appversions', _('pages_appversions_header')); break;
+            $title = ___('Application Versions'); break;
         case 'credits':
-            $title = ___('page_title_credits', 'Credits'); break;
+            $title = ___('Credits'); break;
         case 'fashionyourfirefox_faq':
-            $title = ___('page_title_fashionyourfirefox_faq', 'Fashion your Firefox FAQ');
+            $title = ___('Fashion your Firefox FAQ');
             $this->set('cssAdd', array('collection-style'));
             $this->publish('suppressHeader', true, false);
             $this->publish('suppressLanguageSelector', true, false);
             $this->publish('suppressCredits', true, false);
             break;
         case 'policy':
-            $title = ___('page_title_policy', 'Add-ons Policy'); break;
+            $title = ___('Add-ons Policy'); break;
         case 'privacy':
-            $title = ___('page_title_privacy', 'Mozilla Privacy Policy'); break;
+            $title = ___('Mozilla Privacy Policy'); break;
         case 'review_guide':
-            $title = ___('page_title_review_guide', 'Review Guidelines'); break;
+            $title = ___('Review Guidelines'); break;
         case 'sandbox':
-            $title = ___('page_title_sandbox', 'Sandbox Review System'); break;
+            $title = ___('Sandbox Review System'); break;
         case 'submissionhelp':
-            $title = ___('page_title_submissionhelp', 'Submission Help'); break;
+            $title = ___('Submission Help'); break;
         case 'faq':
-            $title = ___('page_title_faq', 'Frequently Asked Questions'); break;
+            $title = ___('Frequently Asked Questions'); break;
         case 'developer_faq':
-            $title = ___('page_title_developer_faq'); break;
+            $title = ___('Developer FAQ'); break;
         case 'collector':
-            $title = ___('page_title_collector');
+            $title = ___('Add-on Collector');
             $this->publish('collectionSearch', true); break;
         case 'collector_faq':
-            $title = ___('page_title_collector_faq');
+            $title = ___('Add-on Collector FAQ');
             $this->publish('collectionSearch', true); break;
         case 'collector_features':
-            $title = ___('page_title_collector_features');
+            $title = ___('Add-on Collector Features');
             $this->publish('collectionSearch', true); break;
         case 'collector_firstrun':
             $this->set('jsAdd', array('amo2009/collections'));
-            $title = ___('page_title_collector_firstrun');
+            $title = ___('Welcome to the Add-on Collector');
             $this->publish('collectionSearch', true); break;
         default:
             if (!empty($path[$count - 1])) {
@@ -133,7 +133,7 @@ class PagesController extends AppController{
 
         $this->publish('page', $page);
         $this->publish('subpage', $subpage);
-        $this->set('title', $title .' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME));
+        $this->set('title', $title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME));
         $this->render($path_string);
     }
 }

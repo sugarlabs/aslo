@@ -42,10 +42,10 @@
  */
 
 $sortorders = array(
-    'name'      => _('list_sortby_name'),
-    'updated'   => _('list_sortby_date'),
-    'popular'   => _('list_sortby_downloads'),
-    'rated'     => _('list_sortby_rating')
+    'name'      => ___('Add-on Name'),
+    'updated'   => ___('Date'),
+    'popular'   => ___('Downloads'),
+    'rated'     => ___('Rating')
     );
 
 // get base URL for sort links and form
@@ -81,7 +81,7 @@ $(document).ready(function() {
 <div id="addon-list-options" class="listing-header">
 	<form id="form-listcontrol" method="get" action="<?=$html->url($sortbase)?>">
 		<ul>
-			<li id="order-label"><?=_('addon_list_sortby')?></li>
+			<li id="order-label"><?=___('Sort by:')?></li>
 			<?php foreach ($sortorders as $sortkey => $prettystring): ?>
 			<li<?= ($paging['sortBy'] == $sortkey ? ' class="selected"' : '') ?>>
 				<?= $html->link($prettystring, "{$sortbase}?sort={$sortkey}", array(
@@ -100,17 +100,17 @@ $(document).ready(function() {
 						}
 						?>
 						</select>
-					<?=_('addon_list_perpage')?></label>
+					<?=___('per page')?></label>
 				</div>
 				<div>
 					<label for="show-exp"><input type="checkbox" id="show-exp"
 						name="exp"<?=($show_exp?' checked':'')?> onChange="submit_options();"/>
-						<?=_('addons_options_show_experimental')?></label>
+						<?=___('show experimental add-ons')?></label>
 				</div>
 				<noscript>
 					<div>
 						<button type="submit" name="sort" value="<?=$paging['sortBy']?>"
-							id="options-submit"><?=_('addons_options_submit')?></button>
+							id="options-submit"><?=___('Go')?></button>
 					</div>
 				</noscript>
 			</li>

@@ -54,7 +54,7 @@
             foreach ($addon['Version'] as $version) {
                 $version_link = $html->link("{$version['id']}", '/editors/review/'.$version['id']);
                 echo "<li>Version {$version_link}: {$version['version']}
-                        <span class='version-date-created'>".strftime(___('datetime'), strtotime($version['created']))."</span></li>";
+                        <span class='version-date-created'>".strftime(___('%B %e, %Y, %I:%M %p'), strtotime($version['created']))."</span></li>";
                 if (!empty($version['File'])) {
                     echo '<ul>';
                     foreach ($version['File'] as $file) {

@@ -48,7 +48,7 @@
 $created = strtotime(str_replace('&#45;', '-', $created));
 if (!isset($fileSize) || false === $fileSize = $localization->localFileSize($fileSize)) $fileSize = '';
 ?>
-<?=$html->link(sprintf(_('addon_display_header_version'), $version), "/addons/versions/{$addonid}#version-{$version}",
-               array('title'=>___('addon_version_permalink', 'Permanent link to this version')))?>
-    <span title="<?=strftime(_('datetime'), $created)?>">&mdash;
-    <?=strftime(_('date'), $created)?></span> &mdash; <?=$fileSize?>
+<?=$html->link(sprintf(___('Version %s'), $version), "/addons/versions/{$addonid}#version-{$version}",
+               array('title'=>___('Permanent link to this version')))?>
+    <span title="<?=strftime(___('%B %e, %Y, %I:%M %p'), $created)?>">&mdash;
+    <?=strftime(___('%B %e, %Y'), $created)?></span> &mdash; <?=$fileSize?>

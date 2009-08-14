@@ -58,7 +58,7 @@ class AddonSearchenginesTest extends WebTestHelper {
 
     function testSearchengines() {
         // Title
-        $this->title = _('addons_searchengines_pagetitle') .' :: '. sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->title = ___('Search Engines') .' :: '. sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->assertTitle($this->title);
        
    /*     // addSearchEngine + correct URLs
@@ -72,7 +72,7 @@ class AddonSearchenginesTest extends WebTestHelper {
       /*  // two headers
         $pattern = '#<span>'._('addons_searchengines_title').'</span>#';
         $this->assertPattern($pattern, htmlentities($pattern));
-        $pattern = '#<h1>'._('addons_searchengines_additional_resources').'</h1>#';
+        $pattern = '#<h1>'.___('Additional Resources').'</h1>#';
         $this->assertPattern($pattern, htmlentities($pattern));
 
         // search engine link

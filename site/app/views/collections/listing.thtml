@@ -49,14 +49,14 @@ $this->layout = 'amo2009';
   <div class="primary" role="main">
     <?=$this->renderElement('amo2009/breadcrumbs')?>
     <?php if (empty($list_header)): ?>
-        <h2><?=___('collections_index_header_collections')?></h2>
+        <h2><?=___('Collections')?></h2>
     <?php else: ?>
         <h2><?=$list_header?></h2>
     <?php endif; ?>
     <?php if (!empty($collection_deleted)): ?>
         <?=$this->renderElement('notification', array(
             'type' => 'success',
-            'msg' => ___('collections_success_delete')
+            'msg' => ___('The collection has been deleted.')
         ));?>
         <script type="text/javascript">/* <![CDATA[ */
             $(document).ready(function() {

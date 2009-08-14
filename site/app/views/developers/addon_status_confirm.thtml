@@ -40,38 +40,38 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_addon_status_title'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('%s Status'), $addon_name), 'addon_id' => $addon_id));?>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="status-form" name="status-form" action="" method="post">
         <?=$html->hiddenSession();?>
         <input type="hidden" name="confirmed" value="true" />
         <div class="graybox field rounded">
-            <h4><?=___('devcp_status_confirm_header_sure')?></h4>
+            <h4><?=___('Are you sure?')?></h4>
             <p>
             <?php
             switch ($subaction) {
             case 'inactive':
-                echo ___('devcp_status_confirm_inactive').'</p><p>'.___('devcp_status_confirm_inactive_sure');
+                echo ___('Marking this add-on inactive will prevent it from showing up in any public areas, including search and browse listings. It will not be downloadable from the website and will not be returned in client update checks. You will be able to return here and re-enable it at your convenience.').'</p><p>'.___('Are you sure you wish to mark this add-on inactive?');
                 break;
 
             case 'active':
-                echo ___('devcp_status_confirm_active').'</p><p>'.___('devcp_status_confirm_active_sure');
+                echo ___('Marking this add-on active will cause it to show up in public areas appropriate for its status, including search and browse listings. It will be downloadable from the website and could be returned in client update checks, depending on its status. You will be able to return here and disable it again at your convenience.').'</p><p>'.___('Are you sure you wish to mark this add-on active?');
                 break;
 
             case 'sandbox':
-                echo ___('devcp_status_confirm_sandbox').'</p><p>'.___('devcp_status_confirm_sandbox_sure');
+                echo ___('Moving this add-on back to the sandbox will require users to log in before downloading and updates will no longer be offered to existing users. Because your add-on is currently public, you will be able to return here at any time to make it public again.').'</p><p>'.___('Are you sure you wish to move this add-on to the sandbox?');
                 break;
 
             case 'public':
-                echo ___('devcp_status_confirm_public').'</p><p>'.___('devcp_status_confirm_public_sure');
+                echo ___('Making this add-on public will make it available for anyone to download and will begin offering updates to existing users.').'</p><p>'.___('Are you sure you wish to make this add-on public?');
                 break;
             }
             ?>
             </p>
             <div style="text-align: center;">
-                <a href="#" onclick="addon_status.confirm(); return false;" class="complete add-button rounded"><?=___('devcp_status_confirm_yes')?></a>&nbsp;&nbsp;
-                <a href="<?=$html->url("/developers/addon/status/{$addon_id}/")?>" class="button rounded"><?=___('devcp_status_confirm_no')?></a>
+                <a href="#" onclick="addon_status.confirm(); return false;" class="complete add-button rounded"><?=___('Yes, I\'m Sure')?></a>&nbsp;&nbsp;
+                <a href="<?=$html->url("/developers/addon/status/{$addon_id}/")?>" class="button rounded"><?=___('No, cancel')?></a>
             </div>
         </div>
         </form>

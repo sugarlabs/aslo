@@ -40,10 +40,10 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_addon_status_title'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('%s Status'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($errors)) {
-            echo '<div class="notice-error rounded">'.___('devcp_status_nominate_error_notice').'</div>';
+            echo '<div class="notice-error rounded">'.___('<span>A nomination message is required.</span><br />Please fill in the text box with the requested information and try again.').'</div>';
         }
         ?>
         <?=$this->renderElement('noscript')?>
@@ -52,14 +52,14 @@
         <?=$html->hiddenSession();?>
         <input type="hidden" name="confirmed" value="true" />
         <div class="graybox field rounded">
-            <h4><?=___('devcp_status_nominate_header')?></h4>
+            <h4><?=___('Add-on Nomination')?></h4>
             
             <?=$localization->includeLocalPage('nomination', array($html->url('/pages/policy')))?>
             
             <div style="text-align: center;">
                 <textarea cols="70" rows="5" name="data[Addon][nominationmessage]"><?=(!empty($addon['Addon']['nominationmessage']) ? $addon['Addon']['nominationmessage'] : '')?></textarea>
-                <div><a href="#" onclick="addon_status.confirm(); return false;" class="nominate add-button rounded"><?=sprintf(_('devcp_nominate_submit_nominate'), $addon_name)?></a><br />
-                <a href="<?=$html->url("/developers/addon/status/{$addon_id}/")?>"><?=___('devcp_nominate_cancel')?></a>
+                <div><a href="#" onclick="addon_status.confirm(); return false;" class="nominate add-button rounded"><?=sprintf(___('Nominate %s'), $addon_name)?></a><br />
+                <a href="<?=$html->url("/developers/addon/status/{$addon_id}/")?>"><?=___('Cancel and return')?></a>
                 </div>
             </div>
         </div>

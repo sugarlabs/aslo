@@ -45,14 +45,14 @@
     </div>
     <div id="collections-add" class="primary" role="main">
         <?=$this->renderElement('amo2009/breadcrumbs')?>
-        <h2><?=___('collections_add_header')?></h2>
+        <h2><?=___('Create a Collection')?></h2>
 
-        <p><?=___('collections_add_intro')?></p>
+        <p><?=___('It\'s easy to create your own collection of add-ons by filling in a few fields below.')?></p>
 
         <?php
         if (!empty($form_errors)) {
             echo $this->renderElement('notification', array(
-                'msg' => ___('error_formerrors'),
+                'msg' => ___('There are errors in this form. Please correct them and resubmit.'),
                 'type' => 'error'
             ));
         }
@@ -63,45 +63,45 @@
 
             <fieldset>
                 <div>
-                <h3><label for="CollectionName"><?=___('collections_edit_formfield_name')?></label></h3>
-                <p><?=___('collections_edit_formfield_name_description')?></p>
+                <h3><label for="CollectionName"><?=___('Collection Name')?></label></h3>
+                <p><?=___('Give your collection a descriptive name, such as "Dave\'s Favorite Travel Add-ons"')?></p>
                 <?=$html->input('Collection/name');?>
-                <?=$html->tagErrorMsg('Collection/name', ___('collections_edit_form_error_name')) ?>
+                <?=$html->tagErrorMsg('Collection/name', ___('You must give your collection a name.')) ?>
                 </div>
 
                 <div>
-                <h3><label for="CollectionDescription"><?=___('collections_edit_formfield_description')?></label></h3>
-                <p><?=___('collections_edit_formfield_description_description')?></p>
+                <h3><label for="CollectionDescription"><?=___('Collection Description')?></label></h3>
+                <p><?=___('Briefly describe your collection and the kind of add-ons in it')?></p>
                 <?=$html->textarea('Collection/description', array('cols'=>50, 'rows'=>5));?>
-                <?=$html->tagErrorMsg('Collection/description', ___('collections_edit_form_error_description')) ?>
+                <?=$html->tagErrorMsg('Collection/description', ___('You must provide a description of your collection.')) ?>
                 </div>
 
                 <div>
-                <h3><label><?=___('collections_edit_formfield_listed')?></label></h3>
-                <p><?=___('collections_edit_formfield_listed_description')?></p>
+                <h3><label><?=___('Who can view your collection?')?></label></h3>
+                <p><?=___('By default, collections appear in the public Collection Directory and are discoverable by anyone. If you want to restrict your collection to be viewable only by people who are given a special link, choose that option below.')?></p>
                 <?=$html->radio('Collection/listed', array(
-                    true => '<label for="listed_1">'.___('collections_edit_formfield_listed_true').'</label>',
-                    false => '<label for="listed_0">'.___('collections_edit_formfield_listed_false').'</label>'
+                    true => '<label for="listed_1">'.___('Everyone can view my collection in the directory').'</label>',
+                    false => '<label for="listed_0">'.___('Only people I invite can view my collection').'</label>'
                     ), '<br/>', array('value' => (int)(!isset($this->data['Collection']['listed']) || $this->data['Collection']['listed']))
                                 // defaults to true, or previously selected value on postback
                 )?>
                 </div>
 
                 <div id="firstaddons">
-                    <h3><label for="addonname"><?=___('collections_add_formfield_firstaddons')?></label></h3>
-                    <p><?=sprintf(___('collections_add_formfield_addons_description'),
-                        ___('collections_add_submit'))?></p>
-                    <label for="addonname"><?=___('collections_edit_formfield_addons')?></label>
+                    <h3><label for="addonname"><?=___('Choose your first add-ons')?></label></h3>
+                    <p><?=sprintf(___('If you already know which add-ons you want to add to your collection, just start typing their names below. If you\'d rather wait and do this later, just click %1$s now.'),
+                        ___('Create Collection'))?></p>
+                    <label for="addonname"><?=___('Add-on name:')?></label>
                     <input type="text" name="q" id="addonname"/>
 
                     <div id="selectedaddons">
-                        <h3><?=___('collections_add_header_selectedaddons')?></h3>
+                        <h3><?=___('Selected Add-ons')?></h3>
                         <ul></ul>
                     </div>
                 </div>
 
                 <div>
-                <label><?=$html->submit(___('collections_add_submit'), array('class'=>'submit-button'))?></label>
+                <label><?=$html->submit(___('Create Collection'), array('class'=>'submit-button'))?></label>
                 </div>
             </fieldset>
         </form>

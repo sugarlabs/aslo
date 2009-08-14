@@ -35,11 +35,11 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 
 if ($loggedin) {
-    $_review_flag_this = ___('review_flag_this', 'Report this review');
-    $_review_flag_this_titletip = ___('review_flag_this_titletip', 'Is this review inappropriate, inaccurate or spam? Click here to flag it for editor review.');
+    $_review_flag_this = ___('Report this review');
+    $_review_flag_this_titletip = ___('Is this review inappropriate, inaccurate or spam? Click here to flag it for editor review.');
 }
 $bare = isset($_GET['bare']) ? ( $_GET['bare'] == 1 ) : FALSE;
 ?>
@@ -48,11 +48,11 @@ $bare = isset($_GET['bare']) ? ( $_GET['bare'] == 1 ) : FALSE;
 <div class="secondary" role="complementary">
     <?=$this->renderElement('amo2009/categories')?>
 </div>
-    
+
 <div id="content-main" class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
-    
-<h2><?=sprintf(_('reviews_header'), $addon['Translation']['name']['string']);?></h2>
+
+<h2><?=sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);?></h2>
 <?php else: ?>
 <div class="other-reviews">
 <?php endif ?>
@@ -65,18 +65,18 @@ foreach ($reviews as $review):
 ?>
     <div class="item review" id="review-<?=$review['Review']['id']?>">
     <h3><?=$review['Translation']['title']['string']?></h3>
-    
-    <div class="reviewed-on">
-        <?=$this->renderElement('amo2009/stars',array('rating' => $review['Review']['rating']))?>	
-        <?php
-            echo sprintf(___('addon_reviewed_by_u_on_d'),
-                     $html->linkUserFromModel($review['User']),
-                     strftime(_('date'), strtotime($review['Review']['created'])));
-        ?>
-        <?=($isAuthor || $isAdmin) ? '['.$html->link(_('addon_review_author_reply_link'), "/reviews/reply/{$review['Review']['id']}").']' : '' ?>
-        <?=($canDelete) ? '['.$html->link(_('addon_review_admin_delete'), "/reviews/delete/{$review['Review']['id']}").']' : ''?>
 
-        <?php /* Show either the review moderation form, or display a 
+    <div class="reviewed-on">
+        <?=$this->renderElement('amo2009/stars',array('rating' => $review['Review']['rating']))?>
+        <?php
+            echo sprintf(___('by %1$s on %2$s'),
+                     $html->linkUserFromModel($review['User']),
+                     strftime(___('%B %e, %Y'), strtotime($review['Review']['created'])));
+        ?>
+        <?=($isAuthor || $isAdmin) ? '['.$html->link(___('Reply'), "/reviews/reply/{$review['Review']['id']}").']' : '' ?>
+        <?=($canDelete) ? '['.$html->link(___('Delete'), "/reviews/delete/{$review['Review']['id']}").']' : ''?>
+
+        <?php /* Show either the review moderation form, or display a
                  thank you message if this user already has flagged this review. */ ?>
         <?php if ($loggedin): ?>
             <?php
@@ -85,10 +85,10 @@ foreach ($reviews as $review):
             ?>
             <?php if ($review_flag_name): ?>
 
-                <?php /* If there's already a flag for this review from this 
-                        user, re-display the thank you message without a flag 
+                <?php /* If there's already a flag for this review from this
+                        user, re-display the thank you message without a flag
                         form. */ ?>
-                <p class="flag-thanks"><?php echo ___('review_flag_success', 
+                <p class="flag-thanks"><?php echo ___('review_flag_success',
                     'Thanks; this review has been flagged for editor approval.') ?></p>
 
             <?php else: ?>
@@ -98,20 +98,20 @@ foreach ($reviews as $review):
                               'class' => 'flag')); ?>
                     <span class="reason">
                         <span class="error"></span>
-                        <select id="data[ReviewsModerationFlag][flag_name]" 
+                        <select id="data[ReviewsModerationFlag][flag_name]"
                                 name="data[ReviewsModerationFlag][flag_name]">
-                            <option value=""> - <?php echo _('review_flag_reason_instructions') ?> - </option>
-                            <?php foreach ($review_flag_reasons as $reason=>$label): ?> 
+                            <option value=""> - <?php echo ___('Report this review (select a reason)') ?> - </option>
+                            <?php foreach ($review_flag_reasons as $reason=>$label): ?>
                                 <option value="<?php echo $reason ?>"><?php echo $label ?></option>
                             <?php endforeach ?>
                         </select>
                     </span>
                     <?php
-                        echo $html->hidden('Review/id', 
+                        echo $html->hidden('Review/id',
                             array('value'=>$review_id, 'class'=>'ReviewId'));
-                        echo $html->input('ReviewsModerationFlag/flag_notes', 
+                        echo $html->input('ReviewsModerationFlag/flag_notes',
                             array('type'=>'text', 'size'=>'50', 'maxsize'=>'100', 'value'=>'', 'class'=>'FlagNotes hide-with-js'));
-                        echo $html->submit($_review_flag_this, 
+                        echo $html->submit($_review_flag_this,
                             array('title'=>$_review_flag_this_titletip, 'class'=>'FlagSubmit hide-with-js'));
                     ?>
                 </form>
@@ -121,26 +121,26 @@ foreach ($reviews as $review):
 
     </div>
     <?=nl2br($review['Translation']['body']['string'])?>
-    
+
     <?php if ($other_count = @($reviews_others_counts[$review['Review']['id']])): ?>
         <?php /* Construct the link to reveal previous reviews by this user. */ ?>
         <div class="others-by-user" id="others-by-user-<?=$review['Review']['id']?>">
             <?php $r_user = $review['User'] ?>
             <?=$html->link(
                 sprintf(
-                    ngettext('addon_review_others_by_user',
-                        'addon_review_others_by_user', $other_count), 
+                    n___('See %1$s previous review submitted by %2$s for this add-on.',
+                        'See %1$s previous reviews submitted by %2$s for this add-on.', $other_count),
                     $other_count,
-                    $r_user['nickname'] ? $r_user['nickname'] : 
-                        $r_user['firstname'] . ' ' . $r_user['lastname'] 
-                ), 
+                    $r_user['nickname'] ? $r_user['nickname'] :
+                        $r_user['firstname'] . ' ' . $r_user['lastname']
+                ),
                 '/reviews/display/'.$addon['Addon']['id'].'?user_id='.$review['User']['id']
             ) ?>
         </div>
     <?php endif ?>
 
     </div>
-    
+
     <? if ($other_count = @($reviews_others_counts[$review['Review']['id']])): ?>
         <div class="others-by-user-load" id="others-by-user-load-<?=$review['Review']['id']?>">
         </div>
@@ -154,13 +154,13 @@ foreach ($reviews as $review):
     $reply_id = $reply['Review']['id'];
     ?>
         <div class="review review-reply" id="review-<?=$reply['Review']['id']?>">
-        <h3><?=_('addon_review_reply_prefix') .' '. $reply['Translation']['title']['string']?></h3>
-        
-        <div class="reviewed-on">
-            <?=sprintf(_('addon_review_reply_on_x_by_y'), $html->linkUserFromModel($reply['User']), strftime(_('date'), strtotime($reply['Review']['created']))) ?> 
-            <?=($canDelete) ? '['.$html->link(_('addon_review_admin_delete'), "/reviews/delete/{$reply['Review']['id']}").']' : ''?>
+        <h3><?=___('Developer Reply:') .' '. $reply['Translation']['title']['string']?></h3>
 
-            <?php /* Show either the review moderation form, or display a 
+        <div class="reviewed-on">
+            <?=sprintf(___('Reply by %1$s on %2$s'), $html->linkUserFromModel($reply['User']), strftime(___('%B %e, %Y'), strtotime($reply['Review']['created']))) ?>
+            <?=($canDelete) ? '['.$html->link(___('Delete'), "/reviews/delete/{$reply['Review']['id']}").']' : ''?>
+
+            <?php /* Show either the review moderation form, or display a
                      thank you message if this user already has flagged this review. */ ?>
             <?php if ($loggedin): ?>
                 <?php
@@ -169,10 +169,10 @@ foreach ($reviews as $review):
                 ?>
                 <?php if ($review_flag_name): ?>
 
-                    <?php /* If there's already a flag for this review from this 
-                            user, re-display the thank you message without a flag 
+                    <?php /* If there's already a flag for this review from this
+                            user, re-display the thank you message without a flag
                             form. */ ?>
-                    <p class="flag-thanks"><?php echo ___('review_flag_success', 
+                    <p class="flag-thanks"><?php echo ___('review_flag_success',
                         'Thanks; this review has been flagged for editor approval.') ?></p>
 
                 <?php else: ?>
@@ -181,20 +181,20 @@ foreach ($reviews as $review):
                             array('id' => "flag-{$reply_id}", 'class' => 'flag')); ?>
                         <span class="reason">
                             <span class="error"></span>
-                            <select id="data[ReviewsModerationFlag][flag_name]" 
+                            <select id="data[ReviewsModerationFlag][flag_name]"
                                     name="data[ReviewsModerationFlag][flag_name]">
-                                <option value=""> - <?php echo _('review_flag_reason_instructions') ?> - </option>
-                                <?php foreach ($review_flag_reasons as $reason=>$label): ?> 
+                                <option value=""> - <?php echo ___('Report this review (select a reason)') ?> - </option>
+                                <?php foreach ($review_flag_reasons as $reason=>$label): ?>
                                     <option value="<?php echo $reason ?>"><?php echo $label ?></option>
                                 <?php endforeach ?>
                             </select>
                         </span>
                         <?php
-                            echo $html->hidden('Review/id', 
+                            echo $html->hidden('Review/id',
                                 array('value'=>$reply_id, 'class'=>'ReviewId'));
-                            echo $html->input('ReviewsModerationFlag/flag_notes', 
+                            echo $html->input('ReviewsModerationFlag/flag_notes',
                                 array('type'=>'text', 'size'=>'50', 'maxsize'=>'100', 'value'=>'', 'class'=>'FlagNotes hide-with-js'));
-                            echo $html->submit($_review_flag_this, 
+                            echo $html->submit($_review_flag_this,
                                 array('title'=>$_review_flag_this_titletip, 'class'=>'FlagSubmit hide-with-js'));
                         ?>
                     </form>
@@ -213,13 +213,13 @@ foreach ($reviews as $review):
 <div class="clearboth"> <hr /> </div>
 
 <ul>
-    <li><?=$html->link(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
+    <li><?=$html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
     <?
     if (empty($isAuthor)) {
         if (!empty($hasreview)) {
-            $add_or_edit = _('addons_display_edit_review');
+            $add_or_edit = ___('Edit your review');
         } else {
-            $add_or_edit = _('addons_display_add_review');
+            $add_or_edit = ___('Add a review');
         }
         echo '<li>'.$html->link($add_or_edit, '/reviews/add/'.$addon['Addon']['id']).'</li>';
     }

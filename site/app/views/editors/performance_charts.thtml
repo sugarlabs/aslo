@@ -42,10 +42,10 @@
     <div id="content-main">
         <?=$this->renderElement('developers/performanceheader');?>
 
-        <h3 class="performanceHeader collapsible expanded"><span><?=___('editorcp_performance_month_activity', 'Activity By Month')?></span></h3>
+        <h3 class="performanceHeader collapsible expanded"><span><?=___('Activity By Month')?></span></h3>
         <div id="byMonthChart" style="width:600px;height:300px"></div>
 
-        <h3 class="performanceHeader collapsible expanded"><span><?=___('editorcp_performance_category_breakdown', 'Category Breakdown')?></span></h3>
+        <h3 class="performanceHeader collapsible expanded"><span><?=___('Category Breakdown')?></span></h3>
         <div>
             <form id="performanceFilter" action="<?=$html->url()?>" method="get">
             <div>
@@ -62,24 +62,24 @@
                 <?php if ($showUserLookup): ?>
                 <input type="hidden" name="user" value="<?=$user['User']['email']?>" />
                 <?php endif; ?>
-                <?=$html->submit(_('editorcp_reviewlog_button_filter'))?>
+                <?=$html->submit(___('Filter'))?>
             </div>
             </form>
             <div id="performancePieContainer">
                 <h4><?=$userName?> - <?=$pieTitleDate?></h4>
                 <div id="byCatUserChart"></div>
-                <h4><?=___('editorcp_performance_column_teamaverage', 'Team Average')?> - <?=$pieTitleDate?></h4>
+                <h4><?=___('Team Average')?> - <?=$pieTitleDate?></h4>
                 <div id="byCatTeamChart"></div>
             </div>
             <div id="performancePieLegendContainer">
-                <h4><?=___('editorcp_performance_legend', 'Legend')?></h4>
+                <h4><?=___('Legend')?></h4>
                 <div id="performancePieLegend"></div>
                 <ul id="performancePieLegendControl">
-                    <li><a id="topUserSlices" href="#"><?=___('editorcp_performance_top_user_categories', 'Top User Categories')?></a></li>
-                    <li><a id="topTeamSlices" href="#"><?=___('editorcp_performance_top_team_categories', 'Top Team Categories')?></a></li>
-                    <li><a id="allSlices" href="#"><?=___('editorcp_performance_select_all', 'Select All')?></a></li>
-                    <li><a id="noSlices" href="#"><?=___('editorcp_performance_select_none', 'Select None')?></a></li>
-                    <li><a id="toggleSliceLabels" href="#"><?=___('editorcp_performance_toggle_labels', 'Toggle Labels')?></a></li>
+                    <li><a id="topUserSlices" href="#"><?=___('Top User Categories')?></a></li>
+                    <li><a id="topTeamSlices" href="#"><?=___('Top Team Categories')?></a></li>
+                    <li><a id="allSlices" href="#"><?=___('Select All')?></a></li>
+                    <li><a id="noSlices" href="#"><?=___('Select None')?></a></li>
+                    <li><a id="toggleSliceLabels" href="#"><?=___('Toggle Labels')?></a></li>
                 </ul>
             </div>
         </div>
@@ -93,7 +93,7 @@
         // line chart data
         editors_performance.monthlyData = [
             { label: '<?=$userName?>',  data: [<?=$monthlyUserPointsJS?>], color:'#0066cc'},
-            { label: '<?=___('editorcp_performance_column_teamaverage', 'Team Average')?>',  data: [<?=$monthlyTeamPointsJS?>], color:'#cc3333'}
+            { label: '<?=___('Team Average')?>',  data: [<?=$monthlyTeamPointsJS?>], color:'#cc3333'}
         ];
         editors_performance.monthlyTicks = [<?=$monthlyTicksJS?>];
 
@@ -105,8 +105,8 @@
         editors_performance.pieLabels = [<?=$sliceLabelsJS?>];
         editors_performance.pieOptions = {
             legendId: 'performancePieLegend',
-            otherLabel: '<?=___('editorcp_performance_unselected', 'Unselected')?>',
-            emptyLabel: '<?=___('editorcp_performance_nodata', 'No Data')?>',
+            otherLabel: '<?=___('Unselected')?>',
+            emptyLabel: '<?=___('No Data')?>',
         };
 
         editors_performance.init();

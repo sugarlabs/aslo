@@ -37,7 +37,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 
 /**
  * This element uses the following local variables:
@@ -64,7 +64,7 @@ $addonSummary = $addon['Translation']['summary']['string'];
 
 // prepare preview image
 if (isset($addonPreviewPath) && !empty($addonPreviewPath)) {
-    $_alt = sprintf(_('img_preview_of'),$addonName);
+    $_alt = sprintf(___('Preview Image of %s'),$addonName);
     $previmg = '<img src="'.$addonPreviewPath.'" '
         .'alt="'.$_alt.'" title="'.$_alt.'"/>';
     $previmg = '<p class="preview-img">'
@@ -88,7 +88,7 @@ if (!isset($addonSummary) || empty($addonSummary))
     $addonSummary = '&nbsp;';
 
 $_install_render_options = array(
-    'addonIconPath' => $addonIconPath, 
+    'addonIconPath' => $addonIconPath,
     'addonName'     => $addonName,
     'addonId'       => $addonID,
     'addonFiles'    => $addonFiles,
@@ -106,22 +106,22 @@ $installbutton = $this->renderElement('install', $_install_render_options);
 <li class="addon <?=$html->extraClass($addon)?>">
     <div class="irk">
         <h3 class="name"><?=$html->link("$icon $addonName", "/addon/{$addonID}");?></h3>
-        <h4 class="author"> <?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonCreators, null, "/addon/{$addonID}#authors")?></h4>
+        <h4 class="author"> <?=___('by')?> <?=$html->linkUsersFromModel($addonCreators, null, "/addon/{$addonID}#authors")?></h4>
         <?=$html->flag($addon)?>
         <?=$previmg ?>
-        <p class="rating"><?=$this->renderElement('stars',array('rating' => $addon['Addon']['averagerating']))?><?php if ($addon['Addon']['totalreviews'] > 0) { ?> <a href="<?=$html->url('/addon/'.$addon['Addon']['id'].'#reviews')?>"><?=sprintf(ngettext('feature_reviews','feature_reviews', $addon['Addon']['totalreviews']), $addon['Addon']['totalreviews'])?></a><?php } ?></p>
+        <p class="rating"><?=$this->renderElement('stars',array('rating' => $addon['Addon']['averagerating']))?><?php if ($addon['Addon']['totalreviews'] > 0) { ?> <a href="<?=$html->url('/addon/'.$addon['Addon']['id'].'#reviews')?>"><?=sprintf(n___('%1$s review','%1$s reviews', $addon['Addon']['totalreviews']), $addon['Addon']['totalreviews'])?></a><?php } ?></p>
         <span class="stats">
             <em><?=$html->number_format($addon['Addon']['weeklydownloads'], 0)?></em>
-            <?php echo ___('addon_downloads_weekly'); ?>
+            <?php echo ___('weekly downloads'); ?>
         </span>
         <?=$categories?>
         <p class="desc"><?=$addonSummary?></p>
         <?=$installbutton?>
         <p class="updated">
             <?php
-            $_update_string = ___('addon_detail_last_updated');
+            $_update_string = ___('Updated %s');
             $_version_date = (isset($addon['Addon']['datestatuschanged']) ? $addon['Addon']['datestatuschanged'] : $addon['Version'][0]['created']);
-            echo sprintf($_update_string, strftime(_('date'), strtotime($_version_date)));
+            echo sprintf($_update_string, strftime(___('%B %e, %Y'), strtotime($_version_date)));
             ?>
         </p>
     </div>

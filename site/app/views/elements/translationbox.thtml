@@ -65,7 +65,7 @@ if (!isset($graybox) || $graybox === true) {
 } else {
     echo '<div class="translation-box'.(isset($extraclass)?' '.$extraclass:'').'">';
 }
-    echo (!empty($displayName) ? '<h4><a href="#" title="'.___('devcp_transbox_a_title_help').'" onclick="translation_box.showHelp(this); return false;">'.$html->image('developers/help.png', array('alt' => ___('devcp_transbox_alt_help'))).'</a>'.$displayName.'  </h4>' : '');
+    echo (!empty($displayName) ? '<h4><a href="#" title="'.___('Help (does not leave page)').'" onclick="translation_box.showHelp(this); return false;">'.$html->image('developers/help.png', array('alt' => ___('Help'))).'</a>'.$displayName.'  </h4>' : '');
     echo (!empty($description) ? "<p>{$description}</p>" : '');
     ?>
     <div class="translation-row">
@@ -82,8 +82,8 @@ if (!isset($graybox) || $graybox === true) {
             }
         ?>
         </div>
-        <div class="translation-button"><?=$html->image('developers/tab_add.png', array('onclick' => 'translation_box.addTab(this);', 'alt' => ___('devcp_transbox_img_add_trans'), 'title' => ___('devcp_transbox_img_add_trans')))?></div>
-        <div class="translation-button remove" style="display: none;"><?=$html->image('developers/tab_delete.png', array('onclick' => 'translation_box.confirmRemove(this);', 'alt' => ___('devcp_transbox_img_remove_trans'), 'title' => ___('devcp_transbox_img_remove_trans')))?></div>
+        <div class="translation-button"><?=$html->image('developers/tab_add.png', array('onclick' => 'translation_box.addTab(this);', 'alt' => ___('Add Translation'), 'title' => ___('Add Translation')))?></div>
+        <div class="translation-button remove" style="display: none;"><?=$html->image('developers/tab_delete.png', array('onclick' => 'translation_box.confirmRemove(this);', 'alt' => ___('Remove Translation'), 'title' => ___('Remove Translation')))?></div>
     </div>
     <div class="translation-area" table="<?=$this->translationBox['table']?>" field="<?=$field?>" defaultLocale="<?=$this->translationBox['defaultLocale']?>"<?=(!empty($id) ? ' itemID="'.$id.'"' : '')?>>
     <?php
@@ -98,7 +98,7 @@ if (!isset($graybox) || $graybox === true) {
             }
 
             if (!empty($maxLength)) {
-                echo '<div class="translation-maxlength '.$locale.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'">'.$html->image('developers/exclamation.png', array('alt' => '')).sprintf(___('devcp_transbox_chars_used'), '<span>'.strlen($translation).'</span>', $maxLength).'</div>';
+                echo '<div class="translation-maxlength '.$locale.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'">'.$html->image('developers/exclamation.png', array('alt' => '')).sprintf(___('Characters used: %1$s / %2$s'), '<span>'.strlen($translation).'</span>', $maxLength).'</div>';
             }
         }
     ?>
@@ -110,7 +110,7 @@ if (!isset($graybox) || $graybox === true) {
 <div class="translation-newlocale-container">
     <div class="translation-newlocale new selected">
         <div class="padded">
-            <?=___('devcp_transbox_select_locale')?>
+            <?=___('Select the locale of the translation to add:')?>
             <select>
             <?php
                 foreach ($this->translationBox['languages'] as $code => $name) {
@@ -119,9 +119,9 @@ if (!isset($graybox) || $graybox === true) {
             ?>
             </select>
             <div class="buttons">
-                <input type="button" value="<?=___('devcp_transbox_input_add_locale')?>" onclick="translation_box.addLocale(this, false);" />
-                <input type="button" value="<?=___('devcp_transbox_input_add_all')?>" onclick="translation_box.addLocale(this, true);" />
-                <input type="button" value="<?=___('devcp_transbox_input_cancel')?>" onclick="translation_box.cancelAdd(this);" />
+                <input type="button" value="<?=___('Add Locale')?>" onclick="translation_box.addLocale(this, false);" />
+                <input type="button" value="<?=___('Add Locale to All')?>" onclick="translation_box.addLocale(this, true);" />
+                <input type="button" value="<?=___('Cancel')?>" onclick="translation_box.cancelAdd(this);" />
             </div>
         </div>
     </div>
@@ -129,10 +129,10 @@ if (!isset($graybox) || $graybox === true) {
 <div class="translation-deletelocale-container">
     <div class="translation-deletelocale">
         <div class="padded">
-            <?=___('devcp_transbox_delete_sure')?>
+            <?=___('Are you sure you wish to delete this translation?')?>
             <div class="buttons">
-                <input type="button" value="<?=___('devcp_transbox_input_delete')?>" onclick="translation_box.removeLocale(this);" />
-                <input type="button" value="<?=___('devcp_transbox_input_cancel')?>" onclick="translation_box.cancelRemove(this);" />
+                <input type="button" value="<?=___('Delete It')?>" onclick="translation_box.removeLocale(this);" />
+                <input type="button" value="<?=___('Cancel')?>" onclick="translation_box.cancelRemove(this);" />
             </div>
         </div>
     </div>
@@ -140,11 +140,11 @@ if (!isset($graybox) || $graybox === true) {
 <div class="translation-help-container">
     <div class="translation-help bluebox-tr"><div class="bluebox-tl">
         <div class="padded">
-            <h4><?=sprintf(___('devcp_transbox_help_header_tabs'), $this->translationBox['defaultLocale'])?></h4>
-            <p><?=___('devcp_transbox_help_transbox')?></p>
-            <h4><?=___('devcp_transbox_help_header_what')?></h4>
-            <p><?=___('devcp_transbox_help_if')?>
-            <div style="text-align: right;"><a href="#" onclick="translation_box.hideHelp(this); return false;"><?=___('devcp_transbox_help_hide')?></a></div></p>
+            <h4><?=sprintf(___('What are these %s tabs?'), $this->translationBox['defaultLocale'])?></h4>
+            <p><?=___('This is a <i>Translation Box</i>. It allows you to localize a specific field into any other languages for which you might have a translation. You can add, edit, and remove translations using the locale tabs.')?></p>
+            <h4><?=___('What if I don\'t have any translations?')?></h4>
+            <p><?=___('If a user browses the site and a translation isn\'t available in their own language, it will fall back to your add-on\'s Default Locale, specified in the Edit Add-on Properties area. If you don\'t have any translations, just enter what you can into your Default Locale, which should be a language you speak.')?>
+            <div style="text-align: right;"><a href="#" onclick="translation_box.hideHelp(this); return false;"><?=___('Hide Help')?></a></div></p>
         </div>
         <div class="bluebox-br"><div class="bluebox-bl"></div></div>
     </div></div>

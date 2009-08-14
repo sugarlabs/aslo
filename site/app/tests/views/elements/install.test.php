@@ -21,7 +21,7 @@
  *
  * Contributor(s):
  *   Andrei Hajdukewycz <sancus@off.net> (Original Author)
- * 
+ *
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -53,9 +53,11 @@ class InstallTest extends WebTestHelper {
     }
 
     function testDisplayInstall() {
-        //get display page and test eula link 
+        //get display page and test eula link
         $this->getAction("/addon/" . $this->id);
-        $installMessage = sprintf(_('a_install'), "", "");
+        // commented out by clouserw on 2009-08-13.  I'm converting to normal .po files and I don't know what this
+        // is, but it doesn't look like $installMessage is doing anything anyway.  we can revisit later.
+        //$installMessage = sprintf(_('a_install'), "", "");
         if (!empty($this->data['Translation']['eula']['string'])) {
             // install link
             $this->wantedPattern = "@<p class=\"install-button platform-ALL\">\s*<a href=\"{$this->actionPath}/@";
@@ -66,23 +68,23 @@ class InstallTest extends WebTestHelper {
             $this->wantedPattern = "@<script type=\"text/javascript\">setTimeout\(function\(\) {fixPlatformLinks\('\d+', document.getElementById\('installTrigger\d+'\).getAttribute\('addonName'\)\);addCompatibilityHints\([^)]+\);},0\);</script>@";
             $this->assertWantedPattern($this->wantedPattern, htmlentities($this->wantedPattern));
         }
-        
+
         // test remaining things on the policy page
         $this->getAction("/addons/policy/0/{$this->id}/{$this->data['Version'][0]['File'][0]['id']}");
-        $installMessage = _('a_eula_install');
-        
+        $installMessage = ___('Accept and Install');
+
         //test filenames matches with database
         $this->wantedPattern = "@<a href=\"{$this->actionPath}/downloads/latest/{$this->id}/addon-{$this->id}-latest.xpi\"@";
         $this->assertWantedPattern($this->wantedPattern, "install url matches: ".htmlentities($this->wantedPattern));
-        
+
         //test add-on name matches in install trigger
         $this->wantedPattern = "@addonName=\"{$this->data['Translation']['name']['string']}\"@";
         $this->assertWantedPattern($this->wantedPattern, "Add-on name matches: {$this->data['Translation']['name']['string']}");
-        
+
         //test add-on icon link for install trigger
         $this->wantedPattern = "@addonIcon=\"{$this->actionPath}/images/addon_icon/{$this->id}/\d{10}\"@";
         $this->assertWantedPattern($this->wantedPattern, htmlentities($this->wantedPattern));
-        
+
         //test add-on hash matches with db @TODO: Download file and verify hash
         $this->wantedPattern = "@addonHash=\"{$this->data['Version'][0]['File'][0]['hash']}\"@";
         $this->assertWantedPattern($this->wantedPattern, "Addon Hash Match: {$this->data['Version'][0]['File'][0]['hash']}");

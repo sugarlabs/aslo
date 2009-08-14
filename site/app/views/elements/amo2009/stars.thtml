@@ -46,7 +46,7 @@ if (is_numeric($rating) && $rating > 0) {
     } else {
         $stars = ceil($rating);
     }
-    $msg = sprintf(_('stars_rated_x_outof_5'), $stars);
+    $msg = sprintf(___('Rated %s out of 5 stars'), $stars);
     ?>
     <span class="stars stars-<?=$stars?>" title="<?=$msg?>">
         <?=$msg?>
@@ -54,6 +54,6 @@ if (is_numeric($rating) && $rating > 0) {
     <?php
 } else {
     ?>
-    <?=_('stars_not_yet_rated')?>
+    <?=___('Not yet rated')?>
     <?php
 }

@@ -59,16 +59,16 @@ class CollectionsListingComponent extends Object {
         $sort_default = 'weekly';
         $sort_opts = array(
             'weekly' => array(
-                'text' => ___('collections_index_option_week'),
+                'text' => ___('Most popular this week'),
                 'sort' => 'weekly_subscribers'),
             'monthly' => array(
-                'text' => ___('collections_index_option_month'),
+                'text' => ___('Most popular this month'),
                 'sort' => 'monthly_subscribers'),
             'all' => array(
-                'text' => ___('collections_index_option_all'),
+                'text' => ___('Most popular all time'),
                 'sort' => 'subscribers'),
             'newest' => array(
-                'text' => ___('collections_index_option_newest'),
+                'text' => ___('Newest'),
                 'sort' => 'created'),
         );
         $sortby = isset($_GET['sortby']) ? $_GET['sortby'] : $sort_default;

@@ -50,7 +50,7 @@ else
         if (!empty($hist['Version'])) {
             echo "{$hist['Version']['version']} ({$platforms[$hist['File']['platform_id']]})";
             echo "<br />";
-            echo $html->link(sprintf(ngettext('editors_review_history_comment_count', 'editors_review_history_comment_count', $hist['commentCount']), $hist['commentCount']), "/editors/review/{$hist['Version']['id']}#editorComments");
+            echo $html->link(sprintf(n___('Comments (%1$s)', 'Comments (%1$s)', $hist['commentCount']), $hist['commentCount']), "/editors/review/{$hist['Version']['id']}#editorComments");
         }
     ?></td>
     <td><?=$hist['Approval']['created']?></td>
@@ -65,31 +65,31 @@ else
     <?php
     if ($hist['Approval']['reviewtype'] == 'nominated') {
         if ($hist['Approval']['action'] == STATUS_PUBLIC) {
-            echo _('editors_review_history_nominated_approved');
+            echo ___('Nomination Approved/Public');
         }
         elseif ($hist['Approval']['action'] == STATUS_SANDBOX) {
-            echo _('editors_review_history_nominated_denied');
+            echo ___('Nomination Denied/Sandbox');
         }
         elseif ($hist['Approval']['action'] == STATUS_NOMINATED) {
-            echo _('editors_review_history_nominated_adminreview');
+            echo ___('Admin Review');
         }
     }
     elseif ($hist['Approval']['reviewtype'] == 'pending') {
         if ($hist['Approval']['action'] == STATUS_PUBLIC) {
-            echo _('editors_review_history_pending_approved');
+            echo ___('Approved/Public');
         }
         elseif ($hist['Approval']['action'] == STATUS_SANDBOX) {
-            echo _('editors_review_history_pending_denied');
+            echo ___('Denied/Sandbox');
         }
         elseif ($hist['Approval']['action'] == STATUS_PENDING) {
-            echo _('editors_review_history_pending_adminreview');
+            echo ___('Admin Review');
         }
     }
     elseif ($hist['Approval']['reviewtype'] == 'info') {
         if (empty($hist['Approval']['reply_to']))
-            echo ___('editors_review_history_info_request', 'Information Request');
+            echo ___('Information Request');
         else
-            echo ___('editors_review_history_info_reply', 'Reply');
+            echo ___('Reply');
     }
     ?>
     </td>
@@ -99,9 +99,8 @@ else
           && !empty($hist['replies'])):?>
 <tr>
     <td colspan="5">
-        <?=$html->link(sprintf(n___('editors_review_history_show_hide_replies',
-        'editors_review_history_show_hide_replies', count($hist['replies']),
-        'Show/Hide Replies (%1$s)'), count($hist['replies'])), "#",
+        <?=$html->link(sprintf(n___('Show/Hide Replies (%1$s)',
+        'Show/Hide Replies (%1$s)', count($hist['replies'])), count($hist['replies'])), "#",
         array('onclick'=>"$('tr.reply_to_{$hist['Approval']['id']}').toggle();return false;"))?></td>
 </tr>
 <?php

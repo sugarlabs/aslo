@@ -72,7 +72,7 @@ class FilesController extends AppController
         
         $this->File->id = $file_id;
         if (!$file = $this->File->read()) {
-            $this->flash(_('error_file_notfound'), '/');
+            $this->flash(___('File not found!'), '/');
             return;
         }
         $this->Addon->id = $file['Version']['addon_id'];
@@ -92,7 +92,7 @@ class FilesController extends AppController
         //Only display add-on if: 1) opted in 2) user owns this plugin 3) user is an editor/admin
         if ($addon['Addon']['viewsource'] != 1 && !$isDeveloper &&            
             !$this->SimpleAcl->actionAllowed('Editors', '*', $user)) {
-            $this->flash(_('error_addon_notviewable'), '/addon/'.$this->Addon->id);
+            $this->flash(___('This add-on is not viewable here.'), '/addon/'.$this->Addon->id);
             return;
         }
 
@@ -102,10 +102,10 @@ class FilesController extends AppController
 
         if (!file_exists($path)) {
             if ($review == 1) {
-                $this->flash(_('error_file_notfound'), '/reviewers/review/'.$this->Addon->id);
+                $this->flash(___('File not found!'), '/reviewers/review/'.$this->Addon->id);
             }
             else {
-                $this->flash(_('error_file_notfound'), '/addon/'.$this->Addon->id);
+                $this->flash(___('File not found!'), '/addon/'.$this->Addon->id);
             }
             return;
         }
@@ -236,7 +236,7 @@ class FilesController extends AppController
         $contents = $this->_get_contents($path, $file, $addontype);
 
         if (is_bool($contents) && $contents == false) {
-            $this->flash(_('error_file_notfound'), '/');
+            $this->flash(___('File not found!'), '/');
             return;
         }
         $this->publish('filename', $file);
@@ -249,7 +249,7 @@ class FilesController extends AppController
         
         $this->File->id = $file_id;
         if (!$file = $this->File->read()) {
-            $this->flash(_('error_file_notfound'), '/');
+            $this->flash(___('File not found!'), '/');
             return;
         }
 
@@ -258,7 +258,7 @@ class FilesController extends AppController
             array(STATUS_PUBLIC));
         
         if (count($prev) == 0) {
-            $this->flash(_('error_file_notfound'), '/');
+            $this->flash(___('File not found!'), '/');
             return;
         }
         $this->Version->id = $prev[0]['Version']['id'];
@@ -269,7 +269,7 @@ class FilesController extends AppController
 
         //Only display add-on if opted in or if the user is a reviewer
         if ($addon['Addon']['viewsource'] != 1 && !$this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User'))) {
-            $this->flash(_('error_addon_notviewable'), '/addon/'.$this->Addon->id);
+            $this->flash(___('This add-on is not viewable here.'), '/addon/'.$this->Addon->id);
             return;
         }
 
@@ -277,7 +277,7 @@ class FilesController extends AppController
         $path = REPO_PATH.'/'.$this->Addon->id.'/'.$file['File']['filename'];
 
         if (!file_exists($path)) {
-            $this->flash(_('error_file_notfound'), '/reviewers/review/'.$this->Addon->id);
+            $this->flash(___('File not found!'), '/reviewers/review/'.$this->Addon->id);
             return;
         }
 

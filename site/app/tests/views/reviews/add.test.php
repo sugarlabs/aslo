@@ -59,7 +59,7 @@ class ReviewsAddTest extends WebTestHelper {
 
     function testReviews() {
         // Title
-        $this->title = sprintf(_('addon_review_pagetitle'), $this->data['Translation']['name']['string']).' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->title = sprintf(___('Reviews for %s'), $this->data['Translation']['name']['string']).' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->assertTitle($this->title);
 
         // add review form
@@ -67,7 +67,7 @@ class ReviewsAddTest extends WebTestHelper {
         $this->assertWantedPattern($myPattern, htmlentities($myPattern));
 
         // submit button
-        $myPattern = '#<input type="submit" class="amo-submit" value="'._('addon_review_add_submit').'" >#';
+        $myPattern = '#<input type="submit" class="amo-submit" value="'.___('Submit your review').'" >#';
         $this->assertWantedPattern($myPattern, htmlentities($myPattern));
     }
 

@@ -40,18 +40,18 @@
 <?php
 // prepare query string
 if (!isset($query) || !is_string($query))
-    $query = _('search_form_default_text');
+    $query = ___('search for add-ons');
 ?>
 
 <div id="search-mini">
     <form id="" method="get" action="<?=$html->url("/search")?>">
         <span id="search-query">
-            <label  for="query" title="<?=___('search_form_tooltip')?>"><?=___('search_form_default_text')?></label> 
+            <label  for="query" title="<?=___('Click to enter search terms')?>"><?=___('search for add-ons')?></label> 
             <input type="text" id="query" name="q" value="<?=$query?>"/>
         </span>
-        <label for="category"><?=___('search_form_within')?></label> 
+        <label for="category"><?=___('within')?></label> 
         <select id="category" name="cat">
-        <option value="all"<?=($category[0]==0 ? ' selected="selected"' : '')?>><?=_('search_form_all_addons')?></option>
+        <option value="all"<?=($category[0]==0 ? ' selected="selected"' : '')?>><?=___('all add-ons')?></option>
         <?php
         // AmoVersions is from controller->beforeRender()
         foreach ($AmoCategories as $category):
@@ -67,6 +67,6 @@ if (!isset($query) || !is_string($query))
         <option value="<?=$category['type'].','.$category['cat']?>"<?=$sel?>><?=$html->entities($category['name'])?></option>
         <?php endforeach; ?>
         </select>
-        <button type="submit" id="search-mini-submit"><?= _('search'); ?></button>
+        <button type="submit" id="search-mini-submit"><?= ___('Search'); ?></button>
     </form>
 </div>

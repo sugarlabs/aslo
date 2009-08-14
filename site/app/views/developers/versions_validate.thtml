@@ -40,7 +40,7 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_validate_addon', 'Validate %s version %s'), $addon_name, $version['Version']['version']), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Validate %1$s version %2$s'), $addon_name, $version['Version']['version']), 'addon_id' => $addon_id));?>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="versions-validate-form" action="" method="post">
@@ -49,14 +49,14 @@
         <?php if (!empty($files)) {
             foreach($files as $file) {
                 echo '<div id="test-results-'.$file['File']['id'].'">';
-                echo '<h2>'.sprintf(___('devcp_versions_validate_header', 'Validate File %s'), $file['File']['filename']).'</h2>';
+                echo '<h2>'.sprintf(___('Validate File %s'), $file['File']['filename']).'</h2>';
                 echo $this->renderElement('developers/testresults', array('file' => $file, 'test_groups' => $file['groups'], 'all_groups' => $all_groups, 'counts' => $file['counts']));
                 echo '</div><br/>';
             }
         }
         else {
             // They should never actually hit this, but display it just in case
-            echo '<p><i>'.___('devcp_versions_edit_no_files').'</i></p>';
+            echo '<p><i>'.___('No files found.').'</i></p>';
         } ?>
         </form>
     </div>

@@ -41,61 +41,61 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_OWNER ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
             if (!empty($success)) {
-                echo '<div class="notice-success rounded">'.___('devcp_notice_changes_saved').'</div>';
+                echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
             }
         ?>
-        <h2><?=___('devcp_edit_authors_header_manage')?></h2>
-        
+        <h2><?=___('Manage Add-on Authors')?></h2>
+
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="addon-edit-authors-form" action="" method="post">
         <?=$html->hiddenSession();?>
-        
+
         <div class="graybox field rounded spaced">
-            <h4><?=___('devcp_edit_authors_header_current')?></h4>
+            <h4><?=___('Current Authors')?></h4>
             <table id="author-table" class="pretty-table">
                 <thead><tr>
                     <th></th>
-                    <th><?=___('devcp_edit_authors_th_author')?></th>
-                    <th><?=___('devcp_edit_authors_th_role')?></th>
-                    <th><?=___('devcp_edit_authors_th_listed')?></th>
+                    <th><?=___('Author')?></th>
+                    <th><?=___('Role')?></th>
+                    <th><?=___('Listed')?></th>
                     <th></th>
                 </tr></thead>
                 <tbody></tbody>
             </table>
             <div class="save-changes rounded">
-                <strong><?=___('devcp_notice_unsaved_changes')?></strong> <?=___('devcp_edit_authors_click_save')?>
+                <strong><?=___('You have unsaved changes.')?></strong> <?=___('Click the Update Authors button below to save.')?>
             </div>
-            <div class="add-button-container"><a href="#add-author" onclick="addon_edit_authors.showAddForm();" class="add-button rounded"><?=___('devcp_edit_authors_add_author')?></a></div>
+            <div class="add-button-container"><a href="#add-author" onclick="addon_edit_authors.showAddForm();" class="add-button rounded"><?=___('Add New Author')?></a></div>
         </div>
         </form>
-        
-        <div id="empty-authors" class="notice-error rounded" style="display:none"><span><?=___('devcp_error_empty_authors', 'Your add-on must have at least one owner.')?></span></div>
-        <div class="action-button-container centered"><a href="#" id="submit" onclick="addon_edit_authors.save(); return false;" class="action-button rounded"><?=___('devcp_edit_authors_update_author')?></a></div>
+
+        <div id="empty-authors" class="notice-error rounded" style="display:none"><span><?=___('Your add-on must have at least one owner.')?></span></div>
+        <div class="action-button-container centered"><a href="#" id="submit" onclick="addon_edit_authors.save(); return false;" class="action-button rounded"><?=___('Update authors')?></a></div>
         <br />
-        
+
         <div id="add-author" class="graybox rounded spaced field" style="display: none;">
-            <h4><?=___('devcp_edit_authors_add_author')?></h4>
+            <h4><?=___('Add New Author')?></h4>
             <br />
-            <p><label><?=___('devcp_edit_authors_add_email')?> <input id="add-email" type="text" size="40" /></label></p>
+            <p><label><?=___('Author Account Email:')?> <input id="add-email" type="text" size="40" /></label></p>
             <div id="add-error" class="rounded"></div>
-            
-            <p><?=___('devcp_edit_authors_select_role')?></p>
+
+            <p><?=___('Select a role for the author:')?></p>
             <ul>
-                <li><label><input id="add-role-owner" type="radio" name="role" checked="checked" />&nbsp;</strong><?=___('devcp_edit_authors_label_owner')?></label></li>
-                <li><label><input id="add-role-developer" type="radio" name="role" />&nbsp;</strong><?=___('devcp_edit_authors_label_developer')?></label></li>
-                <li><label><input id="add-role-viewer" type="radio" name="role" />&nbsp;</strong><?=___('devcp_edit_authors_label_viewer')?></label></li>
+                <li><label><input id="add-role-owner" type="radio" name="role" checked="checked" />&nbsp;</strong><?=___('<strong>Owner</strong> - Can manage all aspects of the add-on listing, including adding and removing other authors.')?></label></li>
+                <li><label><input id="add-role-developer" type="radio" name="role" />&nbsp;</strong><?=___('<strong>Developer</strong> - Can manage all aspects of the add-on listing, except for adding and removing other authors.')?></label></li>
+                <li><label><input id="add-role-viewer" type="radio" name="role" />&nbsp;</strong><?=___('<strong>Viewer</strong> - Can view add-on developer listing and statistics, but can\'t make any changes.')?></label></li>
             </ul>
-            
-            <p><label><input id="add-listed" type="checkbox" checked="checked" />&nbsp;<?=___('devcp_edit_authors_label_add_listed')?></label></p>
-            
+
+            <p><label><input id="add-listed" type="checkbox" checked="checked" />&nbsp;<?=___('List as author in public display pages')?></label></p>
+
             <table><tr><td>
-                <div id="add-author-button" class="add-button-container"><a href="#author-table" onclick="return addon_edit_authors.checkAddForm();" class="add-button rounded bigger"><?=___('devcp_edit_authors_add_author_button')?></a></div>
+                <div id="add-author-button" class="add-button-container"><a href="#author-table" onclick="return addon_edit_authors.checkAddForm();" class="add-button rounded bigger"><?=___('Add Author')?></a></div>
             </td><td valign="middle">
-                <div id="add-loading"><?=$html->image('ajax_loading.gif', array('alt' => 'Loading'))?>&nbsp;<?=___('devcp_edit_authors_add_loading')?></div>
+                <div id="add-loading"><?=$html->image('ajax_loading.gif', array('alt' => 'Loading'))?>&nbsp;<?=___('Checking account email...')?></div>
             </td></tr></table>
         </div>
     </div>

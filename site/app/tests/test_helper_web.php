@@ -80,7 +80,7 @@ class WebTestHelper extends WebTestCase {
                 );
         
         $this->post($path, $data);
-        $this->assertNoUnwantedText(_('error_username_or_pw_wrong'), 'Logged in with test account');        
+        $this->assertNoUnwantedText(___('Wrong username or password!'), 'Logged in with test account');        
     }
 
     /**

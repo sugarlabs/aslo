@@ -255,11 +255,11 @@ if (in_array(LANG, $rtl_languages)) {
 
 global $app_prettynames;
 $app_prettynames = array(
-    'firefox' => ___('main_prettyname_firefox'),
-    'thunderbird' => ___('main_prettyname_thunderbird'),
-    'sunbird' => ___('main_prettyname_sunbird'),
-    'seamonkey' => ___('main_prettyname_seamonkey'),
-    'fennec' => ___('main_prettyname_fennec')
+    'firefox' => ___('Firefox'),
+    'thunderbird' => ___('Thunderbird'),
+    'sunbird' => ___('Sunbird'),
+    'seamonkey' => ___('SeaMonkey'),
+    'fennec' => ___('Fennec')
     );
 define('APP_PRETTYNAME', $app_prettynames[APP_SHORTNAME]);
 
@@ -278,10 +278,10 @@ $flush_lists = array();
  */
 global $licenses;
 $licenses = array();
-$licenses[0] = array('name' => ___('licenses_mpl_1.1'),  'url' => 'http://www.mozilla.org/MPL/MPL-1.1.html');
-$licenses[1] = array('name' => ___('licenses_gpl_2.0'),  'url' => 'http://www.gnu.org/licenses/gpl-2.0.html');
-$licenses[2] = array('name' => ___('licenses_gpl_3.0'),  'url' => 'http://www.gnu.org/licenses/gpl-3.0.html');
-$licenses[3] = array('name' => ___('licenses_lgpl_2.1'), 'url' => 'http://www.gnu.org/licenses/lgpl-2.1.html');
-$licenses[4] = array('name' => ___('licenses_lgpl_3.0'), 'url' => 'http://www.gnu.org/licenses/lgpl-3.0.html');
-$licenses[5] = array('name' => ___('licenses_mit'),      'url' => 'http://www.opensource.org/licenses/mit-license.php');
-$licenses[6] = array('name' => ___('licenses_bsd'),      'url' => 'http://www.opensource.org/licenses/bsd-license.php');
+$licenses[0] = array('name' => ___('Mozilla Public License, version 1.1'),  'url' => 'http://www.mozilla.org/MPL/MPL-1.1.html');
+$licenses[1] = array('name' => ___('GNU General Public License, version 2.0'),  'url' => 'http://www.gnu.org/licenses/gpl-2.0.html');
+$licenses[2] = array('name' => ___('GNU General Public License, version 3.0'),  'url' => 'http://www.gnu.org/licenses/gpl-3.0.html');
+$licenses[3] = array('name' => ___('GNU Lesser General Public License, version 2.1'), 'url' => 'http://www.gnu.org/licenses/lgpl-2.1.html');
+$licenses[4] = array('name' => ___('GNU Lesser General Public License, version 3.0'), 'url' => 'http://www.gnu.org/licenses/lgpl-3.0.html');
+$licenses[5] = array('name' => ___('MIT/X11 License'),      'url' => 'http://www.opensource.org/licenses/mit-license.php');
+$licenses[6] = array('name' => ___('BSD License'),      'url' => 'http://www.opensource.org/licenses/bsd-license.php');

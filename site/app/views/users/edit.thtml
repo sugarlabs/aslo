@@ -65,76 +65,76 @@ $this->translationBox = array(
     <?echo $this->renderElement('notification', array('type' => 'success', 'msg' => $confirmation_message))?>
     
     <?php if (isset($newemail) && $newemail): ?>
-        <?echo $this->renderElement('notification', array('type' => 'success', 'description' => sprintf(___('user_edit_confirm_email_sent'), $newemail)));?>
+        <?echo $this->renderElement('notification', array('type' => 'success', 'description' => sprintf(___('An email has been sent to %1$s to confirm your new email address. For the change to take effect, you need to click on the link provided in this email. Until then, you can keep logging in with your current email address.'), $newemail)));?>
     <?php endif; ?>
 
 <?php endif; ?>
 
 <?php if(isset($errorMessage)): ?>
-    <?echo $this->renderElement('notification', array('type' => 'error', 'msg' => _('error_formerrors')));?>
+    <?echo $this->renderElement('notification', array('type' => 'error', 'msg' => ___('There are errors in this form. Please correct them and resubmit.')));?>
 <p></p>
 <?php endif; ?>
 
 
-<h1><?php printf(_('user_form_editprofile'), $this->data['User']['email']); ?></h1>
+<h1><?php printf(___('Edit user profile for %s'), $this->data['User']['email']); ?></h1>
 
 <form enctype="multipart/form-data" action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
     <?=$html->hiddenSession() ?>
     
 <div id="tabbed-editor" class="flora">
     <ul class="tabs-nav">
-        <li><a href="#profile-user"><span><?=___('user_tab_profile', 'User Profile');?></span></a></li>
-        <li><a href="#profile-collections"><span><?=___('user_tab_collections');?></span></a></li>
-        <li><a href="#profile-notifications"><span><?=___('user_tab_notifications');?></span></a></li>
-        <li><a href="#profile-change-pw-email"><span><?=_('user_change_password_or_email'); ?></span></a></li>
-        <li><a href="#profile-other"><span><?=___('user_form_otheractions');?></span></a></li>
+        <li><a href="#profile-user"><span><?=___('User Profile');?></span></a></li>
+        <li><a href="#profile-collections"><span><?=___('Collections');?></span></a></li>
+        <li><a href="#profile-notifications"><span><?=___('Notifications');?></span></a></li>
+        <li><a href="#profile-change-pw-email"><span><?=___('Change Password or Email'); ?></span></a></li>
+        <li><a href="#profile-other"><span><?=___('Other Actions');?></span></a></li>
     </ul>
     
     <div id="profile-user">
-        <h3 class="hidden"><?=___('user_tab_profile', 'User Profile');?></h3>
+        <h3 class="hidden"><?=___('User Profile');?></h3>
         <div class="line">
-            <label class="amo-label-large" for="UserFirstname"><?=_('user_form_firstname')?></label>
+            <label class="amo-label-large" for="UserFirstname"><?=___('First name')?></label>
             <?=$html->input('User/firstname') ?>
-            <?=$html->tagErrorMsg('User/firstname', _('error_field_required'))?>
-            <?=___('user_required_firstlast_or_nickname', 'A first name, last name or nickname is required.')?>
+            <?=$html->tagErrorMsg('User/firstname', ___('This field must not be empty.'))?>
+            <?=___('A first name, last name or nickname is required.')?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserLastname"><?=_('user_form_lastname')?></label>
+            <label class="amo-label-large" for="UserLastname"><?=___('Last name')?></label>
             <?=$html->input('User/lastname') ?>
-            <?=$html->tagErrorMsg('User/lastname', _('error_field_required'))?>
+            <?=$html->tagErrorMsg('User/lastname', ___('This field must not be empty.'))?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserNickname"><?=_('user_form_nickname')?></label>
+            <label class="amo-label-large" for="UserNickname"><?=___('Nickname')?></label>
             <?=$html->input('User/nickname') ?>
-            <?=$html->tagErrorMsg('User/nickname', _('error_user_nickname_notunique'))?>
+            <?=$html->tagErrorMsg('User/nickname', ___('This nickname is already taken.'))?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserLocation"><?=___('user_form_location', 'Location')?></label>
+            <label class="amo-label-large" for="UserLocation"><?=___('Location')?></label>
             <?=$html->input('User/location') ?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserOccupation"><?=___('user_form_occupation', 'Occupation')?></label>
+            <label class="amo-label-large" for="UserOccupation"><?=___('Occupation')?></label>
             <?=$html->input('User/occupation') ?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserHomepage"><?=_('user_form_homepage')?></label>
+            <label class="amo-label-large" for="UserHomepage"><?=___('Website URL')?></label>
             <?=$html->input('User/homepage') ?>
-            <?=$html->tagErrorMsg('User/homepage', _('error_invalid_url'))?>
+            <?=$html->tagErrorMsg('User/homepage', ___('This URL has an invalid format. Valid URLs look like http://example.com/my_page.'))?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
+            <label class="amo-label-large" for="UserEmailhidden"><?=___('Hide email address')?></label>
             <?=$html->checkBox('User/emailhidden') ?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserPictureData"><?=___('user_form_picture', 'Picture')?></label>
+            <label class="amo-label-large" for="UserPictureData"><?=___('Picture')?></label>
             <div class="edit-picture">
-                <img src="<?=$html->url("/user/{$user_id}/picture?{$this->data['User']['picture_hash']}{$_how_much_cake_sucks_on_a_scale_of_1_to_10}")?>" alt="<?=empty($this->data['User']['picture_data']) ? ___('user_picture_alt_no_picture', 'No photo') : sprintf(___('user_picture_alt_name', 'Picture of %1$s'), $this->data['User']['email'])?>" class="avatar photo-large photo" />
+                <img src="<?=$html->url("/user/{$user_id}/picture?{$this->data['User']['picture_hash']}{$_how_much_cake_sucks_on_a_scale_of_1_to_10}")?>" alt="<?=empty($this->data['User']['picture_data']) ? ___('No photo') : sprintf(___('Picture of %1$s'), $this->data['User']['email'])?>" class="avatar photo-large photo" />
                 <br />
                 <?php if(!empty($this->data['User']['picture_data'])): ?>
-                    <label for="UserRemovepicture"><?=___('user_form_delete_picture', 'Remove this picture?')?></label>
+                    <label for="UserRemovepicture"><?=___('Remove this picture?')?></label>
                     <?=$html->checkBox('User/removepicture') ?><br />
                 <? endif; ?>
-                <label for="UserRemovepicture"><?=___('user_form_new_picture', 'Upload a new picture?')?></label>
+                <label for="UserRemovepicture"><?=___('Upload a new picture?')?></label>
                 <?=$html->file('User/picture_data') ?>
                 <?=$html->tagErrorMsg('User/picture_data', @$picture_error)?>
             </div>
@@ -146,52 +146,52 @@ $this->translationBox = array(
                 'translations' => $translations['bio'],
                 'height' => '100',
                 'maxLength' => '500',
-                'displayName' => ___('user_form_bio'),
-                'description' => ___('user_form_bio_description'),
+                'displayName' => ___('About me'),
+                'description' => ___('Introduce yourself to the community, if you like! This text will appear publicly on your user info page. Line breaks will be preserved, but no HTML is allowed.'),
             ));
             ?>
         </div>
     </div>
     
     <div id="profile-collections">
-        <h3 class="hidden"><?=___('user_tab_collections');?></h3>
+        <h3 class="hidden"><?=___('Collections');?></h3>
         <div class="line">
             <?=$html->checkbox('User/display_collections') ?>
-            <label for="UserDisplayCollections"><?=___('user_form_display_collections')?></label>
+            <label for="UserDisplayCollections"><?=___('Display the collections I have created in my user profile')?></label>
         </div>
         <div class="line">
             <?=$html->checkbox('User/display_collections_fav') ?>
-            <label for="UserDisplayCollectionsFav"><?=___('user_form_display_collections_fav')?></label>
+            <label for="UserDisplayCollectionsFav"><?=___('Display my favorite collections in my user profile')?></label>
         </div>
     </div>
 
     <div id="profile-notifications">
-        <h3 class="hidden"><?=___('user_tab_notifications', 'Notifications');?></h3>
+        <h3 class="hidden"><?=___('Notifications');?></h3>
         <?php if (empty($userAddons) && empty($userVersionThreads)): ?>
-            <p><?=___('user_notifications_none_available', 'There are currently no notifications available for you to configure.')?></p>
+            <p><?=___('There are currently no notifications available for you to configure.')?></p>
         <?php endif; ?>
         <?php if (!empty($userAddons)): ?>
-            <p><?=___('user_notifications_select_topics', 'From time to time, Mozilla may send you email about upcoming releases and add-on events. Please select the topics you are interested in below:')?></p>
+            <p><?=___('From time to time, Mozilla may send you email about upcoming releases and add-on events. Please select the topics you are interested in below:')?></p>
             <ul>
                 <li><label for="UserNotifycompat"><?=$html->checkbox('User/notifycompat')?>&nbsp;<?=___('user_notifications_item_compat', 'Add-on Compatibility (strongly recommended)')?></label></li>
-                <li><label for="UserNotifyevents"><?=$html->checkbox('User/notifyevents')?>&nbsp;<?=___('user_notifications_item_events', 'Upcoming events and contests')?></label></li>
+                <li><label for="UserNotifyevents"><?=$html->checkbox('User/notifyevents')?>&nbsp;<?=___('Upcoming events and contests')?></label></li>
             </ul>
             
-            <p><?=___('user_notifications_specific_contact', 'Mozilla reserves the right to contact you individually about specific concerns with your hosted add-ons.')?></p>
+            <p><?=___('Mozilla reserves the right to contact you individually about specific concerns with your hosted add-ons.')?></p>
         <?php endif; ?>
         <?php if (!empty($userVersionThreads)): ?>
             <div class="line">
                 <div class="graybox rounded spaced">
-                    <h4><?=___('user_notifications_editor_discussions', 'Editor Review Discussions')?></h4>
-                    <p><?=___('user_notifications_unselect_discussions', 'You will be notified when there is activity in any of the following discussions. Please uncheck those you wish to unsubscribe from.')?></p>
+                    <h4><?=___('Editor Review Discussions')?></h4>
+                    <p><?=___('You will be notified when there is activity in any of the following discussions. Please uncheck those you wish to unsubscribe from.')?></p>
 
                     <table id="editor-subscriptions">
                     <thead>
                         <tr>
                             <th><?php /* jquery will add a check/uncheck all box here */ ?></th>
-                            <th><?=___('user_notifications_th_addon', 'Add-on')?></th>
-                            <th><?=___('user_notifications_th_subject', 'Subject')?></th>
-                            <th><?=___('user_notifications_th_subscription_date', 'Subscription Date')?></th>
+                            <th><?=___('Add-on')?></th>
+                            <th><?=___('Subject')?></th>
+                            <th><?=___('Subscription Date')?></th>
                         </tr>
                     </thead>
                     <tbody><?php foreach ($userVersionThreads as $thread): ?>
@@ -199,7 +199,7 @@ $this->translationBox = array(
                             <td><?=$html->checkbox("Subscriptions/{$thread['Subscription']['comment_id']}", null, array('value' => '1'))?></td>
                             <td><label for="Subscriptions<?=$thread['Subscription']['comment_id']?>"><?=$thread['Addon']['Translation']['name']['string']?> <?=$thread['Version']['version']?></label></td>
                             <td><?=$html->link($thread['Versioncomment']['subject'], "/editors/review/{$thread['Version']['id']}#editorComment{$thread['Versioncomment']['id']}")?></td>
-                            <td><?=strftime(_('datetime'), strtotime($thread['Subscription']['modified']))?></td>
+                            <td><?=strftime(___('%B %e, %Y, %I:%M %p'), strtotime($thread['Subscription']['modified']))?></td>
                         </tr><?php endforeach; ?>
                     </tbody>
                     </table>
@@ -209,43 +209,43 @@ $this->translationBox = array(
     </div>
 
     <div id="profile-change-pw-email">
-        <h3><?=_('user_change_password'); ?></h3>
+        <h3><?=___('Change password'); ?></h3>
         <div class="line">
-            <label class="amo-label-large" for="UserPassword"><?=_('user_form_oldpassword')?></label>
+            <label class="amo-label-large" for="UserPassword"><?=___('Old password')?></label>
             <?=$html->password('User/password', array('autocomplete'=>'off')) ?>
-            <?=$html->tagErrorMsg('User/password', _('error_wrong_password'))?>
+            <?=$html->tagErrorMsg('User/password', ___('Wrong password entered!'))?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserNewpassword"><?=_('user_form_newpassword')?></label>
+            <label class="amo-label-large" for="UserNewpassword"><?=___('New password')?></label>
             <?=$html->password('User/newpassword', array('autocomplete'=>'off')) ?>
             <?=$html->tagErrorMsg('User/newpassword', 'error_field_required')?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserConfirmpw"><?=_('user_form_confirmpassword')?></label>
+            <label class="amo-label-large" for="UserConfirmpw"><?=___('Confirm password')?></label>
             <?=$html->password('User/confirmpw', array('autocomplete'=>'off')) ?>
-            <?=$html->tagErrorMsg('User/confirmpw', _('error_user_confirmpw_nomatch'))?>
+            <?=$html->tagErrorMsg('User/confirmpw', ___('The passwords did not match.'))?>
         </div>
-        <h3><?=___('user_change_email', 'Change Email Address');?></h3>
+        <h3><?=___('Change Email Address');?></h3>
         <div class="line">
-            <label class="amo-label-large" for="UserEmail"><?=_('user_form_email')?></label>
+            <label class="amo-label-large" for="UserEmail"><?=___('Email address')?></label>
             <?=$html->input('User/email') ?>
             <?php if (isset($error_email_notunique))
-                    echo '<div class="error_message">'._('error_user_email_notunique').'</div>';
+                    echo '<div class="error_message">'.___('This email address is already taken by another user.').'</div>';
                 elseif (isset($error_email_empty))
-                    echo '<div class="error_message">'._('error_field_required').'</div>';
+                    echo '<div class="error_message">'.___('This field must not be empty.').'</div>';
                 else
-                    echo $html->tagErrorMsg('User/email', _('error_email_invalid'));
+                    echo $html->tagErrorMsg('User/email', ___('This is not a valid email address.'));
             ?>
         </div>
     </div>
     
     <div id="profile-other">
-        <h3 class="hidden"><?=___('user_form_otheractions', 'Other Actions');?></h3>
-        <p><?=$html->link(___('user_edit_delete_user', 'Delete user account'), '/users/delete');?></p>
+        <h3 class="hidden"><?=___('Other Actions');?></h3>
+        <p><?=$html->link(___('Delete user account'), '/users/delete');?></p>
     </div>
 </div><!-- /#tabbed-editor -->
 
-    <?=$html->submit(_('user_form_submit_edit'), array('class'=>'amo-submit')); ?>
+    <?=$html->submit(___('Save'), array('class'=>'amo-submit')); ?>
 </form>
 
 </div><!-- /.primary -->

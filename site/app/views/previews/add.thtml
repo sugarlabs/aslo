@@ -40,9 +40,9 @@
     <?=$this->renderElement('developers/myaddons', array('addons' => $all_addons));?>
     
     <div id="content-main">
-        <h3><?=_('devcp_previews_header_add')?></h3>
+        <h3><?=___('Add Preview')?></h3>
         <div class="addonName"><?=$addon['Translation']['name']['string']?></div>
-        <p><?=_('devcp_previews_filetype_info')?></p>
+        <p><?=___('Use the form below to upload a PNG, JPG, or GIF screenshot of your add-on. Images larger than 700 pixels wide and 525 pixels high will automatically be resized.')?></p>
         <?php
         if (!empty($errors['main'])) {
             echo '<div class="error">'.$errors['main'].'</div>';
@@ -51,16 +51,16 @@
         ?>
     <div id="developersForm">
         <div>
-            <label for="PreviewFile"><?=_('devcp_previews_label_file')?></label>
+            <label for="PreviewFile"><?=___('Preview File')?></label>
             <?=$html->file('Preview/File')?>
         </div>
         <div>
             <?=$html->checkbox('Preview/highlight', null, $highlightCheckbox)?>
-            <label for="PreviewHighlight" class="nofloat"><?=_('devcp_previews_label_makedefault')?></label>
+            <label for="PreviewHighlight" class="nofloat"><?=___('Make this the default preview image')?></label>
         </div>
         <?=$this->renderElement('developers/localebox')?>
         <div class="buttonBox">
-            <?=$html->submit(_('devcp_previews_submit_upload'))?>
+            <?=$html->submit(___('Upload Preview'))?>
         </div>
     </div> <!-- developersForm -->
     </form>

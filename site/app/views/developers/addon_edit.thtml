@@ -40,32 +40,32 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
-        
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
+
         <dl id="edit-listing" class="actionbar">
-            <dt class="edit-authors"><?=$html->link(___('devcp_edit_dt_manage_authors'), "/developers/addon/edit/{$addon_id}/authors")?></dt>
-            <dd><?=___('devcp_edit_dd_manage_authors')?></dd>
-            <dt class="edit-categories"><?=$html->link(___('devcp_edit_dt_manage_categories'), "/developers/addon/edit/{$addon_id}/categories")?></dt>
-            <dd><?=___('devcp_edit_dd_manage_categories')?></dd>
-            <dt class="edit-tags"><?=$html->link(___('devcp_edit_dt_manage_tag'), "/developers/addon/edit/{$addon_id}/tags")?></dt>
-            <dd><?=___('devcp_edit_dd_manage_tags')?></dd>            
-            <dt class="edit-descriptions"><?=$html->link(___('devcp_edit_dt_manage_descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></dt>
-            <dd><?=___('devcp_edit_dd_manage_description')?></dd>
-            <dt class="edit-properties"><?=$html->link(___('devcp_edit_dt_manage_properties'), "/developers/addon/edit/{$addon_id}/properties")?></dt>
-            <dd><?=___('devcp_edit_dd_manage_properties')?></dd>
+            <dt class="edit-authors"><?=$html->link(___('Manage Add-on Authors'), "/developers/addon/edit/{$addon_id}/authors")?></dt>
+            <dd><?=___('Add or remove users that can manage this add-on.')?></dd>
+            <dt class="edit-categories"><?=$html->link(___('Manage Add-on Categories'), "/developers/addon/edit/{$addon_id}/categories")?></dt>
+            <dd><?=___('Select the relevant categories for each application your add-on supports.')?></dd>
+            <dt class="edit-tags"><?=$html->link(___('Manage Add-on Tags'), "/developers/addon/edit/{$addon_id}/tags")?></dt>
+            <dd><?=___('Add tags to your add-on.')?></dd>
+            <dt class="edit-descriptions"><?=$html->link(___('Manage Add-on Descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></dt>
+            <dd><?=___('Add and modify translations for your add-on\'s summary, description, end-user license, and privacy policy.')?></dd>
+            <dt class="edit-properties"><?=$html->link(___('Manage Add-on Properties'), "/developers/addon/edit/{$addon_id}/properties")?></dt>
+            <dd><?=___('Change your add-on\'s name, homepage, icon, and other flags.')?></dd>
             <dt class="edit-profile">
-                <?=$html->link(___('devcp_edit_dt_manage_profile'),
+                <?=$html->link(___('Manage Developer Profile'),
                                "/developers/addon/edit/{$addon_id}/profile")?>
                 <?=$this->renderElement('amo2009/new_indicator')?>
             </dt>
-            <dd><?=___('devcp_edit_dd_manage_profile')?></dd>
+            <dd><?=___('Create or update a profile of yourself and your work in making this add-on.')?></dd>
             <dt class="edit-contributions">
-                <?=$html->link(___('devcp_edit_dt_manage_contributions'),
+                <?=$html->link(___('Manage Contributions'),
                                "/developers/addon/edit/{$addon_id}/contributions")?>
                 <?=$this->renderElement('amo2009/new_indicator')?>
             </dt>
-            <dd><?=___('devcp_edit_dd_manage_contributions')?></dd>
+            <dd><?=___('Provide a way for users to make monetary donations to your project.')?></dd>
         </dl>
-        
+
     </div>
 </div>

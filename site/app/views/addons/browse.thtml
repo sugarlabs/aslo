@@ -57,8 +57,8 @@ $this->layout = 'amo2009';
     <div class="primary full" role="main">
         <h2><?=$subpagetitle?></h2>
 
-        <h3><?=sprintf(ngettext('addon_list_category_totalcount',
-            'addon_list_category_totalcount', $paging['total']),
+        <h3><?=sprintf(n___('%1$s add-on',
+            '%1$s add-ons', $paging['total']),
             $paging['total'])?></h3>
         <div class="featured listing" id="addon-listing">
             <?php

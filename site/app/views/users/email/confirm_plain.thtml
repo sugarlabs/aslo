@@ -3,6 +3,6 @@ $confirmurl = SITE_URL.$html->url('/users/verify/'.$userid.'/'
     .$data['User']['confirmationcode'], true);
 
 // the whole email is localized.
-echo $html->lineBreaks(sprintf(_('user_email_confirm_account_nopass'),
+echo $html->lineBreaks(sprintf(___('Welcome to %2$s Add-ons.\n\nBefore you can use your new account you must activate it - this ensures the e-mail address you used is valid and belongs to you.\nTo activate your account, click the link below or copy and paste the whole thing into your browser\'s location bar:\n\n%1$s\n\nOnce you\'ve successfully activated your account, you can throw away this e-mail.\n\nThanks for joining %2$s Add-ons\n-- %2$s Add-ons Staff'),
     $confirmurl, APP_PRETTYNAME));
 ?>

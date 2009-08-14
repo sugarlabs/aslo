@@ -39,7 +39,7 @@
 if (empty($required_role) || (!empty($required_role) && $author_role < $required_role)):
 ?>
     <div class="notice no-privs-box rounded">
-        <?=___('devcp_rolecheck_no_privs')?>
+        <?=___('<span>You do not have sufficient privileges to make changes on this page.</span><br />Contact the Add-on Owner if you need to make changes.')?>
     </div>
 <?php
 endif;

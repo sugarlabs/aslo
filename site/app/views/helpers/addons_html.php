@@ -189,7 +189,7 @@ class AddonsHtmlHelper extends HtmlHelper
      */
     function linkUserFromModel($userModel, $params = array('class'=>'profileLink')) {
         if ($userModel['nickname'] == 'Deleted User') // XXX slightly ugly way of determining a deleted user
-            $nickname = ___('user_deleted_nickname', 'Deleted User');
+            $nickname = ___('Deleted User');
         else
             $nickname = $userModel['nickname'];
         return $this->linkUser($userModel['id'], $userModel['firstname'],
@@ -219,7 +219,7 @@ class AddonsHtmlHelper extends HtmlHelper
         
         if ($showOthers) {
             $text .= ', ';
-            $_linktext = _('other_users');
+            $_linktext = ___('others');
             if ($moreLink)
                 $text .= $this->link($_linktext, $moreLink);
             else
@@ -568,9 +568,9 @@ class AddonsHtmlHelper extends HtmlHelper
 
     function flag($addon, $default='') {
         $flag = $this->byStatus($addon, array(
-            'experimental' => $this->link(___('addon_listitem_flag_experimental'),
+            'experimental' => $this->link(___('experimental'),
                                           '/pages/faq#experimental-addons'),
-            'recommended'  => $this->link(___('addon_listitem_flag_recommended'),
+            'recommended'  => $this->link(___('recommended'),
                                           '/pages/faq#recommended-addons'),
             'default' => $default
         ));

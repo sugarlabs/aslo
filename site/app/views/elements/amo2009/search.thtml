@@ -94,7 +94,7 @@ if(!isset($hver)) {
 
 // AmoPlatforms is from controller->beforeRender()
 array_shift($AmoPlatforms); // get rid of PLATFORM_ALL
-$platforms = array_merge(array(PLATFORM_ANY => ___('advanced_search_form_any_type')), $AmoPlatforms); //add semantically happy PLATFORM_ANY
+$platforms = array_merge(array(PLATFORM_ANY => ___('Any')), $AmoPlatforms); //add semantically happy PLATFORM_ANY
 $pid = 0;
 if (isset($this->params['pid'])
     && in_array($this->params['pid'], array_keys($platforms))) {
@@ -107,7 +107,7 @@ if (isset($this->params['pid'])
 // goes to a static page and the latter is empty
 array_pop($AmoAddonTypes);
 array_pop($AmoAddonTypes);
-$addon_types = array_merge(array(ADDON_ANY => ___('advanced_search_form_any_type')), $AmoAddonTypes);
+$addon_types = array_merge(array(ADDON_ANY => ___('Any')), $AmoAddonTypes);
 if (!isset($atype)) {
     $atype = ADDON_ANY;
 }
@@ -123,13 +123,13 @@ if (!isset($pp)) {
 }
 
 $updates = array(
-    "" => ___('advanced_search_form_any_time'),
-    '- INTERVAL 1 DAY' => ___('advanced_search_form_past_day'),
-    '- INTERVAL 1 WEEK' => ___('advanced_search_form_past_week'),
-    '- INTERVAL 1 MONTH' => ___('advanced_search_form_past_month'),
-    '- INTERVAL 3 MONTH' => ___('advanced_search_form_past_3_months'),
-    '- INTERVAL 6 MONTH' => ___('advanced_search_form_past_6_months'),
-    '- INTERVAL 1 YEAR' => ___('advanced_search_form_past_year')
+    "" => ___('Any time'),
+    '- INTERVAL 1 DAY' => ___('Past Day'),
+    '- INTERVAL 1 WEEK' => ___('Past week'),
+    '- INTERVAL 1 MONTH' => ___('Past month'),
+    '- INTERVAL 3 MONTH' => ___('Past 3 months'),
+    '- INTERVAL 6 MONTH' => ___('Past 6 months'),
+    '- INTERVAL 1 YEAR' => ___('Past year')
 );
 
 $lup = "";
@@ -141,11 +141,11 @@ if (isset($this->params['lup'])
 }
 
 $sort_orders = array(
-    '' => ___('advanced_search_form_keyword_match'),
-    'newest' => ___('advanced_search_form_newest'),
-    'name' => ___('advanced_search_form_name'),
-    'averagerating' => ___('advanced_search_form_rating'),
-    'weeklydownloads' => ___('advanced_search_form_popularity')
+    '' => ___('Keyword Match'),
+    'newest' => ___('Newest'),
+    'name' => ___('Name'),
+    'averagerating' => ___('Rating'),
+    'weeklydownloads' => ___('Popularity')
 );
 if (!isset($sort)) {
     $sort = "";
@@ -182,11 +182,11 @@ if (!isset($category)) $category = array(0, 0);
 <div class="search-form expanded-search-form">
     <form method="get" action="<?=$html->url("/search")?>" id="search-form">
         <div class="basic" id="search-query">
-            <label for="query" class="query-label" title="<?=___('search_form_tooltip')?>"><?=($collectionSearch ? ___('search_form_default_text_collections', 'search for collections') : ___('search_form_default_text'))?></label>
+            <label for="query" class="query-label" title="<?=___('Click to enter search terms')?>"><?=($collectionSearch ? ___('search for collections') : ___('search for add-ons'))?></label>
             <input id="query" type="text" title="search" name="q" value="<?=$query?>" />
-            <label for="cat"><?=___('search_form_within')?></label>
+            <label for="cat"><?=___('within')?></label>
             <select name="cat" id="cat">
-                    <option class="cat-all" value="all"<?=(!$collectionSearch && $category[0]==0 ? ' selected="selected"' : '')?>><?=_('search_form_all_addons')?></option>
+                    <option class="cat-all" value="all"<?=(!$collectionSearch && $category[0]==0 ? ' selected="selected"' : '')?>><?=___('all add-ons')?></option>
 
                     <?php foreach ($AmoCategories as $AmoCategory): ?>
                         <?php
@@ -202,9 +202,9 @@ if (!isset($category)) $category = array(0, 0);
                         <option value="<?=$AmoCategory['type'].','.$AmoCategory['cat']?>"<?=$sel?>><?=$html->entities($AmoCategory['name'])?></option>
                     <?php endforeach; ?>
 
-                    <option class="cat-all" value="collections"<?=($collectionSearch ? ' selected="selected"' : '')?>><?=___('search_form_all_collections', 'all collections')?></option>
+                    <option class="cat-all" value="collections"<?=($collectionSearch ? ' selected="selected"' : '')?>><?=___('all collections')?></option>
             </select>
-            <button type="submit"><img src="<?=$html->url('/img/amo2009/blank.gif', null, false, false)?>" alt="<?= ___('search_form_submit_tooltip') ?>"/></button>
+            <button type="submit"><img src="<?=$html->url('/img/amo2009/blank.gif', null, false, false)?>" alt="<?= ___('Search for add-ons') ?>"/></button>
         </div>
 
         <?=$two_form; ?>
@@ -221,17 +221,17 @@ if (!isset($category)) $category = array(0, 0);
                 <input type="hidden" id="vfuz" name="vfuz" value="false" />
 
                 <div class="container application">
-                    <label for="appid"><?=___('advanced_search_form_application', 'Application'); ?></label>
+                    <label for="appid"><?=___('Application'); ?></label>
                     <?php $html->simpleSelectTag('appid', $applications, $appid, array(), array(), false)?>
                 </div>
 
                 <div class="container">
-                    <label for="lver"><?=___('advanced_search_form_version', 'version'); ?></label>
+                    <label for="lver"><?=___('version'); ?></label>
                     <span id="lver-td"><input name="lver" type="text" size="5" maxlength="10" value="<?=$lver ?>" /></span>
                 </div>
 
                 <div class="container">
-                    <label for="hver"><?=___('advanced_search_form_to', 'to'); ?></label>
+                    <label for="hver"><?=___('to'); ?></label>
                     <span id="hver-td"><input name="hver" type="text" size="5" maxlength="10" value="<?=$hver ?>" /></span>
                 </div>
 
@@ -239,29 +239,29 @@ if (!isset($category)) $category = array(0, 0);
 
             <fieldset class="subsidiary">
                 <div class="container">
-                    <label for="atype"><?=___('advanced_search_form_type', 'Type'); ?></label>
+                    <label for="atype"><?=___('Type'); ?></label>
                     <?php $html->simpleSelectTag('atype', $addon_types, $atype, array(), array(), false); ?>
                 </div>
                 <div class="container">
-                    <label for="pp"><?=___('advanced_search_form_perpage', 'Per Page'); ?></label>
+                    <label for="pp"><?=___('Per Page'); ?></label>
                     <?php $html->simpleSelectTag('pp', $pages, $pp, array(), array(), false); ?>
                 </div>
                 <div class="container">
-                    <label for="pid"><?=___('advanced_search_form_platform', 'Platform'); ?></label>
+                    <label for="pid"><?=___('Platform'); ?></label>
                     <?php $html->simpleSelectTag('pid', $platforms, $pid, array(), array(), false); ?>
                 </div>
                 <div class="container">
-                    <label for="sort"><?=___('advanced_search_form_sortby', 'Sort By'); ?></label>
+                    <label for="sort"><?=___('Sort By'); ?></label>
                     <?php $html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false); ?>
                 </div>
                 <div class="container">
-                    <label for="lup"><?=___('advanced_search_form_lastupdate', 'Last Updated'); ?></label>
+                    <label for="lup"><?=___('Last Updated'); ?></label>
                     <?php $html->simpleSelectTag('lup', $updates, $lup, array(), array(), false); ?>
                 </div>
             </fieldset>
         </div>
 
-        <div id="advanced-link" title="<?=___('advanced_search_form_toggle_tooltip');?>"><a href="<?=$toggle_uri; ?>"><?= ___('advanced_search_form') ?></a></div>
+        <div id="advanced-link" title="<?=___('Toggle advanced search mode');?>"><a href="<?=$toggle_uri; ?>"><?= ___('Advanced') ?></a></div>
     </form>
     <div id="search-bubble-inner"></div>
 
@@ -279,7 +279,7 @@ if (!isset($category)) $category = array(0, 0);
                 echo "\"{$version}\": \"{$version}\", ";
             }
         }
-        echo "'".___('advanced_search_form_any_version')."' : 'any' };\n";
+        echo "'".___('Any')."' : 'any' };\n";
     }
 
    // to get default version value set up correctly needed to do after $appid, $lver and $hver set-up above in this element
@@ -387,7 +387,7 @@ if (!isset($category)) $category = array(0, 0);
         var l = $("#search-query label[for=query]");
         var c = $("#cat");
         l.show();
-        if ( q.val() == "<?=_('search_form_default_text')?>"){ //initially q is set to search add-ons text for javascriptless browsing
+        if ( q.val() == "<?=___('search for add-ons')?>"){ //initially q is set to search add-ons text for javascriptless browsing
 		  q.val('');
 		}
         if ( q.val() != "") { // if field has any value...
@@ -406,11 +406,11 @@ if (!isset($category)) $category = array(0, 0);
         });
         c.change(function() {
             if (c.val() == "collections") {
-                l.text("<?=___('search_form_default_text_collections', 'search for collections')?>");
+                l.text("<?=___('search for collections')?>");
                 // most advanced fields do not apply to collection search
                 $('select:not(#appid,#pp),input', $('#advanced-search')).attr('disabled', 'disabled');
             } else {
-                l.text("<?=_('search_form_default_text')?>");
+                l.text("<?=___('search for add-ons')?>");
                 $('select,input', $('#advanced-search')).attr('disabled', '');
             }
         });

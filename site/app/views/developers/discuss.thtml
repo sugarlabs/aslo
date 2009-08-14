@@ -40,7 +40,7 @@
     
     <div id="content-main">
         
-        <h3><?=sprintf(___('devcp_discuss_pagetitle', 'Provide More Information For the Add-on Review of %1$s'), $addonName)?></h3>
+        <h3><?=sprintf(___('Provide More Information For the Add-on Review of %1$s'), $addonName)?></h3>
         
         
         <p><?=sprintf(___('devcp_discuss_intro', 'A Mozilla Add-ons Editor requested further '
@@ -49,34 +49,34 @@
         <div class="corner-box">
         <p><?=$inforequest['Approval']['comments']?></p>
         <cite>
-            <?=sprintf(___('devcp_discuss_writtenby', 'written by %1$s on %2$s'), $html->linkUserFromModel($inforequest['User']), strftime(_('datetime'), strtotime($inforequest['Approval']['created'])))?>
+            <?=sprintf(___('written by %1$s on %2$s'), $html->linkUserFromModel($inforequest['User']), strftime(___('%B %e, %Y, %I:%M %p'), strtotime($inforequest['Approval']['created'])))?>
         </cite>
         </div>
           
         <?php if (!empty($replies)): ?>
-        <h4><?=___('devcp_discuss_allreplies_header', 'Replies')?></h4>
+        <h4><?=___('Replies')?></h4>
         <?php foreach ($replies as &$reply): ?>
             <div class="corner-box">
             <p><?=$reply['Approval']['comments']?></p>
             <cite>
-                <?=sprintf(___('devcp_discuss_writtenby', 'written by %1$s on %2$s'), $html->linkUserFromModel($reply['User']), strftime(_('datetime'), strtotime($reply['Approval']['created'])))?>
+                <?=sprintf(___('written by %1$s on %2$s'), $html->linkUserFromModel($reply['User']), strftime(___('%B %e, %Y, %I:%M %p'), strtotime($reply['Approval']['created'])))?>
             </cite>
             </div>
         <?php endforeach; ?>
         <?php endif; ?>
         
-        <h4><?=___('devcp_discuss_addreply_header', 'Add Reply')?></h4>
+        <h4><?=___('Add Reply')?></h4>
         <?php if (!empty($error)): ?>
-        <div class="error-notice"><p><?=sprintf(___('devcp_discuss_error_notice', 'There was an error saving your reply. Please contact %1$s about the issue.'), $link->email('amo-editors@mozilla.org'))?></p></div>
+        <div class="error-notice"><p><?=sprintf(___('There was an error saving your reply. Please contact %1$s about the issue.'), $link->email('amo-editors@mozilla.org'))?></p></div>
         <?php elseif (!empty($success)): ?>
-        <div><p><?=___('devcp_discuss_success_message', 'Your reply was successfully saved. The other participants of the discussion will be notified by email.')?></p></div>
+        <div><p><?=___('Your reply was successfully saved. The other participants of the discussion will be notified by email.')?></p></div>
         <?php else: ?>
         <?=$html->formTag()?>
             <div id="commentsbox">
             <?=$html->textarea('Approval/comments', array('cols' => '70', 'rows' => '5', 'id' => 'comments', 'class' => 'input'))?>
             </div>
             <div id="finish">
-            <?=$html->submit(___('devcp_discuss_submit_reply', 'Submit Reply'), array('id' => 'submit'))?>
+            <?=$html->submit(___('Submit Reply'), array('id' => 'submit'))?>
             </div>
         </form>
         <?php endif; ?>

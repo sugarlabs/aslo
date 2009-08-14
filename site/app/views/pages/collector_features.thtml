@@ -51,8 +51,8 @@ $this->layout = 'amo2009';
   <div class="primary" role="main">
     <?php
     $breadcrumbs = array(
-        sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-        ___('collections_breadcrumb') => '/collections'
+        sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+        ___('Collections') => '/collections'
     );
     ?>
     <?=$this->renderElement('amo2009/breadcrumbs', array('breadcrumbs' => $breadcrumbs))?>
@@ -64,12 +64,12 @@ $this->layout = 'amo2009';
     <ul>
       <li>
         <a href="<?=$html->url('/pages/collector')?>">
-          <?=___('collector_features_a_home')?>
+          <?=___('Add-on Collector Home')?>
         </a>
       </li>
       <li>
         <a href="<?=$html->url('/pages/collector_faq')?>">
-          <?=___('footer_abbr_faq')?>
+          <?=___('Frequently Asked Questions')?>
         </a>
       </li>
     </ul>

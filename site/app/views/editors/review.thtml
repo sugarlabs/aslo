@@ -45,16 +45,16 @@
             if ($filtered) {
                 echo sprintf(___('editors_review_rank_in_queue_filtered', '<strong># %1$s</strong> of %2$s in queue (filtered)'), $queueRank, $filteredCount);
             } else {
-                echo sprintf(___('editors_review_rank_in_queue'), $queueRank, $filteredCount);
+                echo sprintf(___('<strong># %1$s</strong> of %2$s in queue'), $queueRank, $filteredCount);
             }
         ?><br/>
-        <?php if ($queueRank > 1) echo $html->link(___('editors_review_previous_link'), "/editors/queue/{$reviewType}?num=".($queueRank-1)); ?>
-        <?php if ($queueRank < $count[$reviewType]) echo $html->link(___('editors_review_next_link'), "/editors/queue/{$reviewType}?num=".($queueRank+1)); ?>
+        <?php if ($queueRank > 1) echo $html->link(___('&laquo; prev'), "/editors/queue/{$reviewType}?num=".($queueRank-1)); ?>
+        <?php if ($queueRank < $count[$reviewType]) echo $html->link(___('next &raquo;'), "/editors/queue/{$reviewType}?num=".($queueRank+1)); ?>
     </div>
     <?php endif; ?>
-    
+
 <a name="top"></a>
-<h3 class="reviewheader"><?=sprintf(_('editors_review_header_review'), $addon['Translation']['name']['string'].' '.$version['Version']['version'])?></h3>
+<h3 class="reviewheader"><?=sprintf(___('Review %s'), $addon['Translation']['name']['string'].' '.$version['Version']['version'])?></h3>
 <?php
     if (!empty($errors['main'])) {
         echo '<div class="error">'.$errors['main'].'</div>';
@@ -63,7 +63,7 @@
 <div id="headerbox">
     <div id="header1" class="headerboxes">
         <div>
-            <span class="sectionTitle"><?=_('editors_review_header_authors')?></span>
+            <span class="sectionTitle"><?=___('Authors:')?></span>
             <ul id="authors">
             <?php
                 if (!empty($addon['User'])) {
@@ -77,7 +77,7 @@
     </div>
     <div id="header2" class="headerboxes">
         <div>
-            <span class="sectionTitle"><?=_('editors_review_header_categories')?></span>
+            <span class="sectionTitle"><?=___('Categories:')?></span>
             <ul id="categorylist">
             <?php
                 if (!empty($addon['Categories'])) {
@@ -90,7 +90,7 @@
         </div>
     </div>
     <div id="header3" class="headerboxes">
-        <span class="sectionTitle"><?=_('editors_review_header_compatibility')?></span>
+        <span class="sectionTitle"><?=___('Compatibility:')?></span>
         <ul id="compatibility">
         <?php
             if (!empty($addon['targetApps'])) {
@@ -112,20 +112,20 @@
 </div>
 <br class="clear">
 <div id="flagsbox">
-    <span id="flagsTitle"><?=___('editors_review_header_flags')?></span>
+    <span id="flagsTitle"><?=___('Flags:')?></span>
     <ul id="flags">
     <?php
         if ($addon['Addon']['adminreview']) {
-            echo '<li>'.$html->image('developers/admin_review.png', array('title' => ___('editors_review_admin_flag'))).'</li>';
+            echo '<li>'.$html->image('developers/admin_review.png', array('title' => ___('Admin Review'))).'</li>';
         } else {
-            echo '<li>' . ___('editors_review_list_none') . '</li>';
+            echo '<li>' . ___('none') . '</li>';
         }
     ?>
     </ul>
 </div>
 <?=$html->formTag('/editors/review/'.$version['Version']['id'], 'post')?>
 <div id="filesbox">
-    <span id="filesTitle"><?=_('editors_review_header_files')?></span>
+    <span id="filesTitle"><?=___('Files:')?></span>
     <ul id="files">
     <?php
         if (!empty($version['File'])) {
@@ -143,26 +143,26 @@
                 echo $html->checkbox('Approval/File][', null, array('value' => $file['id'], 'class' => 'fileCheckbox', 'checked' => $checked, 'disabled' => $file['disabled'], 'onClick' => 'selectedFile();'));
                 echo '&nbsp;<b>'.$html->link($platforms[$file['platform_id']], '/downloads/file/'.$file['id'].'/'.$file['filename'], array('onClick' => $this->controller->Amo->installTrigger($addon['Addon']['addontype_id'], FULL_BASE_URL.$html->url('/downloads/file/'.$file['id'].'/'.$file['filename']), $addon['Translation']['name']['string'].' '.$version['Version']['version'], '', $file['hash']).' return false;')).'</b>';
                 echo ' - '.$approval[$file['status']].' ('.$file['created'].')';
-                echo ' - '.$html->link(_('editors_review_file_viewcontents_link'), '/files/browse/'.$file['id'].'/1');
+                echo ' - '.$html->link(___('View Contents'), '/files/browse/'.$file['id'].'/1');
                 if ($has_public && $addontype != ADDON_SEARCH) {
 		        //if (count($addon['Version']) > 1) {
-                	echo ' - '.$html->link(_('editors_review_file_diff_link'), '/files/diff/'.$file['id'].'/');
+                	echo ' - '.$html->link(___('Compare with public version'), '/files/diff/'.$file['id'].'/');
 		        }
                 echo '</li>';
             }
         }
     ?>
     </ul>
-    <span id="multipleNotice" style="display: none;"><?=___('editors_review_mulitple_notice')?></span>
+    <span id="multipleNotice" style="display: none;"><?=___('Notice: Only review more than one file if you have tested EVERY file you select.')?></span>
 </div>
 <br class="clear">
 <div id="links">
-    <span id="overview_link"><?=$html->link(___('editors_review_a_item_overview'), '/addon/'.$addon['Addon']['id'])?></span>
-    <span id="history_link"><a href="#history"><?=___('editors_review_a_item_history')?></a></span>
-    <span id="previews_link"><a href="#previews"><?=___('editors_review_a_previews')?></a></span>
-    <?=(!empty($addon['Addon']['homepage'])) ? '<span id="homepage_link">'.$html->link(___('editors_review_a_item_homepage'), $addon['Addon']['homepage']).'</span>' : ''?>
-    <?=($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $this->controller->Session->read('User'))) ? '<span id="edit_link">'.$html->link(___('editors_review_a_edit_item'), '/developers/edit/'.$addon['Addon']['id']).'</span>' : ''?>
-    <span id="comments_link"><a href="#editorComments"><?=___('editors_review_a_comments')?></a></span>
+    <span id="overview_link"><?=$html->link(___('Item Overview'), '/addon/'.$addon['Addon']['id'])?></span>
+    <span id="history_link"><a href="#history"><?=___('Item History')?></a></span>
+    <span id="previews_link"><a href="#previews"><?=___('Previews')?></a></span>
+    <?=(!empty($addon['Addon']['homepage'])) ? '<span id="homepage_link">'.$html->link(___('Item Homepage'), $addon['Addon']['homepage']).'</span>' : ''?>
+    <?=($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $this->controller->Session->read('User'))) ? '<span id="edit_link">'.$html->link(___('Edit Item'), '/developers/edit/'.$addon['Addon']['id']).'</span>' : ''?>
+    <span id="comments_link"><a href="#editorComments"><?=___('Editor Comments')?></a></span>
 </div>
 <div id="form">
     <?php
@@ -170,46 +170,46 @@
         echo $html->hidden('Approval/Type', array('value' => $reviewType));
     ?>
     <div id="actionbox">
-        <span id="public" class="action_color" onClick="selectAction('public');"><?=$html->image('developers/public-bw.png', array('id' => 'publicIcon')).' '._('editors_review_action_public')?></span>
-        <span id="sandbox" class="action_color" onClick="selectAction('sandbox');"><?=$html->image('developers/sandbox-bw.png', array('id' => 'sandboxIcon')).' '._('editors_review_action_sandbox')?></span>
-        <span id="info" class="action_color" onClick="selectAction('info');"><?=$html->image('developers/info-bw.png', array('id' => 'infoIcon')).' '.___('editors_review_action_info')?></span>
-        <span id="superreview" class="action_color" onClick="selectAction('superreview');"><?=$html->image('developers/superreview-bw.png', array('id' => 'superreviewIcon')).' '._('editors_review_action_request_superreview')?></span>
+        <span id="public" class="action_color" onClick="selectAction('public');"><?=$html->image('developers/public-bw.png', array('id' => 'publicIcon')).' '.___('Push to Public')?></span>
+        <span id="sandbox" class="action_color" onClick="selectAction('sandbox');"><?=$html->image('developers/sandbox-bw.png', array('id' => 'sandboxIcon')).' '.___('Retain in Sandbox')?></span>
+        <span id="info" class="action_color" onClick="selectAction('info');"><?=$html->image('developers/info-bw.png', array('id' => 'infoIcon')).' '.___('Request More Information')?></span>
+        <span id="superreview" class="action_color" onClick="selectAction('superreview');"><?=$html->image('developers/superreview-bw.png', array('id' => 'superreviewIcon')).' '.___('Request Super-Review')?></span>
     </div>
     <div id="actiondetails">
     <?php
         if ($reviewType == 'pending') {
             echo '<div id="details-public" style="display: none;">';
-            echo _('editors_review_details_pending_public');
+            echo ___('This will approve a sandboxed version of a public add-on to appear on the public side.');
             echo '</div>';
             echo '<div id="details-sandbox" style="display: none;">';
-            echo _('editors_review_details_pending_sandbox');
+            echo ___('This will cause a sandboxed version of a public add-on to remain in the sandbox.');
             echo '</div>';
         }
         elseif ($reviewType == 'nominated') {
             echo '<div id="details-public" style="display: none;">';
-            echo _('editors_review_details_nominated_public');
+            echo ___('This will mark the add-on and its most recent version and files as public. Future versions will go into the sandbox until they are reviewed by an editor.');
             echo '</div>';
             echo '<div id="details-sandbox" style="display: none;">';
-            echo _('editors_review_details_nominated_sandbox');
+            echo ___('This will retain the add-on in the sandbox.');
             echo '</div>';
         }
     ?>
         <div id="details-info" style="display: none;">
-        <?=___('editors_review_details_info_request')?>
+        <?=___('Use this form to request more information from the author. They will receive an email and be able to answer here. You will be notified by email when they reply.')?>
         </div>
         <div id="details-superreview" style="display: none;">
-        <?=_('editors_review_details_superreview');?>
+        <?=___('If you have concerns about this add-on\'s security, copyright issues, or other concerns that an administrator should look into, enter your comments in the area below. They will be sent to administrators, not the author.');?>
         </div>
     </div>
     <div id="subform" style="display: none;">
         <div id="commentsbox">
-            <?=_('editors_review_label_comments')?>
+            <?=___('Comments:')?>
             <?=$html->textarea('Approval/comments', array('cols' => '70', 'rows' => '5', 'id' => 'comments', 'class' => 'input'))?>
         </div>
         <?php
             if (!empty($cannedresponses)) {
                 echo '<div id="canned">';
-                echo _('editors_review_label_cannedresponse').' ';
+                echo ___('or select a canned response:').' ';
                 echo $html->selectTag('Approval/CannedResponse', $cannedresponses, null, array("onChange" => "document.getElementById('comments').value = this.value;", 'class' => 'input'));
                 echo '</div>';
             }
@@ -217,11 +217,11 @@
         ?>
         <div id="testing">
             <div id="os">
-                <?=_('editors_review_label_operating_systems')?>
+                <?=___('Operating Systems:')?>
                 <?=$html->input('Approval/os', array('class' => 'input', 'size' => '30'))?>
             </div>
             <div id="apps">
-                <?=_('editors_review_label_applications')?>     
+                <?=___('Applications:')?>
                 <?=$html->input('Approval/applications', array('class' => 'input', 'size' => '30'))?>
             </div>
         </div>
@@ -230,13 +230,13 @@
         ?>
         <div id="subscribe">
             <?php
-            $_subscribetext = ___('editors_review_update_notify_once');
+            $_subscribetext = ___('Notify me the next time this add-on is updated. (Subsequent updates will not generate an email)');
             echo $html->checkbox('Approval/subscribe', $_subscribetext);
             ?>
             <label for="ApprovalSubscribe"><?=$_subscribetext?></label>
         </div>
         <div id="finish">
-            <?=$html->submit(_('editors_review_submit_process_action'), array('id' => 'process', 'onClick' => 'return validateReview(\''.$reviewType.'\');'))?>
+            <?=$html->submit(___('Process Action'), array('id' => 'process', 'onClick' => 'return validateReview(\''.$reviewType.'\');'))?>
         </div>
     </div>
 </div>
@@ -245,50 +245,50 @@
 <?php
 if (!empty($addon['Addon']['nominationmessage'])) {
     echo '<div class="highlighted">';
-    echo '<h3>'._('editors_review_header_nominationmessage').'</h3>';
+    echo '<h3>'.___('Nomination Message').'</h3>';
     echo '<div id="nominationMessage">';
         echo nl2br($addon['Addon']['nominationmessage']);
     echo '</div>';
     echo '</div>';
 }
 if (!empty($version['Version']['approvalnotes'])) {
-    echo '<h3>'._('editors_review_header_reviewernotes').'</h3>';
+    echo '<h3>'.___('Notes to Reviewer').'</h3>';
     echo '<div id="reviewNotes">';
         echo nl2br($version['Version']['approvalnotes']);
     echo '</div>';
 }
 if (!empty($addon['Translation']['summary']['string'])) {
-    echo '<h3>'._('editors_review_header_summary').'</h3>';
+    echo '<h3>'.___('Summary').'</h3>';
     echo '<div id="summary" '.$addon['Translation']['summary']['locale_html'].'>';
         echo nl2br($addon['Translation']['summary']['string']);
     echo '</div>';
 }
 if (!empty($addon['Translation']['description']['string'])) {
-    echo '<h3>'._('editors_review_header_description').'</h3>';
+    echo '<h3>'.___('Description').'</h3>';
     echo '<div id="description" '.$addon['Translation']['description']['locale_html'].'>';
         echo nl2br($addon['Translation']['description']['string']);
     echo '</div>';
 }
 if (!empty($version['Translation']['releasenotes']['string'])) {
-    echo '<h3>'._('editors_review_header_versionnotes').'</h3>';
+    echo '<h3>'.___('Version Notes').'</h3>';
     echo '<div id="versionNotes" '.$version['Translation']['releasenotes']['locale_html'].'>';
         echo nl2br($version['Translation']['releasenotes']['string']);
     echo '</div>';
 }
 if (!empty($addon['Translation']['eula']['string'])) {
-    echo '<h3>'._('editors_review_header_eula').'</h3>';
+    echo '<h3>'.___('EULA').'</h3>';
     echo '<div id="EULA" '.$addon['Translation']['eula']['locale_html'].'>';
         echo nl2br($addon['Translation']['eula']['string']);
     echo '</div>';
 }
 if (!empty($addon['Translation']['privacypolicy']['string'])) {
-    echo '<h3>'._('editors_review_header_privacy').'</h3>';
+    echo '<h3>'.___('Privacy Policy').'</h3>';
     echo '<div id="privacyPolicy" '.$addon['Translation']['privacypolicy']['locale_html'].'>';
         echo nl2br($addon['Translation']['privacypolicy']['string']);
     echo '</div>';
 }
 if (!empty($addon['Translation']['developercomments']['string'])) {
-    echo '<h3>'._('editors_review_header_devcomments').'</h3>';
+    echo '<h3>'.___('Developer Comments').'</h3>';
     echo '<div id="developerComments" '.$addon['Translation']['developercomments']['locale_html'].'>';
         echo nl2br($addon['Translation']['developercomments']['string']);
     echo '</div>';
@@ -298,29 +298,29 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <br class="clear">
 <div id="validation" class="validation">
     <div class="sectionHeader">
-        <div class="name"><a name="validation"></a><?=___('editors_review_header_validation', 'Validation Results') . ' [' . $html->link(___('editors_review_header_validation_help', 'help'), '/pages/validation') . ']'?></div>
-        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+        <div class="name"><a name="validation"></a><?=___('Validation Results') . ' [' . $html->link(___('help'), '/pages/validation') . ']'?></div>
+        <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
     <? foreach($version['File'] as $file) : ?>
-        <h4><?= $html->link(sprintf(___('editors_file_validation_header', 'Validation results for %s'), $file['filename']), '/developers/versions/validate/' . $version['Version']['id'] . '#test-results-' . $file['id']) ?></h4>
+        <h4><?= $html->link(sprintf(___('Validation results for %s'), $file['filename']), '/developers/versions/validate/' . $version['Version']['id'] . '#test-results-' . $file['id']) ?></h4>
         <?= $this->renderElement('developers/testresults_header', array('test_groups' => $file['groups'], 'all_groups' => $test_groups, 'file' => array('File' => $file), 'counts' => $file['counts'], 'external_link' => true)); ?>
     <? endforeach; ?>
-</div>    
+</div>
 <br class="clear">
 <div id="history">
     <div class="sectionHeader">
-        <div class="name"><a name="history"></a><?=_('editors_review_header_itemhistory')?></div>
-        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+        <div class="name"><a name="history"></a><?=___('Item History')?></div>
+        <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
     <table id="historyTable">
         <tr id="headerRow">
-            <td><?=_('editors_review_th_version_file')?></td>
-            <td><?=_('editors_review_th_date')?></td>
-            <td><?=_('editors_review_th_reviewer')?></td>
-            <td><?=_('editors_review_th_action')?></td>
-            <td><?=_('editors_review_th_comments')?></td>
+            <td><?=___('Version/File')?></td>
+            <td><?=___('Date')?></td>
+            <td><?=___('Reviewer')?></td>
+            <td><?=___('Action')?></td>
+            <td><?=___('Comments')?></td>
         </tr>
     <?php
         if (!empty($history)) {
@@ -330,7 +330,7 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
             unset($hist); // PHP bug 35106
         }
         else {
-            echo '<tr><td id="notFound" colspan="5">'._('editors_review_history_nonefound').'</td></tr>';
+            echo '<tr><td id="notFound" colspan="5">'.___('No previous review entries could be found.').'</td></tr>';
         }
     ?>
     </table>
@@ -338,8 +338,8 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <br class="clear">
 <div id="previews">
     <div class="sectionHeader">
-        <div class="name"><a name="previews"></a><?=_('editors_review_header_previews')?></div>
-        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+        <div class="name"><a name="previews"></a><?=___('Previews')?></div>
+        <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
     <?php
@@ -349,15 +349,15 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
                 echo '<img src="'.$previewUrl.'" border=0>&nbsp;&nbsp;';
             }
         } else {
-            echo _('editors_review_previews_notfound');
+            echo ___('No previews found.');
         }
     ?>
 </div>
 <br class="clear">
 <div id="editorComments">
     <div class="sectionHeader">
-        <div class="name"><a name="editorComments"></a><?=___('editors_review_header_comments')?></div>
-        <div class="top"><a href="#top"><?=_('editors_review_link_pagetop')?></a></div>
+        <div class="name"><a name="editorComments"></a><?=___('Editor Comments')?></div>
+        <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
     <?php foreach ($comments as $c): ?>
@@ -366,7 +366,7 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
         <div class="commentSubheader">
             <?="{$c['User']['firstname']} {$c['User']['lastname']} "?>
             <?=$html->link("({$c['User']['email']})", "mailto:{$c['User']['email']}")?>
-            <?=(" - " . strftime(_('datetime'), strtotime($c['Versioncomment']['created'])))?>
+            <?=(" - " . strftime(___('%B %e, %Y, %I:%M %p'), strtotime($c['Versioncomment']['created'])))?>
         <?php
             if (! $c['Versioncomment']['reply_to']) { // start of thread
                 $params = array('comment_id' => $c['Versioncomment']['id'],
@@ -377,56 +377,56 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
         </div>
         <div class="commentBody">
             <?=$c['Versioncomment']['comment']?>
-            <div class="commentFooter"><a href="#editorComment<?=$c['Versioncomment']['id']?>" class="replyLink"><?=___('editors_review_link_reply')?></a></div>
+            <div class="commentFooter"><a href="#editorComment<?=$c['Versioncomment']['id']?>" class="replyLink"><?=___('(Reply)')?></a></div>
         </div>
     </div>
     <?php endforeach; ?>
 
-    <a href="#" class="newThreadLink"><?=___('editors_review_link_new_thread')?></a>
+    <a href="#" class="newThreadLink"><?=___('(New Thread)')?></a>
     <?=$html->formTag('/editors/review/'.$version['Version']['id'].($queueRank ? "?num={$queueRank}" : ''), 'post', array('id'=>'editorCommentForm', 'class'=>'hidden'))?>
     <div>
         <?=$html->input('Versioncomment/subject', array('size'=>'50'))?>
-        <label for="VersioncommentSubject"><?=___('editors_review_label_subject')?></label><br />
+        <label for="VersioncommentSubject"><?=___('Subject')?></label><br />
 
         <?=$html->textarea('Versioncomment/comment', array('cols'=>'70', 'rows'=>'10'))?><br />
 
         <?=$html->hidden('Versioncomment/reply_to', array('value'=>''))?>
-        <input type="submit" value="<?=___('editors_review_input_post_comment')?>" />
-        <input type="button" value="<?=___('editors_review_input_cancel')?>" id="VersioncommentCancel" />
+        <input type="submit" value="<?=___('Post Comment')?>" />
+        <input type="button" value="<?=___('Cancel')?>" id="VersioncommentCancel" />
     </div>
     <div id="markitupHelp" class="hidden">
-        <span id="markitupHelpClose"><?=$html->image('developers/cross.png', array('alt'=>___('editors_review_help_close'), 'title'=>___('editors_review_help_close')))?></span>
+        <span id="markitupHelpClose"><?=$html->image('developers/cross.png', array('alt'=>___('Close'), 'title'=>___('Close')))?></span>
 
-        <h1><?=___('editors_review_comment_help_heading', 'Comment Help')?></h1>
+        <h1><?=___('Comment Help')?></h1>
 
-        <h2><?=___('editors_review_supported_markdown', 'Supported markdown syntax')?></h2>
+        <h2><?=___('Supported markdown syntax')?></h2>
         <dl>
-        <dt><?=___('editors_review_line_breaks', 'Line Break')?></dt>
-        <dd><?=___('editors_review_line_breaks_help', 'End a line with two or more spaces.')?></dd>
-        <dt><?=___('editors_review_italics', 'Italics')?></dt>
-        <dd><?=___('editors_review_italics_help', 'Wrap text with *asterisks* or _underscores_.')?></dd>
-        <dt><?=___('editors_review_bold', 'Bold')?></dt>
-        <dd><?=___('editors_review_bold_help', 'Wrap text with **two asterisks** or __two underscores__.')?></dd>
-        <dt><?=___('editors_review_unordered_lists', 'Unordered List')?></dt>
-        <dd><?=___('editors_review_unordered_lists_help', 'Start a line with a single * or + character.')?></dd>
-        <dt><?=___('editors_review_ordered_lists', 'Ordered List')?></dt>
-        <dd><?=___('editors_review_ordered_lists_help', 'Start a line with a number followed by a period.')?></dd>
-        <dt><?=___('editors_review_block_quotes', 'Block Quote')?></dt>
-        <dd><?=___('editors_review_block_quotes_help', 'Start lines with a &gt;. Multiple &gt; characters may be used to create nested block quotes.')?></dd>
-        <dt><?=___('editors_review_code_blocks', 'Code Block')?></dt>
-        <dd><?=___('editors_review_code_blocks_help', 'Enclose code with three or more ~ tilde characters on separate lines.')?></dd>
-        <dt><?=___('editors_review_syntax', 'Syntax Highlighting')?></dt>
-        <dd><?=___('editors_review_syntax_help', 'Append {.syntax} to the opening line of code block ~ tildes, where syntax is one of: html, css, javascript, diff, or sql.')?></dd>
+        <dt><?=___('Line Break')?></dt>
+        <dd><?=___('End a line with two or more spaces.')?></dd>
+        <dt><?=___('Italics')?></dt>
+        <dd><?=___('Wrap text with *asterisks* or _underscores_.')?></dd>
+        <dt><?=___('Bold')?></dt>
+        <dd><?=___('Wrap text with **two asterisks** or __two underscores__.')?></dd>
+        <dt><?=___('Unordered List')?></dt>
+        <dd><?=___('Start a line with a single * or + character.')?></dd>
+        <dt><?=___('Ordered List')?></dt>
+        <dd><?=___('Start a line with a number followed by a period.')?></dd>
+        <dt><?=___('Block Quote')?></dt>
+        <dd><?=___('Start lines with a &gt;. Multiple &gt; characters may be used to create nested block quotes.')?></dd>
+        <dt><?=___('Code Block')?></dt>
+        <dd><?=___('Enclose code with three or more ~ tilde characters on separate lines.')?></dd>
+        <dt><?=___('Syntax Highlighting')?></dt>
+        <dd><?=___('Append {.syntax} to the opening line of code block ~ tildes, where syntax is one of: html, css, javascript, diff, or sql.')?></dd>
         </dl>
 
-        <h2><?=___('editors_review_modifier_keys_heading', 'Button Modifier Keys')?></h2>
+        <h2><?=___('Button Modifier Keys')?></h2>
         <dl>
-        <dt><?=___('editors_review_ctrl_click', 'Ctrl + Click')?></dt>
-        <dd><?=___('editors_review_ctrl_click_help', 'Insert markup and retain selection.')?></dd>
-        <dt><?=___('editors_review_shift_click', 'Shift + Click')?></dt>
-        <dd><?=___('editors_review_shift_click_help', 'Insert markup and retain selection plus added markup.')?></dd>
-        <dt><?=___('editors_review_ctrl_shift_click', 'Ctrl + Shift + Click')?></dt>
-        <dd><?=___('editors_review_ctrl_shift_click_help', 'Insert markup on every line of selection instead of once on the whole selection.')?></dd>
+        <dt><?=___('Ctrl + Click')?></dt>
+        <dd><?=___('Insert markup and retain selection.')?></dd>
+        <dt><?=___('Shift + Click')?></dt>
+        <dd><?=___('Insert markup and retain selection plus added markup.')?></dd>
+        <dt><?=___('Ctrl + Shift + Click:')?></dt>
+        <dd><?=___('Insert markup on every line of selection instead of once on the whole selection.')?></dd>
         </dl>
     </div>
     </form>

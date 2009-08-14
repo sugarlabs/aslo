@@ -47,7 +47,7 @@
 <?php if (!isset($suppressLanguageSelector) || !$suppressLanguageSelector): ?>
 <form id="footer-lang-form"  method="get" action="">
     <p>
-        <label for="language"><?=_('footer_other_languages')?></label>
+        <label for="language"><?=___('Other languages:')?></label>
         <select id="language" name="lang" dir="ltr" onchange="this.form.submit()">
         <?php
         // Retrieve language arrays from bootstrap.
@@ -58,22 +58,22 @@
         }
         ?>
         </select>
-        <input class="hidden" type="submit" value="<?=_('footer_lang_form_lang_submit_go')?>"/>
+        <input class="hidden" type="submit" value="<?=___('Go')?>"/>
     </p>
 </form>
 <?php endif; ?>
 
 <div id="footer-legal">
-    <p id="copyright"><?=_('footer_copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla. <?=_('footer_all_rights_reserved')?></p>
+    <p id="copyright"><?=___('Copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla. <?=___('All rights reserved.')?></p>
     <ul id="nav-legal">
-        <li><?=$html->link(_('footer_privacy_policy'), '/pages/privacy');?></li>
-        <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=_('footer_legal_notices')?></a></li>
-        <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(_('footer_credits'), '/pages/credits')?></li><?php endif; ?>
-        <li><?=$html->link(___('footer_a_about'), '/pages/about')?></li>
-        <li><?=$html->link('<abbr title="'.___('footer_abbr_faq').'">'.___('footer_a_faq').'</abbr>', '/pages/faq')?></li>
-        <li><a href="http://blog.mozilla.com/addons"><?=___('footer_a_blog')?></a></li>
+        <li><?=$html->link(___('Privacy Policy'), '/pages/privacy');?></li>
+        <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=___('Legal Notices')?></a></li>
+        <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(___('Credits'), '/pages/credits')?></li><?php endif; ?>
+        <li><?=$html->link(___('About'), '/pages/about')?></li>
+        <li><?=$html->link('<abbr title="'.___('Frequently Asked Questions').'">'.___('FAQ').'</abbr>', '/pages/faq')?></li>
+        <li><a href="http://blog.mozilla.com/addons"><?=___('Blog')?></a></li>
     </ul>
-    <p id="footer-disclaimer"><?=_('footer_disclaimer')?></p>
+    <p id="footer-disclaimer"><?=___('Mozilla is providing links to these applications as a courtesy, and makes no representations regarding the applications or any information related there to. Any questions, complaints or claims regarding the applications must be directed to the appropriate software vendor.')?></p>
 </div>
 
 

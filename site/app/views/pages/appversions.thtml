@@ -76,21 +76,21 @@ foreach ($applications as $application) {
     <?=$this->renderElement('amo2009/search')?>
 
 <?php
-    echo '<h1>'._('pages_appversions_header').'</h1>';
-    echo '<p>'._('pages_appversions_intro').'</p>';
+    echo '<h1>'.___('Valid Application Versions').'</h1>';
+    echo '<p>'.___('Add-ons submitted to Mozilla Add-ons must have an install.rdf file with at least one of the below applications supported. Only the versions listed below are allowed for these applications.').'</p>';
     foreach ($versions as $version) {
         echo '<div>';
             echo '<h3>'.
             $html->image('app-icons/'.strtolower($version['name']).'_small.png', array('style' => 'vertical-align: middle; padding-right: 10px;')).
             '<b>'.$version['name'].'</b></h3>';
             echo '<ul>';
-                echo '<li>'._('pages_appversions_guid').': '.$version['guid'].'</li>';
-                echo '<li>'._('pages_appversions_versions').': '.implode(', ', $version['versions']);
+                echo '<li>'.___('GUID').': '.$version['guid'].'</li>';
+                echo '<li>'.___('Versions').': '.implode(', ', $version['versions']);
             echo '</ul>';
         echo '</div>';
     }
     
-    echo '<p>'.sprintf(_('pages_appversions_required_files'), $html->link(_('pages_appversions_required_files_link'), 'http://developer.mozilla.org/en/docs/Install_Manifests')).'</p>';
+    echo '<p>'.sprintf(___('If your supported application does not require an install.rdf file, you still must include one with the required properties as specified %s.'), $html->link(___('here'), 'http://developer.mozilla.org/en/docs/Install_Manifests')).'</p>';
 ?>
 
 </div>

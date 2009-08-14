@@ -39,23 +39,23 @@
     <?=$this->renderElement('developers/editorsmenu');?>
     
     <div id="content-main">
-        <h3><?=_('editorcp_reviewlog_page_heading')?></h3>
+        <h3><?=___('Review Log')?></h3>
         <form action="<?=$html->url()?>" method="get">
         <?php
-        echo sprintf(_('editorcp_reviewlog_entries_between'),
+        echo sprintf(___('View entries between %1$s and %2$s'),
             '<input type="text" id="start" name="start" value="'.$startdate.'" size="11" onFocus="clearInput(this)"/>',
             '<input type="text" id="end" name="end" value="'.$enddate.'" size="11" onFocus="clearInput(this)"/>');
         echo '&nbsp;&nbsp;';
-        echo $html->submit(_('editorcp_reviewlog_button_filter'));
+        echo $html->submit(___('Filter'));
         ?>
         </form>
     
         <table id="historyTable">
             <tr id="headerRow">
-                <td><?=_('editorcp_reviewlog_column_date')?></td>
-                <td><?=_('editorcp_reviewlog_column_addon')?></td>
-                <td><?=_('editorcp_reviewlog_column_editor')?></td>
-                <td><?=_('editorcp_reviewlog_column_action')?></td>
+                <td><?=___('Date')?></td>
+                <td><?=___('Add-on')?></td>
+                <td><?=___('Editor')?></td>
+                <td><?=___('Action')?></td>
                 <td>&nbsp;</td>
             </tr>
         <?php
@@ -68,30 +68,30 @@
                     echo '<td>';
                     if ($approval['Approval']['reviewtype'] == 'nominated') {
                         if ($approval['Approval']['action'] == STATUS_PUBLIC) {
-                            echo _('editors_review_history_nominated_approved');
+                            echo ___('Nomination Approved/Public');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_SANDBOX) {
-                            echo _('editors_review_history_nominated_denied');
+                            echo ___('Nomination Denied/Sandbox');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_NOMINATED) {
-                            echo _('editors_review_history_nominated_adminreview');
+                            echo ___('Admin Review');
                         }
                     }
                     elseif ($approval['Approval']['reviewtype'] == 'pending') {
                         if ($approval['Approval']['action'] == STATUS_PUBLIC) {
-                            echo _('editors_review_history_pending_approved');
+                            echo ___('Approved/Public');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_SANDBOX) {
-                            echo _('editors_review_history_pending_denied');
+                            echo ___('Denied/Sandbox');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_PENDING) {
-                            echo _('editors_review_history_pending_adminreview');
+                            echo ___('Admin Review');
                         }
                     }
                     echo '</td>';
                     echo '<td>';
-                        echo $html->link(_('editorcp_reviewlog_comments_show'), 'javascript:void(0);', array('onClick' => 'showComments('.$k.');', 'id' => 'reviewShow_'.$k));
-                        echo $html->link(_('editorcp_reviewlog_comments_hide'), 'javascript:void(0);', array('onClick' => 'hideComments('.$k.');', 'style' => 'display: none;', 'id' => 'reviewHide_'.$k));
+                        echo $html->link(___('Show Comments'), 'javascript:void(0);', array('onClick' => 'showComments('.$k.');', 'id' => 'reviewShow_'.$k));
+                        echo $html->link(___('Hide Comments'), 'javascript:void(0);', array('onClick' => 'hideComments('.$k.');', 'style' => 'display: none;', 'id' => 'reviewHide_'.$k));
                     echo '</td>';
                 echo '</tr>';
                 echo '<tr id="reviewComment_'.$k.'" style="display: none;">';
@@ -101,7 +101,7 @@
         }
         else {
             echo '<tr>';
-                echo '<td colspan=4 align="center">'._('editorcp_reviewlog_none_found').'</td>';
+                echo '<td colspan=4 align="center">'.___('No reviews found for this period.').'</td>';
             echo '</tr>';
         }
         //pr($approvals);

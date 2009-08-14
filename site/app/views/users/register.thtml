@@ -35,7 +35,7 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 ?>
 
 <div class="secondary" role="complementary">
@@ -44,73 +44,73 @@
 
 <div class="primary prose" role="main">
     <?=$this->renderElement('amo2009/search')?>
-    
+
         <div>
-            <h1><?= ___('user_register_welcome_header') ?></h1>
-            <?= sprintf(___('user_register_details'), 'http://www.mozilla.com/about/legal.html', $html->url('/pages/privacy')) ?>
+            <h1><?= ___('Welcome to addons.mozilla.org (AMO)!') ?></h1>
+            <?= sprintf(___('<p>Registration on AMO is <strong>not required</strong> if you simply want to download and install public add-ons.</p><p>You only need to register if:</p><ul><li>You want to submit reviews for add-ons</li><li>You want to keep track of your favorite add-on collections or create one yourself</li><li>You are an add-on developer and want to upload your add-on for hosting on AMO</li></ul><p>Upon successful registration, you will be sent a confirmation email to the address you provided. Please follow the instructions there to confirm your account.</p><p>If you like, you can read our <a href=\'%1$s\' title=\'Legal Notices\'>Legal Notices</a> and <a href=\'%2$s\' title=\'Privacy Policy\'>Privacy Policy</a>.</p>'), 'http://www.mozilla.com/about/legal.html', $html->url('/pages/privacy')) ?>
         </div>
 
 <?php if(isset($errorMessage)): ?>
-<?=$this->renderElement('notification', array('type' => 'error', 'msg' => _('error_formerrors')));?>
+<?=$this->renderElement('notification', array('type' => 'error', 'msg' => ___('There are errors in this form. Please correct them and resubmit.')));?>
 <p></p>
-<?php 
+<?php
 endif;
 ?>
 
 <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
-    <?=$html->hiddenSession() ?>       
+    <?=$html->hiddenSession() ?>
     <div class="container">
-        <label class="amo-label-large" for="UserEmail"><?=_('user_form_email')?></label>
+        <label class="amo-label-large" for="UserEmail"><?=___('Email address')?></label>
         <?=$html->input('User/email') ?>
-        <?=(isset($error_email_notunique)) ? '<div class="error_message">'._('error_user_email_notunique').'</div>' : $html->tagErrorMsg('User/email', _('error_email_invalid'))?>
+        <?=(isset($error_email_notunique)) ? '<div class="error_message">'.___('This email address is already taken by another user.').'</div>' : $html->tagErrorMsg('User/email', ___('This is not a valid email address.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserPassword"><?=_('user_form_password')?></label>
+        <label class="amo-label-large" for="UserPassword"><?=___('Password')?></label>
         <?=$html->password('User/password') ?>
-        <?=$html->tagErrorMsg('User/password', _('error_field_required'))?>
+        <?=$html->tagErrorMsg('User/password', ___('This field must not be empty.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserConfirmpw"><?=_('user_form_confirmpassword')?></label>
+        <label class="amo-label-large" for="UserConfirmpw"><?=___('Confirm password')?></label>
         <?=$html->password('User/confirmpw') ?>
-        <?=$html->tagErrorMsg('User/confirmpw', _('error_user_confirmpw_nomatch'))?>
+        <?=$html->tagErrorMsg('User/confirmpw', ___('The passwords did not match.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserFirstname"><?=_('user_form_firstname')?></label>
+        <label class="amo-label-large" for="UserFirstname"><?=___('First name')?></label>
         <?=$html->input('User/firstname') ?>
-        <?=$html->tagErrorMsg('User/firstname', _('error_field_required'))?>
-        <?=___('user_required_firstlast_or_nickname', 'A first name, last name or nickname is required.')?>
+        <?=$html->tagErrorMsg('User/firstname', ___('This field must not be empty.'))?>
+        <?=___('A first name, last name or nickname is required.')?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserLastname"><?=_('user_form_lastname')?></label>
+        <label class="amo-label-large" for="UserLastname"><?=___('Last name')?></label>
         <?=$html->input('User/lastname') ?>
-        <?=$html->tagErrorMsg('User/lastname', _('error_field_required'))?>
+        <?=$html->tagErrorMsg('User/lastname', ___('This field must not be empty.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserNickname"><?=_('user_form_nickname')?></label>
+        <label class="amo-label-large" for="UserNickname"><?=___('Nickname')?></label>
         <?=$html->input('User/nickname') ?>
-        <?=$html->tagErrorMsg('User/nickname', _('error_user_nickname_notunique'))?>
+        <?=$html->tagErrorMsg('User/nickname', ___('This nickname is already taken.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserEmailhidden"><?=_('user_form_hideemail')?></label>
+        <label class="amo-label-large" for="UserEmailhidden"><?=___('Hide email address')?></label>
         <?=$html->checkBox('User/emailhidden')?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserHomepage"><?=_('user_form_homepage')?></label>
+        <label class="amo-label-large" for="UserHomepage"><?=___('Website URL')?></label>
         <?=$html->input('User/homepage') ?>
-        <?=$html->tagErrorMsg('User/homepage', _('error_invalid_url'))?>
+        <?=$html->tagErrorMsg('User/homepage', ___('This URL has an invalid format. Valid URLs look like http://example.com/my_page.'))?>
     </div>
 <?php if (isset($this->controller->Recaptcha) && $this->controller->Recaptcha->enabled): ?>
     <div class="container">
         <div class="amo-label-large">
-            <label for="recaptcha_response_field"><?=___('recaptcha_label', 'Are you human?')?></label><br/>
-            <span id="recaptcha_whatsthis"><a href="javascript:Recaptcha.showhelp()"><?=___('recaptcha_whatsthis', "What's this?")?></a></span>
+            <label for="recaptcha_response_field"><?=___('Are you human?')?></label><br/>
+            <span id="recaptcha_whatsthis"><a href="javascript:Recaptcha.showhelp()"><?=___('What\'s this?')?></a></span>
         </div>
         <div class="amo-form-indent"><?=$this->renderElement('recaptcha')?></div>
-        <?=$html->tagErrorMsg('User/captcha', ___('error_invalid_captcha', 'Invalid captcha, please try again!'))?>
+        <?=$html->tagErrorMsg('User/captcha', ___('Invalid captcha, please try again!'))?>
     </div>
 <?php endif; ?>
     <div class="container">
-        <?=$html->submit(_('user_form_submit_register'), array('class'=>'amo-submit')); ?>
+        <?=$html->submit(___('Register'), array('class'=>'amo-submit')); ?>
     </div>
 </form>
 

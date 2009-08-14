@@ -72,19 +72,19 @@ class Addontype extends AppModel
     function getName($id) {
         switch($id) {
             case ADDON_EXTENSION:
-                return ___('general_addontype_extension');
+                return ___('Extension');
             case ADDON_THEME: 
-                return ___('general_addontype_theme');
+                return ___('Theme');
             case ADDON_DICT: 
-                return ___('general_addontype_dict');
+                return ___('Dictionary');
             case ADDON_SEARCH: 
-                return ___('general_addontype_search');
+                return ___('Search Engine');
             case ADDON_LPAPP: 
-                return ___('general_addontype_lpapp');
+                return ___('Language Pack (Application)');
             case ADDON_LPADDON: 
-                return ___('general_addontype_lpaddon');
+                return ___('Language Pack (Add-on)');
             case ADDON_PLUGIN: 
-                return ___('general_addontype_plugin');
+                return ___('Plugin');
         }
     }
                   
@@ -95,13 +95,13 @@ class Addontype extends AppModel
      */
     function getNames() {
         $addontypes = array(
-            ADDON_EXTENSION => ___('general_addontype_extension_plural'),
-            ADDON_THEME => ___('general_addontype_theme_plural'),
-            ADDON_DICT => ___('general_addontype_dict_plural'),
-            ADDON_SEARCH => ___('general_addontype_search_plural'),
-            ADDON_LPAPP => ___('general_addontype_lpapp_plural'),
-            ADDON_LPADDON => ___('general_addontype_lpaddon_plural'),
-            ADDON_PLUGIN => ___('general_addontype_plugin_plural')
+            ADDON_EXTENSION => ___('Extensions'),
+            ADDON_THEME => ___('Themes'),
+            ADDON_DICT => ___('Dictionaries'),
+            ADDON_SEARCH => ___('Search Engines'),
+            ADDON_LPAPP => ___('Language Packs (Application)'),
+            ADDON_LPADDON => ___('Language Packs (Add-on)'),
+            ADDON_PLUGIN => ___('Plugins')
         );
 
         return $addontypes;

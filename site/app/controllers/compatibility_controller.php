@@ -69,7 +69,7 @@ class CompatibilityController extends AppController
         $this->publish('jsAdd', $this->jsAdd);
         
         $this->layout = 'amo2009';
-        $this->pageTitle = ___('compatibility_dashboard_center_header', 'Add-on Compatibility Center').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Add-on Compatibility Center').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         $this->publish('expand_categories', true);
     }

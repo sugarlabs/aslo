@@ -54,7 +54,7 @@ class EditorsComponent extends Object {
     function reviewNominatedAddon($addon, $data) {
         //Make sure add-on is actually nominated
         if ($addon['Addon']['status'] != STATUS_NOMINATED) {
-            $this->controller->Error->addError(___('editor_review_error_addon_not_nominated', 'This add-on has not been nominated'));
+            $this->controller->Error->addError(___('This add-on has not been nominated.'));
             return false;
         }
         
@@ -76,12 +76,12 @@ class EditorsComponent extends Object {
             $addonData['status'] = STATUS_NOMINATED;
         }
         else {
-            $this->controller->Error->addError(___('editor_review_error_no_action', 'Please select a review action.'));
+            $this->controller->Error->addError(___('Please select a review action.'));
             return false;
         }
         
         if (empty($data['Approval']['comments'])) {
-            $this->controller->Error->addError(___('editor_review_error_no_comments', 'Please enter review comments.'));
+            $this->controller->Error->addError(___('Please enter review comments.'));
             return false;
         }
         
@@ -158,7 +158,7 @@ class EditorsComponent extends Object {
     */
     function reviewPendingFiles($addon, $data) {
         if (empty($data['Approval']['File'])) {
-            $this->controller->addError(___('editor_review_error_no_files', 'Please select at least one file to review.'));
+            $this->controller->addError(___('Please select at least one file to review.'));
             return false;
         }
             
@@ -179,22 +179,22 @@ class EditorsComponent extends Object {
             $fileData['status'] = STATUS_PENDING;
         }
         else {
-            $this->controller->Error->addError(___('editor_review_error_no_action', 'Please select a review action.'));
+            $this->controller->Error->addError(___('Please select a review action.'));
             return false;
         }
         
         if (empty($data['Approval']['comments'])) {
-            $this->controller->Error->addError(___('editor_review_error_no_comments', 'Please enter review comments.'));
+            $this->controller->Error->addError(___('Please enter review comments.'));
             return false;
         }
 
         if (empty($data['Approval']['applications'])) {
-            $this->controller->Error->addError(___('editor_review_error_no_applications', 'Please enter the tested applications.'));
+            $this->controller->Error->addError(___('Please enter the applications you tested.'));
             return false;
         }
         
         if (empty($data['Approval']['os'])) {
-            $this->controller->Error->addError(___('editor_review_error_no_operating_system', 'Please enter the tested operating systems.'));
+            $this->controller->Error->addError(___('Please enter the operating systems you tested.'));
             return false;
         }
         
@@ -210,7 +210,7 @@ class EditorsComponent extends Object {
                 
                 // Make sure file is pending review
                 if ($file['File']['status'] != STATUS_PENDING) {
-                    $this->controller->Error->addError(___('editor_review_error_file_not_pending', 'File not pending review.'));
+                    $this->controller->Error->addError(___('This file is not pending review.'));
                     return false;
                 }
                 
@@ -343,10 +343,10 @@ class EditorsComponent extends Object {
 
         // validation
         if (empty($commentData['subject'])) {
-            $this->controller->Error->addError(___('editor_review_error_comment_subject_required', 'Comment subject is required'));
+            $this->controller->Error->addError(___('Comment subject is required'));
         }
         if (empty($commentData['comment'])) {
-            $this->controller->Error->addError(___('editor_review_error_comment_body_required', 'Comment body is required'));
+            $this->controller->Error->addError(___('Comment body is required'));
         }
 
         // cake does not turn '' into NULL
@@ -358,7 +358,7 @@ class EditorsComponent extends Object {
             if ($this->controller->Versioncomment->save($commentData)) {
                 $returnId = $this->controller->Versioncomment->id;
             } else {
-                $this->controller->Error->addError(___('editor_review_error_comment_save_fail', 'Failed to save comment'));
+                $this->controller->Error->addError(___('Failed to save comment'));
             }
         }
 

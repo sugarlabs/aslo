@@ -98,7 +98,7 @@ class SearchController extends AppController
         if ($this->Config->getValue('search_disabled') == 1
             && !$this->SimpleAcl->actionAllowed('*', '*', $this->Session->read('User'))) {
             
-            $this->flash(_('search_disabled'), '/', 3);
+            $this->flash(___('Search is currently disabled. Please try again later.'), '/', 3);
             exit;
         }
     }
@@ -196,7 +196,7 @@ class SearchController extends AppController
         $_result_ids = $this->Search->search($_terms, $_tag, false, $category[0], $category[1], NULL, $lver, $hver, $vfuz, $atype, $pid, $lup, $sort);
         
         if ($this->params['action'] != 'rss') {
-            $this->pageTitle = _('search_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            $this->pageTitle = ___('Search Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('cssAdd', array('forms'));
             $this->params['url']['q'] = urlencode( $this->params['url']['q']);
             $this->Pagination->total = count($_result_ids);
@@ -232,7 +232,7 @@ class SearchController extends AppController
             }
             
             $this->publish('bigHeader', true);
-            $this->publish('bigHeaderText', sprintf(_('addons_home_header_details'), APP_PRETTYNAME));
+            $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
             // Collapse categories menu, unless no results were found
             $this->publish('collapse_categories', !empty($results));
             
@@ -256,8 +256,8 @@ class SearchController extends AppController
                 $results = array();
             }
             $this->publish('search_results', $results);
-            $this->publish('rss_title', sprintf(_('search_rss_results_for'), $_terms));
-            $this->publish('rss_description', _('search_rss_description'));
+            $this->publish('rss_title', sprintf(___('Search results for: %s'), $_terms));
+            $this->publish('rss_description', ___('Search results feed'));
             $this->render('rss/index', 'rss');
             return;
         }
@@ -295,12 +295,12 @@ class SearchController extends AppController
         list($sort_opts, $sortby) = $this->CollectionsListing->sorting();
 
         // Prep and render the view
-        $this->pageTitle = ___('search_collections_pagetitle', 'Collection Search Results').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Collection Search Results').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
        
         $this->publish('jsAdd', array('amo2009/collections', 'jquery-ui/jqModal.js'));
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-            ___('collections_breadcrumb') => '/collections'
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Collections') => '/collections'
         ));
 
         $this->publish('collapse_categories', true);

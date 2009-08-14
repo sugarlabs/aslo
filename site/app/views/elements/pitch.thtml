@@ -45,20 +45,20 @@
 global $browser_apps;
 if (in_array(APP_ID, $browser_apps)) {
     $pitch_links = array(
-        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => _('sidebar_pitch_theme'),
-        '/browse/type:'.ADDON_SEARCH.'/cat:all?sort=name' => _('sidebar_pitch_search'),
-        '/browse/type:'.ADDON_DICT => _('sidebar_pitch_dictionary')
+        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => ___('Theme'),
+        '/browse/type:'.ADDON_SEARCH.'/cat:all?sort=name' => ___('Search Plugin'),
+        '/browse/type:'.ADDON_DICT => ___('Dictionary')
     );
 } else {
     $pitch_links = array(
-        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => _('sidebar_pitch_theme'),
-        '/browse/type:'.ADDON_DICT => _('sidebar_pitch_dictionary')
+        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => ___('Theme'),
+        '/browse/type:'.ADDON_DICT => ___('Dictionary')
     );
 }
 
 ?>
 <div class="pitch">
-    <h3><?=_('sidebar_pitch_looking_for')?></h3>
+    <h3><?=___('I am looking for a:')?></h3>
     <ul>
     <?php foreach ($pitch_links as $_url => $_text): ?>
     <li><a href="<?=$html->url($_url)?>"><?=$_text?></a></li>
@@ -66,10 +66,10 @@ if (in_array(APP_ID, $browser_apps)) {
     </ul>
     <?php
     // RSS links the hard way, bug 426541
-    $subscribeHeader = ___('sidebar_pitch_subscribe_to');
-    $newestLink = ___('sidebar_pitch_newest_addons');
-    $updatedLink = ___('sidebar_pitch_updated_addons');
-    $featuredLink = ___('sidebar_pitch_featured_addons');
+    $subscribeHeader = ___('Subscribe to');
+    $newestLink = ___('Newest Add-ons');
+    $updatedLink = ___('Updated Add-ons');
+    $featuredLink = ___('Featured Add-ons');
     ?>
     <br/>
     <h3><?=$subscribeHeader?></h3>

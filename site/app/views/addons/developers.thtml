@@ -12,7 +12,7 @@ if ($multiple) {
   </div>
   <?=$this->renderElement('amo2009/breadcrumbs')?>
 
-  <h2><?=n___('addon_developer_h2_meet', 'addon_developer_h2_meet', $num_authors)?></h2>
+  <h2><?=n___('Meet the Developer', 'Meet the Developers', $num_authors)?></h2>
 
   <?php
   if ($this->controller->Addon->acceptContributions($addon)) {
@@ -26,8 +26,8 @@ if ($multiple) {
 
       $contrib_element = $this->renderElement('amo2009/contribution', array(
           'addon_id' => $addon['Addon']['id'],
-          'text' => $roadblock ? ___('addons_display_contribution_roadblock')
-                               : ___('addons_display_contribution_ask'),
+          'text' => $roadblock ? ___('Before downloading this add-on, please consider supporting the development of this add-on by making a small contribution.')
+                               : ___('The developer of this add-on asks that you help support its continued development by making a small contribution.'),
           'source' => $source,
           'show_install' => True,
           ));
@@ -53,7 +53,7 @@ if ($multiple) {
       <?=$contrib_element?>
       <div class="primary prose">
         <?php if($author['Translation']['bio']['string']): ?>
-          <h3><?=sprintf(___('addon_developer_who_is', 'Who is %s?'), $author['User']['display_name'])?></h3>
+          <h3><?=sprintf(___('Who is %1$s?'), $author['User']['display_name'])?></h3>
           <p class="intro"><?=$author['Translation']['bio']['string']?></p>
         <?php endif; ?>
         <?=$this->renderElement('amo2009/addons/developers/about_addon')?>

@@ -2,5 +2,5 @@
 $reseturl = SITE_URL.$html->url('/users/pwreset/'.$data['User']['id']
     .'/'.$resetcode, true);
 
-echo $html->lineBreaks(sprintf(_('user_email_pwreset'), $reseturl, APP_PRETTYNAME));
+echo $html->lineBreaks(sprintf(___('%2$s Add-ons Password Reset\n\nA request was received to reset the password for this account on addons.mozilla.org. To change this password please click on the following link, or paste it into your browser\'s location bar:\n\n%1$s\n\nIf you did not request this email there is no need for further action.\n\nThanks,\n-- %2$s Add-ons Staff'), $reseturl, APP_PRETTYNAME));
 ?>

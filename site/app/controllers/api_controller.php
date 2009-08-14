@@ -121,7 +121,7 @@ class ApiController extends AppController
         if (isset($this->viewVars['addonsdata'][$id])) {
             $this->publish('addon', $this->viewVars['addonsdata'][$id]);
         } else {
-            $error = ___('error_addon_notfound');
+            $error = ___('Add-on not found!');
             $this->publish('error', $error);
             return;
         }
@@ -424,7 +424,7 @@ class ApiController extends AppController
             'Collection.id' => $id
         ));
         if (!$collection) {
-            $error = ___('error_collection_feed_notfound', 'Addon feed not found');
+            $error = ___('Add-on feed not found.');
             $this->publish('error', $error);
             return;
         }
@@ -759,7 +759,7 @@ class ApiController extends AppController
         $addon_data = $this->Addon->find($_conditions, null , null , 1);
 
         if (empty($addon_data)) {
-            $error = ___('error_addon_notfound');
+            $error = ___('Add-on not found!');
             $this->publish('error', $error);
             return;
         }

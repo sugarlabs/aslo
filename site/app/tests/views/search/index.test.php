@@ -44,7 +44,7 @@ class SearchResultTest extends WebTestHelper {
     
     function testBasicResults() {
         $this->getAction("/search/?q=the");
-        $this->assertNoUnwantedPattern("/"._('search_nothing_found')."/", "No results found.");
+        $this->assertNoUnwantedPattern("/".___('No results found.')."/", "No results found.");
         $this->assertFieldById('query', 'the', "previous query pre-populated");
     }
     

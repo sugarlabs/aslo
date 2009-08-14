@@ -226,16 +226,16 @@ class DevelopersTest extends UnitTestCase {
     */
     function testValidateIcon() {
         $allowedImage = array('.png', '.jpg', '.gif');
-        $fileErrors = array('1' => _('devcp_error_http_maxupload'),
-                            '2' => _('devcp_error_http_maxupload'),
-                            '3' => _('devcp_error_http_incomplete'),
-                            '4' => _('devcp_error_http_nofile')
+        $fileErrors = array('1' => ___('Exceeds maximum upload size'),
+                            '2' => ___('Exceeds maximum upload size'),
+                            '3' => ___('Incomplete transfer'),
+                            '4' => ___('No file uploaded')
                       );
 
         /* test vector for extension tests */
         $extTestVec = array(
-            'base-image' => sprintf(_('devcp_error_icon_extension'), 'base-image', implode(', ', $allowedImage)),
-            'base-image.xpi' => sprintf(_('devcp_error_icon_extension'), '.xpi', implode(', ', $allowedImage))
+            'base-image' => sprintf(___('That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s'), 'base-image', implode(', ', $allowedImage)),
+            'base-image.xpi' => sprintf(___('That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s'), '.xpi', implode(', ', $allowedImage))
         );
 
         /* test image */

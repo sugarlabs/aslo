@@ -51,7 +51,7 @@ if (is_numeric($rating) && $rating > 0) {
         $stars = ceil($rating);
     }
 
-$msg = sprintf(_('stars_rated_x_outof_5'), $stars);
+$msg = sprintf(___('Rated %s out of 5 stars'), $stars);
 ?>
 
 <img src="<?=$html->urlImage("/ratings/{$stars}stars.png")?>" width="68" height="12" alt="" title="<?=$msg?>"/> 
@@ -60,7 +60,7 @@ $msg = sprintf(_('stars_rated_x_outof_5'), $stars);
 } else {
 ?>
 
-<?=_('stars_not_yet_rated')?>
+<?=___('Not yet rated')?>
 
 <?php
 }

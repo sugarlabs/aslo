@@ -44,11 +44,11 @@
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
 
-    <?=$this->renderElement('notification', array('type' => 'success', 'msg' => _('user_register_congratulations')));?>
+    <?=$this->renderElement('notification', array('type' => 'success', 'msg' => ___('Congratulations! Your user account was successfully created.')));?>
     
-    <p><?=sprintf(_('user_register_confirm_email_sent'), $data['User']['email'])?></p>
+    <p><?=sprintf(___('An email has been sent to your address %1$s to confirm your account. Before you can log in, you have to activate your account by clicking on the link provided in this email.'), $data['User']['email'])?></p>
     
-    <p><?=sprintf(_('user_register_welcome'), $html->link(sprintf(_('user_register_amo_link'), APP_PRETTYNAME), '/'))?></p>
+    <p><?=sprintf(___('Thanks for registering and welcome to %1$s!'), $html->link(sprintf(___('%s Add-ons'), APP_PRETTYNAME), '/'))?></p>
 
     </div>
 </div>

@@ -38,19 +38,19 @@
 ?>
 <div id="sidebar">
     <div id="categories">
-        <h3><span><?=_('devcp_additem_sidebar_title')?></span></h3>
+        <h3><span><?=___('Submit Add-on')?></span></h3>
         
         <ul id="cat-list">
 <?php
     $items = array(
-                   1 => _('devcp_additem_step1_link'),
-                   2 => _('devcp_additem_step2_link'),
-                   3 => _('devcp_additem_step3_link'),
-                   4 => _('devcp_additem_step4_link'),
-                   5 => _('devcp_additem_step5_link')
+                   1 => ___('Step 1: Upload'),
+                   2 => ___('Step 2: Add-on Details'),
+                   3 => ___('Step 3: Version Details'),
+                   4 => ___('Step 4: Localization'),
+                   5 => ___('Step 5: Success')
              );
     if ($newAddon == true) {
-        $items[0] = _('devcp_additem_step0_newlink');
+        $items[0] = ___('Developer Agreement');
         ksort($items);
     }
     foreach ($items as $number => $item) {
@@ -73,7 +73,7 @@
 <?php
     if ($step > 0 && $step < 5) {
         echo '<div id="submissionHelp">';
-        echo $html->link(_('devcp_additem_submissionhelp_link'), '/pages/submissionhelp#step'.$step, array('target' => '_blank', 'title' => _('devcp_additem_linktitle_opensin_newwindow')));
+        echo $html->link(___('Submission Help'), '/pages/submissionhelp#step'.$step, array('target' => '_blank', 'title' => ___('Opens in a new window')));
         echo '</div>';
     }
 ?>

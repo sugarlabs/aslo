@@ -51,10 +51,10 @@ class DevelopersComponent extends Object {
         $this->controller =& $controller;
 
         $this->uploadErrors = array(
-                    '1' => _('devcp_error_http_maxupload'),
-                    '2' => _('devcp_error_http_maxupload'),
-                    '3' => _('devcp_error_http_incomplete'),
-                    '4' => _('devcp_error_http_nofile')
+                    '1' => ___('Exceeds maximum upload size'),
+                    '2' => ___('Exceeds maximum upload size'),
+                    '3' => ___('Incomplete transfer'),
+                    '4' => ___('No file uploaded')
                 );
     }
     
@@ -67,12 +67,12 @@ class DevelopersComponent extends Object {
         
         //Must have at least one category selected, but no more than 5
         if (empty($categories)) {
-            $errors->addError(_('devcp_error_one_category'), 'Category/Category');
+            $errors->addError(___('Please select at least one category.'), 'Category/Category');
             $this->controller->Category->invalidate('Category');
             return false;
         }
         elseif (count($categories) > 5) {
-            $errors->addError(_('devcp_error_five_categories'), 'Category/Category');
+            $errors->addError(___('Please select no more than five categories.'), 'Category/Category');
             $this->controller->Category->invalidate('Category');
             return false;
         }
@@ -100,7 +100,7 @@ class DevelopersComponent extends Object {
 
         //Make sure there is at least one author
         if (empty($users)) {
-            $errors->addError(_('devcp_error_one_user'), 'User/User');
+            $errors->addError(___('There must be at least one author for this add-on.'), 'User/User');
             $this->controller->User->invalidate('User');
             return false;
         }
@@ -282,7 +282,7 @@ class DevelopersComponent extends Object {
         
         //Make sure the first file was uploaded
         if (empty($this->controller->data['File']['file1']['name'])) {
-            $errors->addError(_('devcp_error_upload_file'), 'File/file1');
+            $errors->addError(___('Please upload a file.'), 'File/file1');
             $this->controller->File->invalidate('file1');
             return false;
         }
@@ -298,7 +298,7 @@ class DevelopersComponent extends Object {
                 if ($f != 4) {
                     //Make sure platform selected
                     if (empty($this->controller->data['File']['platform_id'.$f])) {
-                        $errors->addError(_('devcp_error_no_platform'), 'File/platform_id'.$f);
+                        $errors->addError(___('No platform selected'), 'File/platform_id'.$f);
                         $this->controller->File->invalidate('platform_id'.$f);
                         $errorCount++;
                     }
@@ -360,7 +360,7 @@ class DevelopersComponent extends Object {
         
         // Check for file extension match
         if (!in_array(strtolower($fileInfo['extension']), $allowedExtensions)) {
-            return sprintf(_('devcp_error_file_extension'), $fileInfo['extension'], implode(', ', $allowedExtensions));
+            return sprintf(___('That file extension (%1$s) is not allowed for the selected add-on type. Please use one of the following: %2$s'), $fileInfo['extension'], implode(', ', $allowedExtensions));
         }
 
         // Move temporary file to repository
@@ -378,7 +378,7 @@ class DevelopersComponent extends Object {
             $fileInfo['path'] = $tempLocation;
         }
         else {
-            return _('devcp_error_move_file');
+            return ___('Could not move file');
         }
         
         return $fileInfo;
@@ -398,7 +398,7 @@ class DevelopersComponent extends Object {
         // Check for file extension match
         $extension = substr($icon['name'], strrpos($icon['name'], '.'));
         if (!in_array(strtolower($extension), $this->imageExtensions)) {
-            return sprintf(_('devcp_error_icon_extension'), $extension, implode(', ', $this->imageExtensions));
+            return sprintf(___('That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s'), $extension, implode(', ', $this->imageExtensions));
         }
         
         $fileInfo['icondata'] = file_get_contents($icon['tmp_name']);
@@ -427,7 +427,7 @@ class DevelopersComponent extends Object {
         // Check for file extension match
         $extension = substr($picture['name'], strrpos($picture['name'], '.'));
         if (!in_array(strtolower($extension), $this->imageExtensions)) {
-            return sprintf(_('devcp_error_icon_extension'), $extension, implode(', ', $this->imageExtensions));
+            return sprintf(___('That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s'), $extension, implode(', ', $this->imageExtensions));
         }
         
         $fileInfo['picture_data'] = file_get_contents($picture['tmp_name']);
@@ -527,47 +527,47 @@ class DevelopersComponent extends Object {
     function validateManifestData($manifestData) {
         // If the data is a string, it is an error message
         if (is_string($manifestData)) {
-            return sprintf(_('devcp_error_manifest_parse'), $manifestData);
+            return sprintf(___('The following error occurred while parsing install.rdf: %s'), $manifestData);
         }
 
         // Check if install.rdf has an updateURL
         if (isset($manifestData['updateURL'])) {
-            return _('devcp_error_updateurl');
+            return ___('Add-ons cannot use an external updateURL. Please remove this from install.rdf and try again.');
         }
 
         // Check if install.rdf has an updateKey
         if (isset($manifestData['updateKey'])) {
-            return _('devcp_error_updatekey');
+            return ___('Add-ons cannot use an updateKey. Please remove this from install.rdf and try again.');
         }
 
         // Check the GUID for existence
         if (!isset($manifestData['id'])) {
-            return _('devcp_error_no_guid');
+            return ___('No ID could be found for this add-on in install.rdf.');
         }
         
         // Validate GUID
         if (!preg_match('/^(\{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}|[a-z0-9-\._]*\@[a-z0-9-\._]+)$/i', $manifestData['id'])) {
-            return sprintf(_('devcp_error_invalid_guid'), $manifestData['id']);
+            return sprintf(___('The ID of this add-on is invalid: %s'), $manifestData['id']);
         }
         
         // Make sure GUID is not an application's GUID
         if ($this->controller->Application->findByGuid($manifestData['id'])) {
-            return _('devcp_error_guid_application');
+            return ___('The ID of this add-on is already used by an application.');
         }
 
         // Make sure the GUID is not blacklisted 
         if ($this->controller->BlacklistedGuid->findByGuid($manifestData['id'])) {
-            return sprintf(___('devcp_error_guid_blacklisted', 'Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact'); 
+            return sprintf(___('Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact'); 
         }
 
         // Make sure version has no spaces
         if (!isset($manifestData['version']) || preg_match('/.*\s.*/', $manifestData['version'])) {
-            return _('devcp_error_invalid_version_spaces');
+            return ___('The version of this add-on is invalid: versions cannot contain spaces.');
         }
         
         // Validate version
         if (!preg_match('/^\d+(\+|\w+)?(\.\d+(\+|\w+)?)*$/', $manifestData['version'])) {
-            return _('devcp_error_invalid_version');
+            return ___('The version of this add-on is invalid: please see the <a href="http://developer.mozilla.org/en/docs/Toolkit_version_format">specification</a>');
         }
         
         return true;
@@ -600,10 +600,10 @@ class DevelopersComponent extends Object {
                     $matchingMinVers = $this->controller->Appversion->find("application_id={$matchingApp['Application']['id']} AND version='{$appVal['minVersion']}'", null, null, -1);
                     
                     if (empty($matchingMinVers)) {
-                        $versionErrors[] = sprintf(_('devcp_error_invalid_appversion'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
+                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
                     }
                     elseif (strpos($appVal['minVersion'], '*') !== false) {
-                        $versionErrors[] = sprintf(_('devcp_error_invalid_minversion'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
+                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s: minimum versions cannot contain *'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
                     }
                     else {
                         $return[$i]['min'] = $matchingMinVers['Appversion']['id'];
@@ -612,7 +612,7 @@ class DevelopersComponent extends Object {
                     // Check if the maxVersion is valid
                     $matchingMaxVers = $this->controller->Appversion->find("application_id={$matchingApp['Application']['id']} AND version='{$appVal['maxVersion']}'", null, null, -1);
                     if (empty($matchingMaxVers)) {
-                        $versionErrors[] = sprintf(_('devcp_error_invalid_appversion'), $appVal['maxVersion'], $matchingApp['Translation']['name']['string']);
+                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s'), $appVal['maxVersion'], $matchingApp['Translation']['name']['string']);
                     }
                     else {
                         $return[$i]['max'] = $matchingMaxVers['Appversion']['id'];
@@ -622,17 +622,17 @@ class DevelopersComponent extends Object {
             }
         }
         
-        $validAppReference = sprintf(_('devcp_error_appversion_reference_link'), '<a href="'.$this->controller->url('/pages/appversions').'">'._('devcp_error_appversion_reference_link_text').'</a>');
+        $validAppReference = sprintf(___('Please see %s for reference.'), '<a href="'.$this->controller->url('/pages/appversions').'">'.___('this page').'</a>');
 
         // Must have at least one Mozilla app
         if ($noMozApps === true) {
-            return _('devcp_error_mozilla_application').'<br />'.$validAppReference;
+            return ___('You must have at least one valid Mozilla target application.').'<br />'.$validAppReference;
         }
 
         // Max/min version errors
         if (count($versionErrors) > 0) {
             $errorStr = implode($versionErrors, '<br />');
-            return _('devcp_error_install_manifest').'<br />'.$errorStr.'<br />'.$validAppReference;
+            return ___('The following errors were found in install.rdf:').'<br />'.$errorStr.'<br />'.$validAppReference;
         }
         
         return $return;
@@ -681,7 +681,7 @@ class DevelopersComponent extends Object {
         // Create directory if necessary
         if (!file_exists($dirPath)) {
             if (!mkdir($dirPath)) {
-                return sprintf(_('devcp_error_moving_file'), $data['File']['db']['filename']);
+                return sprintf(___('An error occurred moving %s.'), $data['File']['db']['filename']);
             }
         }
         
@@ -689,16 +689,16 @@ class DevelopersComponent extends Object {
         if (file_exists($currentPath)) {
             // Bail if the file exists. See bug 470652 for a rough explanation
             if (file_exists($newPath)) {
-                return sprintf(___('devcp_error_file_exists'), $filename);
+                return sprintf(___('A version of that add-on already exists. To replace it, you must delete the file %1$s first.'), $filename);
             }
             // We must copy instead of rename now in case there are other platforms
             if (!copy($currentPath, $newPath)) {
-                return sprintf(_('devcp_error_moving_file'), $data['File']['db']['filename']);
+                return sprintf(___('An error occurred moving %s.'), $data['File']['db']['filename']);
             }
             $fileUpdates['filename'] = $filename;
         }
         else {
-            return sprintf(_('devcp_error_moving_file'), $data['File']['db']['filename']);
+            return sprintf(___('An error occurred moving %s.'), $data['File']['db']['filename']);
         }
         
         // Copy file to rsync area if public
@@ -758,7 +758,7 @@ class DevelopersComponent extends Object {
             //Create directory if necessary
             if (!file_exists($dirPath)) {
                 if (!mkdir($dirPath)) {
-                    $errors->addError(sprintf(_('devcp_error_moving_file'), $file['filename']));
+                    $errors->addError(sprintf(___('An error occurred moving %s.'), $file['filename']));
                 }
             }
 
@@ -769,12 +769,12 @@ class DevelopersComponent extends Object {
                     unlink($newPath);
                 }
                 if (!rename($currentPath, $newPath)) {
-                    $errors->addError(sprintf(_('devcp_error_moving_file'), $file['filename']));
+                    $errors->addError(sprintf(___('An error occurred moving %s.'), $file['filename']));
                 }
                 $fileUpdates[$file['id']]['filename'] = $newFilename;
             }
             else {
-                $errors->addError(sprintf(_('devcp_error_moving_file'), $file['filename']));
+                $errors->addError(sprintf(___('An error occurred moving %s.'), $file['filename']));
             }
         }
         
@@ -1115,7 +1115,7 @@ class DevelopersComponent extends Object {
         $extension = substr($data['File']['name'], strrpos($data['File']['name'], '.'));
         if (!in_array($extension, $allowedImage)) {
             $errors =& $this->controller->Error;
-            $errors->addError(sprintf(_('devcp_error_preview_extension'), $extension, implode(', ', $allowedImage)), 'main');
+            $errors->addError(sprintf(___('That file extension (%1$s) is not allowed for a preview. Please use one of the following: %2$s'), $extension, implode(', ', $allowedImage)), 'main');
             return false;
         }
         
@@ -1197,7 +1197,7 @@ class DevelopersComponent extends Object {
                       );
         
         if ($autoDetect == true) {
-            $addontypes[0] = _('devcp_additem_addontype_autodetect');
+            $addontypes[0] = ___('(auto-detect)');
         }
         
         if ($isAdmin == true) {
@@ -1219,7 +1219,7 @@ class DevelopersComponent extends Object {
         // Add 'Please Choose...' only if no license has been selected.
         // if (!isset($version['license_id'])) {
         //     $licenses['null'] = array(
-        //         'name' => ___('devcp_uploader_please_choose'),
+        //         'name' => ___('Please Choose...'),
         //         'selected' => True);
         // }
 
@@ -1247,7 +1247,7 @@ class DevelopersComponent extends Object {
                   ORDER BY Version.id DESC";
             foreach ($this->controller->Version->execute($q) as $existing) {
                 $existing = $existing['Version'];
-                $t = ___('devcp_license_existing');
+                $t = ___('Custom license for add-on %1$s v%2$s');
                 $val = 'existing_'.$existing['license_id'];
                 $licenses[$val] = array(
                     'name' => sprintf($t, $version['addon_id'], $existing['version']),
@@ -1256,7 +1256,7 @@ class DevelopersComponent extends Object {
             }
         }
         
-        $licenses['other'] = array('name' => ___('devcp_uploader_option_other'),
+        $licenses['other'] = array('name' => ___('Other'),
                                    'selected' => false);
         return array($licenses, $trans);
     }

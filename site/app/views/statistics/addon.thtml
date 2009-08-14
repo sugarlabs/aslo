@@ -34,14 +34,14 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 
 echo '<div id="content">';
     if ($this->controller->Config->getValue('stats_updating')) {
-        echo '<div class="warning"><div>'._('statistics_notice_data_updating').'</div></div>';
+        echo '<div class="warning"><div>'.___('Add-on statistics are currently in the process of being updated. Recent data may be incomplete as our scripts work to update this information. Please check back in a few minutes.').'</div></div>';
     }
     if (isset($_GET['settings'])) {
-        echo '<div class="notice-updated">'._('statistics_notice_settings_updated').'</div>';
+        echo '<div class="notice-updated">'.___('Your settings have been updated!').'</div>';
     }
 ?>
     <div class="article">
@@ -50,31 +50,31 @@ echo '<div id="content">';
             <div id="statistics-controls">
                 <?php
                 if (!empty($all_addons)) {
-                    echo _('statistics_addon_switch').':';
+                    echo ___('Switch Add-on').':';
                     echo $html->selectTag('Addon/id', $all_addons, $addon_id, array('onChange' => 'changeAddon(this);'), null, false).'<br>';
                 }
                 ?>
                 <span id="statistics-links">
-                    <?=$html->link(_('statistics_addon_developertools_link'), '/developers')?> |
-                    <?=$html->link(_('statistics_addon_dashboard_link'), '/statistics')?> |
-                    <a href="#" onclick="$('#helpbox').toggle(); return false;"><?=_('statistics_help_link')?></a>
+                    <?=$html->link(___('Developer Tools'), '/developers')?> |
+                    <?=$html->link(___('Dashboard Home'), '/statistics')?> |
+                    <a href="#" onclick="$('#helpbox').toggle(); return false;"><?=___('Help')?></a>
                 </span>
             </div>
             <div>
                 <img id="addon-icon" src="<?=$addonIcon?>" alt="<?=$addon_name?> Icon">
                 <h3 id="addon-title">
                     <a href="<?=$html->url('/addon/'.$addon_id)?>">
-                        <?=sprintf(_('statistics_title_addon_stats'), $addon_name)?>
+                        <?=sprintf(___('%1$s Statistics'), $addon_name)?>
                     </a>
                 </h3>
             </div>
         </div>
-        
+
         <div id="helpbox" style="display: none;">
             <?=$localization->includeLocalPage('statistics_help')?>
-            <a href="#" onclick="$('#helpbox').hide(); return false;"><?=_('statistics_help_close_link')?></a>
+            <a href="#" onclick="$('#helpbox').hide(); return false;"><?=___('Close')?></a>
         </div>
-        
+
         <?php if ($stats['totaldownloads'] > 0): ?>
         <div id="plot-options" style="display: none;">
             <div id="plot-selector-area"></div>
@@ -96,51 +96,51 @@ echo '<div id="content">';
                 <div id="summary-legend">
                     <div class="plot-legend">
                         <div class="colorbox" style="background-color: #33AAFF;"></div>
-                        <div class="plot-name"><?=_('statistics_plot_legend_downloads')?></div>
+                        <div class="plot-name"><?=___('Daily Downloads')?></div>
                     </div>
                     <div class="plot-legend">
                         <div class="colorbox" style="background-color: #EE3322;"></div>
-                        <div class="plot-name"><?=_('statistics_plot_legend_adu')?></div>
+                        <div class="plot-name"><?=___('Active Daily Users')?></div>
                     </div>
                 </div>
             </div>
             <div id="options-area">
                 <?=$html->image('stats/cog.png', array('id' => 'options-cog', 'style' => 'display: none;', 'alt' => ''));?>
                 <div id="summary-options">
-                    <div id="zoom-in" class="zoom-button" onclick="Plots.summary.zoomIn();" title="<?=_('statistics_plot_options_zoomin_title')?>">
-                        <?=$html->image('stats/zoom_in.png', array('alt' => _('statistics_plot_options_zoomin_alt')))?>
+                    <div id="zoom-in" class="zoom-button" onclick="Plots.summary.zoomIn();" title="<?=___('Zoom in one month')?>">
+                        <?=$html->image('stats/zoom_in.png', array('alt' => ___('Zoom In')))?>
                     </div>
-                    <div id="zoom-out" class="zoom-button" onclick="Plots.summary.zoomOut();" title="<?=_('statistics_plot_options_zoomout_title')?>">
-                        <?=$html->image('stats/zoom_out.png', array('alt' => _('statistics_plot_options_zoomout_alt')))?>
+                    <div id="zoom-out" class="zoom-button" onclick="Plots.summary.zoomOut();" title="<?=___('Zoom out one month')?>">
+                        <?=$html->image('stats/zoom_out.png', array('alt' => ___('Zoom Out')))?>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div id="timeplot-container">
             <div id="not-enough-data" class="warning" style="display: none;"><div>
-                <?=_('statistics_notice_data_insufficient')?>
+                <?=___('There is not yet enough data to display this graph. Please check back later.')?>
             </div></div>
-            
+
             <noscript>
                 <div class="warning"><div>
-                    <?=_('statistics_notice_nojavascript')?>
+                    <?=___('JavaScript is required to view the Statistics Dashboard graphs.')?>
                 </div></div>
             </noscript>
         </div>
-        
+
         <?php elseif (!$this->controller->Config->getValue('stats_disabled')): ?>
             <div class="warning"><div>
-                <?=_('statistics_notice_data_none')?>
+                <?=___('We don\'t have any data for your add-on yet. Please check back in a few days.')?>
             </div></div>
         <?php endif; ?>
-        
+
         <?php if ($this->controller->Config->getValue('stats_disabled')): ?>
             <div class="warning"><div>
-                <?=_('statistics_notice_disabled')?>
+                <?=___('The Statistics Dashboard is currently disabled. Please check back later.')?>
             </div></div>
         <?php endif; ?>
-        
+
         <div class="bluebox-br"><div class="bluebox-bl"></div></div>
     </div></div></div>
 
@@ -152,19 +152,19 @@ echo '<div id="content">';
         <table width="100%" cellpadding="5" id="stats_overview">
             <tr>
                 <td class="biglabel" valign="middle" style="width: 30%;">
-                    <?=_('statistics_summary_downloads_total')?>
-                    <div class="date"><?=sprintf(_('statistics_summary_downloads_total_sincedate'), strftime(_('statistics_date_shortmonthwithyear'), strtotime($addon['Addon']['created'])))?></div>
+                    <?=___('Total Downloads')?>
+                    <div class="date"><?=sprintf(___('Since %1$s'), strftime(___('%b. %e, %Y'), strtotime($addon['Addon']['created'])))?></div>
                 </td>
                 <td class="bigvalue" style="width: 19%;"><?=$statistics->number_format($stats, 'totaldownloads')?></td>
                 <td class="spacer" style="width: 2%;"></td>
                 <td class="biglabel" valign="middle" style="width: 30%;">
-                    <?=_('statistics_summary_updatepings_total')?>
+                    <?=___('Active Daily Users')?>
                     <div class="date">
                         <?php
                         if (!empty($stats['last_updatepings_date']))
-                            echo sprintf(_('statistics_summary_updatepings_total_ondate'), strftime(_('statistics_date_weekdayshortmonth'), strtotime($stats['last_updatepings_date'])));
+                            echo sprintf(___('On %1$s'), strftime(___('%A, %b. %e'), strtotime($stats['last_updatepings_date'])));
                         else
-                            echo _('statistics_summary_nodata');
+                            echo ___('No data yet');
                         ?>
                     </div>
                 </td>
@@ -172,19 +172,19 @@ echo '<div id="content">';
             </tr>
             <tr>
                 <td class="label">
-                    <?=_('statistics_summary_downloads_lastcount')?>
-                    <div class="date"><?=(!empty($stats['last_downloads_date']) ? strftime(_('statistics_date_weekdayshortmonth'), strtotime($stats['last_downloads_date'])) : '')?></div>
+                    <?=___('Last Day Count')?>
+                    <div class="date"><?=(!empty($stats['last_downloads_date']) ? strftime(___('%A, %b. %e'), strtotime($stats['last_downloads_date'])) : '')?></div>
                 </td>
                 <td class="value"><?=$statistics->number_format($stats, 'last_downloads')?></td>
                 <td class="spacer"></td>
                 <td class="label">
-                    <?=_('statistics_summary_updatepings_changefromprevious')?>
+                    <?=___('Change from previous count')?>
                     <div class="date">
                         <?php
                         if (!empty($stats['previous_updatepings']))
-                            echo sprintf(_('statistics_summary_updatepings_changefromprevious_ondate'), $html->number_format($stats['previous_updatepings'], 0), strftime(_('statistics_date_shortmonth'), strtotime($stats['previous_updatepings_date'])));
+                            echo sprintf(___('%1$s on %2$s'), $html->number_format($stats['previous_updatepings'], 0), strftime(___('%b. %e'), strtotime($stats['previous_updatepings_date'])));
                         else
-                            echo _('statistics_summary_nodata');
+                            echo ___('No data yet');
                         ?>
                     </div>
                 </td>
@@ -193,20 +193,20 @@ echo '<div id="content">';
                 </td>
             </tr>
             <tr>
-                <td class="label"><?=_('statistics_summary_downloads_average')?></td>
+                <td class="label"><?=___('Average Daily Downloads')?></td>
                 <td class="value"><?=$statistics->number_format($stats, 'avg_downloads')?></td>
                 <td class="spacer"></td>
-                <td class="label"><?=_('statistics_summary_updatepings_average')?></td>
+                <td class="label"><?=___('Average Daily Active Users')?></td>
                 <td class="value"><?=$statistics->number_format($stats, 'avg_updatepings')?></td>
             </tr>
             <tr>
-                <td class="label"><?=_('statistics_summary_downloads_lastweek')?></td>
+                <td class="label"><?=___('Downloads in the last 7 days')?></td>
                 <td class="value"><?=$statistics->number_format($stats, 'weeklydownloads')?></td>
                 <td class="spacer"></td>
                 <td class="label">
-                    <?=___('statistics_summary_updatepings_weekly_average')?>
+                    <?=___('Average Daily Users this Week')?>
                     <div class="date">
-                        <?=sprintf(___('statistics_summary_updatepings_weekly_change'),
+                        <?=sprintf(___('%s from last week'),
                                    $statistics->colored_percentage($stats, 'weekly_updatepings_change'))
                         ?>
                     </div>
@@ -223,7 +223,7 @@ echo '<div id="content">';
 
 <div id="stats-table">
 
-    <a href="#" class="download"><? echo ___('statistics_js_download_csv', 'View this table in CSV format') ?></a>
+    <a href="#" class="download"><? echo ___('View this table in CSV format') ?></a>
 
     <table class="template">
         <thead>
@@ -242,19 +242,19 @@ echo '<div id="content">';
     <div id="settings">
     <?php
         if ($addon['Addon']['publicstats'] == 1) {
-            echo _('statistics_settings_currently_public');
-            echo '&nbsp;'.$html->image('stats/lock_open.png', array('alt' => _('statistics_settings_unlocked_alt')));
+            echo ___('This dashboard is currently <b>public</b>.');
+            echo '&nbsp;'.$html->image('stats/lock_open.png', array('alt' => ___('Unlocked')));
         }
         else {
-            echo _('statistics_settings_currently_private');
-            echo '&nbsp;'.$html->image('stats/lock.png', array('alt' => _('statistics_settings_locked_alt')));
+            echo ___('This dashboard is currently <b>private</b>.');
+            echo '&nbsp;'.$html->image('stats/lock.png', array('alt' => ___('Locked')));
         }
-        
+
         echo '<br>';
         if ($this->controller->Amo->checkOwnership($addon_id, null, true))
-            echo $html->link(_('statistics_settings_change_link'), '/statistics/settings/'.$addon_id);
+            echo $html->link(___('Change Settings'), '/statistics/settings/'.$addon_id);
         elseif ($addon['Addon']['publicstats'] != 1)
-            echo '<span class="confidential">'._('statistics_settings_confidential').'</span>';
+            echo '<span class="confidential">'.___('Please treat this information as confidential.').'</span>';
     ?>
     </div>
 

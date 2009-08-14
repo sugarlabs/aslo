@@ -62,7 +62,7 @@ class DownloadsController extends AppController
         $this->Amo->clean($id);
         $this->layout=null;
         if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'file_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'file_id'), '/', 3);
             return;
         }
         
@@ -88,18 +88,18 @@ class DownloadsController extends AppController
             } elseif ($addon_data['Addon']['status'] == STATUS_DISABLED &&
                 !$this->Amo->checkOwnership($addon_data['Addon']['id'])) {
                 
-                $this->flash(_('downloads_disable_warning'), '/', 3);
+                $this->flash(___('This add-on is disabled'), '/', 3);
                 return;
             }
         } else {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
         
         if (file_exists($file_loc))
             $this->set('fileLoc', $file_loc);    
         else {
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
         
@@ -161,7 +161,7 @@ class DownloadsController extends AppController
         }
         else {
             // File wasn't found
-            $this->flash(_('error_addon_notfound'), '/', 3);
+            $this->flash(___('Add-on not found!'), '/', 3);
         }
     }
 }   

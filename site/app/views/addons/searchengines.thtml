@@ -48,13 +48,13 @@ $this->layout = 'amo2009';
     <div class="primary" role="main">
     
         <noscript>
-            <?=$this->renderElement('notification', array('type' => 'error', 'description' => _('addons_searchengines_error_nojavascript'))); ?>
+            <?=$this->renderElement('notification', array('type' => 'error', 'description' => ___('JavaScript is required to install plugins, but it looks like you have it disabled.  Please enable JavaScript before trying to install any of the search plugins below.'))); ?>
         </noscript>
         <div class="featured show-recommended listing" id="featured">
             <div class="featured-inner">
                 <div class="listing-header">
                     <ul>
-                        <li class="selected"><a href="?featured=recommended#featured"><?=___('addons_home_browse_recommended', 'Recommended')?></a></li>
+                        <li class="selected"><a href="?featured=recommended#featured"><?=___('Recommended')?></a></li>
                     </ul>
                 </div>
                 <?php foreach ($featureAddons as $id => $addon): ?>
@@ -69,26 +69,26 @@ $this->layout = 'amo2009';
 
 <div class="secondary" role="complementary">
 
-    <h3 class="compact"><?=$html->link(_('search_landing_browse_search_engines'), "/browse/type:".ADDON_SEARCH."/cat:all?sort=name", array('class'=>'view'))?></h3>
+    <h3 class="compact"><?=$html->link(___('Browse Search Engines'), "/browse/type:".ADDON_SEARCH."/cat:all?sort=name", array('class'=>'view'))?></h3>
 
     <div class="more-addons">
         <ul class="highlight">
-            <li><?=$html->link(_('search_landing_all_search_engines'), "/browse/type:".ADDON_SEARCH."/cat:all?sort=name", array('class' => 'category'))?></li>
+            <li><?=$html->link(___('All Search Engines'), "/browse/type:".ADDON_SEARCH."/cat:all?sort=name", array('class' => 'category'))?></li>
             <?php foreach ($subcats as $subcat): ?>
                 <li class="sub-category"><?=$html->link($subcat['Translation']['name']['string'], "/browse/type:{$subcat['Category']['addontype_id']}/cat:{$subcat['Category']['id']}?sort=name", array('class' => 'category'))?></li>
             <?php endforeach; ?>
         </ul>
     </div>
 
-    <h3 class="clear"><?=___('addons_searchengines_additional_resources')?></h3>
+    <h3 class="clear"><?=___('Additional Resources')?></h3>
     <div class="article prose compact more-addons">
         <ul>
-            <li><?=$html->link(sprintf(_('category_extra_see_all'), $this_category['Translation']['name']['string']), "/browse/type:{$this_category['Category']['addontype_id']}/cat:{$this_category['Category']['id']}?sort=name", array('class'=>'view'))?></li>
-            <li><?=sprintf(___('addons_searchengines_more'), $html->link(___('addons_searchengines_mycroft_link'), 'http://mycroft.mozdev.org/'))?></li>
-            <li><?=sprintf(___('addons_searchengines_learn_howto'), 
-                           $html->link(___('addons_searchengines_makeyourown_link'), 'http://developer.mozilla.org'.___('addons_searchengines_makeyourown_href')),
-                           $html->link(___('addons_searchengines_devmo_link'), 'http://developer.mozilla.org/'))?></li>
+            <li><?=$html->link(sprintf(___('See All %1$s'), $this_category['Translation']['name']['string']), "/browse/type:{$this_category['Category']['addontype_id']}/cat:{$this_category['Category']['id']}?sort=name", array('class'=>'view'))?></li>
+            <li><?=sprintf(___('Browse through more search engines at %1$s'), $html->link(___('mycroft.mozdev.org'), 'http://mycroft.mozdev.org/'))?></li>
+            <li><?=sprintf(___('Learn how to %1$s at the %2$s.'), 
+                           $html->link(___('make your own'), 'http://developer.mozilla.org'.___('/en/docs/Creating_OpenSearch_plugins_for_Firefox')),
+                           $html->link(___('Mozilla Developer Center'), 'http://developer.mozilla.org/'))?></li>
         </ul>
     </div>
-    <div class="article prose highlight"> <?=_('addons_searchengines_thanks')?> </div>
+    <div class="article prose highlight"> <?=___('Special thanks to the Mycroft Project for their work on Firefox search engines.')?> </div>
 </div><!-- /.secondary -->

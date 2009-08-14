@@ -58,7 +58,7 @@ class AddonHomeTest extends WebTestHelper {
     }
 
     function testTitle() {
-        $this->title = sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->title = sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->assertTitle($this->title);
     }
     

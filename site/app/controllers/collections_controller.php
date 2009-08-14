@@ -54,7 +54,7 @@ class CollectionsController extends AppController
         $this->layout='mozilla';
         $this->publish('collapse_categories', true);
         $this->publish('collectionSearch', true);
-        $this->pageTitle = 'Collections' . " :: " . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = 'Collections' . " :: " . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('jsAdd', array('jquery.autocomplete.pack.js'), false);
         // Disable ACLs because this controller is entirely public.
         $this->SimpleAuth->enabled = false;
@@ -96,7 +96,7 @@ class CollectionsController extends AppController
 
         if (empty($this->viewVars['breadcrumbs'])) {
             $this->publish('breadcrumbs', array(
-                sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+                sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
             ));
         }
 
@@ -106,17 +106,17 @@ class CollectionsController extends AppController
     function _collectionTabs() {
         $tabs = array(
             array('href' => 'editors_picks',
-                  'text' => ___('collections_index_li_editors')),
+                  'text' => ___('Editor\'s Picks')),
             array('href' => 'popular',
-                  'text' => ___('collections_index_li_popular')),
+                  'text' => ___('Popular')),
         );
 
         if ($this->Session->check('User')) {
             $tabs = array_merge($tabs, array(
                 array('href' => 'mine',
-                      'text' => ___('collections_index_li_mine')),
+                      'text' => ___('My Collections')),
                 array('href' => 'favorites',
-                      'text' => ___('collections_index_li_favorites')),
+                      'text' => ___('My Favorites')),
             ));
         }
         return $tabs;
@@ -145,7 +145,7 @@ class CollectionsController extends AppController
         $this->Amo->checkLoggedIn();
 
         $this->set('selected', 'mine');
-        $this->set('filler', sprintf(___('collections_index_filler_mine'),
+        $this->set('filler', sprintf(___('<p>You haven\'t created any collections yet. Collections are easy to create and fill with your favorite add-ons.  <a href=\'%1$s\'>Try it out</a>!</p>'),
                                      $this->Html->url('/collections/add')));
 
         $user = $this->Session->read('User');
@@ -160,7 +160,7 @@ class CollectionsController extends AppController
     function favorites() {
         $this->Amo->checkLoggedIn();
         $this->set('selected', 'favorites');
-        $this->set('filler', sprintf(___('collections_index_filler_favorites'),
+        $this->set('filler', sprintf(___('<p><strong>You don\'t have any favorite collections yet.</strong></p> <p>Collections you mark as favorites can be quickly accessed from this page, and will appear in the <a href=\'%1$s\'>Add-on Collector</a> if you\'ve installed it.</p>'),
                                      $this->Html->url('/pages/collector')));
 
         $user = $this->Session->read('User');
@@ -174,7 +174,7 @@ class CollectionsController extends AppController
 
     function addon($id) {
         if (!$id || !is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id'), '/', 3);
             return;
         }
         $addon = $this->Addon->getAddon($id);
@@ -182,11 +182,11 @@ class CollectionsController extends AppController
             $id, null, APP_ID);
 
         $this->set('hide_listing_header', true);
-        $this->publish('list_header', sprintf(___('collections_index_header_addon'),
+        $this->publish('list_header', sprintf(___('Collections containing %1$s'),
             $addon['Translation']['name']['string']));
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-            ___('collections_breadcrumb') => '/collections',
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Collections') => '/collections',
             $addon['Translation']['name']['string'] => "/addon/{$addon['Addon']['id']}"
         ));
 
@@ -204,8 +204,8 @@ class CollectionsController extends AppController
         $this->set('bodyclass', 'inverse collections-page');
         $this->publish('jsAdd', array('jquery.autocomplete.pack.js'));
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-            ___('collections_breadcrumb') => '/collections'
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Collections') => '/collections'
         ));
 
         // pick initially selected add-ons both from the URI and possible form choices
@@ -276,7 +276,7 @@ class CollectionsController extends AppController
         $this->Amo->checkLoggedIn(); // must be logged in
 
         if (empty($this->data['addon_id']) || empty($this->data['collection_uuid'])) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id or collection_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id or collection_id'), '/', 3);
             return;
         }
 
@@ -295,7 +295,7 @@ class CollectionsController extends AppController
         $addon_id = $this->data['addon_id'];
         $collection_id = $this->Collection->getIdForUUID($this->data['collection_uuid']);
         if (!is_numeric($addon_id) || !$collection_id) {
-            $this->flash(sprintf(_('error_missing_argument'), 'addon_id or collection_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'addon_id or collection_id'), '/', 3);
             return;
         }
         $user = $this->Session->read('User');
@@ -308,9 +308,9 @@ class CollectionsController extends AppController
 
     function _getSortedAddons($collection_id) {
         $sort_options = array(
-            'date-added' => ___('collections_detail_sort_date'),
-            'name' => ___('collections_detail_sort_name'),
-            'popularity' => ___('collections_detail_sort_popularity')
+            'date-added' => ___('Date Added'),
+            'name' => ___('Name'),
+            'popularity' => ___('Popularity')
         );
 
         // Fetch #1.  What's in the collection?
@@ -359,13 +359,13 @@ class CollectionsController extends AppController
 
     function view($uuid = NULL) {
         if (!$uuid) {
-            $this->flash(sprintf(_('error_missing_argument'), 'collection_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'collection_id'), '/', 3);
             return;
         }
 
         $id = $this->Collection->getIdForUuidOrNickname($uuid);
         if (!$id) {
-            $this->flash(_('collection_not_found'), '/', 3);
+            $this->flash(___('Collection not found!'), '/', 3);
             return;
         }
         $_conditions['Collection.id'] = $id;
@@ -379,7 +379,7 @@ class CollectionsController extends AppController
         $this->publish('collection', $collection);
         $this->publish('sort_options', $sort_options);
         $this->publish('sortby', $sortby);
-        $this->pageTitle = $collection['Translation']['name']['string'] . " :: " . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = $collection['Translation']['name']['string'] . " :: " . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         // User-specific stuff.
         if ($this->Session->check('User')) {
@@ -406,7 +406,7 @@ class CollectionsController extends AppController
         $rss_url = sprintf('/collection/%s?format=rss', $collection['Collection']['uuid']);
         $this->publish('rssAdd', array(
             array($rss_url,
-                  sprintf(___('collection_detail_rss_title'),
+                  sprintf(___('%s Collection'),
                           $collection['Translation']['name']['string']))
         ));
 
@@ -418,8 +418,8 @@ class CollectionsController extends AppController
         }
 
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-            ___('collections_breadcrumb') => '/collections'
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Collections') => '/collections'
         ));
 
         $this->render('detail');
@@ -452,12 +452,12 @@ class CollectionsController extends AppController
         $this->publish('is_ajax', ($ajax == 'ajax'));
 
         if (!in_array($this->action, array('subscribe', 'unsubscribe'))) {
-            $this->flash(___('error_access_denied'), '/', 3);
+            $this->flash(___('Access Denied'), '/', 3);
             return;
         }
 
         if (empty($this->params['form']['uuid'])) { // uuid needs to be POSTed
-            $this->flash(sprintf(_('error_missing_argument'), 'uuid'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'uuid'), '/', 3);
             return;
         }
         $uuid = $this->params['form']['uuid'];
@@ -480,8 +480,8 @@ class CollectionsController extends AppController
 
         // set up view and render result
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-            ___('collections_breadcrumb') => '/collections'
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Collections') => '/collections'
         ));
         return $this->render('subscribe');
     }
@@ -496,12 +496,12 @@ class CollectionsController extends AppController
         $this->Collection->caching = false;
 
         if (empty($uuid)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'collection_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'collection_id'), '/', 3);
             return;
         }
         $id = $this->Collection->getIdForUuidOrNickname($uuid);
         if (!$id) {
-            $this->flash(_('collection_not_found'), '/', 3);
+            $this->flash(___('Collection not found!'), '/', 3);
             return;
         }
 
@@ -510,7 +510,7 @@ class CollectionsController extends AppController
         $this->publish('user', $user);
         $rights = $this->_getUserRights($user, $id);
         if (!($rights['writable'] || $rights['isadmin'])) {
-            $this->flash(___('error_access_denied'), '/', 3);
+            $this->flash(___('Access Denied'), '/', 3);
             return;
         }
 
@@ -518,7 +518,7 @@ class CollectionsController extends AppController
             // Delete collection?
             if (isset($this->data['action']) && $this->data['action'] == 'delete-coll') {
                 if (!$rights['atleast_manager']) {
-                    $this->flash(___('error_access_denied'), '/', 3);
+                    $this->flash(___('Access Denied'), '/', 3);
                     return;
                 }
                 $this->Collection->delete($id);
@@ -552,8 +552,8 @@ class CollectionsController extends AppController
         $this->publish('jsAdd', array('jquery-ui/ui.core.min', 'jquery-ui/ui.tabs.min',
             'jquery.autocomplete.pack.js'));
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-            ___('collections_breadcrumb') => '/collections'
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Collections') => '/collections'
         ));
     }
 
@@ -594,9 +594,9 @@ class CollectionsController extends AppController
 
         // prepare collection types
         $this->publish('collection_types', array(
-            Collection::COLLECTION_TYPE_NORMAL => ___('collections_type_normal'),
-            Collection::COLLECTION_TYPE_AUTOPUBLISHER => ___('collections_type_autopublisher'),
-            Collection::COLLECTION_TYPE_EDITORSPICK => ___('collections_type_editorspick')
+            Collection::COLLECTION_TYPE_NORMAL => ___('Normal'),
+            Collection::COLLECTION_TYPE_AUTOPUBLISHER => ___('Auto-publisher'),
+            Collection::COLLECTION_TYPE_EDITORSPICK => ___('Editor\'s Pick')
         ), false);
 
         // get existing publishers and managers
@@ -844,7 +844,7 @@ class CollectionsController extends AppController
         $this->publish('platforms', $platforms);
 
         // prepare and display view
-        $this->pageTitle = 'Collections' . " :: " . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = 'Collections' . " :: " . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $is_ajax = ($method=='ajax');
         $this->publish('is_ajax', $is_ajax, false);
         $this->publish('suppressHeader', true, false);
@@ -952,14 +952,14 @@ class CollectionsController extends AppController
     function _checkNickname() {
         $this->Amo->checkLoggedIn(); // must be logged in
         if (empty($this->params['url']['nickname'])) {
-            return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'nickname'));
+            return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'nickname'));
         }
         $nickname = preg_replace(INVALID_COLLECTION_NICKNAME_CHARS, '_',
             mb_strtolower(trim($this->params['url']['nickname'])));
         if ($nickname != mb_strtolower($this->params['url']['nickname']))
             return array(
                 'error' => 1,
-                'error_message' => ___('collections_edit_nickname_error'),
+                'error_message' => ___('Your nickname contained invalid characters and was corrected. Please try again.'),
                 'nickname' => $nickname
             );
 
@@ -975,8 +975,8 @@ class CollectionsController extends AppController
      * AJAX: Add / remove user to/from this collection's roles
      */
     function _handleUser($action) {
-        if (empty($action)) return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'action'));
-        if (empty($this->params['form']['collection_id'])) return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'collection_id'));
+        if (empty($action)) return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'action'));
+        if (empty($this->params['form']['collection_id'])) return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'collection_id'));
 
         $this->Amo->checkLoggedIn(); // must be logged in
 
@@ -987,13 +987,13 @@ class CollectionsController extends AppController
 
         $user = $this->Session->read('User');
         $rights = $this->_getUserRights($user, $collection_id);
-        if (!$rights['atleast_manager']) return $this->Error->getJSONforError(___('error_access_denied'));
+        if (!$rights['atleast_manager']) return $this->Error->getJSONforError(___('Access Denied'));
 
         switch ($action) {
         case 'add':
-            if (empty($email)) return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'email'));
+            if (empty($email)) return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'email'));
             $roles = array('publishers' => COLLECTION_ROLE_PUBLISHER, 'managers' => COLLECTION_ROLE_ADMIN);
-            if (empty($role)) return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'role'));
+            if (empty($role)) return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'role'));
 
             $newuser = $this->User->findByEmail($email, array('id'));
             if (!empty($newuser)) {
@@ -1001,25 +1001,25 @@ class CollectionsController extends AppController
                     $this->Collection->addUser($collection_id, $newuser['User']['id'], $roles[$role]);
                     return array('id' => $newuser['User']['id'], 'email' => $email);
                 } else {
-                    return $this->Error->getJSONforError(___('error_user_exists'));
+                    return $this->Error->getJSONforError(___('Users can only have one role at a time.  Please remove the user from any existing roles before continuing.'));
                 }
             } else {
-                return $this->Error->getJSONforError(___('error_user_notfound'));
+                return $this->Error->getJSONforError(___('User not found!'));
             }
             break;
 
         case 'del':
             if (empty($user_id))
-                return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'user_id'));
+                return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'user_id'));
             if ($this->Collection->removeUser($collection_id, $user_id) !== false) {
                 return array('id' => $user_id);
             } else {
-                return $this->Error->getJSONforError(___('error_user_notfound'));
+                return $this->Error->getJSONforError(___('User not found!'));
             }
             break;
 
         default:
-            return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'action'));
+            return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'action'));
         }
     }
 
@@ -1034,15 +1034,15 @@ class CollectionsController extends AppController
     function _handleAddon($action) {
         global $valid_status;
 
-        if (empty($action)) return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'action'));
-        if (empty($this->params['form']['addon_id']) || !is_numeric($this->params['form']['addon_id'])) return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'addon_id'));
+        if (empty($action)) return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'action'));
+        if (empty($this->params['form']['addon_id']) || !is_numeric($this->params['form']['addon_id'])) return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'addon_id'));
         if (!empty($this->params['form']['collection_id']) && is_numeric($this->params['form']['collection_id'])) {
             $collection_id = $this->params['form']['collection_id'];
         } elseif (!empty($this->params['form']['collection_uuid']) &&
             ($collection_id = $this->Collection->getIdForUuidOrNickname($this->params['form']['collection_uuid'])) > 0) {
             // no-op
         } else {
-            return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'collection_id'));
+            return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'collection_id'));
         }
 
         $this->Amo->checkLoggedIn(); // must be logged in
@@ -1052,25 +1052,25 @@ class CollectionsController extends AppController
         $user = $this->Session->read('User');
         $rights = $this->_getUserRights($user, $collection_id);
 
-        if (!($rights['writable'] || $rights['isadmin'])) return $this->Error->getJSONforError(___('error_access_denied'));
+        if (!($rights['writable'] || $rights['isadmin'])) return $this->Error->getJSONforError(___('Access Denied'));
 
         switch ($action) {
         case 'add':
             if ($this->AddonCollection->isAddonInCollection($addon_id, $collection_id))
-                return $this->Error->getJSONforError(___('error_addon_exists'));
+                return $this->Error->getJSONforError(___('Add-on already exists!'));
             $addon = $this->Addon->getAddon($addon_id);
             if (empty($addon) || !in_array($addon['Addon']['status'], $valid_status))
-                return $this->Error->getJSONforError(___('error_addon_notfound'));
+                return $this->Error->getJSONforError(___('Add-on not found!'));
             if (false !== $this->Collection->addAddonToCollection($collection_id, $user['id'], $addon_id)) {
                 return array(
                     'id' => $addon_id,
                     'name' => $addon['Translation']['name']['string'],
                     'iconURL' => $this->Image->getAddonIconURL($addon_id),
-                    'date' => strftime(_('date'), mktime()),
+                    'date' => strftime(___('%B %e, %Y'), mktime()),
                     'publisher' => $this->Html->linkUserFromModel($user)
                 );
             } else {
-                return $this->Error->getJSONforError(___('collection_error_saving_addon'));
+                return $this->Error->getJSONforError(___('Error saving add-on!'));
             }
             break;
 
@@ -1084,22 +1084,22 @@ class CollectionsController extends AppController
             if ($res) {
                 return array('id' => $addon_id);
             } else {
-                return $this->Error->getJSONforError(___('collection_error_deleting_addon'));
+                return $this->Error->getJSONforError(___('Error deleting add-on!'));
             }
             break;
 
         case 'savecomment':
-            if (!isset($this->params['form']['comment'])) return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'comment'));
+            if (!isset($this->params['form']['comment'])) return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'comment'));
             $comment = strip_tags(trim($this->params['form']['comment']));
 
             $addon = $this->AddonCollection->find(array('addon_id'=>$addon_id, 'collection_id'=>$collection_id), array('user_id'));
-            if (empty($addon)) return $this->Error->getJSONforError(___('error_addon_notfound'));
+            if (empty($addon)) return $this->Error->getJSONforError(___('Add-on not found!'));
             if (!$rights['isadmin'] && !$rights['atleast_manager']) {
                 // publisher's own add-on?
-                if ($addon['AddonCollection']['user_id'] != $user['id']) return $this->Error->getJSONforError(___('error_access_denied'));
+                if ($addon['AddonCollection']['user_id'] != $user['id']) return $this->Error->getJSONforError(___('Access Denied'));
             }
             if (!$this->AddonCollection->setComment($collection_id, $addon_id, $comment)) {
-                return $this->Error->getJSONforError(___('collection_error_saving_comment'));
+                return $this->Error->getJSONforError(___('Error saving comment!'));
             } else {
                 return array(
                     'addon_id' => $addon_id,
@@ -1109,7 +1109,7 @@ class CollectionsController extends AppController
             break;
 
         default:
-            return $this->Error->getJSONforError(sprintf(_('error_missing_argument'), 'action'));
+            return $this->Error->getJSONforError(sprintf(___('Missing argument: %s'), 'action'));
         }
     }
 }

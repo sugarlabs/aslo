@@ -45,10 +45,10 @@
     <?=$this->renderElement('amo2009/search')?>
 
 <?php
-$_user_emailchange_success = ___('user_emailchange_success');
-$_user_emailchange_successful_description = sprintf(___('user_emailchange_successful_description'), $newemail);
-$_user_emailchange_error = ___('user_emailchange_error');
-$_link_return_to_front_page = ___('link_return_to_front_page');
+$_user_emailchange_success = ___('Success!');
+$_user_emailchange_successful_description = sprintf(___('Your email address was changed successfully. From now on, please use %1$s to log in.'), $newemail);
+$_user_emailchange_error = ___('Error!');
+$_link_return_to_front_page = ___('Click here to return to the front page.');
 
 if (!isset($errormsg)): ?>
 <?=$this->renderElement('notification', array('type' => 'success', 'msg' => $_user_emailchange_success, 'description' => $_user_emailchange_successful_description))?>

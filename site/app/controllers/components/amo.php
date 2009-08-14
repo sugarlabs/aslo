@@ -49,7 +49,7 @@ class AmoComponent extends Object {
     function startup(&$controller) {
         $this->controller =& $controller;
     }
-    
+
    /**
     * Checks if user has permissions for an addon
     * @param int $id the add-on id
@@ -59,23 +59,23 @@ class AmoComponent extends Object {
     function checkOwnership($id, $addonInfo = array(), $requireOwner = false) {
         $session = $this->controller->Session->read('User');
         if (empty($session['id'])) return false;
-        
+
         //Check if user is an admin
         if ($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $session) && !$requireOwner) {
             return true;
         }
-        
+
         //See if add-on data was passed; if not, retrieve it
         if (empty($addonInfo['status'])) {
             $addon = $this->controller->Addon->findById($id, null, null, -1);
             $addonInfo = $addon['Addon'];
         }
-        
+
         //Check if add-on is disabled
         if ($addonInfo['status'] == STATUS_DISABLED) {
             return false;
         }
-        
+
         //check if user is an author of the add-on
         if ($this->controller->Addon->query("SELECT * FROM addons_users WHERE addon_id={$id} AND user_id={$session['id']}")) {
             return true;
@@ -84,7 +84,7 @@ class AmoComponent extends Object {
             return false;
         }
     }
-    
+
     /**
      * Gets the author role of the current user for the given add-on
 	 * @param int $addon_id id of the add-on
@@ -92,13 +92,13 @@ class AmoComponent extends Object {
     function getAuthorRole($addon_id) {
         $session = $this->controller->Session->read('User');
         if (empty($session['id'])) return AUTHOR_ROLE_NONE;
-        
+
         // Get role from database
         $role = $this->controller->Addon->query("SELECT role FROM addons_users WHERE addon_id={$addon_id} AND user_id={$session['id']}");
         if (!empty($role)) {
             $role = $role[0]['addons_users']['role'];
         }
-        
+
         // Check if user has permissions to edit any add-on
         if ($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $session)) {
             if ($role == AUTHOR_ROLE_OWNER) {
@@ -108,7 +108,7 @@ class AmoComponent extends Object {
                 return AUTHOR_ROLE_ADMIN;
             }
         }
-        
+
         // Check if add-on is disabled
         $status = $this->controller->Addon->findById($addon_id, array('Addon.status'), null, -1);
         if (!empty($status['Addon']['status'])) {
@@ -116,15 +116,15 @@ class AmoComponent extends Object {
                 return AUTHOR_ROLE_NONE;
             }
         }
-        
+
         // If not an admin and not disabled, return db role if we found one
         if (!empty($role)) {
             return $role;
         }
-        
+
         return AUTHOR_ROLE_NONE;
     }
-    
+
    /**
     * Cleans an array or string for SQL and HTML, by reference
     *
@@ -158,7 +158,7 @@ class AmoComponent extends Object {
         } else {
             $uncleaned = stripslashes($subject);
         }
-        
+
         return $uncleaned;
     }
 
@@ -178,7 +178,7 @@ class AmoComponent extends Object {
             }
         }
     }
-    
+
    /**
     * Returns a string representation of the Approval Status id
     * @param int $status
@@ -188,19 +188,19 @@ class AmoComponent extends Object {
         //If a status id is specified, return the string
         if ($status != '') {
             switch ($status) {
-                case STATUS_NULL:       $string = ___('addons_status_incomplete', 'Incomplete Version');
+                case STATUS_NULL:       $string = ___('Incomplete Version');
                                         break;
-                case STATUS_SANDBOX:    $string = ___('addons_status_sandbox', 'In Sandbox');
+                case STATUS_SANDBOX:    $string = ___('In Sandbox');
                                         break;
-                case STATUS_PENDING:    $string = ___('addons_status_pending', 'In Sandbox; Pending Review');
+                case STATUS_PENDING:    $string = ___('In Sandbox; Pending Review');
                                         break;
-                case STATUS_NOMINATED:  $string = ___('addons_status_nominated', 'In Sandbox; Public Nomination');
+                case STATUS_NOMINATED:  $string = ___('In Sandbox; Public Nomination');
                                         break;
-                case STATUS_PUBLIC:     $string = ___('addons_status_public', 'Public');
+                case STATUS_PUBLIC:     $string = ___('Public');
                                         break;
-                case STATUS_DISABLED:   $string = ___('addons_status_disabled', 'Disabled');
+                case STATUS_DISABLED:   $string = ___('Disabled');
                                         break;
-                default:                $string = ___('addons_status_unknown', 'Unknown');
+                default:                $string = ___('Unknown');
                                         break;
             }
             return $string;
@@ -215,21 +215,21 @@ class AmoComponent extends Object {
             return $array;
         }
     }
-    
+
     /**
      * Returns an array of possible add-on and file statuses and names
      */
     function getStatusNames() {
         return array(
-            STATUS_NULL      => ___('addons_status_incomplete', 'Incomplete'),
-            STATUS_SANDBOX   => ___('addons_status_sandbox', 'In Sandbox'),
-            STATUS_PENDING   => ___('addons_status_pending', 'In Sandbox; Pending Review'),
-            STATUS_NOMINATED => ___('addons_status_nominated', 'In Sandbox; Public Nomination'),
-            STATUS_PUBLIC    => ___('addons_status_public', 'Public'),
-            STATUS_DISABLED  => ___('addons_status_disabled', 'Admin Disabled')
+            STATUS_NULL      => ___('Incomplete Version'),
+            STATUS_SANDBOX   => ___('In Sandbox'),
+            STATUS_PENDING   => ___('In Sandbox; Pending Review'),
+            STATUS_NOMINATED => ___('In Sandbox; Public Nomination'),
+            STATUS_PUBLIC    => ___('Public'),
+            STATUS_DISABLED  => ___('Disabled')
         );
     }
-    
+
    /**
     * Returns the name of a platform by Id, or an array of platforms
     * The purpose of this is to reduce unnecessary database queries
@@ -333,7 +333,7 @@ class AmoComponent extends Object {
         else {
             $applicationModel =& new Application();
             $applicationModel->useDbConfig = 'shadow';
-            
+
             loadComponent('Versioncompare');
             $versionCompare =& new VersioncompareComponent();
 
@@ -341,7 +341,7 @@ class AmoComponent extends Object {
             $applications = $applicationModel->findAll('Application.supported=1', null, null, null, null, 2);
             $appvids = array();
             $versions = array();
-            foreach ($applications as $application) {    
+            foreach ($applications as $application) {
                 if (!empty($application['Appversion'])) {
                     $appversions = array();
                     //Change array structure for sorting
@@ -349,17 +349,17 @@ class AmoComponent extends Object {
                         $appversions[]['Appversion']['version'] = $appversion['version'];
                         $appvids[$appversion['application_id']][$appversion['version']] = $appversion['id'];
                     }
-                    $versionCompare->sortAppversionArray($appversions);      
+                    $versionCompare->sortAppversionArray($appversions);
                     foreach ($appversions as $appversion) {
                         $versions[$application['Application']['id']][] = $appversion['Appversion']['version'];
                     }
                 }
             }
-            $this->versionIds = $appvids; 
+            $this->versionIds = $appvids;
             return $versions;
         }
     }
-    
+
    /**
      * Returns the version => versionIds pairs corresponding to a particular application
      * It is used by the SearchController
@@ -374,12 +374,12 @@ class AmoComponent extends Object {
             return $this->versionIds[$appid];
         }
     }
-    
+
     /**
      * check if the user is logged in. If not, refer them to the login page,
      * optionally passing on where they wanted to go to in the first place.
      * @param string cake-relative path to refer to after login
-     * @return mixed bool true if logged in, void otherwise 
+     * @return mixed bool true if logged in, void otherwise
      */
     function checkLoggedIn($whereTo = '') {
         $session = $this->controller->Session->read('User');
@@ -398,7 +398,7 @@ class AmoComponent extends Object {
             exit;
         }
     }
-    
+
    /**
     * Returns information on the min and max versions for a version because Cake
     * does not consider non-key fields in HasAndBelongsToMany tables.
@@ -443,7 +443,7 @@ class AmoComponent extends Object {
 
         return true;
     }
-    
+
    /**
     * Return the install trigger string for the specified addontype
     * @param int $addontype The addontype of the file
@@ -456,12 +456,12 @@ class AmoComponent extends Object {
         $xpi = array(ADDON_EXTENSION, ADDON_DICT, ADDON_LPAPP, ADDON_LPADDON);
         $chrome = array(ADDON_THEME);
         $search = array(ADDON_SEARCH);
-        
+
         $uri = str_replace("'", "\'", $uri);
         $name = str_replace("'", "\'", $name);
         $icon = str_replace("'", "\'", $icon);
         $hash = str_replace("'", "\'", $hash);
-        
+
         if (in_array($addontype, $xpi)) {
             return "InstallTrigger.install('{$uri}', '{$name}', '{$icon}', '{$hash}');";
         }
@@ -498,13 +498,13 @@ class AmoComponent extends Object {
 
         return $newArray;
     }
-    
+
     /**
      * @deprecated
      */
     function LEGACY_describeVersionStatus($files) {
         if (count($files) == 0) {
-            return ___('error_no_files_in_addon', 'Incomplete - No Files');
+            return ___('No Files');
         }
         elseif (count($files) == 1) {
             return $this->getApprovalStatus($files[0]['File']['status']);
@@ -526,16 +526,16 @@ class AmoComponent extends Object {
             return 'Multiple Files';
         }
     }
-    
+
     function describeVersionStatus($files) {
         if (count($files) == 0) {
-            return ___('error_no_files_in_addon', 'No Files');
+            return ___('No Files');
         }
         else {
             $statuses = $this->getStatusNames();
             $fileStatuses = array();
             $counts = array();
-            
+
             foreach ($files as $file) {
                 if (!empty($fileStatuses[$file['status']])) {
                     $fileStatuses[$file['status']]++;
@@ -544,58 +544,58 @@ class AmoComponent extends Object {
                     $fileStatuses[$file['status']] = 1;
                 }
             }
-            
+
             foreach ($fileStatuses as $status => $count) {
-                $string = n___('devcp_describe_version_status', 'devcp_describe_version_status', $count);
+                $string = n___('%1$s %2$s file', '%1$s %2$s files', $count);
                 $counts[] = sprintf($string, $count, $statuses[$status]);
             }
-            
+
             return implode('; ', $counts);
         }
     }
-    
+
     /**
      * Provide the validation status as a readable string
      * @param array $files the file array for the version, in model format
      * @return string the rendered view, using renderElement
      */
     function describeValidationStatus($files) {
-        
+
         // No files means no test cases
         if (count($files) == 0) {
-            return ___('error_no_test_results_in_addon', 'No Test Results');
+            return ___('No Test Results');
         }
-        
+
         // We want all the results for all files
         $fileIds = array();
         foreach ($files as $file) {
             $fileIds[] = $file['id'];
-        }            
-        
+        }
+
         $results = $this->controller->TestResult->findAll(array('file_id' => $fileIds));
         if (count($results) == 0) {
-            return ___('error_no_test_results_in_addon', 'No Test Results');
+            return ___('No Test Results');
         }
-        
+
         // Count the results
         $counts = array(0,0,0);
         foreach ($results as $test_result) {
             $counts[$test_result['TestResult']['result']]++;
-        }        
-        
+        }
+
         // Create a view to render the testresults_stats element
         $view = new View($this->controller);
         return $view->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => false, 'multiline' => true));
-        
+
     }
-    
+
    /**
     * Returns the date in MySQL NOW() format
     */
     function getNOW() {
         return date('Y-m-d H:i:s');
     }
-    
+
    /**
     * Copy a file to the rsync location for updates
     * @param int $addon_id the add-on id
@@ -609,45 +609,45 @@ class AmoComponent extends Object {
             // return true because false indicates error
             return true;
         }
-        
+
         $currentFile = REPO_PATH."/{$addon_id}/{$filename}";
         $newDir = PUBLIC_STAGING_PATH."/{$addon_id}";
         $newFile = $newDir."/{$filename}";
-        
+
         // Make sure source file exists
         if (!file_exists($currentFile)) {
             return false;
         }
-        
+
         // If we don't want to overwrite, make sure we don't
         if (!$overwrite && file_exists($newFile)) {
             // return true because this is not treated as an error
             return false;
         }
-        
+
         // Make directory if necessary
         if (!file_exists($newDir)) {
             if (!mkdir($newDir)) {
                 return false;
             }
         }
-        
+
         return copy($currentFile, $newFile);
     }
-    
+
     function accessDenied() {
         header('HTTP/1.1 401 Unauthorized');
-        
+
         $this->controller->layout = 'mozilla';
-        $this->controller->pageTitle = _('error_access_denied') . ' :: ' . sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
-        $this->controller->set('breadcrumbs', _('error_access_denied'));
-        $this->controller->set('subpagetitle', _('error_access_denied'));
-        $this->controller->viewPath = 'errors';            
+        $this->controller->pageTitle = ___('Access Denied') . ' :: ' . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->controller->set('breadcrumbs', ___('Access Denied'));
+        $this->controller->set('subpagetitle', ___('Access Denied'));
+        $this->controller->viewPath = 'errors';
         $this->controller->render('error401');
-        
+
         exit;
     }
-    
+
    /**
     * Logs detailed information to a specific logfile
     * @param string $message Log message
@@ -658,9 +658,9 @@ class AmoComponent extends Object {
         if (!defined('DETAILED_LOG_PATH')) {
             return false;
         }
-        
+
         $logfile = DETAILED_LOG_PATH.'/'.date('Y-m-d');
-        
+
         $fp = fopen($logfile, 'a');
         fwrite($fp, "[".date('r')."] (".php_uname('n').") {$message}\n");
         if ($dumpData) {
@@ -681,9 +681,9 @@ class AmoComponent extends Object {
             // for CakePHP 1.2 this would be:
             // $this->controller->loadModel('Category');
         }
-    
+
         $this->controller->Category->unbindFully();
-        
+
         return $this->controller->Category->findAll(
             array(
                 'application_id' => $app,
@@ -693,7 +693,7 @@ class AmoComponent extends Object {
             'Category.weight, Translation.name'
         );
     }
-    
+
     /**
      * Get categories/addon types list for global navigation menu
      * @return array Category list, style:
@@ -704,9 +704,9 @@ class AmoComponent extends Object {
      */
     function getNavCategories() {
         global $hybrid_categories, $app_listedtypes, $valid_status;
-        
+
         if (!empty($this->navCategories)) return $this->navCategories;
-        
+
         // addon type list to be added to regular categories list
         // get "Themes" category name
         if (!isset($this->controller->Addontype)) {
@@ -716,9 +716,9 @@ class AmoComponent extends Object {
 
         $names =  $this->controller->Addontype->getNames();
         $_themes_name = $names[ADDON_THEME];
-        
+
         $catlist = array(
-            array('name' => ___('langtools_header_dicts_and_langpacks'),
+            array('name' => ___('Dictionaries & Language Packs'),
                   'type' => ADDON_DICT,
                   'cat' => 0,
                   'weight' => 0),
@@ -727,18 +727,18 @@ class AmoComponent extends Object {
                   'cat' => 0,
                   'weight' => 0)
         );
-        
+
         // add plugins where appropriate
         if (in_array(ADDON_PLUGIN, $app_listedtypes[APP_ID])) {
             $catlist[] = array(
-                'name' => ___('addons_plugins_pagetitle'),
+                'name' => ___('Plugins'),
                 'type' => ADDON_PLUGIN,
                 'cat' => 0,
                 'weight' => 0,
                 'count' => COUNT_ADDON_PLUGIN,
             );
         }
-        
+
         // create two sort arrays that we can use with array_multisort later
         $_weights = array();
         $_names = array();
@@ -746,7 +746,7 @@ class AmoComponent extends Object {
             $_weights[] = $_item['weight'];
             $_names[] = strtolower($_item['name']);
         }
-        
+
         // add regular categories to list
         $categories = $this->getCategories();
         foreach ($categories as $_category) {
@@ -758,11 +758,11 @@ class AmoComponent extends Object {
                 $_type = $_category['Category']['addontype_id'];
                 $_cat = $_category['Category']['id'];
             }
-            
+
             $_name = $_category['Translation']['name']['string'];
             $_weight = $_category['Category']['weight'];
             $_count = $_category['Category']['count'];
-            
+
             // add item to results array
             $catlist[] = array(
                 'name' => $_name,
@@ -771,7 +771,7 @@ class AmoComponent extends Object {
                 'weight' => $_weight,
                 'count' => $_count
             );
-            
+
             // add item to sort arrays too
             $_names[] = strtolower($_name);
             $_weights[] = $_weight;

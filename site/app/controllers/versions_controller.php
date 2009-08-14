@@ -58,9 +58,9 @@ class VersionsController extends AppController
 
         // set up view, then render
         $this->layout = 'amo2009';
-        $this->pageTitle = sprintf(___('versions_license_header_source'),
+        $this->pageTitle = sprintf(___('Source code license for %1$s %2$s'),
             $addon['Translation']['name']['string'], $version['Version']['version'])
-            .' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+            .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
     }
 
     /**

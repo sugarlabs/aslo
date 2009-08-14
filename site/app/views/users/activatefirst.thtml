@@ -44,10 +44,10 @@
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
     
-    <?=$this->renderElement('notification', array('type' => 'error', 'msg' => _('error_user_unconfirmed')));?>
+    <?=$this->renderElement('notification', array('type' => 'error', 'msg' => ___('Please confirm your user account first with the code you received by email.')));?>
     <br/>
-    <p><?=sprintf(_('user_register_click_confirm_link'), $email, APP_PRETTYNAME)?></p>
+    <p><?=sprintf(___('A link to activate your user account was sent by email to your address %1$s. You have to click it before you can log into %2$s Add-ons.'), $email, APP_PRETTYNAME)?></p>
     <br/>
-    <p><?=sprintf(_('user_register_resend_confirmation_link'), $html->link(_('user_register_confirmation_link_text'), "/users/verify/{$userid}/resend"))?></p>
+    <p><?=sprintf(___('If you did not receive the confirmation email, make sure your email service did not mark it as "junk mail" or "spam". If you need to, you can have us %1$s to your email address mentioned above.'), $html->link(___('resend the confirmation message'), "/users/verify/{$userid}/resend"))?></p>
 
 </div>

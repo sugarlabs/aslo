@@ -40,7 +40,7 @@ if ($format != 'ajax') {
 $this->viewVars['bodyclass'] = 'inverse';
 ?>
 <div id="content" class="primary prose" style="min-height: 400px;">
-    <h2><?=___('compatibility_developer_info', 'Information for Add-on Developers')?></h2>
+    <h2><?=___('Information for Add-on Developers')?></h2>
     <?=$localization->includeLocalPage('compatibility_developer_tips', array(
             APP_PRETTYNAME." {$version}",
             APP_PRETTYNAME."_{$version}",
@@ -52,7 +52,7 @@ $this->viewVars['bodyclass'] = 'inverse';
 }
 if ($loggedin) {
     if ($format != 'ajax') {
-        echo '<h2>'.___('compatibility_developers_results', 'Add-on Status Check Results').'</h2>';
+        echo '<h2>'.___('Add-on Status Check Results').'</h2>';
     }
     
     if (!empty($addons)) {
@@ -63,18 +63,18 @@ if ($loggedin) {
             echo '<div class="addon-details">';
             echo '<span class="name">'.$addon['name'].'</span>';
             echo '<span class="details">'.sprintf(___('compatibility_developers_user_count', '%1$s %2$s users (%3$s&#37; of total)'), $html->number_format($addon['versionCount'], 0), APP_PRETTYNAME." {$version}", $addon['percentage']);
-            echo '&nbsp;&middot;&nbsp;<a href="'.$html->url('/developers/versions/edit/'.$addon['latestVersion']).'">'.___('compatibility_developers_adjust_maxversion', 'Adjust maxVersion without uploading').'</a></span>';
+            echo '&nbsp;&middot;&nbsp;<a href="'.$html->url('/developers/versions/edit/'.$addon['latestVersion']).'">'.___('Adjust maxVersion without uploading').'</a></span>';
             echo '</div>';
             echo '</li>';
         }
         echo '</ul>';
     }
     else {
-        echo '<p class="login">'.___('compatibility_developers_no_addons', 'You do not have any add-ons hosted on Mozilla Add-ons.').'</p>';
+        echo '<p class="login">'.___('You do not have any add-ons hosted on Mozilla Add-ons.').'</p>';
     }
 }
 else {
-    echo '<p class="login">'.sprintf(__('compatibility_developers_login_first', 'If you have add-ons hosted on Mozilla Add-ons, <a href="%1$s">please login</a> to analyze the status of your add-ons for %2$s.'), $html->url($html->login_url()), APP_PRETTYNAME." {$version}").'</p>';
+    echo '<p class="login">'.sprintf(____('If you have add-ons hosted on Mozilla Add-ons, <a href="%1$s">please log in</a> to analyze the status of your add-ons for %2$s.'), $html->url($html->login_url()), APP_PRETTYNAME." {$version}").'</p>';
 }
 ?>
 <?php if ($format != 'ajax'): ?>

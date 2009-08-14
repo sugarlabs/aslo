@@ -36,10 +36,10 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-$group_class = ''; 
+$group_class = '';
 if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
-    $group_class = 'passed'; 
-} else if ($group['counts'][TEST_FAIL] == 0) { 
+    $group_class = 'passed';
+} else if ($group['counts'][TEST_FAIL] == 0) {
     $group_class = 'warning';
 } else {
     $group_class = 'failed';
@@ -47,20 +47,20 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
 ?>
 <div class="test-heading" id="test-group-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
     <h4 class="<?=$group_class?>">
-        <?=sprintf(n___('devcp_versions_validate_header_group', 'devcp_versions_validate_header_group',  count($group['cases']), '%s results'), $group['TestGroup']['name'])?>
+        <?=sprintf(n___('%s result', '%s results',  count($group['cases'])), $group['TestGroup']['name'])?>
     </h4>
-    <a href="#test-summary-<?=$file['File']['id']?>"><?=___('devcp_back_to_top', 'Back to Top')?></a>
+    <a href="#test-summary-<?=$file['File']['id']?>"><?=___('Back to Top')?></a>
 </div>
 <div id="test-details-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
 <? if (!empty($group['cases'])) : ?>
     <div class="results-list <?=$group_class?>">
     <? foreach ($group['cases'] as $case) : ?>
-        <h5><?=$case['name']?> [<?=$html->link(___('devcp_validation_help', 'help'), '/pages/validation#help-'.$case['id'])?>]</h5>
+        <h5><?=$case['name']?> [<?=$html->link(___('help'), '/pages/validation#help-'.$case['id'])?>]</h5>
         <ul class="test-results">
         <? $resultNum = 0; ?>
         <? if (!empty($case['results'])) : ?>
             <? foreach ($case['results'] as $result) : ?>
-                <? 
+                <?
                 $resultNum++;
                 switch ($result['result']) {
                     case TEST_PASS:
@@ -85,7 +85,7 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
                         <?=$result['message']?>
                     <? else: ?>
                         <?=$case['description']?>
-                    <? endif; ?>                   
+                    <? endif; ?>
                     <? if (!empty($result['preview'])) : ?>
                         <div class="code">
                             <? foreach ($result['preview'] as $line => $code) : ?>
@@ -96,7 +96,7 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
                 </li>
                 <? if ($resultNum == 3 && count($case['results']) > 3) : ?>
                 <li class="more">
-                    <a href="#" onclick="versions_validate.showMore($(this)); return false;" class="show-more-link"><?=sprintf(n___('devcp_more_validation_results', 'devcp_more_validation_results', count($case['results']) - 3, 'Show %d more result(s)'), count($case['results']) - 3)?></a>
+                    <a href="#" onclick="versions_validate.showMore($(this)); return false;" class="show-more-link"><?=sprintf(n___('Show %1$s more result', 'Show %1$s more results', count($case['results']) - 3), count($case['results']) - 3)?></a>
                 </li>
                 <div class="hidden-results">
                 <? endif; ?>
@@ -109,9 +109,9 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
     <? endforeach; ?>
     </div>
     <? if ($group_class =='passed') : ?>
-        <i><?= ___('devcp_all_tests_passed', 'All tests passed.') ?> <a href="#" onclick="versions_validate.showPasses($(this)); return false;"><?= n___('devcp_show_validation_passes', 'devcp_show_validation_passes', count($group['cases']), 'Show Pass(es)') ?></a></i>
+        <i><?= ___('All tests passed.') ?> <a href="#" onclick="versions_validate.showPasses($(this)); return false;"><?= n___('Show pass', 'Show passes', count($group['cases'])) ?></a></i>
     <? endif; ?>
 <? else: ?>
-    <i><?= ___('devcp_versions_validate_no_results', 'No test results found.') ?></i>
+    <i><?= ___('No test results found.') ?></i>
 <? endif; ?>
 </div>

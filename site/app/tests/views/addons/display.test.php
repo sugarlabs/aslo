@@ -65,10 +65,10 @@ class AddonTest extends WebTestHelper {
             if ($categorykey == 0)
                 $related_category_query = "Category.id='${categoryvalue['id']}'";
             else
-                $related_category_query = $related_category_query . " OR Category.id ='${categoryvalue['id']}'";    
+                $related_category_query = $related_category_query . " OR Category.id ='${categoryvalue['id']}'";
         }
         $this->categoryData = $categoryModel->findAll($related_category_query);
-        
+
         $this->getAction("/addon/" . $this->id);
 
         global $TestController;
@@ -87,12 +87,12 @@ class AddonTest extends WebTestHelper {
 
     function testDisplay() {
         // Title
-        $this->title = sprintf(_('addons_display_pagetitle'), $this->data['Translation']['name']['string']). ' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->title = sprintf(___('%s'), $this->data['Translation']['name']['string']). ' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->assertTitle($this->title);
         // Author
         $username = $this->data['User'][0]['nickname'];
         $userid = $this->data['User'][0]['id'];
-        $this->actionPath = $this->actionPath(""); 
+        $this->actionPath = $this->actionPath("");
         $this->authorPattern = "@<h4 class=\"author\">by +<a href=\"{$this->actionPath}/user/{$userid}\"  class=\"profileLink\">{$username}</a> ?</h4>@";
         $this->assertWantedPattern($this->authorPattern, htmlentities($this->authorPattern));
 
@@ -104,9 +104,9 @@ class AddonTest extends WebTestHelper {
         foreach ($this->categoryData as $category) {
             $this->wantedPattern = "@<li><a href=\"[^\"]+\"( )*>" . $category['Translation']['name']['string'] . "</a></li>@";
             $this->assertWantedPattern($this->wantedPattern, htmlentities($this->wantedPattern));
-        }		        
+        }
         // are reviews displayed?
-        $this->wantedPattern = "@"._('addons_display_header_reviews')."@";
+        $this->wantedPattern = "@".___('Reviews')."@";
         $this->assertWantedPattern($this->wantedPattern, htmlentities($this->wantedPattern));
 
         $this->wantedPattern = "@It works but not well.@";
@@ -120,14 +120,14 @@ class AddonTest extends WebTestHelper {
         // Check the version detail area.
         $version_link = pq('h5#version-detail a');
         $version = $this->data['Version'][0]['Version']['version'];
-        $this->assertEqual($version_link->text(), sprintf(_('addon_display_header_version'), $version));
+        $this->assertEqual($version_link->text(), sprintf(___('Version %s'), $version));
         $link = sprintf('addons/versions/%s#version-%s', $this->id, $version);
         $this->assertEqual($version_link->attr('href'), $this->controller->url($link));
 
         $span = pq('h5#version-detail span');
         $created = strtotime($this->data['Version'][0]['Version']['created']);
-        $this->assertEqual($span->attr('title'), strftime(_('datetime'), $created));
-        $this->assertEquiv($span->text(), '— '.strftime(_('date'), $created));
+        $this->assertEqual($span->attr('title'), strftime(___('%B %e, %Y, %I:%M %p'), $created));
+        $this->assertEquiv($span->text(), '— '.strftime(___('%B %e, %Y'), $created));
 
         $notes = $this->data['Version'][0]['Translation']['releasenotes']['string'];
         $this->assertEquiv(pq('#release-notes')->text(), $notes);
@@ -138,7 +138,7 @@ class AddonTest extends WebTestHelper {
 
         // check if previous versions link is displayed
         $link = $this->controller->url('addons/versions/'.$this->id);
-        $text = ___('addons_display_see_all_versions');
+        $text = ___('View Older Versions');
         $this->assertLinkLocation($link, $text);
     }
 

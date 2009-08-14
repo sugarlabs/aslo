@@ -62,11 +62,11 @@ class ReviewsModerationFlag extends AppModel
         // class definition.
         $this->reasons = array(
             'review_flag_reason_spam' => 
-                ___('review_flag_reason_spam', 'Spam or otherwise non-review content'),
+                ___('Spam or otherwise non-review content'),
             'review_flag_reason_language' => 
-                ___('review_flag_reason_language', 'Inappropriate language/dialog'),
+                ___('Inappropriate language/dialog'),
             'review_flag_reason_bug_support' => 
-                ___('review_flag_reason_bug_support', 'Misplaced bug report or support request'),
+                ___('Misplaced bug report or support request'),
             'review_flag_reason_other' => 
                 ___('review_flag_reason_other', 'Other (please specify)') 
         );

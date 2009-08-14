@@ -62,7 +62,7 @@ class LocalizationHelper extends Helper
         $html = new AddonsHtmlHelper();
         $formatted_no = $html->number_format($size, $decimals);
 
-        return sprintf(_('size_kb'), $formatted_no);
+        return sprintf(___('%1$s KB'), $formatted_no);
     }
 }
 ?>

@@ -104,7 +104,7 @@ class RdfComponent extends Object {
 
                 if (array_key_exists($prop, $singleProps) ) {
                     if (isset($data['manifest'][$prop])) {
-                        $data['manifest']['errors'][] = sprintf(___('rdf_error_duplicate_single_prop', 'RDF Parser error: the file contained a duplicate element: %s'), $prop);
+                        $data['manifest']['errors'][] = sprintf(___('RDF Parser error: the file contained a duplicate element: %s'), $prop);
                     } else {
                         $data['manifest'][$prop] = $object;
                     }

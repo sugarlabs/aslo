@@ -70,9 +70,9 @@ if (!isset($is_latest)) $is_latest = false;
 /* "Install" for browser apps, "Download" for non-browser apps */
 if (!isset($buttonMessage)) {
     if (!in_array(APP_ID, $browser_apps)) {
-        $buttonMessage = _('a_download');
+        $buttonMessage = ___('Download Now %s');
     } else {
-        $buttonMessage = sprintf(_('install_button_text'), APP_PRETTYNAME, "%s");
+        $buttonMessage = sprintf(___('Add to %1$s %2$s'), APP_PRETTYNAME, "%s");
     }
 }
 
@@ -91,7 +91,7 @@ if (empty($addonIconPath)) {
     
 if (count($addonFiles) < 1) {
     // This should never happen - this would mean the file didn't exist.
-    echo '<p class="install-button">'._('install_error_addon_not_found').'</p>';
+    echo '<p class="install-button">'.___('This add-on is not available.').'</p>';
 
 } else {
     
@@ -102,14 +102,14 @@ if (count($addonFiles) < 1) {
     // installs, but it doesn't hurt to have these instructions still.
     if (APP_ID == APP_THUNDERBIRD && empty($addonEULA) && $showInstructions) {
         echo '<div class="app_install">';
-        echo '<h3>'._('addons_install_in_thunderbird_title').'</h3>';
-        echo _('addons_install_in_thunderbird');
+        echo '<h3>'.___('How to Install in Thunderbird').'</h3>';
+        echo ___('<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla Thunderbird, open Add-ons from the Tools menu.</li><li>Click the Install button, and locate/select the file you downloaded and click "OK".</li></ol>');
         echo '</div>';
     }
     if (APP_ID == APP_SUNBIRD && empty($addonEULA) && $showInstructions) {
         echo '<div class="app_install">';
-        echo '<h3>'._('addons_install_in_sunbird_title').'</h3>';
-        echo _('addons_install_in_sunbird');
+        echo '<h3>'.___('How to Install in Sunbird').'</h3>';
+        echo ___('<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, and locate/select the file you downloaded and click "OK".</li></ol>');
         echo '</div>';
     }
     
@@ -147,7 +147,7 @@ if (count($addonFiles) < 1) {
                 // prepare link options for browser apps
                 $linkOptions = array(
                     'id' => $installTriggerName,
-                    'title'     => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME),
+                    'title'     => sprintf(___('Add %1$s to %2$s'), $addonName, APP_PRETTYNAME),
                     'addonName' => $addonName,
                     'addonIcon' => $addonIconPath,
                     'addonHash' => $file['hash'], 
@@ -156,13 +156,13 @@ if (count($addonFiles) < 1) {
             } else {
                 // prepare link options for non-browser apps
                 $linkOptions = array('id' => $installTriggerName, 
-                    'title'=>sprintf(_('install_download'),$addonName));
+                    'title'=>sprintf(___('Download %1$s'),$addonName));
             }
         } else {
             /* prepare link options for search engines */
             $linkOptions = array(
                 'id'        => $installTriggerName,
-                'title'     => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME),
+                'title'     => sprintf(___('Add %1$s to %2$s'), $addonName, APP_PRETTYNAME),
                 'engineURL' => FULL_BASE_URL . $html->urlFile($file['id'], $file['filename'], @$collection_uuid),
                 // search engines use a special install method
                 'jsInstallMethod' => 'search_engine_install',
@@ -178,7 +178,7 @@ if (count($addonFiles) < 1) {
                 INVALID_FILENAME_CHARS, '_', $html->unsanitize($file['filename'])));
                 
             // if this is the latest public version, use perma-URL. Otherwise, link directly to file.
-            $linktitle = '<span><span><span><strong>'.sprintf(_('a_download'),$_install_platform_string).'</strong></span></span></span>';
+            $linktitle = '<span><span><span><strong>'.sprintf(___('Download Now %s'),$_install_platform_string).'</strong></span></span></span>';
             if ($is_latest && $file['status'] == STATUS_PUBLIC) {
                 $latest_permalink = "/downloads/latest/{$addonId}";
                 if ($file['platform_id'] != PLATFORM_ALL) $latest_permalink .= "/platform:{$file['platform_id']}";
@@ -199,10 +199,10 @@ if (count($addonFiles) < 1) {
         } else {
             $eula_attributes = array('id' => $installTriggerName,
                 'addonName' => $addonName,
-                'title' => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME),
+                'title' => sprintf(___('Add %1$s to %2$s'), $addonName, APP_PRETTYNAME),
                 'isEULAPageLink' => 'true');
             $install_button_html .= $html->link('<span><span><span><strong>'
-                .sprintf(_('a_download'),$_install_platform_string)
+                .sprintf(___('Download Now %s'),$_install_platform_string)
                 .'</strong></span></span></span>',
                 "/addons/policy/0/{$addonId}/{$file['id']}",
                 $eula_attributes, false, false);
@@ -229,7 +229,7 @@ if (count($addonFiles) < 1) {
                     <input type="checkbox" name="confirm-<?= $addonId ?>" />
                     <div class="exp-desc">
                     <label for="exp-confirm-install-checkbox-<?=$addonId?>"></label>
-                    <span><?= sprintf(___('install_button_confirm_exp_install'), $html->url('/pages/faq#experimental-addons')) ?></span>
+                    <span><?= sprintf(___('Let me install this experimental add-on. <a href="%1$s">What's this?</a>'), $html->url('/pages/faq#experimental-addons')) ?></span>
                     </div>
                 </div>
 
@@ -243,21 +243,21 @@ if (count($addonFiles) < 1) {
                 $login_url = $html->login_url('/'.LANG.'/'.APP_SHORTNAME."/addon/{$addonId}", false);
                 $attributes = array('id' => $installTriggerName,
                     'addonName' => $addonName,
-                    'title' => sprintf(_('install_button_title'), $addonName, APP_PRETTYNAME));
+                    'title' => sprintf(___('Add %1$s to %2$s'), $addonName, APP_PRETTYNAME));
                 echo $html->link('<span><span><span><strong>'
-                    .sprintf(_('a_download'),$_install_platform_string)
+                    .sprintf(___('Download Now %s'),$_install_platform_string)
                     .'</strong></span></span></span>',
                     $login_url, $attributes, false, false);
 
                 $exp_addon_url = "/pages/faq#experimental-addons";
                 ?>
                 </p>
-                <?= sprintf(___('install_a_login_to_install'), $html->url($login_url), $html->url($exp_addon_url)); ?>
+                <?= sprintf(___('<a href="%1$s">Log in</a> to install this experimental add-on. <a href="%2$s">Why</a>?'), $html->url($login_url), $html->url($exp_addon_url)); ?>
                 </noscript>
             </div>
         <?php endif; ?>
 	<script type="text/javascript">
-        installVersusDownloadCheck("<?=$installTriggerName?>", "<?=sprintf($buttonMessage, $_install_platform_string) ?>", "<?=sprintf(_('a_download'), $_install_platform_string)?>");
+        installVersusDownloadCheck("<?=$installTriggerName?>", "<?=sprintf($buttonMessage, $_install_platform_string) ?>", "<?=sprintf(___('Download Now %s'), $_install_platform_string)?>");
 	</script>		
     <?php
     }

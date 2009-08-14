@@ -39,8 +39,8 @@
 $this->layout = 'amo2009';
 
 $breadcrumbs = array(
-    sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
-    ___('collections_breadcrumb') => '/collections'
+    sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+    ___('Collections') => '/collections'
 );
     // This code is a bit ugly because we need to work within the constraints of the pages controller.
     // Build the collection menu here because we have access to the controllers we need.
@@ -61,7 +61,7 @@ $breadcrumbs = array(
             if ($fav) {
                 continue;
             }
-            $text = ___('collections_detail_button_add');
+            $text = ___('Add to Favorites');
             $_favorite_button = <<<FAVORITE_BUTTON
                 <form class="collector-firstrun-favorite favorite" method="post" action="{$subscribe_url}">
                   <div>
@@ -113,7 +113,7 @@ COLLECTION_GROUP;
   </div>
 
   <div class="secondary" role="complementary">
-    <?=$html->image('amo2009/illustrations/logo-collections-220x270.png', array( 'class' => 'scale', 'alt' => ___('collector_features_img_logo')))?>
+    <?=$html->image('amo2009/illustrations/logo-collections-220x270.png', array( 'class' => 'scale', 'alt' => ___('Add-on Collector Logo')))?>
   </div>
 
 </div>

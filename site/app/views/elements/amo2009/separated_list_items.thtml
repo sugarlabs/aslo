@@ -69,7 +69,7 @@
         <?=$addon['Translation']['name']['string']?>
       </a>
       <span>
-        <?=sprintf(___('collections_index_header_created'),
+        <?=sprintf(___('created by %1$s'),
            $html->linkUsersFromModel($addon['User']))?>
       </span>
     </h4>
@@ -77,8 +77,8 @@
       <?=$this->renderElement('amo2009/install', $element_params)?>
       <p class="downloads">
         <?php $downloads = $a['weeklydownloads']; ?>
-        <?=sprintf(n___('collections_detail_weekly_downloads',
-                        'collections_detail_weekly_downloads',
+        <?=sprintf(n___('%1$s download this week',
+                        '%1$s downloads this week',
                         $downloads),
                    '<strong>'.$html->number_format($downloads).'</strong>')?>
       </p>
@@ -96,16 +96,16 @@
       </p>
       <p>
         <a href="<?=$addon_link?>">
-          <?=___('collections_detail_a_learn')?>
+          <?=___('Learn More')?>
         </a>
       </p>
       <?php
       if (!empty($a['comment'])) {
           echo '<blockquote class="publisher-comment">';
           echo '<p>'.nl2br($a['comment']).'</p>';
-          echo '<p class="by">'.sprintf(___('addon_reviewed_by_u_on_d'),
+          echo '<p class="by">'.sprintf(___('by %1$s on %2$s'),
               $html->linkUserFromModel($a['publisher']),
-              strftime(_('date'), strtotime($a['dateadded']))).'</p>';
+              strftime(___('%B %e, %Y'), strtotime($a['dateadded']))).'</p>';
           echo '</blockquote>';
       }
       ?>

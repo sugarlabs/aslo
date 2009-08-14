@@ -42,10 +42,10 @@
  */
 
 $sortorders = array(
-    'name'      => _('list_sortby_name'),
-    'updated'   => _('list_sortby_date'),
-    'popular'   => _('list_sortby_downloads'),
-    'rated'     => _('list_sortby_rating')
+    'name'      => ___('Add-on Name'),
+    'updated'   => ___('Date'),
+    'popular'   => ___('Downloads'),
+    'rated'     => ___('Rating')
     );
 
 // make sort order links
@@ -91,20 +91,20 @@ function submit_options() {
             }
             ?>
             </select>
-        <?=_('addon_list_perpage')?></label>
+        <?=___('per page')?></label>
     </p>
 
     <ul id="order-by">
-    <li id="order-label"><?=_('addon_list_sortby')?></li>
+    <li id="order-label"><?=___('Sort by:')?></li>
     <?=implode('', $sortlinks)?>
     </ul>
 
     <p id="experimental">
         <label for="show-exp"><input type="checkbox" id="show-exp"
             name="exp"<?=($show_exp?' checked':'')?> onChange="submit_options();"/>
-            <?=_('addons_options_show_experimental')?></label>
+            <?=___('show experimental add-ons')?></label>
     </p>
     
     <div><button type="submit" name="sort" value="<?=$paging['sortBy']?>"
-        id="options-submit" class="hidden"><?=_('addons_options_submit')?></button></div>
+        id="options-submit" class="hidden"><?=___('Go')?></button></div>
 </form>

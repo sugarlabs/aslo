@@ -45,13 +45,13 @@
   <input type="hidden" name="cat" value="collections" />
   <input type="hidden" name="pp" value="<?=$pp?>" />
 <?php endif; ?>
-  <label for="sortby2"><?=___('collections_index_label_sortby')?></label>
+  <label for="sortby2"><?=___('Sort by')?></label>
   <select id="sortby2" name="sortby">
     <?php foreach ($sort_opts as $value => $opt): ?>
       <?php $selected = ($value == $sortby) ? 'selected="selected"' : ''; ?>
       <option value="<?=$value?>" <?=$selected?>><?=$opt['text']?></option>
     <?php endforeach; ?>
   </select>
-  <button><?=___('collections_index_button_go')?></button>
+  <button><?=___('Go')?></button>
   </div>
 </form>

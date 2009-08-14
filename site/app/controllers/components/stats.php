@@ -423,18 +423,18 @@ class StatsComponent extends Object {
                                                       )
                                              ),
                       'prettyNames' => array(
-                                             'version' => _('statistics_longnames_version'),
-                                             'application' => _('statistics_longnames_application'),
-                                             'status' => _('statistics_longnames_status'),
-                                             'os' => _('statistics_longnames_os'),
-                                             'unknown' => _('statistics_longnames_unknown')
+                                             'version' => ___('Add-on Version'),
+                                             'application' => ___('Application'),
+                                             'status' => ___('Add-on Status'),
+                                             'os' => ___('Operating System'),
+                                             'unknown' => ___('Unknown')
                                              ),
                       'shortNames' => array(
-                                            'version' => _('statistics_shortnames_version'),
-                                            'application' => _('statistics_shortnames_application'),
-                                            'status' => _('statistics_shortnames_status'),
-                                            'os' => _('statistics_shortnames_os'),
-                                            'unknown' => _('statistics_shortnames_unknown'),
+                                            'version' => ___('Ver'),
+                                            'application' => ___('App'),
+                                            'status' => ___('St'),
+                                            'os' => ___('OS'),
+                                            'unknown' => ___('Uk'),
                                             )
                       );
         $appShortnames = $this->controller->Amo->getApplicationName(null, true);
@@ -526,7 +526,7 @@ class StatsComponent extends Object {
         
         if (!empty($releases)) {
             foreach ($releases as $version => $date) {
-                $title = sprintf(_('statistics_events_app_released'), ucwords($app)." {$version}");
+                $title = sprintf(___('%1$s released'), ucwords($app)." {$version}");
                 $xml[] = '<event start="'.date('M d Y H:i:s \G\M\TO', strtotime($date)).'" title="'.$title.'" />';
             }
         }
@@ -545,7 +545,7 @@ class StatsComponent extends Object {
         
         if (!empty($versions)) {
             foreach ($versions as $version) {
-                $title = sprintf(_('statistics_events_addon_created'), "{$name} {$version['Version']['version']}");
+                $title = sprintf(___('%1$s created'), "{$name} {$version['Version']['version']}");
                 $xml[] = '<event start="'.date('M d Y H:i:s \G\M\TO', strtotime($version['Version']['created'])).'" title="'.$title.'" />';
             }
         }

@@ -57,7 +57,7 @@ class AddonReviewsTest extends WebTestHelper {
 
     function testReviews() {
         // Title
-        $this->title = sprintf(_('addon_review_pagetitle'), $this->data['Translation']['name']['string']).' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->title = sprintf(___('Reviews for %s'), $this->data['Translation']['name']['string']).' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->assertTitle($this->title);
 
         // Header

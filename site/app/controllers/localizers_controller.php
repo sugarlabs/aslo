@@ -70,7 +70,7 @@ class LocalizersController extends AppController
         $this->Amo->clean($this->data);
         
         $this->layout = 'mozilla';
-        $this->pageTitle = 'Localizer Control Panel :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = 'Localizer Control Panel :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         $this->cssAdd = array('localizers');
         $this->publish('cssAdd', $this->cssAdd);

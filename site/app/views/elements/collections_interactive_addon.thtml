@@ -59,7 +59,7 @@ if(isset($showDate) && $showDate == true) {
 
 // prepare preview image
 if (isset($addonPreviewPath) && !empty($addonPreviewPath)) {
-    $_alt = sprintf(_('img_preview_of'),$addonName);
+    $_alt = sprintf(___('Preview Image of %s'),$addonName);
     $previmg = '<img src="'.$addonPreviewPath.'" '
         .'alt="'.$_alt.'" title="'.$_alt.'"/>';
     $previmg = '<div class="preview-img">'
@@ -82,7 +82,7 @@ if (!isset($addonSummary) || empty($addonSummary))
     <div class="item-desc">
         <h4><?=$html->link("$icon <span>$addonName</span>", "/addon/{$addonID}");?></h4>
         <?php if(isset($showDate) && $showDate == true){ ?>
-            <p class="date-added"><?php echo sprintf(_('collections_interactive_addon_added'), strftime(_('date'), strtotime($addonDateAdded))); ?></p>
+            <p class="date-added"><?php echo sprintf(___('Added %s'), strftime(___('%B %e, %Y'), strtotime($addonDateAdded))); ?></p>
         <?php } ?>
         
         <p class="desc"><?=$addonSummary?> <?=$html->link('Learn more...', "/addon/{$addonID}")?></p>

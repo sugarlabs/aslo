@@ -47,12 +47,12 @@
     
 <?php if (isset($success) && $success): ?>
 <?=$this->renderElement('notification', array('type' => 'success', 
-'msg' => ___('user_del_header_farewell', 'Farewell!'),
+'msg' => ___('Farewell!'),
 'description' => sprintf(___('user_del_account_deleted', 'Your user account %1$s '
         .'has been successfully deleted. If you want to come back some time, '
         .'you can re-register on the <a href="%2$s">user registration page</a>.')
         , $useremail, $html->url('/users/register')))); ?>
-    <p><?=$html->link(_('link_return_to_front_page'), '/');?></p>
+    <p><?=$html->link(___('Click here to return to the front page.'), '/');?></p>
 
 <?php else: ?>
     <?php if (!empty($deleteerror)){
@@ -97,9 +97,9 @@
     }
     ?>
     
-    <h1><?php echo sprintf(___('user_del_header_delete_account', 'Delete User Account %s'), $useremail)?></h1>
+    <h1><?php echo sprintf(___('Delete User Account %1$s'), $useremail)?></h1>
     
-    <p><?=___('user_del_community_sad', 'The Mozilla Add-ons community is sad to see you go.')?></p>
+    <p><?=___('The Mozilla Add-ons community is sad to see you go.')?></p>
     
     <p><?php sprintf(___('user_del_specific_problem_editors', 'If you have a '
     .'specific problem we may help you with, please do not delete your account '
@@ -107,12 +107,12 @@
     .'solving it.'), $link->email('amo-editors@mozilla.org'))?></p>
     
     <div class="highlight">
-    <h2><?=___('user_del_header_confirm_deletion', 'Confirm account deletion')?></h2>
+    <h2><?=___('Confirm account deletion')?></h2>
     
     <p><?=___('user_del_permanently_removed_means', 'By clicking "delete" your '
         .'account is going to be <strong>permanently removed</strong>. That means:')?>
     <ul>
-        <li><?=___('user_del_nologin', 'You will not be able to log into Mozilla Add-ons anymore.')?></li>
+        <li><?=___('You will not be able to log into Mozilla Add-ons anymore.')?></li>
         <li><?=___('user_del_reviews_anonymized', 'Your reviews and ratings will '
             .'not be deleted, but they will no longer be associated with you.')?></li>
     </ul>
@@ -120,9 +120,9 @@
     <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
         <?=$html->hiddenSession() ?>
         <div>
-            <label class="amo-label-large" for="UserPassword"><?=___('user_del_confirm_password', 'Confirm Password')?></label>
+            <label class="amo-label-large" for="UserPassword"><?=___('Confirm Password')?></label>
             <?=$html->password('User/password', array('autocomplete'=>'off')) ?>
-            <?=$html->tagErrorMsg('User/password', _('error_wrong_password'))?>
+            <?=$html->tagErrorMsg('User/password', ___('Wrong password entered!'))?>
         </div>
         
         <p>
@@ -131,9 +131,9 @@
             'I understand that this step cannot be undone.')?></label>
         </p>
         
-        <p><?=$html->submit(___('user_del_deletenow', 'Delete my user account now')); ?></p>
+        <p><?=$html->submit(___('Delete my user account now')); ?></p>
     </form>
     </div>
-    <p><?=$html->link(_('link_return_to_front_page'), '/');?></p>
+    <p><?=$html->link(___('Click here to return to the front page.'), '/');?></p>
 <?php endif; ?>
 </div>

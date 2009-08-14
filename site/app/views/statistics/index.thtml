@@ -36,26 +36,26 @@
  *
  * ***** END LICENSE BLOCK ***** */ 
 ?> 
-<h1><?=_('statistics_index_title')?></h1>
+<h1><?=___('Statistics Dashboard')?></h1>
 
 <div class="secondary" role="complementary">
   <div class="highlight">
-    <h2><?=___('statistics_index_site_stats', 'Site Statistics')?></h2>
+    <h2><?=___('Site Statistics')?></h2>
     <dl>
       <dt><?=$html->number_format($statsOverview['totalDownloads'])?></dt>
-      <dd><?=___('statistics_index_addons_downloaded', 'Add-ons Downloaded')?></dd>
+      <dd><?=___('Add-ons Downloaded')?></dd>
 
       <dt><?=$html->number_format($statsOverview['totalInUse'])?></dt>
-      <dd><?=___('statistics_index_addons_used', 'Add-ons in Use')?></dd>
+      <dd><?=___('Add-ons in Use')?></dd>
 
       <dt><?=$html->number_format($statsOverview['totalUsers'])?></dt>
-      <dd><?=___('statistics_index_registered_users', 'Registered Users')?></dd>
+      <dd><?=___('Registered Users')?></dd>
 
       <dt><?=$html->number_format($statsOverview['totalReviews'])?></dt>
-      <dd><?=___('statistics_index_addon_reviews', 'Add-on Reviews')?></dd>
+      <dd><?=___('Add-on Reviews')?></dd>
 
       <dt><?=$html->number_format($statsOverview['totalCollections'])?></dt>
-      <dd><?=___('statistics_index_addon_collections', 'Add-on Collections')?></dd>
+      <dd><?=___('Add-on Collections')?></dd>
     </dl>
   </div>
 
@@ -71,12 +71,12 @@
 
     <div id="timeplot-container">
       <div id="not-enough-data" class="warning" style="display: none;"><div>
-        <?=_('statistics_notice_data_insufficient')?>
+        <?=___('There is not yet enough data to display this graph. Please check back later.')?>
       </div></div>
         
       <noscript>
         <div class="warning"><div>
-          <?=_('statistics_notice_nojavascript')?>
+          <?=___('JavaScript is required to view the Statistics Dashboard graphs.')?>
         </div></div>
       </noscript>
     </div>
@@ -87,14 +87,14 @@
       <table id="stats-table-instance">
         <thead>
           <tr class="header">
-            <th class="first"><?=_('list_sortby_date')?></th>
-            <th><?=___('statistics_addons_downloaded', 'Add-ons Downloaded')?></th>
-            <th><?=___('statistics_addons_inuse', 'Add-ons In Use')?></th>
-            <th><?=___('statistics_addons_created', 'Add-ons Created')?></th>
-            <th><?=___('statistics_addons_updated', 'Add-ons Updated')?></th>
-            <th><?=___('statistics_users_created', 'Users Created')?></th>
-            <th><?=___('statistics_reviews_created', 'Reviews Created')?></th>
-            <th class="last"><?=___('statistics_collections_created', 'Collections Created')?></th>
+            <th class="first"><?=___('Date')?></th>
+            <th><?=___('Add-ons Downloaded')?></th>
+            <th><?=___('Add-ons In Use')?></th>
+            <th><?=___('Add-ons Created')?></th>
+            <th><?=___('Add-ons Updated')?></th>
+            <th><?=___('Users Created')?></th>
+            <th><?=___('Reviews Created')?></th>
+            <th class="last"><?=___('Collections Created')?></th>
           </tr>
         </thead>
         <tbody>
@@ -105,7 +105,7 @@
               if ($i > 30) break; // nonJS case: show the date-range that would initially be charted
         ?>
           <tr class="row <?=($i % 2 ? 'odd' : 'even')?>">
-            <td class="col first"><?=strftime(_('date'), strtotime($row['date']))?></td>
+            <td class="col first"><?=strftime(___('%B %e, %Y'), strtotime($row['date']))?></td>
             <td class="col value"><?=$row['addons_downloaded']?></td>
             <td class="col value"><?=$row['addons_in_use']?></td>
             <td class="col value"><?=$row['addons_created']?></td>
@@ -121,7 +121,7 @@
     </div>
     <div class="listing-footer">
       <ol id="stats-table-pagination" class="pagination"></ol>
-      <a href="<?=$html->url('/statistics/sitecsv/date')?>" id="stats-csv-download"><? echo ___('statistics_js_download_csv', 'View this table in CSV format') ?></a>
+      <a href="<?=$html->url('/statistics/sitecsv/date')?>" id="stats-csv-download"><? echo ___('View this table in CSV format') ?></a>
     </div>
   </div>
 
@@ -131,7 +131,7 @@
     echo '<div class="featured prose">';
     echo '<div class="featured-inner article">';
         if (!empty($addons)) {
-            echo '<p>'._('statistics_index_myaddons').':</p>';
+            echo '<p>'.___('Select one of your add-ons to view its statistics').':</p>';
             echo '<ul>';
             foreach ($addons as $id => $addon) {
                 echo '<li>'.$html->link($addon, '/statistics/addon/'.$id).'</li>';
@@ -143,21 +143,21 @@
             echo '<p>';
             if (!empty($addons)) {
                 if ($this->controller->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->controller->Session->read('User')))
-                    echo _('statistics_index_anotheraddon').':';
+                    echo ___('or, select another add-on').':';
                 else
-                    echo _('statistics_index_anotheraddon_public').':';
+                    echo ___('or, select an add-on with public statistics').':';
             }
             else {
                 if ($this->controller->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->controller->Session->read('User')))
-                    echo _('statistics_index_selectaddon').':';
+                    echo ___('Select an add-on to view its statistics').':';
                 else
-                    echo _('statistics_index_selectaddon_public').':';
+                    echo ___('Select an add-on with public statistics').':';
             }
             echo '</p>';
             
             echo $html->formTag('/statistics/', 'get');
             echo $html->selectTag('Addon/id', $otherAddons, null, array('onChange' => 'changeAddon(this);'));
-            echo '<noscript><input type="submit" value="'._('statistics_index_view_button').'"></noscript>';
+            echo '<noscript><input type="submit" value="'.___('View Statistics').'"></noscript>';
             echo '</form>';
         }
     echo '</div>';

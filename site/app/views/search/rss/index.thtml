@@ -2,7 +2,7 @@
 foreach ($search_results as $var => $val):
     // prepare version string
     if (!empty($val['Version']))
-        $version = $val['Version'][0]['version'] .' - '. strftime(_('date'), strtotime($val['Version'][0]['created']));
+        $version = $val['Version'][0]['version'] .' - '. strftime(___('%B %e, %Y'), strtotime($val['Version'][0]['created']));
     else
         $version = '';
 

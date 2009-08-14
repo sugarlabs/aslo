@@ -45,11 +45,11 @@
         <form id="performanceFilter" action="<?=$html->url()?>" method="get">
         <div>
             <?php
-             echo sprintf(_('editorcp_reviewlog_entries_between'),
+             echo sprintf(___('View entries between %1$s and %2$s'),
                 '<input type="text" id="start" name="start" value="'.$startDate.'" size="11" onfocus="clearInput(this)"/>',
                 '<input type="text" id="end" name="end" value="'.$endDate.'" size="11" onfocus="clearInput(this)"/>');
             echo "&nbsp;&nbsp;";
-            echo $html->submit(_('editorcp_reviewlog_button_filter'));
+            echo $html->submit(___('Filter'));
             if ($showUserLookup) {
                 echo '<input type="hidden" name="user" value="'.$user['User']['email'].'"/>';
             }
@@ -58,18 +58,18 @@
         </div>
         </form>
 
-        <h3 id="reviewTotals" class="performanceHeader collapsible expanded"><span><?=sprintf(___('editorcp_performance_totals', 'Total Reviews: %1$s &nbsp;&nbsp;Team Average: %2$s'), $myTotal, sprintf('%.2f', $teamAverage))?></span></h3>
+        <h3 id="reviewTotals" class="performanceHeader collapsible expanded"><span><?=sprintf(___('Total Reviews: %1$s &nbsp;&nbsp;Team Average: %2$s'), $myTotal, sprintf('%.2f', $teamAverage))?></span></h3>
         <?php if (empty($myApprovals)): ?>
-        <div><p><?=_('editorcp_reviewlog_none_found')?></p></div>
+        <div><p><?=___('No reviews found for this period.')?></p></div>
         <?php else: ?>
         <table id="historyTable">
-            <thead title="<?=___('editorcp_performance_multisort_tip', 'Shift-click to sort by multiple columns')?>">
+            <thead title="<?=___('Shift-click to sort by multiple columns')?>">
             <tr>
-                <th><?=_('editorcp_reviewlog_column_date')?></th>
-                <th><?=_('editorcp_reviewlog_column_addon')?></th>
-                <th><?=___('editorcp_performance_column_application', 'Application')?></th>
-                <th><?=___('editorcp_performance_column_category', 'Category')?></th>
-                <th><?=_('editorcp_reviewlog_column_action')?></th>
+                <th><?=___('Date')?></th>
+                <th><?=___('Add-on')?></th>
+                <th><?=___('Application')?></th>
+                <th><?=___('Category')?></th>
+                <th><?=___('Action')?></th>
             </tr>
             </thead>
             <tbody>
@@ -83,24 +83,24 @@
                     echo '<td>';
                     if ($approval['Approval']['reviewtype'] == 'nominated') {
                         if ($approval['Approval']['action'] == STATUS_PUBLIC) {
-                            echo _('editors_review_history_nominated_approved');
+                            echo ___('Nomination Approved/Public');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_SANDBOX) {
-                            echo _('editors_review_history_nominated_denied');
+                            echo ___('Nomination Denied/Sandbox');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_NOMINATED) {
-                            echo _('editors_review_history_nominated_adminreview');
+                            echo ___('Admin Review');
                         }
                     }
                     elseif ($approval['Approval']['reviewtype'] == 'pending') {
                         if ($approval['Approval']['action'] == STATUS_PUBLIC) {
-                            echo _('editors_review_history_pending_approved');
+                            echo ___('Approved/Public');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_SANDBOX) {
-                            echo _('editors_review_history_pending_denied');
+                            echo ___('Denied/Sandbox');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_PENDING) {
-                            echo _('editors_review_history_pending_adminreview');
+                            echo ___('Admin Review');
                         }
                     }
                     echo '</td>';
@@ -111,17 +111,17 @@
         </table>
         <?php endif; ?>
 
-        <h3 id="weeklyTotals" class="performanceHeader collapsible expanded"><span><?=___('editorcp_performance_weekly_heading', 'Weekly Totals')?></span></h3>
+        <h3 id="weeklyTotals" class="performanceHeader collapsible expanded"><span><?=___('Weekly Totals')?></span></h3>
         <table id="weeklyTable">
             <tr>
-                <th><?=___('editorcp_performance_column_week', 'Week')?></th>
-                <th class="numeric"><?=___('editorcp_performance_column_total', 'Total')?></th>
-                <th class="numeric"><?=___('editorcp_performance_column_teamaverage', 'Team Average')?></th>
+                <th><?=___('Week')?></th>
+                <th class="numeric"><?=___('Total')?></th>
+                <th class="numeric"><?=___('Team Average')?></th>
             </tr>
         <?php
             foreach ($weeklyTotals as $k => $week) {
                 echo '<tr>';
-                    echo "<td>".sprintf(___('editorcp_performance_date_range', '%1$s to %2$s'), date('Y-m-d', $week['from']), date('Y-m-d', $week['to']))."</td>";
+                    echo "<td>".sprintf(___('%1$s to %2$s'), date('Y-m-d', $week['from']), date('Y-m-d', $week['to']))."</td>";
                     echo "<td class=\"numeric\">{$week['myTotal']}</td>";
                     echo sprintf('<td class="numeric">%0.2f</td>', $week['teamAverage']);
                 echo '</tr>';
@@ -129,9 +129,9 @@
         ?>
         </table>
 
-        <h3 id="monthToDateTotals" class="performanceHeader"><span><?=sprintf(___('editorcp_performance_mtd_totals', 'Month To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s'), $myMtdTotal, sprintf('%.2f', $teamMtdAverage))?></span></h3>
+        <h3 id="monthToDateTotals" class="performanceHeader"><span><?=sprintf(___('Month To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s'), $myMtdTotal, sprintf('%.2f', $teamMtdAverage))?></span></h3>
 
-        <h3 id="yearToDateTotals" class="performanceHeader"><span><?=sprintf(___('editorcp_performance_ytd_totals', 'Year To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s'), $myYtdTotal, sprintf('%.2f', $teamYtdAverage))?></span></h3>
+        <h3 id="yearToDateTotals" class="performanceHeader"><span><?=sprintf(___('Year To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s'), $myYtdTotal, sprintf('%.2f', $teamYtdAverage))?></span></h3>
     </div>
 </div>
 <script type="text/javascript">

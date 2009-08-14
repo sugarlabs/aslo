@@ -45,11 +45,11 @@
     ?>
 
     <div id="categories">
-        <h3><span><?=_('devcp_myaddons_title')?></span></h3>
+        <h3><span><?=___('Developer Tools')?></span></h3>
         
         <ul id="cat-list">
     <?php if ($this->controller->Session->check('User')): ?>
-            <li><?=$html->link(___('devcp_sidebar_a_dashboard'), '/developers/dashboard')?></li>
+            <li><?=$html->link(___('Dashboard'), '/developers/dashboard')?></li>
         <?php
             if (!empty($addons)) {
                 foreach ($addons as $addon_id => $addon_name) {
@@ -59,17 +59,17 @@
                 }
             }
         ?>
-            <li><?=$html->link(_('devcp_myaddons_submitaddon_link'), '/developers/addon/submit')?></li>
-            <li><?=$html->link(_('devcp_myaddons_statistics_link'), '/statistics')?></li>
+            <li><?=$html->link(___('Submit Add-on'), '/developers/addon/submit')?></li>
+            <li><?=$html->link(___('Statistics Dashboard'), '/statistics')?></li>
             <?php if ($this->controller->SimpleAcl->actionAllowed('Editors', '*', $this->controller->Session->read('User'))): ?>
-                <li><?=$html->link(_('devcp_myaddons_editorcp_link'), '/editors')?></li>
+                <li><?=$html->link(___('Editor Tools'), '/editors')?></li>
             <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User'))): ?>
-                <li><?=$html->link(_('devcp_myaddons_admincp_link'), '/admin')?></li>
+                <li><?=$html->link(___('Admin Tools'), '/admin')?></li>
             <?php endif; ?>
-            <li><?=$html->link(_('devcp_myaddons_mainpage_link'), '/')?></li>
+            <li><?=$html->link(___('Back to Main'), '/')?></li>
     <?php else: ?>
-            <li><?=$html->link(_('header_navlink_login'), $html->login_url())?></li>
+            <li><?=$html->link(___('Log in'), $html->login_url())?></li>
     <?php endif; ?>
         </ul>
         

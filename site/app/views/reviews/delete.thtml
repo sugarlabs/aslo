@@ -45,13 +45,13 @@ $this->layout = 'amo2009';
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
     
-        <h2><?=_('addon_review_delete_header')?></h2><br>
+        <h2><?=___('Delete Review')?></h2><br>
         
         <div class="article">
             <h3><?=$html->link($review['Addon']['Translation']['name']['string'], '/addons/display/'.$review['Addon']['Addon']['id']).
                     ': '.$review['Translation']['title']['string']?></h3>
             <div>
-                <?= sprintf(_('addon_reviewed_on_x_rated_y'), $html->linkUserFromModel($review['User']), strftime(_('date'), strtotime($review['Review']['created'])), $review['Review']['rating'])?>
+                <?= sprintf(___('by %1$s on %2$s (rated %3$s)'), $html->linkUserFromModel($review['User']), strftime(___('%B %e, %Y'), strtotime($review['Review']['created'])), $review['Review']['rating'])?>
             </div>
             <?=$review['Translation']['body']['string']?>
         
@@ -59,9 +59,9 @@ $this->layout = 'amo2009';
         </div>
         <div class="item">
             <div align="center">
-                <?=_('addon_review_confirm_delete')?><br>
-                <input type="submit" name="no" value="<?=_('addon_review_confirm_no')?>">
-                <input type="submit" name="yes" value="<?=_('addon_review_confirm_yes')?>">
+                <?=___('Are you sure you wish to delete this review?')?><br>
+                <input type="submit" name="no" value="<?=___('No')?>">
+                <input type="submit" name="yes" value="<?=___('Yes')?>">
             </div>
             </form>
         </div>

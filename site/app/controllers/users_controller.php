@@ -93,10 +93,10 @@ class UsersController extends AppController
 
         $this->disableCache();
     
-        $this->pageTitle = _('users_register_pagetitle'). ' :: '. sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('New User Registration'). ' :: '. sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         // $this->publish('cssAdd', array('forms'));
-        $this->publish('breadcrumbs', array(_('users_register_pagetitle') => '/users/register'));
-        $this->publish('subpagetitle', _('user_form_registration'));
+        $this->publish('breadcrumbs', array(___('New User Registration') => '/users/register'));
+        $this->publish('subpagetitle', ___('New User Registration'));
         if (empty($this->data)) {
             $this->render();
             return;
@@ -163,7 +163,7 @@ class UsersController extends AppController
 
         // don't allow sending an email to already confirmed users.
         if (empty($data['User']['confirmationcode'])) {
-            $this->flash(_('error_user_already_confirmed'), '/', 3);
+            $this->flash(___('This user account is already confirmed.'), '/', 3);
             return false;
         }
         
@@ -171,7 +171,7 @@ class UsersController extends AppController
         $this->publish('data', $data);
         $this->Email->template = 'email/confirm';
         $this->Email->to = $data['User']['email'];
-        $this->Email->subject = sprintf(_('user_email_confirm_subject'), APP_PRETTYNAME);
+        $this->Email->subject = sprintf(___('Thanks for joining %s Add-ons'), APP_PRETTYNAME);
         $result = $this->Email->send();
         return true;
     }
@@ -188,31 +188,31 @@ class UsersController extends AppController
         $this->Amo->clean($code);
         
         if (!$id || !$code) {
-            $this->flash(sprintf(_('error_missing_argument'), 'user_id or code'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'user_id or code'), '/', 3);
             return;
         }
 
         $thisuser = $this->User->findById($id);
         if (empty($thisuser)) {
-            $this->flash(_('error_user_notfound'), '/', 3);
+            $this->flash(___('User not found!'), '/', 3);
             return;
         }
 
         if ($code == 'resend') { // resend the confirmation code to the user's email address
             if (true === $this->_sendConfirmationCode($id))
-                $this->flash(_('user_confirmationcode_resent'), '/', 3);
+                $this->flash(___('The confirmation code was resent!'), '/', 3);
             return;
         }
 
         if ($code !== $thisuser['User']['confirmationcode']) {
-            $this->flash(_('error_user_badconfirmationcode'), '/', 3);
+            $this->flash(___('Invalid confirmation code!'), '/', 3);
             return;
         }
 
         // remove confirmation code from DB
         $this->User->id = $id;
         $this->User->saveField('confirmationcode', '');
-        $this->flash(_('user_verified_okay'), '/users/login?to='.urlencode('/'), 3);
+        $this->flash(___('Successfully verified!'), '/users/login?to='.urlencode('/'), 3);
     }
 
 
@@ -226,10 +226,10 @@ class UsersController extends AppController
         $this->Amo->clean($id);
         $this->Amo->clean($code);
         
-        $this->pageTitle = _('users_pwreset_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('User Password Reset').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms'));
-        $this->publish('breadcrumbs', array(_('users_pwreset_pagetitle') => '/users/pwreset'));
-        $this->publish('subpagetitle', _('user_pwreset_header'));
+        $this->publish('breadcrumbs', array(___('User Password Reset') => '/users/pwreset'));
+        $this->publish('subpagetitle', ___('Password Reset'));
         if (!$id && !$code) {
             if (!isset($this->data['User']['email'])) {
                 $this->render();    // display 'enter email' form
@@ -248,10 +248,10 @@ class UsersController extends AppController
                     $this->publish('resetcode', $resetCode);
                     $this->Email->template = 'email/pwreset';
                     $this->Email->to = $this->data['User']['email'];
-                    $this->Email->subject = sprintf(_('user_email_pwreset_subject'), APP_PRETTYNAME);
+                    $this->Email->subject = sprintf(___('Reset your %s Add-ons password'), APP_PRETTYNAME);
                     $result = $this->Email->send();
 
-                    $this->flash(_('user_pwreset_link_sent'), '/', 3);
+                    $this->flash(___('The password reset link was sent to your email address.'), '/', 3);
                 }
             }
             return;
@@ -267,19 +267,19 @@ class UsersController extends AppController
         }
 
         if (!$id || !$code) {
-            $this->flash(sprintf(_('error_missing_argument'), 'user_id or code'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'user_id or code'), '/', 3);
             return;
         }
 
         $thisuser = $this->User->findById($id);
         if (empty($thisuser)) {
-            $this->flash(_('error_user_notfound'), '/', 3);
+            $this->flash(___('User not found!'), '/', 3);
             return;
         }
 
         if (!$this->User->checkResetCode($id, $code)) {
             // TODO: update message re: expiration
-            $this->flash(_('error_user_badconfirmationcode'), '/', 3);
+            $this->flash(___('Invalid confirmation code!'), '/', 3);
             return;
         }
 
@@ -307,7 +307,7 @@ class UsersController extends AppController
             $this->User->id = $id;
             $this->User->save($newpw);
             // success
-            $this->flash(_('user_pwreset_okay'), '/users/login', 3);
+            $this->flash(___('Password successfully reset.'), '/users/login', 3);
         }
     }
     
@@ -333,9 +333,9 @@ class UsersController extends AppController
             return;
         }
     
-        $this->pageTitle = _('users_login_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('User Login').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms'));
-        $this->publish('subpagetitle', _('user_form_login'));
+        $this->publish('subpagetitle', ___('User Login'));
         $this->publish('loginerror', false);
         
         // by default, just give them a login screen
@@ -419,7 +419,7 @@ class UsersController extends AppController
 
         $this->publish('user_id', $_current_user['User']['id']);
         
-        $this->pageTitle = _('users_edit_pagetitle').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('User Account Editing').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms', 'jquery-ui/flora/flora.tabs'));
         $this->publish('jsAdd', array('jquery-ui/ui.core.min', 'jquery-ui/ui.tabs.min'));
 
@@ -606,7 +606,7 @@ class UsersController extends AppController
             // send out the confirmation email
             $this->Email->template = 'email/emailchange';
             $this->Email->to = $newemail;
-            $this->Email->subject = sprintf(___('user_emailchange_subject'), APP_PRETTYNAME);
+            $this->Email->subject = sprintf(___('Please confirm your email address change at %1$s Add-ons'), APP_PRETTYNAME);
             $result = $this->Email->send();
         }
         
@@ -615,10 +615,10 @@ class UsersController extends AppController
             $_new_session_user = $newprofile['User'];
             $_new_session_user['picture_data'] = $_new_session_user['picture_type'] = '';
             $this->Session->write('User', $_new_session_user);
-            $this->publish('confirmation_message', _('user_profile_saved'));
+            $this->publish('confirmation_message', ___('Profile updated.'));
         } else {
             // this should never happen, but anyway...
-            $this->publish('confirmation_message', _('user_profile_edit_error'));
+            $this->publish('confirmation_message', ___('There were errors in the changes you made. Please correct them and resubmit.'));
         }
 
         $this->data['User'] = $newprofile['User'];
@@ -638,7 +638,7 @@ class UsersController extends AppController
     function emailchange($id = '') {
         $this->Amo->clean($id);
         if (!(int)$id || !$this->params['url']['code']) {
-            $this->flash(sprintf(_('error_missing_argument'), 'user_id or code'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'user_id or code'), '/', 3);
             return;
         }
         $code = $this->params['url']['code'];
@@ -648,7 +648,7 @@ class UsersController extends AppController
         // characters, or anything bigger but mod 4 = 0 as base64 generates
         // multiples of four chars.
         if (strlen($code) < 64 || strlen($code)%4 != 0) {
-            $this->publish('errormsg', _('error_user_badconfirmationcode'));
+            $this->publish('errormsg', ___('Invalid confirmation code!'));
             $this->render();
             return;
         }
@@ -660,13 +660,13 @@ class UsersController extends AppController
         // decode and hash-check the token
         $token = base64_decode($token);
         if (!$token || md5($token.$this->_getSecret()) != $hash) {
-            $this->publish('errormsg', _('error_user_badconfirmationcode'));
+            $this->publish('errormsg', ___('Invalid confirmation code!'));
             $this->render();
             return;
         }
         $changedata = explode(',', $token);
         if (!$changedata || count($changedata) != 3) {
-            $this->publish('errormsg', _('error_user_badconfirmationcode'));
+            $this->publish('errormsg', ___('Invalid confirmation code!'));
             $this->render();
             return;
         }
@@ -675,28 +675,28 @@ class UsersController extends AppController
         
         // is the token expired (48 hours max)?
         if (time()-$changedata[2] > 48*60*60) {
-            $this->publish('errormsg', ___('error_user_emailchange_expired'));
+            $this->publish('errormsg', ___('The email change has expired. Please change your email address again in your user profile and click the link in the confirmation email as soon as you receive it.'));
             $this->render();
             return;
         }
         
         $thisuser = $this->User->findById($id);
         if (empty($thisuser)) {
-            $this->publish('errormsg', _('error_user_notfound'));
+            $this->publish('errormsg', ___('User not found!'));
             $this->render();
             return;
         }
         
         // does old email still match?
         if ($thisuser['User']['email'] != $changedata[0]) {
-            $this->publish('errormsg', _('error_user_badconfirmationcode'));
+            $this->publish('errormsg', ___('Invalid confirmation code!'));
             $this->render();
             return;
         }
         
         // is new email address still unique?
         if ($this->User->findCount(array('User.email' => $changedata[1])) > 0) {
-            $this->publish('errormsg', _('error_user_email_notunique'));
+            $this->publish('errormsg', ___('This email address is already taken by another user.'));
             $this->render();
             return;
         }
@@ -706,7 +706,7 @@ class UsersController extends AppController
             'id' => $id,
             'email' => $changedata[1]
             )))) {
-            $this->publish('errormsg', _('error_user_badconfirmationcode'));
+            $this->publish('errormsg', ___('Invalid confirmation code!'));
         }
         // fetch new user profile
         if ($this->Session->check('User')) {
@@ -736,12 +736,12 @@ class UsersController extends AppController
         $this->Amo->clean($userid);
         
         if (!is_numeric($userid)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'user_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'user_id'), '/', 3);
             return;
         }
         $user = $this->User->getUser($userid, array('addons', 'reviews'), $addon_associations);
         if (empty($user)) {
-            $this->flash(_('error_user_notfound'), '/', 3);
+            $this->flash(___('User not found!'), '/', 3);
             return;
         }
 
@@ -784,11 +784,11 @@ class UsersController extends AppController
 
         $this->publish('user', $user);
 
-        $_title = sprintf(_('users_info_pagetitle'), $user['User']['display_name']);
-        $this->pageTitle = $_title.' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $_title = sprintf(___('User Info for %1$s'), $user['User']['display_name']);
+        $this->pageTitle = $_title.' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         $this->publish('breadcrumbs', array(
-            sprintf(___('addons_home_pagetitle'), APP_PRETTYNAME) => '/',
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
         ));
 
         return $this->render();
@@ -801,7 +801,7 @@ class UsersController extends AppController
     function delete() {
         $this->Amo->checkLoggedIn();
         
-        $this->pageTitle = ___('users_delete_pagetitle', 'Delete User Account').' :: '.sprintf(_('addons_home_pagetitle'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Delete User Account').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms'));
         
         $deluser = $this->Session->read('User');
@@ -906,12 +906,12 @@ class UsersController extends AppController
      */
     function picture($id) {
         if (!is_numeric($id)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'user_id'), '/', 3);
+            $this->flash(sprintf(___('Missing argument: %s'), 'user_id'), '/', 3);
             return;
         }
         $user = $this->User->getUser($id);
         if (empty($user)) {
-            $this->flash(_('error_user_notfound'), '/', 3);
+            $this->flash(___('User not found!'), '/', 3);
             return;
         }
 

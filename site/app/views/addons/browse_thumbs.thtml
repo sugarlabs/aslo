@@ -53,9 +53,9 @@ $this->layout = 'amo2009';
 
 <div class="secondary">
     <div class="highlight" id="thumb-subcategories">
-        <h3><?=___('general_addontype_theme_plural', 'Themes')?></h3>
+        <h3><?=___('Themes')?></h3>
         <ul class="subcategories">
-            <li<?= ($this_category == FALSE) ? ' class="selected"' : '' ?>><?=$html->link( 
+            <li<?= ($this_category == FALSE) ? ' class="selected"' : '' ?>><?=$html->link(
                     'All',
                     "/browse/type:{$type}/cat:all?sort={$sort_by}"
                 )?>
@@ -64,12 +64,12 @@ $this->layout = 'amo2009';
             <?php foreach ($subcats as $subcat): ?>
                 <?php
                     $params = 'sort=' . $sort_by;
-                    if ($show_exp) 
+                    if ($show_exp)
                         $params .= '&exp=on';
-                    if ($show_limit) 
+                    if ($show_limit)
                         $params .= '&show=' . $show_limit;
                 ?>
-                <li class="sub<?= ($this_category['Category']['id'] == $subcat['Category']['id']) ? ' selected' : '' ?>"><?=$html->link( 
+                <li class="sub<?= ($this_category['Category']['id'] == $subcat['Category']['id']) ? ' selected' : '' ?>"><?=$html->link(
                     $subcat['Translation']['name']['string'],
                     "/browse/type:{$subcat['Category']['addontype_id']}/cat:{$subcat['Category']['id']}?{$params}"
                     )?>
@@ -83,13 +83,13 @@ $this->layout = 'amo2009';
 <div class="primary" role="main">
 
     <?php if ( empty($this_category)): ?>
-        <h2><?=___('themes_landing_browse_themes', 'Browse Themes')?></h2>
+        <h2><?=___('Browse Themes')?></h2>
     <?php else: ?>
         <h2><?=$this_category['Translation']['name']['string']?></h2>
     <?php endif ?>
 
-    <h3><?=sprintf(ngettext('addon_list_category_totalcount',
-        'addon_list_category_totalcount', $paging['total']),
+    <h3><?=sprintf(n___('%1$s add-on',
+        '%1$s add-ons', $paging['total']),
         $paging['total'])?></h3>
     <div class="featured listing" id="addon-listing">
         <?= $this->renderElement('amo2009/addons/list_options', array('paging' => $paging)) ?>
@@ -103,7 +103,7 @@ $this->layout = 'amo2009';
                 $prevPath  = $this->controller->Image->getHighlightedPreviewURL($addon['Addon']['id']);
                 $iconPath  = $this->controller->Image->getAddonIconURL($addon['Addon']['id']);
 
-                $_alt = sprintf(_('img_preview_of'),$addonName);
+                $_alt = sprintf(___('Preview Image of %s'),$addonName);
                 $previmg = '<img src="'.$prevPath.'" alt="'.$_alt.'" title="'.$_alt.'"/>';
                 $previmg = $html->link($previmg, "/addon/{$addonID}");
                 ?>
@@ -115,20 +115,20 @@ $this->layout = 'amo2009';
                             <p class="meta">
                                 <?php if ($sort_by == 'updated'): ?>
                                     <?php
-                                    $_update_string = (_('addon_detail_last_updated') == 'addon_detail_last_updated') ? 'Updated %s' : _('addon_detail_last_updated');
+                                    $_update_string = (___('Updated %s') == 'addon_detail_last_updated') ? 'Updated %s' : ___('Updated %s');
                                     $_version_date = (isset($addon['Addon']['datestatuschanged']) ? $addon['Addon']['datestatuschanged'] : $addon['Version'][0]['created']);
-                                    echo sprintf($_update_string, strftime(_('date'), strtotime($_version_date)));
+                                    echo sprintf($_update_string, strftime(___('%B %e, %Y'), strtotime($_version_date)));
                                     ?>
                                 <?php elseif ($sort_by == 'popular'): ?>
                                     <em><?=$html->number_format($addon['Addon']['weeklydownloads'], 0)?></em>
-                                    <?php 
-                                    echo ___('addon_downloads_weekly', _('addon_downloads'));
+                                    <?php
+                                    echo ___('weekly downloads');
                                     ?>
                                 <?php else: ?>
                                     <?=$this->renderElement('stars',array('rating' => $addon['Addon']['averagerating']))?>
-                                    <?php if ($addon['Addon']['totalreviews'] > 0): ?> 
+                                    <?php if ($addon['Addon']['totalreviews'] > 0): ?>
                                         <a href="<?= $html->url('/addon/'.$addon['Addon']['id'].'#reviews') ?>"><?=
-                                            sprintf(ngettext('feature_reviews','feature_reviews', 
+                                            sprintf(n___('%1$s review','%1$s reviews',
                                                 $addon['Addon']['totalreviews']), $addon['Addon']['totalreviews'])
                                         ?></a>
                                     <?php endif ?>

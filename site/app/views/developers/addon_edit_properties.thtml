@@ -41,16 +41,16 @@
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
     <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('devcp_title_edit_addon'), $addon_name), 'addon_id' => $addon_id));?>
+        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($success)) {
-            echo '<div class="notice-success rounded">'.___('devcp_notice_changes_saved').'</div>';
+            echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
         }
         if (!empty($errors)) {
-            echo '<div class="notice-error rounded">'.___('devcp_notice_changes_error').'</div>';
+            echo '<div class="notice-error rounded">'.___('<span>One or more of your changes couldn\'t be saved.</span><br />Please look for the errors below. The rest of your changes were successfully saved.').'</div>';
         }
         ?>
-        <h2><?=___('devcp_edit_properties_header')?></h2>
+        <h2><?=___('Edit Add-on Properties')?></h2>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="addon-edit-properties-form" action="" method="post" enctype="multipart/form-data">
@@ -62,27 +62,27 @@
                 $languages[$key] = $native_languages[$key]['native'];
             }
             ksort($languages);
-            
+
             $this->translationBox = array(
                                 'defaultLocale' => $addon['Addon']['defaultlocale'],
                                 'languages' => $languages,
                                 'table' => 'Addon',
                                 'loaded' => false
                             );
-        
+
         // Name
         echo $this->renderElement('translationbox', array(
                     'field' => 'name',
                     'translations' => $translations['name'],
                     'type' => 'textbox',
-                    'displayName' => ___('devcp_edit_properties_transbox_name_name'),
-                    'description' => ___('devcp_edit_properties_transbox_name_description'),
+                    'displayName' => ___('Add-on Name'),
+                    'description' => ___('The name of your add-on is displayed everywhere your add-on is listed.'),
                 ));
         ?>
-        
+
         <div class="field graybox rounded spaced" style="width: 600px;">
-            <h4><?=___('devcp_edit_properties_header_default_locale')?></h4>
-            <p><?=___('devcp_edit_properties_default_locale')?></p>
+            <h4><?=___('Default Locale')?></h4>
+            <p><?=___('Information about your add-on is displayed on this website in the default locale unless you override it with a locale-specific translation.')?></p>
             <select name="data[Addon][defaultlocale]">
             <?php
             // Retrieve language arrays from bootstrap.
@@ -91,23 +91,23 @@
                 $languages[$key] = $native_languages[$key]['native'];
             }
             ksort($languages);
-            
+
             foreach ($languages as $lang_key => $lang_name) {
                 echo '<option value="'.$lang_key.'"'.($addon['Addon']['defaultlocale'] == $lang_key ? ' selected="selected"' : '').'>'.$lang_name.' ('.$lang_key.')</option>';
             }
             ?>
             </select>
-            
+
         </div>
-        
+
         <div class="field graybox rounded spaced<?=(!empty($errors['icon']) ? ' errors' : '')?>" style="width: 600px;">
-            <h4><?=___('devcp_edit_properties_header_icon')?></h4>
+            <h4><?=___('Add-on Icon')?></h4>
             <?=(!empty($errors['icon']) ? '<div class="error-message">'.$errors['icon'].'</div>' : '')?>
-            <p><?=sprintf(___('devcp_edit_properties_icon'), implode(', ', $this->controller->Developers->imageExtensions))?></p>
+            <p><?=sprintf(___('The add-on icon is a small image that is displayed next to your add-on\'s name in browse and search results, display pages, and in the add-on installation dialog. The image will automatically be resized to 32 x 32 pixels.  Please use one of the following image types: %s'), implode(', ', $this->controller->Developers->imageExtensions))?></p>
             <table width="100%" id="edit-properties-icon-table">
                 <tr>
-                    <th style="width: 20%;"><?=___('devcp_edit_properties_current_icon')?></th>
-                    <th><?=___('devcp_edit_properties_new_icon')?></th>
+                    <th style="width: 20%;"><?=___('Current Icon')?></th>
+                    <th><?=___('New Icon')?></th>
                 </tr>
                 <tr>
                     <td style="text-align: center;">
@@ -115,8 +115,8 @@
                     $addonIconPath = $this->controller->Image->getAddonIconURL($addon_id);
                     echo '<img id="addon-icon" src="'.$addonIconPath.'" alt="" />';
                     if (!empty($addon['Addon']['icontype'])) {
-                        echo '<div id="delete-icon-area" class="require-privs"><a href="#" onclick="addon_edit_properties.deleteIcon(); return false;">'.___('devcp_edit_properties_remove_icon').'</a></div>';
-                        echo '<div id="undelete-icon-area" style="display: none;">'.sprintf(___('devcp_edit_properties_undelete'), 'href="#" onclick="addon_edit_properties.undeleteIcon(); return false;"').'</div>';
+                        echo '<div id="delete-icon-area" class="require-privs"><a href="#" onclick="addon_edit_properties.deleteIcon(); return false;">'.___('Remove Icon').'</a></div>';
+                        echo '<div id="undelete-icon-area" style="display: none;">'.sprintf(___('Icon will be deleted on save. <a %s>Cancel?</a>'), 'href="#" onclick="addon_edit_properties.undeleteIcon(); return false;"').'</div>';
                         echo '<input id="delete-icon" type="hidden" name="data[Addon][deleteIcon]" value="0" />';
                     }
                     ?>
@@ -125,65 +125,65 @@
                 </tr>
             </table>
         </div>
-        
+
         <?php
         // Homepage
         echo $this->renderElement('translationbox', array(
                     'field' => 'homepage',
                     'translations' => $translations['homepage'],
                     'type' => 'textbox',
-                    'displayName' => ___('devcp_edit_properties_transbox_homepage_name'),
-                    'description' => ___('devcp_edit_properties_transbox_homepage_description'),
+                    'displayName' => ___('Add-on Homepage'),
+                    'description' => ___('If your add-on has another homepage, enter its address here. Adding other translations is not necessary unless your website is localized into other languages.'),
                 ));
-        
+
         // Support Email
         echo $this->renderElement('translationbox', array(
                     'field' => 'supportemail',
                     'translations' => $translations['supportemail'],
                     'type' => 'textbox',
-                    'displayName' => ___('devcp_edit_properties_transbox_supportemail_name'),
-                    'description' => ___('devcp_edit_properties_transbox_supportemail_description'),
+                    'displayName' => ___('Support Email Address'),
+                    'description' => ___('If you have an email address for support inquiries, enter it here. Adding other translations is not necessary unless you have different email addresses for different languages.'),
                 ));
-        
+
         // Support URL
         echo $this->renderElement('translationbox', array(
                     'field' => 'supporturl',
                     'translations' => $translations['supporturl'],
                     'type' => 'textbox',
-                    'displayName' => ___('devcp_edit_properties_transbox_supporturl_name'),
-                    'description' => ___('devcp_edit_properties_transbox_supporturl_description'),
+                    'displayName' => ___('Support Website'),
+                    'description' => ___('If your add-on has a support website or forum, enter its address here. Adding other translations is not necessary unless your website is localized into other languages.'),
                 ));
         ?>
-        
+
         <div class="field graybox rounded spaced" style="width: 600px;">
-            <h4><?=___('devcp_edit_properties_header_other_settings')?></h4>
-            <h5><?=___('devcp_edit_properties_header_view_source')?></h5>
-            <p class="smallmargin"><?=___('devcp_edit_properties_view_source')?></p>
-            <label class="indented"><input type="radio" name="data[Addon][viewsource]" value="1" <?=($addon['Addon']['viewsource'] == 0 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('devcp_edit_properties_view_source_allow')?></label>
-            <label class="indented"><input type="radio" name="data[Addon][viewsource]" value="0" <?=($addon['Addon']['viewsource'] == 0 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('devcp_edit_properties_view_source_do_not_allow')?></label>
-            
+            <h4><?=___('Other Settings')?></h4>
+            <h5><?=___('View Source Online')?></h5>
+            <p class="smallmargin"><?=___('The source of your add-on files can be viewed online by any logged in user if you wish.')?></p>
+            <label class="indented"><input type="radio" name="data[Addon][viewsource]" value="1" <?=($addon['Addon']['viewsource'] == 0 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('Allow online source viewing')?></label>
+            <label class="indented"><input type="radio" name="data[Addon][viewsource]" value="0" <?=($addon['Addon']['viewsource'] == 0 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('Do not allow online source viewing')?></label>
+
             <?php if ($addon['Addon']['addontype_id'] != ADDON_SEARCH): ?>
-            <h5><?=___('devcp_edit_properties_header_flags')?></h5>
-            <p class="smallmargin"><?=___('devcp_edit_properties_flags')?></p>
-            <label class="indented"><input type="checkbox" name="data[Addon][prerelease]" value="1"  <?=($addon['Addon']['prerelease'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=_('devcp_edit_label_prerelease')?></label>
-            <label class="indented"><input type="checkbox" name="data[Addon][sitespecific]" value="1"  <?=($addon['Addon']['sitespecific'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=_('devcp_edit_label_sitespecific')?></label>
-            <label class="indented"><input type="checkbox" name="data[Addon][externalsoftware]" value="1" <?=($addon['Addon']['externalsoftware'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=_('devcp_edit_label_externalsoftware')?></label>
-            <label class="indented"><input type="checkbox" name="data[Addon][binary]" value="1" <?=($addon['Addon']['binary'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=___('devcp_edit_properties_label_binary')?></label>
-            
-            <h5><?=___('devcp_edit_properties_header_guid')?></h5>
-            <p class="smallmargin"><?=___('devcp_edit_properties_guid')?></p>
+            <h5><?=___('Add-on Flags')?></h5>
+            <p class="smallmargin"><?=___('These flags are used to filter and classify add-ons.')?></p>
+            <label class="indented"><input type="checkbox" name="data[Addon][prerelease]" value="1"  <?=($addon['Addon']['prerelease'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('This is a pre-release')?></label>
+            <label class="indented"><input type="checkbox" name="data[Addon][sitespecific]" value="1"  <?=($addon['Addon']['sitespecific'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('This is a site-specific add-on')?></label>
+            <label class="indented"><input type="checkbox" name="data[Addon][externalsoftware]" value="1" <?=($addon['Addon']['externalsoftware'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=___('This add-on requires external software')?></label>
+            <label class="indented"><input type="checkbox" name="data[Addon][binary]" value="1" <?=($addon['Addon']['binary'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=___('This add-on contains binary components')?></label>
+
+            <h5><?=___('Add-on GUID')?></h5>
+            <p class="smallmargin"><?=___('The GUID of your add-on is specified in its install.rdf and uniquely identifies it. You cannot change your GUID once it is listed on Mozilla Add-ons.')?></p>
             <label class="indented"><tt><?=$addon['Addon']['guid']?></tt></label>
             <?php endif; ?>
         </div>
-        
+
         <?php if ($this->controller->SimpleAcl->actionAllowed('Admin', 'ConfigureAnyAddon', $this->controller->Session->read('User'))): ?>
         <div class="field graybox rounded spaced" style="width: 600px;">
-            <h4><?=___('devcp_edit_properties_header_admin_settings')?></h4>
-            <h5><?=___('devcp_edit_properties_header_trusted')?></h5>
-            <p class="smallmargin"><?=___('devcp_edit_properties_trusted')?></p>
-            <label class="indented"><input type="radio" name="data[Addon][trusted]" value="1" <?=($addon['Addon']['trusted'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('devcp_edit_properties_label_trusted')?></label>
-            <label class="indented"><input type="radio" name="data[Addon][trusted]" value="0" <?=($addon['Addon']['trusted'] == 1 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('devcp_edit_properties_label_not_trusted')?></label>
-            <h5><?=___('devcp_edit_properties_header_addon_type')?></h5>
+            <h4><?=___('Admin Settings')?></h4>
+            <h5><?=___('Trusted Add-on?')?></h5>
+            <p class="smallmargin"><?=___('Trusted add-ons can become public without Editor review.')?></p>
+            <label class="indented"><input type="radio" name="data[Addon][trusted]" value="1" <?=($addon['Addon']['trusted'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('Trusted')?></label>
+            <label class="indented"><input type="radio" name="data[Addon][trusted]" value="0" <?=($addon['Addon']['trusted'] == 1 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('Not Trusted')?></label>
+            <h5><?=___('Add-on Type')?></h5>
             <select name="data[Addon][addontype_id]">
             <?php
             if (!empty($addontypes)) {
@@ -193,23 +193,23 @@
             }
             ?>
             </select>
-            
-            <h5><?=___('devcp_edit_properties_header_guid')?></h5>
-            <p class="smallmargin"><?=___('devcp_edit_properties_change_guid')?></p>
+
+            <h5><?=___('Add-on GUID')?></h5>
+            <p class="smallmargin"><?=___('Only change if you understand all of the consequences.')?></p>
             <input type="text" name="data[Addon][guid]" value="<?=$addon['Addon']['guid']?>" size="50" />
-            
+
             <?php if (in_array($addon['Addon']['addontype_id'], array(ADDON_DICT, ADDON_LPAPP))): ?>
-            <h5><?=_('devcp_edit_label_target_locale')?></h5>
+            <h5><?=___('Target Locale')?></h5>
             <p class="smallmargin">Only applicable to dictionaries and language packs, this identifies the language and, optionally, region that this add-on is written for. Examples: en-US, fr, and de-AT</p>
             <label><input type="text" name="data[Addon][target_locale]" value="<?=$html->entities($addon['Addon']['target_locale'])?>" /></label>
-            <h5><?=_('devcp_edit_label_locale_disambiguation')?></h5>
+            <h5><?=___('Additional Locale Info')?></h5>
             <p class="smallmargin">Only applicable to dictionaries and language packs, this is a short identifier to differentiate this add-on from other similar add-ons (for example, different dialects). This field is not required. Please limit the length of the field to a few short words.</p>
             <label><input type="text" name="data[Addon][locale_disambiguation]" value="<?=$html->entities($addon['Addon']['locale_disambiguation'])?>" /></label>
             <?php endif; ?>
         </div>
         <?php endif; ?>
-        
-        <div class="action-button-container centered" style="width: 600px;"><a href="#" onclick="addon_edit_properties.save(); return false;" class="action-button rounded"><?=___('devcp_edit_properties_button_update')?></a></div>
+
+        <div class="action-button-container centered" style="width: 600px;"><a href="#" onclick="addon_edit_properties.save(); return false;" class="action-button rounded"><?=___('Update Properties')?></a></div>
         </form>
     </div>
 </div>

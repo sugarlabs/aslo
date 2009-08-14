@@ -61,7 +61,7 @@
  * - $compatible_apps
  * - $addonType - default ADDON_EXTENSION
  * - $buttonMessage - default 'a_install'
- * 
+ *
  */
 
 // Bug 444817: limit length of addon descriptions in feature elements.
@@ -70,9 +70,9 @@ if (mb_strlen($addonSummary) > $desc_limit) {
     // If the addon summary exceeds the display limit, cut it off before the
     // last space-delimited word in the string and add an ellipsis linking to
     // the full detail page.  Would use TextHelper::truncate() here, but need
-    // mb_* string functions.  
+    // mb_* string functions.
 
-    // mb_substr is used twice here, because mb_strrpos doesn't support 
+    // mb_substr is used twice here, because mb_strrpos doesn't support
     // offset in PHP 5.1.6 - first chop down to char limit, then chop down
     // to end of last space-delimited word.
     $addonSummary = mb_substr($addonSummary, 0, $desc_limit);
@@ -81,29 +81,29 @@ if (mb_strlen($addonSummary) > $desc_limit) {
 }
 
 // prepare alt and title text for preview image
-$_alt = sprintf(_('img_preview_of'), $addonName);
+$_alt = sprintf(___('Preview Image of %s'), $addonName);
 
 // is addon recommended or experimental?
 global $experimental_status;
 if (isset($addonStatus) && in_array($addonStatus, $experimental_status))
-    $flag = _('addon_listitem_flag_experimental');
+    $flag = ___('experimental');
 else
     $flag = '';
 ?>
 
-<h4 class="name" title="<?=___('addons_title_tooltip') ?>"><a href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonIconPath?>" width="32" height="32" alt="" class="icon"/><?=$addonName?></a></h4>
-<h5 class="author" title="<?=___('addons_author_tooltip') ?>"><?=_('addons_home_by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></h5>
+<h4 class="name" title="<?=___('Learn more about this add-on') ?>"><a href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonIconPath?>" width="32" height="32" alt="" class="icon"/><?=$addonName?></a></h4>
+<h5 class="author" title="<?=___('View Author\'s Profile') ?>"><?=___('by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></h5>
 <? if (!empty($flag)) echo '<h6 class="flag">'.$flag.'</h6>'; ?>
 <p class="preview-img"><a href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonThumbPath?>" alt="<?=$_alt?>" title="<?=$_alt?>"/></a></p>
 <p class="desc"><?=$addonSummary?></p>
-<p class="rating"><?=$this->renderElement('stars',array('rating' => $addonRating))?><?php if ($addonReviews > 0) { ?> <a href="<?=$html->url('/addon/'.$addonId.'#reviews')?>"><?=sprintf(ngettext('feature_reviews','feature_reviews', $addonReviews), $addonReviews)?></a><?php } ?></p>
+<p class="rating"><?=$this->renderElement('stars',array('rating' => $addonRating))?><?php if ($addonReviews > 0) { ?> <a href="<?=$html->url('/addon/'.$addonId.'#reviews')?>"><?=sprintf(n___('%1$s review','%1$s reviews', $addonReviews), $addonReviews)?></a><?php } ?></p>
 <p class="stats"><em><?=$html->number_format($addonWeeklyDownloads, 0)?></em>
-<?php echo ___('addon_downloads_weekly'); ?>
+<?php echo ___('weekly downloads'); ?>
 </p>
 <?php if (isset($addonFiles)): ?>
 
 <p class="updated">
-    <?php echo sprintf(___('addon_detail_last_updated'), strftime(_('date'), strtotime($addonVersionCreated))); ?>
+    <?php echo sprintf(___('Updated %s'), strftime(___('%B %e, %Y'), strtotime($addonVersionCreated))); ?>
 </p>
 
 <?=$this->renderElement('install',array(
@@ -119,11 +119,11 @@ else
     'addonType' => $addonType
 ))?>
 <?php else: ?>
-<p class="learn-more"><?=$html->link(_('feature_learnmore'), "/addon/{$addonId}",
-    array('class'=>'view', 'title'=>sprintf(_('feature_learnmore_about_addon'), $addonName)))?></p>
+<p class="learn-more"><?=$html->link(___('Learn more'), "/addon/{$addonId}",
+    array('class'=>'view', 'title'=>sprintf(___('Learn more about %1$s'), $addonName)))?></p>
 <?php endif; ?>
 
 <?php if(!empty($addonCategories)): ?>
-<p class="more-from"><?=_('feature_view_more_from_category')?> <a href="<?=$html->url('/browse/type:'.$addonType.'/cat:'.$addonCategories[0]['Category']['id'])?>" class="view"><?=$addonCategories[0]['Translation']['name']['string']?></a></p>
+<p class="more-from"><?=___('View more from')?> <a href="<?=$html->url('/browse/type:'.$addonType.'/cat:'.$addonCategories[0]['Category']['id'])?>" class="view"><?=$addonCategories[0]['Translation']['name']['string']?></a></p>
 <?php endif; ?>
 

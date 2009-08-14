@@ -80,19 +80,19 @@ class AddonEnabledVersionsTest extends AddonVersionsTest {
         $addon = $this->controller->Addon->findById($this->addonid);
         
         // "Careful" warning
-        $pattern = '#<h3>'._('addons_versions_careful').'</h3>#';
+        $pattern = '#<h3>'.___('Be Careful With Old Versions').'</h3>#';
         $this->assertPattern($pattern, htmlentities($pattern));
-        $pattern = '#<p>'._('addons_versions_careful_introduction').'</p>#';
+        $pattern = '#<p>'.___('These versions are displayed for reference and testing purposes. You should always use the latest version of an add-on.').'</p>#';
         $this->assertPattern($pattern, htmlentities($pattern));
         
         // Version strings for all versions
         foreach ($addon['Version'] as $version) {
-            $pattern = "@<h3>Version " . $version['version'] . ' <span title="' . strftime(_('datetime'), strtotime($version['created'])) . '">&mdash; ' . strftime(_('date'), strtotime($version['created'])) . "</span> &mdash; .*</h3>@";
+            $pattern = "@<h3>Version " . $version['version'] . ' <span title="' . strftime(___('%B %e, %Y, %I:%M %p'), strtotime($version['created'])) . '">&mdash; ' . strftime(___('%B %e, %Y'), strtotime($version['created'])) . "</span> &mdash; .*</h3>@";
             $this->assertPattern($pattern, htmlentities($pattern));
         }
 
         // link back
-        $this->assertLink(sprintf(_('addon_review_a_back_to_addon_x'), $addon['Translation']['name']['string']), 'link back to addon page');
+        $this->assertLink(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), 'link back to addon page');
     }
 
     /**
@@ -119,7 +119,7 @@ class AddonDisabledVersionsTest extends AddonVersionsTest {
      * Test if version page is _not_ shown for disabled add-ons
      */
     function testDisabledAddonVersionsPage() {
-        $this->assertText(___('error_addon_notfound'), "disabled add-on's versions page");
+        $this->assertText(___('Add-on not found!'), "disabled add-on's versions page");
     }
 }
 ?>
