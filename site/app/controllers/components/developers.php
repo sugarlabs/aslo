@@ -42,7 +42,7 @@ class DevelopersComponent extends Object {
     var $imageExtensions = array('.png', '.jpg', '.gif');
 
     var $uploadErrors = array();
-    
+
    /**
     * Save a reference to the controller on startup
     * @param object &$controller the controller using this component
@@ -57,14 +57,14 @@ class DevelopersComponent extends Object {
                     '4' => ___('No file uploaded')
                 );
     }
-    
+
    /**
     * Make sure at least one but no more than 5 categories selected
     * @param array $categories post data of selected categories
     */
     function validateCategories($categories) {
         $errors =& $this->controller->Error;
-        
+
         //Must have at least one category selected, but no more than 5
         if (empty($categories)) {
             $errors->addError(___('Please select at least one category.'), 'Category/Category');
@@ -76,17 +76,17 @@ class DevelopersComponent extends Object {
             $this->controller->Category->invalidate('Category');
             return false;
         }
-        
+
         return true;
     }
-    
+
    /**
     * Remove duplicates and make sure at least one user selected
     * @param array &$users post data of selected users
     */
     function validateUsers(&$users) {
         $errors =& $this->controller->Error;
-    
+
         //Remove deleted and duplicate entries from authors
         $authors = array();
         if (!empty($users)) {
@@ -104,10 +104,10 @@ class DevelopersComponent extends Object {
             $this->controller->User->invalidate('User');
             return false;
         }
-        
+
         return true;
     }
-    
+
    /**
     * Save users to addons_users table. For some reason, Cake refuses to save
     * this properly the normal way.
@@ -115,16 +115,16 @@ class DevelopersComponent extends Object {
     */
     function saveUsers($users) {
         $this->controller->User->execute("DELETE FROM addons_users WHERE addon_id={$this->controller->Addon->id}");
-        
+
         if (!empty($users)) {
             foreach ($users as $user) {
                 $this->controller->User->execute("INSERT INTO addons_users (addon_id, user_id) VALUES({$this->controller->Addon->id}, {$user})");
             }
         }
-        
+
         return true;
     }
-    
+
    /**
     * Get all categories for an addontype
     * @param int $addontypeId the addontype ID
@@ -139,7 +139,7 @@ class DevelopersComponent extends Object {
         if ($addontypeId == ADDON_SEARCH) {
             $applicationIdQry = 'Category.application_id IS NOT NULL OR';
         }
-        
+
         $categoriesQry = $this->controller->Category->findAll("Category.addontype_id='{$addontypeId}' AND ({$applicationIdQry} Category.application_id IS NULL)");
 
         if ($categoriesQry) {
@@ -154,7 +154,7 @@ class DevelopersComponent extends Object {
                         $appnames[$app] = $app_prettynames[$sn];
                 }
             }
-            
+
             foreach ($categoriesQry as $k => $v) {
                 $categories['names'][$v['Category']['id']] = $v['Translation']['name']['string'];
                 if ($add_apps && !is_null($v['Category']['application_id']))
@@ -162,15 +162,15 @@ class DevelopersComponent extends Object {
                 $categories['descriptions'][] = $v['Category']['id'].': "'.addslashes($v['Translation']['description']['string']).'"';
             }
         }
-        
+
         if (!empty($categories)) {
             asort($categories['names']);
             return $categories;
         }
-        
+
         return array();
     }
-    
+
    /**
     * Get all selected categories in order of post data, existing data, default
     * @param array $currentCategories currently selected categories
@@ -193,7 +193,7 @@ class DevelopersComponent extends Object {
         else {
             $selectedCategories = array();
         }
-        
+
         return $selectedCategories;
     }
 
@@ -233,19 +233,19 @@ class DevelopersComponent extends Object {
 
         return $authors;
     }
-    
+
    /**
     * Detect addontype based on file information
     * @param array $file array of PHP file info
     * @return int addontype id
     */
-    function detectAddontype($file) {            
+    function detectAddontype($file) {
         $extension = substr($file['name'], strrpos($file['name'], '.'));
         switch ($extension) {
             case '.xpi':
                 // Dictionaries have a .dic file in the dictionaries directory
                 $zip = new Archive_Zip($file['tmp_name']);
-                $dicFile = $zip->extract(array('extract_as_string' => true, 'by_preg' => "/dictionaries\/.+\.dic/i")); 
+                $dicFile = $zip->extract(array('extract_as_string' => true, 'by_preg' => "/dictionaries\/.+\.dic/i"));
 
                 // if the .dic file is present, it is a dictionary, otherwise it's an extension
                 if (count($dicFile) > 0) {
@@ -255,21 +255,21 @@ class DevelopersComponent extends Object {
                     return ADDON_EXTENSION;
                 }
                 break;
-            
+
             case '.jar':
                 return ADDON_THEME;
                 break;
-            
+
             case '.xml':
                 return ADDON_SEARCH;
                 break;
-            
+
             default:
                 return 0;
                 break;
         }
     }
-    
+
    /**
     * Validate the uploaded files
     * @deprecated
@@ -279,7 +279,7 @@ class DevelopersComponent extends Object {
 	/* Should be removed */
 
         $errors =& $this->controller->Error;
-        
+
         //Make sure the first file was uploaded
         if (empty($this->controller->data['File']['file1']['name'])) {
             $errors->addError(___('Please upload a file.'), 'File/file1');
@@ -288,7 +288,7 @@ class DevelopersComponent extends Object {
         }
 
         $errorCount = 0;
-                
+
         //Loop through the files
         for ($f = 1; $f <= 4; $f++) {
             $file = (!empty($this->controller->data['File']['file'.$f])) ? $this->controller->data['File']['file'.$f] : array();
@@ -302,7 +302,7 @@ class DevelopersComponent extends Object {
                         $this->controller->File->invalidate('platform_id'.$f);
                         $errorCount++;
                     }
-                
+
                     //Validate the file
                     $files[$f] = $this->validateFile($this->controller->data['File']['file'.$f], $this->controller->data);
                 }
@@ -310,7 +310,7 @@ class DevelopersComponent extends Object {
                     //Validate the image
                     $files[$f] = $this->validateIcon($this->controller->data['File']['file'.$f]);
                 }
-                
+
                 //If an array is not returned, an error occurred
                 if (!is_array($files[$f])) {
                     $errors->addError($files[$f], 'File/file'.$f);
@@ -336,7 +336,7 @@ class DevelopersComponent extends Object {
             return true;
         }
     }
-    
+
    /**
     * Validate a file for basic problems with the upload
     * @param array $file PHP info on the file
@@ -346,7 +346,7 @@ class DevelopersComponent extends Object {
     */
     function validateFile($file, $addon) {
         $allowedExtensions = $this->getAllowedExtensions($addon['Addon']['addontype_id']);
-        
+
         // Check for file upload errors
         if (!empty($file['error'])) {
             return $this->uploadErrors[$file['error']];
@@ -357,7 +357,7 @@ class DevelopersComponent extends Object {
         $fileInfo['size'] = round($file['size']/1024, 0); // in KB
         $fileInfo['extension'] = substr($file['name'], strrpos($file['name'], '.'));
         $fileInfo['hash'] = 'sha256:'.hash_file("sha256", $file['tmp_name']);
-        
+
         // Check for file extension match
         if (!in_array(strtolower($fileInfo['extension']), $allowedExtensions)) {
             return sprintf(___('That file extension (%1$s) is not allowed for the selected add-on type. Please use one of the following: %2$s'), $fileInfo['extension'], implode(', ', $allowedExtensions));
@@ -371,7 +371,7 @@ class DevelopersComponent extends Object {
         if (file_exists($tempLocation)) {
             $fileInfo['filename'] = str_replace('0.', '', microtime()).$fileInfo['extension'];
             $tempLocation = REPO_PATH.'/temp/'.$fileInfo['filename'];
-        }  
+        }
 
         if (move_uploaded_file($uploadedFile, $tempLocation)) {
             chmod($tempLocation, 0644);
@@ -380,7 +380,7 @@ class DevelopersComponent extends Object {
         else {
             return ___('Could not move file');
         }
-        
+
         return $fileInfo;
     }
 
@@ -389,27 +389,27 @@ class DevelopersComponent extends Object {
     * @param array $file the icon file array
     */
     function validateIcon($icon) {
-        
+
         // Check for file upload errors
         if (!empty($icon['error'])) {
             return $this->uploadErrors[$icon['error']];
         }
-        
+
         // Check for file extension match
         $extension = substr($icon['name'], strrpos($icon['name'], '.'));
         if (!in_array(strtolower($extension), $this->imageExtensions)) {
             return sprintf(___('That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s'), $extension, implode(', ', $this->imageExtensions));
         }
-        
+
         $fileInfo['icondata'] = file_get_contents($icon['tmp_name']);
         $fileInfo['icontype'] = $icon['type'];
-        
+
         // Get icon size
         list($sourceWidth, $sourceHeight) = getimagesize($icon['tmp_name']);
-        
+
         // Resize to 32x32
         $fileInfo['icondata'] = $this->resizeImage($fileInfo['icondata'], $sourceWidth, $sourceHeight, 32, 32);
-        
+
         return $fileInfo;
     }
 
@@ -418,30 +418,30 @@ class DevelopersComponent extends Object {
     * @param array $file the picture file array
     */
     function validatePicture($picture) {
-        
+
         // Check for file upload errors
         if (!empty($picture['error'])) {
             return $this->uploadErrors[$picture['error']];
         }
-        
+
         // Check for file extension match
         $extension = substr($picture['name'], strrpos($picture['name'], '.'));
         if (!in_array(strtolower($extension), $this->imageExtensions)) {
             return sprintf(___('That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s'), $extension, implode(', ', $this->imageExtensions));
         }
-        
+
         $fileInfo['picture_data'] = file_get_contents($picture['tmp_name']);
         $fileInfo['picture_type'] = $picture['type'];
-        
+
         // Get picture size
         list($sourceWidth, $sourceHeight) = getimagesize($picture['tmp_name']);
-        
+
         // Resize to 200x200 which is the largest size we use
         $fileInfo['picture_data'] = $this->resizeImage($fileInfo['picture_data'], $sourceWidth, $sourceHeight, 200, 200);
-        
+
         return $fileInfo;
     }
-    
+
     /**
      * Resizes an image to specified size
      * @param string $sourceData the image data
@@ -454,45 +454,45 @@ class DevelopersComponent extends Object {
     function resizeImage($sourceData, $sourceWidth, $sourceHeight, $newWidth = 200, $newHeight = 150) {
         $sourceImage = imagecreatefromstring($sourceData);
         imagesavealpha($sourceImage, true);
-        
+
         // Determine width/height aspect ratio
         $sourceRatio = $sourceWidth / $sourceHeight;
         $newRatio = $newWidth / $newHeight;
-        
+
         if ($newRatio > $sourceRatio) {
             $newWidth = $newHeight * $sourceRatio;
         }
         else {
             $newHeight = $newWidth / $sourceRatio;
         }
-        
+
         // Only make image smaller, not larger
         if ($newWidth >= $sourceWidth && $newHeight >= $sourceHeight) {
             $newImage = $sourceImage;
         } else {
             $newImage = imagecreatetruecolor($newWidth, $newHeight);
-            
+
             // Make a new transparent image and turn off alpha blending to keep the alpha channel
             $background = imagecolorallocatealpha($newImage, 255, 255, 255, 127);
             imagecolortransparent($newImage, $background);
             imagealphablending($newImage, false);
             imagesavealpha($newImage, true);
-            
+
             imagecopyresampled($newImage, $sourceImage, 0, 0, 0, 0, $newWidth, $newHeight, $sourceWidth, $sourceHeight);
         }
-        
+
         // Output new image to buffer to save and clear it
         ob_start();
         imagepng($newImage);
         $newData = ob_get_contents();
         ob_end_clean();
-        
+
         @imagedestroy($sourceImage);
         @imagedestroy($newImage);
-        
+
         return $newData;
     }
-    
+
    /**
     * Get allowed file extensions based on addontype
     * @param int $addontype the addontype
@@ -517,7 +517,7 @@ class DevelopersComponent extends Object {
         }
         return $allowed;
     }
-    
+
    /**
     * Validate the install.rdf manifest data
     * @param array $manifestData the manifest contents
@@ -544,35 +544,35 @@ class DevelopersComponent extends Object {
         if (!isset($manifestData['id'])) {
             return ___('No ID could be found for this add-on in install.rdf.');
         }
-        
+
         // Validate GUID
         if (!preg_match('/^(\{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}|[a-z0-9-\._]*\@[a-z0-9-\._]+)$/i', $manifestData['id'])) {
             return sprintf(___('The ID of this add-on is invalid: %s'), $manifestData['id']);
         }
-        
+
         // Make sure GUID is not an application's GUID
         if ($this->controller->Application->findByGuid($manifestData['id'])) {
             return ___('The ID of this add-on is already used by an application.');
         }
 
-        // Make sure the GUID is not blacklisted 
+        // Make sure the GUID is not blacklisted
         if ($this->controller->BlacklistedGuid->findByGuid($manifestData['id'])) {
-            return sprintf(___('Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact'); 
+            return sprintf(___('Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact');
         }
 
         // Make sure version has no spaces
         if (!isset($manifestData['version']) || preg_match('/.*\s.*/', $manifestData['version'])) {
             return ___('The version of this add-on is invalid: versions cannot contain spaces.');
         }
-        
+
         // Validate version
         if (!preg_match('/^\d+(\+|\w+)?(\.\d+(\+|\w+)?)*$/', $manifestData['version'])) {
             return ___('The version of this add-on is invalid: please see the <a href="http://developer.mozilla.org/en/docs/Toolkit_version_format">specification</a>');
         }
-        
+
         return true;
     }
-    
+
    /**
     * Validate the target applications
     * @param array $targetApps the targetApps from install.rdf
@@ -585,20 +585,20 @@ class DevelopersComponent extends Object {
 
         if (count($targetApps) > 0) {
             $i = 0;
-            
+
             // Iterate through each target app and find it in the DB
             foreach ($targetApps as $appKey => $appVal) {
                 if ($matchingApp = $this->controller->Application->find(array('guid' => $appKey), null, null, -1)) {
                     $return[$i]['application_id'] = $matchingApp['Application']['id'];
-                    
+
                     // Mark as Moz-app if supported
                     if ($matchingApp['Application']['supported'] == 1) {
                         $noMozApps = false;
                     }
-                    
+
                     // Check if the minVersion is valid
                     $matchingMinVers = $this->controller->Appversion->find("application_id={$matchingApp['Application']['id']} AND version='{$appVal['minVersion']}'", null, null, -1);
-                    
+
                     if (empty($matchingMinVers)) {
                         $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
                     }
@@ -621,8 +621,8 @@ class DevelopersComponent extends Object {
                 }
             }
         }
-        
-        $validAppReference = sprintf(___('Please see %s for reference.'), '<a href="'.$this->controller->url('/pages/appversions').'">'.___('this page').'</a>');
+
+        $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->controller->url('/pages/appversions'));
 
         // Must have at least one Mozilla app
         if ($noMozApps === true) {
@@ -634,10 +634,10 @@ class DevelopersComponent extends Object {
             $errorStr = implode($versionErrors, '<br />');
             return ___('The following errors were found in install.rdf:').'<br />'.$errorStr.'<br />'.$validAppReference;
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Renames and moves a file out of temp repository
      * @param array $data array of data in model format
@@ -646,17 +646,17 @@ class DevelopersComponent extends Object {
         $fileUpdates = array();
         $applications = $this->controller->Application->getShortNames();
         $platforms = $this->controller->Platform->getShortNames();
-        
+
         // Construct new filename with name, version, supported apps, and OS
         $filename = preg_replace(INVALID_FILENAME_CHARS, '_', $data['Addon']['name']);
-        
+
         $filename .= '-'.$data['Version']['version'];
-        
+
         if ($data['Addon']['addontype_id'] != ADDON_SEARCH) {
             $filename .= '-';
             $appString = '';
             foreach ($data['appversions'] as $appversion) {
-                if ($appString != "") {   
+                if ($appString != "") {
                     $appString .= '+'.$applications[$appversion['application_id']];
                 }
                 else {
@@ -664,27 +664,27 @@ class DevelopersComponent extends Object {
                 }
             }
             $filename .= $appString;
-            
+
             if ($data['File']['db']['platform_id'] != PLATFORM_ALL) {
                 $filename .= '-'.$platforms[$data['File']['db']['platform_id']];
             }
         }
-        
+
         $filename .= $data['File']['details']['extension'];
         $filename = strtolower($filename);
-        
+
         // File paths
         $currentPath = $data['File']['details']['path'];
         $dirPath = REPO_PATH.'/'.$data['Addon']['id'];
         $newPath = $dirPath.'/'.$filename;
-        
+
         // Create directory if necessary
         if (!file_exists($dirPath)) {
             if (!mkdir($dirPath)) {
                 return sprintf(___('An error occurred moving %s.'), $data['File']['db']['filename']);
             }
         }
-        
+
         // Move file
         if (file_exists($currentPath)) {
             // Bail if the file exists. See bug 470652 for a rough explanation
@@ -700,15 +700,15 @@ class DevelopersComponent extends Object {
         else {
             return sprintf(___('An error occurred moving %s.'), $data['File']['db']['filename']);
         }
-        
+
         // Copy file to rsync area if public
         if ($data['File']['db']['status'] == STATUS_PUBLIC) {
             $this->controller->Amo->copyFileToPublic($data['Addon']['id'], $filename);
         }
-        
+
         return $fileUpdates;
     }
-    
+
    /**
     * Create new file name and move files from temp to approval
     * @param array $version version information
@@ -720,15 +720,15 @@ class DevelopersComponent extends Object {
         $applications = $this->controller->Amo->getApplicationName(null, true);
         $this->controller->Addon->id = $version['Version']['addon_id'];
         $addon = $this->controller->Addon->read();
-        
+
         // Construct new filename with name, version, supported apps, and OS
         $baseFilename = preg_replace(INVALID_FILENAME_CHARS, '_', $addon['Translation']['name']['string']);
-        
+
         if ($addontype_id != ADDON_SEARCH) {
             $baseFilename .= '-'.$version['Version']['version'].'-';
             $appString = '';
             foreach ($version['Application'] as $app) {
-                if ($appString != "") {   
+                if ($appString != "") {
                     $appString .= '+'.$applications[$app['id']]['shortname'];
                 }
                 else {
@@ -736,7 +736,7 @@ class DevelopersComponent extends Object {
                 }
             }
             $baseFilename .= $appString;
-    
+
             //Get platforms with shortnames
             $platforms = $this->controller->Amo->getPlatformName('', true);
         }
@@ -777,15 +777,15 @@ class DevelopersComponent extends Object {
                 $errors->addError(sprintf(___('An error occurred moving %s.'), $file['filename']));
             }
         }
-        
+
         return $fileUpdates;
     }
-    
+
    /**
     * Determine if all required fields are set in order to skip reviewing add-on info
     */
     function noReviewRequired() {
-    
+
         if ($this->controller->addVars['newAddon'] == true) {
             return false;
         }
@@ -793,7 +793,7 @@ class DevelopersComponent extends Object {
             return true;
         }
     }
-    
+
     /**
      * To be run after a file is deleted to ensure nominated add-ons
      * have files
@@ -808,7 +808,7 @@ class DevelopersComponent extends Object {
             $this->controller->Addon->save($addonData);
         }
     }
-    
+
     /**
      * Deletes a file from disk and database
      * ENSURE USER HAS ALL NECESSARY PERMISSIONS BEFORE USING THIS METHOD
@@ -817,7 +817,7 @@ class DevelopersComponent extends Object {
      */
     function deleteFile($file_id, $addon_id) {
         $file = $this->controller->File->findById($file_id);
-        
+
         // Delete files from disk
         $path = "/{$addon_id}/{$file['File']['filename']}";
         if (defined('REPO_PATH') && file_exists(REPO_PATH.$path)) {
@@ -826,17 +826,17 @@ class DevelopersComponent extends Object {
         if (defined('PUBLIC_STAGING_PATH') && file_exists(PUBLIC_STAGING_PATH.$path)) {
             unlink(PUBLIC_STAGING_PATH.$path);
         }
-        
+
         // Delete approvals
         $this->controller->File->execute("DELETE FROM approvals WHERE file_id='{$file_id}'");
-        
+
         // Delete test results
         $this->controller->File->execute("DELETE FROM test_results WHERE file_id='{$file_id}'");
-        
+
         // Delete file
         $this->controller->File->execute("DELETE FROM files WHERE id='{$file_id}' LIMIT 1");
     }
-    
+
    /**
     * Deletes a version along with all dependent files, reviews, etc
     * ENSURE USER HAS ALL NECESSARY PERMISSIONS BEFORE USING THIS METHOD
@@ -847,7 +847,7 @@ class DevelopersComponent extends Object {
         $this->controller->Version->translationReplace = false;
         $version = $this->controller->Version->findById($version_id);
         $this->controller->Version->translationReplace = true;
-        
+
         // Get translation ids of any translated fields of versions
         $translation_ids = array();
         if (!empty($this->controller->Version->translated_fields)) {
@@ -864,10 +864,10 @@ class DevelopersComponent extends Object {
                 $this->deleteFile($file['id'], $version['Version']['addon_id']);
             }
         }
-        
+
         // Delete applications_versions rows
         $this->controller->Version->execute("DELETE FROM applications_versions WHERE version_id={$version_id}");
-        
+
         // Delete reviews
         $review_ids = array();
         if (!empty($this->controller->Review->translated_fields)) {
@@ -882,17 +882,17 @@ class DevelopersComponent extends Object {
                 }
             }
         }
-        
+
         if (!empty($review_ids)) {
             foreach ($review_ids as $review_id) {
                 $this->controller->Review->execute("DELETE FROM reviewratings WHERE review_id={$review_id}");
                 $this->controller->Review->execute("DELETE FROM reviews WHERE id={$review_id}");
             }
         }
-        
+
         // Delete version
         $this->controller->Version->execute("DELETE FROM versions WHERE id={$version_id}");
-        
+
         // Delete translations
         if (!empty($translation_ids)) {
             $this->controller->Version->execute("DELETE FROM translations WHERE id IN (".implode(',', $translation_ids).")");
@@ -954,7 +954,7 @@ class DevelopersComponent extends Object {
                 //Delete review
                 $this->controller->Addon->execute("DELETE FROM reviews WHERE id='{$review['id']}'");
             }
-        }       
+        }
 
         //Delete add-on
         $this->controller->Addon->execute("DELETE FROM addons WHERE id='{$id}' LIMIT 1");
@@ -1002,7 +1002,7 @@ class DevelopersComponent extends Object {
 
         $translations = array();
         $errors = 0;
-        
+
         if (!empty($data['Locales'])) {
             foreach ($data['Locales'] as $id => $locale) {
                 // Reformat each model's array
@@ -1069,7 +1069,7 @@ class DevelopersComponent extends Object {
                 unset($data['Version'][$field]);
             }
         }
-        
+
         unset($data['Locales']);
 
         return $data;
@@ -1101,7 +1101,7 @@ class DevelopersComponent extends Object {
     function unhighlightOtherPreviews($addon_id) {
         $this->controller->Preview->execute("UPDATE previews SET highlight=0 WHERE addon_id='{$addon_id}'");
     }
-    
+
     function addPreview($addon_id, $data) {
         $previewData = array('addon_id' => $addon_id,
                              'filedata' => file_get_contents($data['File']['tmp_name']),
@@ -1109,7 +1109,7 @@ class DevelopersComponent extends Object {
                              'highlight' => $data['highlight'],
                              'thumbtype' => 'image/png'
                              );
-        
+
         //Check for allowed file extensions
         $allowedImage = array('.png', '.jpg', '.gif');
         $extension = substr($data['File']['name'], strrpos($data['File']['name'], '.'));
@@ -1118,9 +1118,9 @@ class DevelopersComponent extends Object {
             $errors->addError(sprintf(___('That file extension (%1$s) is not allowed for a preview. Please use one of the following: %2$s'), $extension, implode(', ', $allowedImage)), 'main');
             return false;
         }
-        
+
         list($sourceWidth, $sourceHeight) = getimagesize($data['File']['tmp_name']);
-        
+
         //Generate thumbnail (200 x 150) if necessary
         if ($sourceHeight < 150 && $sourceWidth < 200) {
             $previewData['thumbdata'] = $previewData['filedata'];
@@ -1128,31 +1128,31 @@ class DevelopersComponent extends Object {
         else {
             $previewData['thumbdata'] = $this->resizeImage($previewData['filedata'], $sourceWidth, $sourceHeight, 200, 150);
         }
-        
+
         //Resize preview if too large (700 x 525)
         if ($sourceWidth > 700 || $sourceHeight > 525) {
             $previewData['filedata'] = $this->resizeImage($previewData['filedata'], $sourceWidth, $sourceHeight, 700, 525);
             $previewData['filetype'] = 'image/png';
         }
-        
+
         /*
         //Debug preview adjustments
         $full = fopen(REPO_PATH.'/full.png', 'wb');
         fwrite($full, $previewData['filedata']);
         fclose($full);
-        
+
         $new = fopen(REPO_PATH.'/new.png', 'wb');
         fwrite($new, $previewData['thumbdata']);
         fclose($new);
-        
+
         echo '<img src="../../../files/full.png">';
         echo '<img src="../../../files/new.png">';
         //pr($previewData);
         */
-        
+
         return $previewData;
     }
-    
+
    /**
     * Determine file status based on submission information
     * @param array $addon Addon informaiton
@@ -1184,10 +1184,10 @@ class DevelopersComponent extends Object {
         else {
             $fileStatus = STATUS_SANDBOX;
         }
-        
+
         return $fileStatus;
     }
-    
+
     function getAllowedAddonTypes($autoDetect, $isAdmin) {
         $addontypes = array(
                         ADDON_EXTENSION => $this->controller->Addontype->getName(ADDON_EXTENSION),
@@ -1195,17 +1195,17 @@ class DevelopersComponent extends Object {
                         ADDON_DICT => $this->controller->Addontype->getName(ADDON_DICT),
                         ADDON_LPAPP => $this->controller->Addontype->getName(ADDON_LPAPP)
                       );
-        
+
         if ($autoDetect == true) {
             $addontypes[0] = ___('(auto-detect)');
         }
-        
+
         if ($isAdmin == true) {
             $addontypes[ADDON_SEARCH] = $this->controller->Addontype->getName(ADDON_SEARCH);
         }
-        
+
         ksort($addontypes);
-        
+
         return $addontypes;
     }
 
@@ -1255,7 +1255,7 @@ class DevelopersComponent extends Object {
                 $trans[$val] = $this->controller->License->getAllTranslations($existing['license_id']);
             }
         }
-        
+
         $licenses['other'] = array('name' => ___('Other'),
                                    'selected' => false);
         return array($licenses, $trans);

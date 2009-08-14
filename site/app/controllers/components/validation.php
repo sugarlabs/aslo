@@ -343,7 +343,7 @@ class ValidationComponent extends Object {
             }
         }
 
-        $validAppReference = sprintf(___('Please see %s for reference.'), '<a href="'.$this->controller->url('/pages/appversions').'">'.___('this page').'</a>');
+        $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->controller->url('/pages/appversions'));
 
         // Must have at least one Mozilla app
         if ($noMozApps === true) {

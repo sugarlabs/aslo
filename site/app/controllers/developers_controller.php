@@ -501,7 +501,7 @@ class DevelopersController extends AppController
 
             // Make sure install.rdf is present
             if (empty($extraction)) {
-                $validAppReference = sprintf(___('Please see %s for reference.'), '<a href=\''.$this->url('/pages/appversions').'\'>'.___('this page').'</a>');
+                $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->url('/pages/appversions'));
                 return $this->Error->getJSONforError(___('No install.rdf present.').'<br />'.$validAppReference);
             }
 
