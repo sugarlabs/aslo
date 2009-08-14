@@ -261,18 +261,18 @@ Bandwagon.Util._initExtensionServices = function()
 
     var getURLSpecFromFile = function(file)
     {
-        var ioServ = this.Cc["@mozilla.org/network/io-service;1"]
-            .getService(this.Ci.nsIIOService);
+        var ioServ = Bandwagon.Util.Cc["@mozilla.org/network/io-service;1"]
+            .getService(Bandwagon.Util.Ci.nsIIOService);
         var fph = ioServ.getProtocolHandler("file")
-            .QueryInterface(this.Ci.nsIFileProtocolHandler);
+            .QueryInterface(Bandwagon.Util.Ci.nsIFileProtocolHandler);
         return fph.getURLSpecFromFile(file);
     }
 
     var getDir = function(key, pathArray)
     {
-        var fileLocator = this.Cc["@mozilla.org/file/directory_service;1"]
-            .getService(this.Ci.nsIProperties);
-        var dir = fileLocator.get(key, this.Ci.nsILocalFile);
+        var fileLocator = Bandwagon.Util.Cc["@mozilla.org/file/directory_service;1"]
+            .getService(Bandwagon.Util.Ci.nsIProperties);
+        var dir = fileLocator.get(key, Bandwagon.Util.Ci.nsILocalFile);
         for (var i=0; i<pathArray.length; ++i)
         {
             dir.append(pathArray[i]);

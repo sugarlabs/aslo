@@ -19,6 +19,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s): David McNamara
+ *                 Brian King
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -80,6 +81,16 @@ function cleanupSettings()
   catch(e) {}
 }
 
+/* Returns host application string
+ */
+function getAppName()
+{
+  var info = Components.classes["@mozilla.org/xre/app-info;1"]
+      .getService(Components.interfaces.nsIXULAppInfo);
+  // Get the name of the application running us
+  return info.name; // Returns "Firefox" for Firefox
+}
+
 function BandwagonService()
 {
     this.wrappedJSObject = this;
@@ -107,16 +118,19 @@ BandwagonService.prototype = {
             return;
 
         // get access to Bandwagon.* singletons
+        var app = getAppName();
+        var appWinString = "navigator:browser"; // default, Firefox
+        if (app == "Thunderbird")
+            appWinString = "mail:3pane";
+        var appWindow = WindowMediator.getService(nsIWindowMediator).getMostRecentWindow(appWinString);
 
-        var browserWindow = WindowMediator.getService(nsIWindowMediator).getMostRecentWindow("navigator:browser");
-
-        if (!browserWindow || !browserWindow.Bandwagon)
+        if (!appWindow || !appWindow.Bandwagon)
         {
             debug("Bandwagon: could not get access to Bandwagon singletons from last window");
             return;
         }
 
-        Bandwagon = browserWindow.Bandwagon;
+        Bandwagon = appWindow.Bandwagon;
         bandwagonService = this;
 
         Bandwagon.Logger.info("Initializing Bandwagon");
@@ -1098,11 +1112,15 @@ BandwagonService.prototype = {
 
         if (showNotificationsForThisCollection && collection.getUnnotifiedAddons().length > 0)
         {
-            var browserWindow = WindowMediator.getService(nsIWindowMediator).getMostRecentWindow("navigator:browser");
+            var app = getAppName();
+            var appWinString = "navigator:browser"; // default, Firefox
+            if (app == "Thunderbird")
+                appWinString = "mail:3pane";
+            var appWindow = WindowMediator.getService(nsIWindowMediator).getMostRecentWindow(appWinString);
 
-            if (browserWindow)
+            if (appWindow)
             {
-                browserWindow.Bandwagon.Controller.BrowserOverlay.showNewAddonsAlert(collection);
+                appWindow.Bandwagon.Controller.BrowserOverlay.showNewAddonsAlert(collection);
             }
             else
             {

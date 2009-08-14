@@ -64,7 +64,8 @@ Bandwagon.Controller.BrowserOverlay.initBandwagon = function()
         Bandwagon.Logger.error("Error initializing bandwagon: " + e);
     }
 
-    gBrowser.addEventListener("DOMContentLoaded", Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument, true);
+    if (Bandwagon.Util.getHostEnvironmentInfo().appName == "Firefox")
+        gBrowser.addEventListener("DOMContentLoaded", Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument, true);
 }
 
 Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument = function(event)
@@ -122,12 +123,16 @@ Bandwagon.Controller.BrowserOverlay.openFirstRunLandingPage = function()
 
     var url = Bandwagon.FIRSTRUN_LANDING_PAGE.replace("%%AMO_HOST%%", Bandwagon.Preferences.getPreference("amo_host"));
 
-    window.setTimeout(function()
+    if (Bandwagon.Util.getHostEnvironmentInfo().appName == "Firefox")
     {
-        var tab = window.getBrowser().addTab(url);
-        window.getBrowser().selectedTab = tab;
-    },
-    1000);
+        window.setTimeout(function()
+        {
+            var tab = window.getBrowser().addTab(url);
+            window.getBrowser().selectedTab = tab;
+        },
+        1000);
+    }
+    // XX TODO A Thunderbird firstrun story
 }
 
 /* Toolbar button action - Open add-ons window with Subscriptions tab focused */
