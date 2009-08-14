@@ -907,6 +907,7 @@ class CollectionsController extends AppController
             $conditions['Translation.name'] = $name;
         }
 
+        $this->Addon->unbindFully();
         $addons = $this->Addon->findAll($conditions,
             array('Addon.id', 'Addon.name'), 'Translation.name');
         if (!empty($addons)) {
