@@ -87,7 +87,7 @@ class RdfComponent extends Object {
      * @param string $xmlLang
      */
     function mfStatementHandler(&$data, $subjectType, $subject, $predicate,
-                                $ordinal, $objectType, $object, $xmlLang) {     
+                                $ordinal, $objectType, $object, $xmlLang) {
         //single properties - ignoring: iconURL, optionsURL, aboutURL, and anything not listed
         $singleProps = array('id' => 1, 'type' => 1, 'version' => 1, 'creator' => 1, 'homepageURL' => 1, 'updateURL' => 1, 'updateKey' => 1);
         //multiple properties - ignoring: File
@@ -104,7 +104,7 @@ class RdfComponent extends Object {
 
                 if (array_key_exists($prop, $singleProps) ) {
                     if (isset($data['manifest'][$prop])) {
-                        $data['manifest']['errors'][] = sprintf(___('rdf_error_duplicate single prop', 'RDF Parser error: the file contained a duplicate element: %s'), $prop);
+                        $data['manifest']['errors'][] = sprintf(___('rdf_error_duplicate_single_prop', 'RDF Parser error: the file contained a duplicate element: %s'), $prop);
                     } else {
                         $data['manifest'][$prop] = $object;
                     }
