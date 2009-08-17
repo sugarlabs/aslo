@@ -10,7 +10,7 @@ import re
 def get(name, text, default=''):
     """Extract something like 'define('name', 'value');'"""
     q = """['"]"""
-    def_re = '\s*'.join(['^define\(', q, name, q, ',', q, '([-\w]+)', q, '\);'])
+    def_re = '\s*'.join(['^define\(', q, name, q, ',', q, '([-\w.]+)', q, '\);'])
     match = re.search(def_re, text, re.MULTILINE)
     if match:
         return match.group(1)
