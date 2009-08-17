@@ -89,6 +89,11 @@ $db = new Database();
 // Get our action.
 $action = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
 
+// Used to count stats.  This should be a global but was moved inside the add-ons controller
+// temporarily apparently.  Also see comment in the add-ons controller above the assignment of
+// the similarly named variable.
+$link_sharing_services = array('digg','facebook','delicious','myspace','friendfeed','twitter');
+
 // Perform specified task.  If a task is not properly defined, exit.
 switch ($action) {
 
@@ -272,7 +277,16 @@ switch ($action) {
                 `expires` < DATE_SUB(CURDATE(), INTERVAL 2 DAY)
         ";
         $session_result = $db->write($session_sql);
+        $affected_rows += mysql_affected_rows($db->write);
 
+        echo 'Cleaning up sharing services...'."\n";
+        $sharing_sql = "
+            DELETE FROM
+                `stats_share_counts`
+            WHERE
+                service NOT IN ('".implode("','",$link_sharing_services)."')
+            ";
+        $db->write($sharing_sql);
         $affected_rows += mysql_affected_rows($db->write);
 
     break;
@@ -528,6 +542,21 @@ switch ($action) {
     break;
 
 
+    /**
+     * Update share count totals.
+     */
+    case 'share_count_totals':
+        echo "Starting share count totals update...\n";
+
+        $affected_rows = 0;
+        $rows = $db->read("SELECT addon_id, SUM(count) as sum, service from stats_share_counts GROUP BY addon_id, service");
+        while ($row = mysql_fetch_array($rows)) {
+            if (in_array($row['service'], $link_sharing_services)) {
+                $db->write("REPLACE INTO stats_share_counts_totals (addon_id,service,count) VALUES ({$row['addon_id']}, '{$row['service']}',{$row['sum']})");
+                $affected_rows++;
+            }
+        }
+    break;
 
 
     /**
@@ -583,12 +612,12 @@ switch ($action) {
         $affected_rows = 0;
 
         $date = date('Y-m-d');
-        
+
         $stats = array(
             // Add-on downloads
             'addon_total_downloads'             => 'SELECT SUM(count) FROM download_counts',
             'addon_downloads_new'               => "SELECT IFNULL(SUM(count), 0) FROM download_counts WHERE date = '{$date}'",
-            
+
             // Add-on counts
             'addon_count_public'                => 'SELECT COUNT(*) FROM addons WHERE status = 4 AND inactive = 0',
             'addon_count_pending'               => 'SELECT COUNT(*) FROM versions INNER JOIN files ON versions.id = files.version_id WHERE files.status = 2',
@@ -606,7 +635,7 @@ switch ($action) {
             // Review counts
             'review_count_total'                => 'SELECT COUNT(*) FROM reviews WHERE editorreview = 0',
             'review_count_new'                  => "SELECT COUNT(*) FROM reviews WHERE DATE(created) = '{$date}'",
-            
+
             // Collection counts
             'collection_count_total'            => 'SELECT COUNT(*) FROM collections',
             'collection_count_new'              => "SELECT COUNT(*) FROM collections WHERE DATE(created) = '{$date}'",

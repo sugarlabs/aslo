@@ -69,6 +69,9 @@ class AddonsController extends AppController
         // Set of available link sharing services with associated labels and
         // submission URL templates.
         // @TODO: Move this to a model class when share counts are enabled in DB
+        // @TODO: In addition to this variable there is a duplicated variable in /bin/maintenance.php
+        // with these values as well.  If you add/remove something here you need to add/remove something there.
+        // There should be 1 global variable holding this array at some point.
         $this->link_sharing_services = array(
 
             // see: http://digg.com/tools/integrate#3
