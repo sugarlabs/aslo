@@ -1,0 +1,84 @@
+source addons
+{
+	type					= mysql
+	sql_host				= localhost
+	sql_user				= root
+	sql_pass				=
+	sql_db					= remora
+
+    sql_query_pre           = SET NAMES utf8
+    sql_query_pre           = SET SESSION query_cache_type=OFF
+
+	sql_query				= \
+		SELECT \
+		    id, addon_id, addontype AS type, status, locale,locale_ord, averagerating, weeklydownloads, totaldownloads, inactive, \
+		name, name AS name_ord, homepage, description, summary, developercomments, created, modified \
+		FROM translated_addons
+
+    sql_attr_uint        = addon_id
+    sql_attr_str2ordinal = name_ord
+    sql_attr_uint        = type
+    sql_attr_uint        = status
+    sql_attr_uint        = weeklydownloads
+    sql_attr_uint        = totaldownloads
+    sql_attr_uint        = locale_ord
+    sql_attr_str2ordinal = locale
+    sql_attr_float       = averagerating
+    sql_attr_bool        = inactive
+    sql_attr_str2ordinal = homepage
+    sql_attr_timestamp   = created
+    sql_attr_timestamp   = modified
+    
+    
+    sql_attr_multi = uint app from query; \
+    SELECT a.id AS id, av.application_id \
+    FROM versions v, applications_versions av, files f, translated_addons a \
+    WHERE av.version_id=v.id \
+        AND f.version_id=v.id \
+        AND a.addon_id = v.addon_id \
+        AND f.status > 1
+        
+    sql_attr_multi = uint category from query; \
+    SELECT a.id AS id, ac.category_id AS category \
+    FROM addons_categories ac, translated_addons a WHERE a.addon_id = ac.addon_id
+    
+    sql_attr_multi = uint tag from query; \
+    SELECT a.id AS id, t.tag_id AS tag \
+    FROM users_tags_addons t, translated_addons a \
+    WHERE t.addon_id = a.addon_id
+    
+    sql_attr_multi = uint max_ver from query; \
+    SELECT translation_id AS id, max AS max_ver \
+    FROM versions_summary_view v
+
+    sql_attr_multi = uint min_ver from query; \
+    SELECT translation_id AS id, min AS min_ver \
+    FROM versions_summary_view v
+    
+    sql_attr_multi = uint platform from query; \
+    SELECT a.id AS id, platform_id AS platform \
+    FROM versions v, applications_versions av, files f, translated_addons a \
+    WHERE av.version_id=v.id \
+        AND f.version_id=v.id \
+        AND a.addon_id = v.addon_id \
+        AND f.status > 1
+        
+    sql_query_info       = SELECT * FROM translated_addons WHERE id=$id    
+
+}
+
+index addons
+{
+    source                  = addons
+    path                    = /var/local/data/sphinx/catalog
+    morphology              = stem_en
+}
+
+searchd
+{
+	listen    = 3312
+	listen    = localhost:3307:mysql41
+	log       = /var/local/log/searchd/searchd.log
+	query_log = /var/local/log/searchd/query.log
+	pid_file  = /var/local/log/searchd/searchd.pid
+}
