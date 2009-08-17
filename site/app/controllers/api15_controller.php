@@ -74,16 +74,31 @@ class Api15Controller extends ApiController
             $version_int = AddonSearch::convert_version($matches[1]);
             // using 10x version number since that should cover a significantly larger number since SetFilterRange requires
             // max and min
-            $sphinx->SetFilterRange('max_ver', $version_int, 10*$version_int);
-            $sphinx->SetFilterRange('min_ver', 0, $version_int);
+            if ($version_int) {
+                $sphinx->SetFilterRange('max_ver', $version_int, 10*$version_int);
+                $sphinx->SetFilterRange('min_ver', 0, $version_int);
+            }
         }
         
         // type filter 
         if (preg_match('/\btype:(\w+)/', $term, $matches)) {
             $term = str_replace($matches[0], '', $term);
             $type = AddonSearch::convert_type($matches[1]);
-            $sphinx->SetFilter('type', array($type));
+            if ($type) {
+                $sphinx->SetFilter('type', array($type));
+            }
         }
+        
+        // platform
+        if (preg_match('/\bplatform:(\w+)/', $term, $matches)) {
+            $term = str_replace($matches[0], '', $term);
+            $platform = AddonSearch::convert_platform($matches[1]);
+            if ($platform) {
+                $sphinx->SetFilter('platform', array($platform, PLATFORM_ALL));
+            }
+        }
+        
+        
         // category filter
         // pull out the category
         // do the lookup
