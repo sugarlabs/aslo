@@ -102,7 +102,7 @@ if __name__ == '__main__':
     say(settings.db, "ALTER TABLE appversions ADD COLUMN version_int \
     BIGINT UNSIGNED AFTER version;")
     id_versions = say(settings.db, \
-    "SELECT id, version FROM appversions WHERE version_int >  3060000001000 ")
+    "SELECT id, version FROM appversions")
 
     for id_version in id_versions.split('\n'):
 
