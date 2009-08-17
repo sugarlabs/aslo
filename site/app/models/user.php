@@ -256,12 +256,16 @@ class User extends AppModel
         if (!$this->data) return false;
         if (array_key_exists('nickname', $this->data['User']) &&
             array_key_exists('lastname', $this->data['User']) &&
-            array_key_exists('firstname', $this->data['User']) &&
-            empty($this->data['User']['nickname']) && empty($this->data['User']['firstname'])
-            && empty($this->data['User']['lastname'])) {
-            $this->invalidate('firstname');
-            $this->invalidate('lastname');
-            $this->invalidate('nickname');
+            array_key_exists('firstname', $this->data['User'])) {
+            $this->data['User']['nickname'] = trim($this->data['User']['nickname']);
+            $this->data['User']['firstname'] = trim($this->data['User']['firstname']);
+            $this->data['User']['lastname'] = trim($this->data['User']['lastname']);
+            if (empty($this->data['User']['nickname']) && empty($this->data['User']['firstname'])
+                && empty($this->data['User']['lastname'])) {
+                $this->invalidate('firstname');
+                $this->invalidate('lastname');
+                $this->invalidate('nickname');
+            }
         }
 
         return parent::beforeValidate();
