@@ -69,7 +69,7 @@ class AddonSearch
             $term      = str_replace($matches[0], '', $term);
             $timestamp = strtotime($matches[1]);
 
-            if ($timestamp > time()) {
+            if ($timestamp) {
                 $sphinx->SetFilterRange('modified', $timestamp, time()*10);
             }
         }
