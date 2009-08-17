@@ -20,6 +20,24 @@ pattern     = re.compile(pattern_str)
 pattern_plus = re.compile(r'((\d+)\+)')
 
 def translate(version_string):
+    """
+    >>> def c(x,y):
+    ...    x = int(translate(x))
+    ...    y = int(translate(y))
+    ...    if (x-y > 0):
+    ...        return 1
+    ...    elif (x-y < 0):
+    ...        return -1
+    ...    return 0
+    >>> v = ['1.9.0a1pre', '1.9.0a1', '1.9.1.b5', '1.9.1.b5', '1.9.1pre', '1.9.1', '1.9.0']
+    >>> assert c(v[0],v[1]) == -1
+    >>> assert c(v[1],v[2]) == -1
+    >>> assert c(v[2],v[3]) == 0
+    >>> assert c(v[3],v[4]) == -1
+    >>> assert c(v[4],v[5]) == -1
+    >>> assert c(v[5],v[6]) == 1
+    
+    """
     # replace .x/.* with .99
 
     version_string = version_string.replace('.x', '.99')
