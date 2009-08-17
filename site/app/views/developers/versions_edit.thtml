@@ -129,7 +129,7 @@
                     echo '<td class="appname">';
                     echo '<input type="hidden" name="data[Application]['.$application_id.'][delete]" value="0" class="delete"/>';
                     echo $applications[$application_id].'</td>';
-                    echo '<td><select name="data[Application]['.$application_id.'][min]">';
+                    echo '<td><select name="data[Application]['.$application_id.'][min]" onchange="versions_edit.versionChanged(this);">';
                     if (!empty($possibleVersions[$application_id])) {
                         foreach ($possibleVersions[$application_id] as $possibleVersion_id => $possibleVersion) {
                             if (strpos($possibleVersion, '*') === false) {
@@ -139,7 +139,7 @@
                     }
                     echo '</select>';
                     echo '&nbsp;&mdash;&nbsp;';
-                    echo '<select name="data[Application]['.$application_id.'][max]">';
+                    echo '<select name="data[Application]['.$application_id.'][max]" onchange="versions_edit.versionChanged(this);">';
                     if (!empty($possibleVersions[$application_id])) {
                         foreach ($possibleVersions[$application_id] as $possibleVersion_id => $possibleVersion) {
                             echo '<option value="'.$possibleVersion_id.'"'.($versions['max'] == $possibleVersion_id ? ' selected="selected"' : '').'>'.$possibleVersion.'</option>';
@@ -217,6 +217,15 @@
 
         <div class="action-button-container centered"><a href="#" onclick="versions_edit.save(); return false;" class="action-button rounded"><?=___('Update Versions')?></a></div>
         </form>
+        <script type="text/javascript">
+            $(document).ready(function($){
+                $('select:visible').filter(function() { 
+                    return /data\[Application\]/.test($(this).attr('name')); 
+                }).each(function() {
+                    versions_edit.versionChanged(this);
+                });
+            });
+        </script>
     </div>
 </div>
 
@@ -239,7 +248,7 @@ if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
     // outside of the <form>
     foreach ($applications as $application_id => $application_name) {
         echo '<div id="app'.$application_id.'-dropdowns" style="display: none;">';
-        echo '<select name="data[Application]['.$application_id.'][min]">';
+        echo '<select name="data[Application]['.$application_id.'][min]" onchange="versions_edit.versionChanged(this);">';
         if (!empty($possibleVersions[$application_id])) {
             foreach ($possibleVersions[$application_id] as $possibleVersion_id => $possibleVersion) {
                 if (strpos($possibleVersion, '*') === false) {
@@ -249,7 +258,7 @@ if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
         }
         echo '</select>';
         echo '&nbsp;&mdash;&nbsp;';
-        echo '<select name="data[Application]['.$application_id.'][max]">';
+        echo '<select name="data[Application]['.$application_id.'][max]" onchange="versions_edit.versionChanged(this);">';
         if (!empty($possibleVersions[$application_id])) {
             foreach ($possibleVersions[$application_id] as $possibleVersion_id => $possibleVersion) {
                 echo '<option value="'.$possibleVersion_id.'">'.$possibleVersion.'</option>';

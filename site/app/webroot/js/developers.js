@@ -502,6 +502,23 @@ var versions_edit = {
         } else {
             $('#versions-edit-form').submit();
         }
+    },
+
+    versionChanged: function(select) {
+        var stopAt = $(select).val();
+        var ok = /min/.test($(select).attr('name'));
+        $(select).parent().children().filter(function() { 
+            return this != select;
+        }).children().each(function() {
+            $(this).attr('disabled', '');
+        }).each(function() {
+            if (ok && $(this).val() != stopAt) {
+                $(this).attr('disabled', 'disabled');
+            }
+            if ($(this).val() == stopAt) {
+                ok = !ok;
+            }
+        });
     }
 
 };
