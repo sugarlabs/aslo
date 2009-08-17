@@ -111,6 +111,8 @@ class PagesController extends AppController{
             $title = ___('Frequently Asked Questions'); break;
         case 'developer_faq':
             $title = ___('Developer FAQ'); break;
+        case 'developer_agreement':
+            $title = ___('Developer Agreement'); break;
         case 'collector':
             $title = ___('Add-on Collector');
             $this->publish('collectionSearch', true); break;
