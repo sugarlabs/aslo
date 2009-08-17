@@ -888,19 +888,32 @@ Bandwagon.Controller.CollectionsPane._openURL = function(url)
 {
     Bandwagon.Logger.debug("Opening URL " + url);
 
-    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-                       .getService(Components.interfaces.nsIWindowMediator);
-    var mainWindow = wm.getMostRecentWindow("navigator:browser");
-
-    if (mainWindow)
+    var appname = Bandwagon.Util.getHostEnvironmentInfo().appName
+    if (appname == "Firefox")
     {
-        var tab = mainWindow.getBrowser().addTab(url);
-        mainWindow.getBrowser().selectedTab = tab;
-        mainWindow.focus();
+        var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+                           .getService(Components.interfaces.nsIWindowMediator);
+        var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    
+        if (mainWindow)
+        {
+            var tab = mainWindow.getBrowser().addTab(url);
+            mainWindow.getBrowser().selectedTab = tab;
+            mainWindow.focus();
+        }
+        else
+        {
+            window.open(url);
+        }
     }
-    else
+    else if (appname == "Thunderbird")
     {
-        window.open(url);
+        var ioServ = Bandwagon.Util.Cc["@mozilla.org/network/io-service;1"]
+            .getService(Bandwagon.Util.Ci.nsIIOService);
+        var resolvedURI = ioServ.newURI(url, null, null);
+        var extps = Bandwagon.Util.Cc["@mozilla.org/uriloader/external-protocol-service;1"]
+            .getService(Bandwagon.Util.Ci.nsIExternalProtocolService);
+        extps.loadURI(resolvedURI, null);
     }
 }
 
