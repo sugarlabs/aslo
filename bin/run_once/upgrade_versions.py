@@ -5,12 +5,12 @@
 import os
 import sys
 import re
-sys.path.append(os.path.join(os.path.dirname(__file__), 'schematic'))
+sys.path.append('../schematic')
 
 from schematic import get_settings, say
 
 SETTINGS_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), \
-os.path.pardir, "site/app/config/migrations"))
+os.path.pardir, os.path.pardir, "site/app/config/migrations"))
 
 settings = get_settings(SETTINGS_DIR)
 
