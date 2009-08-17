@@ -63,7 +63,7 @@ class ApiController extends AppController
     var $securityLevel = 'low';
 
     function beforeFilter() {
-
+        DboAmoMysql::$disable_log = true;
         if ($this->Config->getValue('api_disabled') == 1) {
             header('HTTP/1.1 503 Service Unavailable');
             header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, private');

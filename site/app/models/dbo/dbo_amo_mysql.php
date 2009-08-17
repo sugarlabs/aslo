@@ -61,6 +61,8 @@ class DboAmoMysql extends DboMysql {
      *        0 => (translation data)
      *      )
      */
+     
+     public static $disable_log = false;
     function __filterResults(&$results, &$model, $filtered = array()) {
         // if there's no translations, we don't change anything
         // (also: if there's no results for the queried model, this is
@@ -172,6 +174,10 @@ class DboAmoMysql extends DboMysql {
      * Outputs a pretty version of the Cake query log that is hidden by default.
      */
     function showLog($sorted = false) {
+        if (self::$disable_log)
+        {
+            return;
+        }
         // If using CLI, use normal showLog method for handling
         if (php_sapi_name() == 'cli') {
             parent::showLog($sorted);
