@@ -20,9 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   Laura Thomson <lthomson@mozilla.com> (Original Author) 
- *   l.m.orchard <lorchard@mozilla.com>
- *   Justin Scott <fligtar@mozilla.com>
+ *   Dave Dash <dd@mozilla.com> (Original Author) 
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -51,92 +49,10 @@ class Api15Controller extends ApiController
     public $newest_api_version = 1.5;   
     
     public function search($term) {
-        $this->layout = 'rest'; 
-        
-        
-        // summon the sphinx api
-        $sphinx = new SphinxClient();
-        $sphinx->SetServer(SPHINX_HOST, SPHINX_PORT);
-        $sphinx->SetSelect("addon_id, app");
-        $sphinx->SetFieldWeights(array('name'=> 4));
-        $sphinx->SetSortMode ( SPH_SORT_EXPR, "@weight + IF(status=1, 0, 100)" );
-        $sphinx->SetLimits(0, 60);
-        $sphinx->SetFilter('inactive', array(0));
-        
-        // filter based on the app we're looking for e.g is this /firefox/ or /seamonkey/ etc
-        $sphinx->SetFilter('app', array(APP_ID));
-        
-        // version filter
-        // convert version to int
-        // convert into to a thing to serach for
-        if (preg_match('/\bversion:([0-9\.]+)/', $term, $matches)) {
-            $term = str_replace($matches[0], '', $term);
-            $version_int = AddonSearch::convert_version($matches[1]);
-            // using 10x version number since that should cover a significantly larger number since SetFilterRange requires
-            // max and min
-            if ($version_int) {
-                $sphinx->SetFilterRange('max_ver', $version_int, 10*$version_int);
-                $sphinx->SetFilterRange('min_ver', 0, $version_int);
-            }
-        }
-        
-        // type filter 
-        if (preg_match('/\btype:(\w+)/', $term, $matches)) {
-            $term = str_replace($matches[0], '', $term);
-            $type = AddonSearch::convert_type($matches[1]);
-            if ($type) {
-                $sphinx->SetFilter('type', array($type));
-            }
-        }
-        
-        // platform
-        if (preg_match('/\bplatform:(\w+)/', $term, $matches)) {
-            $term = str_replace($matches[0], '', $term);
-            $platform = AddonSearch::convert_platform($matches[1]);
-            if ($platform) {
-                $sphinx->SetFilter('platform', array($platform, PLATFORM_ALL));
-            }
-        }
-        
-        // date filter
-        if (preg_match("{\bafter:([0-9-]+)\b}", $term, $matches)) {
-            
-            $term      = str_replace($matches[0], '', $term);
-            $timestamp = strtotime($matches[1]);
-            if ($timestamp) {
-                $sphinx->SetFilterRange('modified', $timestamp, time());
-            }
-        }
-        
-        
-        // category filter
-        // pull out the category
-        // do the lookup
-        if (preg_match('/\bcategory:(\w+)/', $term, $matches)) {
-            $term = str_replace($matches[0], '',$term);
-            $category = AddonSearch::convert_category($matches[1]);
-            $sphinx->setFilter('category', array($category));
-        }
-        
-        if (preg_match('/\btag:(\w+)/', $term, $matches)) {
-            $term = str_replace($matches[0], '',$term);
-            $tag = AddonSearch::convert_tag($matches[1]);
-            $sphinx->setFilter('tag', array($tag));
-        }
-        
-
-        $result        = $sphinx->Query($term);
-        $total_results = $result['total_found'];
-        $matches       = array();
-
-        if ($total_results) {
-            foreach($result['matches'] AS $match) {
-                $matches[] = $match['attrs']['addon_id'];
-                // var_dump($match['attrs']);
-            }
-        }
-        // var_dump($result['matches']);
-        // exit;
+    	$this->layout = 'rest'; 
+    	$as = new AddonSearch($this->Addon);
+    	list($matches, $total_results) = $as->query($term);
+    	
         $this->_getAddons($matches);
         
         // var_dump($matches);
