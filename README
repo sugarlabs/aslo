@@ -1,3 +1,54 @@
-Remora
+# Remora
 
 For more information, visit http://wiki.mozilla.org/Update:Remora
+
+## Sphinx setup
+
+If you require sphinx to be setup (either you are setting up a production
+Sphinx box, or are testing our implementation of Sphinx) you have a few
+options
+
+### Install
+
+You can install sphinx either by using fabric or manually. If you don't have
+fabric, follow the manual instructions.
+
+#### via fabric
+
+Fabric is an ant-like task system for python. In the bin directory you can
+tweak the `INSTALL_ROOT` in `fabfile.py` and then run `fab install_sphinx`.
+
+#### via Source
+
+1.  Download sphinx
+http://www.sphinxsearch.com/downloads/sphinx-0.9.9-rc2.tar.gz
+2.  `tar zxf sphinx-0.9.9-rc2.tar.gz`
+3.  `cd sphinx-0.9.9-rc2`
+4.  `./configure;make;make install`
+
+Note: if you are installing on `khan` be sure to use the `--prefix` option.
+
+### Configuration
+
+Copy `site/app/config/sphinx.conf-dist` to `/opt/local/etc/sphinx.conf` (or
+whatever your `etc` directory is) and adjust the database settings as
+necessary:
+
+    type     = mysql
+    sql_host = localhost
+    sql_user = root
+    sql_pass = 
+    sql_db   = remora
+
+You may also want to search/replace `/opt/local/` with a path of your choice.
+
+### Create the sphinx index
+
+    indexer --all --rotate
+    
+The index and log files will be stored in `/opt/local/data/sphinx/` and
+`/opt/local/log/searchd/` respectively by default.
+
+### Run the daemon
+
+    searchd
