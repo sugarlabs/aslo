@@ -20,6 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ *  Frederic Wenzel <fwenzel@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -39,10 +40,15 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>Log Viewer</h3>
-        <?=$html->formTag('/admin/logs')?>
-        Filter by type/action:
-        <select name="data[Eventlog][filter]">
+        <h3><?=___('Event Log')?></h3>
+        <form id="logFilter" method="get" action="">
+        <div>
+        <?=sprintf(___('View entries between %1$s and %2$s'),
+            '<input type="text" id="start" name="start" value="'.$startDate.'" size="11" onfocus="clearInput(this)"/>',
+            '<input type="text" id="end" name="end" value="'.$endDate.'" size="11" onfocus="clearInput(this)"/>')?>
+        </div>
+        <?=___('Filter by type/action')?>:
+        <select name="filter">
             <option value=""></option>
             <option>admin:*</option>
             <option>admin:addon_status</option>
@@ -82,7 +88,7 @@
             <option>user:*</option>
             <option>user:group_associated</option>
         </select>
-        <?=$html->submit('Filter')?>
+        <?=$html->submit(___('Filter'))?>
         </form>
         <?php
         if (!empty($logs)) {
@@ -91,6 +97,7 @@
                 echo "<li>[{$log['time']}] {$log['entry']}</li>";
             }
             echo '</ul>';
+            echo $this->renderElement('pagination');
         }
         ?>
     </div>

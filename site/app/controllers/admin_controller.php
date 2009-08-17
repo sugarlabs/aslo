@@ -1725,23 +1725,50 @@ class AdminController extends AppController
             $this->_logDetails($id);
             return;
         }
-        
-        $conditions = array();
-        
-        if (!empty($this->data)) {
-            $filter = explode(':', $this->data['Eventlog']['filter']);
-            $conditions['type'] = $filter[0];
-            
-            if ($filter[1] != '*') {
-                $conditions['action'] = $filter[1];
+
+        // Default conditions are the current month
+        $monthStart = date('Y-m-01');
+        $conditions = array("Eventlog.created >= '{$monthStart} 00:00:00'");
+        $startDate = $monthStart;
+        $endDate = ___('editors_date_filter_placeholder', 'YYYY-MM-DD');
+        $filter = '';
+
+        // If user has specified own conditions, use those
+        if (!empty($this->params['url']['start'])) {
+            $startTime = strtotime($this->params['url']['start']);
+            if ($startTime !== false && $startTime != -1) {
+                $conditions = array("Eventlog.created >= FROM_UNIXTIME('{$startTime}')");
+                $startDate = $this->params['url']['start'];
             }
         }
-        
-        $logs = $this->Eventlog->findAll($conditions, null, 'Eventlog.created DESC');
-        
+        if (!empty($this->params['url']['end'])) {
+            $endTime = strtotime($this->params['url']['end']);
+            if ($endTime !== false && $endTime != -1) {
+                $conditions[] = "Eventlog.created < FROM_UNIXTIME('".strtotime('+1 day', $endTime)."')";
+                $endDate = $this->params['url']['end'];
+            }
+        }
+        if (!empty($this->params['url']['filter'])) {
+            $filter = $this->params['url']['filter'];
+            $filterParts = explode(':', $filter);
+            $conditions['type'] = $filterParts[0];
+            
+            if ($filterParts[1] != '*') {
+                $conditions['action'] = $filterParts[1];
+            }
+        }
+
+        // set up pagination
+        list($order,$limit,$page) = $this->Pagination->init($conditions, null,
+            array('modelClass'=>'Eventlog', 'show'=>50, 'sortby'=>'created', 'direction'=>'DESC'));
+
+        $logs = $this->Eventlog->findAll($conditions, null, $order, $limit, $page);
         $logs = $this->Audit->explainLog($logs);
         
         $this->set('logs', $logs);
+        $this->publish('startDate', $startDate);
+        $this->publish('endDate', $endDate);
+        $this->publish('filter', $filter);
         
         $this->set('page', 'logs');
         $this->render('logs');
