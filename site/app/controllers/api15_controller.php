@@ -66,6 +66,19 @@ class Api15Controller extends ApiController
         // filter based on the app we're looking for e.g is this /firefox/ or /seamonkey/ etc
         $sphinx->SetFilter('app', array(APP_ID));
         
+        // version filter
+        // convert version to int
+        // convert into to a thing to serach for
+        if (preg_match('/\bversion:([0-9\.]+)/', $term, $matches)) {
+            $term = str_replace($matches[0], '', $term);
+            $version_int = AddonSearch::convert_version($matches[1]);
+            // using 10x version number since that should cover a significantly larger number since SetFilterRange requires
+            // max and min
+            $sphinx->SetFilterRange('max_ver', $version_int, 10*$version_int);
+            $sphinx->SetFilterRange('min_ver', 0, $version_int);
+            
+        }
+        
         // category filter
         // pull out the category
         // do the lookup
@@ -81,11 +94,8 @@ class Api15Controller extends ApiController
             $sphinx->setFilter('tag', array($tag));
         }
         
-        $sphinx->SetFilterRange('max_ver', 0, 10000);
-        $sphinx->SetFilterRange('min_ver', 0, 10000);
 
         $result        = $sphinx->Query($term);
-        // var_dump($result);
         $total_results = $result['total_found'];
         $matches       = array();
 
