@@ -958,6 +958,7 @@ class ApiController extends AppController
     * @param array $ids ids of the addons to retrieve
     */
     function _getAddons($ids) {
+        
        $addonsdata = array();
        foreach ($ids as $id) {
         $_conditions = array(
@@ -980,42 +981,11 @@ class ApiController extends AppController
         // get addon type
         $this_addon_type = $this->Addontype->findById($addon_data['Addon']['addontype_id']);
         $addon_data['Addon_type'] = $this_addon_type;
-/*
-// getting rid of reviews for now
-        // get reviews
-        $all_version_ids = 
-            $this->Version->getVersionIdsByAddonId($addon_data['Addon']['id'],
-            $this->status);
-        $_review_versions = array();
-        foreach ($all_version_ids as $_version) {
-            $_review_versions[] = $_version['Version']['id'];
-        }
-        if (!empty($_review_versions)) {
-            $reviews = $this->Review->findAll(array(
-                "Review.version_id" => $_review_versions,
-                'Review.reply_to IS NULL',
-                'Translation.body_locale' => array(LANG, 'en-US')),
-                array('Review.id', 
-                      'Review.version_id', 
-                      'Review.body', 
-                      'Review.created', 
-                      'Review.title',
-                      'Review.rating', 
-                      'User.id', 
-                      'User.nickname', 
-                      'User.firstname', 
-                      'User.lastname'),
-                    "Review.created DESC", null, null, 1);
-        } else {
-            $reviews = array();
-        }
 
-        $addon_data['Reviews'] = array_slice($reviews, 0, 3);
-*/
-        // make sure reported latest version matches version of file
         $install_version 
             = $this->Version->getVersionByAddonId($addon_data['Addon']['id'],
                                                   STATUS_PUBLIC);
+
         // find the addon version to report to user 
         foreach ($addon_data['Version'] as $v) {
           if ($v['id'] == $install_version) {
@@ -1074,6 +1044,7 @@ class ApiController extends AppController
         // add data to array
         $addonsdata[$id] = $addon_data;
        }  
+       
        $this->set('addonsdata' , $addonsdata);
     }
 
