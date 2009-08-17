@@ -211,7 +211,7 @@ PlotDataTable.prototype = {
 
         // always show last page link (if not already shown)
         if (pageNum < totalPages) {
-            container.append(this.paginationItemFactory(totalPages-1, totalPages));
+            container.append(this.paginationItemFactory(totalPages-1, totalPages, {selected:(this.currentPage == totalPages-1)}));
         }
 
         // maybe show next link
