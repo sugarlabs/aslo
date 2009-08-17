@@ -37,7 +37,6 @@
  * ***** END LICENSE BLOCK ***** */
 
 uses('sanitize');
-vendor('sphinx/sphinxapi');
 vendor('sphinx/addonsSearch');
 require_once('api_controller.php');
 

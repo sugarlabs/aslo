@@ -1,6 +1,6 @@
 <?php
 
-require_once('api/sphinxsearch.php');
+require_once('api/sphinxapi.php');
 
 /**
 * AddonSearch
@@ -68,8 +68,9 @@ class AddonSearch
             
             $term      = str_replace($matches[0], '', $term);
             $timestamp = strtotime($matches[1]);
-            if ($timestamp) {
-                $sphinx->SetFilterRange('modified', $timestamp, time());
+
+            if ($timestamp > time()) {
+                $sphinx->SetFilterRange('modified', $timestamp, time()*10);
             }
         }
         
