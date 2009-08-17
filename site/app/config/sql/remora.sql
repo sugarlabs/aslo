@@ -917,6 +917,7 @@ CREATE TABLE `stats_share_counts` (
 --
 -- Table structure for table `stats_share_counts_totals`
 --
+DROP TABLE IF EXISTS `stats_share_counts_totals`;
 CREATE TABLE `stats_share_counts_totals` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `addon_id` int(10) unsigned NOT NULL default '0',
