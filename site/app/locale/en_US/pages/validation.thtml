@@ -1,6 +1,6 @@
 <h1>Validation Help</h1>
 
-<p>This page explains each of the tests used in the automated add-on validation framework.  Each section below explains the group that a test belongs to, along with details regarding each of the individual tests.  
+<p>This page explains each of the tests used in the automated add-on validation framework.  Each section below explains the group that a test belongs to, along with details regarding each of the individual tests.
 To validate your add-on, visit the "Versions and Files" page in the developers control panel, choose the version that you wish to validate, and click the "Validate" button.</p>
 
 <h2>What do the test results mean?</h2>
@@ -19,7 +19,7 @@ To validate your add-on, visit the "Versions and Files" page in the developers c
     <li><a href="%s">Contact Us</a></li>
     <li>AMO is open source: <a href="%s">Look at the source for the validation component</a>.</li>
 </ul>
- 
+
 <hr />
 
 <h2>General Tests</h2>
@@ -55,15 +55,26 @@ To validate your add-on, visit the "Versions and Files" page in the developers c
 A matched pattern will generate a warning.</dd>
 
 <dt id="help-22">Unsafe Settings Tests</dt>
-<dd>This test scans the add-on for some common patterns that can lead to security vulnerabilities.  Some examples are:
+<dd>This test scans the add-on for some common patterns that can lead to security vulnerabilities.  A matched pattern will generate a warning.  The current tests include:
 
-<ul>
-    <li>extensions.update.enabled</li>
-    <li>extensions.$your-addon-id.update.enabled</li>
-    <li>extensions.blocklist.url</li>
-</ul>
+<table summary="A list of tests that are run when searching for unsafe settings and explanations of what they mean.">
+    <tr><th>Test</th><th>Explanation</th></tr>
+    <tr>
+        <td>
+            <ul>
+                <li>extensions.update.*</li>
+                <li>extensions.*.update.*</li>
+                <li>extensions.blocklist.*</li>
+            </ul>
+        </td>
+        <td> Add-ons should not be disabling or tampering with the ability for any add-ons
+            to normally update or be blocklisted. This test scans the add-on for preference
+            names corresponding to add-on updating or blocklisting settings.
+        </td>
+    </tr>
+</table>
 
-A matched pattern will generate a warning.</dd>
+</dd>
 
 <dt id="help-23">Remote Javascript Tests</dt>
 <dd>This test searches for any -moz-binding attribute whose url is not of the form <em>chrome://&lt;something&gt;/content/</em>, and generates a warning for every match it finds.</dd>
