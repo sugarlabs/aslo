@@ -49,10 +49,10 @@ class Api15Controller extends ApiController
     public $newest_api_version = 1.5;   
     
     public function search($term) {
-    	$this->layout = 'rest'; 
-    	$as = new AddonSearch($this->Addon);
-    	list($matches, $total_results) = $as->query($term);
-    	
+        $this->layout = 'rest'; 
+        $as = new AddonSearch($this->Addon);
+        list($matches, $total_results) = $as->query($term);
+        
         $this->_getAddons($matches);
         
         // var_dump($matches);
