@@ -446,14 +446,22 @@ var versions_edit = {
     confirmDelete: function(a) {
         this.cancelDelete(a);
         
+        // This can come from two places - either a newly added item or 
+        // a pre-existing one, hence the .is check below.
         var container = $(a).parent().parent().parent();
-        var tr = container.parent().parent();
+        var tr = container.is('tr') ? container : container.parent().parent();
         tr.fadeOut('slow', function() {
             tr.parent().find('tr:visible:even').addClass('alt');
             tr.parent().find('tr:visible:odd').removeClass('alt');
+
+            // Check for locally added
+            if (tr.find('input.delete').length == 0) {
+                tr.remove();
+            } else {
+                tr.find('input.delete').val('1');
+                tr.parent().parent().parent().find('.save-changes').slideDown();
+            }
         });
-        tr.find('input.delete').val('1');
-        tr.parent().parent().parent().find('.save-changes').slideDown();
     },
     
     cancelDelete: function(a) {
@@ -487,13 +495,15 @@ var versions_edit = {
         newRow += '<a href="#" onclick="versions_edit.confirmDelete(this); return false;"><img src="' + imageBase + '/delete.png" alt="' + devcp_js_img_remove_compat + '" title="' + devcp_js_img_remove_compat + '" /></a>';
         newRow += '</div></td>';
         newRow += '</tr>';
+            
+        $(select).parent().parent().parent().find('.save-changes').slideDown('slow', function () {
+            $('#edit-versions-targetapps-table').append(newRow);
+            $('#new-app-picker').hide();
+            $('#new-app-picker select option:first').attr('selected', 'selected');
         
-        $('#edit-versions-targetapps-table').append(newRow);
-        $('#new-app-picker').hide();
-        $('#new-app-picker select option:first').attr('selected', 'selected');
-        
-        $('#edit-versions-targetapps-table tr:visible:even').addClass('alt');
-        $('#edit-versions-targetapps-table tr:visible:odd').removeClass('alt');
+            $('#edit-versions-targetapps-table tr:visible:even').addClass('alt');
+            $('#edit-versions-targetapps-table tr:visible:odd').removeClass('alt');
+        });
     },
     
     save: function() {
