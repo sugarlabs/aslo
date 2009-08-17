@@ -98,6 +98,16 @@ class Api15Controller extends ApiController
             }
         }
         
+        // date filter
+        if (preg_match("{\bafter:([0-9-]+)\b}", $term, $matches)) {
+            
+            $term      = str_replace($matches[0], '', $term);
+            $timestamp = strtotime($matches[1]);
+            if ($timestamp) {
+                $sphinx->SetFilterRange('modified', $timestamp, time());
+            }
+        }
+        
         
         // category filter
         // pull out the category
