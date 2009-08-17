@@ -76,9 +76,14 @@ class Api15Controller extends ApiController
             // max and min
             $sphinx->SetFilterRange('max_ver', $version_int, 10*$version_int);
             $sphinx->SetFilterRange('min_ver', 0, $version_int);
-            
         }
         
+        // type filter 
+        if (preg_match('/\btype:(\w+)/', $term, $matches)) {
+            $term = str_replace($matches[0], '', $term);
+            $type = AddonSearch::convert_type($matches[1]);
+            $sphinx->SetFilter('type', array($type));
+        }
         // category filter
         // pull out the category
         // do the lookup
