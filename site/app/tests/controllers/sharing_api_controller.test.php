@@ -66,6 +66,9 @@ class SharingApiTest extends WebTestHelper {
         // Index the addons by GUID.
         $this->addons = array();
         foreach ($addon_rows as $row) {
+            if (empty($row['Addon']['guid'])) {
+                $row['Addon']['guid'] = 'amoid:'.$row['Addon']['id'];
+            }
             $this->addons[$row['Addon']['guid']] = $row;
         }
 
@@ -361,7 +364,7 @@ class SharingApiTest extends WebTestHelper {
         );
 
         $test_adds = array();
-        $guids = array_slice(array_keys($this->addons), 0, 5);
+        $guids = array_slice(array_keys($this->addons), 0, 10);
 
         foreach ($guids as $guid) {
 

@@ -526,8 +526,7 @@ class SharingApiController extends AppController
         ));
 
         // Look for the addon, throwing an error if there's none found.
-        $this->Addon->bindOnly('User', 'Category');
-        $addon = $this->Addon->findByGuid($params['guid']);
+        $addon = $this->findAddonByGuidOrId($params['guid']);
         if (empty($addon)) {
             return $this->renderStatus(
                 self::STATUS_BAD_REQUEST, 'error',
@@ -621,8 +620,7 @@ class SharingApiController extends AppController
             );
         }
 
-        $this->Addon->bindOnly('User', 'Category');
-        $addon = $this->Addon->findByGuid($addon_guid);
+        $addon = $this->findAddonByGuidOrId($addon_guid);
         $addon_collection = $this->AddonCollection->find(array(
             'AddonCollection.collection_id' => $collection['Collection']['id'],
             'AddonCollection.addon_id'      => $addon['Addon']['id']
@@ -773,8 +771,7 @@ class SharingApiController extends AppController
         }
 
         // Look for the addon, throwing an error if there's none found.
-        $this->Addon->bindOnly('User', 'Category');
-        $addon = $this->Addon->findByGuid($params['guid']);
+        $addon = $this->findAddonByGuidOrId($params['guid']);
         if (empty($addon)) {
             return $this->renderStatus(
                 self::STATUS_BAD_REQUEST, 'error',
@@ -1113,6 +1110,10 @@ class SharingApiController extends AppController
                 continue;
             }
 
+            if (empty($addon['Addon']['guid'])) {
+                $addon['Addon']['guid'] = "amoid:{$addon['Addon']['id']}";
+            }
+
             // Start constructing a flat minimal list of addon details made up of only
             // what the view will need.
             $addon_out = array(
@@ -1211,6 +1212,25 @@ class SharingApiController extends AppController
         }
 
         return $addons_out;
+    }
+
+    /**
+     * Find an addon by GUID or amoid:{database id} psuedo-GUID
+     *
+     * @param  string  GUID or amoid:{database id}
+     * @return array   Addon data
+     */
+    function findAddonByGuidOrId($guid_or_id) {
+        $this->Addon->bindOnly('User', 'Category');
+        if (strpos($guid_or_id, 'amoid:') === 0) {
+            $addon = $this->Addon->findById(substr($guid_or_id, 6));
+        } else {
+            $addon = $this->Addon->findByGuid($guid_or_id);
+        }
+        if (empty($addon['Addon']['guid'])) {
+            $addon['Addon']['guid'] = "amoid:{$addon['Addon']['id']}";
+        }
+        return $addon;
     }
 
     /**
