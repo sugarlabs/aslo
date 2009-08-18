@@ -102,7 +102,8 @@ class FilesController extends AppController
 
         if (!file_exists($path)) {
             if ($review == 1) {
-                $this->flash(___('File not found!'), '/reviewers/review/'.$this->Addon->id);
+                // Redirect to the review version
+                $this->flash(___('File not found!'), '/editors/review/'.$file['File']['version_id']);
             }
             else {
                 $this->flash(___('File not found!'), '/addon/'.$this->Addon->id);
