@@ -324,14 +324,9 @@ function addThemeCompatibility(addonID, fromVer, toVer) {
             .hover(
                 function() {
                     $(this).children('div.overlay').show();
-                    $(this).children('div.overlay').get(0).hidethis = false;
                 },
                 function() {
-                    $(this).children('div.overlay').get(0).hidethis = true;
-                    $(this).children('div.overlay').delay(1000,
-                        function(){
-                            if ($(this).get(0).hidethis) $(this).fadeOut();
-                        });
+                    $(this).children('div.overlay').fadeOut();
                 });
     }
     return true;
