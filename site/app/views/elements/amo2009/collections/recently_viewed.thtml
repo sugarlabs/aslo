@@ -21,7 +21,6 @@
  *
  * Contributor(s):
  *   Jeff Balogh <jbalogh@mozilla.com>
- *   Frederic Wenzel <fwenzel@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -37,43 +36,24 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-$this->viewVars['bodyclass'] = 'inverse';
-$this->layout = 'amo2009';
-?>
+ /* Optional arguments:
+  *   $collection: the current collection being displayed, if any
+  */
 
-<div class="section">
-  <div class="stand-alone-options">
-    <?=$this->renderElement('amo2009/categories')?>
-    <?=$this->renderElement('amo2009/search')?>
+?>
+<div class="secondary">
+  <!-- This is all display:none until it's updated with js. -->
+  <?php if (!empty($collection)): ?>
+    <div id="add-to-recents">
+      <span class="title">
+        <?=$collection['Translation']['name']['string']?>
+      </span>
+      <span class="url">
+        <?=$html->url($this->controller->Collection->getDetailUrl($collection))?>
+      </span>
+    </div>
+  <?php endif; ?>
+  <div id="recently-viewed" class="highlight">
+    <h3><?=_('Recently Viewed')?></h3>
   </div>
-  <div class="primary" role="main">
-    <?=$this->renderElement('amo2009/breadcrumbs')?>
-    <h2><?=___('Collection Search Results')?></h2>
-    <div class="featured listing">
-      <div class="featured-inner">
-        <div class="listing-header">
-          <?=$this->renderElement('amo2009/collections/sort_form')?>
-        </div> <!-- listing-header -->
-        <script type="text/javascript">
-          <?=$this->renderElement('amo2009/collections/js_init')?>
-        </script>
-        <?php if (count($collections) === 0): ?>
-          <div class="item">
-              <p class="addon-search-message"><?=___('No results found.')?></p>
-          </div>
-        <?php endif; ?>
-        <?php
-        $user = $this->controller->Session->read('User');
-        foreach ($collections as $collection) {
-          echo $this->renderElement('amo2009/collection_listing_item',
-                                    array('collection' => $collection,
-                                          'user' => $user));
-        }
-        ?>
-      </div> <!-- featured-inner -->
-      <?=$this->renderElement('amo2009/listing_footer')?>
-    </div> <!-- featured listing -->
-  </div> <!-- primary -->
-  <?=$this->renderElement('amo2009/collections/collector_info_secondary')?>
-  <?=$this->renderElement('amo2009/collections/recently_viewed')?>
 </div>

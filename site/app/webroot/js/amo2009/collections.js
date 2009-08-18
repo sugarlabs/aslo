@@ -15,37 +15,201 @@ var collections = {};
  *   add_img
  */
 
-collections.init = function(){
+(function() {
 
-    var sum = function(arr) {
-        var ret = 0;
-        $.each(arr, function(_, i) { ret += i; });
-        return ret;
+/** Helpers for recently_viewed. **/
+
+RECENTLY_VIEWED_LIMIT = 5;
+
+/* jQuery extras */
+jQuery.extend({
+    keys: function(obj) {
+        var a = [];
+        $.each(obj, function(k) { a.push(k); });
+        return a;
+    },
+
+    values: function(obj) {
+        var a = [];
+        $.each(obj, function(k, v) { a.push(v); });
+        return a;
+    },
+
+    items: function(obj) {
+        var a = [];
+        $.each(obj, function(k, v) { a.push([k, v]); })
+        return a;
+    },
+
+    /* Same as the built-in jQuery.map, but doesn't flatten returned arrays.
+     * Sometimes you really do want a list of lists.
+     */
+    fmap: function(arr, callback) {
+        var a = [];
+        $.each(arr, function(index, el) { a.push(callback(el, index)); });
+        return a;
+    },
+
+    /* Turn a list of (key, value) pairs into an object. */
+    dict: function(pairs) {
+        var o = {};
+        $.each(pairs, function(i, pair) { o[pair[0]] = pair[1]; });
+        return o;
+    }
+});
+
+
+/* Return a new array of all the unique elements in `arr`.  Order is preserved,
+ * duplicates are dropped from the end of the array.
+ *
+ * `keyfunc` is called once per element before determining uniqueness, so it
+ * can be used to pull out a piece of a larger object. It defaults to the
+ * identity function.
+ */
+var unique = function(arr, keyfunc) {
+    if (keyfunc === undefined) {
+        var keyfunc = function(e) { return e; };
+    }
+
+    /* Iterate backwards so dupes at the back are removed. */
+    var o = {};
+    $.each(arr.reverse(), function(index, element) {
+        o[keyfunc(element)] = [index, element];
+    });
+
+    /* Sort by the original indexes, then return the elements. */
+    var s = $.values(o).sort(function(a, b){ return a[0] - b[0]; });
+    return $.fmap(s, function(e) { return e[1]; });
+};
+
+
+/* Maintains a list of unique objects in localStorage sorted by date-added
+ * (descending).
+ *
+ * Options:
+ *  limit: max number of items to keep in localStorage (default: 10)
+ *  storageKey: the key used for localStorage (default: "recently-viewed")
+ *  uniqueFunc: the function passed to `unique` to determine uniqueness
+ *              of items (default: the whole object, without date-added)
+ */
+RecentlyViewed = function(options) {
+    var defaults = {
+        limit: 10,
+        storageKey: 'recently-viewed',
+        uniqueFunc: function(e) { return e[1]; }
     };
+    $.extend(this, defaults, options);
+};
 
-    /* We don't want the button to shrink when the contents
-     * inside change. */
-    var maintain_width = function(b) {
-        var w = sum($.map(['width', 'padding-left', 'padding-right',
-                           'border-left-width', 'border-right-width'],
-                          function(w){ return parseFloat(b.css(w)); })
-                   );
-        b.css('min-width', w);
-    };
+RecentlyViewed.prototype = {
+    /* Add a new object to the recently viewed items.
+     *
+     * Returns the new list of saved items.
+     */
+    add: function(obj) {
+        var arr = this._list();
+        /* Date.parse turns Date into an integer for better parsing. */
+        arr.push([Date.parse(new Date()), obj]);
+        /* Sort by Date added. */
+        arr.sort(function(a, b) { return a[0] - b[0]; });
+        arr = unique(arr, this.uniqueFunc);
+        return this._save(arr);
+    },
 
-    var modal = function(content) {
-        if ($.cookie('collections-leave-me-alone'))
-            return;
+    /* Fetch the list of saved objects.*/
+    list: function() {
+        return $.fmap(this._list(), function(x) { return x[1]; });
+    },
 
-        var e = $('<div class="modal-subscription">' + content + '</div>');
-        e.appendTo(document.body).jqm().jqmAddClose('a.close-button').jqmShow();
-        e.find('#bothersome').change(function(){
-            // Leave me alone for 1 year (doesn't handle leap years).
-            $.cookie('collections-leave-me-alone', true,
-                     {expires: 365, path: c.cookie_path});
-            e.jqmHide();
-        });
-    };
+    /* Save an array to localStorage, maintaining the storage limit. */
+    _save: function(arr) {
+        arr = arr.slice(0, this.limit);
+        localStorage[this.storageKey] = JSON.stringify(arr);
+        return arr;
+    },
+
+    /* Fetch the internal list of (date, object) tuples. */
+    _list: function() {
+        var val = localStorage[this.storageKey];
+        if (val === null || val === undefined) {
+            return [];
+        } else {
+            return JSON.parse(val);
+        }
+    }
+};
+
+
+collections.recently_viewed = function() {
+    if (!window.localStorage) { return; }
+
+    var recentlyViewed = new RecentlyViewed({
+      storageKey: 'recently-viewed-collections',
+      uniqueFunc: function(e) { return e[1].url; }
+    });
+
+    var add_recent = $('#add-to-recents');
+    if (add_recent.size()) {
+        var o = $.dict($.fmap(['title', 'url'], function(key){
+            return [key, $.trim(add_recent.find('.' + key).text())];
+        }));
+        var current_url = o.url;
+        recentlyViewed.add(o);
+    } else {
+        var current_url = '';
+    }
+
+    var list = $.map(recentlyViewed.list(), function(e) {
+        if (e.url != current_url) {
+            return '<li><a href="' + e.url + '">' + e.title + '</a></li>';
+        }
+    });
+
+    if (list.length != 0) {
+        list = list.slice(0, RECENTLY_VIEWED_LIMIT);
+        $('#recently-viewed')
+          .append('<ul class="xoxo">' + list.join('') + "</ul>")
+          .show();
+    }
+};
+
+
+/** Helpers for hijack_favorite_button. **/
+
+var sum = function(arr) {
+    var ret = 0;
+    $.each(arr, function(_, i) { ret += i; });
+    return ret;
+};
+
+
+/* We don't want the button to shrink when the contents
+ * inside change. */
+var maintain_width = function(b) {
+    var w = sum($.map(['width', 'padding-left', 'padding-right',
+                       'border-left-width', 'border-right-width'],
+                      function(w){ return parseFloat(b.css(w)); })
+               );
+    b.css('min-width', w);
+};
+
+
+var modal = function(content) {
+    if ($.cookie('collections-leave-me-alone'))
+        return;
+
+    var e = $('<div class="modal-subscription">' + content + '</div>');
+    e.appendTo(document.body).jqm().jqmAddClose('a.close-button').jqmShow();
+    e.find('#bothersome').change(function(){
+        // Leave me alone for 1 year (doesn't handle leap years).
+        $.cookie('collections-leave-me-alone', true,
+                 {expires: 365, path: c.cookie_path});
+        e.jqmHide();
+    });
+};
+
+
+collections.hijack_favorite_button = function() {
 
     var c = collections;
 
@@ -101,3 +265,8 @@ collections.init = function(){
         });
     });
 };
+
+
+$(document).ready(collections.recently_viewed);
+
+})();
