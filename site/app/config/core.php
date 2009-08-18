@@ -164,6 +164,24 @@ if (!defined('DEV'))
 	define('ACL_CLASSNAME', 'DB_ACL');
 	define('ACL_FILENAME', 'dbacl' . DS . 'db_acl');
 
+if (!function_exists('pgettext')) {
+    function pgettext($context, $msgid) {
+        $contextString = "{$context}\004{$msgid}";
+        $translation = _($contextString);
+        if ($translation == $contextString)  return $msgid;
+        else  return $translation;
+    }
+
+    function npgettext($context, $msgid, $msgid_plural, $num) {
+        $contextString = "{$context}\004{$msgid}";
+        $contextStringp = "{$context}\004{$msgid_plural}";
+        $translation = ngettext($contextString, $contextStringp, $num);
+        if ($translation == $contextString ||
+            $translation == $contextStringp)  return $msgid;
+        else  return $translation;
+    }
+}
+	
 /** modified gettext
  *
  *  @param $to_translate -- token to look for locale translation
@@ -172,33 +190,16 @@ if (!defined('DEV'))
  *  @return translation -- if no fallback and no translation then uses English
  *
  */
-function ___($to_translate, $fallback_translation ="") {
-    if(_($to_translate) != $to_translate) return _($to_translate);
-    if($fallback_translation != "") return $fallback_translation;
-
-    global $valid_languages;
-
-    putenv('LANG=en_US');
-    setlocale(LC_COLLATE, 'en_US');
-    setlocale(LC_MONETARY, 'en_US');
-    setlocale(LC_NUMERIC, 'en_US');
-    setlocale(LC_TIME, 'en_US');
-    if (defined('LC_MESSAGES')) {
-        setlocale(LC_MESSAGES, 'en_US');
+function ___($message, $context ="") {
+    if($context != "") {
+        $val = pgettext($context, $message);
+    } else {
+        $val = _($message);
     }
-    $output = _($to_translate);
-
-    $lang = $valid_languages[LANG];
-    putenv("LANG=".$lang);
-    setlocale(LC_COLLATE, $lang);
-    setlocale(LC_MONETARY, $lang);
-    setlocale(LC_NUMERIC, $lang);
-    setlocale(LC_TIME, $lang);
-    if (defined('LC_MESSAGES')) {
-        setlocale(LC_MESSAGES, $lang);
-    }
-
-    return $output;	
+    //if ($val==$message) {
+    //	print $val.' ';
+    //}
+    return $val;
 }	
 
 /** modified ngettext
@@ -210,33 +211,12 @@ function ___($to_translate, $fallback_translation ="") {
  *  @return translation -- if no fallback and no translation then uses English
  *
  */
-function n___($to_translate, $plural_to_translate, $num, $fallback_translation ="") {
-    $translation = ngettext($to_translate, $plural_to_translate, $num);
-    if($translation != $to_translate) return $translation;
-    if($fallback_translation != "") return $fallback_translation;
-
-    global $valid_languages;
-
-    putenv('LANG=en_US');
-    setlocale(LC_COLLATE, 'en_US');
-    setlocale(LC_MONETARY, 'en_US');
-    setlocale(LC_NUMERIC, 'en_US');
-    setlocale(LC_TIME, 'en_US');
-    if (defined('LC_MESSAGES')) {
-        setlocale(LC_MESSAGES, 'en_US');
+// $to_translate, $plural_to_translate, $num, $fallback_translation =""
+function n___($message, $message_plural, $num, $context ="") {
+    if($context != "") {
+        return npgettext($context, $message, $message_plural, $num);
+    } else {
+        return ngettext($message, $message_plural, $num);
     }
-    $output = ngettext($to_translate, $plural_to_translate, $num);
-
-    $lang = $valid_languages[LANG];
-    putenv("LANG=".$lang);
-    setlocale(LC_COLLATE, $lang);
-    setlocale(LC_MONETARY, $lang);
-    setlocale(LC_NUMERIC, $lang);
-    setlocale(LC_TIME, $lang);
-    if (defined('LC_MESSAGES')) {
-        setlocale(LC_MESSAGES, $lang);
-    }
-
-    return $output;	
-}	
+}
 ?>
