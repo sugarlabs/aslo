@@ -592,6 +592,10 @@ class ValidationComponent extends Object {
 
         // Results are returned as json
         $json = shell_exec($command);
+        if (preg_match('/WARNING: This extension seems to be not localized./', $json)) {
+            return $this->_resultWarn(0, '', ___('The extension does not appear to be localized.'));
+        }
+
         $result = json_decode($json);
         if (!is_array($result)) {
             return $this->_resultFail(0, '', sprintf(___('L10n test returned an error: %s'), $json));
