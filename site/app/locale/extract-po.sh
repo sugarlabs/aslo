@@ -21,6 +21,8 @@ for sourcedir in $SOURCE_DIRS; do \
         --files-from=- # Pull from standard input (our find command) \
 done
 echo "done."
-echo -n "Merging to en-US"
-msgmerge -U ./locale/en_US/LC_MESSAGES/messages.po ./locale/keys.pot
+echo -n "Merging to all locales..."
+for i in `find locale -type f -name "messages.po"`; do
+    msgmerge -s -U "$i" ./locale/keys.pot
+done
 rm ./locale/keys.pot
