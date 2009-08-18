@@ -49,18 +49,18 @@ if (empty($mode)) {
 
 <div id="sidebar">
     <div id="categories">
-        <h3><span><?=___('Editor Tools')?></span></h3>
+        <h3><span><?=___('Editor Tools', 'editorcp_menu_title')?></span></h3>
 
         <ul id="cat-list">
-            <li<?=($page == 'summary') ? ' class="selected"' : ''?>><?=$html->link(___('Editor Summary'), '/editors/summary')?></li>
+            <li<?=($page == 'summary') ? ' class="selected"' : ''?>><?=$html->link(___('Editor Summary', 'editorcp_menu_summary_link'), '/editors/summary')?></li>
             <li<?=($mode == 'reviews') ? ' class="selected"' : ''?>><?=$html->link(sprintf(n___('Moderated Reviews (%s)', 'Moderated Reviews (%s)', $count['reviews']), $count['reviews']), '/editors/queue/reviews')?></li>
             <li<?=($mode == 'pending') ? ' class="selected"' : ''?>><?=$html->link(sprintf(n___('Pending Updates (%s)', 'Pending Updates (%s)', $count['pending']), $count['pending']), '/editors/queue/pending')?></li>
             <li<?=($mode == 'nominated') ? ' class="selected"' : ''?>><?=$html->link(sprintf(n___('Nominated Add-ons (%s)', 'Nominated Add-ons (%s)', $count['nominated']), $count['nominated']), '/editors/queue/nominated')?></li>
-            <li<?=($mode == 'featured') ? ' class="selected"' : ''?>><?=$html->link(___('Featured Add-ons'), '/editors/featured')?></li>
-            <li<?=($page == 'logs') ? ' class="selected"' : ''?>><?=$html->link(___('Event Log'), '/editors/logs')?></li>
-            <li<?=($page == 'reviewlog') ? ' class="selected"' : ''?>><?=$html->link(___('Review Log'), '/editors/reviewlog')?></li>
+            <li<?=($mode == 'featured') ? ' class="selected"' : ''?>><?=$html->link(___('Featured Add-ons', 'devcp_editorsqueue_featured'), '/editors/featured')?></li>
+            <li<?=($page == 'logs') ? ' class="selected"' : ''?>><?=$html->link(___('Event Log', 'editorcp_menu_eventlog_link'), '/editors/logs')?></li>
+            <li<?=($page == 'reviewlog') ? ' class="selected"' : ''?>><?=$html->link(___('Review Log', 'editorcp_menu_reviewlog_link'), '/editors/reviewlog')?></li>
             <li<?=($page == 'performance') ? ' class="selected"' : ''?>><?=$html->link(___('Performance'), '/editors/performance')?></li>
-            <li><?=$html->link(___('Back to Main'), '/')?></li>
+            <li><?=$html->link(___('Back to Main', 'editorcp_menu_mainpage_link'), '/')?></li>
         </ul>
     </div>
 </div>

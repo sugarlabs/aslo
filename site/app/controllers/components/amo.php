@@ -196,11 +196,11 @@ class AmoComponent extends Object {
                                         break;
                 case STATUS_NOMINATED:  $string = ___('In Sandbox; Public Nomination');
                                         break;
-                case STATUS_PUBLIC:     $string = ___('Public');
+                case STATUS_PUBLIC:     $string = ___('Public', 'addons_status_public');
                                         break;
                 case STATUS_DISABLED:   $string = ___('Disabled');
                                         break;
-                default:                $string = ___('Unknown');
+                default:                $string = ___('Unknown', 'addons_status_unknown');
                                         break;
             }
             return $string;
@@ -225,7 +225,7 @@ class AmoComponent extends Object {
             STATUS_SANDBOX   => ___('In Sandbox'),
             STATUS_PENDING   => ___('In Sandbox; Pending Review'),
             STATUS_NOMINATED => ___('In Sandbox; Public Nomination'),
-            STATUS_PUBLIC    => ___('Public'),
+            STATUS_PUBLIC    => ___('Public', 'addons_status_public'),
             STATUS_DISABLED  => ___('Disabled')
         );
     }
@@ -718,7 +718,7 @@ class AmoComponent extends Object {
         $_themes_name = $names[ADDON_THEME];
 
         $catlist = array(
-            array('name' => ___('Dictionaries & Language Packs'),
+            array('name' => ___('Dictionaries & Language Packs', 'langtools_header_dicts_and_langpacks'),
                   'type' => ADDON_DICT,
                   'cat' => 0,
                   'weight' => 0),
@@ -731,7 +731,7 @@ class AmoComponent extends Object {
         // add plugins where appropriate
         if (in_array(ADDON_PLUGIN, $app_listedtypes[APP_ID])) {
             $catlist[] = array(
-                'name' => ___('Plugins'),
+                'name' => ___('Plugins', 'addons_plugins_pagetitle'),
                 'type' => ADDON_PLUGIN,
                 'cat' => 0,
                 'weight' => 0,

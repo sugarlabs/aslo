@@ -76,9 +76,9 @@
             echo '<table id="files-table" class="pretty-table">';
             echo '<thead><tr>';
             echo '<th>'.___('File').'</th>';
-            echo '<th>'.___('Platform').'</th>';
+            echo '<th>'.___('Platform', 'devcp_versions_edit_th_platform').'</th>';
             echo '<th>'.___('Size').'</th>';
-            echo '<th>'.___('Status').'</th>';
+            echo '<th>'.___('Status', 'devcp_versions_edit_th_status').'</th>';
             echo '<th style="width: 25px;"></th>';
             echo '</tr></thead><tbody>';
             $i = 0;
@@ -95,11 +95,11 @@
                 echo '<td>'.sprintf(___('%1$s KB'), $file['size']).'</td>';
                 echo '<td>'.$statuses[$file['status']].'</td>';
                 echo '<td><div class="inline-delete-button uses-image">';
-                echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('Delete File'), 'title' => ___('Delete File'))).'</a>';
+                echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('Delete File', 'devcp_versions_edit_a_delete'), 'title' => ___('Delete File', 'devcp_versions_edit_a_delete'))).'</a>';
                 echo '<div class="inline-delete-box">';
                 echo '<p>'.___('Are you <b>sure</b> you wish to permanently delete this file?').'</p><br />';
-                echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('Delete File').'</a>&nbsp;&nbsp;';
-                echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('Cancel').'</a></p>';
+                echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('Delete File', 'devcp_versions_edit_a_delete').'</a>&nbsp;&nbsp;';
+                echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('Cancel', 'devcp_versions_edit_a_cancel').'</a></p>';
                 echo '</div>';
                 echo '</div></td>';
                 echo '</tr>';
@@ -148,11 +148,11 @@
                     echo '</select></td>';
                     echo '<td style="width: 25px;">';
                     echo '<div class="inline-delete-button uses-image">';
-                    echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('Remove Application Compatibility'), 'title' => ___('Remove Application Compatibility'))).'</a>';
+                    echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('Remove Application Compatibility', 'devcp_versions_edit_remove_compat'), 'title' => ___('Remove Application Compatibility', 'devcp_versions_edit_remove_compat'))).'</a>';
                     echo '<div class="inline-delete-box">';
                     echo '<p>'.___('Are you <b>sure</b> you wish to remove compatibility with this application?').'</p><br />';
                     echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('Remove Application').'</a>&nbsp;&nbsp;';
-                    echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('Cancel').'</a></p>';
+                    echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('Cancel', 'devcp_versions_edit_a_cancel').'</a></p>';
                     echo '</div>';
                     echo '</div></td>';
 
@@ -179,7 +179,7 @@
                     'translations' => $translations['releasenotes'],
                     'height' => '130',
                     'width' => 'inherit',
-                    'displayName' => ___('Release Notes'),
+                    'displayName' => ___('Release Notes', 'devcp_versions_edit_transbox_releasenotes_name'),
                     'description' => ___('Information about changes in this release, new features, known bugs, and other useful information specific to this release/version. This information will also be available to users updating the add-on in the Firefox 3 Add-ons Manager interface.'),
                 ));
         ?>

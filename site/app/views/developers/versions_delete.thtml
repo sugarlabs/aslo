@@ -53,9 +53,9 @@
                 <li><?=sprintf(n___('%s file', '%s files', count($version['File'])), count($version['File']))?></li>
             </ul>
             <div>
-                <a href="#" onclick="versions_delete.confirm(); return false;" class="remove-button rounded"><?=___('Delete Version')?></a>
+                <a href="#" onclick="versions_delete.confirm(); return false;" class="remove-button rounded"><?=___('Delete Version', 'devcp_versions_delete_a_delete')?></a>
                 <input type="hidden" name="confirmDelete" value="1"/>&nbsp;&nbsp;
-                <a href="<?=$html->url('/developers/versions/'.$addon_id)?>" class="button rounded"><?=___('Cancel')?></a>
+                <a href="<?=$html->url('/developers/versions/'.$addon_id)?>" class="button rounded"><?=___('Cancel', 'devcp_versions_delete_a_cancel')?></a>
             </div>
         </div>
         </form>

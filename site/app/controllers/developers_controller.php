@@ -86,7 +86,7 @@ class DevelopersController extends AppController
         $this->Amo->clean($this->data);
 
         $this->layout = 'mozilla';
-        $this->pageTitle = ___('Developer Tools').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Developer Tools', 'devcp_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         $this->cssAdd = array('developers', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
@@ -96,10 +96,10 @@ class DevelopersController extends AppController
 
         $this->publish('expand_categories', true);
 
-        $this->breadcrumbs = array(___('Developer Tools') => '/developers/index');
+        $this->breadcrumbs = array(___('Developer Tools', 'devcp_pagetitle') => '/developers/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
 
-        $this->publish('subpagetitle', ___('Developer Tools'));
+        $this->publish('subpagetitle', ___('Developer Tools', 'devcp_pagetitle'));
 
         global $native_languages;
         $this->set('nativeLanguages', $native_languages);

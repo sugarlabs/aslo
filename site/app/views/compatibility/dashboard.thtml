@@ -42,7 +42,7 @@ $this->viewVars['bodyclass'] = 'inverse';
 ?>
 <div id="content" class="primary prose" style="min-height: 400px;">
     <div id="compat-home-nav">
-        <a href="#" onclick="compatibility.viewHome(); return false;"><?=___('Back to Main')?></a>
+        <a href="#" onclick="compatibility.viewHome(); return false;"><?=___('Back to Main', 'compatibility_dashboard_main_link')?></a>
     </div>
     <div class="compat-box">
         <div id="compat-intro">
@@ -59,7 +59,7 @@ $this->viewVars['bodyclass'] = 'inverse';
         <div id="report-intro">
             <div class="header">
                 <div class="title">
-                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('Add-on Compatibility Report')?>
+                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('Add-on Compatibility Report', 'compatibility_dashboard_report')?>
                 </div>
             </div>
             <p class="intro"><?=sprintf(___('Of the %1$s add-ons that make up 95&#37; of add-on usage known to Mozilla, <b>%2$s&#37;</b> are currently considered compatible with the latest builds of %3$s.'), $html->number_format($totals['addons95']), round($percentages[COMPAT_LATEST]), APP_PRETTYNAME." {$version}")?></p>
@@ -97,7 +97,7 @@ $this->viewVars['bodyclass'] = 'inverse';
         <div id="report-details">
             <div class="header">
                 <div class="title">
-                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('Add-on Compatibility Report')?>
+                    <?=$html->image('wordmarks/firefox-'.$version.'_small.png', array('alt' => APP_PRETTYNAME." {$version}"))?><?=___('Add-on Compatibility Report', 'compatibility_dashboard_report')?>
                 </div>
             </div>
             <div class="loading"><?=___('Loading data...')?></div>

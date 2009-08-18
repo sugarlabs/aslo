@@ -71,7 +71,7 @@ else
             echo ___('Nomination Denied/Sandbox');
         }
         elseif ($hist['Approval']['action'] == STATUS_NOMINATED) {
-            echo ___('Admin Review');
+            echo ___('Admin Review', 'editors_review_history_nominated_adminreview');
         }
     }
     elseif ($hist['Approval']['reviewtype'] == 'pending') {
@@ -82,14 +82,14 @@ else
             echo ___('Denied/Sandbox');
         }
         elseif ($hist['Approval']['action'] == STATUS_PENDING) {
-            echo ___('Admin Review');
+            echo ___('Admin Review', 'editors_review_history_nominated_adminreview');
         }
     }
     elseif ($hist['Approval']['reviewtype'] == 'info') {
         if (empty($hist['Approval']['reply_to']))
             echo ___('Information Request');
         else
-            echo ___('Reply');
+            echo ___('Reply', 'editors_review_history_info_reply');
     }
     ?>
     </td>

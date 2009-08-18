@@ -108,7 +108,7 @@ class CollectionsController extends AppController
             array('href' => 'editors_picks',
                   'text' => ___('Editor\'s Picks')),
             array('href' => 'popular',
-                  'text' => ___('Popular')),
+                  'text' => ___('Popular', 'collections_index_li_popular')),
         );
 
         if ($this->Session->check('User')) {
@@ -186,7 +186,7 @@ class CollectionsController extends AppController
             $addon['Translation']['name']['string']));
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Collections') => '/collections',
+            ___('Collections', 'collections_breadcrumb') => '/collections',
             $addon['Translation']['name']['string'] => "/addon/{$addon['Addon']['id']}"
         ));
 
@@ -205,7 +205,7 @@ class CollectionsController extends AppController
         $this->publish('jsAdd', array('jquery.autocomplete.pack.js'));
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Collections') => '/collections'
+            ___('Collections', 'collections_breadcrumb') => '/collections'
         ));
 
         // pick initially selected add-ons both from the URI and possible form choices
@@ -309,8 +309,8 @@ class CollectionsController extends AppController
     function _getSortedAddons($collection_id) {
         $sort_options = array(
             'date-added' => ___('Date Added'),
-            'name' => ___('Name'),
-            'popularity' => ___('Popularity')
+            'name' => ___('Name', 'collections_detail_sort_name'),
+            'popularity' => ___('Popularity', 'collections_detail_sort_popularity')
         );
 
         // Fetch #1.  What's in the collection?
@@ -419,7 +419,7 @@ class CollectionsController extends AppController
 
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Collections') => '/collections'
+            ___('Collections', 'collections_breadcrumb') => '/collections'
         ));
 
         $this->render('detail');
@@ -481,7 +481,7 @@ class CollectionsController extends AppController
         // set up view and render result
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Collections') => '/collections'
+            ___('Collections', 'collections_breadcrumb') => '/collections'
         ));
         return $this->render('subscribe');
     }
@@ -553,7 +553,7 @@ class CollectionsController extends AppController
             'jquery.autocomplete.pack.js'));
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Collections') => '/collections'
+            ___('Collections', 'collections_breadcrumb') => '/collections'
         ));
     }
 

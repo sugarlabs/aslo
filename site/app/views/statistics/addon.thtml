@@ -55,9 +55,9 @@ echo '<div id="content">';
                 }
                 ?>
                 <span id="statistics-links">
-                    <?=$html->link(___('Developer Tools'), '/developers')?> |
+                    <?=$html->link(___('Developer Tools', 'statistics_addon_developertools_link'), '/developers')?> |
                     <?=$html->link(___('Dashboard Home'), '/statistics')?> |
-                    <a href="#" onclick="$('#helpbox').toggle(); return false;"><?=___('Help')?></a>
+                    <a href="#" onclick="$('#helpbox').toggle(); return false;"><?=___('Help', 'statistics_help_link')?></a>
                 </span>
             </div>
             <div>
@@ -72,7 +72,7 @@ echo '<div id="content">';
 
         <div id="helpbox" style="display: none;">
             <?=$localization->includeLocalPage('statistics_help')?>
-            <a href="#" onclick="$('#helpbox').hide(); return false;"><?=___('Close')?></a>
+            <a href="#" onclick="$('#helpbox').hide(); return false;"><?=___('Close', 'statistics_help_close_link')?></a>
         </div>
 
         <?php if ($stats['totaldownloads'] > 0): ?>
@@ -100,7 +100,7 @@ echo '<div id="content">';
                     </div>
                     <div class="plot-legend">
                         <div class="colorbox" style="background-color: #EE3322;"></div>
-                        <div class="plot-name"><?=___('Active Daily Users')?></div>
+                        <div class="plot-name"><?=___('Active Daily Users', 'statistics_plot_legend_adu')?></div>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@ echo '<div id="content">';
                 <td class="bigvalue" style="width: 19%;"><?=$statistics->number_format($stats, 'totaldownloads')?></td>
                 <td class="spacer" style="width: 2%;"></td>
                 <td class="biglabel" valign="middle" style="width: 30%;">
-                    <?=___('Active Daily Users')?>
+                    <?=___('Active Daily Users', 'statistics_plot_legend_adu')?>
                     <div class="date">
                         <?php
                         if (!empty($stats['last_updatepings_date']))

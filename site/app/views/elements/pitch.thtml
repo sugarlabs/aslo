@@ -45,14 +45,14 @@
 global $browser_apps;
 if (in_array(APP_ID, $browser_apps)) {
     $pitch_links = array(
-        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => ___('Theme'),
+        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => ___('Theme', 'sidebar_pitch_theme'),
         '/browse/type:'.ADDON_SEARCH.'/cat:all?sort=name' => ___('Search Plugin'),
-        '/browse/type:'.ADDON_DICT => ___('Dictionary')
+        '/browse/type:'.ADDON_DICT => ___('Dictionary', 'sidebar_pitch_dictionary')
     );
 } else {
     $pitch_links = array(
-        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => ___('Theme'),
-        '/browse/type:'.ADDON_DICT => ___('Dictionary')
+        '/browse/type:'.ADDON_THEME.'/cat:all?sort=name' => ___('Theme', 'sidebar_pitch_theme'),
+        '/browse/type:'.ADDON_DICT => ___('Dictionary', 'sidebar_pitch_dictionary')
     );
 }
 
@@ -67,9 +67,9 @@ if (in_array(APP_ID, $browser_apps)) {
     <?php
     // RSS links the hard way, bug 426541
     $subscribeHeader = ___('Subscribe to');
-    $newestLink = ___('Newest Add-ons');
-    $updatedLink = ___('Updated Add-ons');
-    $featuredLink = ___('Featured Add-ons');
+    $newestLink = ___('Newest Add-ons', 'sidebar_pitch_newest_addons');
+    $updatedLink = ___('Updated Add-ons', 'sidebar_pitch_updated_addons');
+    $featuredLink = ___('Featured Add-ons', 'sidebar_pitch_featured_addons');
     ?>
     <br/>
     <h3><?=$subscribeHeader?></h3>

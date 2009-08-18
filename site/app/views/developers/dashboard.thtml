@@ -61,16 +61,16 @@
 
                 echo '<ul class="actionbar index-actions">';
                     // Edit Add-on
-                    echo '<li class="edit"><a href="'.$html->url('/developers/addon/edit/'.$addon_id).'" class="view">'.___('Edit Add-on').'</a>';
+                    echo '<li class="edit"><a href="'.$html->url('/developers/addon/edit/'.$addon_id).'" class="view">'.___('Edit Add-on', 'devcp_actionbar_link_edit').'</a>';
                     echo '<span class="action-details">'.sprintf(___('Last edited on %s'), strftime(___('%B %e, %Y'), strtotime($addon['Addon']['modified']))).'</span></li>';
                     // Change Status
-                    echo '<li class="status"><a href="'.$html->url('/developers/addon/status/'.$addon_id).'" class="view">'.___('Change Status').'</a>';
+                    echo '<li class="status"><a href="'.$html->url('/developers/addon/status/'.$addon_id).'" class="view">'.___('Change Status', 'devcp_dashboard_change_status').'</a>';
                     $active = $addon['Addon']['inactive'] == 1 ? ___('Inactive') : ___('Active');
                     echo '<span class="action-details">'.sprintf(___('%1$s currently %2$s and %3$s'), $addontypes[$addon['Addon']['addontype_id']],
                                                                  '<span class="inactive-'.$addon['Addon']['inactive'].'">'.$active.'</span>',
                                                                  '<span class="status-'.$addon['Addon']['status'].'">'.$statuses[$addon['Addon']['status']].'</span>').'</span></li>';
                     // Statistics Dashboard
-                    echo '<li class="statistics"><a href="'.$html->url('/statistics/addon/'.$addon_id).'" class="view">'.___('Statistics Dashboard').'</a>';
+                    echo '<li class="statistics"><a href="'.$html->url('/statistics/addon/'.$addon_id).'" class="view">'.___('Statistics Dashboard', 'devcp_actionbar_link_stats').'</a>';
                     echo '<span class="action-details stats">';
                     echo sprintf(___('<em>%s</em> Total Downloads'), $html->number_format($addon['Addon']['totaldownloads'], 0));
                     echo '&nbsp;&middot;&nbsp;';
@@ -79,7 +79,7 @@
                     echo sprintf(___('<em>%s</em> Active Daily Users'), $html->number_format($addon['Addon']['updatepings'], 0));
                     echo '</span></li>';
                     // Versions and Files
-                    echo '<li class="versions"><a href="'.$html->url('/developers/versions/'.$addon_id).'" class="view">'.___('Versions and Files').'</a>';
+                    echo '<li class="versions"><a href="'.$html->url('/developers/versions/'.$addon_id).'" class="view">'.___('Versions and Files', 'devcp_dashboard_versions').'</a>';
                     echo '<span class="action-details">';
                     if (!empty($latestVersion)) {
                         echo ___('Latest Version:').' '.$html->link($latestVersion['version'], '/developers/versions/edit/'.$latestVersion['id']).' ('.$this->controller->Amo->describeVersionStatus($latestVersion['File']).')';
@@ -96,7 +96,7 @@
             }
             else {
                 // Admin Disabled Add-on
-                echo '<p>'.sprintf(___('Add-on Status: %s'), '<span class ="'.STATUS_DISABLED.'">'.$statuses[STATUS_DISABLED].'</span>').'</p>';
+                echo '<p>'.sprintf(___('Add-on Status: %s', 'devcp_dashboard_disabled_status'), '<span class ="'.STATUS_DISABLED.'">'.$statuses[STATUS_DISABLED].'</span>').'</p>';
                 echo '<p>'.sprintf(___('Your add-on was disabled by an administrator and cannot be used.  If you have any questions, please email %s.'), 'amo-admins@mozilla.org').'</p>';
             }
             ?>
@@ -110,7 +110,7 @@
             echo '<div class="graybox rounded">';
             echo '<h4>'.___('Welcome to the Developer Dashboard').'</h4>';
             echo '<p>'.___('You don\'t currently have any add-ons hosted on Mozilla Add-ons. To learn how the process works and submit your first add-on, click Get Started below.').'</p>';
-            echo '<div style="text-align: center;"><a href="'.$html->url('/developers/addon/submit').'" class="action-button rounded">'.___('Get Started').'</a></div>';
+            echo '<div style="text-align: center;"><a href="'.$html->url('/developers/addon/submit').'" class="action-button rounded">'.___('Get Started', 'devcp_dashboard_start').'</a></div>';
             echo '</div>';
         }
         ?>

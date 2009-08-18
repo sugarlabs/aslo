@@ -116,9 +116,9 @@
     <ul id="flags">
     <?php
         if ($addon['Addon']['adminreview']) {
-            echo '<li>'.$html->image('developers/admin_review.png', array('title' => ___('Admin Review'))).'</li>';
+            echo '<li>'.$html->image('developers/admin_review.png', array('title' => ___('Admin Review', 'editors_review_admin_flag'))).'</li>';
         } else {
-            echo '<li>' . ___('none') . '</li>';
+            echo '<li>' . ___('none', 'editors_review_list_none') . '</li>';
         }
     ?>
     </ul>
@@ -158,11 +158,11 @@
 <br class="clear">
 <div id="links">
     <span id="overview_link"><?=$html->link(___('Item Overview'), '/addon/'.$addon['Addon']['id'])?></span>
-    <span id="history_link"><a href="#history"><?=___('Item History')?></a></span>
-    <span id="previews_link"><a href="#previews"><?=___('Previews')?></a></span>
+    <span id="history_link"><a href="#history"><?=___('Item History', 'editors_review_a_item_history')?></a></span>
+    <span id="previews_link"><a href="#previews"><?=___('Previews', 'editors_review_a_previews')?></a></span>
     <?=(!empty($addon['Addon']['homepage'])) ? '<span id="homepage_link">'.$html->link(___('Item Homepage'), $addon['Addon']['homepage']).'</span>' : ''?>
     <?=($this->controller->SimpleAcl->actionAllowed('Admin', 'EditAnyAddon', $this->controller->Session->read('User'))) ? '<span id="edit_link">'.$html->link(___('Edit Item'), '/developers/edit/'.$addon['Addon']['id']).'</span>' : ''?>
-    <span id="comments_link"><a href="#editorComments"><?=___('Editor Comments')?></a></span>
+    <span id="comments_link"><a href="#editorComments"><?=___('Editor Comments', 'editors_review_a_comments')?></a></span>
 </div>
 <div id="form">
     <?php
@@ -258,7 +258,7 @@ if (!empty($version['Version']['approvalnotes'])) {
     echo '</div>';
 }
 if (!empty($addon['Translation']['summary']['string'])) {
-    echo '<h3>'.___('Summary').'</h3>';
+    echo '<h3>'.___('Summary', 'editors_review_header_summary').'</h3>';
     echo '<div id="summary" '.$addon['Translation']['summary']['locale_html'].'>';
         echo nl2br($addon['Translation']['summary']['string']);
     echo '</div>';
@@ -282,13 +282,13 @@ if (!empty($addon['Translation']['eula']['string'])) {
     echo '</div>';
 }
 if (!empty($addon['Translation']['privacypolicy']['string'])) {
-    echo '<h3>'.___('Privacy Policy').'</h3>';
+    echo '<h3>'.___('Privacy Policy', 'editors_review_header_privacy').'</h3>';
     echo '<div id="privacyPolicy" '.$addon['Translation']['privacypolicy']['locale_html'].'>';
         echo nl2br($addon['Translation']['privacypolicy']['string']);
     echo '</div>';
 }
 if (!empty($addon['Translation']['developercomments']['string'])) {
-    echo '<h3>'.___('Developer Comments').'</h3>';
+    echo '<h3>'.___('Developer Comments', 'editors_review_header_devcomments').'</h3>';
     echo '<div id="developerComments" '.$addon['Translation']['developercomments']['locale_html'].'>';
         echo nl2br($addon['Translation']['developercomments']['string']);
     echo '</div>';
@@ -298,7 +298,7 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <br class="clear">
 <div id="validation" class="validation">
     <div class="sectionHeader">
-        <div class="name"><a name="validation"></a><?=___('Validation Results') . ' [' . $html->link(___('help'), '/pages/validation') . ']'?></div>
+        <div class="name"><a name="validation"></a><?=___('Validation Results') . ' [' . $html->link(___('help', 'editors_review_header_validation_help'), '/pages/validation') . ']'?></div>
         <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
@@ -310,16 +310,16 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <br class="clear">
 <div id="history">
     <div class="sectionHeader">
-        <div class="name"><a name="history"></a><?=___('Item History')?></div>
+        <div class="name"><a name="history"></a><?=___('Item History', 'editors_review_a_item_history')?></div>
         <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
     <table id="historyTable">
         <tr id="headerRow">
             <td><?=___('Version/File')?></td>
-            <td><?=___('Date')?></td>
+            <td><?=___('Date', 'editors_review_th_date')?></td>
             <td><?=___('Reviewer')?></td>
-            <td><?=___('Action')?></td>
+            <td><?=___('Action', 'editors_review_th_action')?></td>
             <td><?=___('Comments')?></td>
         </tr>
     <?php
@@ -338,7 +338,7 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <br class="clear">
 <div id="previews">
     <div class="sectionHeader">
-        <div class="name"><a name="previews"></a><?=___('Previews')?></div>
+        <div class="name"><a name="previews"></a><?=___('Previews', 'editors_review_a_previews')?></div>
         <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
@@ -356,7 +356,7 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
 <br class="clear">
 <div id="editorComments">
     <div class="sectionHeader">
-        <div class="name"><a name="editorComments"></a><?=___('Editor Comments')?></div>
+        <div class="name"><a name="editorComments"></a><?=___('Editor Comments', 'editors_review_a_comments')?></div>
         <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
@@ -386,16 +386,16 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
     <?=$html->formTag('/editors/review/'.$version['Version']['id'].($queueRank ? "?num={$queueRank}" : ''), 'post', array('id'=>'editorCommentForm', 'class'=>'hidden'))?>
     <div>
         <?=$html->input('Versioncomment/subject', array('size'=>'50'))?>
-        <label for="VersioncommentSubject"><?=___('Subject')?></label><br />
+        <label for="VersioncommentSubject"><?=___('Subject', 'editors_review_label_subject')?></label><br />
 
         <?=$html->textarea('Versioncomment/comment', array('cols'=>'70', 'rows'=>'10'))?><br />
 
         <?=$html->hidden('Versioncomment/reply_to', array('value'=>''))?>
         <input type="submit" value="<?=___('Post Comment')?>" />
-        <input type="button" value="<?=___('Cancel')?>" id="VersioncommentCancel" />
+        <input type="button" value="<?=___('Cancel', 'editors_review_input_cancel')?>" id="VersioncommentCancel" />
     </div>
     <div id="markitupHelp" class="hidden">
-        <span id="markitupHelpClose"><?=$html->image('developers/cross.png', array('alt'=>___('Close'), 'title'=>___('Close')))?></span>
+        <span id="markitupHelpClose"><?=$html->image('developers/cross.png', array('alt'=>___('Close', 'editors_review_help_close'), 'title'=>___('Close', 'editors_review_help_close')))?></span>
 
         <h1><?=___('Comment Help')?></h1>
 

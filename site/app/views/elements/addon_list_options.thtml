@@ -42,10 +42,10 @@
  */
 
 $sortorders = array(
-    'name'      => ___('Add-on Name'),
-    'updated'   => ___('Date'),
-    'popular'   => ___('Downloads'),
-    'rated'     => ___('Rating')
+    'name'      => ___('Add-on Name', 'list_sortby_name'),
+    'updated'   => ___('Date', 'list_sortby_date'),
+    'popular'   => ___('Downloads', 'list_sortby_downloads'),
+    'rated'     => ___('Rating', 'list_sortby_rating')
     );
 
 // make sort order links
@@ -106,5 +106,5 @@ function submit_options() {
     </p>
     
     <div><button type="submit" name="sort" value="<?=$paging['sortBy']?>"
-        id="options-submit" class="hidden"><?=___('Go')?></button></div>
+        id="options-submit" class="hidden"><?=___('Go', 'addons_options_submit')?></button></div>
 </form>

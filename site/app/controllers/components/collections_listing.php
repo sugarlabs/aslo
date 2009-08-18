@@ -68,7 +68,7 @@ class CollectionsListingComponent extends Object {
                 'text' => ___('Most popular all time'),
                 'sort' => 'subscribers'),
             'newest' => array(
-                'text' => ___('Newest'),
+                'text' => ___('Newest', 'collections_index_option_newest'),
                 'sort' => 'created'),
         );
         $sortby = isset($_GET['sortby']) ? $_GET['sortby'] : $sort_default;

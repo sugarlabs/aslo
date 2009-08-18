@@ -65,7 +65,7 @@ if (!isset($graybox) || $graybox === true) {
 } else {
     echo '<div class="translation-box'.(isset($extraclass)?' '.$extraclass:'').'">';
 }
-    echo (!empty($displayName) ? '<h4><a href="#" title="'.___('Help (does not leave page)').'" onclick="translation_box.showHelp(this); return false;">'.$html->image('developers/help.png', array('alt' => ___('Help'))).'</a>'.$displayName.'  </h4>' : '');
+    echo (!empty($displayName) ? '<h4><a href="#" title="'.___('Help (does not leave page)').'" onclick="translation_box.showHelp(this); return false;">'.$html->image('developers/help.png', array('alt' => ___('Help', 'devcp_transbox_alt_help'))).'</a>'.$displayName.'  </h4>' : '');
     echo (!empty($description) ? "<p>{$description}</p>" : '');
     ?>
     <div class="translation-row">
@@ -121,7 +121,7 @@ if (!isset($graybox) || $graybox === true) {
             <div class="buttons">
                 <input type="button" value="<?=___('Add Locale')?>" onclick="translation_box.addLocale(this, false);" />
                 <input type="button" value="<?=___('Add Locale to All')?>" onclick="translation_box.addLocale(this, true);" />
-                <input type="button" value="<?=___('Cancel')?>" onclick="translation_box.cancelAdd(this);" />
+                <input type="button" value="<?=___('Cancel', 'devcp_transbox_input_cancel')?>" onclick="translation_box.cancelAdd(this);" />
             </div>
         </div>
     </div>
@@ -132,7 +132,7 @@ if (!isset($graybox) || $graybox === true) {
             <?=___('Are you sure you wish to delete this translation?')?>
             <div class="buttons">
                 <input type="button" value="<?=___('Delete It')?>" onclick="translation_box.removeLocale(this);" />
-                <input type="button" value="<?=___('Cancel')?>" onclick="translation_box.cancelRemove(this);" />
+                <input type="button" value="<?=___('Cancel', 'devcp_transbox_input_cancel')?>" onclick="translation_box.cancelRemove(this);" />
             </div>
         </div>
     </div>

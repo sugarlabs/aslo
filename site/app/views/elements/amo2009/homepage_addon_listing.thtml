@@ -46,28 +46,28 @@ foreach ($featured_addons as $addon) {
 <?php if ('popular' == $featured_type): ?>
 <div class="popular listing-footer">
     <a href="<?=$html->url('/browse/type:1/cat:all/format:rss?sort=popular')?>"
-        class="subscribe"><?=___('Subscribe')?></a>
+        class="subscribe"><?=___('Subscribe', 'addons_home_browse_subscribe')?></a>
     <a href="<?=$html->url("/browse/type:1/cat:all?sort=popular")?>" class="more-info"
         title="<?=___('View all popular add-ons')?>"><?=___('View all popular add-ons')?></a>
 </div>
 <?php elseif ('added' == $featured_type): ?>
 <div class="added listing-footer">
     <a href="<?=$html->url('/browse/type:1/cat:all/format:rss?sort=newest')?>"
-        class="subscribe"><?=___('Subscribe')?></a>
+        class="subscribe"><?=___('Subscribe', 'addons_home_browse_subscribe')?></a>
     <a href="<?=$html->url("/browse/type:1/cat:all?sort=newest")?>" class="more-info"
         title="<?=___('View all newly created add-ons')?>"><?=___('View all newly created add-ons')?></a>
 </div>
 <?php elseif ('updated' == $featured_type): ?>
 <div class="updated listing-footer">
     <a href="<?=$html->url('/browse/type:1/cat:all/format:rss?sort=updated')?>"
-        class="subscribe"><?=___('Subscribe')?></a>
+        class="subscribe"><?=___('Subscribe', 'addons_home_browse_subscribe')?></a>
     <a href="<?=$html->url("/browse/type:1/cat:all?sort=updated")?>" class="more-info"
         title="<?=___('View all recently updated add-ons')?>"><?=___('View all recently updated add-ons')?></a>
 </div>
 <?php else: ?>
 <div class="recommended listing-footer">
     <a href="<?=$html->url('/recommended/format:rss')?>"
-        class="subscribe"><?=___('Subscribe')?></a>
+        class="subscribe"><?=___('Subscribe', 'addons_home_browse_subscribe')?></a>
     <a href="<?=$html->url('/recommended')?>" class="more-info"
         title="<?=___('View all recommended add-ons')?>"><?=___('View all recommended add-ons')?></a>
 </div>

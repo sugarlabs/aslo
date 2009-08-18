@@ -171,18 +171,18 @@ if (!empty($coll_addon_added)) {
                 </tr>
                 <?php if (!empty($addon['Translation']['homepage']['string'])): ?>
                   <tr>
-                    <th><?=___('Homepage')?></th>
+                    <th><?=___('Homepage', 'addons_display_header_homepage')?></th>
                     <td><strong>
                       <?=$html->link($addon['Translation']['homepage']['string'])?>
                     </strong></td>
                   </tr>
                 <?php endif ?>
                 <tr>
-                  <th><?=___('Rating')?></th>
+                  <th><?=___('Rating', 'advanced_search_form_rating')?></th>
                   <td><?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?></td>
                 </tr>
                 <tr>
-                  <th><?=___('Downloads')?></th>
+                  <th><?=___('Downloads', 'list_sortby_downloads')?></th>
                   <td>
                     <strong class="downloads">
                       <?=$html->number_format($addon['Addon']['totaldownloads'], 0)?>
@@ -268,10 +268,10 @@ if (!empty($coll_addon_added)) {
                      $html->link($support_url),
                      $link->email($support_email));?>
         <?php elseif ($has_url): ?>
-          <?=sprintf(___('Support for this add-on is provided by the developer at %s'),
+          <?=sprintf(___('Support for this add-on is provided by the developer at %s', 'addons_display_paragraph_supportinfoemail'),
                      $html->link($support_url));?>
         <?php elseif ($has_email): ?>
-          <?=sprintf(___('Support for this add-on is provided by the developer at %s'),
+          <?=sprintf(___('Support for this add-on is provided by the developer at %s', 'addons_display_paragraph_supportinfoemail'),
                      $link->email($support_email));?>
         <?php endif; ?>
       </p>
@@ -279,7 +279,7 @@ if (!empty($coll_addon_added)) {
 
     <?php $comments = $addon['Translation']['developercomments']['string'] ?>
     <?php if (!empty($comments)): ?>
-      <h4><?=___('Developer Comments')?></h4>
+      <h4><?=___('Developer Comments', 'addons_display_developer_comments')?></h4>
       <p <?=$addon['Translation']['developercomments']['locale_html']?>>
         <?=nl2br($addon['Translation']['developercomments']['string'])?>
       </p>
@@ -335,7 +335,7 @@ if (!empty($coll_addon_added)) {
                     cols="30" rows="6"></textarea>
         </div>
         <div class="container">
-          <label for="review-rating"><?=___('Rating')?></label>
+          <label for="review-rating"><?=___('Rating', 'advanced_search_form_rating')?></label>
           <select id="review-rating" name="data[Review][rating]">
             <option></option>
             <option value="1" class="worst">*</option>
@@ -366,7 +366,7 @@ if (!empty($coll_addon_added)) {
   <?php endif; /* isAuthor */ ?>
 
   <?php if ($hasversion): ?>
-      <h3><?=___('Release Notes')?></h3>
+      <h3><?=___('Release Notes', 'addons_display_release_notes')?></h3>
       <div class="article">
         <?=$this->renderElement('addon_version_detail', $_version_data)?>
         <p id="release-notes" <?=$addon['Version'][0]['Translation']['releasenotes']['locale_html']?>>
@@ -384,7 +384,7 @@ if (!empty($coll_addon_added)) {
           <h5 id="license">
             <?=___('Source Code License')?>
             <a href="<?=$html->url('/pages/developer_faq#license')?>">
-              <?=___("What's this?")?>
+              <?=___('What's this?', 'addons_display_a_license_what')?>
             </a>
           </h5>
           <p><?=$license_link?></p>
@@ -456,7 +456,7 @@ if (!empty($coll_addon_added)) {
               echo '<select id="addons-author-addons-select" name="addons-author-addons-select" onchange="this.form.submit()">';
               echo $this->renderElement('addon_author_addons', array('tag' => 'option'));
               echo '</select>';
-              echo '<input class="hidden" type="submit" value="'.___('Go').'"/>';
+              echo '<input class="hidden" type="submit" value="'.___('Go', 'addons_author_addons_submit').'"/>';
               echo '</form>';
           } else {
               echo '<ul class="xoxo">';
@@ -470,7 +470,7 @@ if (!empty($coll_addon_added)) {
 <?php endif; ?>
 
 <div class="highlight">
-<h3><?=___('Tags')?></h3>
+<h3><?=___('Tags', 'tags_header_tags_title')?></h3>
 
     <script type="text/javascript">
         <?=$this->renderElement('tags_js_init')?>
@@ -487,7 +487,7 @@ if (!empty($coll_addon_added)) {
                 <?=$html->hiddenSession() ?>
                 <input type="text" id='newTag' name="newTag" />
                 <input type="hidden" name="addonid" id="addtagformaddonid" value="<?=$addon['Addon']['id']?>" />
-                <button id="addtagbutton"><?=___('Add');?></button>
+                <button id="addtagbutton"><?=___('Add', 'tags_add_tag_button');?></button>
             </form>
             <span class="hint"><?=___('Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
         </div>
@@ -527,7 +527,7 @@ if (!empty($coll_addon_added)) {
         <form action="<?= $html->url('/collections/addtocollection') ?>" method="post" id="coll_publish">
             <div>
             <h3><label for="publish_to"><?=___('Add to a collection:')?></label></h3>
-            <?=$html->link(___("What's this?"), '/collections/')?>
+            <?=$html->link(___('What's this?', 'addons_display_a_license_what'), '/collections/')?>
             <?=$html->hiddenSession() ?>
             <input name="data[addon_id]" type="hidden" value="<?= $addon['Addon']['id'] ?>" />
             <select name="data[collection_uuid]" id="publish_to">

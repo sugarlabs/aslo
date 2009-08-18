@@ -61,7 +61,7 @@ class EditorsController extends AppController
         $this->Amo->checkLoggedIn();
         
         $this->layout = 'mozilla';
-        $this->pageTitle = ___('Editor Tools').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Editor Tools', 'editors_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         $this->cssAdd = array('editors', 'admin', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
@@ -74,11 +74,11 @@ class EditorsController extends AppController
                                 'editors');
         $this->publish('jsAdd', $this->jsAdd);
 
-        $this->breadcrumbs = array(___('Editor Tools') => '/editors/index');
+        $this->breadcrumbs = array(___('Editor Tools', 'editors_pagetitle') => '/editors/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         $this->publish('suppressJQuery', 1);
 
-        $this->publish('subpagetitle', ___('Editor Tools'));
+        $this->publish('subpagetitle', ___('Editor Tools', 'editors_pagetitle'));
 
         // disable query caching so devcp changes are visible immediately
         foreach ($this->uses as $_model) {
@@ -398,7 +398,7 @@ class EditorsController extends AppController
                                             'os' => ___('Tested Operating Systems'),
                                             'applications' => ___('Tested Application'),
                                             'errors' => ___('Please complete the following fields:'),
-                                            'files' => ___('Please select at least one file to review.')
+                                            'files' => ___('Please select at least one file to review.', 'editors_error_review_one_file')
                                     ));
         
         // Validation results
@@ -517,7 +517,7 @@ class EditorsController extends AppController
             'editors_review_comment_help_heading' => ___('Comment Help'),
             'editors_syntax_view_source' => ___('View Source'),
             'editors_syntax_print' => ___('Print'),
-            'editors_syntax_about' => ___('About'),
+            'editors_syntax_about' => ___('About', 'editors_syntax_about'),
         ));
         
         $this->render('review');
@@ -1671,9 +1671,9 @@ class EditorsController extends AppController
         }
 
         // Setup title and breadcrumbs
-        $this->breadcrumbs[___('Featured Add-ons')] = '/editors/featured';
+        $this->breadcrumbs[___('Featured Add-ons', 'editors_featured_addons_pagetitle')] = '/editors/featured';
         $this->publish('breadcrumbs', $this->breadcrumbs);
-        $this->publish('subpagetitle', ___('Featured Add-ons'));
+        $this->publish('subpagetitle', ___('Featured Add-ons', 'editors_featured_addons_pagetitle'));
 
         // Get all featured Addons
         $features = $this->AddonCategory->findAllByFeature(1, array('addon_id'));
@@ -1748,7 +1748,7 @@ class EditorsController extends AppController
     * Display logs
     */
     function logs() {
-        $this->breadcrumbs[___('Event Log')] = '/editors/logs';
+        $this->breadcrumbs[___('Event Log', 'editorcp_logs_page_heading')] = '/editors/logs';
         $this->set('breadcrumbs', $this->breadcrumbs);
 
         //Default conditions are the current month

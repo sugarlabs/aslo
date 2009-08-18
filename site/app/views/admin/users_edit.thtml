@@ -96,11 +96,11 @@ $this->translationBox = array(
                 <?=$html->checkBox('User/sandboxshown', null, array('checked' => ($user['User']['sandboxshown'] ? 'checked' : false), 'value' => 1)) ?>
             </div>
             <div class="line">
-                <label class="amo-label-large" for="UserLocation"><?=___('Location')?></label>
+                <label class="amo-label-large" for="UserLocation"><?=___('Location', 'user_form_location')?></label>
                 <?=$html->input('User/location', array('value' => stripslashes($user['User']['location']))) ?>
             </div>
             <div class="line">
-                <label class="amo-label-large" for="UserOccupation"><?=___('Occupation')?></label>
+                <label class="amo-label-large" for="UserOccupation"><?=___('Occupation', 'user_form_occupation')?></label>
                 <?=$html->input('User/occupation', array('value' => stripslashes($user['User']['occupation']))) ?>
             </div>
             <div>

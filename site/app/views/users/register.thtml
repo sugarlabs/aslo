@@ -60,7 +60,7 @@ endif;
 <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
     <?=$html->hiddenSession() ?>
     <div class="container">
-        <label class="amo-label-large" for="UserEmail"><?=___('Email address')?></label>
+        <label class="amo-label-large" for="UserEmail"><?=___('Email address', 'user_form_email')?></label>
         <?=$html->input('User/email') ?>
         <?=(isset($error_email_notunique)) ? '<div class="error_message">'.___('This email address is already taken by another user.').'</div>' : $html->tagErrorMsg('User/email', ___('This is not a valid email address.'))?>
     </div>
@@ -103,14 +103,14 @@ endif;
     <div class="container">
         <div class="amo-label-large">
             <label for="recaptcha_response_field"><?=___('Are you human?')?></label><br/>
-            <span id="recaptcha_whatsthis"><a href="javascript:Recaptcha.showhelp()"><?=___('What\'s this?')?></a></span>
+            <span id="recaptcha_whatsthis"><a href="javascript:Recaptcha.showhelp()"><?=___('What\'s this?', 'recaptcha_whatsthis')?></a></span>
         </div>
         <div class="amo-form-indent"><?=$this->renderElement('recaptcha')?></div>
         <?=$html->tagErrorMsg('User/captcha', ___('Invalid captcha, please try again!'))?>
     </div>
 <?php endif; ?>
     <div class="container">
-        <?=$html->submit(___('Register'), array('class'=>'amo-submit')); ?>
+        <?=$html->submit(___('Register', 'user_form_submit_register'), array('class'=>'amo-submit')); ?>
     </div>
 </form>
 

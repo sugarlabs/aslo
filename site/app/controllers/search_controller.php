@@ -295,12 +295,12 @@ class SearchController extends AppController
         list($sort_opts, $sortby) = $this->CollectionsListing->sorting();
 
         // Prep and render the view
-        $this->pageTitle = ___('Collection Search Results').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Collection Search Results', 'search_collections_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
        
         $this->publish('jsAdd', array('amo2009/collections', 'jquery-ui/jqModal.js'));
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Collections') => '/collections'
+            ___('Collections', 'collections_breadcrumb') => '/collections'
         ));
 
         $this->publish('collapse_categories', true);

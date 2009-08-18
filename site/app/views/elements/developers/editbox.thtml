@@ -40,12 +40,12 @@
     <h4><?=$html->link($addon_name, '/developers/dashboard#addon-'.$addon_id)?></h4>
     <ul class="actionbar">
         <li class="displaypage"><?=$html->link(___('View Listing'), "/addon/{$addon_id}/")?></li>
-        <li class="edit<?=($action == 'edit' ? ' selected' : '')?>"><?=$html->link(___('Edit Add-on'), "/developers/addon/edit/{$addon_id}/")?></li>
+        <li class="edit<?=($action == 'edit' ? ' selected' : '')?>"><?=$html->link(___('Edit Add-on', 'devcp_editbox_edit_addon'), "/developers/addon/edit/{$addon_id}/")?></li>
         <?php if ($action == 'edit'): ?>
         <li class="container"><ul>
         <li class="edit-authors<?=($subaction == 'authors' ? ' selected' : '')?>"><?=$html->link(___('Authors'), "/developers/addon/edit/{$addon_id}/authors")?></li>
-        <li class="edit-categories<?=($subaction == 'categories' ? ' selected' : '')?>"><?=$html->link(___('Categories'), "/developers/addon/edit/{$addon_id}/categories")?></li>
-        <li class="edit-tags<?=($subaction == 'tags' ? ' selected' : '')?>"><?=$html->link(___('Tags'), "/developers/addon/edit/{$addon_id}/tags")?></li>
+        <li class="edit-categories<?=($subaction == 'categories' ? ' selected' : '')?>"><?=$html->link(___('Categories', 'devcp_editbox_categories'), "/developers/addon/edit/{$addon_id}/categories")?></li>
+        <li class="edit-tags<?=($subaction == 'tags' ? ' selected' : '')?>"><?=$html->link(___('Tags', 'devcp_editbox_tags'), "/developers/addon/edit/{$addon_id}/tags")?></li>
 
         <li class="edit-descriptions<?=($subaction == 'descriptions' ? ' selected' : '')?>"><?=$html->link(___('Descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></li>
         <li class="edit-properties<?=($subaction == 'properties' ? ' selected' : '')?>"><?=$html->link(___('Properties'), "/developers/addon/edit/{$addon_id}/properties")?></li>
@@ -59,9 +59,9 @@
         </li>
         </ul></li>
         <?php endif; ?>
-        <li class="status<?=($action == 'status' ? ' selected' : '')?>"><?=$html->link(___('Change Status'), "/developers/addon/status/{$addon_id}/")?></li>
-        <li class="statistics"><?=$html->link(___('Statistics Dashboard'), "/statistics/addon/{$addon_id}/")?></li>
-        <li class="versions<?=($action == 'versions' ? ' selected' : '')?>"><?=$html->link(___('Versions and Files'), "/developers/versions/{$addon_id}/")?></li>
+        <li class="status<?=($action == 'status' ? ' selected' : '')?>"><?=$html->link(___('Change Status', 'devcp_editbox_change_status'), "/developers/addon/status/{$addon_id}/")?></li>
+        <li class="statistics"><?=$html->link(___('Statistics Dashboard', 'devcp_editbox_statistics_dashboard'), "/statistics/addon/{$addon_id}/")?></li>
+        <li class="versions<?=($action == 'versions' ? ' selected' : '')?>"><?=$html->link(___('Versions and Files', 'devcp_editbox_versions'), "/developers/versions/{$addon_id}/")?></li>
         <?php if ($action == 'versions'): ?>
         <li class="container"><ul>
         <li class="versions-add<?=($subaction == 'add' ? ' selected' : '')?>"><?=$html->link(___('New Version'), "/developers/versions/add/{$addon_id}")?></li>

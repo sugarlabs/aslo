@@ -36,14 +36,14 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-$summary = '<b>'.___('Downloads').'</b><br />';
+$summary = '<b>'.___('Downloads', 'statistics_summary_downloads_heading').'</b><br />';
 $summary .= ___('Total Downloads').' ('.sprintf(___('Since %1$s'), strftime(___('%b. %e, %Y'), strtotime($addon['Addon']['created']))).'): '.$statistics->number_format($stats, 'totaldownloads').'<br />';
 $summary .= ___('Last Day Count').(!empty($stats['last_downloads_date']) ? ' ('.strftime(___('%A, %b. %e'), strtotime($stats['last_downloads_date'])).')' : '').': '.$statistics->number_format($stats, 'last_downloads').'<br />';
 $summary .= ___('Average Daily Downloads').': '.$statistics->number_format($stats, 'avg_downloads').'<br />';
 $summary .= ___('Downloads in the last 7 days').': '.$statistics->number_format($stats, 'weeklydownloads').'<br /><br />';
 
-$summary .= '<b>'.___('Active Daily Users').'</b><br />';
-$summary .= ___('Active Daily Users').' (';
+$summary .= '<b>'.___('Active Daily Users', 'statistics_summary_updatepings_heading').'</b><br />';
+$summary .= ___('Active Daily Users', 'statistics_summary_updatepings_heading').' (';
 if (!empty($stats['last_updatepings_date']))
     $summary .= sprintf(___('On %1$s'), strftime(___('%A, %b. %e'), strtotime($stats['last_updatepings_date'])));
 else

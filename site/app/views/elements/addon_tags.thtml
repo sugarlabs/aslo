@@ -60,7 +60,7 @@
                 <li id="taglink-<?=$t['id']?>" class="<?=$class?>">
                     <a href="<?=$html->url('/tag/'.$t['tag_text'])?>" class="tagitem"><?=$t['tag_text']?></a>
                     <?php if (@$t['OwnerOrDeveloper'] == 1): ?>
-                        <input type="submit" alt="<?=___('Remove')?>"
+                        <input type="submit" alt="<?=___('Remove', 'tags_alt_remove_tag')?>"
                                name="tagid" value="<?=$t['id']?>"
                                class="removetag" />
                     <?php endif; ?>

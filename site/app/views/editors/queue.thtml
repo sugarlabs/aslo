@@ -53,7 +53,7 @@
             </div>
 
             <div>
-                <label for="FilterApplication"><?=___('Application')?></label>
+                <label for="FilterApplication"><?=___('Application', 'editors_queue_filter_label_application')?></label>
                 <?=$html->selectTag('Filter/Application', $applications, $selected['Application'], null, null, true)?>
             </div>
 
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="buttons">
-            <?=$html->submit(___('Filter'), array('name' => 'filter'));?>
+            <?=$html->submit(___('Filter', 'editors_queue_submit_filter'), array('name' => 'filter'));?>
             <?=$html->submit(___('Clear'), array('name' => 'clear'))?>
         </div>
     </div>
@@ -112,7 +112,7 @@
                     $sorturl .= '&dir=asc';
                 }
             }
-            echo $html->link(___('Add-on'), $sorturl);
+            echo $html->link(___('Add-on', 'editors_th_addon'), $sorturl);
             echo $sortimg;
         ?></td>
         <td><?php
@@ -128,7 +128,7 @@
                     $sorturl .= '&dir=asc';
                 }
             }
-            echo $html->link(___('Type'), $sorturl);
+            echo $html->link(___('Type', 'editors_th_addontype'), $sorturl);
             echo $sortimg;
         ?></td>
     <?php
@@ -174,7 +174,7 @@
                 }
                 echo '<td>'.(($mode == 'nominated') ? $addon['nominationage'] : $addon['age']).'</td>';
                 if ($addon['Addon']['adminreview']) {
-                    echo '<td>'.$html->image('developers/admin_review.png', array('title' => ___('Admin Review'))).'</td>';
+                    echo '<td>'.$html->image('developers/admin_review.png', array('title' => ___('Admin Review', 'editors_flag_admin_review'))).'</td>';
                 } else {
                     echo '<td>&nbsp;</td>';
                 }

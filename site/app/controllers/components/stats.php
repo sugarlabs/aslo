@@ -423,11 +423,11 @@ class StatsComponent extends Object {
                                                       )
                                              ),
                       'prettyNames' => array(
-                                             'version' => ___('Add-on Version'),
-                                             'application' => ___('Application'),
-                                             'status' => ___('Add-on Status'),
-                                             'os' => ___('Operating System'),
-                                             'unknown' => ___('Unknown')
+                                             'version' => ___('Add-on Version', 'statistics_longnames_version'),
+                                             'application' => ___('Application', 'statistics_longnames_application'),
+                                             'status' => ___('Add-on Status', 'statistics_longnames_status'),
+                                             'os' => ___('Operating System', 'statistics_longnames_os'),
+                                             'unknown' => ___('Unknown', 'statistics_longnames_unknown')
                                              ),
                       'shortNames' => array(
                                             'version' => ___('Ver'),

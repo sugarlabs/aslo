@@ -64,7 +64,7 @@ class StatisticsController extends AppController
         $this->Amo->clean($this->data); 
         
         $this->layout = 'amo2009';
-        $this->pageTitle = ___('Statistics Dashboard').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Statistics Dashboard', 'statistics_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         $this->cssAdd = array('stats/stats');
         $this->publish('cssAdd', $this->cssAdd);
@@ -75,10 +75,10 @@ class StatisticsController extends AppController
         $prescriptJS = "var statsURL = '".$this->url('/statistics/')."';";
         $this->set('prescriptJS', $prescriptJS);
         
-        $this->breadcrumbs = array(___('Statistics Dashboard') => '/statistics/index');
+        $this->breadcrumbs = array(___('Statistics Dashboard', 'statistics_pagetitle') => '/statistics/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         
-        $this->publish('subpagetitle', ___('Statistics Dashboard'));
+        $this->publish('subpagetitle', ___('Statistics Dashboard', 'statistics_pagetitle'));
     }
     
    /**
@@ -122,7 +122,7 @@ class StatisticsController extends AppController
         $this->publish('statsOverview', $this->_cachedStats('getSiteStatsOverview', array()));
 
         $this->publish('jsLocalization', array(
-            'addons_downloaded' => ___('Add-ons Downloaded'),
+            'addons_downloaded' => ___('Add-ons Downloaded', 'statistics_addons_downloaded'),
             'addons_in_use' => ___('Add-ons In Use'),
             'addons_created' => ___('Add-ons Created'),
             'addons_updated' => ___('Add-ons Updated'),
@@ -290,25 +290,25 @@ class StatisticsController extends AppController
             }
         }
         $this->set('stats', $stats);
-        $this->pageTitle = $addon['Translation']['name']['string'].' :: '.___('Statistics Dashboard').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = $addon['Translation']['name']['string'].' :: '.___('Statistics Dashboard', 'statistics_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         
         if (!$rss) {
             $this->publish('jsLocalization', array(
                     'date' => ___('%B %e, %Y'),
                     'statistics_js_dropdowns_removeplot' => ___('Remove this plot'),
-                    'statistics_js_dropdowns_none' => ___('none'),
+                    'statistics_js_dropdowns_none' => ___('none', 'statistics_js_dropdowns_none'),
                     'statistics_js_download_csv' => ___('View this table in CSV format'),
                     'statistics_js_groupby_selector_date' => ___('Group by: Day'),
                     'statistics_js_groupby_selector_week' => ___('Group by: Week'),
                     'statistics_js_groupby_selector_week_over_week' => ___('Compare by: Week'),
                     'statistics_js_groupby_selector_month' => ___('Group by: Month'),
-                    'statistics_js_plotselection_selector_summary' => ___('Summary'),
-                    'statistics_js_plotselection_selector_downloads' => ___('Downloads'),
-                    'statistics_js_plotselection_selector_adu' => ___('Active Daily Users'),
-                    'statistics_js_plotselection_selector_version' => ___('Add-on Version'),
-                    'statistics_js_plotselection_selector_application' => ___('Application'),
-                    'statistics_js_plotselection_selector_status' => ___('Add-on Status'),
-                    'statistics_js_plotselection_selector_os' => ___('Operating System'),
+                    'statistics_js_plotselection_selector_summary' => ___('Summary', 'statistics_js_plotselection_selector_summary'),
+                    'statistics_js_plotselection_selector_downloads' => ___('Downloads', 'statistics_js_plotselection_selector_downloads'),
+                    'statistics_js_plotselection_selector_adu' => ___('Active Daily Users', 'statistics_js_plotselection_selector_adu'),
+                    'statistics_js_plotselection_selector_version' => ___('Add-on Version', 'statistics_js_plotselection_selector_version'),
+                    'statistics_js_plotselection_selector_application' => ___('Application', 'statistics_js_plotselection_selector_application'),
+                    'statistics_js_plotselection_selector_status' => ___('Add-on Status', 'statistics_js_plotselection_selector_status'),
+                    'statistics_js_plotselection_selector_os' => ___('Operating System', 'statistics_js_plotselection_selector_os'),
                     'statistics_js_plotselection_selector_custom' => ___('Custom'),
                     'statistics_js_plotselection_foundinrange' => ___('%s found in range'),
                     'statistics_js_plotselection_options_count_name_checked' => ___('Hide Total Count'),

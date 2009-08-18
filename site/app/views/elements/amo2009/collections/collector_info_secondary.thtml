@@ -49,7 +49,7 @@ $showSecondBox = isset($showSecondBox) ? $showSecondBox : true;
         <? if ($showCreateLink): ?>
             <p>
               <a class="more-info" href="<?=$html->url('/collections/add')?>">
-                <?=___('Create a Collection')?>
+                <?=___('Create a Collection', 'collections_index_a_create')?>
               </a>
             </p>
         <? endif; ?>
@@ -57,7 +57,7 @@ $showSecondBox = isset($showSecondBox) ? $showSecondBox : true;
   <? endif; ?>
   <? if ($showSecondBox && (APP_ID == APP_FIREFOX)): ?>
       <div class="highlight">
-        <h3><?=___('Add-on Collector')?></h3>
+        <h3><?=___('Add-on Collector', 'collections_index_header_collector')?></h3>
         <p class="teaser-img">
           <a href="<?=$html->url('/pages/collector')?>">
           <img alt="" src="<?=$html->url('/img/amo2009/illustrations/logo-collections-download-146x159.png',

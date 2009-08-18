@@ -47,7 +47,7 @@ $this->layout = 'amo2009';
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
     
-    <h2><?=sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);?></h2>
+    <h2><?=sprintf(___('Reviews for %s', 'reviews_header'), $addon['Translation']['name']['string']);?></h2>
     <?=$this->renderElement('notification', array('type' => 'success', 'msg' => ___('Your review was saved successfully. Thanks!')));?>
     <? if (isset($moderated) && $moderated) 
         $this->renderElement('notification', array('type' => 'notification', 'msg' => ___('Please note: Before your review shows up on the public site it will be moderated by an editor.'))); ?>

@@ -65,7 +65,7 @@
         <div id="step-intro">
             <h3><?=___('How does it all work?')?></h3>
             <?=___('<p>Thanks for your interest in submitting your add-on to Mozilla Add-ons. Hosting your add-on on Mozilla Add-ons is the easiest way to handle distribution of your add-on. Here\'s what you\'ll get:</p><ul><li>Each add-on will have a public display page with information you provide, such as a brief summary of the add-on\'s functionality, an optional longer description, and a showcase of preview screenshots of your add-on.</li><li>Your add-on will appear in search and browse listings across the site, and even in the Add-ons Manager of Firefox 3.</li><li>We\'ll take care of hosting all of your downloads and providing automatic updates to users when you upload a new version.</li><li>You\'ll have access to a statistics dashboard with detailed information about your user base.</li></ul><p>Add-ons hosted on the site must be reviewed by a Mozilla Add-ons Editor before they will have all of the features listed above. If you\'re ready to start the process and have your add-on package ready for upload, just click on Get Started below!</p>')?>
-            <div style="text-align: center;"><a href="#" onclick="upload.showAgreement(); return false;" class="action-button rounded"><?=___('Get Started')?></a></div>
+            <div style="text-align: center;"><a href="#" onclick="upload.showAgreement(); return false;" class="action-button rounded"><?=___('Get Started', 'devcp_uploader_a_start')?></a></div>
         </div> <!-- /#step-intro -->
     <?php endif; ?>
     <?php $showAgreement = ($type == 'new' || !$hasAgreement); ?>
@@ -125,7 +125,7 @@
             <?=(!empty($addon_id) ? '<input type="hidden" name="data[Addon][id]" value="'.$addon_id.'" />' : '')?>
             <?=(!empty($version_id) ? '<input type="hidden" name="data[Version][id]" value="'.$version_id.'" />' : '')?>
             <label><?=___('Add-on File: ')?><input id="upload-field" type="file" name="file" /></label><br />
-        <?=___('Supported Platforms:')?>&nbsp;&nbsp;<label><input type="radio" name="platformtype" onclick="upload.platformAll();" checked />&nbsp;<?=___('All')?></label>&nbsp;&nbsp;
+        <?=___('Supported Platforms:')?>&nbsp;&nbsp;<label><input type="radio" name="platformtype" onclick="upload.platformAll();" checked />&nbsp;<?=___('All', 'devcp_uploader_platformtype_all')?></label>&nbsp;&nbsp;
             <label><input type="radio" name="platformtype" onclick="upload.platformSpecific();" />&nbsp;<?=___('Specific:')?></label>
             <?php
             $platforms = $this->controller->Platform->getNames();

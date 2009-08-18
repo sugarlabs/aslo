@@ -49,7 +49,7 @@
 <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form corner-box">
     <?=$html->hiddenSession() ?>       
     <div class="container">
-        <label class="amo-label-large" for="UserEmail"><?=___('Email address')?></label>
+        <label class="amo-label-large" for="UserEmail"><?=___('Email address', 'user_form_email')?></label>
         <?=$html->input('User/email') ?>
         <?=$html->tagErrorMsg('User/email', ___('User not found!'))?>
     </div>

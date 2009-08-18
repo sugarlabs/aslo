@@ -93,10 +93,10 @@ class UsersController extends AppController
 
         $this->disableCache();
     
-        $this->pageTitle = ___('New User Registration'). ' :: '. sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('New User Registration', 'user_form_registration'). ' :: '. sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         // $this->publish('cssAdd', array('forms'));
-        $this->publish('breadcrumbs', array(___('New User Registration') => '/users/register'));
-        $this->publish('subpagetitle', ___('New User Registration'));
+        $this->publish('breadcrumbs', array(___('New User Registration', 'user_form_registration') => '/users/register'));
+        $this->publish('subpagetitle', ___('New User Registration', 'user_form_registration'));
         if (empty($this->data)) {
             $this->render();
             return;
@@ -333,9 +333,9 @@ class UsersController extends AppController
             return;
         }
     
-        $this->pageTitle = ___('User Login').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('User Login', 'user_form_login').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('cssAdd', array('forms'));
-        $this->publish('subpagetitle', ___('User Login'));
+        $this->publish('subpagetitle', ___('User Login', 'user_form_login'));
         $this->publish('loginerror', false);
         
         // by default, just give them a login screen

@@ -52,7 +52,7 @@ $bare = isset($_GET['bare']) ? ( $_GET['bare'] == 1 ) : FALSE;
 <div id="content-main" class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
 
-<h2><?=sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);?></h2>
+<h2><?=sprintf(___('Reviews for %s', 'reviews_header'), $addon['Translation']['name']['string']);?></h2>
 <?php else: ?>
 <div class="other-reviews">
 <?php endif ?>
@@ -73,7 +73,7 @@ foreach ($reviews as $review):
                      $html->linkUserFromModel($review['User']),
                      strftime(___('%B %e, %Y'), strtotime($review['Review']['created'])));
         ?>
-        <?=($isAuthor || $isAdmin) ? '['.$html->link(___('Reply'), "/reviews/reply/{$review['Review']['id']}").']' : '' ?>
+        <?=($isAuthor || $isAdmin) ? '['.$html->link(___('Reply', 'addon_review_author_reply_link'), "/reviews/reply/{$review['Review']['id']}").']' : '' ?>
         <?=($canDelete) ? '['.$html->link(___('Delete'), "/reviews/delete/{$review['Review']['id']}").']' : ''?>
 
         <?php /* Show either the review moderation form, or display a

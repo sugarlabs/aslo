@@ -55,13 +55,13 @@
         <?=$html->hiddenSession();?>
 
         <div class="field graybox rounded spaced">
-            <h4 class="status"><?=sprintf(___('Add-on Status: %s'), '<span class="status-'.$addon['Addon']['status'].'">'.$statuses[$addon['Addon']['status']].'</span>')?></h4>
+            <h4 class="status"><?=sprintf(___('Add-on Status: %s', 'devcp_addon_status_header'), '<span class="status-'.$addon['Addon']['status'].'">'.$statuses[$addon['Addon']['status']].'</span>')?></h4>
             <p>
                 <?php
                     function status_span($i, $status) { return '<span class="status-'.$i.'">'.$status.'</span>'; }
                     // Add-on Status
-                    $sandbox = status_span(STATUS_SANDBOX, ___('Sandbox'));
-                    $public = status_span(STATUS_PUBLIC, ___('Public'));
+                    $sandbox = status_span(STATUS_SANDBOX, ___('Sandbox', 'devcp_addon_status_sandbox'));
+                    $public = status_span(STATUS_PUBLIC, ___('Public', 'devcp_addon_status_public'));
                     switch ($addon['Addon']['status']) {
                     case STATUS_NULL:
                         echo ___('Your add-on is currently <span class="status-0">Incomplete</span>. This means your add-on is not showing up on any portion of the site or update check service. You may come to this page to complete your add-on after it meets the criteria below for completion and transfer to the <span class="status-1">Sandbox</span>.');

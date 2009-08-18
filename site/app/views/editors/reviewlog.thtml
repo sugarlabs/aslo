@@ -39,23 +39,23 @@
     <?=$this->renderElement('developers/editorsmenu');?>
     
     <div id="content-main">
-        <h3><?=___('Review Log')?></h3>
+        <h3><?=___('Review Log', 'editorcp_reviewlog_page_heading')?></h3>
         <form action="<?=$html->url()?>" method="get">
         <?php
         echo sprintf(___('View entries between %1$s and %2$s'),
             '<input type="text" id="start" name="start" value="'.$startdate.'" size="11" onFocus="clearInput(this)"/>',
             '<input type="text" id="end" name="end" value="'.$enddate.'" size="11" onFocus="clearInput(this)"/>');
         echo '&nbsp;&nbsp;';
-        echo $html->submit(___('Filter'));
+        echo $html->submit(___('Filter', 'editorcp_reviewlog_button_filter'));
         ?>
         </form>
     
         <table id="historyTable">
             <tr id="headerRow">
-                <td><?=___('Date')?></td>
-                <td><?=___('Add-on')?></td>
+                <td><?=___('Date', 'editorcp_reviewlog_column_date')?></td>
+                <td><?=___('Add-on', 'editorcp_reviewlog_column_addon')?></td>
                 <td><?=___('Editor')?></td>
-                <td><?=___('Action')?></td>
+                <td><?=___('Action', 'editorcp_reviewlog_column_action')?></td>
                 <td>&nbsp;</td>
             </tr>
         <?php
@@ -74,7 +74,7 @@
                             echo ___('Nomination Denied/Sandbox');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_NOMINATED) {
-                            echo ___('Admin Review');
+                            echo ___('Admin Review', 'editors_review_history_nominated_adminreview');
                         }
                     }
                     elseif ($approval['Approval']['reviewtype'] == 'pending') {
@@ -85,7 +85,7 @@
                             echo ___('Denied/Sandbox');
                         }
                         elseif ($approval['Approval']['action'] == STATUS_PENDING) {
-                            echo ___('Admin Review');
+                            echo ___('Admin Review', 'editors_review_history_nominated_adminreview');
                         }
                     }
                     echo '</td>';

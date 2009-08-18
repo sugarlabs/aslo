@@ -283,13 +283,13 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                 else:
                     $tools_links = array();
                     $user = $this->controller->Session->read('User');
-                    $tools_links[] = $html->link(___('Developer Tools'), '/developers');
+                    $tools_links[] = $html->link(___('Developer Tools', 'sidebar_navlink_developer_tools'), '/developers');
                     if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User')))
-                        $tools_links[] = $html->link(___('Editor Tools'), '/editors');
+                        $tools_links[] = $html->link(___('Editor Tools', 'sidebar_navlink_editor_tools'), '/editors');
                     if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User')))
                         $tools_links[] = $html->link('Localizer Tools', '/localizers');
                     if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User')))
-                        $tools_links[] = $html->link(___('Admin Tools'), '/admin');
+                        $tools_links[] = $html->link(___('Admin Tools', 'sidebar_navlink_admin_tools'), '/admin');
 
                     if (count($tools_links) > 1):
                     ?>
@@ -340,18 +340,18 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
                 }
                 ?>
                 </select>
-                <button type="submit"><?=___('Go')?></button>
+                <button type="submit"><?=___('Go', 'footer_lang_form_lang_submit_go')?></button>
               </div>
             </form>
         <?php endif; ?>
 
         <p><strong><?=___('Copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla.</strong> <?=___('All rights reserved.')?></p>
         <ul>
-            <li><?=$html->link(___('Privacy Policy'), '/pages/privacy');?></li>
+            <li><?=$html->link(___('Privacy Policy', 'footer_privacy_policy'), '/pages/privacy');?></li>
             <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=___('Legal Notices')?></a></li>
-            <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(___('Credits'), '/pages/credits')?></li><?php endif; ?>
-            <li><?=$html->link(___('About'), '/pages/about')?></li>
-            <li><?=$html->link('<abbr title="'.___('Frequently Asked Questions').'">'.___('FAQ').'</abbr>', '/pages/faq')?></li>
+            <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(___('Credits', 'footer_credits'), '/pages/credits')?></li><?php endif; ?>
+            <li><?=$html->link(___('About', 'footer_a_about'), '/pages/about')?></li>
+            <li><?=$html->link('<abbr title="'.___('Frequently Asked Questions', 'footer_abbr_faq').'">'.___('FAQ').'</abbr>', '/pages/faq')?></li>
             <li><a href="http://blog.mozilla.com/addons"><?=___('Blog')?></a></li>
         </ul>
 

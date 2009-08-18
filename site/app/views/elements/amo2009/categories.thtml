@@ -39,7 +39,7 @@
 ?>
 <div class="categories">
     <h3 title="<?=___('Choose a category')?>">
-        <a href="#categoriesdropdown" aria-haspopup="true"><?=___('Categories')?></a>
+        <a href="#categoriesdropdown" aria-haspopup="true"><?=___('Categories', 'categories_header')?></a>
     </h3>
     <ul id="categoriesdropdown">
         <li>
@@ -62,7 +62,7 @@
         <li>
             <ul>
                 <li>
-                    <?= $html->link(___('Collections'), '/collections/') ?>
+                    <?= $html->link(___('Collections', 'addons_home_collections'), '/collections/') ?>
                 </li>
                 <?php foreach ($AmoCategories as $_category): ?>
                     <?php if (0!==$_category['cat'] || ADDON_PLUGIN===$_category['type']) continue ?>

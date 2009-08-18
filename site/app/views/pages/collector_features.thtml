@@ -52,7 +52,7 @@ $this->layout = 'amo2009';
     <?php
     $breadcrumbs = array(
         sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-        ___('Collections') => '/collections'
+        ___('Collections', 'collections_breadcrumb') => '/collections'
     );
     ?>
     <?=$this->renderElement('amo2009/breadcrumbs', array('breadcrumbs' => $breadcrumbs))?>
@@ -69,7 +69,7 @@ $this->layout = 'amo2009';
       </li>
       <li>
         <a href="<?=$html->url('/pages/collector_faq')?>">
-          <?=___('Frequently Asked Questions')?>
+          <?=___('Frequently Asked Questions', 'footer_abbr_faq')?>
         </a>
       </li>
     </ul>

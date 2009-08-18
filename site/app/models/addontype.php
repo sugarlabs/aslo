@@ -74,9 +74,9 @@ class Addontype extends AppModel
             case ADDON_EXTENSION:
                 return ___('Extension');
             case ADDON_THEME: 
-                return ___('Theme');
+                return ___('Theme', 'general_addontype_theme');
             case ADDON_DICT: 
-                return ___('Dictionary');
+                return ___('Dictionary', 'general_addontype_dict');
             case ADDON_SEARCH: 
                 return ___('Search Engine');
             case ADDON_LPAPP: 
@@ -96,12 +96,12 @@ class Addontype extends AppModel
     function getNames() {
         $addontypes = array(
             ADDON_EXTENSION => ___('Extensions'),
-            ADDON_THEME => ___('Themes'),
+            ADDON_THEME => ___('Themes', 'general_addontype_theme_plural'),
             ADDON_DICT => ___('Dictionaries'),
-            ADDON_SEARCH => ___('Search Engines'),
+            ADDON_SEARCH => ___('Search Engines', 'general_addontype_search_plural'),
             ADDON_LPAPP => ___('Language Packs (Application)'),
             ADDON_LPADDON => ___('Language Packs (Add-on)'),
-            ADDON_PLUGIN => ___('Plugins')
+            ADDON_PLUGIN => ___('Plugins', 'general_addontype_plugin_plural')
         );
 
         return $addontypes;

@@ -64,7 +64,7 @@ class PreviewsController extends AppController
         $this->Amo->clean($this->data); 
 
         $this->layout = 'mozilla';
-        $this->pageTitle = ___('Developer Tools').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Developer Tools', 'devcp_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
 		$this->cssAdd = array('developers');
         $this->publish('cssAdd', $this->cssAdd);
@@ -76,10 +76,10 @@ class PreviewsController extends AppController
                              ,'jquery-compressed.js');
         $this->publish('jsAdd', $this->jsAdd);
 
-        $this->breadcrumbs = array(___('Developer Tools') => '/developers/index');
+        $this->breadcrumbs = array(___('Developer Tools', 'devcp_pagetitle') => '/developers/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         
-        $this->publish('subpagetitle', ___('Developer Tools'));
+        $this->publish('subpagetitle', ___('Developer Tools', 'devcp_pagetitle'));
 
         global $native_languages;
         $this->publish('nativeLanguages', $native_languages);
@@ -100,8 +100,8 @@ class PreviewsController extends AppController
     */
     function add($addon_id) {
         $this->Amo->clean($addon_id);
-        $this->publish('subpagetitle', ___('Add Preview'));
-        $this->breadcrumbs[___('Add Preview')] = '/previews/add/'.$addon_id;
+        $this->publish('subpagetitle', ___('Add Preview', 'devcp_preview_add_pagetitle'));
+        $this->breadcrumbs[___('Add Preview', 'devcp_preview_add_pagetitle')] = '/previews/add/'.$addon_id;
         $this->publish('breadcrumbs', $this->breadcrumbs);  
 
         if (!$this->Amo->checkOwnership($addon_id)) {
@@ -165,7 +165,7 @@ class PreviewsController extends AppController
         $localizedFields = array(
                              'caption' => array(
                                             'type'       => 'input',
-                                            'display'    => ___('Preview Caption'),
+                                            'display'    => ___('Preview Caption', 'devcp_addon_field_preview_caption_displaytitle'),
                                             'model'      => 'Preview',
                                             'field'         => 'caption',
                                             'attributes' => array(
@@ -191,8 +191,8 @@ class PreviewsController extends AppController
     */
     function edit($id) {
         $this->Amo->clean($id);
-        $this->set ('subpagetitle', ___('Edit Preview'));
-        $this->breadcrumbs[___('Edit Preview')] = '/previews/edit/'.$id;
+        $this->set ('subpagetitle', ___('Edit Preview', 'devcp_preview_edit_pagetitle'));
+        $this->breadcrumbs[___('Edit Preview', 'devcp_preview_edit_pagetitle')] = '/previews/edit/'.$id;
         $this->publish('breadcrumbs', $this->breadcrumbs);  
 
         $this->Preview->id = $id;
@@ -274,7 +274,7 @@ class PreviewsController extends AppController
         $localizedFields = array(
                              'caption' => array(
                                             'type'       => 'input',
-                                            'display'    => ___('Preview Caption'),
+                                            'display'    => ___('Preview Caption', 'devcp_addon_field_preview_caption_displaytitle'),
                                             'model'      => 'Preview',
                                             'field'         => 'caption',
                                             'attributes' => array(

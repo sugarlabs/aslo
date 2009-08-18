@@ -60,9 +60,9 @@ if (empty($addonIconPath)) {
     <version><?php echo $addon['install_version']; ?></version>
     <status id='<?php echo $addon['status']; ?>'><?php 
         if ($addon['status'] ==  STATUS_PUBLIC) {
-                echo rtrim(___('Public'));  
+                echo rtrim(___('Public', 'a_header_public'));  
               } else {
-                echo rtrim(___('Sandbox'));  
+                echo rtrim(___('Sandbox', 'a_header_sandbox'));  
               }
         ?></status>
     <authors>

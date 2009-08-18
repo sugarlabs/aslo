@@ -60,30 +60,30 @@ if (!isset($table_class)) {
   <table class="<?=$table_class?>" summary="<?=___('Developer Information')?>">
     <tbody>
       <tr>
-        <th><?=___('Name')?></th>
+        <th><?=___('Name', 'addon_developer_th_name')?></th>
         <td class="fn n"><?=$user['display_name']?></td>
       </tr>
       <? if (!empty($user['location'])): ?>
       <tr>
-        <th><?=___('Location')?></th>
+        <th><?=___('Location', 'addon_developer_th_location')?></th>
         <td class="adr"><?=$user['location']?></td>
       </tr>
       <? endif; ?>
       <? if (!empty($user['occupation'])): ?>
       <tr>
-        <th><?=___('Occupation')?></th>
+        <th><?=___('Occupation', 'addon_developer_th_occupation')?></th>
         <td class="role"><?=$user['occupation']?></td>
       </tr>
       <? endif; ?>
       <? if (!empty($user['homepage'])): ?>
       <tr>
-        <th><?=___('Homepage')?></th>
+        <th><?=___('Homepage', 'addon_developer_th_homepage')?></th>
         <td><a class="url" href="<?=$user['homepage']?>"><?=$user['homepage']?></a></td>
       </tr>
       <? endif; ?>
       <?php if (!$user['emailhidden']): ?>
           <tr>
-            <th><?=___('Email address')?></th>
+            <th><?=___('Email address', 'addon_developer_th_email')?></th>
             <td><a class="email" href="mailto:<?=$user['email']?>"><?=$user['email']?></a></td>
           </tr>
       <?php endif; ?>

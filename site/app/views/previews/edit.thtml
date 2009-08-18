@@ -40,7 +40,7 @@
     <?=$this->renderElement('developers/myaddons', array('addons' => $all_addons));?>
     
     <div id="content-main">
-        <h3><?=___('Edit Preview')?></h3>
+        <h3><?=___('Edit Preview', 'devcp_previews_header_edit')?></h3>
         <div class="addonName"><?=$addon['Translation']['name']['string']?></div>
         <?=$html->formTag('/previews/edit/'.$id, 'post')?>
             <div id="developersForm">
@@ -51,8 +51,8 @@
                 </div>
                 <?=$this->renderElement('developers/localebox')?>
                 <div class="buttonBox">
-                    <?=$html->submit(___('Edit Preview'))?>
-                    <?=$html->submit(___('Delete Preview'), array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\''.___('Are you sure you wish to delete this preview?').'\');'))?>
+                    <?=$html->submit(___('Edit Preview', 'devcp_previews_header_edit'))?>
+                    <?=$html->submit(___('Delete Preview', 'devcp_previews_submit_delete'), array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\''.___('Are you sure you wish to delete this preview?').'\');'))?>
                 </div>
             </div> <!-- developersForm -->
         </form>

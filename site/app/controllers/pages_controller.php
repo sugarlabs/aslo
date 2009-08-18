@@ -89,7 +89,7 @@ class PagesController extends AppController{
         case 'appversions':
             $title = ___('Application Versions'); break;
         case 'credits':
-            $title = ___('Credits'); break;
+            $title = ___('Credits', 'page_title_credits'); break;
         case 'fashionyourfirefox_faq':
             $title = ___('Fashion your Firefox FAQ');
             $this->set('cssAdd', array('collection-style'));
@@ -106,15 +106,15 @@ class PagesController extends AppController{
         case 'sandbox':
             $title = ___('Sandbox Review System'); break;
         case 'submissionhelp':
-            $title = ___('Submission Help'); break;
+            $title = ___('Submission Help', 'page_title_submissionhelp'); break;
         case 'faq':
-            $title = ___('Frequently Asked Questions'); break;
+            $title = ___('Frequently Asked Questions', 'page_title_faq'); break;
         case 'developer_faq':
             $title = ___('Developer FAQ'); break;
         case 'developer_agreement':
             $title = ___('Developer Agreement'); break;
         case 'collector':
-            $title = ___('Add-on Collector');
+            $title = ___('Add-on Collector', 'page_title_collector');
             $this->publish('collectionSearch', true); break;
         case 'collector_faq':
             $title = ___('Add-on Collector FAQ');

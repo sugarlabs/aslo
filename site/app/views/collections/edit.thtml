@@ -93,8 +93,8 @@ JS;
             'type' => 'warning',
             'msg' => ___('Your collection is about to be deleted!'),
             'description' => sprintf(___('Upon clicking "%1$s" below, your collection will be deleted. If you do not want to delete your collection, uncheck the confirmation box in the "%2$s" tab and continue editing your collection. If you leave this page without saving, your collection will also not be deleted.'),
-                    ___('Delete Collection'),
-                    ___('Advanced')),
+                    ___('Delete Collection', 'collections_edit_formfield_deletecollection'),
+                    ___('Advanced', 'collections_edit_tabheader_advanced')),
             'htmlattributes' => array(
                 'id' => 'delete-warning',
                 'style' => 'display:none'
@@ -108,9 +108,9 @@ JS;
                 <li><a href="#details"><span><?=___('Name &amp; Details')?></span></a></li>
                 <li><a href="#permissions"><span><?=___('Permissions')?></span></a></li>
                 <?php endif; ?>
-                <li><a href="#addons"><span><?=___('Add-ons')?></span></a></li>
+                <li><a href="#addons"><span><?=___('Add-ons', 'collections_edit_tabheader_addons')?></span></a></li>
                 <?php if ($atleast_manager): ?>
-                <li><a href="#advanced"><span><?=___('Advanced')?></span></a></li>
+                <li><a href="#advanced"><span><?=___('Advanced', 'collections_edit_tabheader_advanced')?></span></a></li>
                 <?php endif; ?>
             </ul>
 
@@ -167,7 +167,7 @@ JS;
                 <?php endif;?>
                 <input id="CollectionIcon" type="file" name="icon"/>
                 <span class="toberemoved" style="display:none"><?=sprintf(___('Icon will be removed when "%1$s" is clicked below'), ___('Update Collection'))?></span>
-                <a href="#" class="cancel" style="display:none"><?=___('Cancel')?></a>
+                <a href="#" class="cancel" style="display:none"><?=___('Cancel', 'collections_edit_icon_cancel')?></a>
 
                 <noscript>
                     <p>
@@ -208,7 +208,7 @@ JS;
                 <div id="publishers" class="jsonly">
                     <ul></ul>
                     <label for="PublishersAdd"><?=___('Enter the e-mail address of a Firefox Add-ons account:')?></label><br/>
-                    <?=$html->input('Publishers/add')?> <input type="button" value="<?=___('Add')?>" />
+                    <?=$html->input('Publishers/add')?> <input type="button" value="<?=___('Add', 'collections_edit_formfield_users_submit')?>" />
                     <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
                 </div>
                 <noscript><div>
@@ -230,7 +230,7 @@ JS;
                 <div id="managers" class="jsonly">
                     <ul></ul>
                     <label for="ManagersAdd"><?=___('Enter the e-mail address of a Firefox Add-ons account:')?></label><br/>
-                    <?=$html->input('Managers/add')?> <input type="button" value="<?=___('Add')?>" />
+                    <?=$html->input('Managers/add')?> <input type="button" value="<?=___('Add', 'collections_edit_formfield_users_submit')?>" />
                     <?=$html->image('ajax_loading.gif', array('style'=>'display:none', 'width'=>15, 'height'=>15, 'alt'=>'searching'))?>
                 </div>
                 <noscript><div>
@@ -258,7 +258,7 @@ JS;
                 <h3><?=___('Current Add-ons:')?></h3>
                 <div class="coll-addon" id="addon-new" style="display:none">
                     <p><img src="" alt=""/><span class="name"></span><span class="added"><?=___('Added %1$s by %2$s')?></span></p>
-                    <a href="#" class="removeaddon"><?=___('Remove')?></a>
+                    <a href="#" class="removeaddon"><?=___('Remove', 'collections_edit_addons_listitem_remove')?></a>
                     <blockquote title="publishercomment"></blockquote>
                     <a href="#" class="addlink"><?=___('Add publisher comment')?></a>
                     <div class="editdelete">
@@ -291,12 +291,12 @@ JS;
             <?php endif; ?>
 
             <fieldset>
-                <h4><?=___('Delete Collection')?></h4>
+                <h4><?=___('Delete Collection', 'collections_edit_formfield_deletecollection')?></h4>
                 <p><?=___('Deleting your collection will permanently erase it.')?></p>
-                <input id="delete-coll" type="button" class="jsonly" name="data[action]" value="<?=___('Delete Collection')?>"/>
+                <input id="delete-coll" type="button" class="jsonly" name="data[action]" value="<?=___('Delete Collection', 'collections_edit_formfield_deletecollection')?>"/>
                 <div id="delete-confirm">
                     <div><input id="delete-coll-noscript" type="checkbox" name="data[action]" value="delete-coll"/> <label for="delete-coll-noscript"><?=___('Yes, I would like to delete this collection.')?></label></div>
-                    <p class="jsonly"><?=sprintf(___('Check the box, then click on "%1$s" to delete this collection.'), ___('Delete Collection'))?></p>
+                    <p class="jsonly"><?=sprintf(___('Check the box, then click on "%1$s" to delete this collection.'), ___('Delete Collection', 'collections_edit_formfield_deletecollection'))?></p>
                     <noscript><p><?=sprintf(___('Check the box, then click on "%1$s" to delete this collection.'), ___('Update Collection'))?></p></noscript>
                 </div>
             </fieldset>

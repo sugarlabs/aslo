@@ -158,7 +158,7 @@ class EditorsComponent extends Object {
     */
     function reviewPendingFiles($addon, $data) {
         if (empty($data['Approval']['File'])) {
-            $this->controller->addError(___('Please select at least one file to review.'));
+            $this->controller->addError(___('Please select at least one file to review.', 'editor_review_error_no_files'));
             return false;
         }
             

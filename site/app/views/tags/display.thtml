@@ -73,14 +73,14 @@
 			            	<label><?=___('Sort By'); ?></label>
 			            	<?php 
 								$sort_orders = array( 
-								    'newest' => ___('Newest'),
-								    'name' => ___('Name'),
-								    'averagerating' => ___('Rating'),
-								    'weeklydownloads' => ___('Popularity')
+								    'newest' => ___('Newest', 'advanced_search_form_newest'),
+								    'name' => ___('Name', 'advanced_search_form_name'),
+								    'averagerating' => ___('Rating', 'advanced_search_form_rating'),
+								    'weeklydownloads' => ___('Popularity', 'advanced_search_form_popularity')
 								);
 								$html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
 							?>
-							<button><?=___('Go')?></button>
+							<button><?=___('Go', 'addons_author_addons_submit')?></button>
 				        </form>
 						<script type="text/javascript">collections.hijack_favorite_button();</script>
 					</div>

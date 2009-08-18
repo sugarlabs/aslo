@@ -39,15 +39,15 @@
 <div class="action-bar actionbar <?=(!empty($disabled) && $disabled == 1 ? 'inactive' : 'active')?>">
     <ul>
     <?php if (!empty($revamp) && $revamp === true): ?>
-        <li class="edit"><a href="<?=$html->url('/developers/addon/edit/'.$addon_id)?>" class="view"><?=___('Edit Add-on')?></a></li>
+        <li class="edit"><a href="<?=$html->url('/developers/addon/edit/'.$addon_id)?>" class="view"><?=___('Edit Add-on', 'devcp_actionbar_link_edit')?></a></li>
         <li class="status"><a href="<?=$html->url('/developers/addon/status/'.$addon_id)?>" class="view">Change Status</a></li>
-        <li class="statistics"><a href="<?=$html->url('/statistics/addon/'.$addon_id)?>" class="view"><?=___('Statistics Dashboard')?></a></li>
+        <li class="statistics"><a href="<?=$html->url('/statistics/addon/'.$addon_id)?>" class="view"><?=___('Statistics Dashboard', 'devcp_actionbar_link_stats')?></a></li>
         <li class="versions"><a href="<?=$html->url('/developers/versions/'.$addon_id)?>" class="view">Versions and Files</a></li>
     <?php else: ?>
         <li class="details active-only"><a href="<?=$html->url('/developers/details/'.$addon_id)?>" class="view"><?=___('Detailed Info')?></a></li>
         <li class="displaypage active-only"><a href="<?=$html->url('/addon/'.$addon_id)?>" class="view">View Listing</a></li>
-        <li class="statistics"><a href="<?=$html->url('/statistics/addon/'.$addon_id)?>" class="view"><?=___('Statistics Dashboard')?></a></li>
-        <li class="edit"><a href="<?=$html->url('/developers/edit/'.$addon_id)?>" class="view"><?=___('Edit Add-on')?></a></li>
+        <li class="statistics"><a href="<?=$html->url('/statistics/addon/'.$addon_id)?>" class="view"><?=___('Statistics Dashboard', 'devcp_actionbar_link_stats')?></a></li>
+        <li class="edit"><a href="<?=$html->url('/developers/edit/'.$addon_id)?>" class="view"><?=___('Edit Add-on', 'devcp_actionbar_link_edit')?></a></li>
         <li class="versions-add active-only"><a href="<?=$html->url('/developers/add/'.$addon_id)?>" class="view"><?=___('Upload New Version')?></a></li>
     <?php endif; ?>
     </ul>

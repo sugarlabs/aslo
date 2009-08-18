@@ -55,11 +55,11 @@
     else
         $url_format = "/status:%s";
     if (isset($addonStatus) && $addonStatus == STATUS_SANDBOX) {
-        $homeText = ___('Sandbox');
+        $homeText = ___('Sandbox', 'a_header_sandbox');
         $homeLink = "/addons/home/status:" . STATUS_SANDBOX;
     }
     else {
-        $homeText = ___('Add-ons');
+        $homeText = ___('Add-ons', 'header_main_header');
         $homeLink = "/";
     }
         
@@ -72,14 +72,14 @@
         }
     }
     $sandboxUrl = $publicUrl . sprintf($url_format, STATUS_SANDBOX);
-    $sandboxUrl = $html->link(___('Sandbox'), $sandboxUrl);
-    $publicUrl = $html->link(___('Public'), $publicUrl);
+    $sandboxUrl = $html->link(___('Sandbox', 'a_header_sandbox'), $sandboxUrl);
+    $publicUrl = $html->link(___('Public', 'a_header_public'), $publicUrl);
         
     if(isset($sandboxAccess) && $sandboxAccess && $this->controller->action != 'display') {
         if ($addonStatus == STATUS_SANDBOX)
-            $sandboxLink = "$publicUrl | ".___('Sandbox');
+            $sandboxLink = "$publicUrl | ".___('Sandbox', 'a_header_sandbox');
         else
-            $sandboxLink = ___('Public')." | $sandboxUrl";
+            $sandboxLink = ___('Public', 'a_header_public')." | $sandboxUrl";
     }
 
     switch (APP_SHORTNAME) {
@@ -96,7 +96,7 @@
             $main_header = ___('Thunderbird Add-ons');
             break;
         default:
-            $main_header = ___('Add-ons');
+            $main_header = ___('Add-ons', 'header_main_header');
             break;
     }
 ?>
@@ -143,20 +143,20 @@
     if ($this->controller->Session->check('User')) {
         $user = $this->controller->Session->read('User');
         echo '<li>' . $html->link(___('My Account'), '/users/edit', array('title' => $user['email'])) . '</li>' . "\n";
-        echo '<li>' . $html->link(___('Developer Tools'), '/developers') . '</li>' . "\n";
+        echo '<li>' . $html->link(___('Developer Tools', 'sidebar_navlink_developer_tools'), '/developers') . '</li>' . "\n";
         if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User'))) {
-            echo '<li>' . $html->link(___('Editor Tools'), '/editors') .'</li>' . "\n";
+            echo '<li>' . $html->link(___('Editor Tools', 'sidebar_navlink_editor_tools'), '/editors') .'</li>' . "\n";
         }
         if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User'))) {
             echo '<li>' . $html->link('Localizer Tools', '/localizers') . '</li>' . "\n";
         }
         if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User'))) {
-            echo '<li>' . $html->link(___('Admin Tools'), '/admin') . '</li>' . "\n";
+            echo '<li>' . $html->link(___('Admin Tools', 'sidebar_navlink_admin_tools'), '/admin') . '</li>' . "\n";
         }
         echo '<li>' . $html->link(___('Log out'), $html->logout_url()) . '</li>' . "\n";
     } else {
-        echo '<li>' . $html->link(___('Register'), '/users/register') . '</li> ' . "\n";
-        echo '<li>' . $html->link(___('Log in'), $html->login_url()) .  '</li>' . "\n";
+        echo '<li>' . $html->link(___('Register', 'header_navlink_register'), '/users/register') . '</li> ' . "\n";
+        echo '<li>' . $html->link(___('Log in', 'header_navlink_login'), $html->login_url()) .  '</li>' . "\n";
     }
     ?>
   </ul>

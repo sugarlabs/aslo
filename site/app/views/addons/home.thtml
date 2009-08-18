@@ -107,7 +107,7 @@ $this->viewVars['bodyclass'] = 'home';
                         <li<?= ('recommended'==$featured_type) ? ' class="selected"' : '' ?>>
                             <a href="?featured=recommended#featured"><?=___('Recommended')?></a></li>
                         <li<?= ('popular'==$featured_type) ? ' class="selected"' : '' ?>>
-                            <a href="?featured=popular#featured"><?=___('Popular')?></a></li>
+                            <a href="?featured=popular#featured"><?=___('Popular', 'addons_home_browse_popular')?></a></li>
                         <li<?= ('added'==$featured_type) ? ' class="selected"' : '' ?>>
                             <a href="?featured=added#featured"><?=___('Just Added')?></a></li>
                         <li<?= ('updated'==$featured_type) ? ' class="selected"' : '' ?>>
@@ -139,7 +139,7 @@ $this->viewVars['bodyclass'] = 'home';
 
     <div class="secondary">
         <img class="pull-right" src="<?=$html->url('/img/amo2009/illustrations/logo-collections-100x125.png', null, false, false)?>" alt=""/>
-        <h3><a href="<?=$html->url('/collections')?>"><?=___('Collections')?></a>
+        <h3><a href="<?=$html->url('/collections')?>"><?=___('Collections', 'addons_home_collections')?></a>
             <?=$this->renderElement('amo2009/new_indicator')?>
         </h3>
         <p><?=___('Collections are a way for you to categorize, mix, match and mingle add-ons.  Subscribe to collections created by other users or create your own.')?></p>

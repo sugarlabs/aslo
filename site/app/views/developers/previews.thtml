@@ -77,7 +77,7 @@
                 <table style="width: 100%;"><tr><td style="width: 200px; text-align: center; vertical-align: top;">
                 <img src="<?=$this->controller->Image->getPreviewURL($preview['Preview']['id'])?>/0" alt="<?=___('Thumbnail')?>" />
                 </td><td style="vertical-align: top;">
-                <h5 style="margin-top: 0; margin-bottom: 2px;"><?=___('Preview Caption')?></h5>
+                <h5 style="margin-top: 0; margin-bottom: 2px;"><?=___('Preview Caption', 'devcp_previews_header_caption')?></h5>
                 <?php
                 echo $this->renderElement('translationbox', array(
                     'field' => 'caption',
@@ -93,7 +93,7 @@
                 <?=___('Default Preview')?></label>
                 </td><td class="preview-buttons">
                 <a href="#" onclick="previews.showReplaceBox(this); return false;" class="edit-button rounded"><?=___('Replace Preview')?></a>&nbsp;
-                <a href="#" onclick="previews.deletePreview(this); return false;" class="remove-button rounded"><?=___('Delete Preview')?></a>
+                <a href="#" onclick="previews.deletePreview(this); return false;" class="remove-button rounded"><?=___('Delete Preview', 'devcp_previews_a_delete')?></a>
                 </td></tr></table>
                 
                 <div class="replace-preview" style="display: none;">

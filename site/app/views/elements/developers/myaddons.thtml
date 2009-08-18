@@ -47,7 +47,7 @@
     <div id="categories" class="secondary-item-list">
         
     <?php if (!$this->controller->Session->check('User')): ?>
-            <h4><?=$html->link(___('Log in'), $html->login_url())?></h4>
+            <h4><?=$html->link(___('Log in', 'header_navlink_login'), $html->login_url())?></h4>
     <?php else: ?>
         <h4><?=$html->link(___('My Add-ons'), '/developers/index')?></h4>
         <ul id="cat-list">
@@ -64,17 +64,17 @@
     </div>
     
     <div class="secondary-item-list">
-        <h4><span><?=___('Developer Tools')?></span></h4>
+        <h4><span><?=___('Developer Tools', 'devcp_myaddons_title')?></span></h4>
         <ul class="">
-            <li><?=$html->link(___('Submit Add-on'), '/developers/addon/submit')?></li>
-            <li><?=$html->link(___('Statistics Dashboard'), '/statistics')?></li>
+            <li><?=$html->link(___('Submit Add-on', 'devcp_myaddons_submitaddon_link'), '/developers/addon/submit')?></li>
+            <li><?=$html->link(___('Statistics Dashboard', 'devcp_myaddons_statistics_link'), '/statistics')?></li>
             <?php if ($this->controller->SimpleAcl->actionAllowed('Editors', '*', $this->controller->Session->read('User'))): ?>
-                <li><?=$html->link(___('Editor Tools'), '/editors')?></li>
+                <li><?=$html->link(___('Editor Tools', 'devcp_myaddons_editorcp_link'), '/editors')?></li>
             <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User'))): ?>
-                <li><?=$html->link(___('Admin Tools'), '/admin')?></li>
+                <li><?=$html->link(___('Admin Tools', 'devcp_myaddons_admincp_link'), '/admin')?></li>
             <?php endif; ?>
-            <li><?=$html->link(___('Back to Main'), '/')?></li>
+            <li><?=$html->link(___('Back to Main', 'devcp_myaddons_mainpage_link'), '/')?></li>
         </ul>
     <?php endif; ?>
         

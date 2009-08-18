@@ -40,7 +40,7 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3><?=___('Event Log')?></h3>
+        <h3><?=___('Event Log', 'editorcp_logs_page_heading')?></h3>
         <form id="logFilter" method="get" action="">
         <div>
         <?=sprintf(___('View entries between %1$s and %2$s'),
@@ -88,7 +88,7 @@
             <option>user:*</option>
             <option>user:group_associated</option>
         </select>
-        <?=$html->submit(___('Filter'))?>
+        <?=$html->submit(___('Filter', 'editorcp_logs_button_filter'))?>
         </form>
         <?php
         if (!empty($logs)) {

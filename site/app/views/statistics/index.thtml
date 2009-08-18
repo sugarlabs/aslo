@@ -36,14 +36,14 @@
  *
  * ***** END LICENSE BLOCK ***** */ 
 ?> 
-<h1><?=___('Statistics Dashboard')?></h1>
+<h1><?=___('Statistics Dashboard', 'statistics_index_title')?></h1>
 
 <div class="secondary" role="complementary">
   <div class="highlight">
     <h2><?=___('Site Statistics')?></h2>
     <dl>
       <dt><?=$html->number_format($statsOverview['totalDownloads'])?></dt>
-      <dd><?=___('Add-ons Downloaded')?></dd>
+      <dd><?=___('Add-ons Downloaded', 'statistics_addons_downloaded')?></dd>
 
       <dt><?=$html->number_format($statsOverview['totalInUse'])?></dt>
       <dd><?=___('Add-ons in Use')?></dd>
@@ -87,8 +87,8 @@
       <table id="stats-table-instance">
         <thead>
           <tr class="header">
-            <th class="first"><?=___('Date')?></th>
-            <th><?=___('Add-ons Downloaded')?></th>
+            <th class="first"><?=___('Date', 'list_sortby_date')?></th>
+            <th><?=___('Add-ons Downloaded', 'statistics_addons_downloaded')?></th>
             <th><?=___('Add-ons In Use')?></th>
             <th><?=___('Add-ons Created')?></th>
             <th><?=___('Add-ons Updated')?></th>

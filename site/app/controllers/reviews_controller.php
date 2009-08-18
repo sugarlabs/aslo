@@ -199,7 +199,7 @@ class ReviewsController extends AppController
         $this->publish('reviews_others_counts', $others_counts);
         $this->publish('reviews', $reviews);
 
-        $_title = sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);
+        $_title = sprintf(___('Reviews for %s', 'addon_review_pagetitle'), $addon['Translation']['name']['string']);
 
         if ($format != 'rss') {
             $this->pageTitle = $_title.' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
@@ -248,7 +248,7 @@ class ReviewsController extends AppController
         }
 
         $this->publish('addon', $addon);
-        $_title = sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);
+        $_title = sprintf(___('Reviews for %s', 'addon_review_pagetitle'), $addon['Translation']['name']['string']);
         $this->pageTitle = $_title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         // fetch user object from session
@@ -343,7 +343,7 @@ class ReviewsController extends AppController
         }
         $this->publish('addon', $addon);
 
-        $_title = sprintf(___('Reviews for %s'), $addon['Translation']['name']['string']);
+        $_title = sprintf(___('Reviews for %s', 'addon_review_pagetitle'), $addon['Translation']['name']['string']);
         $this->pageTitle = $_title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         // fetch user object from session
@@ -422,7 +422,7 @@ class ReviewsController extends AppController
         $review = $this->Review->findById($id, null, null, 2);
         $review['Addon'] = $this->Addon->findById($review['Version']['addon_id'], array('id', 'name'), null, -1);
 
-        $_title = sprintf(___('Reviews for %s'), $review['Addon']['Translation']['name']['string']);
+        $_title = sprintf(___('Reviews for %s', 'addon_review_pagetitle'), $review['Addon']['Translation']['name']['string']);
         $this->pageTitle = $_title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         $this->publish('breadcrumbs', array(

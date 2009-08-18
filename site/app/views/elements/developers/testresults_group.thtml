@@ -55,7 +55,7 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
 <? if (!empty($group['cases'])) : ?>
     <div class="results-list <?=$group_class?>">
     <? foreach ($group['cases'] as $case) : ?>
-        <h5><?=$case['name']?> [<?=$html->link(___('help'), '/pages/validation#help-'.$case['id'])?>]</h5>
+        <h5><?=$case['name']?> [<?=$html->link(___('help', 'devcp_validation_help'), '/pages/validation#help-'.$case['id'])?>]</h5>
         <ul class="test-results">
         <? $resultNum = 0; ?>
         <? if (!empty($case['results'])) : ?>
@@ -112,6 +112,6 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
         <i><?= ___('All tests passed.') ?> <a href="#" onclick="versions_validate.showPasses($(this)); return false;"><?= n___('Show pass', 'Show passes', count($group['cases'])) ?></a></i>
     <? endif; ?>
 <? else: ?>
-    <i><?= ___('No test results found.') ?></i>
+    <i><?= ___('No test results found.', 'devcp_versions_validate_no_results') ?></i>
 <? endif; ?>
 </div>

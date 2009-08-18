@@ -84,7 +84,7 @@ $this->translationBox = array(
 <div id="tabbed-editor" class="flora">
     <ul class="tabs-nav">
         <li><a href="#profile-user"><span><?=___('User Profile');?></span></a></li>
-        <li><a href="#profile-collections"><span><?=___('Collections');?></span></a></li>
+        <li><a href="#profile-collections"><span><?=___('Collections', 'user_tab_collections');?></span></a></li>
         <li><a href="#profile-notifications"><span><?=___('Notifications');?></span></a></li>
         <li><a href="#profile-change-pw-email"><span><?=___('Change Password or Email'); ?></span></a></li>
         <li><a href="#profile-other"><span><?=___('Other Actions');?></span></a></li>
@@ -109,11 +109,11 @@ $this->translationBox = array(
             <?=$html->tagErrorMsg('User/nickname', ___('This nickname is already taken.'))?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserLocation"><?=___('Location')?></label>
+            <label class="amo-label-large" for="UserLocation"><?=___('Location', 'user_form_location')?></label>
             <?=$html->input('User/location') ?>
         </div>
         <div class="line">
-            <label class="amo-label-large" for="UserOccupation"><?=___('Occupation')?></label>
+            <label class="amo-label-large" for="UserOccupation"><?=___('Occupation', 'user_form_occupation')?></label>
             <?=$html->input('User/occupation') ?>
         </div>
         <div class="line">
@@ -154,7 +154,7 @@ $this->translationBox = array(
     </div>
 
     <div id="profile-collections">
-        <h3 class="hidden"><?=___('Collections');?></h3>
+        <h3 class="hidden"><?=___('Collections', 'user_tab_collections');?></h3>
         <div class="line">
             <?=$html->checkbox('User/display_collections') ?>
             <label for="UserDisplayCollections"><?=___('Display the collections I have created in my user profile')?></label>
@@ -189,8 +189,8 @@ $this->translationBox = array(
                     <thead>
                         <tr>
                             <th><?php /* jquery will add a check/uncheck all box here */ ?></th>
-                            <th><?=___('Add-on')?></th>
-                            <th><?=___('Subject')?></th>
+                            <th><?=___('Add-on', 'user_notifications_th_addon')?></th>
+                            <th><?=___('Subject', 'user_notifications_th_subject')?></th>
                             <th><?=___('Subscription Date')?></th>
                         </tr>
                     </thead>
@@ -227,7 +227,7 @@ $this->translationBox = array(
         </div>
         <h3><?=___('Change Email Address');?></h3>
         <div class="line">
-            <label class="amo-label-large" for="UserEmail"><?=___('Email address')?></label>
+            <label class="amo-label-large" for="UserEmail"><?=___('Email address', 'user_form_email')?></label>
             <?=$html->input('User/email') ?>
             <?php if (isset($error_email_notunique))
                     echo '<div class="error_message">'.___('This email address is already taken by another user.').'</div>';

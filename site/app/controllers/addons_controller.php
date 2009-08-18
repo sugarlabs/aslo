@@ -536,10 +536,10 @@ class AddonsController extends AppController
 
         // add rss links to global feeds
         $this->publish('rssAdd', array(
-            array('/browse/type:1/cat:all/format:rss?sort=newest', ___('Newest Add-ons')),
-            array('/browse/type:1/cat:all/format:rss?sort=updated', ___('Updated Add-ons')),
-            array('/browse/type:1/cat:all/format:rss?sort=popular', ___('Popular Add-ons')),
-            array('/recommended/format:rss', ___('Featured Add-ons')),
+            array('/browse/type:1/cat:all/format:rss?sort=newest', ___('Newest Add-ons', 'browse_addons_newest')),
+            array('/browse/type:1/cat:all/format:rss?sort=updated', ___('Updated Add-ons', 'rss_updatedaddons')),
+            array('/browse/type:1/cat:all/format:rss?sort=popular', ___('Popular Add-ons', 'browse_addons_popular')),
+            array('/recommended/format:rss', ___('Featured Add-ons', 'rss_featuredaddons')),
         ));
     }
 
@@ -1170,9 +1170,9 @@ class AddonsController extends AppController
         // set layout details and render view
         if ($category == 'all') {
             switch ($sort_by) {
-                case 'popular': $_title = ___('Popular Add-ons'); break;
+                case 'popular': $_title = ___('Popular Add-ons', 'browse_addons_popular'); break;
                 case 'updated': $_title = ___('Recently Updated Add-ons'); break;
-                case 'newest': $_title = ___('Newest Add-ons'); break;
+                case 'newest': $_title = ___('Newest Add-ons', 'browse_addons_newest'); break;
                 case 'rated': $_title = ___('Add-ons by Rating'); break;
                 case 'name': $_title = ___('Add-ons by Name'); break;
                 default: $_title = ''; break;
@@ -1256,7 +1256,7 @@ class AddonsController extends AppController
         if ($format != 'rss') {
             $this->set('content_wide', true); // display 2 features next to each other
             $this->set('collapse_categories', true);
-            $this->pageTitle = ___('Search Engines').' :: '
+            $this->pageTitle = ___('Search Engines', 'addons_searchengines_pagetitle').' :: '
                 .sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('bigHeader', true);
             $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
@@ -1266,7 +1266,7 @@ class AddonsController extends AppController
             $this->render('searchengines');
         } else {
             // RSS feed
-            $this->publish('rss_title', ___('Search Engines'));
+            $this->publish('rss_title', ___('Search Engines', 'addons_searchengines_pagetitle'));
             $this->publish('rss_description', '');
             $this->render('rss/searchengines', 'rss');
         }
@@ -1277,7 +1277,7 @@ class AddonsController extends AppController
      */
     function _plugins() {
         $this->layout = 'mozilla';
-        $this->pageTitle = ___('Plugins').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Plugins', 'addons_plugins_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('subpagetitle', sprintf(___('Common Plugins for %1$s'), APP_PRETTYNAME));
         $this->render('plugins');
         return;
@@ -1399,7 +1399,7 @@ class AddonsController extends AppController
         $this->publish('platforms', $platforms);
 
         // set layout details
-        $this->pageTitle = ___('Dictionaries & Language Packs') .' :: '
+        $this->pageTitle = ___('Dictionaries & Language Packs', 'langtools_header_dicts_and_langpacks') .' :: '
             . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
         $this->publish('bigHeader', true);
         $this->publish('bigHeaderText', sprintf(___('Add-ons extend %1$s, letting you personalize your browsing experience.  Take a look around and make %1$s your own.'), APP_PRETTYNAME));
@@ -1513,14 +1513,14 @@ class AddonsController extends AppController
             $this->publish('platforms', $platforms);
 
             $this->layout='mozilla';
-            $this->pageTitle = ___('Recommended Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+            $this->pageTitle = ___('Recommended Add-ons', 'addons_recommended_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('addons', $featAddons);
             $this->publish('rssAdd', array('/recommended/format:rss'));
-            $this->publish('subpagetitle', ___('Recommended Add-ons'));
+            $this->publish('subpagetitle', ___('Recommended Add-ons', 'addons_recommended_pagetitle'));
             $this->render();
         } else {
             $this->publish('addons', $featAddons);
-            $this->publish('rss_title', ___('Recommended Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME));
+            $this->publish('rss_title', ___('Recommended Add-ons', 'addons_recommended_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME));
             $this->publish('rss_description', ___('With so many great add-ons available, there\'s something for everyone. To get you started, here\'s a list of some of the most popular. Enjoy!'));
             $this->render('rss/addons', 'rss');
         }
