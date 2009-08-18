@@ -218,12 +218,13 @@ class InstallationTest extends UnitTestCase {
         }
     }
 
-	/**
-	 * Tests that JSHydra is installed
-	 */
-	function testJSHydra() {
-		$this->assertTrue(file_exists(JSHYDRA_PATH), 'JSHydra is installed at JSHYDRA_PATH: (return true)');
-	}
+    /**
+     * Tests that the validation framework is properly configured
+     */
+    function testValidation() {
+        $this->assertTrue(file_exists(JSHYDRA_PATH), 'JSHydra is installed at JSHYDRA_PATH: (return true)');
+        $this->assertTrue(file_exists(COMPARELOCALES_PATH), 'mozcomparelocales is installed at COMPARELOCALES_PATH: (return true)');
+    }
 
 }
 ?>

@@ -573,31 +573,28 @@ class ValidationComponent extends Object {
      */
     function all_l10n_checkCompleteness($file) {
 
-        //
-        // This test is not yet ready for production, pending the
-        // resolution of bug 505260.  Do not remove the return
-        // statement below until this is good to go
-        //
-        return array();
+        // Bail if we don't have comparelocales
+        if (!defined('COMPARELOCALES_PATH') || !defined('PYTHON_PATH')) return array();
 
-        // Build the paths we need
-        $script = VENDORS . 'verify_l10n/scripts/compare-locales2.py';
+        // Find the scripts and make sure we can use them
+        $script = ROOT . '/../bin/comparelocales_scripts/amo-l10ncheck.py';
         $file_loc = REPO_PATH . '/' . $file['Version']['addon_id'] . '/' . $file['File']['filename'];
-        $file_loc = '"' . escapeshellarg($file_loc) . '"';
 
-        // If we can't find the exec, just skip this test
-        if (!file_exists($script) || !is_readable($script) || !defined('PYTHON_BINARY')) {
+        // If we can't find the required files, skip this
+        if (!file_exists($script) || !is_readable($script) 
+            || !file_exists($file_loc) || !is_readable($file_loc)
+            || !file_exists(COMPARELOCALES_PATH) || !is_readable(COMPARELOCALES_PATH)) {
             return array();
         }
 
         // Build the full escaped command
-        $command = PYTHON_BINARY . ' ' . $script . ' -i xpi ' . $file_loc . ' --json statistics_json';
+        $command = PYTHON_PATH . ' ' . $script . ' ' . escapeshellarg($file_loc) . ' ' . escapeshellarg(COMPARELOCALES_PATH);
 
         // Results are returned as json
         $json = shell_exec($command);
         $result = json_decode($json);
         if (!is_array($result)) {
-            return $this->_testFail(0, '', sprintf(___('L10n test returned an error: %s'), $json));
+            return $this->_resultFail(0, '', sprintf(___('L10n test returned an error: %s'), $json));
         }
 
         // If results didn't parse, it won't be an array
@@ -611,11 +608,15 @@ class ValidationComponent extends Object {
                 $code = $data[0];
                 $info = $data[1]->children[0];
 
+                // We have a threshold for the number of entries before generating a warning.
+                $totalEntities = $info->total;
+                $threshold = 0.10;
+                
                 // We are concerned with unmodified and missing entities
-                if (property_exists($info, 'unmodifiedEntities')) {
+                if (property_exists($info, 'unmodifiedEntities') && $info->unmodifiedEntities/$totalEntities > $threshold) {
                     $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('The %1$s locale contains %2$s unmodified translation', 'The %1$s locale contains %2$s unmodified translations', $info->unmodifiedEntities), $code, $info->unmodifiedEntities));
                 }
-                if (property_exists($info, 'missingEntities')) {
+                if (property_exists($info, 'missingEntities') && $info->missingEntities/$totalEntities > $threshold) {
                     $results[] = $this->_result(TEST_WARN, 0, '', sprintf(n___('The %1$s locale is missing %2$s translation', 'The %1$s locale is missing %2$s translations', $info->missingEntities), $code, $info->missingEntities));
                 }
             }

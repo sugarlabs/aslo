@@ -494,6 +494,28 @@ class ValidationTest extends UnitTestCase {
     }
 
     /**
+     * Tests the all_l10n_checkCompleteness() method {
+     */
+    function testAll_l10n_checkCompleteness() {
+        
+        $file = $this->controller->File->findById(1);
+        
+        // Verify default extension is not localized
+        $results = $this->controller->Validation->all_l10n_checkCompleteness($file);
+        $expected = $this->controller->Validation->_resultFail(0, '', 'L10n test returned an error: ');
+        $this->assertEqual($results, $expected, 'Default extension should have complete L10n: %s');
+
+        $file = $this->controller->File->findById(3);
+
+        // Advanced extension should have 4 incomplete locales
+        $results = $this->controller->Validation->all_l10n_checkCompleteness($file);
+        $this->assertEqual(count($results), 4, 'The advanced extension has 4 incomplete locales');
+
+        $expected = $this->controller->Validation->_result(TEST_WARN, 0, '', 'The it-IT locale contains 7 unmodified translations');
+        $this->assertEqual($results[0], $expected, 'Results are warnings conforming to a threshold: %s');
+    }
+
+    /**
      * Tests the dictionary_general_verifyFileLayout() method
      */
     function testDictionary_general_verifyFileLayout() {
