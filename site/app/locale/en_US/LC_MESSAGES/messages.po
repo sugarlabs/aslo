@@ -16,6 +16,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# %1$s is the count of files, a number
+# %2$s is a status string like _('Public') or _('Incomplete')
 #: controllers/components/amo.php:549
 #, php-format
 msgid "%1$s %2$s file"
@@ -23,16 +25,24 @@ msgid_plural "%1$s %2$s files"
 msgstr[0] "%1$s %2$s file"
 msgstr[1] "%1$s %2$s files"
 
+# %1$s is a number
+# %2$s is an application name  
+# %3$s is a number.
+# Full example:   50 Firefox users (10% of total)
 #: views/compatibility/developers.thtml:65
 #, php-format
 msgid "%1$s %2$s users (%3$s&#37; of total)"
 msgstr "%1$s %2$s users (%3$s&#37; of total)"
 
+# The title of the page for viewing an add-on's source.
+# %1$s is the name of the add-on
+# %2$s is the name of the current application (e.g. Firefox or Thunderbird)
 #: views/files/browse.thtml:46
 #, php-format
 msgid "%1$s :: File Browser :: %2$s Add-ons"
 msgstr "%1$s :: File Browser :: %2$s Add-ons"
 
+# %1 is a number.
 #: views/elements/amo2009/users/vcard.thtml:99
 #, php-format
 msgid "%1$s Add-on"
@@ -40,6 +50,7 @@ msgid_plural "%1$s Add-ons"
 msgstr[0] "%1$s Add-on"
 msgstr[1] "%1$s Add-ons"
 
+# %1$s is a number.
 #: views/collections/detail.thtml:126
 #, php-format
 msgid "%1$s Add-on in this Collection"
@@ -47,6 +58,7 @@ msgid_plural "%1$s Add-ons in this Collection"
 msgstr[0] "%1$s Add-on in this Collection"
 msgstr[1] "%1$s Add-ons in this Collection"
 
+# %1$s is a number
 #: views/helpers/localization.php:65 views/developers/versions_edit.thtml:95
 #: views/addons/dictionaries.thtml:92
 #, php-format
@@ -59,11 +71,13 @@ msgstr "%1$s KB"
 msgid "%1$s Statistics"
 msgstr "%1$s Statistics"
 
+# %1$s is the add-on name
 #: controllers/addons_controller.php:1637
 #, php-format
 msgid "%1$s Version History"
 msgstr "%1$s Version History"
 
+# %1 is the add-on count, %2 the category name
 #: views/addons/browse_thumbs.thtml:92 views/addons/browse.thtml:60
 #, php-format
 msgid "%1$s add-on"
@@ -71,146 +85,217 @@ msgid_plural "%1$s add-ons"
 msgstr[0] "%1$s add-on"
 msgstr[1] "%1$s add-ons"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>user name</a>
+# %3$s is <a>group name</a>
 #: controllers/components/audit.php:188
 #, php-format
 msgid "%1$s added %2$s to group %3$s"
 msgstr "%1$s added %2$s to group %3$s"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>addon name</a>
 #: controllers/components/audit.php:243
 #, php-format
 msgid "%1$s added addon %2$s to feature list"
 msgstr "%1$s added addon %2$s to feature list"
 
+# %1$s is <a>user name</a>
+# %2$s is a numeric id.
 #: controllers/components/audit.php:257
 #, php-format
 msgid "%1$s approved review %2$s"
 msgstr "%1$s approved review %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>group name</a>
 #: controllers/components/audit.php:325
 #, php-format
 msgid "%1$s associated themselves with %2$s"
 msgstr "%1$s associated themselves with %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>group name</a>
 #: controllers/components/audit.php:307
 #, php-format
 msgid "%1$s attempted to modify locked group %2$s"
 msgstr "%1$s attempted to modify locked group %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a locale, like en-US.
 #: controllers/components/audit.php:311
 #, php-format
 msgid "%1$s attempted to modify translations in %2$s without permission"
 msgstr "%1$s attempted to modify translations in %2$s without permission"
 
+# %1$s is <a>user name</a>
+# %2$s is a locale, like en-US.
 #: controllers/components/audit.php:152
 #, php-format
 msgid "%1$s changed a feature for %2$s locale"
 msgstr "%1$s changed a feature for %2$s locale"
 
+# %1$s is <a>user name</a>
+# %2$s is a config field, like "awesomeness".
+# %3$s is a config value, like "off".
+# %4$s is a config value, like "on".
 #: controllers/components/audit.php:219
 #, php-format
 msgid "%1$s changed config '%2$s' from '%3$s' to '%4$s'"
 msgstr "%1$s changed config '%2$s' from '%3$s' to '%4$s'"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>addon name</a>
 #: controllers/components/audit.php:253
 #, php-format
 msgid "%1$s changed locales for addon %2$s on feature list"
 msgstr "%1$s changed locales for addon %2$s on feature list"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>addon name</a>
+# %3$s is a status, like Public.
 #: controllers/components/audit.php:82
 #, php-format
 msgid "%1$s changed the status of %2$s to %3$s"
 msgstr "%1$s changed the status of %2$s to %3$s"
 
+# %1$s is <a>user name</a>
+# %2$s an action string, but we don't know what it could be.
+# %3$s is a numeric id.
 #: controllers/components/audit.php:292
 #, php-format
 msgid "%1$s committed unknown action %2$s for %3$s"
 msgstr "%1$s committed unknown action %2$s for %3$s"
 
+# %1$s is <a>user name</a>
+# %2$s an action string, but we don't know what it could be.
+# %3$s is a numeric id.
 #: controllers/components/audit.php:233
 #, php-format
 msgid "%1$s committed unknown admin action %2$s to ID %3$s"
 msgstr "%1$s committed unknown admin action %2$s to ID %3$s"
 
+# %1$s is <a>user name</a>
+# %2$s an action string, but we don't know what it could be.
+# %3$s is a numeric id.
 #: controllers/components/audit.php:270
 #, php-format
 msgid "%1$s committed unknown editor action %2$s to ID %3$s"
 msgstr "%1$s committed unknown editor action %2$s to ID %3$s"
 
+# %1$s is <a>user name</a>
+# %2$s an action string, but we don't know what it could be.
+# %3$s is a numeric id.
 #: controllers/components/audit.php:315
 #, php-format
 msgid "%1$s committed unknown security action %2$s to ID %3$s"
 msgstr "%1$s committed unknown security action %2$s to ID %3$s"
 
+# %1$s is an add-on name and version.  Example:  Add-on 3.5
 #: controllers/components/stats.php:548
 #, php-format
 msgid "%1$s created"
 msgstr "%1$s created"
 
+# %1$s is <a>user name</a>
+# %2$s is an application, like Firefox.
 #: controllers/components/audit.php:95
 #, php-format
 msgid "%1$s created application %2$s"
 msgstr "%1$s created application %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>group name</a>
 #: controllers/components/audit.php:165
 #, php-format
 msgid "%1$s created group %2$s"
 msgstr "%1$s created group %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a platform, like <a>Windows</a>
 #: controllers/components/audit.php:138
 #, php-format
 msgid "%1$s created platform %2$s"
 msgstr "%1$s created platform %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is the name of a canned response, like 'Ready for the public'
 #: controllers/components/audit.php:207
 #, php-format
 msgid "%1$s created response %2$s"
 msgstr "%1$s created response %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a category name, like <a>Search Tools</a>
 #: controllers/components/audit.php:121
 #, php-format
 msgid "%1$s created tag %2$s"
 msgstr "%1$s created tag %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a version number, like 3.5.
+# %3$s is an application, like Firefox.
 #: controllers/components/audit.php:108
 #, php-format
 msgid "%1$s created version %2$s for %3$s"
 msgstr "%1$s created version %2$s for %3$s"
 
+# %1$s is the add-on type string
+# %2$s is Inactive or Active in a <span>
+# %3$s is the addon's public status (Public, In Sandbox, ...) in a <span>
 #: views/developers/dashboard.thtml:69
 #, php-format
 msgid "%1$s currently %2$s and %3$s"
 msgstr "%1$s currently %2$s and %3$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a category name, like <a>Search Tools</a>
+# %3$s is a numeric id.
 #: controllers/components/audit.php:129
 #, php-format
 msgid "%1$s deleted category %2$s (ID %3$s)"
 msgstr "%1$s deleted category %2$s (ID %3$s)"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>group name</a>
+# %2$s is a numeric id.
 #: controllers/components/audit.php:173
 #, php-format
 msgid "%1$s deleted group %2$s (ID %3$s)"
 msgstr "%1$s deleted group %2$s (ID %3$s)"
 
+# %1$s is <a>user name</a>
+# %2$s is a platform, like <a>Windows</a>
+# %3$s is a numeric id.
 #: controllers/components/audit.php:146
 #, php-format
 msgid "%1$s deleted platform %2$s (ID %3$s)"
 msgstr "%1$s deleted platform %2$s (ID %3$s)"
 
+# %1$s is <a>user name</a>
+# %2$s is the name of a canned response, like 'Ready for the public'
+# %3$s is a numeric id.
 #: controllers/components/audit.php:215
 #, php-format
 msgid "%1$s deleted response %2$s (ID %3$s)"
 msgstr "%1$s deleted response %2$s (ID %3$s)"
 
+# %1$s is <a>user name</a>
+# %2$s is a numeric id.
 #: controllers/components/audit.php:262 controllers/components/audit.php:265
 #, php-format
 msgid "%1$s deleted review %2$s"
 msgstr "%1$s deleted review %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a version number, like 3.5.
+# %3$s is an application, like Firefox.
 #: controllers/components/audit.php:111
 #, php-format
 msgid "%1$s deleted version %2$s for %3$s"
 msgstr "%1$s deleted version %2$s for %3$s"
 
+# %1$s is a number.
 #: views/elements/amo2009/separated_list_items.thtml:80
 #, php-format
 msgid "%1$s download this week"
@@ -218,36 +303,49 @@ msgid_plural "%1$s downloads this week"
 msgstr[0] "%1$s download this week"
 msgstr[1] "%1$s downloads this week"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>user name</a>
 #: controllers/components/audit.php:229
 #, php-format
 msgid "%1$s edited %2$s's user information"
 msgstr "%1$s edited %2$s's user information"
 
+# %1$s is <a>user name</a>
+# %2$s is an application, like Firefox.
 #: controllers/components/audit.php:98
 #, php-format
 msgid "%1$s edited application %2$s"
 msgstr "%1$s edited application %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a category name, like <a>Search Tools</a>
 #: controllers/components/audit.php:124
 #, php-format
 msgid "%1$s edited category %2$s"
 msgstr "%1$s edited category %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>group name</a>
 #: controllers/components/audit.php:168
 #, php-format
 msgid "%1$s edited group %2$s"
 msgstr "%1$s edited group %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a platform, like <a>Windows</a>
 #: controllers/components/audit.php:141
 #, php-format
 msgid "%1$s edited platform %2$s"
 msgstr "%1$s edited platform %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is the name of a canned response, like 'Ready for the public'
 #: controllers/components/audit.php:210
 #, php-format
 msgid "%1$s edited response %2$s"
 msgstr "%1$s edited response %2$s"
 
+# %1$s is a number
 #: views/elements/developers/testresults_stats.thtml:45
 #, php-format
 msgid "%1$s error"
@@ -255,26 +353,34 @@ msgid_plural "%1$s errors"
 msgstr[0] "%1$s error"
 msgstr[1] "%1$s errors"
 
+# %1$s is <a>user name</a>
+# %2$s is a part of the admin, like 'Site Config'
 #: controllers/components/audit.php:300
 #, php-format
 msgid "%1$s failed to re-authenticate to access %2$s."
 msgstr "%1$s failed to re-authenticate to access %2$s."
 
+# %1$s is the add-on name
+# %2$s is the collection name, linked to the collection's page
 #: views/pages/js_constants.js.thtml:101 views/addons/display.thtml:70
 #, php-format
 msgid "%1$s has been added to the %2$s collection."
 msgstr "%1$s has been added to the %2$s collection."
 
+# %1$s is the collection name
 #: views/collections/subscribe.thtml:60
 #, php-format
 msgid "%1$s has been added to your favorite collections."
 msgstr "%1$s has been added to your favorite collections."
 
+# %1$s is the collection name
 #: views/collections/subscribe.thtml:78
 #, php-format
 msgid "%1$s has been removed from your favorite collections."
 msgstr "%1$s has been removed from your favorite collections."
 
+# %$1s is a version.  Example: 3.1.1
+# %$2s is an add-on name.
 #: controllers/components/validation.php:324
 #: controllers/components/validation.php:336
 #: controllers/components/developers.php:603
@@ -283,6 +389,8 @@ msgstr "%1$s has been removed from your favorite collections."
 msgid "%1$s is not a valid version for %2$s"
 msgstr "%1$s is not a valid version for %2$s"
 
+# %$1s is a version.  Example: 3.1.1
+# %$2s is an add-on name.
 #: controllers/components/validation.php:327
 #: controllers/components/developers.php:606
 #, php-format
@@ -290,6 +398,7 @@ msgid "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
 msgstr ""
 "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
 
+# %1 is the add-on name, %2 is the platform
 #: views/pages/js_constants.js.thtml:66
 #, php-format
 msgid "%1$s is not available for %2$s."
@@ -300,6 +409,7 @@ msgstr "%1$s is not available for %2$s."
 msgid "%1$s on %2$s"
 msgstr "%1$s on %2$s"
 
+# %1$s is a number.  This is referring to the total number of passing tests.
 #: views/elements/developers/testresults_stats.thtml:69
 #, php-format
 msgid "%1$s pass"
@@ -307,31 +417,42 @@ msgid_plural "%1$s pass"
 msgstr[0] "%1$s pass"
 msgstr[1] "%1$s passes"
 
+# %1$s is <a>user name</a>
+# %2$s is a numeric id.
 #: controllers/components/audit.php:86
 #, php-format
 msgid "%1$s recalculated the hash for file %2$s"
 msgstr "%1$s recalculated the hash for file %2$s"
 
+# %1$s is an application name and version.  Example:  Firefox 3.5
 #: controllers/components/stats.php:529
 #, php-format
 msgid "%1$s released"
 msgstr "%1$s released"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>user name</a>
+# %3$s is <a>group name</a>
 #: controllers/components/audit.php:197
 #, php-format
 msgid "%1$s removed %2$s from group %3$s"
 msgstr "%1$s removed %2$s from group %3$s"
 
+# %1$s is <a>user name</a>
+# %2$s is <a>addon name</a>
 #: controllers/components/audit.php:248
 #, php-format
 msgid "%1$s removed addon %2$s from feature list"
 msgstr "%1$s removed addon %2$s from feature list"
 
+# %1$s is <a>user name</a>
+# %2$s is a numeric id.
 #: controllers/components/audit.php:156
 #, php-format
 msgid "%1$s removed feature %2$s"
 msgstr "%1$s removed feature %2$s"
 
+# %1$s is a number
 #: views/elements/amo2009/reviews.thtml:58
 #: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
 #: views/addons/browse_thumbs.thtml:132
@@ -341,31 +462,42 @@ msgid_plural "%1$s reviews"
 msgstr[0] "%1$s review"
 msgstr[1] "%1$s reviews"
 
+# %1$s is a date
+# %2$s is a date
 #: views/editors/performance_table.thtml:124
 #, php-format
 msgid "%1$s to %2$s"
 msgstr "%1$s to %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a locale, like en-US.
 #: controllers/components/audit.php:278
 #, php-format
 msgid "%1$s updated application translations for %2$s"
 msgstr "%1$s updated application translations for %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a locale, like en-US.
 #: controllers/components/audit.php:289
 #, php-format
 msgid "%1$s updated blog post translations for %2$s"
 msgstr "%1$s updated blog post translations for %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a locale, like en-US.
 #: controllers/components/audit.php:282
 #, php-format
 msgid "%1$s updated categories for %2$s"
 msgstr "%1$s updated categories for %2$s"
 
+# %1$s is <a>user name</a>
+# %2$s is a locale, like en-US.
 #: controllers/components/audit.php:286
 #, php-format
 msgid "%1$s updated platform translations for %2$s"
 msgstr "%1$s updated platform translations for %2$s"
 
+# %1$s is a number
 #: views/elements/developers/testresults_stats.thtml:57
 #, php-format
 msgid "%1$s warning"
@@ -373,6 +505,8 @@ msgid_plural "%1$s warnings"
 msgstr[0] "%1$s warning"
 msgstr[1] "%1$s warnings"
 
+# This is the password reset email
+# %1 is the pw reset URL, %2 is the application
 #: views/users/email/pwreset_plain.thtml:5
 #, php-format
 msgid ""
@@ -399,11 +533,15 @@ msgstr ""
 msgid "%A, %B %e, %Y"
 msgstr "%A, %B %e, %Y"
 
+# This is a date format.
+# http://php.net/strftime
 #: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 #: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
 msgid "%A, %b. %e"
 msgstr "%A, %b. %e"
 
+# date format string as used in PHP's strftime():
+# http://php.net/strftime
 #: views/elements/collections_interactive_addon.thtml:85
 #: views/elements/amo2009/users/vcard.thtml:92
 #: views/elements/amo2009/results_addon.thtml:102
@@ -428,6 +566,8 @@ msgstr "%A, %b. %e"
 msgid "%B %e, %Y"
 msgstr "%B %e, %Y"
 
+# date and time format string (strftime)
+# http://php.net/strftime
 #: views/elements/addon_version_detail.thtml:53 views/users/edit.thtml:202
 #: views/editors/review.thtml:369 views/developers/discuss.thtml:51
 #: views/developers/discuss.thtml:61 views/admin/addons_status.thtml:57
@@ -435,15 +575,22 @@ msgstr "%B %e, %Y"
 msgid "%B %e, %Y, %I:%M %p"
 msgstr "%B %e, %Y, %I:%M %p"
 
+# This is a date format.
+# http://php.net/strftime
 #: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
 #, php-format
 msgid "%b. %e"
 msgstr "%b. %e"
 
+# This is a date format.
+# http://php.net/strftime
 #: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
 msgid "%b. %e, %Y"
 msgstr "%b. %e, %Y"
 
+# %s is the name of the add-on and the add-on section.  Example:
+#   Some Add-on :: Firefox Add-ons
+# This should not be concatenated in the code and should be fixed.
 #: controllers/tags_controller.php:381 controllers/addons_controller.php:259
 #: controllers/addons_controller.php:389
 #: controllers/addons_controller.php:1584
@@ -456,26 +603,31 @@ msgstr "%s"
 msgid "%s Add-ons"
 msgstr "%s Add-ons"
 
+# %s is the application name (Firefox, Thunderbird).
 #: views/developers/addon_edit_categories.thtml:61
 #, php-format
 msgid "%s Categories"
 msgstr "%s Categories"
 
+# %1$s is the name of the collection
 #: controllers/collections_controller.php:409
 #, php-format
 msgid "%s Collection"
 msgstr "%s Collection"
 
+# %1 is the app name
 #: views/editors/queue.thtml:137
 #, php-format
 msgid "%s Compatibility"
 msgstr "%s Compatibility"
 
+# %s is the add-on name.
 #: views/developers/previews.thtml:44
 #, php-format
 msgid "%s Preview Manager"
 msgstr "%s Preview Manager"
 
+# %s is the add-on name.
 #: views/developers/addon_status_nominate.thtml:43
 #: views/developers/addon_status_confirm.thtml:43
 #: views/developers/addon_status.thtml:43
@@ -483,6 +635,7 @@ msgstr "%s Preview Manager"
 msgid "%s Status"
 msgstr "%s Status"
 
+# %s is a number
 #: controllers/editors_controller.php:1856
 #, php-format
 msgid "%s days"
@@ -500,27 +653,33 @@ msgstr[1] "%s files"
 msgid "%s found in range"
 msgstr "%s found in range"
 
+# %s is a percentage, like '+22.33%'.  It sits next to another number, so
+# the implied meaning is 'percentage change' from the previous stat point.
 #: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:209
 #, php-format
 msgid "%s from last week"
 msgstr "%s from last week"
 
+# %s is a number
 #: controllers/editors_controller.php:1864
 #, php-format
 msgid "%s hours"
 msgstr "%s hours"
 
+# %s is a number
 #: controllers/editors_controller.php:1872
 #, php-format
 msgid "%s minutes"
 msgstr "%s minutes"
 
+# %s is a comma separated list of platforms.  Example:  Windows, OS X
 #: controllers/editors_controller.php:1439
 #: controllers/editors_controller.php:1442
 #, php-format
 msgid "%s only"
 msgstr "%s only"
 
+# %s is the name of the add-on
 #: views/addons/policy.thtml:61
 #, php-format
 msgid ""
@@ -530,6 +689,7 @@ msgstr ""
 "%s requires that you accept the following End-User License Agreement before "
 "installation can proceed:"
 
+# %s is a number
 #: views/elements/developers/testresults_group.thtml:50
 #, php-format
 msgid "%s result"
@@ -548,14 +708,17 @@ msgstr[1] "%s reviews"
 msgid "&laquo; prev"
 msgstr "&laquo; prev"
 
+# This is text for an <a>, please include the parenthesis
 #: views/editors/review.thtml:385
 msgid "(New Thread)"
 msgstr "(New Thread)"
 
+# This is text for an <a>, please include the parenthesis
 #: views/editors/review.thtml:380
 msgid "(Reply)"
 msgstr "(Reply)"
 
+# This is text for an <a>, please include the parenthesis
 #: views/editors/review.thtml:441
 msgid "(Subscribe)"
 msgstr "(Subscribe)"
@@ -564,6 +727,7 @@ msgstr "(Subscribe)"
 msgid "(US Dollars.  Example: 3.99)"
 msgstr "(US Dollars.  Example: 3.99)"
 
+# This is text for an <a>, please include the parenthesis
 #: views/editors/review.thtml:442
 msgid "(Unsubscribe)"
 msgstr "(Unsubscribe)"
@@ -572,10 +736,14 @@ msgstr "(Unsubscribe)"
 msgid "(auto-detect)"
 msgstr "(auto-detect)"
 
+# This appears on a page that views the source of an add-on.  There is a list of
+# directories and files on the page.  Clicking this link will toggle between an
+# expanded or a collapsed list.  This string should be kept short.
 #: views/files/browse.thtml:68
 msgid "+/-"
 msgstr "+/-"
 
+# Placeholder for the empty option in a <select>.
 #: views/developers/addon_edit_categories.thtml:69
 msgid "----------------"
 msgstr "----------------"
@@ -592,11 +760,14 @@ msgstr "1 hour"
 msgid "1 minute"
 msgstr "1 minute"
 
+# %1$s is a URL
 #: views/collections/detail.thtml:90
 #, php-format
 msgid "<a href=\"%1$s\">Log in</a> to add this collection to your favorites."
 msgstr "<a href=\"%1$s\">Log in</a> to add this collection to your favorites."
 
+# %1 is the login URL for the link tag
+# %2 is the link to an explanatory page.
 #: views/elements/amo2009/install.thtml:334 views/elements/install.thtml:255
 #, php-format
 msgid ""
@@ -606,11 +777,15 @@ msgstr ""
 "<a href=\"%1$s\">Log in</a> to install this experimental add-on. <a href=\"%2"
 "$s\">Why</a>?"
 
+# %1 is the URL to the registration page
+# %2 is the URL to the login page
 #: views/layouts/amo2009.thtml:278
 #, php-format
 msgid "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a>"
 msgstr "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a>"
 
+# %1$s is a URL
+# %2$s is a URL
 #: views/addons/display.thtml:496
 #, php-format
 msgid ""
@@ -618,6 +793,7 @@ msgid ""
 msgstr ""
 "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a> to add tags"
 
+# %1 is the review guidelines link
 #: views/addons/display.thtml:358
 #, php-format
 msgid "<a href=\"%s\">Review Guidelines</a>"
@@ -629,18 +805,21 @@ msgid ""
 msgstr ""
 "<a href=\"http://getfirefox.com\">Upgrade Firefox</a> to use this add-on"
 
+# %s is a number
 #: views/elements/developers/statsbar.thtml:45
 #: views/developers/dashboard.thtml:79
 #, php-format
 msgid "<em>%s</em> Active Daily Users"
 msgstr "<em>%s</em> Active Daily Users"
 
+# %s is a number
 #: views/elements/developers/statsbar.thtml:41
 #: views/developers/dashboard.thtml:75
 #, php-format
 msgid "<em>%s</em> Total Downloads"
 msgstr "<em>%s</em> Total Downloads"
 
+# %s is a number
 #: views/elements/developers/statsbar.thtml:43
 #: views/developers/dashboard.thtml:77
 #, php-format
@@ -667,6 +846,7 @@ msgstr ""
 "Thunderbird, open Add-ons from the Tools menu.</li><li>Click the Install "
 "button, and locate/select the file you downloaded and click \"OK\".</li></ol>"
 
+# %1$s is a URL.
 #: controllers/collections_controller.php:163
 #, php-format
 msgid ""
@@ -710,6 +890,7 @@ msgstr ""
 "what's next.</li><li>Build more awareness of your efforts.</li></ul><p>Ready "
 "to create your Developer Profile? Click the button below to begin.</p>"
 
+# %1 is the URL of the support section, %2 for the review guidelines
 #: views/reviews/add.thtml:53
 #, php-format
 msgid ""
@@ -796,6 +977,8 @@ msgstr ""
 "the features listed above. If you're ready to start the process and have "
 "your add-on package ready for upload, just click on Get Started below!</p>"
 
+# %1$s is a URL.
+# %2$s is a full <a href>.
 #: views/collections/detail.thtml:62
 #, php-format
 msgid ""
@@ -809,6 +992,7 @@ msgstr ""
 "href=\"%1$s\">Manage Collections</a> page.</p><p>Your collection can be "
 "accessed at this location: %2$s</p>"
 
+# %1$s is a URL.
 #: controllers/collections_controller.php:148
 #, php-format
 msgid ""
@@ -818,6 +1002,7 @@ msgstr ""
 "<p>You haven't created any collections yet. Collections are easy to create "
 "and fill with your favorite add-ons.  <a href='%1$s'>Try it out</a>!</p>"
 
+# %s is href=... and should stay in the <a> tag.
 #: views/developers/uploader.thtml:159
 #, php-format
 msgid ""
@@ -879,16 +1064,19 @@ msgstr ""
 "<span>Your changes have been saved.</span><br />Please note that some "
 "changes may take several hours to appear in all areas of the website."
 
+# %1 is the add-ons rank in the queue, %2 is the total queue length
 #: views/editors/review.thtml:48
 #, php-format
 msgid "<strong># %1$s</strong> of %2$s in queue"
 msgstr "<strong># %1$s</strong> of %2$s in queue"
 
+# %1 is the add-ons rank in the queue, %2 is the total queue length.  Both numbers
 #: views/editors/review.thtml:46
 #, php-format
 msgid "<strong># %1$s</strong> of %2$s in queue (filtered)"
 msgstr "<strong># %1$s</strong> of %2$s in queue (filtered)"
 
+# %1$s is the number of addons downloaded
 #: views/addons/home.thtml:57
 #, php-format
 msgid "<strong>%1$s</strong> <span>add-on downloaded</span>"
@@ -896,6 +1084,7 @@ msgid_plural "<strong>%1$s</strong> <span>add-ons downloaded</span>"
 msgstr[0] "<strong>%1$s</strong> <span>add-on downloaded</span>"
 msgstr[1] "<strong>%1$s</strong> <span>add-ons downloaded</span>"
 
+# %1$s is the number of addons in use
 #: views/addons/home.thtml:63
 #, php-format
 msgid "<strong>%1$s</strong> <span>add-on in use</span>"
@@ -903,6 +1092,7 @@ msgid_plural "<strong>%1$s</strong> <span>add-ons in use</span>"
 msgstr[0] "<strong>%1$s</strong> <span>add-on in use</span>"
 msgstr[1] "<strong>%1$s</strong> <span>add-ons in use</span>"
 
+# %1$s is the count of addons in a collection
 #: views/elements/amo2009/collection_listing_item.thtml:51
 #: views/addons/home.thtml:164
 #, php-format
@@ -911,6 +1101,7 @@ msgid_plural "<strong>%1$s</strong> add-ons"
 msgstr[0] "<strong>%1$s</strong> add-on"
 msgstr[1] "<strong>%1$s</strong> add-ons"
 
+# %1$s is the count of subscribers for a collection
 #: views/elements/amo2009/collection_listing_item.thtml:58
 #: views/collections/detail.thtml:96 views/addons/home.thtml:168
 #, php-format
@@ -980,6 +1171,7 @@ msgstr ""
 "<strong>You have unsaved changes.</strong> Files will not be deleted until "
 "you click Update Version below."
 
+# %1 is the add-on name, %2 is the add-on's version number currently being reviewed by an editor
 #: views/developers/discuss.thtml:46
 #, php-format
 msgid ""
@@ -993,6 +1185,7 @@ msgstr ""
 msgid "A first name, last name or nickname is required."
 msgstr "A first name, last name or nickname is required."
 
+# %1 is the user's email address, %2 is the current app
 #: views/users/activatefirst.thtml:49
 #, php-format
 msgid ""
@@ -1010,6 +1203,7 @@ msgstr ""
 "A new section is added to your add-on's page and Developer Profile "
 "requesting a contribution from your users."
 
+# %1$s is the name of the file
 #: controllers/components/developers.php:692
 #, php-format
 msgid ""
@@ -1019,6 +1213,7 @@ msgstr ""
 "A version of that add-on already exists. To replace it, you must delete the "
 "file %1$s first."
 
+# Link text for the AMO About page.
 #: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
 msgctxt "footer_a_about"
 msgid "About"
@@ -1126,6 +1321,7 @@ msgctxt "tags_add_tag_button"
 msgid "Add"
 msgstr "Add"
 
+# %1 is the add-on name, %2 is the app name
 #: views/elements/amo2009/install.thtml:202
 #: views/elements/amo2009/install.thtml:217
 #: views/elements/amo2009/install.thtml:272
@@ -1144,6 +1340,7 @@ msgstr "Add Another Preview"
 msgid "Add Author"
 msgstr "Add Author"
 
+# %1$s is the add-on name, %2$s is the version number.
 #: views/developers/uploader.thtml:57
 #, php-format
 msgid "Add File to %1$s %2$s"
@@ -1213,6 +1410,7 @@ msgstr "Add Translation"
 msgid "Add a review"
 msgstr "Add a review"
 
+# %s is the name of the add-on
 #: views/reviews/add.thtml:51
 #, php-format
 msgid "Add a review for %s"
@@ -1250,6 +1448,8 @@ msgstr "Add publisher comment"
 msgid "Add tags to your add-on."
 msgstr "Add tags to your add-on."
 
+# %1$s is the application name.  Example:  Firefox
+# %2$s is an optional string used to specify a platform.  Example:  (Windows)
 #: views/elements/amo2009/install.thtml:139 views/elements/install.thtml:75
 #, php-format
 msgid "Add to %1$s %2$s"
@@ -1418,12 +1618,14 @@ msgstr "Add-on Status"
 msgid "Add-on Status Check Results"
 msgstr "Add-on Status Check Results"
 
+# %s is the (localized) add-on status string in a span, e.g. "Disabled"
 #: views/developers/dashboard.thtml:99
 #, php-format
 msgctxt "devcp_dashboard_disabled_status"
 msgid "Add-on Status: %s"
 msgstr "Add-on Status: %s"
 
+# %s is the status in a span, e.g. "<span>_('Public')</span>".
 #: views/developers/addon_status.thtml:58
 #, php-format
 msgctxt "devcp_addon_status_header"
@@ -1521,6 +1723,7 @@ msgctxt "collections_edit_tabheader_addons"
 msgid "Add-ons"
 msgstr "Add-ons"
 
+# %1$s is the URL to the logo image
 #: views/layouts/amo2009.thtml:218
 #, php-format
 msgid ""
@@ -1530,6 +1733,7 @@ msgstr ""
 "Add-ons <em>for</em> <img alt=\"Firefox\" src=\"%1$s\" /> <strong>Firefox</"
 "strong>"
 
+# %1$s is the URL to the logo image
 #: views/layouts/amo2009.thtml:224
 #, php-format
 msgid ""
@@ -1539,6 +1743,7 @@ msgstr ""
 "Add-ons <em>for</em> <img alt=\"seamonkey\" src=\"%1$s\" /> "
 "<strong>SeaMonkey</strong>"
 
+# %1$s is the URL to the logo image
 #: views/layouts/amo2009.thtml:230
 #, php-format
 msgid ""
@@ -1548,6 +1753,7 @@ msgstr ""
 "Add-ons <em>for</em> <img alt=\"sunbird\" src=\"%1$s\" /> <strong>Sunbird</"
 "strong>"
 
+# %1$s is the URL to the logo image
 #: views/layouts/amo2009.thtml:236
 #, php-format
 msgid ""
@@ -1557,6 +1763,7 @@ msgstr ""
 "Add-ons <em>for</em> <img alt=\"thunderbird\" src=\"%1$s\" /> "
 "<strong>Thunderbird</strong>"
 
+# %1$s is the URL to the logo image
 #: views/layouts/amo2009.thtml:242
 #, php-format
 msgid "Add-ons <img alt=\"Add-ons\" src=\"%1$s\" />"
@@ -1566,6 +1773,7 @@ msgstr "Add-ons <img alt=\"Add-ons\" src=\"%1$s\" />"
 msgid "Add-ons Created"
 msgstr "Add-ons Created"
 
+# The title for a user if they are a developer
 #: views/users/info.thtml:62
 msgid "Add-ons Developer"
 msgstr "Add-ons Developer"
@@ -1614,11 +1822,13 @@ msgstr ""
 "Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
 "again."
 
+# %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:85
 #, php-format
 msgid "Add-ons compatible with a beta version or release candidate of %1$s"
 msgstr "Add-ons compatible with a beta version or release candidate of %1$s"
 
+# %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:81
 #, php-format
 msgid "Add-ons compatible with an alpha version of %1$s"
@@ -1639,6 +1849,8 @@ msgstr ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
 "a look around and make %1$s your own."
 
+# %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
+# Sunbird
 #: views/users/info.thtml:50 views/pages/collector_faq.thtml:49
 #: views/pages/collector_firstrun.thtml:42 views/pages/collector.thtml:46
 #: views/pages/collector_features.thtml:54
@@ -1698,6 +1910,7 @@ msgstr "Add-ons for Firefox"
 msgid "Add-ons in Use"
 msgstr "Add-ons in Use"
 
+# %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:77
 #, php-format
 msgid "Add-ons not compatible with any version of %1$s"
@@ -1713,16 +1926,20 @@ msgstr ""
 "least one of the below applications supported. Only the versions listed "
 "below are allowed for these applications."
 
+# %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:89
 #, php-format
 msgid "Add-ons up-to-date with the latest builds of %1$s"
 msgstr "Add-ons up-to-date with the latest builds of %1$s"
 
+# %1$s is the date the add-on was added to the collection
+# %1$s is the name of the user who added the add-on to the collection
 #: views/collections/edit.thtml:260
 #, php-format
 msgid "Added %1$s by %2$s"
 msgstr "Added %1$s by %2$s"
 
+# %s is a date in the _('date') format
 #: views/elements/collections_interactive_addon.thtml:85
 #, php-format
 msgid "Added %s"
@@ -1748,6 +1965,7 @@ msgstr "Additional Resources"
 msgid "Adjust maxVersion without uploading"
 msgstr "Adjust maxVersion without uploading"
 
+# %s is href=... and should stay in the <a> tag.
 #: views/developers/versions_edit.thtml:121
 #, php-format
 msgid ""
@@ -1867,11 +2085,13 @@ msgstr "Allow online source viewing"
 msgid "Alpha Versions"
 msgstr "Alpha Versions"
 
+# %1$s is a URL
 #: views/pages/js_constants.js.thtml:70
 #, php-format
 msgid "An <a href=\"%1$s\">older version</a> may work"
 msgstr "An <a href=\"%1$s\">older version</a> may work"
 
+# %1 is the new email address
 #: views/users/edit.thtml:68
 #, php-format
 msgid ""
@@ -1883,6 +2103,7 @@ msgstr ""
 "change to take effect, you need to click on the link provided in this email. "
 "Until then, you can keep logging in with your current email address."
 
+# %1 is the user's email address
 #: views/users/register_complete.thtml:49
 #, php-format
 msgid ""
@@ -1894,6 +2115,7 @@ msgstr ""
 "you can log in, you have to activate your account by clicking on the link "
 "provided in this email."
 
+# %s is the name of a file
 #: controllers/components/developers.php:684
 #: controllers/components/developers.php:696
 #: controllers/components/developers.php:701
@@ -1920,6 +2142,7 @@ msgstr ""
 "An error occurred trying to remove a favorite collection. Was this "
 "collection not a favorite?"
 
+# %1 is a link to the amo-admins mailing list
 #: views/users/delete.thtml:81
 #, php-format
 msgid ""
@@ -2037,6 +2260,7 @@ msgstr "Are you <strong>sure</strong> you wish to remove this author?"
 msgid "Are you human?"
 msgstr "Are you human?"
 
+# %s is the version number.
 #: views/developers/versions_delete.thtml:49
 #, php-format
 msgid "Are you sure you want to permanently delete version %s?"
@@ -2079,6 +2303,7 @@ msgstr "Are you sure?"
 msgid "Ascending sort"
 msgstr "Ascending sort"
 
+# %1$s is a URL where the user can see an example
 #: views/developers/addon_edit_contributions.thtml:143
 #, php-format
 msgid ""
@@ -2086,6 +2311,7 @@ msgid ""
 msgstr ""
 "Ask after users start downloading this add-on (<a href=\"%1$s\">example</a>)"
 
+# %1$s is a URL where the user can see an example
 #: views/developers/addon_edit_contributions.thtml:144
 #, php-format
 msgid ""
@@ -2109,6 +2335,7 @@ msgstr "At least one category selected"
 msgid "At least one preview image required for extensions and themes."
 msgstr "At least one preview image required for extensions and themes."
 
+# Column name in a table.
 #: views/developers/addon_edit_authors.thtml:62
 msgid "Author"
 msgstr "Author"
@@ -2125,6 +2352,7 @@ msgstr "Authors"
 msgid "Authors:"
 msgstr "Authors:"
 
+# A collection of add-ons that is automatically built for a user.  They are "automatically published" to this collection.
 #: controllers/collections_controller.php:598
 msgid "Auto-publisher"
 msgstr "Auto-publisher"
@@ -2154,6 +2382,7 @@ msgstr "Average rating for their Add-ons"
 msgid "BSD License"
 msgstr "BSD License"
 
+# %1 is the add-on name
 #: views/addons/policy.thtml:106 views/addons/versions.thtml:130
 #: views/reviews/flag.thtml:61 views/reviews/add.thtml:114
 #: views/reviews/display.thtml:214 views/reviews/review_added.thtml:57
@@ -2181,14 +2410,20 @@ msgstr "Back to Main"
 msgid "Back to Top"
 msgstr "Back to Top"
 
+# This appears on a page that views the source of an add-on.  This link will return
+# the user to the add-on's main page
 #: views/files/browse.thtml:65
 msgid "Back to add-on"
 msgstr "Back to add-on"
 
+# This appears on a page that views the source of an add-on.  This link will return
+# the user to the add-on's review page (it only appears if the add-on is being
+# reviewed)
 #: views/files/browse.thtml:64
 msgid "Back to review"
 msgstr "Back to review"
 
+# %1 is the add-on name
 #: views/reviews/flag.thtml:60 views/reviews/add.thtml:113
 #: views/reviews/review_added.thtml:56
 msgid "Back to the reviews..."
@@ -2198,6 +2433,8 @@ msgstr "Back to the reviews..."
 msgid "Be Careful With Old Versions"
 msgstr "Be Careful With Old Versions"
 
+# %1$s is the name of an application and a version.  Example: Firefox 3.0
+# %2$s is the name of an application.  Example: Firefox
 #: views/compatibility/dashboard.thtml:50
 #, php-format
 msgid ""
@@ -2227,6 +2464,7 @@ msgstr "Beta Versions"
 msgid "Block Quote"
 msgstr "Block Quote"
 
+# Link text to the AMO blog.
 #: views/elements/footer.thtml:74 views/layouts/amo2009.thtml:355
 msgid "Blog"
 msgstr "Blog"
@@ -2239,11 +2477,14 @@ msgstr "Bold"
 msgid "Briefly describe your collection and the kind of add-ons in it"
 msgstr "Briefly describe your collection and the kind of add-ons in it"
 
+# %1 is the name of the theme category (eg. Modern)
+# %2 is the name of the Application (eg. Firefox)
 #: controllers/addons_controller.php:824
 #, php-format
 msgid "Browse %1$s Themes :: %2$s Add-ons"
 msgstr "Browse %1$s Themes :: %2$s Add-ons"
 
+# %s is the name of the category
 #: controllers/addons_controller.php:1181
 #, php-format
 msgid "Browse %s"
@@ -2261,12 +2502,14 @@ msgstr "Browse Search Engines"
 msgid "Browse Themes"
 msgstr "Browse Themes"
 
+# %1 is the name of the Application (eg. Firefox)
 #: controllers/addons_controller.php:822
 #: controllers/addons_controller.php:1452
 #, php-format
 msgid "Browse all Themes :: %1$s Add-ons"
 msgstr "Browse all Themes :: %1$s Add-ons"
 
+# %1 is the link to mycroft.mozdev.org
 #: views/addons/searchengines.thtml:87
 #, php-format
 msgid "Browse through more search engines at %1$s"
@@ -2390,6 +2633,7 @@ msgstr "Categories:"
 msgid "Category"
 msgstr "Category"
 
+# %s is the category number (1, 2, 3).
 #: views/developers/addon_edit_categories.thtml:67
 #, php-format
 msgid "Category %s"
@@ -2433,6 +2677,7 @@ msgstr "Change password"
 msgid "Change your add-on's name, homepage, icon, and other flags."
 msgstr "Change your add-on's name, homepage, icon, and other flags."
 
+# %1$s is <span>17</span>, %2$s is 42.
 #: views/elements/translationbox.thtml:101
 #, php-format
 msgid "Characters used: %1$s / %2$s"
@@ -2454,6 +2699,7 @@ msgstr "Check Status of My Add-ons"
 msgid "Check out Add-on Collector"
 msgstr "Check out Add-on Collector"
 
+# %1$s is the label of the edit form's submit button
 #: views/collections/edit.thtml:299 views/collections/edit.thtml:300
 #, php-format
 msgid "Check the box, then click on \"%1$s\" to delete this collection."
@@ -2489,6 +2735,7 @@ msgstr "Click here to return to the front page."
 msgid "Click the Update Authors button below to save."
 msgstr "Click the Update Authors button below to save."
 
+# %s is href=... and should stay in the <a> tag.
 #: views/developers/previews.thtml:102
 #, php-format
 msgid ""
@@ -2600,11 +2847,14 @@ msgstr ""
 msgid "Collections are groups of related add-ons assembled for easy sharing."
 msgstr "Collections are groups of related add-ons assembled for easy sharing."
 
+# %1$s is an add-on's name
 #: controllers/collections_controller.php:185
 #, php-format
 msgid "Collections containing %1$s"
 msgstr "Collections containing %1$s"
 
+# This just shows an example of tags.  The important thing in the example is to show
+# that tags can be separated with commas and have spaces in them
 #: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:492
 msgid ""
 "Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
@@ -2637,6 +2887,7 @@ msgstr "Comment successfully posted"
 msgid "Comments"
 msgstr "Comments"
 
+# %1$s is the comment count
 #: views/elements/developers/editors_review_history_item.thtml:53
 #, php-format
 msgid "Comments (%1$s)"
@@ -2652,6 +2903,7 @@ msgstr "Comments:"
 msgid "Common Library Checksum Tests"
 msgstr "Common Library Checksum Tests"
 
+# %1$s is the application name.  Example: Firefox, Thunderbird, Sunbird
 #: controllers/addons_controller.php:1281
 #, php-format
 msgid "Common Plugins for %1$s"
@@ -2673,6 +2925,7 @@ msgstr "Compatibility:"
 msgid "Compatible Applications"
 msgstr "Compatible Applications"
 
+# This is the header for a list of links
 #: views/search/index.thtml:147
 msgid "Compatible with"
 msgstr "Compatible with"
@@ -2710,6 +2963,7 @@ msgstr "Congratulations! Your user account was successfully created."
 msgid "Contribute"
 msgstr "Contribute"
 
+# %1 is a number like 32 or 47.99.
 #: views/elements/amo2009/contribution.thtml:102
 #, php-format
 msgid "Contribute $%1$s"
@@ -2723,6 +2977,7 @@ msgstr "Contribute a Different Amount"
 msgid "Contribution Account"
 msgstr "Contribution Account"
 
+# %1 is an add-on name.
 #: controllers/addons_controller.php:163
 #, php-format
 msgid "Contribution for %1$s"
@@ -2778,6 +3033,7 @@ msgstr ""
 msgid "Created"
 msgstr "Created"
 
+# "Me" in this context is the user shown on the User Info page
 #: views/users/info.thtml:126
 msgid "Created by Me"
 msgstr "Created by Me"
@@ -2824,6 +3080,8 @@ msgstr "Custom"
 msgid "Custom License"
 msgstr "Custom License"
 
+# %1$s is an addon id, like 32.
+# %2$s is a version number, like 3.5.
 #: controllers/components/developers.php:1250
 #, php-format
 msgid "Custom license for add-on %1$s v%2$s"
@@ -2929,6 +3187,7 @@ msgstr "Delete Review"
 msgid "Delete User Account"
 msgstr "Delete User Account"
 
+# %1 is the user's email address
 #: views/users/delete.thtml:88
 #, php-format
 msgid "Delete User Account %1$s"
@@ -2944,6 +3203,7 @@ msgctxt "devcp_versions_a_delete"
 msgid "Delete Version"
 msgstr "Delete Version"
 
+# %s is the version number.
 #: views/developers/versions_delete.thtml:48
 #, php-format
 msgid "Delete Version %s?"
@@ -3003,6 +3263,7 @@ msgstr "Detailed Info"
 msgid "Details"
 msgstr "Details"
 
+# <option> text in a <select> for Author role in an add-on.
 #: views/pages/js_constants.js.thtml:85
 msgctxt "devcp_js_option_developer"
 msgid "Developer"
@@ -3088,6 +3349,7 @@ msgstr "Developer reply to:"
 msgid "Developers"
 msgstr "Developers"
 
+# Plural in this context means many of the add-on type
 #: models/addontype.php:100
 msgid "Dictionaries"
 msgstr "Dictionaries"
@@ -3118,10 +3380,12 @@ msgctxt "langtools_tableheader_dictionary"
 msgid "Dictionary"
 msgstr "Dictionary"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:73
 msgid "Dictionary-specific"
 msgstr "Dictionary-specific"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:74
 msgid "Dictionary-specific security"
 msgstr "Dictionary-specific security"
@@ -3158,6 +3422,7 @@ msgstr "Don't like it"
 msgid "Don't show me this message again."
 msgstr "Don't show me this message again."
 
+# %1$s is the add-on name
 #: views/elements/amo2009/install.thtml:211 views/elements/install.thtml:159
 #, php-format
 msgid "Download %1$s"
@@ -3171,6 +3436,10 @@ msgstr "Download Dictionary"
 msgid "Download Language Pack"
 msgstr "Download Language Pack"
 
+# This is the text that appears on buttons to download add-ons.
+# %$1s is an optional string that only appears if the add-on is only available for
+# a certain platform.  Examples:  (Windows)  or  (Linux)
+# Note that the parentheses are included in the string. :(
 #: views/elements/amo2009/install.thtml:137
 #: views/elements/amo2009/install.thtml:233
 #: views/elements/amo2009/install.thtml:246
@@ -3214,6 +3483,7 @@ msgstr "Downloads in the last 7 days"
 msgid "EULA"
 msgstr "EULA"
 
+# %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
 #: views/developers/addon_edit_tags.thtml:43
@@ -3272,6 +3542,7 @@ msgctxt "devcp_preview_edit_pagetitle"
 msgid "Edit Preview"
 msgstr "Edit Preview"
 
+# %s is the name of the add-on
 #: views/reviews/add.thtml:51
 #, php-format
 msgid "Edit Review for %s"
@@ -3335,6 +3606,7 @@ msgctxt "editors_pagetitle"
 msgid "Editor Tools"
 msgstr "Editor Tools"
 
+# A collection that has been chosen by an Editor as notable or exceptional
 #: controllers/collections_controller.php:599
 msgid "Editor's Pick"
 msgstr "Editor's Pick"
@@ -3442,6 +3714,9 @@ msgstr "Exceeds maximum upload size"
 msgid "Expand Graph"
 msgstr "Expand Graph"
 
+# There is a list of directories and files on the page.  Clicking this will show the
+# contents of all the directories (normally you would click on each one to see the
+# contents)
 #: views/files/browse.thtml:67
 msgid "Expand all"
 msgstr "Expand all"
@@ -3450,14 +3725,17 @@ msgstr "Expand all"
 msgid "Extension"
 msgstr "Extension"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:71
 msgid "Extension-specific"
 msgstr "Extension-specific"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:72
 msgid "Extension-specific security"
 msgstr "Extension-specific security"
 
+# Plural in this context means many of the add-on type
 #: models/addontype.php:98
 msgid "Extensions"
 msgstr "Extensions"
@@ -3466,6 +3744,7 @@ msgstr "Extensions"
 msgid "External Software"
 msgstr "External Software"
 
+# Link text to the Frequently Asked Questions page.
 #: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
 msgid "FAQ"
 msgstr "FAQ"
@@ -3497,6 +3776,7 @@ msgstr "Farewell!"
 msgid "Fashion your Firefox FAQ"
 msgstr "Fashion your Firefox FAQ"
 
+# A heading
 #: views/users/info.thtml:122
 msgid "Favorites"
 msgstr "Favorites"
@@ -3530,21 +3810,31 @@ msgstr "Fennec"
 msgid "File"
 msgstr "File"
 
+# %1$s is the file id, e.g. 18723.
+# %2$s is the platform name, e.g. ALL or Windows.
+# %3$s is the _('date) created.
+# %4$s is the status, e.g. "In Sandbox" or "Public".
+# %5$s is the _('date') status was changed.
 #: views/developers/versions_edit.thtml:208
 #, php-format
 msgid "File %1$s (%2$s) created on %3$s and changed to %4$s on %5$s"
 msgstr "File %1$s (%2$s) created on %3$s and changed to %4$s on %5$s"
 
+# %1$s is a filename, e.g. "foo.txt"
+# %2$s is the extension, e.g. ".txt"
+# %3$s is a list of valid extensions, like ".png, .jpg, .gif"
 #: controllers/developers_controller.php:1696
 #, php-format
 msgid "File %1$s has an invalid extension (%2$s). Allowed extensions: %3$s"
 msgstr "File %1$s has an invalid extension (%2$s). Allowed extensions: %3$s"
 
+# %s is the filename.
 #: controllers/developers_controller.php:1729
 #, php-format
 msgid "File %s could not be saved to the database. Please try again."
 msgstr "File %s could not be saved to the database. Please try again."
 
+# %s is the filename.
 #: controllers/developers_controller.php:1726
 #, php-format
 msgid "File %s was uploaded successfully. You can add a caption below."
@@ -3570,6 +3860,7 @@ msgctxt "test_case_name_all_general_verifyFileTypes"
 msgid "File Type Verification"
 msgstr "File Type Verification"
 
+# %s is a filename
 #: controllers/editors_controller.php:553
 #, php-format
 msgid "File error: %s does not exist."
@@ -3631,11 +3922,13 @@ msgstr "Flags"
 msgid "Flags:"
 msgstr "Flags:"
 
+# %s is a URL
 #: views/pages/credits.thtml:142
 #, php-format
 msgid "For information on contributing, please see our %s."
 msgstr "For information on contributing, please see our %s."
 
+# Full text for the FAQ abbreviation.
 #: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
 #: views/layouts/amo2009.thtml:354
 msgctxt "footer_abbr_faq"
@@ -3675,6 +3968,7 @@ msgstr "GNU Lesser General Public License, version 3.0"
 msgid "GUID"
 msgstr "GUID"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:68
 msgid "General"
 msgstr "General"
@@ -3773,6 +4067,7 @@ msgctxt "statistics_help_link"
 msgid "Help"
 msgstr "Help"
 
+# title attribute for a javascript link that pops up a help dialog.
 #: views/elements/translationbox.thtml:68
 msgid "Help (does not leave page)"
 msgstr "Help (does not leave page)"
@@ -3857,11 +4152,13 @@ msgstr "I'll complete my add-on later."
 msgid "Icon"
 msgstr "Icon"
 
+# %s is href="..." and should stay in the <a> tag.
 #: views/developers/addon_edit_properties.thtml:119
 #, php-format
 msgid "Icon will be deleted on save. <a %s>Cancel?</a>"
 msgstr "Icon will be deleted on save. <a %s>Cancel?</a>"
 
+# %1$s is the label of the edit form's submit button
 #: views/collections/edit.thtml:169
 #, php-format
 msgid "Icon will be removed when \"%1$s\" is clicked below"
@@ -3889,6 +4186,7 @@ msgstr ""
 msgid "If this is hard to understand, "
 msgstr ""
 
+# %1$s is the text on the "create collection" button
 #: views/collections/add.thtml:92
 #, php-format
 msgid ""
@@ -3904,6 +4202,7 @@ msgstr ""
 msgid "If you choose a nickname, it must be unique."
 msgstr "If you choose a nickname, it must be unique."
 
+# %1 is the link to the "resend confirmation code" page
 #: views/users/activatefirst.thtml:51
 #, php-format
 msgid ""
@@ -3915,6 +4214,7 @@ msgstr ""
 "did not mark it as \"junk mail\" or \"spam\". If you need to, you can have "
 "us %1$s to your email address mentioned above."
 
+# %1 is a link to the amo-editors mailing list
 #: views/users/delete.thtml:92
 #, php-format
 msgid ""
@@ -3926,6 +4226,8 @@ msgstr ""
 "your account now, but contact us at %1$s and we will do our best to assist "
 "you in solving it."
 
+# %1$s is a URL
+# %2$s is an application and version.  Example:  Firefox 3.0
 #: views/compatibility/dashboard.thtml:126
 #, php-format
 msgid ""
@@ -3935,6 +4237,7 @@ msgstr ""
 "If you have add-ons hosted on Mozilla Add-ons, <a href=\"%1$s\">please log "
 "in</a> to analyze the status of your add-ons for %2$s."
 
+# %1 is a link to the amo-editors mailing list
 #: views/users/delete.thtml:64
 #, php-format
 msgid "If you have additional questions, please contact %1$s for assistance."
@@ -4000,6 +4303,7 @@ msgstr ""
 "translations is not necessary unless your website is localized into other "
 "languages."
 
+# %s is a URL
 #: views/pages/appversions.thtml:93
 #, php-format
 msgid ""
@@ -4033,6 +4337,7 @@ msgstr "In Sandbox; Pending Review"
 msgid "In Sandbox; Public Nomination"
 msgstr "In Sandbox; Public Nomination"
 
+# A heading
 #: views/users/info.thtml:73
 msgid "In a little more detail&hellip;"
 msgstr "In a little more detail&hellip;"
@@ -4116,6 +4421,7 @@ msgstr "Install Dictionary"
 msgid "Install Language Pack"
 msgstr "Install Language Pack"
 
+# %s is a string.  Example: testo
 #: controllers/components/validation.php:691
 #, php-format
 msgid "Install.js contains a function missing from the whitelist: %s"
@@ -4222,6 +4528,7 @@ msgstr "Just Added"
 msgid "Keyword Match"
 msgstr "Keyword Match"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:70
 msgid "L10n"
 msgstr "L10n"
@@ -4230,6 +4537,7 @@ msgstr "L10n"
 msgid "L10n Completeness Check"
 msgstr "L10n Completeness Check"
 
+# %s is an English string from an external validation program.  (An error)
 #: controllers/components/validation.php:601
 #, php-format
 msgid "L10n test returned an error: %s"
@@ -4251,18 +4559,22 @@ msgstr "Language Pack (Add-on)"
 msgid "Language Pack (Application)"
 msgstr "Language Pack (Application)"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:75
 msgid "Language Pack-specific"
 msgstr "Language Pack-specific"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:76
 msgid "Language Pack-specific security"
 msgstr "Language Pack-specific security"
 
+# Plural in this context means many of the add-on type
 #: models/addontype.php:103
 msgid "Language Packs (Add-on)"
 msgstr "Language Packs (Add-on)"
 
+# Plural in this context means many of the add-on type
 #: models/addontype.php:102
 msgid "Language Packs (Application)"
 msgstr "Language Packs (Application)"
@@ -4275,6 +4587,7 @@ msgstr "Last Day Count"
 msgid "Last Updated"
 msgstr "Last Updated"
 
+# %s is a date in the _('date') format
 #: views/developers/dashboard.thtml:65
 #, php-format
 msgid "Last edited on %s"
@@ -4310,6 +4623,7 @@ msgstr ""
 msgid "Learn more"
 msgstr "Learn more"
 
+# %1 is the add-on name
 #: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/amo2009/homepage_addon.thtml:125
 #: views/elements/feature.thtml:123
@@ -4327,6 +4641,7 @@ msgstr "Learn more about %1$s"
 msgid "Learn more about this add-on"
 msgstr "Learn more about this add-on"
 
+# %1$s is an add-on name.
 #: views/addons/display.thtml:423
 #, php-format
 msgid "Learn why %1$s was created and find out what's next for this add-on."
@@ -4340,6 +4655,7 @@ msgstr "Legal Notices"
 msgid "Legend"
 msgstr "Legend"
 
+# %1 is the URL for the Experimental Add-ons section of the FAQ page
 #: views/elements/amo2009/install.thtml:310 views/elements/install.thtml:232
 #, php-format
 msgid ""
@@ -4365,6 +4681,7 @@ msgstr "License"
 msgid "Like it"
 msgstr "Like it"
 
+# %1$s is the HTML collection name link.
 #: views/elements/amo2009/teaser_collections.thtml:110
 #, php-format
 msgid "Like these? Find more add-ons in the %1$s collection."
@@ -4386,10 +4703,12 @@ msgstr "List as author in public listings"
 msgid "List of language packs and dictionaries."
 msgstr "List of language packs and dictionaries."
 
+# Column name in a table.
 #: views/developers/addon_edit_authors.thtml:64
 msgid "Listed"
 msgstr "Listed"
 
+# Shown on the screen only for a moment
 #: views/elements/developers/testresults.thtml:48
 msgid "Loading Results ..."
 msgstr "Loading Results ..."
@@ -4439,6 +4758,7 @@ msgstr "Log in"
 msgid "Log out"
 msgstr "Log out"
 
+# This is a header for additional help options
 #: views/users/login.thtml:108
 msgid "Login Problems?"
 msgstr "Login Problems?"
@@ -4508,6 +4828,7 @@ msgstr ""
 "Making this the default preview will remove default status from the current "
 "default preview."
 
+# %1$s is the name of the collection
 #: views/collections/edit.thtml:68
 #, php-format
 msgid "Manage %1$s"
@@ -4569,6 +4890,7 @@ msgstr "Manage Developer Profile"
 msgid "Manage Tags"
 msgstr "Manage Tags"
 
+# %s is the version number.
 #: views/developers/versions_edit.thtml:53
 #, php-format
 msgid "Manage Version %s"
@@ -4604,6 +4926,7 @@ msgstr ""
 "from the website and will not be returned in client update checks. You will "
 "be able to return here and re-enable it at your convenience."
 
+# %s is a string.  Example: /test.*pattern/
 #: controllers/components/validation.php:1054
 #, php-format
 msgid "Matched Pattern: \"%s\""
@@ -4613,11 +4936,13 @@ msgstr "Matched Pattern: \"%s\""
 msgid "Max. Version"
 msgstr "Max. Version"
 
+# %1$s is a a person's name
 #: views/addons/display.thtml:430
 #, php-format
 msgid "Meet %1$s"
 msgstr "Meet %1$s"
 
+# %1 is an add-on name.
 #: controllers/addons_controller.php:223
 #, php-format
 msgid "Meet the %1$s Developer"
@@ -4636,6 +4961,7 @@ msgstr[1] "Meet the Developers"
 msgid "Misplaced bug report or support request"
 msgstr "Misplaced bug report or support request"
 
+# %s is a string representing what's missing.  Example:  file_id
 #: controllers/downloads_controller.php:65
 #: controllers/users_controller.php:191 controllers/users_controller.php:270
 #: controllers/users_controller.php:641 controllers/users_controller.php:739
@@ -4670,6 +4996,7 @@ msgstr "Misplaced bug report or support request"
 msgid "Missing argument: %s"
 msgstr "Missing argument: %s"
 
+# %1 is the review count
 #: views/elements/developers/editorsqueue.thtml:42
 #: views/elements/developers/editorsmenu.thtml:56
 #, php-format
@@ -4682,6 +5009,8 @@ msgstr[1] "Moderated Reviews (%s)"
 msgid "Month Reviews"
 msgstr "Month Reviews"
 
+# %1$s is the number of reviews the person has done
+# %2$s is the average number of reviews the team has done
 #: views/editors/performance_table.thtml:132
 #, php-format
 msgid "Month To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
@@ -4703,10 +5032,12 @@ msgstr "Most popular this month"
 msgid "Most popular this week"
 msgstr "Most popular this week"
 
+# alt text for a down-arrow image.
 #: views/pages/js_constants.js.thtml:82
 msgid "Move Down"
 msgstr "Move Down"
 
+# alt text for an up-arrow image.
 #: views/pages/js_constants.js.thtml:83
 msgid "Move Up"
 msgstr "Move Up"
@@ -4802,6 +5133,7 @@ msgstr "My Collections"
 msgid "My Favorites"
 msgstr "My Favorites"
 
+# "My" in this context is the logged in user who is reading the page
 #: views/users/info.thtml:90
 msgid "My Reviews"
 msgstr "My Reviews"
@@ -5009,6 +5341,7 @@ msgstr "No versions."
 msgid "No, cancel"
 msgstr "No, cancel"
 
+# %1 is the add-on name
 #: views/developers/addon_status_nominate.thtml:61
 #, php-format
 msgid "Nominate %s"
@@ -5022,6 +5355,7 @@ msgstr "Nominate for Public"
 msgid "Nominate your add-on to become Public"
 msgstr "Nominate your add-on to become Public"
 
+# %1 is the nominated addons count
 #: views/elements/developers/editorsqueue.thtml:44
 #: views/elements/developers/editorsmenu.thtml:58
 #, php-format
@@ -5106,6 +5440,8 @@ msgctxt "user_form_occupation"
 msgid "Occupation"
 msgstr "Occupation"
 
+# %1$s and %2$s are numbers
+# %3$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:65
 #, php-format
 msgid ""
@@ -5138,6 +5474,7 @@ msgstr "One or more locales are invalid."
 msgid "One or more of your new previews could not be saved."
 msgstr "One or more of your new previews could not be saved."
 
+# %1$s is a URL where the user can see an example
 #: views/developers/addon_edit_contributions.thtml:142
 #, php-format
 msgid ""
@@ -5229,6 +5566,9 @@ msgstr "Other Settings"
 msgid "Other Versions"
 msgstr "Other Versions"
 
+# %1$s is either an author's name or a comma separated list of authors. Using
+# the list doesn't make sense in the English plural form so we ignore the
+# variable.
 #: views/addons/display.thtml:451
 #, php-format
 msgid "Other add-ons by %1$s"
@@ -5254,6 +5594,7 @@ msgstr "Overlay Firefox release dates on the plots"
 msgid "Overlay add-on release dates on the plots"
 msgstr "Overlay add-on release dates on the plots"
 
+# <option> text in a <select> for Author role in an add-on.
 #: views/pages/js_constants.js.thtml:84
 msgid "Owner"
 msgstr "Owner"
@@ -5307,6 +5648,7 @@ msgstr "Past year"
 msgid "PayPal ID"
 msgstr "PayPal ID"
 
+# %1 is the update count
 #: views/elements/developers/editorsqueue.thtml:43
 #: views/elements/developers/editorsmenu.thtml:57
 #, php-format
@@ -5323,6 +5665,7 @@ msgstr "Per Page"
 msgid "Performance"
 msgstr "Performance"
 
+# %1$s is a person's name
 #: views/elements/developers/performanceheader.thtml:57
 #, php-format
 msgid "Performance Report For %1$s"
@@ -5345,6 +5688,7 @@ msgstr "Permissions"
 msgid "Picture"
 msgstr "Picture"
 
+# %1$s is a user's email address or name
 #: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
 #, php-format
 msgid "Picture of %1$s"
@@ -5376,11 +5720,13 @@ msgstr "Platform"
 msgid "Platforms"
 msgstr "Platforms"
 
+# %1 is a URL
 #: views/addons/display.thtml:324
 #, php-format
 msgid "Please <a href=\"%1$s\">log in</a> to submit a review"
 msgstr "Please <a href=\"%1$s\">log in</a> to submit a review"
 
+# Used as first item in a <select>.
 #: views/elements/developers/license_picker.thtml:42
 msgid "Please Choose..."
 msgstr "Please Choose..."
@@ -5393,6 +5739,7 @@ msgstr "Please Select an Application"
 msgid "Please complete the following fields:"
 msgstr "Please complete the following fields:"
 
+# %1 is the application name
 #: controllers/users_controller.php:609
 #, php-format
 msgid "Please confirm your email address change at %1$s Add-ons"
@@ -5430,6 +5777,7 @@ msgstr ""
 "Please enter <strong>both words</strong> below, <strong>separated by a "
 "space</strong>."
 
+# Comments are required when an editor approves or rejects an add-on.
 #: controllers/components/editors.php:84
 #: controllers/components/editors.php:187
 msgid "Please enter review comments."
@@ -5479,6 +5827,7 @@ msgstr ""
 "Please note that some changes may take several hours to appear in all areas "
 "of the website."
 
+# Removing an extra comma
 #: views/reviews/review_added.thtml:53
 msgid ""
 "Please note: Before your review shows up on the public site it will be "
@@ -5493,6 +5842,8 @@ msgid ""
 msgstr ""
 "Please review and accept the following Developer Agreement before proceeding."
 
+# %s is a complete URL with the text from devcp_error_appversion_reference_link_text
+# in the <a> tag.  This should be fixed.
 #: controllers/developers_controller.php:504
 #: controllers/components/validation.php:346
 #: controllers/components/developers.php:625
@@ -5504,6 +5855,7 @@ msgstr "Please see <a href=\"%s\">this page</a> for reference."
 msgid "Please select a license."
 msgstr "Please select a license."
 
+# Actions are, for example: approving or rejecting
 #: controllers/components/editors.php:79
 #: controllers/components/editors.php:182
 msgid "Please select a review action."
@@ -5556,6 +5908,7 @@ msgstr "Plot the total count on this graph"
 msgid "Plugin"
 msgstr "Plugin"
 
+# Plural in this context means many of the add-on type
 #: models/addontype.php:104
 msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
@@ -5639,16 +5992,19 @@ msgstr "Prev"
 msgid "Preview"
 msgstr "Preview"
 
+# %1$s is the preview ID number, %2$s is the filename.
 #: controllers/developers_controller.php:1724
 #, php-format
 msgid "Preview %1$s was replaced with file %2$s successfully."
 msgstr "Preview %1$s was replaced with file %2$s successfully."
 
+# %s is the preview ID number.
 #: controllers/developers_controller.php:1750
 #, php-format
 msgid "Preview %s could not be deleted from the database. Please try again."
 msgstr "Preview %s could not be deleted from the database. Please try again."
 
+# %s is the preview ID number.
 #: controllers/developers_controller.php:1748
 #, php-format
 msgid "Preview %s has been deleted successfully."
@@ -5669,6 +6025,7 @@ msgstr "Preview Caption"
 msgid "Preview File"
 msgstr "Preview File"
 
+# %s is the add-on name
 #: views/elements/collections_interactive_addon.thtml:62
 #: views/elements/amo2009/results_addon.thtml:77
 #: views/elements/amo2009/homepage_addon.thtml:77
@@ -5743,6 +6100,7 @@ msgstr "Profile updated."
 msgid "Properties"
 msgstr "Properties"
 
+# %1 is the add-on name
 #: views/developers/discuss.thtml:43
 #, php-format
 msgid "Provide More Information For the Add-on Review of %1$s"
@@ -5787,11 +6145,13 @@ msgstr "Publish"
 msgid "Push to Public"
 msgstr "Push to Public"
 
+# %s is a string.  example:   em:id
 #: controllers/components/rdf.php:107
 #, php-format
 msgid "RDF Parser error: the file contained a duplicate element: %s"
 msgstr "RDF Parser error: the file contained a duplicate element: %s"
 
+# %1 is the number of stars this add-on has
 #: views/elements/amo2009/stars.thtml:49 views/elements/stars.thtml:54
 #, php-format
 msgid "Rated %s out of 5 stars"
@@ -5980,6 +6340,7 @@ msgstr "Replace Preview"
 msgid "Replies"
 msgstr "Replies"
 
+# a noun: shown in an add-on's editor review history
 #: views/elements/developers/editors_review_history_item.thtml:92
 msgctxt "editors_review_history_info_reply"
 msgid "Reply"
@@ -5990,6 +6351,7 @@ msgctxt "addon_review_author_reply_link"
 msgid "Reply"
 msgstr "Reply"
 
+# %1 is the user, %2 is the (localized) date
 #: views/reviews/display.thtml:159
 #, php-format
 msgid "Reply by %1$s on %2$s"
@@ -6024,6 +6386,7 @@ msgstr "Resize the graph"
 msgid "Restrict to locales?"
 msgstr "Restrict to locales?"
 
+# %1$s is a number
 #: views/editors/queue.thtml:96
 #, php-format
 msgid "Results of your filtered search: <strong>%1$s</strong> Add-on"
@@ -6043,6 +6406,7 @@ msgstr "Retrieving status of hosted add-ons..."
 msgid "Return to Dashboard"
 msgstr "Return to Dashboard"
 
+# %1$s is the application name.  Example:  Firefox
 #: views/elements/header.thtml:111 views/elements/header.thtml:122
 #: views/layouts/amo2009.thtml:248
 #, php-format
@@ -6053,6 +6417,7 @@ msgstr "Return to the %1$s Add-ons homepage"
 msgid "Review"
 msgstr "Review"
 
+# %1 is the add-on name and version
 #: views/editors/review.thtml:57
 #, php-format
 msgid "Review %s"
@@ -6114,6 +6479,7 @@ msgstr "Reviews"
 msgid "Reviews Created"
 msgstr "Reviews Created"
 
+# %1 is the add-on name
 #: views/reviews/flag.thtml:56 views/reviews/display.thtml:55
 #: views/reviews/review_added.thtml:50
 #, php-format
@@ -6121,6 +6487,7 @@ msgctxt "reviews_header"
 msgid "Reviews for %s"
 msgstr "Reviews for %s"
 
+# %1 is the add-on name
 #: controllers/reviews_controller.php:202
 #: controllers/reviews_controller.php:251
 #: controllers/reviews_controller.php:346
@@ -6134,10 +6501,12 @@ msgstr "Reviews for %s"
 msgid "Reviews processed successfully!"
 msgstr "Reviews processed successfully!"
 
+# Column name in a table.
 #: views/developers/addon_edit_authors.thtml:63
 msgid "Role"
 msgstr "Role"
 
+# Showed on screen briefly while a test is running
 #: views/elements/developers/testresults_stats.thtml:77
 msgid "Running test..."
 msgstr "Running test..."
@@ -6206,14 +6575,17 @@ msgstr "Search Add-ons"
 msgid "Search Engine"
 msgstr "Search Engine"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:79
 msgid "Search Engine-specific"
 msgstr "Search Engine-specific"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:80
 msgid "Search Engine-specific security"
 msgstr "Search Engine-specific security"
 
+# Plural in this context means many of the add-on type
 #: models/addontype.php:101
 msgctxt "general_addontype_search_plural"
 msgid "Search Engines"
@@ -6245,15 +6617,18 @@ msgstr "Search is currently disabled. Please try again later."
 msgid "Search results feed"
 msgstr "Search results feed"
 
+# %s is the terms the user is searching for (a string)
 #: controllers/search_controller.php:259
 #, php-format
 msgid "Search results for: %s"
 msgstr "Search results for: %s"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:69
 msgid "Security"
 msgstr "Security"
 
+# %1 is the review count, %2 is the nickname or full name of the user.
 #: views/reviews/display.thtml:130
 #, php-format
 msgid "See %1$s previous review submitted by %2$s for this add-on."
@@ -6261,6 +6636,7 @@ msgid_plural "See %1$s previous reviews submitted by %2$s for this add-on."
 msgstr[0] "See %1$s previous review submitted by %2$s for this add-on."
 msgstr[1] "See %1$s previous reviews submitted by %2$s for this add-on."
 
+# %1$s is the category name
 #: views/addons/searchengines.thtml:86
 #, php-format
 msgid "See All %1$s"
@@ -6271,11 +6647,13 @@ msgstr "See All %1$s"
 msgid "See All %1$s Add-ons"
 msgstr "See All %1$s Add-ons"
 
+# %1 is a number.
 #: views/addons/display.thtml:313
 #, php-format
 msgid "See all %1$s reviews of this add-on"
 msgstr "See all %1$s reviews of this add-on"
 
+# %1 is the support section link
 #: views/addons/display.thtml:355
 #, php-format
 msgid ""
@@ -6309,6 +6687,7 @@ msgstr "Select an add-on to view its statistics"
 msgid "Select an add-on with public statistics"
 msgstr "Select an add-on with public statistics"
 
+# %s is a list of file extensions, e.g. ".png, .gif"
 #: views/developers/previews.thtml:116
 #, php-format
 msgid ""
@@ -6336,6 +6715,7 @@ msgid ""
 msgstr ""
 "Select the relevant categories for each application your add-on supports."
 
+# %s is the application name (Firefox, Thunderbird).
 #: views/developers/addon_edit_categories.thtml:63
 #, php-format
 msgid "Select up to three %s categories for your add-on"
@@ -6382,6 +6762,7 @@ msgstr "Shift-click to sort by multiple columns"
 msgid "Should be a positive number between 0.00 and 99.99."
 msgstr "Should be a positive number between 0.00 and 99.99."
 
+# %1 is a number
 #: views/elements/developers/testresults_group.thtml:99
 #, php-format
 msgid "Show %1$s more result"
@@ -6442,6 +6823,8 @@ msgstr "Show last: 60 days"
 msgid "Show last: 90 days"
 msgstr "Show last: 90 days"
 
+# "pass" in this context refers to a passing test.  An alternative string for
+# this could be "Show passing tests"
 #: views/elements/developers/testresults_group.thtml:112
 msgid "Show pass"
 msgid_plural "Show passes"
@@ -6452,6 +6835,8 @@ msgstr[1] "Show passes"
 msgid "Show sandbox?"
 msgstr "Show sandbox?"
 
+# link text in an add-on's editor review history, allowing to hide and show an information request's replies
+# %1 is the number of replies
 #: views/elements/developers/editors_review_history_item.thtml:102
 #, php-format
 msgid "Show/Hide Replies (%1$s)"
@@ -6459,16 +6844,28 @@ msgid_plural "Show/Hide Replies (%1$s)"
 msgstr[0] "Show/Hide Replies (%1$s)"
 msgstr[1] "Show/Hide Replies (%1$s)"
 
+# %1$s is a number
+# %2$s is a number
+# %3$s is a number
 #: views/search/index.thtml:85
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results"
 msgstr "Showing %1$s - %2$s of %3$s results"
 
+# %1$s is a number
+# %2$s is a number
+# %3$s is a number
+# %4$s is the word the person is searching for
 #: views/search/index.thtml:83
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>"
 msgstr "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>"
 
+# %1$s is a number
+# %2$s is a number
+# %3$s is a number
+# %4$s is the word the person is searching for
+# %5$s is a word (the add-on is tagged with it)
 #: views/search/index.thtml:79
 #, php-format
 msgid ""
@@ -6478,6 +6875,10 @@ msgstr ""
 "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with "
 "<strong>%5$s</strong>"
 
+# %1$s is a number
+# %2$s is a number
+# %3$s is a number
+# %4$s is a word (the add-on is tagged with it)
 #: views/tags/display.thtml:53 views/search/index.thtml:81
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
@@ -6540,6 +6941,7 @@ msgstr ""
 "creativecommons.org/licenses/by/2.5/\">Creative Commons Attribution 2.5 "
 "License</a>."
 
+# %1 is the default locale
 #: views/elements/developers/localebox.thtml:48
 #, php-format
 msgid ""
@@ -6595,6 +6997,8 @@ msgstr "Sort by:"
 msgid "Source Code License"
 msgstr "Source Code License"
 
+# %1$s is an addon name, like <a>Firebug</a>
+# %2$s is a version number, like <a>1.2</a>
 #: views/versions/license.thtml:54 controllers/versions_controller.php:61
 #, php-format
 msgid "Source code license for %1$s %2$s"
@@ -6769,6 +7173,7 @@ msgstr "Submit Add-on"
 msgid "Submit New Add-on"
 msgstr "Submit New Add-on"
 
+# submit button text
 #: views/developers/discuss.thtml:78
 msgid "Submit Reply"
 msgstr "Submit Reply"
@@ -6834,6 +7239,8 @@ msgstr "Successfully verified!"
 msgid "Suggested"
 msgstr "Suggested"
 
+# This is a monetary value like:  $3.99
+# Note that as of 2009-07-06 this only supports USD
 #: views/elements/amo2009/contribution.thtml:86
 #, php-format
 msgid "Suggested Donation: $%1$s"
@@ -6880,6 +7287,8 @@ msgstr "Support Email Address"
 msgid "Support Website"
 msgstr "Support Website"
 
+# %$1s is a URL
+# %$2s is an email address
 #: views/addons/display.thtml:267
 #, php-format
 msgid ""
@@ -6889,6 +7298,7 @@ msgstr ""
 "Support for this add-on is provided by the developer at %1$s or by sending "
 "an e-mail to %2$s"
 
+# %s is an email address
 #: views/addons/display.thtml:271 views/addons/display.thtml:274
 #, php-format
 msgctxt "addons_display_paragraph_supportinfoemail"
@@ -6961,6 +7371,7 @@ msgstr "Tested Operating Systems"
 msgid "Thanks for joining %s Add-ons"
 msgstr "Thanks for joining %s Add-ons"
 
+# %1 is the link to the Mozilla Add-ons front page
 #: views/users/register_complete.thtml:51
 #, php-format
 msgid "Thanks for registering and welcome to %1$s!"
@@ -6971,6 +7382,8 @@ msgstr "Thanks for registering and welcome to %1$s!"
 msgid "Thanks; this review has been flagged for editor approval."
 msgstr "Thanks; this review has been flagged for editor approval."
 
+# %1$s is a file extension.  Example:  .exe
+# %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
 #: controllers/components/developers.php:1118
 #, php-format
 msgid ""
@@ -6980,6 +7393,8 @@ msgstr ""
 "That file extension (%1$s) is not allowed for a preview. Please use one of "
 "the following: %2$s"
 
+# %1$s is a file extension.  Example:  .exe
+# %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
 #: controllers/components/developers.php:401
 #: controllers/components/developers.php:430
 #, php-format
@@ -6990,6 +7405,8 @@ msgstr ""
 "That file extension (%1$s) is not allowed for an icon. Please use one of the "
 "following: %2$s"
 
+# %1$s is a file extension.  Example:  .exe
+# %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
 #: controllers/components/developers.php:363
 #, php-format
 msgid ""
@@ -6999,6 +7416,8 @@ msgstr ""
 "That file extension (%1$s) is not allowed for the selected add-on type. "
 "Please use one of the following: %2$s"
 
+# %1$s is a locale code. Example: en-US or fr
+# %2$s is an integer
 #: controllers/components/validation.php:621
 #, php-format
 msgid "The %1$s locale contains %2$s unmodified translation"
@@ -7006,6 +7425,8 @@ msgid_plural "The %1$s locale contains %2$s unmodified translations"
 msgstr[0] "The %1$s locale contains %2$s unmodified translation"
 msgstr[1] "The %1$s locale contains %2$s unmodified translations"
 
+# %1$s is a locale code. Example: en-US or fr
+# %2$s is an integer
 #: controllers/components/validation.php:624
 #, php-format
 msgid "The %1$s locale is missing %2$s translation"
@@ -7027,6 +7448,7 @@ msgstr ""
 msgid "The Group has been saved"
 msgstr "The Group has been saved"
 
+# %s is a number to identify the group
 #: controllers/groups_controller.php:117
 #, php-format
 msgid "The Group with id %s was deleted"
@@ -7037,6 +7459,7 @@ msgstr "The Group with id %s was deleted"
 msgid "The ID of this add-on is already used by an application."
 msgstr "The ID of this add-on is already used by an application."
 
+# %s is a string
 #: controllers/components/validation.php:271
 #: controllers/components/developers.php:550
 #, php-format
@@ -7053,6 +7476,7 @@ msgid ""
 msgstr ""
 "The Statistics Dashboard is currently disabled. Please check back later."
 
+# %1$s and %2$s are GUIDs.
 #: controllers/developers_controller.php:344
 #, php-format
 msgid ""
@@ -7068,16 +7492,19 @@ msgid ""
 msgstr ""
 "The add-on appears to be a conduit toolbar due to its updateURL element."
 
+# %s is a filename.  Example:  windows.com
 #: controllers/components/validation.php:784
 #, php-format
 msgid "The add-on appears to be a conduit toolbar due to the file '%s'"
 msgstr "The add-on appears to be a conduit toolbar due to the file '%s'"
 
+# %s is a filename.  Example:  windows.com
 #: controllers/components/validation.php:499
 #, php-format
 msgid "The add-on contains a file '%s', which failed a library checksum"
 msgstr "The add-on contains a file '%s', which failed a library checksum"
 
+# %s is a filename.  Example:  windows.com
 #: controllers/components/validation.php:376
 #, php-format
 msgid "The add-on contains a file '%s', which is a flagged type."
@@ -7091,6 +7518,7 @@ msgstr "The add-on could not be found on the server."
 msgid "The add-on developers have not enabled contributions."
 msgstr "The add-on developers have not enabled contributions."
 
+# %s is a comma-separated list of image extensions ".png, .jpg"
 #: views/developers/addon_edit_properties.thtml:106
 #, php-format
 msgid ""
@@ -7104,11 +7532,14 @@ msgstr ""
 "installation dialog. The image will automatically be resized to 32 x 32 "
 "pixels.  Please use one of the following image types: %s"
 
+# %1$s is a filename.  Example: windows.com
 #: controllers/components/validation.php:1019
 #, php-format
 msgid "The add-on was missing a required file: %1$s"
 msgstr "The add-on was missing a required file: %1$s"
 
+# %1 is the link to the sandbox/policy explanation page
+# This message is for a specific add-on not found
 #: views/users/login.thtml:55
 #, php-format
 msgid ""
@@ -7163,6 +7594,7 @@ msgstr ""
 "functionality, and other relevant information. It is displayed under the "
 "summary on the add-on's display page."
 
+# %1$s is a number.
 #: models/collection.php:130
 #, php-format
 msgid "The description should be less than %1$s characters."
@@ -7194,26 +7626,31 @@ msgstr "The extension does not appear to be localized."
 msgid "The extension does not match the type of the add-on."
 msgstr "The extension does not match the type of the add-on."
 
+# %s is a filename.  Example:  windows.exe
 #: controllers/components/validation.php:1000
 #, php-format
 msgid "The file %s does not appear to belong in this add-on"
 msgstr "The file %s does not appear to belong in this add-on"
 
+# %s is a string.  Example: testo
 #: controllers/components/validation.php:428
 #, php-format
 msgid "The file contains a global constant: %s"
 msgstr "The file contains a global constant: %s"
 
+# %s is a string.  Example: testo
 #: controllers/components/validation.php:429
 #, php-format
 msgid "The file contains a global function: %s"
 msgstr "The file contains a global function: %s"
 
+# %s is a string.  Example: testo
 #: controllers/components/validation.php:427
 #, php-format
 msgid "The file contains a global variable: %s"
 msgstr "The file contains a global variable: %s"
 
+# %s is an error message from the parser.
 #: controllers/components/validation.php:251
 #: controllers/components/developers.php:530
 #, php-format
@@ -7225,6 +7662,8 @@ msgstr "The following error occurred while parsing install.rdf: %s"
 msgid "The following errors were found in install.rdf:"
 msgstr "The following errors were found in install.rdf:"
 
+# %1 is the current Application name (e.g. Firefox)
+# %2 is the Application's version number
 #: views/addons/versions.thtml:140
 #, php-format
 msgid "The most recent version compatible with %1$s %2$s"
@@ -7234,11 +7673,13 @@ msgstr "The most recent version compatible with %1$s %2$s"
 msgid "The name of your add-on is displayed everywhere your add-on is listed."
 msgstr "The name of your add-on is displayed everywhere your add-on is listed."
 
+# %1$s is a number.
 #: models/collection.php:122
 #, php-format
 msgid "The name should be less than %1$s characters."
 msgstr "The name should be less than %1$s characters."
 
+# %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
 #: views/developers/uploader.thtml:179
 #, php-format
 msgid ""
@@ -7250,6 +7691,7 @@ msgstr ""
 "review it. There are currently %1$s other add-ons in the queue. Want to be "
 "reviewed faster? Consider <a %2$s>becoming an editor</a>."
 
+# %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
 #: views/developers/uploader.thtml:169
 #, php-format
 msgid ""
@@ -7261,6 +7703,8 @@ msgstr ""
 "to review it. There are currently %1$s other add-ons in the queue. Want to "
 "be reviewed faster? Consider <a %2$s>becoming an editor</a>."
 
+# %1 is the link to the sandbox/policy explanation page
+# This message is for any given sandbox-related page not found
 #: views/users/login.thtml:58
 #, php-format
 msgid ""
@@ -7309,6 +7753,7 @@ msgstr ""
 "The source of your add-on files can be viewed online by any logged in user "
 "if you wish."
 
+# %1$s is a version number, %2$s is an add-on ID.
 #: controllers/developers_controller.php:400
 #, php-format
 msgid "The specified version (%1$s) does not belong to this add-on (%2$s)."
@@ -7324,6 +7769,7 @@ msgstr ""
 "is displayed in search and browse listings, as well as at the top of your "
 "add-on's display page. <strong>Limit of 250 characters.</strong>"
 
+# %1$s and %2$s are version numbers.
 #: controllers/developers_controller.php:406
 #, php-format
 msgid ""
@@ -7333,6 +7779,8 @@ msgstr ""
 "The uploaded version number (%1$s) does not match the existing version "
 "number (%2$s)."
 
+# %1$s is a version number, maybe 1.1.
+# %2$s is a URL.
 #: controllers/developers_controller.php:352
 #, php-format
 msgid ""
@@ -7368,14 +7816,17 @@ msgctxt "sidebar_pitch_theme"
 msgid "Theme"
 msgstr "Theme"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:77
 msgid "Theme-specific"
 msgstr "Theme-specific"
 
+# This is the name/category for a group of tests
 #: models/test_group.php:78
 msgid "Theme-specific security"
 msgstr "Theme-specific security"
 
+# Plural in this context means many of the add-on type
 #: models/addontype.php:99 views/addons/browse_thumbs.thtml:57
 msgctxt "general_addontype_theme_plural"
 msgid "Themes"
@@ -7386,6 +7837,7 @@ msgctxt "nav_category_themes"
 msgid "Themes"
 msgstr "Themes"
 
+# %1 is the queue mode
 #: views/editors/queue.thtml:189 views/admin/flagged_queue.thtml:89
 msgid "There are currently no add-ons of this type to review."
 msgstr "There are currently no add-ons of this type to review."
@@ -7415,6 +7867,8 @@ msgstr ""
 msgid "There must be at least one author for this add-on."
 msgstr "There must be at least one author for this add-on."
 
+# notice when an error occurs saving a discussion reply
+# %1 is the email address (linked) for the amo-editors list
 #: views/developers/discuss.thtml:69
 #, php-format
 msgid ""
@@ -7481,6 +7935,8 @@ msgstr ""
 "This URL has an invalid format. Valid URLs look like http://example.com/"
 "my_page."
 
+# %1$s is an add-on ID, perhaps 167.
+# %2$s is a URL.
 #: controllers/developers_controller.php:257
 #, php-format
 msgid ""
@@ -7506,6 +7962,7 @@ msgstr "This add-on is disabled"
 msgid "This add-on is for older versions of Firefox"
 msgstr "This add-on is for older versions of Firefox"
 
+# %1$s is an application name and version.  Example: Firefox 3.1
 #: views/pages/js_constants.js.thtml:75
 #, php-format
 msgid "This add-on is incompatible with your version of %1$s"
@@ -7527,6 +7984,8 @@ msgstr "This add-on is not yet in any collections."
 msgid "This add-on requires external software"
 msgstr "This add-on requires external software"
 
+# %1$s is a URL
+# %2$s is a version number.  Example: 3.1
 #: views/pages/js_constants.js.thtml:72
 #, php-format
 msgid ""
@@ -7587,6 +8046,7 @@ msgstr "This is not a valid email address."
 msgid "This nickname is already taken."
 msgstr "This nickname is already taken."
 
+# %1$s is a URL
 #: views/addons/plugins.thtml:139
 #, php-format
 msgid ""
@@ -7598,6 +8058,7 @@ msgstr ""
 "more information about other plugins available for Mozilla-based Browsers, "
 "visit %1$s"
 
+# %s is href=... and should stay in the <a> tag.
 #: views/developers/previews.thtml:107
 #, php-format
 msgid ""
@@ -7619,6 +8080,7 @@ msgstr ""
 "This version has no files associated with it and can be removed. Would you "
 "like to remove this version?"
 
+# Followed by a list of reviews and files that will be removed.
 #: views/developers/versions_delete.thtml:50
 msgid "This will also delete:"
 msgstr "This will also delete:"
@@ -7712,6 +8174,7 @@ msgstr "Tools"
 msgid "Top"
 msgstr "Top"
 
+# %1$s is a number
 #: views/tags/top.thtml:72
 #, php-format
 msgid "Top %1$s Tags"
@@ -7745,6 +8208,8 @@ msgstr "Total Downloads"
 msgid "Total Reviews"
 msgstr "Total Reviews"
 
+# %1$s is the number of reviews the person has done
+# %2$s is the average number of reviews the team has done
 #: views/editors/performance_table.thtml:61
 #, php-format
 msgid "Total Reviews: %1$s &nbsp;&nbsp;Team Average: %2$s"
@@ -7754,6 +8219,7 @@ msgstr "Total Reviews: %1$s &nbsp;&nbsp;Team Average: %2$s"
 msgid "Trusted"
 msgstr "Trusted"
 
+# A header on the admin page to toggle trusted status.
 #: views/developers/addon_edit_properties.thtml:182
 msgid "Trusted Add-on?"
 msgstr "Trusted Add-on?"
@@ -7830,6 +8296,7 @@ msgstr "Unsubscription Succeeded"
 msgid "Upcoming events and contests"
 msgstr "Upcoming events and contests"
 
+# %s is the add-on name.
 #: views/developers/uploader.thtml:54
 #, php-format
 msgid "Update %s"
@@ -7876,6 +8343,7 @@ msgstr "UpdateURL Check"
 msgid "Updated"
 msgstr "Updated"
 
+# %s is a date in the _('date') format
 #: views/elements/amo2009/results_addon.thtml:100
 #: views/elements/amo2009/results_addon.thtml:119
 #: views/elements/amo2009/homepage_addon.thtml:117
@@ -7937,6 +8405,8 @@ msgstr ""
 msgid "Uploading file..."
 msgstr "Uploading file..."
 
+# %1$s is the "delete" submit button text
+# %2$s is the title of the "advanced" tab
 #: views/collections/edit.thtml:95
 #, php-format
 msgid ""
@@ -8028,20 +8498,25 @@ msgstr "Users have the option of contributing more or less than this amount."
 msgid "Valid Application Versions"
 msgstr "Valid Application Versions"
 
+# Button text (verb)
 #: views/elements/developers/testresults.thtml:45
 msgid "Validate"
 msgstr "Validate"
 
+# %1$s is the add-on name.
+# %2$s is the add-on version.  Example: 3.1
 #: views/developers/versions_validate.thtml:43
 #, php-format
 msgid "Validate %1$s version %2$s"
 msgstr "Validate %1$s version %2$s"
 
+# %s is a filename
 #: views/developers/versions_validate.thtml:52
 #, php-format
 msgid "Validate File %s"
 msgstr "Validate File %s"
 
+# Header for a column in a table
 #: views/developers/versions.thtml:57
 msgid "Validation"
 msgstr "Validation"
@@ -8050,6 +8525,7 @@ msgstr "Validation"
 msgid "Validation Results"
 msgstr "Validation Results"
 
+# %s is a filename. example: windows.exe
 #: views/editors/review.thtml:306
 #, php-format
 msgid "Validation results for %s"
@@ -8067,6 +8543,7 @@ msgstr "Ver"
 msgid "Version"
 msgstr "Version"
 
+# %s is the version of the add-on.  Example:  3.2a1
 #: views/elements/amo2009/addons/version_detail.thtml:51
 #: views/elements/addon_version_detail.thtml:51
 #, php-format
@@ -8074,17 +8551,20 @@ msgctxt "addon_display_header_version"
 msgid "Version %s"
 msgstr "Version %s"
 
+# %s is a version number.  Example:  3.0
 #: views/developers/versions.thtml:66
 #, php-format
 msgctxt "devcp_details_version"
 msgid "Version %s"
 msgstr "Version %s"
 
+# %s is the version number, e.g. 3.2.
 #: views/developers/uploader.thtml:166
 #, php-format
 msgid "Version %s Created"
 msgstr "Version %s Created"
 
+# %s is a version number, base 10.
 #: views/developers/versions.thtml:46
 #, php-format
 msgid "Version %s deleted successfully."
@@ -8198,6 +8678,7 @@ msgstr "View all top downloads"
 msgid "View all top rated"
 msgstr "View all top rated"
 
+# %1$s and %2$s are full <input> tags for dates
 #: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
 #: views/editors/logs.thtml:45 views/admin/logs.thtml:46
 #, php-format
@@ -8223,6 +8704,8 @@ msgstr "View the source"
 msgid "View this table in CSV format"
 msgstr "View this table in CSV format"
 
+# %1$s is the 'Versions and Files' link target URL.
+# %2$s is 'current status' link target URL.
 #: views/developers/uploader.thtml:180
 #, php-format
 msgid ""
@@ -8232,6 +8715,8 @@ msgstr ""
 "View your new file on the <a href=\"%1$s\">Versions and Files page</a>, or "
 "check out your add-on's <a href=\"%2$s\">current status</a>."
 
+# %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
+# %2$s is href="..." and should stay in the 'current status' <a> tag.
 #: views/developers/uploader.thtml:170
 #, php-format
 msgid ""
@@ -8243,6 +8728,7 @@ msgstr ""
 "your add-on's <a %2$s>current status</a>, or <b>add release notes</b> by "
 "clicking the button below (highly recommended)."
 
+# <option> text in a <select> for Author role in an add-on.
 #: views/pages/js_constants.js.thtml:86
 msgid "Viewer"
 msgstr "Viewer"
@@ -8270,6 +8756,9 @@ msgstr "Weekly Totals"
 msgid "Welcome"
 msgstr "Welcome"
 
+# This contains the email sent to users when they signed up for a new
+# account:
+# %1 is the confirmation URL, %2 is the current app
 #: views/users/email/confirm_plain.thtml:6
 #, php-format
 msgid ""
@@ -8307,6 +8796,7 @@ msgstr "Welcome to the Add-on Collector"
 msgid "Welcome to the Developer Dashboard"
 msgstr "Welcome to the Developer Dashboard"
 
+# %s is the user's name
 #: views/layouts/amo2009.thtml:312
 #, php-format
 msgid "Welcome, %s"
@@ -8320,6 +8810,7 @@ msgstr "What are Add-ons?"
 msgid "What are Collections?"
 msgstr "What are Collections?"
 
+# %s is a locale, like en-US.
 #: views/elements/translationbox.thtml:143
 #, php-format
 msgid "What are these %s tabs?"
@@ -8337,6 +8828,7 @@ msgstr "What if I don't have any translations?"
 msgid "What's Next for this Add-on"
 msgstr "What's Next for this Add-on"
 
+# %1 is an add-on name.
 #: views/elements/amo2009/addons/developers/about_addon.thtml:50
 #, php-format
 msgid "What's next for %1$s"
@@ -8397,6 +8889,7 @@ msgstr "Who can publish add-ons to your collection?"
 msgid "Who can view your collection?"
 msgstr "Who can view your collection?"
 
+# %1 is a user's name.
 #: views/addons/developers.thtml:56
 #, php-format
 msgid "Who is %1$s?"
@@ -8406,6 +8899,7 @@ msgstr "Who is %1$s?"
 msgid "Why I Made this Add-on"
 msgstr "Why I Made this Add-on"
 
+# %1 is an add-on name.
 #: views/elements/amo2009/addons/developers/about_addon.thtml:46
 #, php-format
 msgid "Why was %1$s created?"
@@ -8444,11 +8938,16 @@ msgstr "Wrong password entered!"
 msgid "Wrong username or password!"
 msgstr "Wrong username or password!"
 
+# This is a placeholder for a date in the Year-Month-Day format.  This is 
+# NOT a php format string.  Dates going into this box need to remain in the
+# YYYY-MM-DD format so please localize that if necessary or just leave as is.
 #: controllers/editors_controller.php:658
 #: controllers/editors_controller.php:1758
 msgid "YYYY-MM-DD"
 msgstr "YYYY-MM-DD"
 
+# %1$s is the number of reviews the person has done
+# %2$s is the average number of reviews the team has done
 #: views/editors/performance_table.thtml:134
 #, php-format
 msgid "Year To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
@@ -8486,6 +8985,7 @@ msgstr ""
 msgid "You are not authorized to view this page."
 msgstr "You are not authorized to view this page."
 
+# %1$s and %2$s are URLs
 #: views/pages/js_constants.js.thtml:73
 #, php-format
 msgid ""
@@ -8499,6 +8999,9 @@ msgstr ""
 msgid "You can also publish an add-on from its normal listing page."
 msgstr "You can also publish an add-on from its normal listing page."
 
+# %1$s is the link to the "My Favorites" tab on the main collections page
+# %2$s is the localized title of the "My Favorites" tab
+# %3$s is the link URL to the collector add-on
 #: views/collections/subscribe.thtml:62
 #, php-format
 msgid ""
@@ -8518,6 +9021,7 @@ msgid ""
 msgstr ""
 "You can upload a JPG, GIF or PNG icon that will be resized to 32x32 pixels."
 
+# %1 is the URL of the user's info page
 #: views/users/delete.thtml:62
 #, php-format
 msgid ""
@@ -8612,6 +9116,7 @@ msgstr ""
 "You need to check the box \"I understand...\" before we can delete your "
 "account."
 
+# %1 is the confirmation url, %2 is the application name
 #: views/users/email/emailchange_plain.thtml:5
 #, php-format
 msgid ""
@@ -8646,6 +9151,7 @@ msgstr ""
 msgid "You will not be able to log into Mozilla Add-ons anymore."
 msgstr "You will not be able to log into Mozilla Add-ons anymore."
 
+# %1 is a URL.
 #: views/developers/addon_edit_profile.thtml:62
 #, php-format
 msgid "Your <a href=\"%1$s\">Developer Profile</a> has been updated."
@@ -8691,6 +9197,7 @@ msgstr ""
 "Your add-on is <span class=\"status-4\">Trusted</span>. This means you can "
 "submit updates to your add-on without editor review."
 
+# %1$s is a URL
 #: controllers/components/validation.php:281
 #: controllers/components/developers.php:560
 #, php-format
@@ -8715,6 +9222,7 @@ msgstr ""
 "meets the criteria below for completion and transfer to the <span class="
 "\"status-1\">Sandbox</span>."
 
+# %s is a number, perhaps 42.
 #: views/developers/addon_status.thtml:77
 #, php-format
 msgid ""
@@ -8739,6 +9247,7 @@ msgstr ""
 "it. Updates are <b>not</b> being provided to your add-on through the update "
 "check service."
 
+# %s is an email address.
 #: views/developers/addon_status.thtml:81
 #, php-format
 msgid ""
@@ -8752,6 +9261,7 @@ msgstr ""
 msgid "Your add-on must have at least one owner."
 msgstr "Your add-on must have at least one owner."
 
+# %s is an email address.
 #: views/developers/addon_status.thtml:89
 #, php-format
 msgid ""
@@ -8761,6 +9271,7 @@ msgstr ""
 "Your add-on was <span class=\"status-5\">Disabled</span> by an administrator "
 "and cannot be used. If you have any questions, please e-mail %s."
 
+# %s is the addons email address.
 #: views/developers/dashboard.thtml:100
 #, php-format
 msgid ""
@@ -8770,6 +9281,7 @@ msgstr ""
 "Your add-on was disabled by an administrator and cannot be used.  If you "
 "have any questions, please email %s."
 
+# This string is followed by a URL pointing to the collection's view page
 #: views/collections/edit.thtml:75
 msgid "Your collection can be accessed at this location:"
 msgstr "Your collection can be accessed at this location:"
@@ -8786,6 +9298,7 @@ msgstr "Your collection is now ready!"
 msgid "Your collection was successfully saved!"
 msgstr "Your collection was successfully saved!"
 
+# %1$s is a URL.
 #: views/developers/addon_edit_contributions.thtml:104
 #, php-format
 msgid ""
@@ -8795,6 +9308,7 @@ msgstr ""
 "Your contribution account is the <a href=\"%1$s\">PayPal account</a> where "
 "user contributions will be deposited."
 
+# %1 is the new email address
 #: views/users/emailchange.thtml:49
 #, php-format
 msgid ""
@@ -8804,6 +9318,7 @@ msgstr ""
 "Your email address was changed successfully. From now on, please use %1$s to "
 "log in."
 
+# %1$s is a version number, %2$s is a status, e.g Public or Incomplete.
 #: views/developers/uploader.thtml:178
 #, php-format
 msgid ""
@@ -8811,6 +9326,7 @@ msgid ""
 msgstr ""
 "Your new file has been added to version %1$s and is currently marked as %2$s."
 
+# %s is a status, e.g Public or Incomplete.
 #: views/developers/uploader.thtml:168
 #, php-format
 msgid "Your new version has been created and is currently marked as %s."
@@ -8852,6 +9368,7 @@ msgstr ""
 msgid "Your settings have been updated!"
 msgstr "Your settings have been updated!"
 
+# %1 is the email address, %2 is the URL of the user registration page
 #: views/users/delete.thtml:51
 #, php-format
 msgid ""
@@ -8884,10 +9401,12 @@ msgstr "Zoom out one month"
 msgid "all add-ons"
 msgstr "all add-ons"
 
+# This string is in the main category dropdown when searching
 #: views/elements/amo2009/search.thtml:205
 msgid "all collections"
 msgstr "all collections"
 
+# %1$s is a number
 #: views/addons/display.thtml:516
 #, php-format
 msgid "and %1$s more collection"
@@ -8910,6 +9429,7 @@ msgstr "by"
 msgid "by %1$s on %2$s"
 msgstr "by %1$s on %2$s"
 
+# %1 is the user, %2 is the (localized) date, %3 is the rating
 #: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
 #: views/reviews/add.thtml:63 views/reviews/delete.thtml:54
 #, php-format
@@ -8922,10 +9442,12 @@ msgctxt "test_case_name_langpack_security_checkChromeManifest"
 msgid "chrome.manifest Check"
 msgstr "chrome.manifest Check"
 
+# This refers to closing a small pop-up window
 #: views/elements/amo2009/contribution.thtml:117
 msgid "close"
 msgstr "close"
 
+# %1$s is a comma-separated list of author names
 #: views/elements/amo2009/separated_list_items.thtml:72
 #: views/elements/amo2009/collection_listing_item.thtml:84
 #, php-format
@@ -8959,16 +9481,19 @@ msgstr "for Mac OS X"
 msgid "for Windows"
 msgstr "for Windows"
 
+# A small link following each test.  This goes to a help page specific to the test.
 #: views/elements/developers/testresults_group.thtml:58
 msgctxt "devcp_validation_help"
 msgid "help"
 msgstr "help"
 
+# A link after the main header
 #: views/editors/review.thtml:301
 msgctxt "editors_review_header_validation_help"
 msgid "help"
 msgstr "help"
 
+# link path to search plugins instructions, relative to devmo
 #: views/addons/searchengines.thtml:88
 msgid ""
 "http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox"
@@ -8987,6 +9512,7 @@ msgstr "install.js Verification"
 msgid "install.rdf Verification Tests"
 msgstr "install.rdf Verification Tests"
 
+# link text to mycroft.mozdev.org
 #: views/addons/searchengines.thtml:87
 msgid "mycroft.mozdev.org"
 msgstr "mycroft.mozdev.org"
@@ -9013,6 +9539,8 @@ msgctxt "statistics_js_dropdowns_none"
 msgid "none"
 msgstr "none"
 
+# This is a separator between the graphical [contribute] button and the 
+# graphical [download now] button
 #: views/elements/amo2009/contribution.thtml:72
 msgid "or"
 msgstr "or"
@@ -9029,6 +9557,7 @@ msgstr "or, select an add-on with public statistics"
 msgid "or, select another add-on"
 msgstr "or, select another add-on"
 
+# In a user list: user 1, user 2, "others"
 #: views/helpers/addons_html.php:222
 msgid "others"
 msgstr "others"
@@ -9094,6 +9623,9 @@ msgstr "wiki page"
 msgid "within"
 msgstr "within"
 
+# in an author/editor discussion about an add-on to be reviewed:
+# %1 is the commenter's user name (linked).
+# %2 is the full date the comment was made.
 #: views/developers/discuss.thtml:51 views/developers/discuss.thtml:61
 #, php-format
 msgid "written by %1$s on %2$s"
@@ -9106,6 +9638,7 @@ msgstr "yes"
 #~ msgid "downloads"
 #~ msgstr "downloads"
 
+# %1 is the count of characters entered as notes for the review flag reason.
 #~ msgid ""
 #~ "Problem flagging review: Notes for flagged reviews are limited to between "
 #~ "10 and 100 characters; your character length was %1$s."
@@ -9117,6 +9650,7 @@ msgstr "yes"
 #~ msgid "What's this?"
 #~ msgstr "What's this?"
 
+# %s is a URL
 #~ msgctxt "addons_display_paragraph_supportinfourl"
 #~ msgid "Support for this add-on is provided by the developer at %s"
 #~ msgstr "Support for this add-on is provided by the developer at %s"
@@ -9125,12 +9659,16 @@ msgstr "yes"
 #~ msgid "Recommended Add-ons"
 #~ msgstr "Recommended Add-ons"
 
+# link text devmo
 #~ msgid "Mozilla Developer Center"
 #~ msgstr "Mozilla Developer Center"
 
+# %1 is "make your own" link
+# %2 is MDC link
 #~ msgid "Learn how to %1$s at the %2$s."
 #~ msgstr "Learn how to %1$s at the %2$s."
 
+# link text for "make your own" (opensearch engine)
 #~ msgid "make your own"
 #~ msgstr "make your own"
 
@@ -9150,6 +9688,8 @@ msgstr "yes"
 #~ msgid "Create a Developer Profile"
 #~ msgstr "Create a Developer Profile"
 
+# This is the link text in the <a> for devcp_error_appversion_reference_link.  This
+# should be fixed.
 #~ msgctxt "devcp_error_appversion_reference_link_text"
 #~ msgid "this page"
 #~ msgstr "this page"
@@ -9158,10 +9698,13 @@ msgstr "yes"
 #~ msgid "Edit Preview"
 #~ msgstr "Edit Preview"
 
+# %s is a full <a> tag
 #~ msgctxt "devcp_valid_app_reference"
 #~ msgid "Please see %s for reference."
 #~ msgstr "Please see %s for reference."
 
+# This is the text in the <a> tag for devcp_valid_app_reference.  This should be
+# fixed.
 #~ msgctxt "devcp_valid_app_reference_linktext"
 #~ msgid "this page"
 #~ msgstr "this page"
@@ -9190,9 +9733,13 @@ msgstr "yes"
 #~ msgid "Add-ons"
 #~ msgstr "Add-ons"
 
+# this is the text inside of an <a> tag for pages_appversions_required_files.  This
+# should be fixed.
 #~ msgid "here"
 #~ msgstr "here"
 
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to a text captcha
 #~ msgid ""
 #~ "If this is hard to understand, you can <a href=\"%1$s\">listen to "
 #~ "something else</a> or <a href=\"%2$s\">switch back to text</a>."
@@ -9200,6 +9747,8 @@ msgstr "yes"
 #~ "If this is hard to understand, you can <a href=\"%1$s\">listen to "
 #~ "something else</a> or <a href=\"%2$s\">switch back to text</a>."
 
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to an audio captcha
 #~ msgid ""
 #~ "If this is hard to read, you can <a href=\"%1$s\">try different words</a> "
 #~ "or <a href=\"%2$s\">listen to something</a> instead."
