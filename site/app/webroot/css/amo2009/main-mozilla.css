@@ -2069,6 +2069,7 @@ html[xmlns] .clearfix {
     padding: 0;
 }
 .browse_thumbs ul.thumbs li.thumb {
+    position: relative;
     width: 24.5%;
     float: left;
 }
@@ -2191,6 +2192,33 @@ html[xmlns] .clearfix {
     padding: 1px 5px;
     font-size: 0.856em;
     font-weight: normal;
+}
+.browse_thumbs ul.thumbs li.thumb div.thumb_item.incompatible {
+    opacity:0.3;
+    filter:alpha(opacity=30);
+}
+.browse_thumbs ul.thumbs li.thumb div.overlay {
+    display: none;
+    min-width: 30%;
+    max-width: 100%;
+    position: absolute;
+    top: 30%;
+    padding: 10px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, .5);
+}
+.browse_thumbs ul.thumbs li.thumb div.overlay p {
+    text-align: center;
+    margin: 0;
+}
+.browse_thumbs ul.thumbs li.thumb div.overlay a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
 }
 /*** END =Browse Thumbs ***/
 

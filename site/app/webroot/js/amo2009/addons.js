@@ -300,6 +300,44 @@ function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLi
 }
 
 /**
+ * Gray out themes in the theme browser that are incompatible with the current
+ * browser version
+ */
+function addThemeCompatibility(addonID, fromVer, toVer) {
+    var vc = new VersionCompare();
+    // only determine compatibility for the same app
+    if (!(gIsFirefox && APP_ID == APP_FIREFOX
+        || gIsSeaMonkey && APP_ID == APP_SEAMONKEY))
+        return true;
+
+    if (vc.compareVersions(gBrowserVersion, fromVer) < 0
+        || vc.compareVersions(gBrowserVersion, toVer) > 0) {
+        // add overlay
+        $('#addon-'+addonID+' div.thumb_item').addClass('incompatible');
+        $('#addon-'+addonID)
+            .append('<div class="overlay"><p>'
+                +'<a>'+sprintf(app_compat_incompatible, APP_PRETTYNAME)+'</a>'
+                +'</p></div>')
+            .find('a').attr('href', $('#addon-'+addonID+' h4.name a').attr('href'));
+        // show overlay on hover
+        $('#addon-'+addonID)
+            .hover(
+                function() {
+                    $(this).children('div.overlay').show();
+                    $(this).children('div.overlay').get(0).hidethis = false;
+                },
+                function() {
+                    $(this).children('div.overlay').get(0).hidethis = true;
+                    $(this).children('div.overlay').delay(1000,
+                        function(){
+                            if ($(this).get(0).hidethis) $(this).fadeOut();
+                        });
+                });
+    }
+    return true;
+}
+
+/**
  * Remove "incompatible" message for given version ID, by restoring the
  * original button.
  */

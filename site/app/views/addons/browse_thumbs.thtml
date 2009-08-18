@@ -21,6 +21,7 @@
  *
  * Contributor(s):
  *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *   Les Orchard <lorchard@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -107,7 +108,7 @@ $this->layout = 'amo2009';
                 $previmg = '<img src="'.$prevPath.'" alt="'.$_alt.'" title="'.$_alt.'"/>';
                 $previmg = $html->link($previmg, "/addon/{$addonID}");
                 ?>
-                    <li class="thumb <?=$html->extraClass($addon)?>">
+                    <li class="thumb <?=$html->extraClass($addon)?>" id="addon-<?=$addon['Addon']['id']?>">
                         <div class="thumb_item">
                             <div class="img"><?=$previmg?></div>
                             <h4 class="name"><?=$html->link("$addonName", "/addon/{$addonID}");?></h4>
@@ -136,9 +137,16 @@ $this->layout = 'amo2009';
                             </p>
                         </div>
                     </li>
-                <?php
-            }
-            ?>
+                    <?php if (!empty($addon['compatible_apps'])): ?>
+                    <script type="text/javascript">
+                    $(document).ready(function() {
+                        addThemeCompatibility(<?=$addon['Addon']['id']?>,
+                            '<?=$addon['compatible_apps'][0]['Min_Version']['version']?>',
+                            '<?=$addon['compatible_apps'][0]['Max_Version']['version']?>');
+                    });
+                    </script>
+                    <?php endif; ?>
+            <?php } ?>
             </ul>
 
     </div><!-- /#addon-listing -->
