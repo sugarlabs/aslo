@@ -269,6 +269,10 @@ class Addon extends AppModel
                     'weeklydownloads', 'addontype_id', 'averagerating', 'totalreviews'));
                 break;
 
+            case 'recommendations':
+                // attach the top 5 recommended add-ons
+            break;
+
             case 'single_category':
                 // the first category this add-on is associated with
                 $this->bindModel(array('hasMany' =>
@@ -368,6 +372,17 @@ class Addon extends AppModel
             if (!empty($_category_ids))
                 $categories = $this->Category->findAll(array('Category.id' => $_category_ids));
             $addon['Category'] = $categories;
+        }
+
+        if (in_array('recommendations', $associations)) {
+            $rec_ids = $this->execute("SELECT other_addon_id AS id
+                                       FROM addon_recommendations as recs
+                                       WHERE addon_id={$id}
+                                       ORDER BY score DESC LIMIT 5");
+            $addon['Recommendations'] = array();
+            foreach ($rec_ids as $r) {
+                $addon['Recommendations'][] = $this->getAddon($r['recs']['id']);
+            }
         }
 
         // cache this object...

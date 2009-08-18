@@ -302,7 +302,7 @@ class AddonsController extends AppController
             return;
         }
 
-        $_associations = array( 'all_categories', 'all_tags', 'authors', 'default_fields', 'latest_version', 'contrib_details');
+        $_associations = array( 'all_categories', 'all_tags', 'authors', 'default_fields', 'latest_version', 'contrib_details', 'recommendations');
 
         $addon_data = $this->Addon->getAddon($id, $_associations);
 

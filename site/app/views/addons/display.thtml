@@ -500,13 +500,13 @@ if (!empty($coll_addon_added)) {
 </div>
 <!-- /.highlight-->
 
-    <div class="highlight collections-add prose">
+    <div class="highlight collections-add">
         <h3><?=___('Related Collections')?></h3>
 
         <?php if (empty($pop_collections)): ?>
             <p><?=___('This add-on is not yet in any collections.')?></p>
         <?php else: ?>
-            <ul>
+            <ul class="xoxo">
                 <?php foreach($pop_collections as &$_coll): ?>
                     <li><?=$link->collection($_coll)?></li>
                 <?php endforeach; ?>
@@ -542,6 +542,21 @@ if (!empty($coll_addon_added)) {
         </form>
         <?php endif; ?>
     </div>
+
+    <?php if (!empty($addon['Recommendations'])): ?>
+      <div class="highlight">
+        <h3><?=___('Often Used with&hellip;')?></h3>
+        <ul class="xoxo">
+          <?php foreach ($addon['Recommendations'] as $rec): ?>
+            <li>
+              <a href="<?=$html->url('/addon/'.$rec['Addon']['id'])?>">
+                <?=$rec['Translation']['name']['string']?>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    <?php endif; ?>
 
 
 </div>

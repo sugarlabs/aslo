@@ -73,6 +73,9 @@ class Database {
                 );
         }
 
+        $this->write_config = $write_config;
+        $this->read_config = $read_config;
+
         $this->connectWrite($write_config['host'], $write_config['user'], $write_config['pass'], $write_config['name']);
         $this->connectRead($read_config['host'], $read_config['user'], $read_config['pass'], $read_config['name']);
     }
