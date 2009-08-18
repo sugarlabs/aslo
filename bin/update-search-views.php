@@ -41,7 +41,6 @@
 
 /**
  * The script should be run as a cron job to periodically update the text_search_view
-	* and versions_most_recent view in the amo database.
  *
  * This script should not ever be accessed over HTTP, and instead run via cron.
  * Only sysadmins should be responsible for operating this script.
@@ -102,29 +101,17 @@ $sql_commands[] = "INSERT INTO `text_search_summary`
                    ) 
                    ORDER BY a.id ASC, locale DESC;";
 
-//the purpose of the temporary table is to get the most recently created version of an addon (avoiding sub-selects which are mysql 4 bad)
-$sql_commands[] = "DROP TABLE IF EXISTS `most_recent_version`"; //I am being paranoid to make sure temp table does not exist (it shouldn't by below)
-
-$sql_commands[] = "CREATE TEMPORARY TABLE `most_recent_version` (
-                       `addon_id` int(11) NOT NULL,
-                       `created` DATETIME NOT NULL   
-                   ) DEFAULT CHARSET=utf8";
-
 $sql_commands[] = "DELETE FROM `versions_summary`";
-
-$sql_commands[] = "INSERT INTO `most_recent_version`
-                       SELECT DISTINCT v.addon_id, MAX(v.created)
-                       FROM versions AS v
-                       INNER JOIN files AS f ON (f.version_id = v.id AND f.status IN (".implode(',',$valid_status)."))
-                       GROUP BY v.addon_id";
-
 
 $sql_commands[] = "INSERT INTO `versions_summary`
                        SELECT DISTINCT v.addon_id, v.id, av.application_id, v.created, v.modified, av.min, av.max
-                       FROM (most_recent_version AS mrv NATURAL JOIN versions AS v) LEFT JOIN applications_versions AS av
+                       FROM (SELECT DISTINCT v.addon_id AS addon_id, MAX(v.created) AS created
+                             FROM versions AS v
+                             INNER JOIN files AS f ON (f.version_id = v.id AND f.status IN (".implode(',',$valid_status)."))
+                             GROUP BY v.addon_id) AS mrv
+                            NATURAL JOIN versions AS v
+                            LEFT JOIN applications_versions AS av
                        ON (av.version_id = v.id )";
-
-$sql_commands[] = "DROP TABLE  `most_recent_version`";
 
 $sql_commands[] = "DELETE FROM `collections_search_summary`";
 
