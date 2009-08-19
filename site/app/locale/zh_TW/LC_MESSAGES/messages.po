@@ -52,8 +52,8 @@ msgid_plural "%1$s Add-ons in this Collection"
 msgstr[0] "這個收藏集有 %1$s 個元件"
 
 # %1$s is a number
-#: views/helpers/localization.php:65 views/developers/versions_edit.thtml:95
-#: views/addons/dictionaries.thtml:92
+#: views/addons/dictionaries.thtml:92 views/developers/versions_edit.thtml:95
+#: views/helpers/localization.php:65
 #, php-format
 msgid "%1$s KB"
 msgstr "%1$s KB"
@@ -71,7 +71,7 @@ msgid "%1$s Version History"
 msgstr "%1$s 版本記錄"
 
 # %1 is the add-on count, %2 the category name
-#: views/addons/browse_thumbs.thtml:92 views/addons/browse.thtml:60
+#: views/addons/browse.thtml:60 views/addons/browse_thumbs.thtml:92
 #, php-format
 msgid "%1$s add-on"
 msgid_plural "%1$s add-ons"
@@ -353,7 +353,7 @@ msgstr "%1$s 於存取 %2$s 時，重新認證失敗。"
 
 # %1$s is the add-on name
 # %2$s is the collection name, linked to the collection's page
-#: views/pages/js_constants.js.thtml:101 views/addons/display.thtml:70
+#: views/addons/display.thtml:70 views/pages/js_constants.js.thtml:101
 #, php-format
 msgid "%1$s has been added to the %2$s collection."
 msgstr "已將 %1$s 加入 %2$s 收藏集。"
@@ -372,18 +372,18 @@ msgstr "%1$s 已經從您的最愛收藏集中移除。"
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:324
-#: controllers/components/validation.php:336
 #: controllers/components/developers.php:603
 #: controllers/components/developers.php:615
+#: controllers/components/validation.php:324
+#: controllers/components/validation.php:336
 #, php-format
 msgid "%1$s is not a valid version for %2$s"
 msgstr "%1$s 不是有效的 %2$s 版本"
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:327
 #: controllers/components/developers.php:606
+#: controllers/components/validation.php:327
 #, php-format
 msgid "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
 msgstr "%1$s 不是有效的 %2$s 版本：最低版本不能包含 *"
@@ -394,7 +394,7 @@ msgstr "%1$s 不是有效的 %2$s 版本：最低版本不能包含 *"
 msgid "%1$s is not available for %2$s."
 msgstr "%1$s 無法在 %2$s 上使用。"
 
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, php-format
 msgid "%1$s on %2$s"
 msgstr "%1$s 於 %2$s"
@@ -443,9 +443,9 @@ msgid "%1$s removed feature %2$s"
 msgstr "%1$s 移除了推薦 %2$s"
 
 # %1$s is a number
-#: views/elements/amo2009/reviews.thtml:58
-#: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
 #: views/addons/browse_thumbs.thtml:132
+#: views/elements/addon_listitem.thtml:112
+#: views/elements/amo2009/reviews.thtml:58 views/elements/feature.thtml:99
 #, php-format
 msgid "%1$s review"
 msgid_plural "%1$s reviews"
@@ -523,65 +523,65 @@ msgstr "%Y 年 %m 月 %e 日 (%a)"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 #: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
+#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 msgid "%A, %b. %e"
 msgstr "%m 月 %e 日 (%a)"
 
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
-#: views/elements/collections_interactive_addon.thtml:85
-#: views/elements/amo2009/users/vcard.thtml:92
+#: views/addons/browse_thumbs.thtml:121 views/addons/display.thtml:159
+#: views/addons/display.thtml:307 views/addons/rss/versions.thtml:42
+#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/developers/dashboard.thtml:65 views/developers/versions.thtml:69
+#: views/developers/versions_edit.thtml:208
+#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
+#: views/elements/addon_listitem.thtml:124
+#: views/elements/addon_version_detail.thtml:54
+#: views/elements/amo2009/addons/version_detail.thtml:53
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:102
 #: views/elements/amo2009/results_addon.thtml:119
 #: views/elements/amo2009/separated_list_items.thtml:108
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/amo2009/addons/version_detail.thtml:53
-#: views/elements/addon_version_detail.thtml:54
-#: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
-#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/elements/amo2009/users/vcard.thtml:92
+#: views/elements/collections_interactive_addon.thtml:85
+#: views/elements/feature.thtml:106 views/reviews/add.thtml:63
+#: views/reviews/delete.thtml:54 views/reviews/display.thtml:74
+#: views/reviews/display.thtml:159 views/search/rss/index.thtml:5
 #: views/statistics/index.thtml:108 views/users/info.thtml:108
-#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
-#: views/developers/dashboard.thtml:65
-#: views/developers/versions_edit.thtml:208 views/developers/versions.thtml:69
-#: views/search/rss/index.thtml:5 views/addons/rss/versions.thtml:42
-#: views/addons/display.thtml:159 views/addons/display.thtml:307
-#: views/addons/browse_thumbs.thtml:121 views/reviews/add.thtml:63
-#: views/reviews/display.thtml:74 views/reviews/display.thtml:159
-#: views/reviews/delete.thtml:54 controllers/statistics_controller.php:144
-#: controllers/statistics_controller.php:297
 #: controllers/collections_controller.php:1070
+#: controllers/statistics_controller.php:144
+#: controllers/statistics_controller.php:297
 msgid "%B %e, %Y"
 msgstr "%Y 年 %m 月 %e 日"
 
 # date and time format string (strftime)
 # http://php.net/strftime
-#: views/elements/addon_version_detail.thtml:53 views/users/edit.thtml:202
-#: views/editors/review.thtml:369 views/developers/discuss.thtml:51
-#: views/developers/discuss.thtml:61 views/admin/addons_status.thtml:57
-#: views/addons/display.thtml:158
+#: views/addons/display.thtml:158 views/admin/addons_status.thtml:57
+#: views/developers/discuss.thtml:51 views/developers/discuss.thtml:61
+#: views/editors/review.thtml:369 views/elements/addon_version_detail.thtml:53
+#: views/users/edit.thtml:202
 msgid "%B %e, %Y, %I:%M %p"
 msgstr "%Y 年 %m 月 %e 日 %H:%M"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, fuzzy, php-format
 msgid "%b. %e"
 msgstr "%m 月 %e 日"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 msgid "%b. %e, %Y"
 msgstr "%Y 年 %m 月 %e 日"
 
 # %s is the name of the add-on and the add-on section.  Example:
 #   Some Add-on :: Firefox Add-ons
 # This should not be concatenated in the code and should be fixed.
-#: controllers/tags_controller.php:381 controllers/addons_controller.php:259
-#: controllers/addons_controller.php:389
-#: controllers/addons_controller.php:1584
+#: controllers/addons_controller.php:259 controllers/addons_controller.php:389
+#: controllers/addons_controller.php:1584 controllers/tags_controller.php:381
 #, php-format
 msgid "%s"
 msgstr "%s"
@@ -616,9 +616,9 @@ msgid "%s Preview Manager"
 msgstr "%s 預覽圖片管理員"
 
 # %s is the add-on name.
-#: views/developers/addon_status_nominate.thtml:43
-#: views/developers/addon_status_confirm.thtml:43
 #: views/developers/addon_status.thtml:43
+#: views/developers/addon_status_confirm.thtml:43
+#: views/developers/addon_status_nominate.thtml:43
 #, php-format
 msgid "%s Status"
 msgstr "%s 狀態"
@@ -642,7 +642,7 @@ msgstr "在此範圍找到%s"
 
 # %s is a percentage, like '+22.33%'.  It sits next to another number, so
 # the implied meaning is 'percentage change' from the previous stat point.
-#: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:209
+#: views/statistics/addon.thtml:209 views/statistics/rss/summary.thtml:62
 #, php-format
 msgid "%s from last week"
 msgstr "和上週相比 %s"
@@ -789,22 +789,22 @@ msgid ""
 msgstr "<a href=\"http://getfirefox.com\">升級 Firefox</a> 才能使用此元件"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:45
 #: views/developers/dashboard.thtml:79
+#: views/elements/developers/statsbar.thtml:45
 #, php-format
 msgid "<em>%s</em> Active Daily Users"
 msgstr "每日有效使用者：<em>%s</em>"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:41
 #: views/developers/dashboard.thtml:75
+#: views/elements/developers/statsbar.thtml:41
 #, php-format
 msgid "<em>%s</em> Total Downloads"
 msgstr "總下載次數：<em>%s</em>"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:43
 #: views/developers/dashboard.thtml:77
+#: views/elements/developers/statsbar.thtml:43
 #, php-format
 msgid "<em>%s</em> Weekly Downloads"
 msgstr "本週下載數：<em>%s</em>"
@@ -1011,12 +1011,12 @@ msgstr ""
 "有者。"
 
 #: views/developers/addon_edit_authors.thtml:47
-#: views/developers/addon_edit_tags.thtml:46
-#: views/developers/addon_edit_properties.thtml:47
-#: views/developers/addon_status.thtml:46
-#: views/developers/addon_edit_descriptions.thtml:47
-#: views/developers/versions_edit.thtml:47
 #: views/developers/addon_edit_categories.thtml:46
+#: views/developers/addon_edit_descriptions.thtml:47
+#: views/developers/addon_edit_properties.thtml:47
+#: views/developers/addon_edit_tags.thtml:46
+#: views/developers/addon_status.thtml:46
+#: views/developers/versions_edit.thtml:47
 msgid ""
 "<span>Your changes have been saved.</span><br />Please note that some "
 "changes may take several hours to appear in all areas of the website."
@@ -1051,19 +1051,19 @@ msgid_plural "<strong>%1$s</strong> <span>add-ons in use</span>"
 msgstr[0] "<strong>%1$s</strong> <span>個元件使用中</span>"
 
 # %1$s is the count of addons in a collection
-#: views/elements/amo2009/collection_listing_item.thtml:51
 #: views/addons/home.thtml:164
+#: views/elements/amo2009/collection_listing_item.thtml:51
 #, php-format
 msgid "<strong>%1$s</strong> add-on"
 msgid_plural "<strong>%1$s</strong> add-ons"
 msgstr[0] "<strong>%1$s</strong> 個附加元件"
 
 # %1$s is the count of subscribers for a collection
+#: views/addons/home.thtml:168 views/collections/detail.thtml:96
 #: views/elements/amo2009/collection_listing_item.thtml:58
-#: views/collections/detail.thtml:96 views/addons/home.thtml:168
 #, php-format
 msgid "<strong>%1$s</strong> subscriber"
-msgid_plural "<strong>%1$s</strong> subscribers"
+msgid_plural "<strong>%1$s</strong> subscriber"
 msgstr[0] "<strong>%1$s</strong> 位訂閱者"
 
 #: views/collections/detail.thtml:113
@@ -1133,7 +1133,7 @@ msgid ""
 "version %2$s of your add-on %1$s."
 msgstr "一位 Mozilla 元件審核者請求您的元件 %1$s 之 %2$s 版本的更多資訊。"
 
-#: views/users/register.thtml:81 views/users/edit.thtml:99
+#: views/users/edit.thtml:99 views/users/register.thtml:81
 msgid "A first name, last name or nickname is required."
 msgstr "需要姓氏、名稱或是暱稱之一。"
 
@@ -1161,17 +1161,17 @@ msgid ""
 "file %1$s first."
 msgstr "元件的這個版本已經存在，若要取代它，您必須先刪除檔案 %1$s。"
 
-# Link text for the AMO About page.
-#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
-msgctxt "footer_a_about"
-msgid "About"
-msgstr "關於"
-
 #: controllers/editors_controller.php:520
 #, fuzzy
 msgctxt "editors_syntax_about"
 msgid "About"
 msgstr "About"
+
+# Link text for the AMO About page.
+#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
+msgctxt "footer_a_about"
+msgid "About"
+msgstr "關於"
 
 #: views/users/info.thtml:57
 msgid "About Me"
@@ -1181,7 +1181,7 @@ msgstr "有關我"
 msgid "About This Collection"
 msgstr "關於這個收藏集"
 
-#: views/users/edit.thtml:149 views/admin/users_edit.thtml:131
+#: views/admin/users_edit.thtml:131 views/users/edit.thtml:149
 msgid "About me"
 msgstr "有關我"
 
@@ -1193,21 +1193,26 @@ msgstr "接受並下載"
 msgid "Accept and Install"
 msgstr "接受並安裝"
 
-#: views/errors/error401.thtml:50 controllers/components/simple_acl.php:81
-#: controllers/components/simple_acl.php:82
-#: controllers/components/simple_acl.php:83 controllers/components/amo.php:642
-#: controllers/components/amo.php:643 controllers/components/amo.php:644
-#: controllers/reviews_controller.php:354
-#: controllers/reviews_controller.php:486
-#: controllers/editors_controller.php:1228
-#: controllers/collections_controller.php:455
+#: views/errors/error401.thtml:50 controllers/collections_controller.php:455
 #: controllers/collections_controller.php:513
 #: controllers/collections_controller.php:521
 #: controllers/collections_controller.php:991
 #: controllers/collections_controller.php:1056
 #: controllers/collections_controller.php:1100
+#: controllers/components/amo.php:642 controllers/components/amo.php:643
+#: controllers/components/amo.php:644 controllers/components/simple_acl.php:81
+#: controllers/components/simple_acl.php:82
+#: controllers/components/simple_acl.php:83
+#: controllers/editors_controller.php:1228
+#: controllers/reviews_controller.php:354
+#: controllers/reviews_controller.php:486
 msgid "Access Denied"
 msgstr "存取被拒絕"
+
+#: views/editors/review.thtml:322
+msgctxt "editors_review_th_action"
+msgid "Action"
+msgstr "動作"
 
 #: views/editors/performance_table.thtml:72 views/editors/reviewlog.thtml:58
 msgctxt "editorcp_reviewlog_column_action"
@@ -1219,14 +1224,14 @@ msgctxt "editors_reviews_header_action"
 msgid "Action"
 msgstr "動作"
 
-#: views/editors/review.thtml:322
-msgctxt "editors_review_th_action"
-msgid "Action"
-msgstr "動作"
-
 #: views/developers/dashboard.thtml:68
 msgid "Active"
 msgstr "活動中"
+
+#: controllers/statistics_controller.php:307
+msgctxt "statistics_js_plotselection_selector_adu"
+msgid "Active Daily Users"
+msgstr "每日有效使用者"
 
 #: views/statistics/rss/summary.thtml:45 views/statistics/rss/summary.thtml:46
 msgctxt "statistics_summary_updatepings_heading"
@@ -1235,11 +1240,6 @@ msgstr "每日有效使用者"
 
 #: views/statistics/addon.thtml:103 views/statistics/addon.thtml:161
 msgctxt "statistics_plot_legend_adu"
-msgid "Active Daily Users"
-msgstr "每日有效使用者"
-
-#: controllers/statistics_controller.php:307
-msgctxt "statistics_js_plotselection_selector_adu"
 msgid "Active Daily Users"
 msgstr "每日有效使用者"
 
@@ -1255,6 +1255,11 @@ msgstr "活動狀態: <span class=\"inactive-1\">非活動中</span>"
 msgid "Activity By Month"
 msgstr ""
 
+#: views/addons/display.thtml:490 views/developers/addon_edit_tags.thtml:67
+msgctxt "tags_add_tag_button"
+msgid "Add"
+msgstr "新增"
+
 #: views/collections/edit.thtml:211 views/collections/edit.thtml:233
 msgctxt "collections_edit_formfield_users_submit"
 msgid "Add"
@@ -1262,11 +1267,6 @@ msgstr "新增"
 
 #: views/editors/featured.thtml:126
 msgctxt "editors_featured_add_feature_submit"
-msgid "Add"
-msgstr "新增"
-
-#: views/developers/addon_edit_tags.thtml:67 views/addons/display.thtml:490
-msgctxt "tags_add_tag_button"
 msgid "Add"
 msgstr "新增"
 
@@ -1365,7 +1365,7 @@ msgstr "新增意見"
 msgid "Add a review for %s"
 msgstr "新增對 %s 的意見"
 
-#: views/developers/addon_edit_tags.thtml:54 views/addons/display.thtml:484
+#: views/addons/display.thtml:484 views/developers/addon_edit_tags.thtml:54
 msgid "Add a tag"
 msgstr "新增標籤"
 
@@ -1410,8 +1410,8 @@ msgstr "加入收藏集"
 msgid "Add to Delicious"
 msgstr "加到 Delicious"
 
-#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/elements/amo2009/collections/add_form.thtml:53
+#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/pages/collector_firstrun.thtml:64
 msgid "Add to Favorites"
 msgstr "加入到最愛"
@@ -1420,35 +1420,35 @@ msgstr "加入到最愛"
 msgid "Add to a collection:"
 msgstr "加入到收藏集："
 
-#: views/users/edit.thtml:192
-#, fuzzy
-msgctxt "user_notifications_th_addon"
+#: views/admin/flagged_queue.thtml:53 views/editors/featured.thtml:63
+#: views/editors/queue.thtml:115
+msgctxt "editors_th_addon"
 msgid "Add-on"
-msgstr "Add-on"
+msgstr "附加元件"
 
 #: views/editors/performance_table.thtml:69 views/editors/reviewlog.thtml:56
 msgctxt "editorcp_reviewlog_column_addon"
 msgid "Add-on"
 msgstr "附加元件"
 
-#: views/editors/featured.thtml:63 views/editors/queue.thtml:115
-#: views/admin/flagged_queue.thtml:53
-msgctxt "editors_th_addon"
+#: views/users/edit.thtml:192
+#, fuzzy
+msgctxt "user_notifications_th_addon"
 msgid "Add-on"
-msgstr "附加元件"
+msgstr "Add-on"
 
 #: views/statistics/index.thtml:58
 #, fuzzy
 msgid "Add-on Collections"
 msgstr "Add-on Collections"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
-msgctxt "collections_index_header_collector"
+#: controllers/pages_controller.php:117
+msgctxt "page_title_collector"
 msgid "Add-on Collector"
 msgstr "Add-on Collector"
 
-#: controllers/pages_controller.php:117
-msgctxt "page_title_collector"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
+msgctxt "collections_index_header_collector"
 msgid "Add-on Collector"
 msgstr "Add-on Collector"
 
@@ -1465,7 +1465,7 @@ msgid "Add-on Collector Home"
 msgstr "Add-on Collector 首頁"
 
 #: views/elements/amo2009/collections/collector_sidebar_download.thtml:45
-#: views/pages/collector_firstrun.thtml:116 views/pages/collector.thtml:69
+#: views/pages/collector.thtml:69 views/pages/collector_firstrun.thtml:116
 msgid "Add-on Collector Logo"
 msgstr "Add-on Collector Logo"
 
@@ -1525,14 +1525,14 @@ msgstr "元件圖示"
 msgid "Add-on Information"
 msgstr "統計資訊"
 
-#: views/elements/amo2009/addons/list_options.thtml:45
-#: views/elements/addon_list_options.thtml:45
-msgctxt "list_sortby_name"
+#: views/developers/addon_edit_properties.thtml:78
+msgctxt "devcp_edit_properties_transbox_name_name"
 msgid "Add-on Name"
 msgstr "元件名稱"
 
-#: views/developers/addon_edit_properties.thtml:78
-msgctxt "devcp_edit_properties_transbox_name_name"
+#: views/elements/addon_list_options.thtml:45
+#: views/elements/amo2009/addons/list_options.thtml:45
+msgctxt "list_sortby_name"
 msgid "Add-on Name"
 msgstr "元件名稱"
 
@@ -1624,6 +1624,13 @@ msgstr "元件不得被標示為發行前版本（Pre-release）。"
 msgid "Add-on name:"
 msgstr "元件名稱："
 
+#: controllers/addons_controller.php:133 controllers/addons_controller.php:249
+#: controllers/addons_controller.php:315
+#: controllers/addons_controller.php:1548
+#: controllers/addons_controller.php:1605 controllers/api_controller.php:124
+#: controllers/api_controller.php:762
+#: controllers/collections_controller.php:1064
+#: controllers/collections_controller.php:1097
 #: controllers/developers_controller.php:201
 #: controllers/developers_controller.php:597
 #: controllers/developers_controller.php:1147
@@ -1631,21 +1638,15 @@ msgstr "元件名稱："
 #: controllers/downloads_controller.php:95
 #: controllers/downloads_controller.php:102
 #: controllers/downloads_controller.php:164
-#: controllers/statistics_controller.php:190
+#: controllers/editors_controller.php:286
 #: controllers/previews_controller.php:115
 #: controllers/previews_controller.php:206
 #: controllers/previews_controller.php:307
 #: controllers/reviews_controller.php:78
 #: controllers/reviews_controller.php:241
 #: controllers/reviews_controller.php:333
-#: controllers/reviews_controller.php:341 controllers/api_controller.php:124
-#: controllers/api_controller.php:762 controllers/addons_controller.php:133
-#: controllers/addons_controller.php:249 controllers/addons_controller.php:315
-#: controllers/addons_controller.php:1548
-#: controllers/addons_controller.php:1605
-#: controllers/editors_controller.php:286
-#: controllers/collections_controller.php:1064
-#: controllers/collections_controller.php:1097
+#: controllers/reviews_controller.php:341
+#: controllers/statistics_controller.php:190
 msgid "Add-on not found!"
 msgstr "找不到附加元件！"
 
@@ -1731,7 +1732,8 @@ msgctxt "statistics_addons_downloaded"
 msgid "Add-ons Downloaded"
 msgstr "Add-ons Downloaded"
 
-#: views/statistics/index.thtml:92 controllers/statistics_controller.php:126
+#: views/statistics/index.thtml:49 views/statistics/index.thtml:92
+#: controllers/statistics_controller.php:126
 #, fuzzy
 msgid "Add-ons In Use"
 msgstr "Add-ons In Use"
@@ -1753,16 +1755,16 @@ msgstr "依名稱排序"
 msgid "Add-ons by Rating"
 msgstr "依評分排序"
 
-#: controllers/components/validation.php:256
 #: controllers/components/developers.php:535
+#: controllers/components/validation.php:256
 msgid ""
 "Add-ons cannot use an external updateURL. Please remove this from install."
 "rdf and try again."
 msgstr ""
 "附加元件不能使用外部的 updateURL，請將其從 install.rdf 中移除後再試一次。"
 
-#: controllers/components/validation.php:261
 #: controllers/components/developers.php:540
+#: controllers/components/validation.php:261
 msgid ""
 "Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
 "again."
@@ -1780,13 +1782,13 @@ msgstr "與 %1$s 的測試版或是 RC 版相容的附加元件"
 msgid "Add-ons compatible with an alpha version of %1$s"
 msgstr "和 %1$s 的 Alpha 版本相容的附加元件"
 
-#: controllers/tags_controller.php:372 controllers/search_controller.php:235
 #: controllers/addons_controller.php:294 controllers/addons_controller.php:535
 #: controllers/addons_controller.php:832
 #: controllers/addons_controller.php:1036
 #: controllers/addons_controller.php:1262
 #: controllers/addons_controller.php:1405
 #: controllers/addons_controller.php:1454
+#: controllers/search_controller.php:235 controllers/tags_controller.php:372
 #, php-format
 msgid ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
@@ -1797,29 +1799,12 @@ msgstr ""
 
 # %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
 # Sunbird
-#: views/users/info.thtml:50 views/pages/collector_faq.thtml:49
-#: views/pages/collector_firstrun.thtml:42 views/pages/collector.thtml:46
+#: views/pages/collector.thtml:46 views/pages/collector_faq.thtml:49
 #: views/pages/collector_features.thtml:54
-#: controllers/developers_controller.php:89
-#: controllers/tags_controller.php:381
-#: controllers/compatibility_controller.php:72
-#: controllers/components/simple_acl.php:81 controllers/components/amo.php:642
-#: controllers/versions_controller.php:63
-#: controllers/statistics_controller.php:67
-#: controllers/statistics_controller.php:293
-#: controllers/previews_controller.php:67 controllers/users_controller.php:96
-#: controllers/users_controller.php:229 controllers/users_controller.php:336
-#: controllers/users_controller.php:422 controllers/users_controller.php:788
-#: controllers/users_controller.php:791 controllers/users_controller.php:804
-#: controllers/reviews_controller.php:205
-#: controllers/reviews_controller.php:252
-#: controllers/reviews_controller.php:347
-#: controllers/reviews_controller.php:426
-#: controllers/search_controller.php:199 controllers/search_controller.php:298
-#: controllers/search_controller.php:302 controllers/addons_controller.php:219
-#: controllers/addons_controller.php:265 controllers/addons_controller.php:389
-#: controllers/addons_controller.php:480 controllers/addons_controller.php:510
-#: controllers/addons_controller.php:828
+#: views/pages/collector_firstrun.thtml:42 views/users/info.thtml:50
+#: controllers/addons_controller.php:219 controllers/addons_controller.php:265
+#: controllers/addons_controller.php:389 controllers/addons_controller.php:480
+#: controllers/addons_controller.php:510 controllers/addons_controller.php:828
 #: controllers/addons_controller.php:1039
 #: controllers/addons_controller.php:1184
 #: controllers/addons_controller.php:1199
@@ -1831,9 +1816,6 @@ msgstr ""
 #: controllers/addons_controller.php:1584
 #: controllers/addons_controller.php:1640
 #: controllers/addons_controller.php:1645
-#: controllers/editors_controller.php:64 controllers/pages_controller.php:138
-#: controllers/groups_controller.php:65 controllers/groups_controller.php:71
-#: controllers/groups_controller.php:89 controllers/groups_controller.php:111
 #: controllers/collections_controller.php:57
 #: controllers/collections_controller.php:99
 #: controllers/collections_controller.php:188
@@ -1843,7 +1825,27 @@ msgstr ""
 #: controllers/collections_controller.php:483
 #: controllers/collections_controller.php:555
 #: controllers/collections_controller.php:847
+#: controllers/compatibility_controller.php:72
+#: controllers/components/amo.php:642 controllers/components/simple_acl.php:81
+#: controllers/developers_controller.php:89
+#: controllers/editors_controller.php:64 controllers/groups_controller.php:65
+#: controllers/groups_controller.php:71 controllers/groups_controller.php:89
+#: controllers/groups_controller.php:111
 #: controllers/localizers_controller.php:73
+#: controllers/pages_controller.php:138 controllers/previews_controller.php:67
+#: controllers/reviews_controller.php:205
+#: controllers/reviews_controller.php:252
+#: controllers/reviews_controller.php:347
+#: controllers/reviews_controller.php:426
+#: controllers/search_controller.php:199 controllers/search_controller.php:298
+#: controllers/search_controller.php:302
+#: controllers/statistics_controller.php:67
+#: controllers/statistics_controller.php:293
+#: controllers/tags_controller.php:381 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:422 controllers/users_controller.php:788
+#: controllers/users_controller.php:791 controllers/users_controller.php:804
+#: controllers/versions_controller.php:63
 #, php-format
 msgid "Add-ons for %1$s"
 msgstr "%1$s 附加元件"
@@ -1851,11 +1853,6 @@ msgstr "%1$s 附加元件"
 #: views/elements/header.thtml:87
 msgid "Add-ons for Firefox"
 msgstr "Firefox 附加元件"
-
-#: views/statistics/index.thtml:49
-#, fuzzy
-msgid "Add-ons in Use"
-msgstr "Add-ons in Use"
 
 # %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:77
@@ -1927,11 +1924,11 @@ msgstr ""
 msgid "Admin Flag"
 msgstr "Admin Flag"
 
-#: views/elements/developers/editors_review_history_item.thtml:74
-#: views/elements/developers/editors_review_history_item.thtml:85
 #: views/editors/performance_table.thtml:92
 #: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:77
 #: views/editors/reviewlog.thtml:88
+#: views/elements/developers/editors_review_history_item.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:85
 msgctxt "editors_review_history_nominated_adminreview"
 msgid "Admin Review"
 msgstr "送管理員審核"
@@ -1952,8 +1949,8 @@ msgstr "Admin Review"
 msgid "Admin Settings"
 msgstr "管理員設定"
 
-#: views/elements/developers/sidebar.thtml:68
 #: views/elements/developers/myaddons.thtml:75
+#: views/elements/developers/sidebar.thtml:68
 msgctxt "devcp_myaddons_admincp_link"
 msgid "Admin Tools"
 msgstr "管理員工具"
@@ -2134,13 +2131,18 @@ msgstr ""
 "Append {.syntax} to the opening line of code block ~ tildes, where syntax is "
 "one of: html, css, javascript, diff, or sql."
 
+#: views/editors/performance_table.thtml:70
+msgctxt "editorcp_performance_column_application"
+msgid "Application"
+msgstr "應用程式"
+
 #: views/elements/amo2009/search.thtml:224 views/elements/search.thtml:212
 msgctxt "advanced_search_form_application"
 msgid "Application"
 msgstr "應用程式"
 
-#: views/editors/performance_table.thtml:70
-msgctxt "editorcp_performance_column_application"
+#: controllers/statistics_controller.php:309
+msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "應用程式"
 
@@ -2151,11 +2153,6 @@ msgstr "應用程式"
 
 #: controllers/components/stats.php:427
 msgctxt "statistics_longnames_application"
-msgid "Application"
-msgstr "應用程式"
-
-#: controllers/statistics_controller.php:309
-msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "應用程式"
 
@@ -2179,8 +2176,8 @@ msgstr "審核註解"
 msgid "Approved reviews"
 msgstr "已審核的意見"
 
-#: views/elements/developers/editors_review_history_item.thtml:79
 #: views/editors/performance_table.thtml:97 views/editors/reviewlog.thtml:82
+#: views/elements/developers/editors_review_history_item.thtml:79
 msgid "Approved/Public"
 msgstr "已同意／公開區"
 
@@ -2301,15 +2298,15 @@ msgstr "自動發表"
 msgid "Available Actions"
 msgstr "可進行的操作"
 
-#: views/statistics/rss/summary.thtml:60 views/statistics/addon.thtml:199
+#: views/statistics/addon.thtml:199 views/statistics/rss/summary.thtml:60
 msgid "Average Daily Active Users"
 msgstr "每日平均有效使用者"
 
-#: views/statistics/rss/summary.thtml:42 views/statistics/addon.thtml:196
+#: views/statistics/addon.thtml:196 views/statistics/rss/summary.thtml:42
 msgid "Average Daily Downloads"
 msgstr "每日平均下載數"
 
-#: views/statistics/rss/summary.thtml:61 views/statistics/addon.thtml:207
+#: views/statistics/addon.thtml:207 views/statistics/rss/summary.thtml:61
 msgid "Average Daily Users this Week"
 msgstr "本週平均有效使用者"
 
@@ -2323,22 +2320,22 @@ msgstr "BSD License"
 
 # %1 is the add-on name
 #: views/addons/policy.thtml:106 views/addons/versions.thtml:130
-#: views/reviews/flag.thtml:61 views/reviews/add.thtml:114
-#: views/reviews/display.thtml:214 views/reviews/review_added.thtml:57
+#: views/reviews/add.thtml:114 views/reviews/display.thtml:214
+#: views/reviews/flag.thtml:61 views/reviews/review_added.thtml:57
 #, php-format
 msgid "Back to %1$s..."
 msgstr "回到 %1$s…"
+
+#: views/elements/developers/myaddons.thtml:77
+#: views/elements/developers/sidebar.thtml:70
+msgctxt "devcp_myaddons_mainpage_link"
+msgid "Back to Main"
+msgstr "回到主頁面"
 
 #: views/elements/developers/editorsmenu.thtml:63
 msgctxt "editorcp_menu_mainpage_link"
 msgid "Back to Main"
 msgstr "回到主選單"
-
-#: views/elements/developers/sidebar.thtml:70
-#: views/elements/developers/myaddons.thtml:77
-msgctxt "devcp_myaddons_mainpage_link"
-msgid "Back to Main"
-msgstr "回到主頁面"
 
 #: views/compatibility/dashboard.thtml:45
 msgctxt "compatibility_dashboard_main_link"
@@ -2364,7 +2361,7 @@ msgid "Back to review"
 msgstr "回到審核"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:60 views/reviews/add.thtml:113
+#: views/reviews/add.thtml:113 views/reviews/flag.thtml:60
 #: views/reviews/review_added.thtml:56
 msgid "Back to the reviews..."
 msgstr "回到意見列表…"
@@ -2437,7 +2434,7 @@ msgstr "瀏覽附加元件"
 msgid "Browse Search Engines"
 msgstr "瀏覽搜尋引擎"
 
-#: views/addons/themes_landing.thtml:67 views/addons/browse_thumbs.thtml:87
+#: views/addons/browse_thumbs.thtml:87 views/addons/themes_landing.thtml:67
 msgid "Browse Themes"
 msgstr "瀏覽佈景主題"
 
@@ -2501,9 +2498,8 @@ msgstr "CSS"
 msgid "CSV data not found"
 msgstr "CSV data not found"
 
-#: views/elements/translationbox.thtml:124
-#: views/elements/translationbox.thtml:135
-msgctxt "devcp_transbox_input_cancel"
+#: views/pages/js_constants.js.thtml:90
+msgctxt "devcp_js_a_cancel"
 msgid "Cancel"
 msgstr "取消"
 
@@ -2512,15 +2508,15 @@ msgctxt "collections_edit_icon_cancel"
 msgid "Cancel"
 msgstr "取消"
 
+#: views/developers/versions.thtml:77
+msgctxt "devcp_versions_a_cancel"
+msgid "Cancel"
+msgstr "取消"
+
 #: views/editors/review.thtml:395
 msgctxt "editors_review_input_cancel"
 msgid "Cancel"
 msgstr ""
-
-#: views/pages/js_constants.js.thtml:90
-msgctxt "devcp_js_a_cancel"
-msgid "Cancel"
-msgstr "取消"
 
 #: views/developers/versions_delete.thtml:58
 msgctxt "devcp_versions_delete_a_cancel"
@@ -2533,8 +2529,9 @@ msgctxt "devcp_versions_edit_a_cancel"
 msgid "Cancel"
 msgstr "取消"
 
-#: views/developers/versions.thtml:77
-msgctxt "devcp_versions_a_cancel"
+#: views/elements/translationbox.thtml:124
+#: views/elements/translationbox.thtml:135
+msgctxt "devcp_transbox_input_cancel"
 msgid "Cancel"
 msgstr "取消"
 
@@ -2546,8 +2543,8 @@ msgstr "取消安裝"
 msgid "Cancel and return"
 msgstr "取消並返回"
 
-#: views/elements/categories.thtml:50
 #: views/elements/amo2009/categories.thtml:42
+#: views/elements/categories.thtml:50
 msgctxt "categories_header"
 msgid "Categories"
 msgstr "分類"
@@ -2602,7 +2599,7 @@ msgctxt "devcp_dashboard_change_status"
 msgid "Change Status"
 msgstr "變更狀態"
 
-#: views/statistics/rss/summary.thtml:52 views/statistics/addon.thtml:181
+#: views/statistics/addon.thtml:181 views/statistics/rss/summary.thtml:52
 msgid "Change from previous count"
 msgstr "與上次計數相比"
 
@@ -2647,8 +2644,8 @@ msgstr "勾選此方塊，然後按下「%1$s」刪除這個收藏集。"
 msgid "Checking account email..."
 msgstr "正在檢查帳號 Email…"
 
-#: views/elements/categories.thtml:50
 #: views/elements/amo2009/categories.thtml:41
+#: views/elements/categories.thtml:50
 msgid "Choose a category"
 msgstr "請選擇分類"
 
@@ -2664,8 +2661,8 @@ msgstr "清除"
 msgid "Click Update Previews below to upload."
 msgstr "按下面的「更新預覽圖片」進行上傳。"
 
-#: views/users/emailchange.thtml:51 views/users/delete.thtml:53
-#: views/users/delete.thtml:119 views/reviews/flag.thtml:54
+#: views/reviews/flag.thtml:54 views/users/delete.thtml:53
+#: views/users/delete.thtml:119 views/users/emailchange.thtml:51
 msgid "Click here to return to the front page."
 msgstr "按這裡回到網站首頁。"
 
@@ -2742,30 +2739,31 @@ msgstr "收藏集類型"
 msgid "Collection not found!"
 msgstr "找不到收藏集！"
 
-#: views/elements/amo2009/categories.thtml:65 views/addons/home.thtml:142
-msgctxt "addons_home_collections"
-msgid "Collections"
-msgstr "收藏集"
-
 #: views/collections/listing.thtml:52
 msgctxt "collections_index_header_collections"
 msgid "Collections"
 msgstr "收藏集"
 
-#: views/users/edit.thtml:87 views/users/edit.thtml:157
-msgctxt "user_tab_collections"
-msgid "Collections"
-msgstr "收藏集"
-
-#: views/pages/collector_faq.thtml:50 views/pages/collector_firstrun.thtml:43
-#: views/pages/collector.thtml:47 views/pages/collector_features.thtml:55
-#: controllers/search_controller.php:303
+#: views/pages/collector.thtml:47 views/pages/collector_faq.thtml:50
+#: views/pages/collector_features.thtml:55
+#: views/pages/collector_firstrun.thtml:43
 #: controllers/collections_controller.php:189
 #: controllers/collections_controller.php:208
 #: controllers/collections_controller.php:422
 #: controllers/collections_controller.php:484
 #: controllers/collections_controller.php:556
+#: controllers/search_controller.php:303
 msgctxt "collections_breadcrumb"
+msgid "Collections"
+msgstr "收藏集"
+
+#: views/addons/home.thtml:142 views/elements/amo2009/categories.thtml:65
+msgctxt "addons_home_collections"
+msgid "Collections"
+msgstr "收藏集"
+
+#: views/users/edit.thtml:87 views/users/edit.thtml:157
+msgctxt "user_tab_collections"
 msgid "Collections"
 msgstr "收藏集"
 
@@ -2794,7 +2792,7 @@ msgstr "包含 %1$s 的收藏集"
 
 # This just shows an example of tags.  The important thing in the example is to show
 # that tags can be separated with commas and have spaces in them
-#: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:492
+#: views/addons/display.thtml:492 views/developers/addon_edit_tags.thtml:69
 msgid ""
 "Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
 "\">ocean, sail boat, water</span>"
@@ -2892,8 +2890,8 @@ msgstr "請再次輸入密碼"
 msgid "Confirm account deletion"
 msgstr "確認刪除帳號"
 
-#: views/users/pwreset.thtml:77 views/users/register.thtml:73
-#: views/users/edit.thtml:224
+#: views/users/edit.thtml:224 views/users/pwreset.thtml:77
+#: views/users/register.thtml:73
 msgid "Confirm password"
 msgstr "請再次輸入密碼"
 
@@ -2945,13 +2943,13 @@ msgstr "建立收藏集"
 msgid "Create Developer Profile"
 msgstr "建立開發者檔案"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
-msgctxt "collections_index_a_create"
+#: views/collections/add.thtml:48
+msgctxt "collections_add_header"
 msgid "Create a Collection"
 msgstr "建立收藏集"
 
-#: views/collections/add.thtml:48
-msgctxt "collections_add_header"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
+msgctxt "collections_index_a_create"
 msgid "Create a Collection"
 msgstr "建立收藏集"
 
@@ -2980,13 +2978,13 @@ msgstr "已建立"
 msgid "Created by Me"
 msgstr "Created by Me"
 
-#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
-msgctxt "footer_credits"
+#: controllers/pages_controller.php:92
+msgctxt "page_title_credits"
 msgid "Credits"
 msgstr "感謝"
 
-#: controllers/pages_controller.php:92
-msgctxt "page_title_credits"
+#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
+msgctxt "footer_credits"
 msgid "Credits"
 msgstr "感謝"
 
@@ -3052,9 +3050,8 @@ msgstr "顯示板存取權限"
 msgid "Dashboard Home"
 msgstr "顯示板首頁"
 
-#: views/elements/amo2009/addons/list_options.thtml:46
-#: views/elements/addon_list_options.thtml:46 views/statistics/index.thtml:90
-msgctxt "list_sortby_date"
+#: views/editors/review.thtml:320
+msgctxt "editors_review_th_date"
 msgid "Date"
 msgstr "日期"
 
@@ -3063,8 +3060,10 @@ msgctxt "editorcp_reviewlog_column_date"
 msgid "Date"
 msgstr "日期"
 
-#: views/editors/review.thtml:320
-msgctxt "editors_review_th_date"
+#: views/elements/addon_list_options.thtml:46
+#: views/elements/amo2009/addons/list_options.thtml:46
+#: views/statistics/index.thtml:90
+msgctxt "list_sortby_date"
 msgid "Date"
 msgstr "日期"
 
@@ -3181,8 +3180,8 @@ msgstr "已刪除的意見"
 msgid "Deleting your collection will permanently erase it."
 msgstr "刪除您的收藏集將會永久地消除它。"
 
-#: views/elements/developers/editors_review_history_item.thtml:82
 #: views/editors/performance_table.thtml:100 views/editors/reviewlog.thtml:85
+#: views/elements/developers/editors_review_history_item.thtml:82
 msgid "Denied/Sandbox"
 msgstr "已拒絕／沙箱區"
 
@@ -3202,6 +3201,10 @@ msgstr "敘述"
 #: views/elements/developers/actionbar.thtml:47
 msgid "Detailed Info"
 msgstr "詳細資訊"
+
+#: views/addons/display.thtml:362
+msgid "Detailed Review"
+msgstr "填寫詳細意見"
 
 #: views/elements/developers/performanceheader.thtml:60
 #, fuzzy
@@ -3225,11 +3228,6 @@ msgstr[0] "開發者"
 msgid "Developer Agreement"
 msgstr "開發者授權合約"
 
-#: views/editors/review.thtml:291
-msgctxt "editors_review_header_devcomments"
-msgid "Developer Comments"
-msgstr "開發者留言"
-
 #: views/developers/addon_edit_descriptions.thtml:93
 msgctxt "devcp_edit_descriptions_transbox_comments_name"
 msgid "Developer Comments"
@@ -3240,6 +3238,11 @@ msgstr "開發者留言"
 msgctxt "addons_display_developer_comments"
 msgid "Developer Comments"
 msgstr "Developer Comments"
+
+#: views/editors/review.thtml:291
+msgctxt "editors_review_header_devcomments"
+msgid "Developer Comments"
+msgstr "開發者留言"
 
 #: views/developers/dashboard.thtml:43
 msgid "Developer Dashboard"
@@ -3261,19 +3264,8 @@ msgstr "開發者檔案"
 msgid "Developer Reply:"
 msgstr "開發者回覆："
 
-#: views/elements/developers/sidebar.thtml:48
-#: views/elements/developers/myaddons.thtml:67
-msgctxt "devcp_myaddons_title"
-msgid "Developer Tools"
-msgstr "開發者工具"
-
 #: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
 msgctxt "sidebar_navlink_developer_tools"
-msgid "Developer Tools"
-msgstr "開發者工具"
-
-#: views/statistics/addon.thtml:58
-msgctxt "statistics_addon_developertools_link"
 msgid "Developer Tools"
 msgstr "開發者工具"
 
@@ -3284,6 +3276,17 @@ msgstr "開發者工具"
 #: controllers/previews_controller.php:79
 #: controllers/previews_controller.php:82
 msgctxt "devcp_pagetitle"
+msgid "Developer Tools"
+msgstr "開發者工具"
+
+#: views/statistics/addon.thtml:58
+msgctxt "statistics_addon_developertools_link"
+msgid "Developer Tools"
+msgstr "開發者工具"
+
+#: views/elements/developers/myaddons.thtml:67
+#: views/elements/developers/sidebar.thtml:48
+msgctxt "devcp_myaddons_title"
 msgid "Developer Tools"
 msgstr "開發者工具"
 
@@ -3300,19 +3303,19 @@ msgstr "開發者"
 msgid "Dictionaries"
 msgstr "字典"
 
+#: views/addons/dictionaries.thtml:63 controllers/addons_controller.php:1402
+#: controllers/components/amo.php:721
+msgctxt "langtools_header_dicts_and_langpacks"
+msgid "Dictionaries & Language Packs"
+msgstr "字典及語言套件"
+
 #: views/elements/addon_categories.thtml:52
 msgctxt "nav_category_dicts_langpacks"
 msgid "Dictionaries & Language Packs"
 msgstr "字典套件及語言套件"
 
-#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:721
-#: controllers/addons_controller.php:1402
-msgctxt "langtools_header_dicts_and_langpacks"
-msgid "Dictionaries & Language Packs"
-msgstr "字典及語言套件"
-
-#: models/addontype.php:79
-msgctxt "general_addontype_dict"
+#: views/addons/dictionaries.thtml:69
+msgctxt "langtools_tableheader_dictionary"
 msgid "Dictionary"
 msgstr "字典套件"
 
@@ -3321,8 +3324,8 @@ msgctxt "sidebar_pitch_dictionary"
 msgid "Dictionary"
 msgstr "字典套件"
 
-#: views/addons/dictionaries.thtml:69
-msgctxt "langtools_tableheader_dictionary"
+#: models/addontype.php:79
+msgctxt "general_addontype_dict"
 msgid "Dictionary"
 msgstr "字典套件"
 
@@ -3389,7 +3392,9 @@ msgstr "下載語言套件"
 # %$1s is an optional string that only appears if the add-on is only available for
 # a certain platform.  Examples:  (Windows)  or  (Linux)
 # Note that the parentheses are included in the string. :(
-#: views/elements/amo2009/install.thtml:137
+#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
+#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
+#: views/addons/plugins.thtml:119 views/elements/amo2009/install.thtml:137
 #: views/elements/amo2009/install.thtml:233
 #: views/elements/amo2009/install.thtml:246
 #: views/elements/amo2009/install.thtml:284
@@ -3397,9 +3402,6 @@ msgstr "下載語言套件"
 #: views/elements/amo2009/install.thtml:339 views/elements/install.thtml:73
 #: views/elements/install.thtml:181 views/elements/install.thtml:205
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
-#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
-#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
-#: views/addons/plugins.thtml:119
 #, php-format
 msgid "Download Now %s"
 msgstr "立刻下載 %s"
@@ -3408,23 +3410,23 @@ msgstr "立刻下載 %s"
 msgid "Download the Add-on Collector:"
 msgstr "下載 Add-on Collector："
 
-#: views/elements/amo2009/addons/list_options.thtml:47
-#: views/elements/addon_list_options.thtml:47 views/addons/display.thtml:185
-msgctxt "list_sortby_downloads"
+#: controllers/statistics_controller.php:306
+msgctxt "statistics_js_plotselection_selector_downloads"
 msgid "Downloads"
-msgstr "下載次數"
+msgstr "下載"
 
 #: views/statistics/rss/summary.thtml:39
 msgctxt "statistics_summary_downloads_heading"
 msgid "Downloads"
 msgstr "下載"
 
-#: controllers/statistics_controller.php:306
-msgctxt "statistics_js_plotselection_selector_downloads"
+#: views/addons/display.thtml:185 views/elements/addon_list_options.thtml:47
+#: views/elements/amo2009/addons/list_options.thtml:47
+msgctxt "list_sortby_downloads"
 msgid "Downloads"
-msgstr "下載"
+msgstr "下載次數"
 
-#: views/statistics/rss/summary.thtml:43 views/statistics/addon.thtml:203
+#: views/statistics/addon.thtml:203 views/statistics/rss/summary.thtml:43
 msgid "Downloads in the last 7 days"
 msgstr "最近七日下載次數"
 
@@ -3435,28 +3437,28 @@ msgstr "授權合約"
 # %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
-#: views/developers/addon_edit_tags.thtml:43
+#: views/developers/addon_edit_categories.thtml:43
 #: views/developers/addon_edit_contributions.thtml:46
-#: views/developers/versions_delete.thtml:43
+#: views/developers/addon_edit_descriptions.thtml:44
 #: views/developers/addon_edit_profile.thtml:69
 #: views/developers/addon_edit_properties.thtml:44
-#: views/developers/addon_edit_descriptions.thtml:44
-#: views/developers/versions_edit.thtml:44
-#: views/developers/addon_edit_categories.thtml:43
+#: views/developers/addon_edit_tags.thtml:43
 #: views/developers/versions.thtml:43
+#: views/developers/versions_delete.thtml:43
+#: views/developers/versions_edit.thtml:44
 #, php-format
 msgid "Edit %s"
 msgstr "編輯 %s"
 
-#: views/elements/developers/actionbar.thtml:42
-#: views/elements/developers/actionbar.thtml:50
-#: views/developers/dashboard.thtml:64
-msgctxt "devcp_actionbar_link_edit"
+#: views/elements/developers/editbox.thtml:43
+msgctxt "devcp_editbox_edit_addon"
 msgid "Edit Add-on"
 msgstr "編輯附加元件"
 
-#: views/elements/developers/editbox.thtml:43
-msgctxt "devcp_editbox_edit_addon"
+#: views/developers/dashboard.thtml:64
+#: views/elements/developers/actionbar.thtml:42
+#: views/elements/developers/actionbar.thtml:50
+msgctxt "devcp_actionbar_link_edit"
 msgid "Edit Add-on"
 msgstr "編輯附加元件"
 
@@ -3534,19 +3536,19 @@ msgctxt "editorcp_summary_page_heading"
 msgid "Editor Summary"
 msgstr "審核者摘要"
 
-#: views/elements/developers/editorsmenu.thtml:52
-msgctxt "editorcp_menu_title"
-msgid "Editor Tools"
-msgstr "審核者工具"
-
-#: views/elements/developers/sidebar.thtml:65
 #: views/elements/developers/myaddons.thtml:72
+#: views/elements/developers/sidebar.thtml:65
 msgctxt "devcp_myaddons_editorcp_link"
 msgid "Editor Tools"
 msgstr "審核者工具"
 
 #: views/elements/header.thtml:148 views/layouts/amo2009.thtml:288
 msgctxt "sidebar_navlink_editor_tools"
+msgid "Editor Tools"
+msgstr "審核者工具"
+
+#: views/elements/developers/editorsmenu.thtml:52
+msgctxt "editorcp_menu_title"
 msgid "Editor Tools"
 msgstr "審核者工具"
 
@@ -3583,14 +3585,14 @@ msgstr ""
 "Creating_OpenSearch_plugins_for_Firefox\">閱讀文件</a>並檢查您的附加元件後，"
 "再重新嘗試。"
 
-#: views/elements/amo2009/users/vcard.thtml:86
-msgctxt "addon_developer_th_email"
+#: views/users/edit.thtml:230 views/users/login.thtml:84
+#: views/users/pwreset.thtml:52 views/users/register.thtml:63
+msgctxt "user_form_email"
 msgid "Email address"
 msgstr "Email 地址"
 
-#: views/users/pwreset.thtml:52 views/users/login.thtml:84
-#: views/users/register.thtml:63 views/users/edit.thtml:230
-msgctxt "user_form_email"
+#: views/elements/amo2009/users/vcard.thtml:86
+msgctxt "addon_developer_th_email"
 msgid "Email address"
 msgstr "Email 地址"
 
@@ -3646,7 +3648,7 @@ msgctxt "editorcp_menu_eventlog_link"
 msgid "Event Log"
 msgstr "事件記錄"
 
-#: views/editors/logs.thtml:42 views/admin/logs.thtml:43
+#: views/admin/logs.thtml:43 views/editors/logs.thtml:42
 #: controllers/editors_controller.php:1751
 msgctxt "editorcp_logs_page_heading"
 msgid "Event Log"
@@ -3822,10 +3824,10 @@ msgstr "File Type Verification"
 msgid "File error: %s does not exist."
 msgstr "檔案錯誤：%s 不存在。"
 
-#: controllers/files_controller.php:75 controllers/files_controller.php:106
-#: controllers/files_controller.php:109 controllers/files_controller.php:240
-#: controllers/files_controller.php:253 controllers/files_controller.php:262
-#: controllers/files_controller.php:281 controllers/editors_controller.php:535
+#: controllers/editors_controller.php:535 controllers/files_controller.php:75
+#: controllers/files_controller.php:106 controllers/files_controller.php:109
+#: controllers/files_controller.php:240 controllers/files_controller.php:253
+#: controllers/files_controller.php:262 controllers/files_controller.php:281
 msgid "File not found!"
 msgstr "找不到檔案！"
 
@@ -3833,14 +3835,9 @@ msgstr "找不到檔案！"
 msgid "Files:"
 msgstr "檔案："
 
-#: views/editors/performance_table.thtml:52
-#: views/editors/performance_charts.thtml:65 views/editors/reviewlog.thtml:49
+#: views/editors/performance_charts.thtml:65
+#: views/editors/performance_table.thtml:52 views/editors/reviewlog.thtml:49
 msgctxt "editorcp_reviewlog_button_filter"
-msgid "Filter"
-msgstr "過濾條件"
-
-#: views/editors/logs.thtml:56 views/admin/logs.thtml:91
-msgctxt "editorcp_logs_button_filter"
 msgid "Filter"
 msgstr "過濾條件"
 
@@ -3849,11 +3846,16 @@ msgctxt "editors_queue_submit_filter"
 msgid "Filter"
 msgstr "過濾條件"
 
+#: views/admin/logs.thtml:91 views/editors/logs.thtml:56
+msgctxt "editorcp_logs_button_filter"
+msgid "Filter"
+msgstr "過濾條件"
+
 #: views/editors/queue.thtml:46
 msgid "Filter Queue"
 msgstr "佇列過濾條件"
 
-#: views/editors/logs.thtml:50 views/admin/logs.thtml:50
+#: views/admin/logs.thtml:50 views/editors/logs.thtml:50
 msgid "Filter by type/action"
 msgstr "依類型╱動作過濾"
 
@@ -3865,8 +3867,8 @@ msgstr "尋找其他應用程式使用的附加元件"
 msgid "Firefox"
 msgstr "Firefox"
 
-#: views/users/register.thtml:78 views/users/edit.thtml:96
-#: views/admin/users_edit.thtml:76
+#: views/admin/users_edit.thtml:76 views/users/edit.thtml:96
+#: views/users/register.thtml:78
 msgid "First name"
 msgstr "名字"
 
@@ -3886,15 +3888,15 @@ msgstr "Flags:"
 msgid "For information on contributing, please see our %s."
 msgstr "想瞭解他們的貢獻，您可以參考 Mozilla 上的 %s。"
 
-# Full text for the FAQ abbreviation.
-#: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
-#: views/layouts/amo2009.thtml:354
-msgctxt "footer_abbr_faq"
+#: controllers/pages_controller.php:111
+msgctxt "page_title_faq"
 msgid "Frequently Asked Questions"
 msgstr "常見問題集"
 
-#: controllers/pages_controller.php:111
-msgctxt "page_title_faq"
+# Full text for the FAQ abbreviation.
+#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
+#: views/pages/collector_features.thtml:72
+msgctxt "footer_abbr_faq"
 msgid "Frequently Asked Questions"
 msgstr "常見問題集"
 
@@ -3962,15 +3964,13 @@ msgid ""
 "Add-ons\""
 msgstr "請替您的收藏集取一個敘述性的名稱，例如「小明最愛的旅行相關元件」。"
 
-#: views/elements/amo2009/collections/sort_form.thtml:55
-#: views/collections/detail.thtml:139 views/search/index.thtml:129
-msgctxt "collections_index_button_go"
+#: views/addons/display.thtml:459 views/tags/display.thtml:83
+msgctxt "addons_author_addons_submit"
 msgid "Go"
 msgstr "衝"
 
-#: views/elements/amo2009/addons/list_options.thtml:113
-#: views/elements/addon_list_options.thtml:109
-msgctxt "addons_options_submit"
+#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
+msgctxt "editors_featured_edit_feature_submit"
 msgid "Go"
 msgstr "衝"
 
@@ -3979,13 +3979,16 @@ msgctxt "footer_lang_form_lang_submit_go"
 msgid "Go"
 msgstr "衝"
 
-#: views/tags/display.thtml:83 views/addons/display.thtml:459
-msgctxt "addons_author_addons_submit"
+#: views/elements/addon_list_options.thtml:109
+#: views/elements/amo2009/addons/list_options.thtml:113
+msgctxt "addons_options_submit"
 msgid "Go"
 msgstr "衝"
 
-#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
-msgctxt "editors_featured_edit_feature_submit"
+#: views/collections/detail.thtml:139
+#: views/elements/amo2009/collections/sort_form.thtml:55
+#: views/search/index.thtml:129
+msgctxt "collections_index_button_go"
 msgid "Go"
 msgstr "衝"
 
@@ -4017,13 +4020,13 @@ msgstr "HTML"
 msgid "Hate it"
 msgstr "討厭"
 
-#: views/elements/translationbox.thtml:68
-msgctxt "devcp_transbox_alt_help"
+#: views/statistics/addon.thtml:60
+msgctxt "statistics_help_link"
 msgid "Help"
 msgstr "說明"
 
-#: views/statistics/addon.thtml:60
-msgctxt "statistics_help_link"
+#: views/elements/translationbox.thtml:68
+msgctxt "devcp_transbox_alt_help"
 msgid "Help"
 msgstr "說明"
 
@@ -4057,8 +4060,8 @@ msgstr "隱藏說明"
 msgid "Hide Total Count"
 msgstr "隱藏總計數"
 
-#: views/users/register.thtml:94 views/users/edit.thtml:125
-#: views/admin/users_edit.thtml:91
+#: views/admin/users_edit.thtml:91 views/users/edit.thtml:125
+#: views/users/register.thtml:94
 msgid "Hide email address"
 msgstr "我要隱藏 Email 地址"
 
@@ -4378,7 +4381,7 @@ msgstr "安裝語言套件"
 msgid "Install.js contains a function missing from the whitelist: %s"
 msgstr "Install.js contains a function missing from the whitelist: %s"
 
-#: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
+#: views/admin/users_edit.thtml:132 views/users/edit.thtml:150
 msgid ""
 "Introduce yourself to the community, if you like! This text will appear "
 "publicly on your user info page. Line breaks will be preserved, but no HTML "
@@ -4532,7 +4535,7 @@ msgstr "語言套件 (附加元件)"
 msgid "Language Packs (Application)"
 msgstr "語言套件 (應用程式)"
 
-#: views/statistics/rss/summary.thtml:41 views/statistics/addon.thtml:175
+#: views/statistics/addon.thtml:175 views/statistics/rss/summary.thtml:41
 msgid "Last Day Count"
 msgstr "昨日下載次數"
 
@@ -4546,8 +4549,8 @@ msgstr "更新時間"
 msgid "Last edited on %s"
 msgstr "最後一次編輯於 %s"
 
-#: views/users/register.thtml:84 views/users/edit.thtml:102
-#: views/admin/users_edit.thtml:81
+#: views/admin/users_edit.thtml:81 views/users/edit.thtml:102
+#: views/users/register.thtml:84
 msgid "Last name"
 msgstr "姓氏"
 
@@ -4570,26 +4573,26 @@ msgid ""
 "\">Mozilla Developer Center</a>."
 msgstr ""
 
-#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/amo2009/homepage_addon.thtml:124
+#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/feature.thtml:122
 msgid "Learn more"
 msgstr "詳細資訊"
 
 # %1 is the add-on name
-#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/amo2009/homepage_addon.thtml:125
+#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/feature.thtml:123
 #, php-format
 msgid "Learn more about %1$s"
 msgstr "%1$s 的詳細資訊"
 
-#: views/elements/amo2009/teaser_collections.thtml:86
-#: views/elements/amo2009/teaser_collections.thtml:92
-#: views/elements/amo2009/results_addon.thtml:90
-#: views/elements/amo2009/results_addon.thtml:92
 #: views/elements/amo2009/homepage_addon.thtml:99
 #: views/elements/amo2009/homepage_addon.thtml:102
+#: views/elements/amo2009/results_addon.thtml:90
+#: views/elements/amo2009/results_addon.thtml:92
+#: views/elements/amo2009/teaser_collections.thtml:86
+#: views/elements/amo2009/teaser_collections.thtml:92
 #: views/elements/feature.thtml:94
 msgid "Learn more about this add-on"
 msgstr "了解關於此元件的更多資訊"
@@ -4678,13 +4681,13 @@ msgstr "在地化欄位"
 msgid "Localizers"
 msgstr "在地化"
 
-#: views/elements/amo2009/users/vcard.thtml:68
-msgctxt "addon_developer_th_location"
+#: views/admin/users_edit.thtml:99 views/users/edit.thtml:112
+msgctxt "user_form_location"
 msgid "Location"
 msgstr "地點"
 
-#: views/users/edit.thtml:112 views/admin/users_edit.thtml:99
-msgctxt "user_form_location"
+#: views/elements/amo2009/users/vcard.thtml:68
+msgctxt "addon_developer_th_location"
 msgid "Location"
 msgstr "地點"
 
@@ -4697,8 +4700,8 @@ msgstr "已上鎖"
 msgid "Log In"
 msgstr "Log In"
 
-#: views/elements/developers/sidebar.thtml:72
-#: views/elements/developers/myaddons.thtml:50 views/elements/header.thtml:159
+#: views/elements/developers/myaddons.thtml:50
+#: views/elements/developers/sidebar.thtml:72 views/elements/header.thtml:159
 msgctxt "header_navlink_login"
 msgid "Log in"
 msgstr "登入"
@@ -4904,18 +4907,9 @@ msgid "Misplaced bug report or support request"
 msgstr "誤置的臭蟲回報或是技術支援要求"
 
 # %s is a string representing what's missing.  Example:  file_id
-#: controllers/downloads_controller.php:65
-#: controllers/users_controller.php:191 controllers/users_controller.php:270
-#: controllers/users_controller.php:641 controllers/users_controller.php:739
-#: controllers/users_controller.php:909 controllers/reviews_controller.php:71
-#: controllers/reviews_controller.php:235
-#: controllers/reviews_controller.php:326
-#: controllers/reviews_controller.php:474
-#: controllers/reviews_controller.php:476
 #: controllers/addons_controller.php:175 controllers/addons_controller.php:301
 #: controllers/addons_controller.php:1540
 #: controllers/addons_controller.php:1683
-#: controllers/editors_controller.php:1235
 #: controllers/collections_controller.php:177
 #: controllers/collections_controller.php:279
 #: controllers/collections_controller.php:298
@@ -4934,13 +4928,22 @@ msgstr "誤置的臭蟲回報或是技術支援要求"
 #: controllers/collections_controller.php:1046
 #: controllers/collections_controller.php:1093
 #: controllers/collections_controller.php:1113
+#: controllers/downloads_controller.php:65
+#: controllers/editors_controller.php:1235
+#: controllers/reviews_controller.php:71
+#: controllers/reviews_controller.php:235
+#: controllers/reviews_controller.php:326
+#: controllers/reviews_controller.php:474
+#: controllers/reviews_controller.php:476 controllers/users_controller.php:191
+#: controllers/users_controller.php:270 controllers/users_controller.php:641
+#: controllers/users_controller.php:739 controllers/users_controller.php:909
 #, php-format
 msgid "Missing argument: %s"
 msgstr "缺少參數：%s"
 
 # %1 is the review count
-#: views/elements/developers/editorsqueue.thtml:42
 #: views/elements/developers/editorsmenu.thtml:56
+#: views/elements/developers/editorsqueue.thtml:42
 #, php-format
 msgid "Moderated Reviews (%s)"
 msgid_plural "Moderated Reviews (%s)"
@@ -5085,16 +5088,16 @@ msgstr "我自己和這些使用者："
 msgid "NEW!"
 msgstr "新登場！"
 
+#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
+#: views/search/index.thtml:117 views/tags/display.thtml:77
+msgctxt "advanced_search_form_name"
+msgid "Name"
+msgstr "名稱"
+
 #: views/elements/amo2009/users/vcard.thtml:63
 msgctxt "addon_developer_th_name"
 msgid "Name"
 msgstr "姓名"
-
-#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
-#: views/tags/display.thtml:77 views/search/index.thtml:117
-msgctxt "advanced_search_form_name"
-msgid "Name"
-msgstr "名稱"
 
 #: controllers/collections_controller.php:312
 msgctxt "collections_detail_sort_name"
@@ -5131,12 +5134,12 @@ msgstr "新版本"
 msgid "New image:"
 msgstr "新增圖片："
 
-#: views/users/pwreset.thtml:72 views/users/edit.thtml:219
+#: views/users/edit.thtml:219 views/users/pwreset.thtml:72
 msgid "New password"
 msgstr "新密碼"
 
 #: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:143
-#: views/tags/display.thtml:76 views/search/index.thtml:116
+#: views/search/index.thtml:116 views/tags/display.thtml:76
 msgctxt "advanced_search_form_newest"
 msgid "Newest"
 msgstr "新舊"
@@ -5161,8 +5164,8 @@ msgstr "最新元件"
 msgid "Next"
 msgstr "下一頁"
 
-#: views/users/register.thtml:89 views/users/edit.thtml:107
-#: views/admin/users_edit.thtml:86
+#: views/admin/users_edit.thtml:86 views/users/edit.thtml:107
+#: views/users/register.thtml:89
 msgid "Nickname"
 msgstr "暱稱"
 
@@ -5186,8 +5189,8 @@ msgstr ""
 msgid "No Files"
 msgstr "沒有檔案"
 
-#: controllers/components/validation.php:266
 #: controllers/components/developers.php:545
+#: controllers/components/validation.php:266
 msgid "No ID could be found for this add-on in install.rdf."
 msgstr "此附加元件的 install.rdf 中找不到 ID。"
 
@@ -5209,8 +5212,8 @@ msgstr "此分類無附加元件！"
 msgid "No categories are available for this add-on type and application."
 msgstr "沒有適用於此元件類型與應用程式的分類。"
 
-#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 #: views/statistics/addon.thtml:167 views/statistics/addon.thtml:187
+#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 msgid "No data yet"
 msgstr "尚無資料"
 
@@ -5218,17 +5221,17 @@ msgstr "尚無資料"
 msgid "No file uploaded"
 msgstr "無檔案已上傳"
 
-#: views/developers/versions_validate.thtml:59
 #: views/developers/versions_edit.thtml:111
+#: views/developers/versions_validate.thtml:59
 msgid "No files found."
 msgstr "找不到檔案。"
 
-#: controllers/developers_controller.php:505
 #: controllers/components/validation.php:206
+#: controllers/developers_controller.php:505
 msgid "No install.rdf present."
 msgstr "找不到 install.rdf 檔案。"
 
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 msgid "No photo"
 msgstr "沒有照片"
 
@@ -5244,8 +5247,8 @@ msgstr "無預覽圖片。"
 msgid "No previous review entries could be found."
 msgstr "找不到先前的審核記錄。"
 
-#: views/tags/display.thtml:60 views/search/collections.thtml:62
-#: views/search/index.thtml:100
+#: views/search/collections.thtml:62 views/search/index.thtml:100
+#: views/tags/display.thtml:60
 msgid "No results found."
 msgstr "找不到結果。"
 
@@ -5257,9 +5260,9 @@ msgstr "此日期間無審核記錄。"
 msgid "No tags for these add-ons"
 msgstr "這些附加元件沒有標籤"
 
+#: views/elements/developers/testresults.thtml:61
 #: views/elements/developers/testresults_group.thtml:115
 #: views/elements/developers/testresults_header.thtml:62
-#: views/elements/developers/testresults.thtml:61
 #, fuzzy
 msgctxt "devcp_versions_validate_no_results"
 msgid "No test results found."
@@ -5294,20 +5297,20 @@ msgid "Nominate your add-on to become Public"
 msgstr "將你的元件送交批准至「公開」區"
 
 # %1 is the nominated addons count
-#: views/elements/developers/editorsqueue.thtml:44
 #: views/elements/developers/editorsmenu.thtml:58
+#: views/elements/developers/editorsqueue.thtml:44
 #, php-format
 msgid "Nominated Add-ons (%s)"
 msgid_plural "Nominated Add-ons (%s)"
 msgstr[0] "待批准元件 (%s)"
 
-#: views/elements/developers/editors_review_history_item.thtml:68
 #: views/editors/performance_table.thtml:86 views/editors/reviewlog.thtml:71
+#: views/elements/developers/editors_review_history_item.thtml:68
 msgid "Nomination Approved/Public"
 msgstr "批准通過／公開區"
 
-#: views/elements/developers/editors_review_history_item.thtml:71
 #: views/editors/performance_table.thtml:89 views/editors/reviewlog.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:71
 msgid "Nomination Denied/Sandbox"
 msgstr "批准失敗／沙箱區"
 
@@ -5366,7 +5369,7 @@ msgctxt "addon_developer_th_occupation"
 msgid "Occupation"
 msgstr "職業"
 
-#: views/users/edit.thtml:116 views/admin/users_edit.thtml:103
+#: views/admin/users_edit.thtml:103 views/users/edit.thtml:116
 msgctxt "user_form_occupation"
 msgid "Occupation"
 msgstr "職業"
@@ -5391,7 +5394,7 @@ msgstr ""
 msgid "Old password"
 msgstr "舊密碼"
 
-#: views/statistics/rss/summary.thtml:48 views/statistics/addon.thtml:165
+#: views/statistics/addon.thtml:165 views/statistics/rss/summary.thtml:48
 #, php-format
 msgid "On %1$s"
 msgstr "於 %1$s"
@@ -5441,13 +5444,13 @@ msgstr "用新視窗開啟"
 msgid "Opensearch Format Check"
 msgstr "Opensearch Format Check"
 
-#: controllers/components/stats.php:429
-msgctxt "statistics_longnames_os"
+#: controllers/statistics_controller.php:311
+msgctxt "statistics_js_plotselection_selector_os"
 msgid "Operating System"
 msgstr "作業系統"
 
-#: controllers/statistics_controller.php:311
-msgctxt "statistics_js_plotselection_selector_os"
+#: controllers/components/stats.php:429
+msgctxt "statistics_longnames_os"
 msgid "Operating System"
 msgstr "作業系統"
 
@@ -5577,8 +5580,8 @@ msgid "PayPal ID"
 msgstr "PayPal ID"
 
 # %1 is the update count
-#: views/elements/developers/editorsqueue.thtml:43
 #: views/elements/developers/editorsmenu.thtml:57
+#: views/elements/developers/editorsqueue.thtml:43
 #, php-format
 msgid "Pending Updates (%s)"
 msgid_plural "Pending Updates (%s)"
@@ -5602,8 +5605,8 @@ msgstr ""
 msgid "Performance Reports"
 msgstr ""
 
-#: views/elements/amo2009/addons/version_detail.thtml:52
 #: views/elements/addon_version_detail.thtml:52
+#: views/elements/amo2009/addons/version_detail.thtml:52
 msgid "Permanent link to this version"
 msgstr "到此版本的固定鏈結"
 
@@ -5611,12 +5614,12 @@ msgstr "到此版本的固定鏈結"
 msgid "Permissions"
 msgstr "權限"
 
-#: views/users/edit.thtml:129 views/admin/users_edit.thtml:112
+#: views/admin/users_edit.thtml:112 views/users/edit.thtml:129
 msgid "Picture"
 msgstr "圖片"
 
 # %1$s is a user's email address or name
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 #, php-format
 msgid "Picture of %1$s"
 msgstr "%1$s 的圖片"
@@ -5632,13 +5635,13 @@ msgstr "只有當您的元件不符合任何其他分類時，才將它放在這
 msgid "Plain Text"
 msgstr "Plain Text"
 
-#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
-msgctxt "advanced_search_form_platform"
+#: views/developers/versions_edit.thtml:79
+msgctxt "devcp_versions_edit_th_platform"
 msgid "Platform"
 msgstr "作業系統"
 
-#: views/developers/versions_edit.thtml:79
-msgctxt "devcp_versions_edit_th_platform"
+#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
+msgctxt "advanced_search_form_platform"
 msgid "Platform"
 msgstr "作業系統"
 
@@ -5763,9 +5766,9 @@ msgstr "繼續使用前請先瀏覽並接受下面的開發者授權合約。"
 
 # %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 # in the <a> tag.  This should be fixed.
-#: controllers/developers_controller.php:504
-#: controllers/components/validation.php:346
 #: controllers/components/developers.php:625
+#: controllers/components/validation.php:346
+#: controllers/developers_controller.php:504
 #, fuzzy, php-format
 msgid "Please see <a href=\"%s\">this page</a> for reference."
 msgstr "請參考 %s。"
@@ -5784,13 +5787,13 @@ msgstr "請選擇一個審核行動。"
 msgid "Please select at least one category."
 msgstr "請至少選一項分類。"
 
-#: controllers/components/editors.php:161
-msgctxt "editor_review_error_no_files"
+#: controllers/editors_controller.php:401
+msgctxt "editors_error_review_one_file"
 msgid "Please select at least one file to review."
 msgstr "請至少選一個檔案審核。"
 
-#: controllers/editors_controller.php:401
-msgctxt "editors_error_review_one_file"
+#: controllers/components/editors.php:161
+msgctxt "editor_review_error_no_files"
 msgid "Please select at least one file to review."
 msgstr "請至少選一個檔案審核。"
 
@@ -5814,8 +5817,8 @@ msgstr "請將此資訊視為機密資料。"
 msgid "Please type what you hear."
 msgstr "請輸入您所聽到的數字。"
 
-#: controllers/developers_controller.php:466
 #: controllers/components/developers.php:285
+#: controllers/developers_controller.php:466
 msgid "Please upload a file."
 msgstr "請上傳檔案。"
 
@@ -5827,14 +5830,14 @@ msgstr "在此圖形描繪總數"
 msgid "Plugin"
 msgstr "外掛程式"
 
-# Plural in this context means many of the add-on type
-#: models/addontype.php:104
-msgctxt "general_addontype_plugin_plural"
+#: controllers/addons_controller.php:1280 controllers/components/amo.php:734
+msgctxt "addons_plugins_pagetitle"
 msgid "Plugins"
 msgstr "外掛程式"
 
-#: controllers/components/amo.php:734 controllers/addons_controller.php:1280
-msgctxt "addons_plugins_pagetitle"
+# Plural in this context means many of the add-on type
+#: models/addontype.php:104
+msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
 msgstr "外掛程式"
 
@@ -5847,13 +5850,13 @@ msgstr ""
 "外掛程式能讓瀏覽器達到顯示特殊圖片格式、播放多媒體檔案等功能。和擴充套件改變"
 "或加強已有的功能不同，外掛程式可讓瀏覽器支援全新的格式。"
 
-#: views/addons/home.thtml:110
-msgctxt "addons_home_browse_popular"
+#: controllers/collections_controller.php:111
+msgctxt "collections_index_li_popular"
 msgid "Popular"
 msgstr "熱門"
 
-#: controllers/collections_controller.php:111
-msgctxt "collections_index_li_popular"
+#: views/addons/home.thtml:110
+msgctxt "addons_home_browse_popular"
 msgid "Popular"
 msgstr "熱門"
 
@@ -5867,14 +5870,14 @@ msgstr "熱門元件"
 msgid "Popular Collections"
 msgstr "熱門收藏集"
 
-#: views/elements/amo2009/search.thtml:148 views/elements/search.thtml:146
-#: views/tags/display.thtml:79 views/search/index.thtml:119
-msgctxt "advanced_search_form_popularity"
+#: controllers/collections_controller.php:313
+msgctxt "collections_detail_sort_popularity"
 msgid "Popularity"
 msgstr "熱門程度"
 
-#: controllers/collections_controller.php:313
-msgctxt "collections_detail_sort_popularity"
+#: views/elements/amo2009/search.thtml:148 views/elements/search.thtml:146
+#: views/search/index.thtml:119 views/tags/display.thtml:79
+msgctxt "advanced_search_form_popularity"
 msgid "Popularity"
 msgstr "熱門程度"
 
@@ -5930,14 +5933,14 @@ msgstr "無法從資料庫刪除預覽圖片 %s，請再試一次。"
 msgid "Preview %s has been deleted successfully."
 msgstr "已成功刪除預覽圖片 %s。"
 
-#: views/developers/previews.thtml:80
-msgctxt "devcp_previews_header_caption"
-msgid "Preview Caption"
-msgstr "預覽圖片說明"
-
 #: controllers/previews_controller.php:168
 #: controllers/previews_controller.php:277
 msgctxt "devcp_addon_field_preview_caption_displaytitle"
+msgid "Preview Caption"
+msgstr "預覽圖片說明"
+
+#: views/developers/previews.thtml:80
+msgctxt "devcp_previews_header_caption"
 msgid "Preview Caption"
 msgstr "預覽圖片說明"
 
@@ -5946,12 +5949,13 @@ msgid "Preview File"
 msgstr "預覽圖片檔案"
 
 # %s is the add-on name
-#: views/elements/collections_interactive_addon.thtml:62
-#: views/elements/amo2009/results_addon.thtml:77
-#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/addons/browse_thumbs.thtml:107 views/addons/category_landing.thtml:87
 #: views/elements/addon_discussionheader.thtml:62
-#: views/elements/addon_listitem.thtml:67 views/elements/feature.thtml:84
-#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:107
+#: views/elements/addon_listitem.thtml:67
+#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/elements/amo2009/results_addon.thtml:77
+#: views/elements/collections_interactive_addon.thtml:62
+#: views/elements/feature.thtml:84
 #, php-format
 msgid "Preview Image of %s"
 msgstr "%s 的預覽圖片"
@@ -5986,13 +5990,13 @@ msgstr "預覽圖片"
 msgid "Print"
 msgstr "Print"
 
-#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
-msgctxt "footer_privacy_policy"
+#: views/editors/review.thtml:285
+msgctxt "editors_review_header_privacy"
 msgid "Privacy Policy"
 msgstr "隱私政策"
 
-#: views/editors/review.thtml:285
-msgctxt "editors_review_header_privacy"
+#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
+msgctxt "footer_privacy_policy"
 msgid "Privacy Policy"
 msgstr "隱私政策"
 
@@ -6031,15 +6035,10 @@ msgstr "提供對元件 %1$s 之意見的更多資訊"
 msgid "Provide a way for users to make monetary donations to your project."
 msgstr "提供使用者以資金贊助您專案的管道。"
 
-#: views/elements/header.thtml:76 views/elements/header.thtml:82
 #: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
+#: views/elements/header.thtml:76 views/elements/header.thtml:82
 #: views/sharing_api/addon.thtml:63
 msgctxt "a_header_public"
-msgid "Public"
-msgstr "公開"
-
-#: views/statistics/settings.thtml:52
-msgctxt "statistics_settings_access_public"
 msgid "Public"
 msgstr "公開"
 
@@ -6053,6 +6052,11 @@ msgstr "公開"
 msgctxt "devcp_addon_status_public"
 msgid "Public"
 msgstr "「公開」區"
+
+#: views/statistics/settings.thtml:52
+msgctxt "statistics_settings_access_public"
+msgid "Public"
+msgstr "公開"
 
 #: views/developers/addon_status.thtml:117
 msgid "Public Nomination Criteria"
@@ -6078,15 +6082,15 @@ msgstr "RDF Parser error: the file contained a duplicate element: %s"
 msgid "Rated %s out of 5 stars"
 msgstr "評分：%s / 5 顆星"
 
-#: views/elements/amo2009/addons/list_options.thtml:48
 #: views/elements/addon_list_options.thtml:48
+#: views/elements/amo2009/addons/list_options.thtml:48
 msgctxt "list_sortby_rating"
 msgid "Rating"
 msgstr "評分"
 
-#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
-#: views/tags/display.thtml:78 views/search/index.thtml:118
 #: views/addons/display.thtml:181 views/addons/display.thtml:338
+#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
+#: views/search/index.thtml:118 views/tags/display.thtml:78
 msgctxt "advanced_search_form_rating"
 msgid "Rating"
 msgstr "評分"
@@ -6116,8 +6120,8 @@ msgstr "最近更新元件"
 msgid "Recently Viewed"
 msgstr "最近新增"
 
-#: views/addons/searchengines.thtml:57 views/addons/themes_landing.thtml:54
-#: views/addons/home.thtml:108
+#: views/addons/home.thtml:108 views/addons/searchengines.thtml:57
+#: views/addons/themes_landing.thtml:54
 msgid "Recommended"
 msgstr "推薦元件"
 
@@ -6132,13 +6136,13 @@ msgstr "推薦附加元件"
 msgid "Refine Results"
 msgstr "篩選結果"
 
-#: views/elements/header.thtml:158
-msgctxt "header_navlink_register"
+#: views/users/register.thtml:113
+msgctxt "user_form_submit_register"
 msgid "Register"
 msgstr "註冊"
 
-#: views/users/register.thtml:113
-msgctxt "user_form_submit_register"
+#: views/elements/header.thtml:158
+msgctxt "header_navlink_register"
 msgid "Register"
 msgstr "註冊"
 
@@ -6151,13 +6155,13 @@ msgstr "Registered Users"
 msgid "Related Collections"
 msgstr "相關收藏集"
 
-#: views/developers/versions_edit.thtml:182
-msgctxt "devcp_versions_edit_transbox_releasenotes_name"
+#: views/addons/display.thtml:369
+msgctxt "addons_display_release_notes"
 msgid "Release Notes"
 msgstr "版本資訊"
 
-#: views/addons/display.thtml:369
-msgctxt "addons_display_release_notes"
+#: views/developers/versions_edit.thtml:182
+msgctxt "devcp_versions_edit_transbox_releasenotes_name"
 msgid "Release Notes"
 msgstr "版本資訊"
 
@@ -6175,17 +6179,17 @@ msgstr "Remote JavaScript Tests"
 msgid "Remote Loading Check"
 msgstr "Remote Loading Check"
 
+#: views/collections/edit.thtml:261
+msgctxt "collections_edit_addons_listitem_remove"
+msgid "Remove"
+msgstr "移除"
+
 # Alt text to remove tag (verb)
 #: views/elements/addon_tags.thtml:63
 #, fuzzy
 msgctxt "tags_alt_remove_tag"
 msgid "Remove"
 msgstr "Remove"
-
-#: views/collections/edit.thtml:261
-msgctxt "collections_edit_addons_listitem_remove"
-msgid "Remove"
-msgstr "移除"
 
 #: views/developers/versions_edit.thtml:154
 msgid "Remove Application"
@@ -6225,12 +6229,12 @@ msgstr "移除精選元件"
 msgid "Remove flags; keep review"
 msgstr "刪除回報；保留意見"
 
-#: views/elements/amo2009/collections/js_init.thtml:71
 #: views/elements/amo2009/collections/add_form.thtml:50
+#: views/elements/amo2009/collections/js_init.thtml:71
 msgid "Remove from Favorites"
 msgstr "從最愛移除"
 
-#: views/users/edit.thtml:134 views/admin/users_edit.thtml:116
+#: views/admin/users_edit.thtml:116 views/users/edit.thtml:134
 msgid "Remove this picture?"
 msgstr "移除這張圖片？"
 
@@ -6404,20 +6408,20 @@ msgid "Reviews Created"
 msgstr "Reviews Created"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:56 views/reviews/display.thtml:55
-#: views/reviews/review_added.thtml:50
-#, php-format
-msgctxt "reviews_header"
-msgid "Reviews for %s"
-msgstr "對 %s 的意見"
-
-# %1 is the add-on name
 #: controllers/reviews_controller.php:202
 #: controllers/reviews_controller.php:251
 #: controllers/reviews_controller.php:346
 #: controllers/reviews_controller.php:425
 #, php-format
 msgctxt "addon_review_pagetitle"
+msgid "Reviews for %s"
+msgstr "對 %s 的意見"
+
+# %1 is the add-on name
+#: views/reviews/display.thtml:55 views/reviews/flag.thtml:56
+#: views/reviews/review_added.thtml:50
+#, php-format
+msgctxt "reviews_header"
 msgid "Reviews for %s"
 msgstr "對 %s 的意見"
 
@@ -6441,9 +6445,9 @@ msgstr "Running test..."
 msgid "SQL"
 msgstr "SQL"
 
+#: views/api/api_addon.thtml:57 views/api/collections_feed.thtml:77
 #: views/elements/header.thtml:58 views/elements/header.thtml:75
-#: views/elements/header.thtml:80 views/api/api_addon.thtml:57
-#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:65
+#: views/elements/header.thtml:80 views/sharing_api/addon.thtml:65
 msgctxt "a_header_sandbox"
 msgid "Sandbox"
 msgstr "沙箱"
@@ -6514,15 +6518,15 @@ msgstr "Search Engine-specific"
 msgid "Search Engine-specific security"
 msgstr "Search Engine-specific security"
 
-# Plural in this context means many of the add-on type
-#: models/addontype.php:101
-msgctxt "general_addontype_search_plural"
-msgid "Search Engines"
-msgstr "搜尋引擎"
-
 #: controllers/addons_controller.php:1259
 #: controllers/addons_controller.php:1269
 msgctxt "addons_searchengines_pagetitle"
+msgid "Search Engines"
+msgstr "搜尋引擎"
+
+# Plural in this context means many of the add-on type
+#: models/addontype.php:101
+msgctxt "general_addontype_search_plural"
 msgid "Search Engines"
 msgstr "搜尋引擎"
 
@@ -6815,7 +6819,7 @@ msgstr ""
 # %2$s is a number
 # %3$s is a number
 # %4$s is a word (the add-on is tagged with it)
-#: views/tags/display.thtml:53 views/search/index.thtml:81
+#: views/search/index.thtml:81 views/tags/display.thtml:53
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
 msgstr "顯示帶有 <strong>%4$s</strong> 標籤的 %3$s 筆結果中的第 %1$s - %2$s 筆"
@@ -6824,7 +6828,7 @@ msgstr "顯示帶有 <strong>%4$s</strong> 標籤的 %3$s 筆結果中的第 %1$
 msgid "Sign up for PayPal"
 msgstr "建立 PayPal 帳戶"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 #, php-format
 msgid "Since %1$s"
 msgstr "從 %1$s 開始"
@@ -6911,17 +6915,17 @@ msgid ""
 msgstr "抱歉，您需要 Mozilla 系列的瀏覽器（像 Firefox）才能安裝此搜尋引擎。"
 
 #: views/elements/amo2009/search.thtml:254 views/elements/search.thtml:231
-#: views/tags/display.thtml:73 views/search/index.thtml:112
+#: views/search/index.thtml:112 views/tags/display.thtml:73
 msgid "Sort By"
 msgstr "排序方式"
 
-#: views/elements/amo2009/collections/sort_form.thtml:48
 #: views/collections/detail.thtml:132
+#: views/elements/amo2009/collections/sort_form.thtml:48
 msgid "Sort by"
 msgstr "排序方式"
 
-#: views/elements/amo2009/addons/list_options.thtml:84
 #: views/elements/addon_list_options.thtml:98
+#: views/elements/amo2009/addons/list_options.thtml:84
 msgid "Sort by:"
 msgstr "排序依照："
 
@@ -6994,16 +6998,14 @@ msgstr ""
 msgid "Statistics"
 msgstr "統計資訊"
 
-#: views/elements/developers/actionbar.thtml:44
-#: views/elements/developers/actionbar.thtml:49
-#: views/developers/dashboard.thtml:73
-msgctxt "devcp_actionbar_link_stats"
+#: views/elements/developers/myaddons.thtml:70
+#: views/elements/developers/sidebar.thtml:63
+msgctxt "devcp_myaddons_statistics_link"
 msgid "Statistics Dashboard"
 msgstr "統計資訊顯示板"
 
-#: views/elements/developers/sidebar.thtml:63
-#: views/elements/developers/myaddons.thtml:70
-msgctxt "devcp_myaddons_statistics_link"
+#: views/statistics/index.thtml:39
+msgctxt "statistics_index_title"
 msgid "Statistics Dashboard"
 msgstr "統計資訊顯示板"
 
@@ -7012,8 +7014,10 @@ msgctxt "devcp_editbox_statistics_dashboard"
 msgid "Statistics Dashboard"
 msgstr "統計資訊顯示板"
 
-#: views/statistics/index.thtml:39
-msgctxt "statistics_index_title"
+#: views/developers/dashboard.thtml:73
+#: views/elements/developers/actionbar.thtml:44
+#: views/elements/developers/actionbar.thtml:49
+msgctxt "devcp_actionbar_link_stats"
 msgid "Statistics Dashboard"
 msgstr "統計資訊顯示板"
 
@@ -7069,16 +7073,16 @@ msgstr "步驟 5：完成"
 msgid "Stop asking for contributions"
 msgstr "停止請求捐助"
 
+#: views/editors/review.thtml:389
+msgctxt "editors_review_label_subject"
+msgid "Subject"
+msgstr ""
+
 #: views/users/edit.thtml:193
 #, fuzzy
 msgctxt "user_notifications_th_subject"
 msgid "Subject"
 msgstr "Subject"
-
-#: views/editors/review.thtml:389
-msgctxt "editors_review_label_subject"
-msgid "Subject"
-msgstr ""
 
 #: views/elements/developers/additem.thtml:76
 msgctxt "devcp_additem_submissionhelp_link"
@@ -7095,8 +7099,8 @@ msgctxt "devcp_additem_sidebar_title"
 msgid "Submit Add-on"
 msgstr "上傳附加元件"
 
-#: views/elements/developers/sidebar.thtml:62
 #: views/elements/developers/myaddons.thtml:69
+#: views/elements/developers/sidebar.thtml:62
 msgctxt "devcp_myaddons_submitaddon_link"
 msgid "Submit Add-on"
 msgstr "上傳附加元件"
@@ -7118,6 +7122,12 @@ msgstr "送出密碼變更"
 msgid "Submit your review"
 msgstr "送出意見"
 
+#: views/elements/developers/editors_comment_add_form.thtml:49
+#, fuzzy
+msgctxt "editors_review_submit_subscribe"
+msgid "Subscribe"
+msgstr "Subscribe"
+
 #: views/elements/amo2009/homepage_addon_listing.thtml:49
 #: views/elements/amo2009/homepage_addon_listing.thtml:56
 #: views/elements/amo2009/homepage_addon_listing.thtml:63
@@ -7125,12 +7135,6 @@ msgstr "送出意見"
 msgctxt "addons_home_browse_subscribe"
 msgid "Subscribe"
 msgstr "訂閱"
-
-#: views/elements/developers/editors_comment_add_form.thtml:49
-#, fuzzy
-msgctxt "editors_review_submit_subscribe"
-msgid "Subscribe"
-msgstr "Subscribe"
 
 #: views/elements/pitch.thtml:69
 msgid "Subscribe to"
@@ -7186,13 +7190,13 @@ msgstr "建議捐贈：$%1$s"
 msgid "Suggested amount"
 msgstr "建議金額"
 
-#: views/editors/review.thtml:261
-msgctxt "editors_review_header_summary"
+#: controllers/statistics_controller.php:305
+msgctxt "statistics_js_plotselection_selector_summary"
 msgid "Summary"
 msgstr "摘要"
 
-#: controllers/statistics_controller.php:305
-msgctxt "statistics_js_plotselection_selector_summary"
+#: views/editors/review.thtml:261
+msgctxt "editors_review_header_summary"
 msgid "Summary"
 msgstr "摘要"
 
@@ -7274,13 +7278,13 @@ msgctxt "devcp_editbox_tags"
 msgid "Tags"
 msgstr "標籤"
 
-#: views/search/index.thtml:220
-msgctxt "search_filter_tags_header"
+#: views/addons/display.thtml:473
+msgctxt "tags_header_tags_title"
 msgid "Tags"
 msgstr "標籤"
 
-#: views/addons/display.thtml:473
-msgctxt "tags_header_tags_title"
+#: views/search/index.thtml:220
+msgctxt "search_filter_tags_header"
 msgid "Tags"
 msgstr "標籤"
 
@@ -7288,9 +7292,9 @@ msgstr "標籤"
 msgid "Target Locale"
 msgstr "目標語言"
 
-#: views/editors/performance_table.thtml:119
 #: views/editors/performance_charts.thtml:71
 #: views/editors/performance_charts.thtml:96
+#: views/editors/performance_table.thtml:119
 msgid "Team Average"
 msgstr ""
 
@@ -7381,14 +7385,14 @@ msgstr "群組已儲存"
 msgid "The Group with id %s was deleted"
 msgstr "ID %s 的群組已刪除"
 
-#: controllers/components/validation.php:276
 #: controllers/components/developers.php:555
+#: controllers/components/validation.php:276
 msgid "The ID of this add-on is already used by an application."
 msgstr "此附加元件的 ID 已被應用程式所使用。"
 
 # %s is a string
-#: controllers/components/validation.php:271
 #: controllers/components/developers.php:550
+#: controllers/components/validation.php:271
 #, php-format
 msgid "The ID of this add-on is invalid: %s"
 msgstr "此附加元件的 ID 無效：%s"
@@ -7572,14 +7576,14 @@ msgid "The file contains a global variable: %s"
 msgstr "The file contains a global variable: %s"
 
 # %s is an error message from the parser.
-#: controllers/components/validation.php:251
 #: controllers/components/developers.php:530
+#: controllers/components/validation.php:251
 #, php-format
 msgid "The following error occurred while parsing install.rdf: %s"
 msgstr "解析 install.rdf 時發生下列錯誤：%s"
 
-#: controllers/components/validation.php:356
 #: controllers/components/developers.php:635
+#: controllers/components/validation.php:356
 msgid "The following errors were found in install.rdf:"
 msgstr "install.rdf 中含有下列錯誤："
 
@@ -7638,8 +7642,8 @@ msgstr ""
 msgid "The password reset link was sent to your email address."
 msgstr "重設密碼的鏈結會寄到您的 Email 地址。"
 
-#: views/users/pwreset.thtml:79 views/users/register.thtml:75
-#: views/users/edit.thtml:226
+#: views/users/edit.thtml:226 views/users/pwreset.thtml:79
+#: views/users/register.thtml:75
 msgid "The passwords did not match."
 msgstr "密碼不符。"
 
@@ -7705,8 +7709,8 @@ msgstr ""
 "元件的這個版本（%1$s）已經存在了，如果您要為這個版本新增另一個檔案，<a href="
 "\"%2$s\">按一下這裡</a>。"
 
-#: controllers/components/validation.php:291
 #: controllers/components/developers.php:570
+#: controllers/components/validation.php:291
 msgid ""
 "The version of this add-on is invalid: please see the <a href=\"http://"
 "developer.mozilla.org/en/docs/Toolkit_version_format\">specification</a>"
@@ -7714,8 +7718,8 @@ msgstr ""
 "此附加元件版本號無效：請見 <a href=\"http://developer.mozilla.org/en/docs/"
 "Toolkit_version_format\">規格說明</a>"
 
-#: controllers/components/validation.php:286
 #: controllers/components/developers.php:565
+#: controllers/components/validation.php:286
 msgid "The version of this add-on is invalid: versions cannot contain spaces."
 msgstr "此附加元件的版本號無效：版本號不能有空白。"
 
@@ -7753,7 +7757,7 @@ msgid "Themes"
 msgstr "佈景主題"
 
 # %1 is the queue mode
-#: views/editors/queue.thtml:189 views/admin/flagged_queue.thtml:89
+#: views/admin/flagged_queue.thtml:89 views/editors/queue.thtml:189
 msgid "There are currently no add-ons of this type to review."
 msgstr "目前沒有 %s 附加元件待審核。"
 
@@ -7766,8 +7770,8 @@ msgid "There are currently no reviews in moderation."
 msgstr "目前沒有待審核項目。"
 
 #: views/collections/add.thtml:55 views/collections/edit.thtml:89
-#: views/users/register.thtml:54 views/users/edit.thtml:74
-#: views/reviews/add.thtml:70 controllers/groups_controller.php:80
+#: views/reviews/add.thtml:70 views/users/edit.thtml:74
+#: views/users/register.thtml:54 controllers/groups_controller.php:80
 #: controllers/groups_controller.php:102
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr "此表單中有錯誤，請更正後再送出一次。"
@@ -7835,8 +7839,8 @@ msgid ""
 msgstr ""
 "這裡列出的舊版本僅供參考及測試之用。若無特別需求，請安裝最新版的附加元件。"
 
-#: views/users/register.thtml:100 views/users/edit.thtml:122
-#: views/admin/users_edit.thtml:109
+#: views/admin/users_edit.thtml:109 views/users/edit.thtml:122
+#: views/users/register.thtml:100
 msgid ""
 "This URL has an invalid format. Valid URLs look like http://example.com/"
 "my_page."
@@ -7907,17 +7911,17 @@ msgstr "顯示板目前設為 <b>私人</b>。"
 msgid "This dashboard is currently <b>public</b>."
 msgstr "顯示板目前設為 <b>公開</b>。"
 
-#: views/users/register.thtml:65 views/users/edit.thtml:233
+#: views/users/edit.thtml:233 views/users/register.thtml:65
 #: controllers/users_controller.php:699
 msgid "This email address is already taken by another user."
 msgstr "此 Email 地址已被其他使用者使用。"
 
-#: views/users/pwreset.thtml:74 views/users/register.thtml:70
-#: views/users/register.thtml:80 views/users/register.thtml:86
+#: views/admin/users_edit.thtml:78 views/admin/users_edit.thtml:83
+#: views/reviews/add.thtml:80 views/reviews/add.thtml:104
 #: views/users/edit.thtml:98 views/users/edit.thtml:104
-#: views/users/edit.thtml:235 views/admin/users_edit.thtml:78
-#: views/admin/users_edit.thtml:83 views/reviews/add.thtml:80
-#: views/reviews/add.thtml:104
+#: views/users/edit.thtml:235 views/users/pwreset.thtml:74
+#: views/users/register.thtml:70 views/users/register.thtml:80
+#: views/users/register.thtml:86
 msgid "This field must not be empty."
 msgstr "此欄位不能留空。"
 
@@ -7942,12 +7946,12 @@ msgstr "這是一個發行前版本（Pre-release）"
 msgid "This is a site-specific add-on"
 msgstr "專為特定網站設計"
 
-#: views/users/register.thtml:65 views/users/edit.thtml:237
+#: views/users/edit.thtml:237 views/users/register.thtml:65
 msgid "This is not a valid email address."
 msgstr "Email 地址無效。"
 
-#: views/users/register.thtml:91 views/users/edit.thtml:109
-#: views/admin/users_edit.thtml:88
+#: views/admin/users_edit.thtml:88 views/users/edit.thtml:109
+#: views/users/register.thtml:91
 msgid "This nickname is already taken."
 msgstr "此暱稱已被使用。"
 
@@ -8091,7 +8095,7 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:155
+#: views/statistics/addon.thtml:155 views/statistics/rss/summary.thtml:40
 msgid "Total Downloads"
 msgstr "總下載次數"
 
@@ -8123,13 +8127,13 @@ msgstr "信任狀態: <span class=\"status-4\">受信任的</span>"
 msgid "Trusted add-ons can become public without Editor review."
 msgstr "受信任的元件可以不經審核者批准就公開。"
 
-#: views/elements/amo2009/search.thtml:242 views/elements/search.thtml:223
-msgctxt "advanced_search_form_type"
+#: views/editors/queue.thtml:131
+msgctxt "editors_th_addontype"
 msgid "Type"
 msgstr "種類"
 
-#: views/editors/queue.thtml:131
-msgctxt "editors_th_addontype"
+#: views/elements/amo2009/search.thtml:242 views/elements/search.thtml:223
+msgctxt "advanced_search_form_type"
 msgid "Type"
 msgstr "種類"
 
@@ -8137,15 +8141,15 @@ msgstr "種類"
 msgid "Uk"
 msgstr "未知"
 
-#: controllers/components/stats.php:430
-msgctxt "statistics_longnames_unknown"
-msgid "Unknown"
-msgstr "未知"
-
 #: controllers/components/amo.php:203
 msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "不明"
+
+#: controllers/components/stats.php:430
+msgctxt "statistics_longnames_unknown"
+msgid "Unknown"
+msgstr "未知"
 
 #: views/statistics/addon.thtml:246
 msgid "Unlocked"
@@ -8243,22 +8247,23 @@ msgid "Updated"
 msgstr "已更新"
 
 # %s is a date in the _('date') format
+#: views/addons/browse_thumbs.thtml:119
+#: views/elements/addon_listitem.thtml:122
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:100
 #: views/elements/amo2009/results_addon.thtml:119
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/addon_listitem.thtml:122 views/elements/feature.thtml:106
-#: views/addons/browse_thumbs.thtml:119
+#: views/elements/feature.thtml:106
 #, php-format
 msgid "Updated %s"
 msgstr "更新時間：%s"
 
-#: views/elements/pitch.thtml:71
-msgctxt "sidebar_pitch_updated_addons"
+#: controllers/addons_controller.php:540
+msgctxt "rss_updatedaddons"
 msgid "Updated Add-ons"
 msgstr "最近更新元件"
 
-#: controllers/addons_controller.php:540
-msgctxt "rss_updatedaddons"
+#: views/elements/pitch.thtml:71
+msgctxt "sidebar_pitch_updated_addons"
 msgid "Updated Add-ons"
 msgstr "最近更新元件"
 
@@ -8282,7 +8287,7 @@ msgstr "上傳預覽圖片："
 msgid "Upload Your File"
 msgstr "上傳您的檔案"
 
-#: views/users/edit.thtml:137 views/admin/users_edit.thtml:118
+#: views/admin/users_edit.thtml:118 views/users/edit.thtml:137
 msgid "Upload a new picture?"
 msgstr "上傳新的圖片？"
 
@@ -8361,11 +8366,11 @@ msgstr "使用者檔案"
 msgid "User not found"
 msgstr ""
 
-#: views/users/pwreset.thtml:54 controllers/users_controller.php:197
-#: controllers/users_controller.php:276 controllers/users_controller.php:685
-#: controllers/users_controller.php:744 controllers/users_controller.php:914
-#: controllers/collections_controller.php:1008
+#: views/users/pwreset.thtml:54 controllers/collections_controller.php:1008
 #: controllers/collections_controller.php:1018
+#: controllers/users_controller.php:197 controllers/users_controller.php:276
+#: controllers/users_controller.php:685 controllers/users_controller.php:744
+#: controllers/users_controller.php:914
 msgid "User not found!"
 msgstr "找不到使用者！"
 
@@ -8437,22 +8442,22 @@ msgstr "Validation temporarily disabled, try again later."
 msgid "Ver"
 msgstr "版本"
 
-#: views/developers/versions.thtml:56 views/addons/display.thtml:144
+#: views/addons/display.thtml:144 views/developers/versions.thtml:56
 msgid "Version"
 msgstr "版本"
-
-# %s is the version of the add-on.  Example:  3.2a1
-#: views/elements/amo2009/addons/version_detail.thtml:51
-#: views/elements/addon_version_detail.thtml:51
-#, php-format
-msgctxt "addon_display_header_version"
-msgid "Version %s"
-msgstr "版本 %s"
 
 # %s is a version number.  Example:  3.0
 #: views/developers/versions.thtml:66
 #, php-format
 msgctxt "devcp_details_version"
+msgid "Version %s"
+msgstr "版本 %s"
+
+# %s is the version of the add-on.  Example:  3.2a1
+#: views/elements/addon_version_detail.thtml:51
+#: views/elements/amo2009/addons/version_detail.thtml:51
+#, php-format
+msgctxt "addon_display_header_version"
 msgid "Version %s"
 msgstr "版本 %s"
 
@@ -8488,13 +8493,13 @@ msgstr "版本／檔案"
 msgid "Versions"
 msgstr "版本"
 
-#: views/elements/developers/editbox.thtml:64
-msgctxt "devcp_editbox_versions"
+#: views/developers/dashboard.thtml:82
+msgctxt "devcp_dashboard_versions"
 msgid "Versions and Files"
 msgstr "版本與檔案"
 
-#: views/developers/dashboard.thtml:82
-msgctxt "devcp_dashboard_versions"
+#: views/elements/developers/editbox.thtml:64
+msgctxt "devcp_editbox_versions"
 msgid "Versions and Files"
 msgstr "版本與檔案"
 
@@ -8502,8 +8507,8 @@ msgstr "版本與檔案"
 msgid "View All Collections"
 msgstr "檢視所有收藏集"
 
-#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/feature.thtml:95
 msgid "View Author's Profile"
 msgstr "檢視作者個人檔案"
@@ -8578,14 +8583,14 @@ msgid "View all top rated"
 msgstr "檢視所有評分排行"
 
 # %1$s and %2$s are full <input> tags for dates
+#: views/admin/logs.thtml:46 views/editors/logs.thtml:45
 #: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
-#: views/editors/logs.thtml:45 views/admin/logs.thtml:46
 #, php-format
 msgid "View entries between %1$s and %2$s"
 msgstr "檢視從 %1$s 到 %2$s 的項目"
 
-#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/amo2009/homepage_addon.thtml:129
+#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/feature.thtml:127
 msgid "View more from"
 msgstr "更多同類元件："
@@ -8636,8 +8641,8 @@ msgid ""
 "We don't have any data for your add-on yet. Please check back in a few days."
 msgstr "我們還沒有任何關於此附加元件的資料，請過幾天後再回來檢查。"
 
-#: views/users/register.thtml:98 views/users/edit.thtml:120
-#: views/admin/users_edit.thtml:107
+#: views/admin/users_edit.thtml:107 views/users/edit.thtml:120
+#: views/users/register.thtml:98
 msgid "Website URL"
 msgstr "網站 URL"
 
@@ -8729,8 +8734,8 @@ msgstr "這個元件的下一步"
 msgid "What's next for %1$s"
 msgstr "%1$s 的下一步"
 
-#: views/elements/amo2009/contribution.thtml:92 views/addons/display.thtml:387
-#: views/addons/display.thtml:530
+#: views/addons/display.thtml:387 views/addons/display.thtml:530
+#: views/elements/amo2009/contribution.thtml:92
 msgctxt "addons_display_a_license_what"
 msgid "What's this?"
 msgstr "這是什麼？"
@@ -8834,8 +8839,10 @@ msgstr "使用者名稱或密碼錯誤！"
 # This is a placeholder for a date in the Year-Month-Day format.  This is 
 # NOT a php format string.  Dates going into this box need to remain in the
 # YYYY-MM-DD format so please localize that if necessary or just leave as is.
+#: controllers/admin_controller.php:1733
 #: controllers/editors_controller.php:658
 #: controllers/editors_controller.php:1758
+#: controllers/editors_controller.php:1814
 msgid "YYYY-MM-DD"
 msgstr ""
 
@@ -8925,11 +8932,11 @@ msgstr ""
 msgid "You cannot review your own add-on."
 msgstr "您無法對您自己的附加元件發表意見。"
 
-#: controllers/statistics_controller.php:202
-#: controllers/statistics_controller.php:432
 #: controllers/previews_controller.php:108
 #: controllers/previews_controller.php:211
 #: controllers/previews_controller.php:312
+#: controllers/statistics_controller.php:202
+#: controllers/statistics_controller.php:432
 msgid "You do not have access to that add-on."
 msgstr "您並無此附加元件的權限。"
 
@@ -8977,8 +8984,8 @@ msgstr ""
 msgid "You must give your collection a name."
 msgstr "您必須給收藏集一個名字。"
 
-#: controllers/components/validation.php:350
 #: controllers/components/developers.php:629
+#: controllers/components/validation.php:350
 msgid "You must have at least one valid Mozilla target application."
 msgstr "您至少要選一個有效的 Mozilla 目標應用程式。"
 
@@ -9080,8 +9087,8 @@ msgstr ""
 "要編輯者的審核就可以上傳更新。"
 
 # %1$s is a URL
-#: controllers/components/validation.php:281
 #: controllers/components/developers.php:560
+#: controllers/components/validation.php:281
 #, fuzzy, php-format
 msgid ""
 "Your add-on is attempting to use a GUID that has been blocked.  Please <a "
@@ -9280,17 +9287,19 @@ msgid "and %1$s more collection"
 msgid_plural "and %1$s more collections"
 msgstr[0] "與其他 %1$s 個收藏集"
 
-#: views/elements/amo2009/results_addon.thtml:91
-#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/addons/category_landing.thtml:66 views/addons/display.thtml:64
+#: views/addons/home.thtml:157 views/addons/policy.thtml:57
 #: views/elements/addon_discussionheader.thtml:83
-#: views/elements/addon_listitem.thtml:109 views/elements/feature.thtml:95
-#: views/addons/category_landing.thtml:66 views/addons/policy.thtml:57
-#: views/addons/display.thtml:64 views/addons/home.thtml:157
+#: views/elements/addon_listitem.thtml:109
+#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
+#: views/elements/feature.thtml:95
 msgid "by"
 msgstr "作者："
 
+#: views/addons/display.thtml:305
 #: views/elements/amo2009/separated_list_items.thtml:106
-#: views/addons/display.thtml:305 views/reviews/display.thtml:72
+#: views/reviews/display.thtml:72
 #, php-format
 msgid "by %1$s on %2$s"
 msgstr "作者：%1$s 日期：%2$s"
@@ -9315,23 +9324,14 @@ msgid "close"
 msgstr "建議捐贈：$%1$s"
 
 # %1$s is a comma-separated list of author names
-#: views/elements/amo2009/separated_list_items.thtml:72
 #: views/elements/amo2009/collection_listing_item.thtml:84
+#: views/elements/amo2009/separated_list_items.thtml:72
 #, php-format
 msgid "created by %1$s"
 msgstr "由 %1$s 建立"
 
-#: views/addons/display.thtml:362
-msgid "Detailed Review"
-msgstr "填寫詳細意見"
-
-#: controllers/admin_controller.php:1733
-msgctxt "YYYY-MM-DD"
-msgid "editors_date_filter_placeholder"
-msgstr ""
-
-#: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:348
-#: views/elements/feature.thtml:89
+#: views/elements/amo2009/install.thtml:348 views/elements/feature.thtml:89
+#: views/helpers/addons_html.php:571
 msgid "experimental"
 msgstr "實驗中"
 
@@ -9348,17 +9348,17 @@ msgstr "Mac OS X 作業系統"
 msgid "for Windows"
 msgstr "Windows 作業系統"
 
-# A small link following each test.  This goes to a help page specific to the test.
-#: views/elements/developers/testresults_group.thtml:58
-#, fuzzy
-msgctxt "devcp_validation_help"
-msgid "help"
-msgstr "help"
-
 # A link after the main header
 #: views/editors/review.thtml:301
 #, fuzzy
 msgctxt "editors_review_header_validation_help"
+msgid "help"
+msgstr "help"
+
+# A small link following each test.  This goes to a help page specific to the test.
+#: views/elements/developers/testresults_group.thtml:58
+#, fuzzy
+msgctxt "devcp_validation_help"
 msgid "help"
 msgstr "help"
 
@@ -9402,16 +9402,16 @@ msgstr "下一頁 &raquo;"
 msgid "no"
 msgstr "no"
 
+#: controllers/statistics_controller.php:299
+msgctxt "statistics_js_dropdowns_none"
+msgid "none"
+msgstr "無"
+
 #: views/editors/review.thtml:121
 #, fuzzy
 msgctxt "editors_review_list_none"
 msgid "none"
 msgstr "none"
-
-#: controllers/statistics_controller.php:299
-msgctxt "statistics_js_dropdowns_none"
-msgid "none"
-msgstr "無"
 
 # This is a separator between the graphical [contribute] button and the 
 # graphical [download now] button
@@ -9436,9 +9436,9 @@ msgstr "或選擇其他元件"
 msgid "others"
 msgstr "其他使用者"
 
+#: views/elements/addon_list_options.thtml:94
 #: views/elements/amo2009/addons/list_options.thtml:103
 #: views/elements/pagination.thtml:67
-#: views/elements/addon_list_options.thtml:94
 msgid "per page"
 msgstr "每頁顯示"
 
@@ -9446,7 +9446,7 @@ msgstr "每頁顯示"
 msgid "previous"
 msgstr "上一頁"
 
-#: views/helpers/addons_html.php:573 views/elements/amo2009/install.thtml:346
+#: views/elements/amo2009/install.thtml:346 views/helpers/addons_html.php:573
 msgid "recommended"
 msgstr "推薦"
 
@@ -9467,8 +9467,8 @@ msgstr "搜尋附加元件"
 msgid "search for collections"
 msgstr "搜尋收藏集"
 
-#: views/elements/amo2009/addons/list_options.thtml:108
 #: views/elements/addon_list_options.thtml:105
+#: views/elements/amo2009/addons/list_options.thtml:108
 msgid "show experimental add-ons"
 msgstr "顯示實驗中元件"
 
@@ -9480,11 +9480,12 @@ msgstr "到"
 msgid "version"
 msgstr "版本從"
 
-#: views/elements/amo2009/results_addon.thtml:97
-#: views/elements/amo2009/homepage_addon.thtml:108
-#: views/elements/addon_listitem.thtml:115 views/elements/feature.thtml:101
-#: views/addons/category_landing.thtml:157
 #: views/addons/browse_thumbs.thtml:126
+#: views/addons/category_landing.thtml:157
+#: views/elements/addon_listitem.thtml:115
+#: views/elements/amo2009/homepage_addon.thtml:108
+#: views/elements/amo2009/results_addon.thtml:97
+#: views/elements/feature.thtml:101
 msgid "weekly downloads"
 msgstr "本週下載次數"
 
@@ -9526,6 +9527,10 @@ msgstr "yes"
 #~ msgctxt "statistics_index_addons_downloaded"
 #~ msgid "Add-ons Downloaded"
 #~ msgstr "Add-ons Downloaded"
+
+#, fuzzy
+#~ msgid "Add-ons in Use"
+#~ msgstr "Add-ons in Use"
 
 #~ msgctxt "editors_review_history_pending_adminreview"
 #~ msgid "Admin Review"

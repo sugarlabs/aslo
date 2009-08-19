@@ -1730,7 +1730,7 @@ class AdminController extends AppController
         $monthStart = date('Y-m-01');
         $conditions = array("Eventlog.created >= '{$monthStart} 00:00:00'");
         $startDate = $monthStart;
-        $endDate = ___('editors_date_filter_placeholder', 'YYYY-MM-DD');
+        $endDate = ___('YYYY-MM-DD');
         $filter = '';
 
         // If user has specified own conditions, use those

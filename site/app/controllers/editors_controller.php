@@ -1811,7 +1811,7 @@ class EditorsController extends AppController
         $monthStart = date('Y-m-01');
         $conditions = "Approval.created >= '{$monthStart} 00:00:00'";
         $startdate = $monthStart;
-        $enddate = 'YYYY-MM-DD';
+        $enddate = ___('YYYY-MM-DD');
         
         //If user has specified own conditions, use those
         if (!empty($this->params['url']['start'])) {

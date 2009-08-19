@@ -64,8 +64,8 @@ msgstr[1] "%1$s doplňky v této sbírce"
 msgstr[2] "%1$s doplňků v této sbírce"
 
 # %1$s is a number
-#: views/helpers/localization.php:65 views/developers/versions_edit.thtml:95
-#: views/addons/dictionaries.thtml:92
+#: views/addons/dictionaries.thtml:92 views/developers/versions_edit.thtml:95
+#: views/helpers/localization.php:65
 #, php-format
 msgid "%1$s KB"
 msgstr "%1$s KB"
@@ -83,7 +83,7 @@ msgid "%1$s Version History"
 msgstr "Historie verzí doplňku %1$s"
 
 # %1 is the add-on count, %2 the category name
-#: views/addons/browse_thumbs.thtml:92 views/addons/browse.thtml:60
+#: views/addons/browse.thtml:60 views/addons/browse_thumbs.thtml:92
 #, php-format
 msgid "%1$s add-on"
 msgid_plural "%1$s add-ons"
@@ -370,7 +370,7 @@ msgstr "Uživatel %1$s selhal při opětovném ověření přístupu k %2$s."
 
 # %1$s is the add-on name
 # %2$s is the collection name, linked to the collection's page
-#: views/pages/js_constants.js.thtml:101 views/addons/display.thtml:70
+#: views/addons/display.thtml:70 views/pages/js_constants.js.thtml:101
 #, php-format
 msgid "%1$s has been added to the %2$s collection."
 msgstr "%1$s byl přidán ke sbírce %2$s."
@@ -389,18 +389,18 @@ msgstr "Sbírka %1$s byla odebrána z vašich oblíbených sbírek."
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:324
-#: controllers/components/validation.php:336
 #: controllers/components/developers.php:603
 #: controllers/components/developers.php:615
+#: controllers/components/validation.php:324
+#: controllers/components/validation.php:336
 #, php-format
 msgid "%1$s is not a valid version for %2$s"
 msgstr "Verze %s není platná pro aplikaci %s"
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:327
 #: controllers/components/developers.php:606
+#: controllers/components/validation.php:327
 #, php-format
 msgid "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
 msgstr "%s není platná verze pro %s: minimální verze nesmí obsahovat *"
@@ -411,7 +411,7 @@ msgstr "%s není platná verze pro %s: minimální verze nesmí obsahovat *"
 msgid "%1$s is not available for %2$s."
 msgstr "Doplněk %1$s není pro %2$s dostupný."
 
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, php-format
 msgid "%1$s on %2$s"
 msgstr "%1$s v&nbsp;%2$s"
@@ -461,9 +461,9 @@ msgid "%1$s removed feature %2$s"
 msgstr "Uživatel %1$s odstranil funkci %2$s"
 
 # %1$s is a number
-#: views/elements/amo2009/reviews.thtml:58
-#: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
 #: views/addons/browse_thumbs.thtml:132
+#: views/elements/addon_listitem.thtml:112
+#: views/elements/amo2009/reviews.thtml:58 views/elements/feature.thtml:99
 #, php-format
 msgid "%1$s review"
 msgid_plural "%1$s reviews"
@@ -545,65 +545,65 @@ msgstr "%A, %e. %B %Y"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 #: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
+#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 msgid "%A, %b. %e"
 msgstr "%A %e. %b."
 
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
-#: views/elements/collections_interactive_addon.thtml:85
-#: views/elements/amo2009/users/vcard.thtml:92
+#: views/addons/browse_thumbs.thtml:121 views/addons/display.thtml:159
+#: views/addons/display.thtml:307 views/addons/rss/versions.thtml:42
+#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/developers/dashboard.thtml:65 views/developers/versions.thtml:69
+#: views/developers/versions_edit.thtml:208
+#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
+#: views/elements/addon_listitem.thtml:124
+#: views/elements/addon_version_detail.thtml:54
+#: views/elements/amo2009/addons/version_detail.thtml:53
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:102
 #: views/elements/amo2009/results_addon.thtml:119
 #: views/elements/amo2009/separated_list_items.thtml:108
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/amo2009/addons/version_detail.thtml:53
-#: views/elements/addon_version_detail.thtml:54
-#: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
-#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/elements/amo2009/users/vcard.thtml:92
+#: views/elements/collections_interactive_addon.thtml:85
+#: views/elements/feature.thtml:106 views/reviews/add.thtml:63
+#: views/reviews/delete.thtml:54 views/reviews/display.thtml:74
+#: views/reviews/display.thtml:159 views/search/rss/index.thtml:5
 #: views/statistics/index.thtml:108 views/users/info.thtml:108
-#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
-#: views/developers/dashboard.thtml:65
-#: views/developers/versions_edit.thtml:208 views/developers/versions.thtml:69
-#: views/search/rss/index.thtml:5 views/addons/rss/versions.thtml:42
-#: views/addons/display.thtml:159 views/addons/display.thtml:307
-#: views/addons/browse_thumbs.thtml:121 views/reviews/add.thtml:63
-#: views/reviews/display.thtml:74 views/reviews/display.thtml:159
-#: views/reviews/delete.thtml:54 controllers/statistics_controller.php:144
-#: controllers/statistics_controller.php:297
 #: controllers/collections_controller.php:1070
+#: controllers/statistics_controller.php:144
+#: controllers/statistics_controller.php:297
 msgid "%B %e, %Y"
 msgstr "%e. %B %Y"
 
 # date and time format string (strftime)
 # http://php.net/strftime
-#: views/elements/addon_version_detail.thtml:53 views/users/edit.thtml:202
-#: views/editors/review.thtml:369 views/developers/discuss.thtml:51
-#: views/developers/discuss.thtml:61 views/admin/addons_status.thtml:57
-#: views/addons/display.thtml:158
+#: views/addons/display.thtml:158 views/admin/addons_status.thtml:57
+#: views/developers/discuss.thtml:51 views/developers/discuss.thtml:61
+#: views/editors/review.thtml:369 views/elements/addon_version_detail.thtml:53
+#: views/users/edit.thtml:202
 msgid "%B %e, %Y, %I:%M %p"
 msgstr "%e. %B %Y, %H.%M"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, fuzzy, php-format
 msgid "%b. %e"
 msgstr "%e. %b."
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 msgid "%b. %e, %Y"
 msgstr "%e. %b. %Y"
 
 # %s is the name of the add-on and the add-on section.  Example:
 #   Some Add-on :: Firefox Add-ons
 # This should not be concatenated in the code and should be fixed.
-#: controllers/tags_controller.php:381 controllers/addons_controller.php:259
-#: controllers/addons_controller.php:389
-#: controllers/addons_controller.php:1584
+#: controllers/addons_controller.php:259 controllers/addons_controller.php:389
+#: controllers/addons_controller.php:1584 controllers/tags_controller.php:381
 #, php-format
 msgid "%s"
 msgstr "Doplněk %s"
@@ -638,9 +638,9 @@ msgid "%s Preview Manager"
 msgstr "Spráce náhledů doplňku %s"
 
 # %s is the add-on name.
-#: views/developers/addon_status_nominate.thtml:43
-#: views/developers/addon_status_confirm.thtml:43
 #: views/developers/addon_status.thtml:43
+#: views/developers/addon_status_confirm.thtml:43
+#: views/developers/addon_status_nominate.thtml:43
 #, php-format
 msgid "%s Status"
 msgstr "Stav doplňku %s "
@@ -666,7 +666,7 @@ msgstr "%s nalezen v&nbsp;rozsahu"
 
 # %s is a percentage, like '+22.33%'.  It sits next to another number, so
 # the implied meaning is 'percentage change' from the previous stat point.
-#: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:209
+#: views/statistics/addon.thtml:209 views/statistics/rss/summary.thtml:62
 #, php-format
 msgid "%s from last week"
 msgstr "%s oproti minulému týdnu"
@@ -819,22 +819,22 @@ msgstr ""
 "\">aktualizovat Firefox</a>"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:45
 #: views/developers/dashboard.thtml:79
+#: views/elements/developers/statsbar.thtml:45
 #, php-format
 msgid "<em>%s</em> Active Daily Users"
 msgstr "Aktivních uživatelů za den: <em>%s</em> "
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:41
 #: views/developers/dashboard.thtml:75
+#: views/elements/developers/statsbar.thtml:41
 #, php-format
 msgid "<em>%s</em> Total Downloads"
 msgstr "Celkově staženo: <em>%s</em>"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:43
 #: views/developers/dashboard.thtml:77
+#: views/elements/developers/statsbar.thtml:43
 #, php-format
 msgid "<em>%s</em> Weekly Downloads"
 msgstr "Staženo za týden: <em>%s</em>"
@@ -1067,12 +1067,12 @@ msgstr ""
 "doplňku."
 
 #: views/developers/addon_edit_authors.thtml:47
-#: views/developers/addon_edit_tags.thtml:46
-#: views/developers/addon_edit_properties.thtml:47
-#: views/developers/addon_status.thtml:46
-#: views/developers/addon_edit_descriptions.thtml:47
-#: views/developers/versions_edit.thtml:47
 #: views/developers/addon_edit_categories.thtml:46
+#: views/developers/addon_edit_descriptions.thtml:47
+#: views/developers/addon_edit_properties.thtml:47
+#: views/developers/addon_edit_tags.thtml:46
+#: views/developers/addon_status.thtml:46
+#: views/developers/versions_edit.thtml:47
 msgid ""
 "<span>Your changes have been saved.</span><br />Please note that some "
 "changes may take several hours to appear in all areas of the website."
@@ -1111,8 +1111,8 @@ msgstr[1] "<strong>%1$s</strong> <span>používané doplňky</span>"
 msgstr[2] "<strong>%1$s</strong> <span>používaných doplňků</span>"
 
 # %1$s is the count of addons in a collection
-#: views/elements/amo2009/collection_listing_item.thtml:51
 #: views/addons/home.thtml:164
+#: views/elements/amo2009/collection_listing_item.thtml:51
 #, php-format
 msgid "<strong>%1$s</strong> add-on"
 msgid_plural "<strong>%1$s</strong> add-ons"
@@ -1121,11 +1121,11 @@ msgstr[1] "<strong>%1$s</strong> doplňky"
 msgstr[2] "<strong>%1$s</strong> doplňků"
 
 # %1$s is the count of subscribers for a collection
+#: views/addons/home.thtml:168 views/collections/detail.thtml:96
 #: views/elements/amo2009/collection_listing_item.thtml:58
-#: views/collections/detail.thtml:96 views/addons/home.thtml:168
 #, php-format
 msgid "<strong>%1$s</strong> subscriber"
-msgid_plural "<strong>%1$s</strong> subscribers"
+msgid_plural "<strong>%1$s</strong> subscriber"
 msgstr[0] "<strong>%1$s</strong> odběratel"
 msgstr[1] "<strong>%1$s</strong> odběratelé"
 msgstr[2] "<strong>%1$s</strong> odběratelů"
@@ -1203,7 +1203,7 @@ msgstr ""
 "Redaktor serveru doplňky Mozilly požaduje dodatečné informace ohledně verze %"
 "2$s vašeho doplňku %1$s."
 
-#: views/users/register.thtml:81 views/users/edit.thtml:99
+#: views/users/edit.thtml:99 views/users/register.thtml:81
 msgid "A first name, last name or nickname is required."
 msgstr "Je vyžadováno jméno, příjmení či přezdívka."
 
@@ -1236,17 +1236,17 @@ msgstr ""
 "Tato verze doplňku již existuje. Pokud ji chcete nahradit, musíte nejdříve "
 "odstranit soubor %1$s."
 
-# Link text for the AMO About page.
-#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
-msgctxt "footer_a_about"
-msgid "About"
-msgstr "O nás"
-
 #: controllers/editors_controller.php:520
 #, fuzzy
 msgctxt "editors_syntax_about"
 msgid "About"
 msgstr "About"
+
+# Link text for the AMO About page.
+#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
+msgctxt "footer_a_about"
+msgid "About"
+msgstr "O nás"
 
 #: views/users/info.thtml:57
 msgid "About Me"
@@ -1256,7 +1256,7 @@ msgstr "O mně"
 msgid "About This Collection"
 msgstr "O této sbírce"
 
-#: views/users/edit.thtml:149 views/admin/users_edit.thtml:131
+#: views/admin/users_edit.thtml:131 views/users/edit.thtml:149
 msgid "About me"
 msgstr "O mně"
 
@@ -1268,21 +1268,26 @@ msgstr "Souhlasím a stahovat"
 msgid "Accept and Install"
 msgstr "Souhlasím a instalovat"
 
-#: views/errors/error401.thtml:50 controllers/components/simple_acl.php:81
-#: controllers/components/simple_acl.php:82
-#: controllers/components/simple_acl.php:83 controllers/components/amo.php:642
-#: controllers/components/amo.php:643 controllers/components/amo.php:644
-#: controllers/reviews_controller.php:354
-#: controllers/reviews_controller.php:486
-#: controllers/editors_controller.php:1228
-#: controllers/collections_controller.php:455
+#: views/errors/error401.thtml:50 controllers/collections_controller.php:455
 #: controllers/collections_controller.php:513
 #: controllers/collections_controller.php:521
 #: controllers/collections_controller.php:991
 #: controllers/collections_controller.php:1056
 #: controllers/collections_controller.php:1100
+#: controllers/components/amo.php:642 controllers/components/amo.php:643
+#: controllers/components/amo.php:644 controllers/components/simple_acl.php:81
+#: controllers/components/simple_acl.php:82
+#: controllers/components/simple_acl.php:83
+#: controllers/editors_controller.php:1228
+#: controllers/reviews_controller.php:354
+#: controllers/reviews_controller.php:486
 msgid "Access Denied"
 msgstr "Přístup zamítnout"
+
+#: views/editors/review.thtml:322
+msgctxt "editors_review_th_action"
+msgid "Action"
+msgstr "Akce"
 
 #: views/editors/performance_table.thtml:72 views/editors/reviewlog.thtml:58
 msgctxt "editorcp_reviewlog_column_action"
@@ -1294,14 +1299,14 @@ msgctxt "editors_reviews_header_action"
 msgid "Action"
 msgstr "Akce"
 
-#: views/editors/review.thtml:322
-msgctxt "editors_review_th_action"
-msgid "Action"
-msgstr "Akce"
-
 #: views/developers/dashboard.thtml:68
 msgid "Active"
 msgstr "aktivní"
+
+#: controllers/statistics_controller.php:307
+msgctxt "statistics_js_plotselection_selector_adu"
+msgid "Active Daily Users"
+msgstr "Uživatelé za den"
 
 #: views/statistics/rss/summary.thtml:45 views/statistics/rss/summary.thtml:46
 msgctxt "statistics_summary_updatepings_heading"
@@ -1312,11 +1317,6 @@ msgstr "Aktivní uživatelé za den"
 msgctxt "statistics_plot_legend_adu"
 msgid "Active Daily Users"
 msgstr "Počet aktivních uživatelů za den"
-
-#: controllers/statistics_controller.php:307
-msgctxt "statistics_js_plotselection_selector_adu"
-msgid "Active Daily Users"
-msgstr "Uživatelé za den"
 
 #: views/developers/addon_status.thtml:168
 msgid "Active Status: <span class=\"inactive-0\">Active</span>"
@@ -1330,6 +1330,11 @@ msgstr "Stav aktivity doplňku: <span class=\"inactive-1\">není aktivní</span>
 msgid "Activity By Month"
 msgstr "Měsíční aktivita"
 
+#: views/addons/display.thtml:490 views/developers/addon_edit_tags.thtml:67
+msgctxt "tags_add_tag_button"
+msgid "Add"
+msgstr "Přidat"
+
 #: views/collections/edit.thtml:211 views/collections/edit.thtml:233
 msgctxt "collections_edit_formfield_users_submit"
 msgid "Add"
@@ -1337,11 +1342,6 @@ msgstr "Přidat"
 
 #: views/editors/featured.thtml:126
 msgctxt "editors_featured_add_feature_submit"
-msgid "Add"
-msgstr "Přidat"
-
-#: views/developers/addon_edit_tags.thtml:67 views/addons/display.thtml:490
-msgctxt "tags_add_tag_button"
 msgid "Add"
 msgstr "Přidat"
 
@@ -1440,7 +1440,7 @@ msgstr "Přidat recenzi"
 msgid "Add a review for %s"
 msgstr "Přidat recenzi doplňku %s"
 
-#: views/developers/addon_edit_tags.thtml:54 views/addons/display.thtml:484
+#: views/addons/display.thtml:484 views/developers/addon_edit_tags.thtml:54
 msgid "Add a tag"
 msgstr "Přidat štítek"
 
@@ -1487,8 +1487,8 @@ msgstr "Přidat do sbírky"
 msgid "Add to Delicious"
 msgstr "Přidat na Delicious"
 
-#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/elements/amo2009/collections/add_form.thtml:53
+#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/pages/collector_firstrun.thtml:64
 msgid "Add to Favorites"
 msgstr "Přidat do oblíbených"
@@ -1497,8 +1497,9 @@ msgstr "Přidat do oblíbených"
 msgid "Add to a collection:"
 msgstr "Přidat do sbírky:"
 
-#: views/users/edit.thtml:192
-msgctxt "user_notifications_th_addon"
+#: views/admin/flagged_queue.thtml:53 views/editors/featured.thtml:63
+#: views/editors/queue.thtml:115
+msgctxt "editors_th_addon"
 msgid "Add-on"
 msgstr "Doplněk"
 
@@ -1507,9 +1508,8 @@ msgctxt "editorcp_reviewlog_column_addon"
 msgid "Add-on"
 msgstr "Doplněk"
 
-#: views/editors/featured.thtml:63 views/editors/queue.thtml:115
-#: views/admin/flagged_queue.thtml:53
-msgctxt "editors_th_addon"
+#: views/users/edit.thtml:192
+msgctxt "user_notifications_th_addon"
 msgid "Add-on"
 msgstr "Doplněk"
 
@@ -1518,13 +1518,13 @@ msgstr "Doplněk"
 msgid "Add-on Collections"
 msgstr "Add-on Collections"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
-msgctxt "collections_index_header_collector"
+#: controllers/pages_controller.php:117
+msgctxt "page_title_collector"
 msgid "Add-on Collector"
 msgstr "Sbírky doplňků"
 
-#: controllers/pages_controller.php:117
-msgctxt "page_title_collector"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
+msgctxt "collections_index_header_collector"
 msgid "Add-on Collector"
 msgstr "Sbírky doplňků"
 
@@ -1541,7 +1541,7 @@ msgid "Add-on Collector Home"
 msgstr "Domovská stránka Sbírky doplňků"
 
 #: views/elements/amo2009/collections/collector_sidebar_download.thtml:45
-#: views/pages/collector_firstrun.thtml:116 views/pages/collector.thtml:69
+#: views/pages/collector.thtml:69 views/pages/collector_firstrun.thtml:116
 msgid "Add-on Collector Logo"
 msgstr "Logo Sbírky doplňků"
 
@@ -1601,16 +1601,16 @@ msgstr "Icona doplňku"
 msgid "Add-on Information"
 msgstr "Informace o doplňku"
 
-#: views/elements/amo2009/addons/list_options.thtml:45
-#: views/elements/addon_list_options.thtml:45
-msgctxt "list_sortby_name"
-msgid "Add-on Name"
-msgstr "Název"
-
 #: views/developers/addon_edit_properties.thtml:78
 msgctxt "devcp_edit_properties_transbox_name_name"
 msgid "Add-on Name"
 msgstr "Název doplňku"
+
+#: views/elements/addon_list_options.thtml:45
+#: views/elements/amo2009/addons/list_options.thtml:45
+msgctxt "list_sortby_name"
+msgid "Add-on Name"
+msgstr "Název"
 
 #: views/developers/addon_status.thtml:99
 msgid "Add-on Name required"
@@ -1700,6 +1700,13 @@ msgstr "Doplněk není ozančen jako kandidát na vydání."
 msgid "Add-on name:"
 msgstr "Jméno doplňku:"
 
+#: controllers/addons_controller.php:133 controllers/addons_controller.php:249
+#: controllers/addons_controller.php:315
+#: controllers/addons_controller.php:1548
+#: controllers/addons_controller.php:1605 controllers/api_controller.php:124
+#: controllers/api_controller.php:762
+#: controllers/collections_controller.php:1064
+#: controllers/collections_controller.php:1097
 #: controllers/developers_controller.php:201
 #: controllers/developers_controller.php:597
 #: controllers/developers_controller.php:1147
@@ -1707,21 +1714,15 @@ msgstr "Jméno doplňku:"
 #: controllers/downloads_controller.php:95
 #: controllers/downloads_controller.php:102
 #: controllers/downloads_controller.php:164
-#: controllers/statistics_controller.php:190
+#: controllers/editors_controller.php:286
 #: controllers/previews_controller.php:115
 #: controllers/previews_controller.php:206
 #: controllers/previews_controller.php:307
 #: controllers/reviews_controller.php:78
 #: controllers/reviews_controller.php:241
 #: controllers/reviews_controller.php:333
-#: controllers/reviews_controller.php:341 controllers/api_controller.php:124
-#: controllers/api_controller.php:762 controllers/addons_controller.php:133
-#: controllers/addons_controller.php:249 controllers/addons_controller.php:315
-#: controllers/addons_controller.php:1548
-#: controllers/addons_controller.php:1605
-#: controllers/editors_controller.php:286
-#: controllers/collections_controller.php:1064
-#: controllers/collections_controller.php:1097
+#: controllers/reviews_controller.php:341
+#: controllers/statistics_controller.php:190
 msgid "Add-on not found!"
 msgstr "Doplněk nenalezen!"
 
@@ -1806,7 +1807,8 @@ msgctxt "statistics_addons_downloaded"
 msgid "Add-ons Downloaded"
 msgstr "Add-ons Downloaded"
 
-#: views/statistics/index.thtml:92 controllers/statistics_controller.php:126
+#: views/statistics/index.thtml:49 views/statistics/index.thtml:92
+#: controllers/statistics_controller.php:126
 #, fuzzy
 msgid "Add-ons In Use"
 msgstr "Add-ons In Use"
@@ -1828,8 +1830,8 @@ msgstr "Doplňky podle jména"
 msgid "Add-ons by Rating"
 msgstr "Doplňky podle hodnocení"
 
-#: controllers/components/validation.php:256
 #: controllers/components/developers.php:535
+#: controllers/components/validation.php:256
 msgid ""
 "Add-ons cannot use an external updateURL. Please remove this from install."
 "rdf and try again."
@@ -1837,8 +1839,8 @@ msgstr ""
 "Doplňky nesmí používat externí updateURL. Odstraňte prosím tuto položku ze "
 "souboru install.rdf a nahrání opakujte."
 
-#: controllers/components/validation.php:261
 #: controllers/components/developers.php:540
+#: controllers/components/validation.php:261
 msgid ""
 "Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
 "again."
@@ -1858,13 +1860,13 @@ msgstr "Doplňky kompatibilní s&nbsp;beta verzemi aplikace %1$s"
 msgid "Add-ons compatible with an alpha version of %1$s"
 msgstr "Doplňky kompatibilní s&nbsp;alfa verzemi aplikace %1$s"
 
-#: controllers/tags_controller.php:372 controllers/search_controller.php:235
 #: controllers/addons_controller.php:294 controllers/addons_controller.php:535
 #: controllers/addons_controller.php:832
 #: controllers/addons_controller.php:1036
 #: controllers/addons_controller.php:1262
 #: controllers/addons_controller.php:1405
 #: controllers/addons_controller.php:1454
+#: controllers/search_controller.php:235 controllers/tags_controller.php:372
 #, php-format
 msgid ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
@@ -1875,29 +1877,12 @@ msgstr ""
 
 # %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
 # Sunbird
-#: views/users/info.thtml:50 views/pages/collector_faq.thtml:49
-#: views/pages/collector_firstrun.thtml:42 views/pages/collector.thtml:46
+#: views/pages/collector.thtml:46 views/pages/collector_faq.thtml:49
 #: views/pages/collector_features.thtml:54
-#: controllers/developers_controller.php:89
-#: controllers/tags_controller.php:381
-#: controllers/compatibility_controller.php:72
-#: controllers/components/simple_acl.php:81 controllers/components/amo.php:642
-#: controllers/versions_controller.php:63
-#: controllers/statistics_controller.php:67
-#: controllers/statistics_controller.php:293
-#: controllers/previews_controller.php:67 controllers/users_controller.php:96
-#: controllers/users_controller.php:229 controllers/users_controller.php:336
-#: controllers/users_controller.php:422 controllers/users_controller.php:788
-#: controllers/users_controller.php:791 controllers/users_controller.php:804
-#: controllers/reviews_controller.php:205
-#: controllers/reviews_controller.php:252
-#: controllers/reviews_controller.php:347
-#: controllers/reviews_controller.php:426
-#: controllers/search_controller.php:199 controllers/search_controller.php:298
-#: controllers/search_controller.php:302 controllers/addons_controller.php:219
-#: controllers/addons_controller.php:265 controllers/addons_controller.php:389
-#: controllers/addons_controller.php:480 controllers/addons_controller.php:510
-#: controllers/addons_controller.php:828
+#: views/pages/collector_firstrun.thtml:42 views/users/info.thtml:50
+#: controllers/addons_controller.php:219 controllers/addons_controller.php:265
+#: controllers/addons_controller.php:389 controllers/addons_controller.php:480
+#: controllers/addons_controller.php:510 controllers/addons_controller.php:828
 #: controllers/addons_controller.php:1039
 #: controllers/addons_controller.php:1184
 #: controllers/addons_controller.php:1199
@@ -1909,9 +1894,6 @@ msgstr ""
 #: controllers/addons_controller.php:1584
 #: controllers/addons_controller.php:1640
 #: controllers/addons_controller.php:1645
-#: controllers/editors_controller.php:64 controllers/pages_controller.php:138
-#: controllers/groups_controller.php:65 controllers/groups_controller.php:71
-#: controllers/groups_controller.php:89 controllers/groups_controller.php:111
 #: controllers/collections_controller.php:57
 #: controllers/collections_controller.php:99
 #: controllers/collections_controller.php:188
@@ -1921,7 +1903,27 @@ msgstr ""
 #: controllers/collections_controller.php:483
 #: controllers/collections_controller.php:555
 #: controllers/collections_controller.php:847
+#: controllers/compatibility_controller.php:72
+#: controllers/components/amo.php:642 controllers/components/simple_acl.php:81
+#: controllers/developers_controller.php:89
+#: controllers/editors_controller.php:64 controllers/groups_controller.php:65
+#: controllers/groups_controller.php:71 controllers/groups_controller.php:89
+#: controllers/groups_controller.php:111
 #: controllers/localizers_controller.php:73
+#: controllers/pages_controller.php:138 controllers/previews_controller.php:67
+#: controllers/reviews_controller.php:205
+#: controllers/reviews_controller.php:252
+#: controllers/reviews_controller.php:347
+#: controllers/reviews_controller.php:426
+#: controllers/search_controller.php:199 controllers/search_controller.php:298
+#: controllers/search_controller.php:302
+#: controllers/statistics_controller.php:67
+#: controllers/statistics_controller.php:293
+#: controllers/tags_controller.php:381 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:422 controllers/users_controller.php:788
+#: controllers/users_controller.php:791 controllers/users_controller.php:804
+#: controllers/versions_controller.php:63
 #, php-format
 msgid "Add-ons for %1$s"
 msgstr "Doplňky aplikace %1$s"
@@ -1929,11 +1931,6 @@ msgstr "Doplňky aplikace %1$s"
 #: views/elements/header.thtml:87
 msgid "Add-ons for Firefox"
 msgstr "Doplňky Firefoxu"
-
-#: views/statistics/index.thtml:49
-#, fuzzy
-msgid "Add-ons in Use"
-msgstr "Add-ons in Use"
 
 # %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:77
@@ -2007,11 +2004,11 @@ msgstr ""
 msgid "Admin Flag"
 msgstr "Příznak administrátora"
 
-#: views/elements/developers/editors_review_history_item.thtml:74
-#: views/elements/developers/editors_review_history_item.thtml:85
 #: views/editors/performance_table.thtml:92
 #: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:77
 #: views/editors/reviewlog.thtml:88
+#: views/elements/developers/editors_review_history_item.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:85
 msgctxt "editors_review_history_nominated_adminreview"
 msgid "Admin Review"
 msgstr "Správce kontroly"
@@ -2030,8 +2027,8 @@ msgstr "Kontrola administrátorem"
 msgid "Admin Settings"
 msgstr "Administrátorské nastavení"
 
-#: views/elements/developers/sidebar.thtml:68
 #: views/elements/developers/myaddons.thtml:75
+#: views/elements/developers/sidebar.thtml:68
 msgctxt "devcp_myaddons_admincp_link"
 msgid "Admin Tools"
 msgstr "Ovládací panel správce"
@@ -2220,13 +2217,18 @@ msgstr ""
 "Append {.syntax} to the opening line of code block ~ tildes, where syntax is "
 "one of: html, css, javascript, diff, or sql."
 
+#: views/editors/performance_table.thtml:70
+msgctxt "editorcp_performance_column_application"
+msgid "Application"
+msgstr "Aplikace"
+
 #: views/elements/amo2009/search.thtml:224 views/elements/search.thtml:212
 msgctxt "advanced_search_form_application"
 msgid "Application"
 msgstr "Aplikace"
 
-#: views/editors/performance_table.thtml:70
-msgctxt "editorcp_performance_column_application"
+#: controllers/statistics_controller.php:309
+msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "Aplikace"
 
@@ -2237,11 +2239,6 @@ msgstr "Aplikace"
 
 #: controllers/components/stats.php:427
 msgctxt "statistics_longnames_application"
-msgid "Application"
-msgstr "Aplikace"
-
-#: controllers/statistics_controller.php:309
-msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "Aplikace"
 
@@ -2265,8 +2262,8 @@ msgstr "Poznámky ke&nbsp;schválení"
 msgid "Approved reviews"
 msgstr "Schválené recenze"
 
-#: views/elements/developers/editors_review_history_item.thtml:79
 #: views/editors/performance_table.thtml:97 views/editors/reviewlog.thtml:82
+#: views/elements/developers/editors_review_history_item.thtml:79
 msgid "Approved/Public"
 msgstr "Schváleno/veřejné doplňky"
 
@@ -2387,15 +2384,15 @@ msgstr "Automaticky publikované"
 msgid "Available Actions"
 msgstr "Dostupné akce"
 
-#: views/statistics/rss/summary.thtml:60 views/statistics/addon.thtml:199
+#: views/statistics/addon.thtml:199 views/statistics/rss/summary.thtml:60
 msgid "Average Daily Active Users"
 msgstr "Průměrný počet aktivních uživatelů za den"
 
-#: views/statistics/rss/summary.thtml:42 views/statistics/addon.thtml:196
+#: views/statistics/addon.thtml:196 views/statistics/rss/summary.thtml:42
 msgid "Average Daily Downloads"
 msgstr "Průměrný počet stažení za den"
 
-#: views/statistics/rss/summary.thtml:61 views/statistics/addon.thtml:207
+#: views/statistics/addon.thtml:207 views/statistics/rss/summary.thtml:61
 msgid "Average Daily Users this Week"
 msgstr "Průměrný počet denních uživatelů v tomto týdnu"
 
@@ -2409,22 +2406,22 @@ msgstr "BSD licence"
 
 # %1 is the add-on name
 #: views/addons/policy.thtml:106 views/addons/versions.thtml:130
-#: views/reviews/flag.thtml:61 views/reviews/add.thtml:114
-#: views/reviews/display.thtml:214 views/reviews/review_added.thtml:57
+#: views/reviews/add.thtml:114 views/reviews/display.thtml:214
+#: views/reviews/flag.thtml:61 views/reviews/review_added.thtml:57
 #, php-format
 msgid "Back to %1$s..."
 msgstr "Zpět na doplněk %1$s…"
+
+#: views/elements/developers/myaddons.thtml:77
+#: views/elements/developers/sidebar.thtml:70
+msgctxt "devcp_myaddons_mainpage_link"
+msgid "Back to Main"
+msgstr "Titulní stránka"
 
 #: views/elements/developers/editorsmenu.thtml:63
 msgctxt "editorcp_menu_mainpage_link"
 msgid "Back to Main"
 msgstr "Zpět na titulní stránku"
-
-#: views/elements/developers/sidebar.thtml:70
-#: views/elements/developers/myaddons.thtml:77
-msgctxt "devcp_myaddons_mainpage_link"
-msgid "Back to Main"
-msgstr "Titulní stránka"
 
 #: views/compatibility/dashboard.thtml:45
 msgctxt "compatibility_dashboard_main_link"
@@ -2449,7 +2446,7 @@ msgid "Back to review"
 msgstr "Zpět na stránku recenzí"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:60 views/reviews/add.thtml:113
+#: views/reviews/add.thtml:113 views/reviews/flag.thtml:60
 #: views/reviews/review_added.thtml:56
 msgid "Back to the reviews..."
 msgstr "Zpět na recenze…"
@@ -2523,7 +2520,7 @@ msgstr "Procházet doplňky"
 msgid "Browse Search Engines"
 msgstr "Vyhledávací moduly dle typu"
 
-#: views/addons/themes_landing.thtml:67 views/addons/browse_thumbs.thtml:87
+#: views/addons/browse_thumbs.thtml:87 views/addons/themes_landing.thtml:67
 msgid "Browse Themes"
 msgstr "Procházet motivy vzhledu"
 
@@ -2590,9 +2587,8 @@ msgstr "CSS"
 msgid "CSV data not found"
 msgstr "CSV data not found"
 
-#: views/elements/translationbox.thtml:124
-#: views/elements/translationbox.thtml:135
-msgctxt "devcp_transbox_input_cancel"
+#: views/pages/js_constants.js.thtml:90
+msgctxt "devcp_js_a_cancel"
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -2601,13 +2597,13 @@ msgctxt "collections_edit_icon_cancel"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: views/editors/review.thtml:395
-msgctxt "editors_review_input_cancel"
+#: views/developers/versions.thtml:77
+msgctxt "devcp_versions_a_cancel"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: views/pages/js_constants.js.thtml:90
-msgctxt "devcp_js_a_cancel"
+#: views/editors/review.thtml:395
+msgctxt "editors_review_input_cancel"
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -2622,8 +2618,9 @@ msgctxt "devcp_versions_edit_a_cancel"
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: views/developers/versions.thtml:77
-msgctxt "devcp_versions_a_cancel"
+#: views/elements/translationbox.thtml:124
+#: views/elements/translationbox.thtml:135
+msgctxt "devcp_transbox_input_cancel"
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -2635,8 +2632,8 @@ msgstr "Přerušit instalaci"
 msgid "Cancel and return"
 msgstr "Zrušit a vrátit se"
 
-#: views/elements/categories.thtml:50
 #: views/elements/amo2009/categories.thtml:42
+#: views/elements/categories.thtml:50
 msgctxt "categories_header"
 msgid "Categories"
 msgstr "Kategorie"
@@ -2691,7 +2688,7 @@ msgctxt "devcp_dashboard_change_status"
 msgid "Change Status"
 msgstr "Změna stavu"
 
-#: views/statistics/rss/summary.thtml:52 views/statistics/addon.thtml:181
+#: views/statistics/addon.thtml:181 views/statistics/rss/summary.thtml:52
 msgid "Change from previous count"
 msgstr "Změna z&nbsp;předchozího počtu"
 
@@ -2736,8 +2733,8 @@ msgstr "Pro smazání tété sbírky zaškrtněte pole a klepněte na \"%1$s\"."
 msgid "Checking account email..."
 msgstr "Kontrola e-mailu účtu…"
 
-#: views/elements/categories.thtml:50
 #: views/elements/amo2009/categories.thtml:41
+#: views/elements/categories.thtml:50
 msgid "Choose a category"
 msgstr "Vybere kategorii"
 
@@ -2753,8 +2750,8 @@ msgstr "Vymazat"
 msgid "Click Update Previews below to upload."
 msgstr "Pro nahrání náhledu klepněte na tlačítko Aktualizovat náhledy."
 
-#: views/users/emailchange.thtml:51 views/users/delete.thtml:53
-#: views/users/delete.thtml:119 views/reviews/flag.thtml:54
+#: views/reviews/flag.thtml:54 views/users/delete.thtml:53
+#: views/users/delete.thtml:119 views/users/emailchange.thtml:51
 msgid "Click here to return to the front page."
 msgstr "Klepnutím zde se vrátíte na titulní stránku."
 
@@ -2831,30 +2828,31 @@ msgstr "Typ sbírky"
 msgid "Collection not found!"
 msgstr "Sbírka nenalezena!"
 
-#: views/elements/amo2009/categories.thtml:65 views/addons/home.thtml:142
-msgctxt "addons_home_collections"
-msgid "Collections"
-msgstr "Sbírky"
-
 #: views/collections/listing.thtml:52
 msgctxt "collections_index_header_collections"
 msgid "Collections"
 msgstr "Sbírky"
 
-#: views/users/edit.thtml:87 views/users/edit.thtml:157
-msgctxt "user_tab_collections"
-msgid "Collections"
-msgstr "Sbírky"
-
-#: views/pages/collector_faq.thtml:50 views/pages/collector_firstrun.thtml:43
-#: views/pages/collector.thtml:47 views/pages/collector_features.thtml:55
-#: controllers/search_controller.php:303
+#: views/pages/collector.thtml:47 views/pages/collector_faq.thtml:50
+#: views/pages/collector_features.thtml:55
+#: views/pages/collector_firstrun.thtml:43
 #: controllers/collections_controller.php:189
 #: controllers/collections_controller.php:208
 #: controllers/collections_controller.php:422
 #: controllers/collections_controller.php:484
 #: controllers/collections_controller.php:556
+#: controllers/search_controller.php:303
 msgctxt "collections_breadcrumb"
+msgid "Collections"
+msgstr "Sbírky"
+
+#: views/addons/home.thtml:142 views/elements/amo2009/categories.thtml:65
+msgctxt "addons_home_collections"
+msgid "Collections"
+msgstr "Sbírky"
+
+#: views/users/edit.thtml:87 views/users/edit.thtml:157
+msgctxt "user_tab_collections"
 msgid "Collections"
 msgstr "Sbírky"
 
@@ -2883,7 +2881,7 @@ msgstr "Sbírky obsahující %1$s"
 
 # This just shows an example of tags.  The important thing in the example is to show
 # that tags can be separated with commas and have spaces in them
-#: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:492
+#: views/addons/display.thtml:492 views/developers/addon_edit_tags.thtml:69
 msgid ""
 "Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
 "\">ocean, sail boat, water</span>"
@@ -2979,8 +2977,8 @@ msgstr "Potvrzení hesla"
 msgid "Confirm account deletion"
 msgstr "Potvrzení smazání účtu"
 
-#: views/users/pwreset.thtml:77 views/users/register.thtml:73
-#: views/users/edit.thtml:224
+#: views/users/edit.thtml:224 views/users/pwreset.thtml:77
+#: views/users/register.thtml:73
 msgid "Confirm password"
 msgstr "Heslo znova"
 
@@ -3032,13 +3030,13 @@ msgstr "Vytvořit sbírku"
 msgid "Create Developer Profile"
 msgstr "Vytvořit profil vývojáře"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
-msgctxt "collections_index_a_create"
+#: views/collections/add.thtml:48
+msgctxt "collections_add_header"
 msgid "Create a Collection"
 msgstr "Vytvořit sbírku"
 
-#: views/collections/add.thtml:48
-msgctxt "collections_add_header"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
+msgctxt "collections_index_a_create"
 msgid "Create a Collection"
 msgstr "Vytvořit sbírku"
 
@@ -3066,13 +3064,13 @@ msgstr "Vytvořeno"
 msgid "Created by Me"
 msgstr "Vytvořeno mnou"
 
-#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
-msgctxt "footer_credits"
+#: controllers/pages_controller.php:92
+msgctxt "page_title_credits"
 msgid "Credits"
 msgstr "Autoři"
 
-#: controllers/pages_controller.php:92
-msgctxt "page_title_credits"
+#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
+msgctxt "footer_credits"
 msgid "Credits"
 msgstr "Autoři"
 
@@ -3136,9 +3134,8 @@ msgstr "Přístup ke statistikám"
 msgid "Dashboard Home"
 msgstr "Stránka statistik"
 
-#: views/elements/amo2009/addons/list_options.thtml:46
-#: views/elements/addon_list_options.thtml:46 views/statistics/index.thtml:90
-msgctxt "list_sortby_date"
+#: views/editors/review.thtml:320
+msgctxt "editors_review_th_date"
 msgid "Date"
 msgstr "Datum"
 
@@ -3147,8 +3144,10 @@ msgctxt "editorcp_reviewlog_column_date"
 msgid "Date"
 msgstr "Datum"
 
-#: views/editors/review.thtml:320
-msgctxt "editors_review_th_date"
+#: views/elements/addon_list_options.thtml:46
+#: views/elements/amo2009/addons/list_options.thtml:46
+#: views/statistics/index.thtml:90
+msgctxt "list_sortby_date"
 msgid "Date"
 msgstr "Datum"
 
@@ -3265,8 +3264,8 @@ msgstr "Smazané recenze"
 msgid "Deleting your collection will permanently erase it."
 msgstr "Smazáním vaší sbírky ji definitivně odstraníte."
 
-#: views/elements/developers/editors_review_history_item.thtml:82
 #: views/editors/performance_table.thtml:100 views/editors/reviewlog.thtml:85
+#: views/elements/developers/editors_review_history_item.thtml:82
 msgid "Denied/Sandbox"
 msgstr "Zamítnuto/Pískoviště"
 
@@ -3286,6 +3285,10 @@ msgstr "Popis"
 #: views/elements/developers/actionbar.thtml:47
 msgid "Detailed Info"
 msgstr "Více informací"
+
+#: views/addons/display.thtml:362
+msgid "Detailed Review"
+msgstr "Podrobná recenze"
 
 #: views/elements/developers/performanceheader.thtml:60
 #, fuzzy
@@ -3311,11 +3314,6 @@ msgstr[2] "Vývojáři"
 msgid "Developer Agreement"
 msgstr "Souhlas vývojáře"
 
-#: views/editors/review.thtml:291
-msgctxt "editors_review_header_devcomments"
-msgid "Developer Comments"
-msgstr "Komentáře vývojářů"
-
 #: views/developers/addon_edit_descriptions.thtml:93
 msgctxt "devcp_edit_descriptions_transbox_comments_name"
 msgid "Developer Comments"
@@ -3326,6 +3324,11 @@ msgstr "Komentáře vývojáře"
 msgctxt "addons_display_developer_comments"
 msgid "Developer Comments"
 msgstr "Developer Comments"
+
+#: views/editors/review.thtml:291
+msgctxt "editors_review_header_devcomments"
+msgid "Developer Comments"
+msgstr "Komentáře vývojářů"
 
 #: views/developers/dashboard.thtml:43
 msgid "Developer Dashboard"
@@ -3347,19 +3350,8 @@ msgstr "Profil vývojáře"
 msgid "Developer Reply:"
 msgstr "Odpověď vývojáře:"
 
-#: views/elements/developers/sidebar.thtml:48
-#: views/elements/developers/myaddons.thtml:67
-msgctxt "devcp_myaddons_title"
-msgid "Developer Tools"
-msgstr "Nástroje vývojáře"
-
 #: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
 msgctxt "sidebar_navlink_developer_tools"
-msgid "Developer Tools"
-msgstr "Nástroje vývojáře"
-
-#: views/statistics/addon.thtml:58
-msgctxt "statistics_addon_developertools_link"
 msgid "Developer Tools"
 msgstr "Nástroje vývojáře"
 
@@ -3372,6 +3364,17 @@ msgstr "Nástroje vývojáře"
 msgctxt "devcp_pagetitle"
 msgid "Developer Tools"
 msgstr "Ovládací panel vývojáře"
+
+#: views/statistics/addon.thtml:58
+msgctxt "statistics_addon_developertools_link"
+msgid "Developer Tools"
+msgstr "Nástroje vývojáře"
+
+#: views/elements/developers/myaddons.thtml:67
+#: views/elements/developers/sidebar.thtml:48
+msgctxt "devcp_myaddons_title"
+msgid "Developer Tools"
+msgstr "Nástroje vývojáře"
 
 #: views/reviews/add.thtml:57
 msgid "Developer reply to:"
@@ -3386,31 +3389,31 @@ msgstr "Vývojáři"
 msgid "Dictionaries"
 msgstr "Slovníky"
 
+#: views/addons/dictionaries.thtml:63 controllers/addons_controller.php:1402
+#: controllers/components/amo.php:721
+msgctxt "langtools_header_dicts_and_langpacks"
+msgid "Dictionaries & Language Packs"
+msgstr "Slovníky a jazykové balíčky"
+
 #: views/elements/addon_categories.thtml:52
 msgctxt "nav_category_dicts_langpacks"
 msgid "Dictionaries & Language Packs"
 msgstr "Slovníky a jazykové balíčky"
 
-#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:721
-#: controllers/addons_controller.php:1402
-msgctxt "langtools_header_dicts_and_langpacks"
-msgid "Dictionaries & Language Packs"
-msgstr "Slovníky a jazykové balíčky"
-
-#: models/addontype.php:79
-msgctxt "general_addontype_dict"
+#: views/addons/dictionaries.thtml:69
+msgctxt "langtools_tableheader_dictionary"
 msgid "Dictionary"
-msgstr "Slovník"
+msgstr "Slovníky"
 
 #: views/elements/pitch.thtml:50 views/elements/pitch.thtml:55
 msgctxt "sidebar_pitch_dictionary"
 msgid "Dictionary"
 msgstr "Slovník"
 
-#: views/addons/dictionaries.thtml:69
-msgctxt "langtools_tableheader_dictionary"
+#: models/addontype.php:79
+msgctxt "general_addontype_dict"
 msgid "Dictionary"
-msgstr "Slovníky"
+msgstr "Slovník"
 
 # This is the name/category for a group of tests
 #: models/test_group.php:73
@@ -3474,7 +3477,9 @@ msgstr "Stáhnout jazykový balíček"
 # %$1s is an optional string that only appears if the add-on is only available for
 # a certain platform.  Examples:  (Windows)  or  (Linux)
 # Note that the parentheses are included in the string. :(
-#: views/elements/amo2009/install.thtml:137
+#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
+#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
+#: views/addons/plugins.thtml:119 views/elements/amo2009/install.thtml:137
 #: views/elements/amo2009/install.thtml:233
 #: views/elements/amo2009/install.thtml:246
 #: views/elements/amo2009/install.thtml:284
@@ -3482,9 +3487,6 @@ msgstr "Stáhnout jazykový balíček"
 #: views/elements/amo2009/install.thtml:339 views/elements/install.thtml:73
 #: views/elements/install.thtml:181 views/elements/install.thtml:205
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
-#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
-#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
-#: views/addons/plugins.thtml:119
 #, php-format
 msgid "Download Now %s"
 msgstr "Stáhnout doplněk %s"
@@ -3493,9 +3495,8 @@ msgstr "Stáhnout doplněk %s"
 msgid "Download the Add-on Collector:"
 msgstr "Stáhnout sbírku doplňků:"
 
-#: views/elements/amo2009/addons/list_options.thtml:47
-#: views/elements/addon_list_options.thtml:47 views/addons/display.thtml:185
-msgctxt "list_sortby_downloads"
+#: controllers/statistics_controller.php:306
+msgctxt "statistics_js_plotselection_selector_downloads"
 msgid "Downloads"
 msgstr "Stažení"
 
@@ -3504,12 +3505,13 @@ msgctxt "statistics_summary_downloads_heading"
 msgid "Downloads"
 msgstr "Stažení"
 
-#: controllers/statistics_controller.php:306
-msgctxt "statistics_js_plotselection_selector_downloads"
+#: views/addons/display.thtml:185 views/elements/addon_list_options.thtml:47
+#: views/elements/amo2009/addons/list_options.thtml:47
+msgctxt "list_sortby_downloads"
 msgid "Downloads"
 msgstr "Stažení"
 
-#: views/statistics/rss/summary.thtml:43 views/statistics/addon.thtml:203
+#: views/statistics/addon.thtml:203 views/statistics/rss/summary.thtml:43
 msgid "Downloads in the last 7 days"
 msgstr "Počet stažení za poslední týden"
 
@@ -3520,28 +3522,28 @@ msgstr "EULA"
 # %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
-#: views/developers/addon_edit_tags.thtml:43
+#: views/developers/addon_edit_categories.thtml:43
 #: views/developers/addon_edit_contributions.thtml:46
-#: views/developers/versions_delete.thtml:43
+#: views/developers/addon_edit_descriptions.thtml:44
 #: views/developers/addon_edit_profile.thtml:69
 #: views/developers/addon_edit_properties.thtml:44
-#: views/developers/addon_edit_descriptions.thtml:44
-#: views/developers/versions_edit.thtml:44
-#: views/developers/addon_edit_categories.thtml:43
+#: views/developers/addon_edit_tags.thtml:43
 #: views/developers/versions.thtml:43
+#: views/developers/versions_delete.thtml:43
+#: views/developers/versions_edit.thtml:44
 #, php-format
 msgid "Edit %s"
 msgstr "Úpravy doplňku %s"
 
-#: views/elements/developers/actionbar.thtml:42
-#: views/elements/developers/actionbar.thtml:50
-#: views/developers/dashboard.thtml:64
-msgctxt "devcp_actionbar_link_edit"
+#: views/elements/developers/editbox.thtml:43
+msgctxt "devcp_editbox_edit_addon"
 msgid "Edit Add-on"
 msgstr "Úpravy doplňku"
 
-#: views/elements/developers/editbox.thtml:43
-msgctxt "devcp_editbox_edit_addon"
+#: views/developers/dashboard.thtml:64
+#: views/elements/developers/actionbar.thtml:42
+#: views/elements/developers/actionbar.thtml:50
+msgctxt "devcp_actionbar_link_edit"
 msgid "Edit Add-on"
 msgstr "Úpravy doplňku"
 
@@ -3565,14 +3567,14 @@ msgstr "Upravit doplněk"
 msgid "Edit My Add-on"
 msgstr "Upravit doplněk"
 
-#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
-msgctxt "devcp_previews_header_edit"
-msgid "Edit Preview"
-msgstr "Úprava náhledu"
-
 #: controllers/previews_controller.php:194
 #: controllers/previews_controller.php:195
 msgctxt "devcp_preview_edit_pagetitle"
+msgid "Edit Preview"
+msgstr "Úprava náhledu"
+
+#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
+msgctxt "devcp_previews_header_edit"
 msgid "Edit Preview"
 msgstr "Úprava náhledu"
 
@@ -3624,8 +3626,14 @@ msgctxt "editorcp_menu_title"
 msgid "Editor Tools"
 msgstr "Nástroje redaktora"
 
-#: views/elements/developers/sidebar.thtml:65
+#: controllers/editors_controller.php:64 controllers/editors_controller.php:77
+#: controllers/editors_controller.php:81
+msgctxt "editors_pagetitle"
+msgid "Editor Tools"
+msgstr "Ovládací panel redaktora"
+
 #: views/elements/developers/myaddons.thtml:72
+#: views/elements/developers/sidebar.thtml:65
 msgctxt "devcp_myaddons_editorcp_link"
 msgid "Editor Tools"
 msgstr "Ovládací panel redaktora"
@@ -3634,12 +3642,6 @@ msgstr "Ovládací panel redaktora"
 msgctxt "sidebar_navlink_editor_tools"
 msgid "Editor Tools"
 msgstr "Nástroje redaktora"
-
-#: controllers/editors_controller.php:64 controllers/editors_controller.php:77
-#: controllers/editors_controller.php:81
-msgctxt "editors_pagetitle"
-msgid "Editor Tools"
-msgstr "Ovládací panel redaktora"
 
 # A collection that has been chosen by an Editor as notable or exceptional
 #: controllers/collections_controller.php:599
@@ -3669,14 +3671,14 @@ msgstr ""
 "AD_vyhled%C3%A1vac%C3%ADho_modulu_OpenSearch\">dokumentaci</a>, zkontrolujte "
 "svůj doplněk a zkuste to znovu."
 
-#: views/elements/amo2009/users/vcard.thtml:86
-msgctxt "addon_developer_th_email"
+#: views/users/edit.thtml:230 views/users/login.thtml:84
+#: views/users/pwreset.thtml:52 views/users/register.thtml:63
+msgctxt "user_form_email"
 msgid "Email address"
 msgstr "E-mailová adresa"
 
-#: views/users/pwreset.thtml:52 views/users/login.thtml:84
-#: views/users/register.thtml:63 views/users/edit.thtml:230
-msgctxt "user_form_email"
+#: views/elements/amo2009/users/vcard.thtml:86
+msgctxt "addon_developer_th_email"
 msgid "Email address"
 msgstr "E-mailová adresa"
 
@@ -3732,7 +3734,7 @@ msgctxt "editorcp_menu_eventlog_link"
 msgid "Event Log"
 msgstr "Záznam událostí"
 
-#: views/editors/logs.thtml:42 views/admin/logs.thtml:43
+#: views/admin/logs.thtml:43 views/editors/logs.thtml:42
 #: controllers/editors_controller.php:1751
 msgctxt "editorcp_logs_page_heading"
 msgid "Event Log"
@@ -3820,26 +3822,26 @@ msgstr "Vytvořte si své Firefox FAQ"
 msgid "Favorites"
 msgstr "Oblíbené"
 
-#: views/elements/pitch.thtml:72
-msgctxt "sidebar_pitch_featured_addons"
+#: controllers/addons_controller.php:542
+msgctxt "rss_featuredaddons"
 msgid "Featured Add-ons"
-msgstr "Doporučované doplňky"
+msgstr "Zajímavé doplňky"
 
 #: views/elements/developers/editorsmenu.thtml:59
 msgctxt "devcp_editorsqueue_featured"
 msgid "Featured Add-ons"
 msgstr "Uváděné doplňky"
 
-#: controllers/addons_controller.php:542
-msgctxt "rss_featuredaddons"
-msgid "Featured Add-ons"
-msgstr "Zajímavé doplňky"
-
 #: controllers/editors_controller.php:1674
 #: controllers/editors_controller.php:1676
 msgctxt "editors_featured_addons_pagetitle"
 msgid "Featured Add-ons"
 msgstr "Uváděné doplňky"
+
+#: views/elements/pitch.thtml:72
+msgctxt "sidebar_pitch_featured_addons"
+msgid "Featured Add-ons"
+msgstr "Doporučované doplňky"
 
 #: config/bootstrap.php:262
 msgid "Fennec"
@@ -3905,10 +3907,10 @@ msgstr "Kontrola typů souborů"
 msgid "File error: %s does not exist."
 msgstr "Chyba souboru: %s neexistuje."
 
-#: controllers/files_controller.php:75 controllers/files_controller.php:106
-#: controllers/files_controller.php:109 controllers/files_controller.php:240
-#: controllers/files_controller.php:253 controllers/files_controller.php:262
-#: controllers/files_controller.php:281 controllers/editors_controller.php:535
+#: controllers/editors_controller.php:535 controllers/files_controller.php:75
+#: controllers/files_controller.php:106 controllers/files_controller.php:109
+#: controllers/files_controller.php:240 controllers/files_controller.php:253
+#: controllers/files_controller.php:262 controllers/files_controller.php:281
 msgid "File not found!"
 msgstr "Soubor nebyl nalezen!"
 
@@ -3916,13 +3918,13 @@ msgstr "Soubor nebyl nalezen!"
 msgid "Files:"
 msgstr "Soubory:"
 
-#: views/editors/performance_table.thtml:52
-#: views/editors/performance_charts.thtml:65 views/editors/reviewlog.thtml:49
+#: views/editors/performance_charts.thtml:65
+#: views/editors/performance_table.thtml:52 views/editors/reviewlog.thtml:49
 msgctxt "editorcp_reviewlog_button_filter"
 msgid "Filter"
 msgstr "Filtrovat"
 
-#: views/editors/logs.thtml:56 views/admin/logs.thtml:91
+#: views/admin/logs.thtml:91 views/editors/logs.thtml:56
 msgctxt "editorcp_logs_button_filter"
 msgid "Filter"
 msgstr "Filtrovat"
@@ -3936,7 +3938,7 @@ msgstr "Filtr"
 msgid "Filter Queue"
 msgstr "Filtr fronty"
 
-#: views/editors/logs.thtml:50 views/admin/logs.thtml:50
+#: views/admin/logs.thtml:50 views/editors/logs.thtml:50
 msgid "Filter by type/action"
 msgstr "Filtrovat podle typu/akce"
 
@@ -3948,8 +3950,8 @@ msgstr "Zobrazí doplňky pro ostatní aplikace"
 msgid "Firefox"
 msgstr "Firefox"
 
-#: views/users/register.thtml:78 views/users/edit.thtml:96
-#: views/admin/users_edit.thtml:76
+#: views/admin/users_edit.thtml:76 views/users/edit.thtml:96
+#: views/users/register.thtml:78
 msgid "First name"
 msgstr "Křestní jméno"
 
@@ -3967,15 +3969,15 @@ msgstr "Příznaky:"
 msgid "For information on contributing, please see our %s."
 msgstr "Více informací o&nbsp;přispívání naleznete na naší %s."
 
-# Full text for the FAQ abbreviation.
-#: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
-#: views/layouts/amo2009.thtml:354
-msgctxt "footer_abbr_faq"
+#: controllers/pages_controller.php:111
+msgctxt "page_title_faq"
 msgid "Frequently Asked Questions"
 msgstr "Často kladené otázky"
 
-#: controllers/pages_controller.php:111
-msgctxt "page_title_faq"
+# Full text for the FAQ abbreviation.
+#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
+#: views/pages/collector_features.thtml:72
+msgctxt "footer_abbr_faq"
 msgid "Frequently Asked Questions"
 msgstr "Často kladené otázky"
 
@@ -4020,13 +4022,13 @@ msgstr "Základní kontrola"
 msgid "Geolocation Check"
 msgstr "Kontrola na Geolocation API"
 
-#: views/developers/dashboard.thtml:113
-msgctxt "devcp_dashboard_start"
+#: views/developers/uploader.thtml:68
+msgctxt "devcp_uploader_a_start"
 msgid "Get Started"
 msgstr "Začít"
 
-#: views/developers/uploader.thtml:68
-msgctxt "devcp_uploader_a_start"
+#: views/developers/dashboard.thtml:113
+msgctxt "devcp_dashboard_start"
 msgid "Get Started"
 msgstr "Začít"
 
@@ -4041,24 +4043,12 @@ msgid ""
 msgstr ""
 "Pojmenujte vaši sbírku rozumně. Například \"Mé oblíbené doplňky pro vývoj\"."
 
-#: views/elements/amo2009/collections/sort_form.thtml:55
-#: views/collections/detail.thtml:139 views/search/index.thtml:129
-msgctxt "collections_index_button_go"
-msgid "Go"
-msgstr "Přejít"
-
-#: views/elements/amo2009/addons/list_options.thtml:113
-#: views/elements/addon_list_options.thtml:109
-msgctxt "addons_options_submit"
-msgid "Go"
-msgstr "Odeslat"
-
 #: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
 msgctxt "footer_lang_form_lang_submit_go"
 msgid "Go"
 msgstr "Přejít"
 
-#: views/tags/display.thtml:83 views/addons/display.thtml:459
+#: views/addons/display.thtml:459 views/tags/display.thtml:83
 msgctxt "addons_author_addons_submit"
 msgid "Go"
 msgstr "Odeslat"
@@ -4067,6 +4057,19 @@ msgstr "Odeslat"
 msgctxt "editors_featured_edit_feature_submit"
 msgid "Go"
 msgstr "Odeslat"
+
+#: views/elements/addon_list_options.thtml:109
+#: views/elements/amo2009/addons/list_options.thtml:113
+msgctxt "addons_options_submit"
+msgid "Go"
+msgstr "Odeslat"
+
+#: views/collections/detail.thtml:139
+#: views/elements/amo2009/collections/sort_form.thtml:55
+#: views/search/index.thtml:129
+msgctxt "collections_index_button_go"
+msgid "Go"
+msgstr "Přejít"
 
 #: controllers/groups_controller.php:65
 msgid "Group Admin"
@@ -4095,13 +4098,13 @@ msgstr "HTML"
 msgid "Hate it"
 msgstr "Nesnáším ho"
 
-#: views/elements/translationbox.thtml:68
-msgctxt "devcp_transbox_alt_help"
+#: views/statistics/addon.thtml:60
+msgctxt "statistics_help_link"
 msgid "Help"
 msgstr "Nápověda"
 
-#: views/statistics/addon.thtml:60
-msgctxt "statistics_help_link"
+#: views/elements/translationbox.thtml:68
+msgctxt "devcp_transbox_alt_help"
 msgid "Help"
 msgstr "Nápověda"
 
@@ -4135,8 +4138,8 @@ msgstr "Skrýt nápovědu"
 msgid "Hide Total Count"
 msgstr "Skrýt celkový počet"
 
-#: views/users/register.thtml:94 views/users/edit.thtml:125
-#: views/admin/users_edit.thtml:91
+#: views/admin/users_edit.thtml:91 views/users/edit.thtml:125
+#: views/users/register.thtml:94
 msgid "Hide email address"
 msgstr "Skrýt e-mailovou adresu"
 
@@ -4471,7 +4474,7 @@ msgstr "Instalovat jazykový balíček"
 msgid "Install.js contains a function missing from the whitelist: %s"
 msgstr "Install.js contains a function missing from the whitelist: %s"
 
-#: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
+#: views/admin/users_edit.thtml:132 views/users/edit.thtml:150
 msgid ""
 "Introduce yourself to the community, if you like! This text will appear "
 "publicly on your user info page. Line breaks will be preserved, but no HTML "
@@ -4625,7 +4628,7 @@ msgstr "Jazykové balíčky (doplněk)"
 msgid "Language Packs (Application)"
 msgstr "Jazykové balíčky (aplikace)"
 
-#: views/statistics/rss/summary.thtml:41 views/statistics/addon.thtml:175
+#: views/statistics/addon.thtml:175 views/statistics/rss/summary.thtml:41
 msgid "Last Day Count"
 msgstr "Počet za poslední den"
 
@@ -4639,8 +4642,8 @@ msgstr "Aktualizované"
 msgid "Last edited on %s"
 msgstr "Naposledy upraveno: %s"
 
-#: views/users/register.thtml:84 views/users/edit.thtml:102
-#: views/admin/users_edit.thtml:81
+#: views/admin/users_edit.thtml:81 views/users/edit.thtml:102
+#: views/users/register.thtml:84
 msgid "Last name"
 msgstr "Příjmení"
 
@@ -4663,26 +4666,26 @@ msgid ""
 "\">Mozilla Developer Center</a>."
 msgstr ""
 
-#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/amo2009/homepage_addon.thtml:124
+#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/feature.thtml:122
 msgid "Learn more"
 msgstr "Více informací"
 
 # %1 is the add-on name
-#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/amo2009/homepage_addon.thtml:125
+#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/feature.thtml:123
 #, php-format
 msgid "Learn more about %1$s"
 msgstr "Více informací o&nbsp;doplňku %1$s"
 
-#: views/elements/amo2009/teaser_collections.thtml:86
-#: views/elements/amo2009/teaser_collections.thtml:92
-#: views/elements/amo2009/results_addon.thtml:90
-#: views/elements/amo2009/results_addon.thtml:92
 #: views/elements/amo2009/homepage_addon.thtml:99
 #: views/elements/amo2009/homepage_addon.thtml:102
+#: views/elements/amo2009/results_addon.thtml:90
+#: views/elements/amo2009/results_addon.thtml:92
+#: views/elements/amo2009/teaser_collections.thtml:86
+#: views/elements/amo2009/teaser_collections.thtml:92
 #: views/elements/feature.thtml:94
 msgid "Learn more about this add-on"
 msgstr "Zobrazí více o&nbsp;doplňku"
@@ -4777,7 +4780,7 @@ msgctxt "addon_developer_th_location"
 msgid "Location"
 msgstr "Umístění"
 
-#: views/users/edit.thtml:112 views/admin/users_edit.thtml:99
+#: views/admin/users_edit.thtml:99 views/users/edit.thtml:112
 msgctxt "user_form_location"
 msgid "Location"
 msgstr "Umístění"
@@ -4790,8 +4793,8 @@ msgstr "Zamknuto"
 msgid "Log In"
 msgstr "Přihlášení"
 
-#: views/elements/developers/sidebar.thtml:72
-#: views/elements/developers/myaddons.thtml:50 views/elements/header.thtml:159
+#: views/elements/developers/myaddons.thtml:50
+#: views/elements/developers/sidebar.thtml:72 views/elements/header.thtml:159
 msgctxt "header_navlink_login"
 msgid "Log in"
 msgstr "Přihlášení"
@@ -5011,18 +5014,9 @@ msgid "Misplaced bug report or support request"
 msgstr "Nevhodné oznámení chyby nebo žádost o&nbsp;podporu"
 
 # %s is a string representing what's missing.  Example:  file_id
-#: controllers/downloads_controller.php:65
-#: controllers/users_controller.php:191 controllers/users_controller.php:270
-#: controllers/users_controller.php:641 controllers/users_controller.php:739
-#: controllers/users_controller.php:909 controllers/reviews_controller.php:71
-#: controllers/reviews_controller.php:235
-#: controllers/reviews_controller.php:326
-#: controllers/reviews_controller.php:474
-#: controllers/reviews_controller.php:476
 #: controllers/addons_controller.php:175 controllers/addons_controller.php:301
 #: controllers/addons_controller.php:1540
 #: controllers/addons_controller.php:1683
-#: controllers/editors_controller.php:1235
 #: controllers/collections_controller.php:177
 #: controllers/collections_controller.php:279
 #: controllers/collections_controller.php:298
@@ -5041,13 +5035,22 @@ msgstr "Nevhodné oznámení chyby nebo žádost o&nbsp;podporu"
 #: controllers/collections_controller.php:1046
 #: controllers/collections_controller.php:1093
 #: controllers/collections_controller.php:1113
+#: controllers/downloads_controller.php:65
+#: controllers/editors_controller.php:1235
+#: controllers/reviews_controller.php:71
+#: controllers/reviews_controller.php:235
+#: controllers/reviews_controller.php:326
+#: controllers/reviews_controller.php:474
+#: controllers/reviews_controller.php:476 controllers/users_controller.php:191
+#: controllers/users_controller.php:270 controllers/users_controller.php:641
+#: controllers/users_controller.php:739 controllers/users_controller.php:909
 #, php-format
 msgid "Missing argument: %s"
 msgstr "Chybějící argument: %s"
 
 # %1 is the review count
-#: views/elements/developers/editorsqueue.thtml:42
 #: views/elements/developers/editorsmenu.thtml:56
+#: views/elements/developers/editorsqueue.thtml:42
 #, php-format
 msgid "Moderated Reviews (%s)"
 msgid_plural "Moderated Reviews (%s)"
@@ -5199,16 +5202,16 @@ msgstr "Já a tito uživatelé:"
 msgid "NEW!"
 msgstr "NOVĚ!"
 
+#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
+#: views/search/index.thtml:117 views/tags/display.thtml:77
+msgctxt "advanced_search_form_name"
+msgid "Name"
+msgstr "Název"
+
 #: views/elements/amo2009/users/vcard.thtml:63
 msgctxt "addon_developer_th_name"
 msgid "Name"
 msgstr "Jméno"
-
-#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
-#: views/tags/display.thtml:77 views/search/index.thtml:117
-msgctxt "advanced_search_form_name"
-msgid "Name"
-msgstr "Název"
 
 #: controllers/collections_controller.php:312
 msgctxt "collections_detail_sort_name"
@@ -5245,12 +5248,12 @@ msgstr "Nová verze"
 msgid "New image:"
 msgstr "Nový obrázek:"
 
-#: views/users/pwreset.thtml:72 views/users/edit.thtml:219
+#: views/users/edit.thtml:219 views/users/pwreset.thtml:72
 msgid "New password"
 msgstr "Nové heslo"
 
 #: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:143
-#: views/tags/display.thtml:76 views/search/index.thtml:116
+#: views/search/index.thtml:116 views/tags/display.thtml:76
 msgctxt "advanced_search_form_newest"
 msgid "Newest"
 msgstr "Nejnovější"
@@ -5260,23 +5263,23 @@ msgctxt "collections_index_option_newest"
 msgid "Newest"
 msgstr "Nejnovější"
 
-#: views/elements/pitch.thtml:70
-msgctxt "sidebar_pitch_newest_addons"
-msgid "Newest Add-ons"
-msgstr "Nejnovější doplňky"
-
 #: controllers/addons_controller.php:539
 #: controllers/addons_controller.php:1175
 msgctxt "browse_addons_newest"
 msgid "Newest Add-ons"
 msgstr "Nové doplňky"
 
+#: views/elements/pitch.thtml:70
+msgctxt "sidebar_pitch_newest_addons"
+msgid "Newest Add-ons"
+msgstr "Nejnovější doplňky"
+
 #: views/elements/amo2009/pagination.thtml:42
 msgid "Next"
 msgstr "Další"
 
-#: views/users/register.thtml:89 views/users/edit.thtml:107
-#: views/admin/users_edit.thtml:86
+#: views/admin/users_edit.thtml:86 views/users/edit.thtml:107
+#: views/users/register.thtml:89
 msgid "Nickname"
 msgstr "Přezdívka"
 
@@ -5300,8 +5303,8 @@ msgstr "Žádná data"
 msgid "No Files"
 msgstr "Soubory nenalezeny"
 
-#: controllers/components/validation.php:266
 #: controllers/components/developers.php:545
+#: controllers/components/validation.php:266
 msgid "No ID could be found for this add-on in install.rdf."
 msgstr "V souboru install.rdf nabylo nalezeno Id doplňku."
 
@@ -5322,8 +5325,8 @@ msgstr "V této kategorii nejsou žádné doplňky."
 msgid "No categories are available for this add-on type and application."
 msgstr "Pro tento typ doplňku a aplikaci nejsou dostupné žádné kategorie."
 
-#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 #: views/statistics/addon.thtml:167 views/statistics/addon.thtml:187
+#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 msgid "No data yet"
 msgstr "Chybí data"
 
@@ -5331,17 +5334,17 @@ msgstr "Chybí data"
 msgid "No file uploaded"
 msgstr "Nebyl nahrán soubor"
 
-#: views/developers/versions_validate.thtml:59
 #: views/developers/versions_edit.thtml:111
+#: views/developers/versions_validate.thtml:59
 msgid "No files found."
 msgstr "Nebyl nalezen žádný soubor."
 
-#: controllers/developers_controller.php:505
 #: controllers/components/validation.php:206
+#: controllers/developers_controller.php:505
 msgid "No install.rdf present."
 msgstr "Nebyl nalezen soubor install.rdf."
 
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 msgid "No photo"
 msgstr "Fotka nenahrána"
 
@@ -5357,8 +5360,8 @@ msgstr "Náhledy nenalezeny."
 msgid "No previous review entries could be found."
 msgstr "Nebyly nalezeny žádné záznamy předchozího kontroly."
 
-#: views/tags/display.thtml:60 views/search/collections.thtml:62
-#: views/search/index.thtml:100
+#: views/search/collections.thtml:62 views/search/index.thtml:100
+#: views/tags/display.thtml:60
 msgid "No results found."
 msgstr "Nic nebylo nalezeno."
 
@@ -5370,9 +5373,9 @@ msgstr "Pro toto období nebyla nalezena žádná kontrola."
 msgid "No tags for these add-ons"
 msgstr "U doplňku nejsou štítky"
 
+#: views/elements/developers/testresults.thtml:61
 #: views/elements/developers/testresults_group.thtml:115
 #: views/elements/developers/testresults_header.thtml:62
-#: views/elements/developers/testresults.thtml:61
 msgctxt "devcp_versions_validate_no_results"
 msgid "No test results found."
 msgstr "Nebyl nalezen žádný výsledek testu."
@@ -5405,8 +5408,8 @@ msgid "Nominate your add-on to become Public"
 msgstr "Nominujte svůj doplněk ke zveřejnění."
 
 # %1 is the nominated addons count
-#: views/elements/developers/editorsqueue.thtml:44
 #: views/elements/developers/editorsmenu.thtml:58
+#: views/elements/developers/editorsqueue.thtml:44
 #, php-format
 msgid "Nominated Add-ons (%s)"
 msgid_plural "Nominated Add-ons (%s)"
@@ -5414,13 +5417,13 @@ msgstr[0] "%s nominovaný doplněk"
 msgstr[1] "%s nominované doplňky"
 msgstr[2] "%s nominovaných doplňků"
 
-#: views/elements/developers/editors_review_history_item.thtml:68
 #: views/editors/performance_table.thtml:86 views/editors/reviewlog.thtml:71
+#: views/elements/developers/editors_review_history_item.thtml:68
 msgid "Nomination Approved/Public"
 msgstr "Nominace schválena/veřejné doplňky"
 
-#: views/elements/developers/editors_review_history_item.thtml:71
 #: views/editors/performance_table.thtml:89 views/editors/reviewlog.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:71
 msgid "Nomination Denied/Sandbox"
 msgstr "Nominace zamítnuta/pískoviště"
 
@@ -5485,7 +5488,7 @@ msgctxt "addon_developer_th_occupation"
 msgid "Occupation"
 msgstr "Zaměstnání"
 
-#: views/users/edit.thtml:116 views/admin/users_edit.thtml:103
+#: views/admin/users_edit.thtml:103 views/users/edit.thtml:116
 msgctxt "user_form_occupation"
 msgid "Occupation"
 msgstr "Zaměstnání"
@@ -5511,7 +5514,7 @@ msgstr ""
 msgid "Old password"
 msgstr "Původní heslo"
 
-#: views/statistics/rss/summary.thtml:48 views/statistics/addon.thtml:165
+#: views/statistics/addon.thtml:165 views/statistics/rss/summary.thtml:48
 #, php-format
 msgid "On %1$s"
 msgstr "%1$s"
@@ -5561,13 +5564,13 @@ msgstr "Otevřít v&nbsp;novém okně"
 msgid "Opensearch Format Check"
 msgstr "Kontrola formátu OpenSearch"
 
-#: controllers/components/stats.php:429
-msgctxt "statistics_longnames_os"
+#: controllers/statistics_controller.php:311
+msgctxt "statistics_js_plotselection_selector_os"
 msgid "Operating System"
 msgstr "Operační systém"
 
-#: controllers/statistics_controller.php:311
-msgctxt "statistics_js_plotselection_selector_os"
+#: controllers/components/stats.php:429
+msgctxt "statistics_longnames_os"
 msgid "Operating System"
 msgstr "Operační systém"
 
@@ -5700,8 +5703,8 @@ msgid "PayPal ID"
 msgstr "PayPal ID"
 
 # %1 is the update count
-#: views/elements/developers/editorsqueue.thtml:43
 #: views/elements/developers/editorsmenu.thtml:57
+#: views/elements/developers/editorsqueue.thtml:43
 #, php-format
 msgid "Pending Updates (%s)"
 msgid_plural "Pending Updates (%s)"
@@ -5727,8 +5730,8 @@ msgstr "Výkonová zpráva pro uživatele %1$s"
 msgid "Performance Reports"
 msgstr "Výkonostní zpráva"
 
-#: views/elements/amo2009/addons/version_detail.thtml:52
 #: views/elements/addon_version_detail.thtml:52
+#: views/elements/amo2009/addons/version_detail.thtml:52
 msgid "Permanent link to this version"
 msgstr "Stálý odkaz na tuto verzi"
 
@@ -5736,12 +5739,12 @@ msgstr "Stálý odkaz na tuto verzi"
 msgid "Permissions"
 msgstr "Povolení"
 
-#: views/users/edit.thtml:129 views/admin/users_edit.thtml:112
+#: views/admin/users_edit.thtml:112 views/users/edit.thtml:129
 msgid "Picture"
 msgstr "Obrázek"
 
 # %1$s is a user's email address or name
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 #, php-format
 msgid "Picture of %1$s"
 msgstr "Obrázek %1$s"
@@ -5758,13 +5761,13 @@ msgstr ""
 msgid "Plain Text"
 msgstr "Čistý text"
 
-#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
-msgctxt "advanced_search_form_platform"
+#: views/developers/versions_edit.thtml:79
+msgctxt "devcp_versions_edit_th_platform"
 msgid "Platform"
 msgstr "Platforma"
 
-#: views/developers/versions_edit.thtml:79
-msgctxt "devcp_versions_edit_th_platform"
+#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
+msgctxt "advanced_search_form_platform"
 msgid "Platform"
 msgstr "Platforma"
 
@@ -5892,9 +5895,9 @@ msgstr "Před pokračováním si prosím přečtěte a odsouhlaste následujíc�
 
 # %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 # in the <a> tag.  This should be fixed.
-#: controllers/developers_controller.php:504
-#: controllers/components/validation.php:346
 #: controllers/components/developers.php:625
+#: controllers/components/validation.php:346
+#: controllers/developers_controller.php:504
 #, fuzzy, php-format
 msgid "Please see <a href=\"%s\">this page</a> for reference."
 msgstr "Více informací viz stránka %s."
@@ -5913,15 +5916,15 @@ msgstr "Zvolte prosím akci kontroly."
 msgid "Please select at least one category."
 msgstr "Zvolte prosím alespoň jednu kategorii."
 
-#: controllers/components/editors.php:161
-msgctxt "editor_review_error_no_files"
-msgid "Please select at least one file to review."
-msgstr "Zvolte prosím alespoň jeden soubor ke kontrole."
-
 #: controllers/editors_controller.php:401
 msgctxt "editors_error_review_one_file"
 msgid "Please select at least one file to review."
 msgstr "Zvolte prosím alespoň jeden soubor ke&nbsp;kontrole."
+
+#: controllers/components/editors.php:161
+msgctxt "editor_review_error_no_files"
+msgid "Please select at least one file to review."
+msgstr "Zvolte prosím alespoň jeden soubor ke kontrole."
 
 #: controllers/components/developers.php:75
 msgid "Please select no more than five categories."
@@ -5943,8 +5946,8 @@ msgstr "Považujte prosím tyto informace za důvěrné."
 msgid "Please type what you hear."
 msgstr "Vložte prosím, co jste slyšeli."
 
-#: controllers/developers_controller.php:466
 #: controllers/components/developers.php:285
+#: controllers/developers_controller.php:466
 msgid "Please upload a file."
 msgstr "Nahrajte prosím soubor."
 
@@ -5962,7 +5965,7 @@ msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
 msgstr "Zásuvné moduly"
 
-#: controllers/components/amo.php:734 controllers/addons_controller.php:1280
+#: controllers/addons_controller.php:1280 controllers/components/amo.php:734
 msgctxt "addons_plugins_pagetitle"
 msgid "Plugins"
 msgstr "Zásuvné moduly"
@@ -5979,13 +5982,13 @@ msgstr ""
 "např. Flash, PDF, WMV. Zásuvné moduly na rozdíl od rozšíření nemodifikují "
 "samotný kód aplikace."
 
-#: views/addons/home.thtml:110
-msgctxt "addons_home_browse_popular"
+#: controllers/collections_controller.php:111
+msgctxt "collections_index_li_popular"
 msgid "Popular"
 msgstr "Populární"
 
-#: controllers/collections_controller.php:111
-msgctxt "collections_index_li_popular"
+#: views/addons/home.thtml:110
+msgctxt "addons_home_browse_popular"
 msgid "Popular"
 msgstr "Populární"
 
@@ -6000,7 +6003,7 @@ msgid "Popular Collections"
 msgstr "Populární sbírky"
 
 #: views/elements/amo2009/search.thtml:148 views/elements/search.thtml:146
-#: views/tags/display.thtml:79 views/search/index.thtml:119
+#: views/search/index.thtml:119 views/tags/display.thtml:79
 msgctxt "advanced_search_form_popularity"
 msgid "Popularity"
 msgstr "Popularita"
@@ -6061,28 +6064,29 @@ msgstr ""
 msgid "Preview %s has been deleted successfully."
 msgstr "Náhled %s byl úspěšně smazán."
 
-#: views/developers/previews.thtml:80
-msgctxt "devcp_previews_header_caption"
-msgid "Preview Caption"
-msgstr "Legenda v&nbsp;náhledu"
-
 #: controllers/previews_controller.php:168
 #: controllers/previews_controller.php:277
 msgctxt "devcp_addon_field_preview_caption_displaytitle"
 msgid "Preview Caption"
 msgstr "Ukázka záhlaví"
 
+#: views/developers/previews.thtml:80
+msgctxt "devcp_previews_header_caption"
+msgid "Preview Caption"
+msgstr "Legenda v&nbsp;náhledu"
+
 #: views/previews/add.thtml:54
 msgid "Preview File"
 msgstr "Soubor náhledu"
 
 # %s is the add-on name
-#: views/elements/collections_interactive_addon.thtml:62
-#: views/elements/amo2009/results_addon.thtml:77
-#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/addons/browse_thumbs.thtml:107 views/addons/category_landing.thtml:87
 #: views/elements/addon_discussionheader.thtml:62
-#: views/elements/addon_listitem.thtml:67 views/elements/feature.thtml:84
-#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:107
+#: views/elements/addon_listitem.thtml:67
+#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/elements/amo2009/results_addon.thtml:77
+#: views/elements/collections_interactive_addon.thtml:62
+#: views/elements/feature.thtml:84
 #, php-format
 msgid "Preview Image of %s"
 msgstr "Náhledy doplňku %s"
@@ -6117,13 +6121,13 @@ msgstr "Náhledy"
 msgid "Print"
 msgstr "Print"
 
-#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
-msgctxt "footer_privacy_policy"
+#: views/editors/review.thtml:285
+msgctxt "editors_review_header_privacy"
 msgid "Privacy Policy"
 msgstr "Zásady ochrany soukromí"
 
-#: views/editors/review.thtml:285
-msgctxt "editors_review_header_privacy"
+#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
+msgctxt "footer_privacy_policy"
 msgid "Privacy Policy"
 msgstr "Zásady ochrany soukromí"
 
@@ -6162,28 +6166,28 @@ msgstr "Kvůli kontrole doplňku %1$s je požadováno více informací"
 msgid "Provide a way for users to make monetary donations to your project."
 msgstr "Poskytnout uživatelům možnost finančně přispět vašemu projektu."
 
-#: views/elements/header.thtml:76 views/elements/header.thtml:82
-#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
-#: views/sharing_api/addon.thtml:63
-msgctxt "a_header_public"
-msgid "Public"
-msgstr "Veřejné doplňky"
-
-#: views/statistics/settings.thtml:52
-msgctxt "statistics_settings_access_public"
-msgid "Public"
-msgstr "Veřejný"
-
 #: views/pages/js_constants.js.thtml:79 controllers/components/amo.php:199
 #: controllers/components/amo.php:228
 msgctxt "addons_status_public"
 msgid "Public"
 msgstr "veřejné"
 
+#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
+#: views/elements/header.thtml:76 views/elements/header.thtml:82
+#: views/sharing_api/addon.thtml:63
+msgctxt "a_header_public"
+msgid "Public"
+msgstr "Veřejné doplňky"
+
 #: views/developers/addon_status.thtml:64
 msgctxt "devcp_addon_status_public"
 msgid "Public"
 msgstr "veřejný"
+
+#: views/statistics/settings.thtml:52
+msgctxt "statistics_settings_access_public"
+msgid "Public"
+msgstr "Veřejný"
 
 #: views/developers/addon_status.thtml:117
 msgid "Public Nomination Criteria"
@@ -6209,15 +6213,15 @@ msgstr "RDF Parser error: the file contained a duplicate element: %s"
 msgid "Rated %s out of 5 stars"
 msgstr "Hodnoceno %s z&nbsp;5 hvězdiček"
 
-#: views/elements/amo2009/addons/list_options.thtml:48
 #: views/elements/addon_list_options.thtml:48
+#: views/elements/amo2009/addons/list_options.thtml:48
 msgctxt "list_sortby_rating"
 msgid "Rating"
 msgstr "Hodnocení"
 
-#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
-#: views/tags/display.thtml:78 views/search/index.thtml:118
 #: views/addons/display.thtml:181 views/addons/display.thtml:338
+#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
+#: views/search/index.thtml:118 views/tags/display.thtml:78
 msgctxt "advanced_search_form_rating"
 msgid "Rating"
 msgstr "Hodnocení"
@@ -6247,8 +6251,8 @@ msgstr "Právě aktualizované doplňky"
 msgid "Recently Viewed"
 msgstr "Nedávno přidané"
 
-#: views/addons/searchengines.thtml:57 views/addons/themes_landing.thtml:54
-#: views/addons/home.thtml:108
+#: views/addons/home.thtml:108 views/addons/searchengines.thtml:57
+#: views/addons/themes_landing.thtml:54
 msgid "Recommended"
 msgstr "Doporučené"
 
@@ -6263,15 +6267,15 @@ msgstr "Doporučované doplňky"
 msgid "Refine Results"
 msgstr "Zpřesnit výsledky"
 
-#: views/elements/header.thtml:158
-msgctxt "header_navlink_register"
-msgid "Register"
-msgstr "Registrace"
-
 #: views/users/register.thtml:113
 msgctxt "user_form_submit_register"
 msgid "Register"
 msgstr "Založit účet"
+
+#: views/elements/header.thtml:158
+msgctxt "header_navlink_register"
+msgid "Register"
+msgstr "Registrace"
 
 #: views/statistics/index.thtml:52
 #, fuzzy
@@ -6282,15 +6286,15 @@ msgstr "Registered Users"
 msgid "Related Collections"
 msgstr "Obdobné sbírky"
 
-#: views/developers/versions_edit.thtml:182
-msgctxt "devcp_versions_edit_transbox_releasenotes_name"
-msgid "Release Notes"
-msgstr "Poznámky v&nbsp;vydání"
-
 #: views/addons/display.thtml:369
 msgctxt "addons_display_release_notes"
 msgid "Release Notes"
 msgstr "Poznámky k vydání"
+
+#: views/developers/versions_edit.thtml:182
+msgctxt "devcp_versions_edit_transbox_releasenotes_name"
+msgid "Release Notes"
+msgstr "Poznámky v&nbsp;vydání"
 
 #: views/users/login.thtml:93
 msgid "Remember me on this computer"
@@ -6304,14 +6308,14 @@ msgstr "Kontrola na vzdálená volání v JavaScriptu"
 msgid "Remote Loading Check"
 msgstr "Kontrola na vzdálené načítání"
 
-# Alt text to remove tag (verb)
-#: views/elements/addon_tags.thtml:63
-msgctxt "tags_alt_remove_tag"
+#: views/collections/edit.thtml:261
+msgctxt "collections_edit_addons_listitem_remove"
 msgid "Remove"
 msgstr "Odebrat"
 
-#: views/collections/edit.thtml:261
-msgctxt "collections_edit_addons_listitem_remove"
+# Alt text to remove tag (verb)
+#: views/elements/addon_tags.thtml:63
+msgctxt "tags_alt_remove_tag"
 msgid "Remove"
 msgstr "Odebrat"
 
@@ -6319,15 +6323,15 @@ msgstr "Odebrat"
 msgid "Remove Application"
 msgstr "Odebrat aplikaci"
 
-#: views/pages/js_constants.js.thtml:92
-msgctxt "devcp_js_img_remove_compat"
-msgid "Remove Application Compatibility"
-msgstr "Odstranit kompatibilitu aplikace"
-
 #: views/developers/versions_edit.thtml:151
 msgctxt "devcp_versions_edit_remove_compat"
 msgid "Remove Application Compatibility"
 msgstr "Odebrat kompatibilní aplikace"
+
+#: views/pages/js_constants.js.thtml:92
+msgctxt "devcp_js_img_remove_compat"
+msgid "Remove Application Compatibility"
+msgstr "Odstranit kompatibilitu aplikace"
 
 #: views/pages/js_constants.js.thtml:89
 msgid "Remove Author"
@@ -6353,12 +6357,12 @@ msgstr "Odebrat vlastnost"
 msgid "Remove flags; keep review"
 msgstr "Odstranit hlášení a ponechat recenzi"
 
-#: views/elements/amo2009/collections/js_init.thtml:71
 #: views/elements/amo2009/collections/add_form.thtml:50
+#: views/elements/amo2009/collections/js_init.thtml:71
 msgid "Remove from Favorites"
 msgstr "Odebrat z oblíbených"
 
-#: views/users/edit.thtml:134 views/admin/users_edit.thtml:116
+#: views/admin/users_edit.thtml:116 views/users/edit.thtml:134
 msgid "Remove this picture?"
 msgstr "Odstranit obrázek?"
 
@@ -6394,14 +6398,14 @@ msgstr "Nahradit náhled"
 msgid "Replies"
 msgstr "Odpovědi"
 
-# a noun: shown in an add-on's editor review history
-#: views/elements/developers/editors_review_history_item.thtml:92
-msgctxt "editors_review_history_info_reply"
+#: views/reviews/display.thtml:76
+msgctxt "addon_review_author_reply_link"
 msgid "Reply"
 msgstr "Odpovědět"
 
-#: views/reviews/display.thtml:76
-msgctxt "addon_review_author_reply_link"
+# a noun: shown in an add-on's editor review history
+#: views/elements/developers/editors_review_history_item.thtml:92
+msgctxt "editors_review_history_info_reply"
 msgid "Reply"
 msgstr "Odpovědět"
 
@@ -6494,13 +6498,13 @@ msgstr "Komentář kontroly"
 msgid "Review Guidelines"
 msgstr "Příručka recenzenta"
 
-#: views/elements/developers/editorsmenu.thtml:61
-msgctxt "editorcp_menu_reviewlog_link"
+#: views/editors/reviewlog.thtml:42
+msgctxt "editorcp_reviewlog_page_heading"
 msgid "Review Log"
 msgstr "Záznam kontroly"
 
-#: views/editors/reviewlog.thtml:42
-msgctxt "editorcp_reviewlog_page_heading"
+#: views/elements/developers/editorsmenu.thtml:61
+msgctxt "editorcp_menu_reviewlog_link"
 msgid "Review Log"
 msgstr "Záznam kontroly"
 
@@ -6535,7 +6539,7 @@ msgid "Reviews Created"
 msgstr "Reviews Created"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:56 views/reviews/display.thtml:55
+#: views/reviews/display.thtml:55 views/reviews/flag.thtml:56
 #: views/reviews/review_added.thtml:50
 #, php-format
 msgctxt "reviews_header"
@@ -6571,9 +6575,9 @@ msgstr "Running test..."
 msgid "SQL"
 msgstr "SQL"
 
+#: views/api/api_addon.thtml:57 views/api/collections_feed.thtml:77
 #: views/elements/header.thtml:58 views/elements/header.thtml:75
-#: views/elements/header.thtml:80 views/api/api_addon.thtml:57
-#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:65
+#: views/elements/header.thtml:80 views/sharing_api/addon.thtml:65
 msgctxt "a_header_sandbox"
 msgid "Sandbox"
 msgstr "Pískoviště"
@@ -6955,7 +6959,7 @@ msgstr ""
 # %2$s is a number
 # %3$s is a number
 # %4$s is a word (the add-on is tagged with it)
-#: views/tags/display.thtml:53 views/search/index.thtml:81
+#: views/search/index.thtml:81 views/tags/display.thtml:53
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
 msgstr ""
@@ -6966,7 +6970,7 @@ msgstr ""
 msgid "Sign up for PayPal"
 msgstr "Přihlásit se k PayPal"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 #, php-format
 msgid "Since %1$s"
 msgstr "Od %1$s"
@@ -7058,17 +7062,17 @@ msgstr ""
 "Je nám líto, ale váš prohlížeč nepodporuje instalaci vyhledávacích modulů."
 
 #: views/elements/amo2009/search.thtml:254 views/elements/search.thtml:231
-#: views/tags/display.thtml:73 views/search/index.thtml:112
+#: views/search/index.thtml:112 views/tags/display.thtml:73
 msgid "Sort By"
 msgstr "Seřadit dle"
 
-#: views/elements/amo2009/collections/sort_form.thtml:48
 #: views/collections/detail.thtml:132
+#: views/elements/amo2009/collections/sort_form.thtml:48
 msgid "Sort by"
 msgstr "Řadit dle"
 
-#: views/elements/amo2009/addons/list_options.thtml:84
 #: views/elements/addon_list_options.thtml:98
+#: views/elements/amo2009/addons/list_options.thtml:84
 msgid "Sort by:"
 msgstr "Řazení:"
 
@@ -7142,15 +7146,15 @@ msgstr ""
 msgid "Statistics"
 msgstr "Statistiky"
 
+#: views/developers/dashboard.thtml:73
 #: views/elements/developers/actionbar.thtml:44
 #: views/elements/developers/actionbar.thtml:49
-#: views/developers/dashboard.thtml:73
 msgctxt "devcp_actionbar_link_stats"
 msgid "Statistics Dashboard"
 msgstr "Stránka statistik"
 
-#: views/elements/developers/sidebar.thtml:63
 #: views/elements/developers/myaddons.thtml:70
+#: views/elements/developers/sidebar.thtml:63
 msgctxt "devcp_myaddons_statistics_link"
 msgid "Statistics Dashboard"
 msgstr "Stránka statistik"
@@ -7160,16 +7164,16 @@ msgctxt "devcp_editbox_statistics_dashboard"
 msgid "Statistics Dashboard"
 msgstr "Nástěnka statistik"
 
-#: views/statistics/index.thtml:39
-msgctxt "statistics_index_title"
-msgid "Statistics Dashboard"
-msgstr "Stránka statistik"
-
 #: controllers/statistics_controller.php:67
 #: controllers/statistics_controller.php:78
 #: controllers/statistics_controller.php:81
 #: controllers/statistics_controller.php:293
 msgctxt "statistics_pagetitle"
+msgid "Statistics Dashboard"
+msgstr "Stránka statistik"
+
+#: views/statistics/index.thtml:39
+msgctxt "statistics_index_title"
 msgid "Statistics Dashboard"
 msgstr "Stránka statistik"
 
@@ -7227,24 +7231,24 @@ msgctxt "editors_review_label_subject"
 msgid "Subject"
 msgstr "Subjekt"
 
-#: views/elements/developers/additem.thtml:76
-msgctxt "devcp_additem_submissionhelp_link"
-msgid "Submission Help"
-msgstr "Nápověda přidání doplňku"
-
 #: controllers/pages_controller.php:109
 msgctxt "page_title_submissionhelp"
 msgid "Submission Help"
 msgstr "Nápověda v&nbsp;odeslání"
 
-#: views/elements/developers/additem.thtml:41
-msgctxt "devcp_additem_sidebar_title"
+#: views/elements/developers/additem.thtml:76
+msgctxt "devcp_additem_submissionhelp_link"
+msgid "Submission Help"
+msgstr "Nápověda přidání doplňku"
+
+#: views/elements/developers/myaddons.thtml:69
+#: views/elements/developers/sidebar.thtml:62
+msgctxt "devcp_myaddons_submitaddon_link"
 msgid "Submit Add-on"
 msgstr "Přidání doplňku"
 
-#: views/elements/developers/sidebar.thtml:62
-#: views/elements/developers/myaddons.thtml:69
-msgctxt "devcp_myaddons_submitaddon_link"
+#: views/elements/developers/additem.thtml:41
+msgctxt "devcp_additem_sidebar_title"
 msgid "Submit Add-on"
 msgstr "Přidání doplňku"
 
@@ -7412,8 +7416,8 @@ msgstr "Byl dosažen maximální počet štítků"
 msgid "Tag removed"
 msgstr "Štítek odstraněn"
 
-#: views/elements/developers/editbox.thtml:48
-msgctxt "devcp_editbox_tags"
+#: views/addons/display.thtml:473
+msgctxt "tags_header_tags_title"
 msgid "Tags"
 msgstr "Štítky"
 
@@ -7422,8 +7426,8 @@ msgctxt "search_filter_tags_header"
 msgid "Tags"
 msgstr "Štítky"
 
-#: views/addons/display.thtml:473
-msgctxt "tags_header_tags_title"
+#: views/elements/developers/editbox.thtml:48
+msgctxt "devcp_editbox_tags"
 msgid "Tags"
 msgstr "Štítky"
 
@@ -7431,9 +7435,9 @@ msgstr "Štítky"
 msgid "Target Locale"
 msgstr "Cílová lokalizace"
 
-#: views/editors/performance_table.thtml:119
 #: views/editors/performance_charts.thtml:71
 #: views/editors/performance_charts.thtml:96
+#: views/editors/performance_table.thtml:119
 msgid "Team Average"
 msgstr "Průměr týmu"
 
@@ -7534,14 +7538,14 @@ msgstr "Skupina byla uložena"
 msgid "The Group with id %s was deleted"
 msgstr "Skupina s&nbsp;ID %s byla smazána"
 
-#: controllers/components/validation.php:276
 #: controllers/components/developers.php:555
+#: controllers/components/validation.php:276
 msgid "The ID of this add-on is already used by an application."
 msgstr "Id tohoto doplňku je již používáno aplikací."
 
 # %s is a string
-#: controllers/components/validation.php:271
 #: controllers/components/developers.php:550
+#: controllers/components/validation.php:271
 #, php-format
 msgid "The ID of this add-on is invalid: %s"
 msgstr "Id doplňku je neplatné: %s"
@@ -7733,14 +7737,14 @@ msgid "The file contains a global variable: %s"
 msgstr "The file contains a global variable: %s"
 
 # %s is an error message from the parser.
-#: controllers/components/validation.php:251
 #: controllers/components/developers.php:530
+#: controllers/components/validation.php:251
 #, php-format
 msgid "The following error occurred while parsing install.rdf: %s"
 msgstr "Pří zpracovávání souboru install.rdf nastaly následující chyby: %s"
 
-#: controllers/components/validation.php:356
 #: controllers/components/developers.php:635
+#: controllers/components/validation.php:356
 msgid "The following errors were found in install.rdf:"
 msgstr "V souboru install.rdf byly nalezeny následujícící chyby:"
 
@@ -7802,8 +7806,8 @@ msgstr ""
 msgid "The password reset link was sent to your email address."
 msgstr "Odkaz pro obnovení hesla vám byl odeslán e-mailem."
 
-#: views/users/pwreset.thtml:79 views/users/register.thtml:75
-#: views/users/edit.thtml:226
+#: views/users/edit.thtml:226 views/users/pwreset.thtml:79
+#: views/users/register.thtml:75
 msgid "The passwords did not match."
 msgstr "Hesla nesouhlasí."
 
@@ -7869,8 +7873,8 @@ msgstr ""
 "Nahrané číslo verze (%1$s) již u tohoto doplňku existuje. Pokud se snažíte "
 "k&nbsp;této verzi přidat další soubor, <a href=\"%2$s\">klepněte zde</a>."
 
-#: controllers/components/validation.php:291
 #: controllers/components/developers.php:570
+#: controllers/components/validation.php:291
 msgid ""
 "The version of this add-on is invalid: please see the <a href=\"http://"
 "developer.mozilla.org/en/docs/Toolkit_version_format\">specification</a>"
@@ -7878,8 +7882,8 @@ msgstr ""
 "Verze doplňku je neplatná: platné verze viz <a href=\"http://developer."
 "mozilla.org/en/docs/Toolkit_version_format\">specifikace</a>"
 
-#: controllers/components/validation.php:286
 #: controllers/components/developers.php:565
+#: controllers/components/validation.php:286
 msgid "The version of this add-on is invalid: versions cannot contain spaces."
 msgstr "Verze doplňku je neplatná: verze nesmí obsahovat mezery."
 
@@ -7917,7 +7921,7 @@ msgid "Themes"
 msgstr "Motivy vzhledu"
 
 # %1 is the queue mode
-#: views/editors/queue.thtml:189 views/admin/flagged_queue.thtml:89
+#: views/admin/flagged_queue.thtml:89 views/editors/queue.thtml:189
 msgid "There are currently no add-ons of this type to review."
 msgstr "V současnosti nejsou ke kontrole dostupné žádné doplňky."
 
@@ -7930,8 +7934,8 @@ msgid "There are currently no reviews in moderation."
 msgstr "V současnosti nejsou žádné požadavky na kontrolu."
 
 #: views/collections/add.thtml:55 views/collections/edit.thtml:89
-#: views/users/register.thtml:54 views/users/edit.thtml:74
-#: views/reviews/add.thtml:70 controllers/groups_controller.php:80
+#: views/reviews/add.thtml:70 views/users/edit.thtml:74
+#: views/users/register.thtml:54 controllers/groups_controller.php:80
 #: controllers/groups_controller.php:102
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr ""
@@ -8009,8 +8013,8 @@ msgstr ""
 "Tyto verze jsou nabízeny především pro porovnání a pro testovací účely. Pro "
 "běžné používání doporučujeme mít nainstalovánu vždy nejnovější verzi doplňku."
 
-#: views/users/register.thtml:100 views/users/edit.thtml:122
-#: views/admin/users_edit.thtml:109
+#: views/admin/users_edit.thtml:109 views/users/edit.thtml:122
+#: views/users/register.thtml:100
 msgid ""
 "This URL has an invalid format. Valid URLs look like http://example.com/"
 "my_page."
@@ -8084,17 +8088,17 @@ msgstr "Tato stránka je v&nbsp;současnosti <b>soukromá</b>."
 msgid "This dashboard is currently <b>public</b>."
 msgstr "Tato stránka je v&nbsp;současnosti <b>veřejná</b>."
 
-#: views/users/register.thtml:65 views/users/edit.thtml:233
+#: views/users/edit.thtml:233 views/users/register.thtml:65
 #: controllers/users_controller.php:699
 msgid "This email address is already taken by another user."
 msgstr "Tuto e-mailovou adresu již používá jiný uživatel."
 
-#: views/users/pwreset.thtml:74 views/users/register.thtml:70
-#: views/users/register.thtml:80 views/users/register.thtml:86
+#: views/admin/users_edit.thtml:78 views/admin/users_edit.thtml:83
+#: views/reviews/add.thtml:80 views/reviews/add.thtml:104
 #: views/users/edit.thtml:98 views/users/edit.thtml:104
-#: views/users/edit.thtml:235 views/admin/users_edit.thtml:78
-#: views/admin/users_edit.thtml:83 views/reviews/add.thtml:80
-#: views/reviews/add.thtml:104
+#: views/users/edit.thtml:235 views/users/pwreset.thtml:74
+#: views/users/register.thtml:70 views/users/register.thtml:80
+#: views/users/register.thtml:86
 msgid "This field must not be empty."
 msgstr "Tato položka nesmí být prázdná."
 
@@ -8120,12 +8124,12 @@ msgstr "Toto je kandidát na vydání doplňku"
 msgid "This is a site-specific add-on"
 msgstr "Toto je doplněk pro specifický server"
 
-#: views/users/register.thtml:65 views/users/edit.thtml:237
+#: views/users/edit.thtml:237 views/users/register.thtml:65
 msgid "This is not a valid email address."
 msgstr "Tato e-mailová adresa není platná."
 
-#: views/users/register.thtml:91 views/users/edit.thtml:109
-#: views/admin/users_edit.thtml:88
+#: views/admin/users_edit.thtml:88 views/users/edit.thtml:109
+#: views/users/register.thtml:91
 msgid "This nickname is already taken."
 msgstr "Tuto přezdívku používá již jiný uživatel."
 
@@ -8282,7 +8286,7 @@ msgstr "Nejlepší kategorie uživatelů"
 msgid "Total"
 msgstr "Celkem"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:155
+#: views/statistics/addon.thtml:155 views/statistics/rss/summary.thtml:40
 msgid "Total Downloads"
 msgstr "Celkový počet stažení"
 
@@ -8426,11 +8430,12 @@ msgid "Updated"
 msgstr "Aktualizováno"
 
 # %s is a date in the _('date') format
+#: views/addons/browse_thumbs.thtml:119
+#: views/elements/addon_listitem.thtml:122
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:100
 #: views/elements/amo2009/results_addon.thtml:119
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/addon_listitem.thtml:122 views/elements/feature.thtml:106
-#: views/addons/browse_thumbs.thtml:119
+#: views/elements/feature.thtml:106
 #, php-format
 msgid "Updated %s"
 msgstr "Aktualizováno dne %s"
@@ -8465,7 +8470,7 @@ msgstr "Nahrát náhled: "
 msgid "Upload Your File"
 msgstr "Nahrání souboru"
 
-#: views/users/edit.thtml:137 views/admin/users_edit.thtml:118
+#: views/admin/users_edit.thtml:118 views/users/edit.thtml:137
 msgid "Upload a new picture?"
 msgstr "Nahrát nový obrázek?"
 
@@ -8548,11 +8553,11 @@ msgstr "Uživatelský profil"
 msgid "User not found"
 msgstr "Uživatel nebyl nalezen"
 
-#: views/users/pwreset.thtml:54 controllers/users_controller.php:197
-#: controllers/users_controller.php:276 controllers/users_controller.php:685
-#: controllers/users_controller.php:744 controllers/users_controller.php:914
-#: controllers/collections_controller.php:1008
+#: views/users/pwreset.thtml:54 controllers/collections_controller.php:1008
 #: controllers/collections_controller.php:1018
+#: controllers/users_controller.php:197 controllers/users_controller.php:276
+#: controllers/users_controller.php:685 controllers/users_controller.php:744
+#: controllers/users_controller.php:914
 msgid "User not found!"
 msgstr "Uživatel nenalezen!"
 
@@ -8623,22 +8628,22 @@ msgstr "Kontrola je dočasně nedostupná. Zkuste to prosím později."
 msgid "Ver"
 msgstr "Verze"
 
-#: views/developers/versions.thtml:56 views/addons/display.thtml:144
+#: views/addons/display.thtml:144 views/developers/versions.thtml:56
 msgid "Version"
 msgstr "Verze"
-
-# %s is the version of the add-on.  Example:  3.2a1
-#: views/elements/amo2009/addons/version_detail.thtml:51
-#: views/elements/addon_version_detail.thtml:51
-#, php-format
-msgctxt "addon_display_header_version"
-msgid "Version %s"
-msgstr "Verze %s"
 
 # %s is a version number.  Example:  3.0
 #: views/developers/versions.thtml:66
 #, php-format
 msgctxt "devcp_details_version"
+msgid "Version %s"
+msgstr "Verze %s"
+
+# %s is the version of the add-on.  Example:  3.2a1
+#: views/elements/addon_version_detail.thtml:51
+#: views/elements/amo2009/addons/version_detail.thtml:51
+#, php-format
+msgctxt "addon_display_header_version"
 msgid "Version %s"
 msgstr "Verze %s"
 
@@ -8674,13 +8679,13 @@ msgstr "Verze/soubor"
 msgid "Versions"
 msgstr "Verze"
 
-#: views/elements/developers/editbox.thtml:64
-msgctxt "devcp_editbox_versions"
+#: views/developers/dashboard.thtml:82
+msgctxt "devcp_dashboard_versions"
 msgid "Versions and Files"
 msgstr "Verze a soubory"
 
-#: views/developers/dashboard.thtml:82
-msgctxt "devcp_dashboard_versions"
+#: views/elements/developers/editbox.thtml:64
+msgctxt "devcp_editbox_versions"
 msgid "Versions and Files"
 msgstr "Verze a soubory"
 
@@ -8688,8 +8693,8 @@ msgstr "Verze a soubory"
 msgid "View All Collections"
 msgstr "Zobrazit všechny sbírky"
 
-#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/feature.thtml:95
 msgid "View Author's Profile"
 msgstr "Zobrazí profil autora"
@@ -8764,14 +8769,14 @@ msgid "View all top rated"
 msgstr "Zobrazit všechny nejlépe hodnocené"
 
 # %1$s and %2$s are full <input> tags for dates
+#: views/admin/logs.thtml:46 views/editors/logs.thtml:45
 #: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
-#: views/editors/logs.thtml:45 views/admin/logs.thtml:46
 #, php-format
 msgid "View entries between %1$s and %2$s"
 msgstr "Zobrazit položky mezi %s a %s"
 
-#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/amo2009/homepage_addon.thtml:129
+#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/feature.thtml:127
 msgid "View more from"
 msgstr "Zobrazit více z&nbsp;kategorie"
@@ -8825,8 +8830,8 @@ msgstr ""
 "Pro zobrazení grafu toho doplňku nejsou žádná data. Zkuste to prosím za pár "
 "dní."
 
-#: views/users/register.thtml:98 views/users/edit.thtml:120
-#: views/admin/users_edit.thtml:107
+#: views/admin/users_edit.thtml:107 views/users/edit.thtml:120
+#: views/users/register.thtml:98
 msgid "Website URL"
 msgstr "Adresa webové stránky"
 
@@ -8919,8 +8924,8 @@ msgstr "Co dalšího u doplňku plánujete"
 msgid "What's next for %1$s"
 msgstr "Co je dalšího u %1$s plánováno"
 
-#: views/elements/amo2009/contribution.thtml:92 views/addons/display.thtml:387
-#: views/addons/display.thtml:530
+#: views/addons/display.thtml:387 views/addons/display.thtml:530
+#: views/elements/amo2009/contribution.thtml:92
 msgctxt "addons_display_a_license_what"
 msgid "What's this?"
 msgstr "Co to je?"
@@ -9027,8 +9032,10 @@ msgstr "Chybné uživatelské jméno a nebo heslo!"
 # This is a placeholder for a date in the Year-Month-Day format.  This is 
 # NOT a php format string.  Dates going into this box need to remain in the
 # YYYY-MM-DD format so please localize that if necessary or just leave as is.
+#: controllers/admin_controller.php:1733
 #: controllers/editors_controller.php:658
 #: controllers/editors_controller.php:1758
+#: controllers/editors_controller.php:1814
 msgid "YYYY-MM-DD"
 msgstr "YYYY-MM-DD"
 
@@ -9123,11 +9130,11 @@ msgstr ""
 msgid "You cannot review your own add-on."
 msgstr "Nelze recenzovat svůj vlastní doplněk."
 
-#: controllers/statistics_controller.php:202
-#: controllers/statistics_controller.php:432
 #: controllers/previews_controller.php:108
 #: controllers/previews_controller.php:211
 #: controllers/previews_controller.php:312
+#: controllers/statistics_controller.php:202
+#: controllers/statistics_controller.php:432
 msgid "You do not have access to that add-on."
 msgstr "K tomuto doplňku nemáte přístup."
 
@@ -9175,8 +9182,8 @@ msgstr ""
 msgid "You must give your collection a name."
 msgstr "Vaši sbírku musíte pojmenovat."
 
-#: controllers/components/validation.php:350
 #: controllers/components/developers.php:629
+#: controllers/components/validation.php:350
 msgid "You must have at least one valid Mozilla target application."
 msgstr "Je nutné určit alespoň jednu platnou cílovou aplikaci Mozilla."
 
@@ -9281,8 +9288,8 @@ msgstr ""
 "nahrávat jeho aktualizace bez kontroly redaktora."
 
 # %1$s is a URL
-#: controllers/components/validation.php:281
 #: controllers/components/developers.php:560
+#: controllers/components/validation.php:281
 #, php-format
 msgid ""
 "Your add-on is attempting to use a GUID that has been blocked.  Please <a "
@@ -9494,17 +9501,19 @@ msgstr[0] "a %1$s další sbírka"
 msgstr[1] "a %1$s další sbírky"
 msgstr[2] "a %1$s dalších sbírek"
 
-#: views/elements/amo2009/results_addon.thtml:91
-#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/addons/category_landing.thtml:66 views/addons/display.thtml:64
+#: views/addons/home.thtml:157 views/addons/policy.thtml:57
 #: views/elements/addon_discussionheader.thtml:83
-#: views/elements/addon_listitem.thtml:109 views/elements/feature.thtml:95
-#: views/addons/category_landing.thtml:66 views/addons/policy.thtml:57
-#: views/addons/display.thtml:64 views/addons/home.thtml:157
+#: views/elements/addon_listitem.thtml:109
+#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
+#: views/elements/feature.thtml:95
 msgid "by"
 msgstr "od"
 
+#: views/addons/display.thtml:305
 #: views/elements/amo2009/separated_list_items.thtml:106
-#: views/addons/display.thtml:305 views/reviews/display.thtml:72
+#: views/reviews/display.thtml:72
 #, php-format
 msgid "by %1$s on %2$s"
 msgstr "uživatelem %1$s dne %2$s"
@@ -9528,23 +9537,14 @@ msgid "close"
 msgstr "zavřít"
 
 # %1$s is a comma-separated list of author names
-#: views/elements/amo2009/separated_list_items.thtml:72
 #: views/elements/amo2009/collection_listing_item.thtml:84
+#: views/elements/amo2009/separated_list_items.thtml:72
 #, php-format
 msgid "created by %1$s"
 msgstr "vytvořili %1$s"
 
-#: views/addons/display.thtml:362
-msgid "Detailed Review"
-msgstr "Podrobná recenze"
-
-#: controllers/admin_controller.php:1733
-msgctxt "YYYY-MM-DD"
-msgid "editors_date_filter_placeholder"
-msgstr ""
-
-#: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:348
-#: views/elements/feature.thtml:89
+#: views/elements/amo2009/install.thtml:348 views/elements/feature.thtml:89
+#: views/helpers/addons_html.php:571
 msgid "experimental"
 msgstr "experimentální"
 
@@ -9561,18 +9561,18 @@ msgstr "Mac OS X"
 msgid "for Windows"
 msgstr "Windows"
 
-# A small link following each test.  This goes to a help page specific to the test.
-#: views/elements/developers/testresults_group.thtml:58
-msgctxt "devcp_validation_help"
-msgid "help"
-msgstr "nápověda"
-
 # A link after the main header
 #: views/editors/review.thtml:301
 #, fuzzy
 msgctxt "editors_review_header_validation_help"
 msgid "help"
 msgstr "help"
+
+# A small link following each test.  This goes to a help page specific to the test.
+#: views/elements/developers/testresults_group.thtml:58
+msgctxt "devcp_validation_help"
+msgid "help"
+msgstr "nápověda"
 
 # link path to search plugins instructions, relative to devmo
 #: views/addons/searchengines.thtml:88
@@ -9610,15 +9610,15 @@ msgstr "další &raquo;"
 msgid "no"
 msgstr "ne"
 
-#: views/editors/review.thtml:121
-msgctxt "editors_review_list_none"
-msgid "none"
-msgstr "nic"
-
 #: controllers/statistics_controller.php:299
 msgctxt "statistics_js_dropdowns_none"
 msgid "none"
 msgstr "žádný"
+
+#: views/editors/review.thtml:121
+msgctxt "editors_review_list_none"
+msgid "none"
+msgstr "nic"
 
 # This is a separator between the graphical [contribute] button and the 
 # graphical [download now] button
@@ -9643,9 +9643,9 @@ msgstr " a nebo zvolte jiný doplněk"
 msgid "others"
 msgstr "další"
 
+#: views/elements/addon_list_options.thtml:94
 #: views/elements/amo2009/addons/list_options.thtml:103
 #: views/elements/pagination.thtml:67
-#: views/elements/addon_list_options.thtml:94
 msgid "per page"
 msgstr "na stránku"
 
@@ -9653,7 +9653,7 @@ msgstr "na stránku"
 msgid "previous"
 msgstr "předchozí"
 
-#: views/helpers/addons_html.php:573 views/elements/amo2009/install.thtml:346
+#: views/elements/amo2009/install.thtml:346 views/helpers/addons_html.php:573
 msgid "recommended"
 msgstr "doporučené"
 
@@ -9674,8 +9674,8 @@ msgstr "hledat doplňky"
 msgid "search for collections"
 msgstr "hledání sbírek"
 
-#: views/elements/amo2009/addons/list_options.thtml:108
 #: views/elements/addon_list_options.thtml:105
+#: views/elements/amo2009/addons/list_options.thtml:108
 msgid "show experimental add-ons"
 msgstr "Experimentální doplňky"
 
@@ -9687,11 +9687,12 @@ msgstr "až"
 msgid "version"
 msgstr "Verze"
 
-#: views/elements/amo2009/results_addon.thtml:97
-#: views/elements/amo2009/homepage_addon.thtml:108
-#: views/elements/addon_listitem.thtml:115 views/elements/feature.thtml:101
-#: views/addons/category_landing.thtml:157
 #: views/addons/browse_thumbs.thtml:126
+#: views/addons/category_landing.thtml:157
+#: views/elements/addon_listitem.thtml:115
+#: views/elements/amo2009/homepage_addon.thtml:108
+#: views/elements/amo2009/results_addon.thtml:97
+#: views/elements/feature.thtml:101
 msgid "weekly downloads"
 msgstr "staženo týdně"
 
@@ -9732,6 +9733,10 @@ msgstr "ano"
 #~ msgctxt "statistics_index_addons_downloaded"
 #~ msgid "Add-ons Downloaded"
 #~ msgstr "Add-ons Downloaded"
+
+#, fuzzy
+#~ msgid "Add-ons in Use"
+#~ msgstr "Add-ons in Use"
 
 #~ msgctxt "editors_review_history_pending_adminreview"
 #~ msgid "Admin Review"

@@ -60,8 +60,8 @@ msgstr[0] "このコレクションには %1$s 個のアドオンが含まれて
 msgstr[1] "このコレクションには %1$s 個のアドオンが含まれています"
 
 # %1$s is a number
-#: views/helpers/localization.php:65 views/developers/versions_edit.thtml:95
-#: views/addons/dictionaries.thtml:92
+#: views/addons/dictionaries.thtml:92 views/developers/versions_edit.thtml:95
+#: views/helpers/localization.php:65
 #, php-format
 msgid "%1$s KB"
 msgstr "%1$s KB"
@@ -79,7 +79,7 @@ msgid "%1$s Version History"
 msgstr "%1$s のバージョン履歴"
 
 # %1 is the add-on count, %2 the category name
-#: views/addons/browse_thumbs.thtml:92 views/addons/browse.thtml:60
+#: views/addons/browse.thtml:60 views/addons/browse_thumbs.thtml:92
 #, php-format
 msgid "%1$s add-on"
 msgid_plural "%1$s add-ons"
@@ -364,7 +364,7 @@ msgstr "%1$s が %2$s へアクセスするための再認証に失敗しまし�
 
 # %1$s is the add-on name
 # %2$s is the collection name, linked to the collection's page
-#: views/pages/js_constants.js.thtml:101 views/addons/display.thtml:70
+#: views/addons/display.thtml:70 views/pages/js_constants.js.thtml:101
 #, php-format
 msgid "%1$s has been added to the %2$s collection."
 msgstr "%1$s は %2$s コレクションへ追加されました。"
@@ -383,18 +383,18 @@ msgstr "%1$s はお気に入りのコレクションから削除されました�
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:324
-#: controllers/components/validation.php:336
 #: controllers/components/developers.php:603
 #: controllers/components/developers.php:615
+#: controllers/components/validation.php:324
+#: controllers/components/validation.php:336
 #, php-format
 msgid "%1$s is not a valid version for %2$s"
 msgstr "%s は %s のバージョンには使用できません"
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:327
 #: controllers/components/developers.php:606
+#: controllers/components/validation.php:327
 #, php-format
 msgid "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
 msgstr ""
@@ -407,7 +407,7 @@ msgstr ""
 msgid "%1$s is not available for %2$s."
 msgstr "%1$s は %2$s では利用できません"
 
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, php-format
 msgid "%1$s on %2$s"
 msgstr "%1$s (%2$s 現在)"
@@ -456,9 +456,9 @@ msgid "%1$s removed feature %2$s"
 msgstr "%1$s が機能 %2$s を削除しました"
 
 # %1$s is a number
-#: views/elements/amo2009/reviews.thtml:58
-#: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
 #: views/addons/browse_thumbs.thtml:132
+#: views/elements/addon_listitem.thtml:112
+#: views/elements/amo2009/reviews.thtml:58 views/elements/feature.thtml:99
 #, php-format
 msgid "%1$s review"
 msgid_plural "%1$s reviews"
@@ -520,11 +520,11 @@ msgid ""
 "further action.\\n\\nThanks,\\n-- %2$s Add-ons Staff"
 msgstr ""
 "%2$s Add-ons の登録パスワード変更\\n\\naddons.mozilla.org に登録されているア"
-"カウントのパスワード変更リクエストを受け付けました。パスワードを変更するには"
-"、以下のリンクをクリックするか、リンクの文字列全体をブラウザのロケーションバ"
-"ーに貼り付けてください。\\n\\n%1$s\\n\\nリクエストをした覚えがない場合は、こ"
-"のメールは無視してください。\\n\\nご利用ありがとうございます。\\n-- %2$s Add-"
-"ons スタッフ"
+"カウントのパスワード変更リクエストを受け付けました。パスワードを変更するに"
+"は、以下のリンクをクリックするか、リンクの文字列全体をブラウザのロケーション"
+"バーに貼り付けてください。\\n\\n%1$s\\n\\nリクエストをした覚えがない場合は、"
+"このメールは無視してください。\\n\\nご利用ありがとうございます。\\n-- %2$s "
+"Add-ons スタッフ"
 
 #: views/statistics/rss/summary.thtml:68
 msgid "%A, %B %e, %Y"
@@ -532,65 +532,65 @@ msgstr "%Y年 %b %e日 (%a)"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 #: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
+#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 msgid "%A, %b. %e"
 msgstr "%b %e日 (%a)"
 
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
-#: views/elements/collections_interactive_addon.thtml:85
-#: views/elements/amo2009/users/vcard.thtml:92
+#: views/addons/browse_thumbs.thtml:121 views/addons/display.thtml:159
+#: views/addons/display.thtml:307 views/addons/rss/versions.thtml:42
+#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/developers/dashboard.thtml:65 views/developers/versions.thtml:69
+#: views/developers/versions_edit.thtml:208
+#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
+#: views/elements/addon_listitem.thtml:124
+#: views/elements/addon_version_detail.thtml:54
+#: views/elements/amo2009/addons/version_detail.thtml:53
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:102
 #: views/elements/amo2009/results_addon.thtml:119
 #: views/elements/amo2009/separated_list_items.thtml:108
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/amo2009/addons/version_detail.thtml:53
-#: views/elements/addon_version_detail.thtml:54
-#: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
-#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/elements/amo2009/users/vcard.thtml:92
+#: views/elements/collections_interactive_addon.thtml:85
+#: views/elements/feature.thtml:106 views/reviews/add.thtml:63
+#: views/reviews/delete.thtml:54 views/reviews/display.thtml:74
+#: views/reviews/display.thtml:159 views/search/rss/index.thtml:5
 #: views/statistics/index.thtml:108 views/users/info.thtml:108
-#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
-#: views/developers/dashboard.thtml:65
-#: views/developers/versions_edit.thtml:208 views/developers/versions.thtml:69
-#: views/search/rss/index.thtml:5 views/addons/rss/versions.thtml:42
-#: views/addons/display.thtml:159 views/addons/display.thtml:307
-#: views/addons/browse_thumbs.thtml:121 views/reviews/add.thtml:63
-#: views/reviews/display.thtml:74 views/reviews/display.thtml:159
-#: views/reviews/delete.thtml:54 controllers/statistics_controller.php:144
-#: controllers/statistics_controller.php:297
 #: controllers/collections_controller.php:1070
+#: controllers/statistics_controller.php:144
+#: controllers/statistics_controller.php:297
 msgid "%B %e, %Y"
 msgstr "%Y年 %b %e日"
 
 # date and time format string (strftime)
 # http://php.net/strftime
-#: views/elements/addon_version_detail.thtml:53 views/users/edit.thtml:202
-#: views/editors/review.thtml:369 views/developers/discuss.thtml:51
-#: views/developers/discuss.thtml:61 views/admin/addons_status.thtml:57
-#: views/addons/display.thtml:158
+#: views/addons/display.thtml:158 views/admin/addons_status.thtml:57
+#: views/developers/discuss.thtml:51 views/developers/discuss.thtml:61
+#: views/editors/review.thtml:369 views/elements/addon_version_detail.thtml:53
+#: views/users/edit.thtml:202
 msgid "%B %e, %Y, %I:%M %p"
 msgstr "%Y年 %b %e日 %H:%M"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, php-format
 msgid "%b. %e"
 msgstr "%b %e 日"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 msgid "%b. %e, %Y"
 msgstr "%Y年 %b %e日"
 
 # %s is the name of the add-on and the add-on section.  Example:
 #   Some Add-on :: Firefox Add-ons
 # This should not be concatenated in the code and should be fixed.
-#: controllers/tags_controller.php:381 controllers/addons_controller.php:259
-#: controllers/addons_controller.php:389
-#: controllers/addons_controller.php:1584
+#: controllers/addons_controller.php:259 controllers/addons_controller.php:389
+#: controllers/addons_controller.php:1584 controllers/tags_controller.php:381
 #, php-format
 msgid "%s"
 msgstr "%s"
@@ -625,9 +625,9 @@ msgid "%s Preview Manager"
 msgstr "%s のプレビュー画像マネージャ"
 
 # %s is the add-on name.
-#: views/developers/addon_status_nominate.thtml:43
-#: views/developers/addon_status_confirm.thtml:43
 #: views/developers/addon_status.thtml:43
+#: views/developers/addon_status_confirm.thtml:43
+#: views/developers/addon_status_nominate.thtml:43
 #, php-format
 msgid "%s Status"
 msgstr "%s のステータス"
@@ -652,7 +652,7 @@ msgstr "範囲内に %s 件見つかりました"
 
 # %s is a percentage, like '+22.33%'.  It sits next to another number, so
 # the implied meaning is 'percentage change' from the previous stat point.
-#: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:209
+#: views/statistics/addon.thtml:209 views/statistics/rss/summary.thtml:62
 #, php-format
 msgid "%s from last week"
 msgstr "先週からの増減: %s"
@@ -807,22 +807,22 @@ msgstr ""
 "グレード</a> してください"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:45
 #: views/developers/dashboard.thtml:79
+#: views/elements/developers/statsbar.thtml:45
 #, php-format
 msgid "<em>%s</em> Active Daily Users"
 msgstr "1 日のアクティブユーザ: <em>%s</em>"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:41
 #: views/developers/dashboard.thtml:75
+#: views/elements/developers/statsbar.thtml:41
 #, php-format
 msgid "<em>%s</em> Total Downloads"
 msgstr "累計ダウンロード数: <em>%s</em>"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:43
 #: views/developers/dashboard.thtml:77
+#: views/elements/developers/statsbar.thtml:43
 #, php-format
 msgid "<em>%s</em> Weekly Downloads"
 msgstr "週間ダウンロード数: <em>%s</em>"
@@ -833,10 +833,10 @@ msgid ""
 "Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, "
 "and locate/select the file you downloaded and click \"OK\".</li></ol>"
 msgstr ""
-"<ol><li>以下のリンクをクリックしてファイルを保存してください。</li><li>"
-"Mozilla Sunbird の [ツール] メニューから [アドオン] を選択します。</li><li>"
-"[インストール] ボタンをクリックし、ダウンロードしたファイルを見つけて選択した"
-"ら [OK] をクリックします。</li></ol>"
+"<ol><li>以下のリンクをクリックしてファイルを保存してください。</"
+"li><li>Mozilla Sunbird の [ツール] メニューから [アドオン] を選択します。</"
+"li><li>[インストール] ボタンをクリックし、ダウンロードしたファイルを見つけて"
+"選択したら [OK] をクリックします。</li></ol>"
 
 #: views/elements/amo2009/install.thtml:358 views/elements/install.thtml:106
 msgid ""
@@ -844,10 +844,10 @@ msgid ""
 "Thunderbird, open Add-ons from the Tools menu.</li><li>Click the Install "
 "button, and locate/select the file you downloaded and click \"OK\".</li></ol>"
 msgstr ""
-"<ol><li>下のリンクを右クリックして [名前を付けてリンク先を保存] を選択し、フ"
-"ァイルをハードディスクにダウンロードします。</li><li>Thunderbird を開き、[ツ"
-"ール] メニューから [アドオン] を選択します。</li><li>[インストール] ボタンを"
-"クリックして、ダウンロードしたファイルを選択し、[OK] をクリックします。"
+"<ol><li>下のリンクを右クリックして [名前を付けてリンク先を保存] を選択し、"
+"ファイルをハードディスクにダウンロードします。</li><li>Thunderbird を開き、"
+"[ツール] メニューから [アドオン] を選択します。</li><li>[インストール] ボタン"
+"をクリックして、ダウンロードしたファイルを選択し、[OK] をクリックします。"
 
 # %1$s is a URL.
 #: controllers/collections_controller.php:163
@@ -876,9 +876,9 @@ msgstr ""
 "<p>寄付は、あなたのアドオンを金銭的に支援する方法をユーザに提供します。寄付の"
 "設定を行うと、以下のようなことができます。</p><ul><li>アドオンの公開ページで"
 "ユーザに寄付を求める</li><li>クレジットカードもしくは PayPal 口座を利用した寄"
-"付の方法をユーザに提供する</li><li>指定した <a href='https://www.paypal.com/'"
-" target='_blank'>PayPal 口座</a> への寄付の振り込み</li></ul><p>用意はできま"
-"したか？ 以下のボタンをクリックして寄付のお願いを始めましょう。</p>"
+"付の方法をユーザに提供する</li><li>指定した <a href='https://www.paypal."
+"com/' target='_blank'>PayPal 口座</a> への寄付の振り込み</li></ul><p>用意はで"
+"きましたか？ 以下のボタンをクリックして寄付のお願いを始めましょう。</p>"
 
 #: views/developers/addon_edit_profile.thtml:78
 msgid ""
@@ -889,8 +889,8 @@ msgid ""
 msgstr ""
 "<p>開発者プロフィールを利用してユーザに自己紹介をしませんか。</p><ul><li>この"
 "アドオンを作った経緯を説明しましょう。</li><li>今後の開発計画を伝えましょう。"
-"</li><li>あなたの取り組みの認知度を高めましょう。</li></ul><p>開発者プロフィ"
-"ールを作成する用意はできましたか？ 下のボタンをクリックして始めましょう。"
+"</li><li>あなたの取り組みの認知度を高めましょう。</li></ul><p>開発者プロ"
+"フィールを作成する用意はできましたか？ 下のボタンをクリックして始めましょう。"
 
 # %1 is the URL of the support section, %2 for the review guidelines
 #: views/reviews/add.thtml:53
@@ -939,11 +939,11 @@ msgstr ""
 "<p>一般に公開されているアドオンをダウンロード、インストールするだけであれば、"
 "AMO へのユーザ登録は<strong>必要ありません</strong>。</p><p>登録が必要なのは"
 "以下の場合のみです。</p><ul><li>アドオンのレビューを投稿したい場合</li><li>ア"
-"ドオンの開発者が、自分のアドオンをアップロードして AMO に掲載したい場合</li>"
-"</ul><p>ユーザ登録が行われると、入力されたアドレスあてに確認のためのメールが"
-"送られます。そこに書かれた手順に従ってアカウントの確認を行ってください。</p>"
-"<p>ご希望なら、Mozilla の <a href='%1$s'>法的通知</a> と <a href='%2$s'>プラ"
-"イバシーポリシー</a> をご覧いただけます。"
+"ドオンの開発者が、自分のアドオンをアップロードして AMO に掲載したい場合</"
+"li></ul><p>ユーザ登録が行われると、入力されたアドレスあてに確認のためのメール"
+"が送られます。そこに書かれた手順に従ってアカウントの確認を行ってください。</"
+"p><p>ご希望なら、Mozilla の <a href='%1$s'>法的通知</a> と <a href='%2$s'>プ"
+"ライバシーポリシー</a> をご覧いただけます。"
 
 #: views/developers/uploader.thtml:67
 msgid ""
@@ -964,18 +964,18 @@ msgid ""
 msgstr ""
 "<p>Mozilla Add-ons へのアドオンの登録に興味をお持ちいただき、ありがとうござい"
 "ます。Mozilla Add-ons でのアドオンのホスティングは、アドオンの配布を管理する"
-"最も簡単な方法です。このサイトでは以下のような機能を利用できます。</p><ul>"
-"<li>各アドオンには、あなたが提供した情報を含む公開ページが提供されます。ここ"
-"には、アドオンの機能の簡単な要約、より詳しい説明、プレビュー用スクリーンショ"
-"ットなどを掲載できます。</li><li>あなたのアドオンは、サイト全体の検索結果など"
-"に加えて、Firefox のアドオンマネージャにも表示されます。</li><li>ダウンロード"
-"のためのすべてのホスティングが提供され、あなたが新しいバージョンをアップロー"
-"ドしたときには、既存のユーザ向けに自動更新が行われます。</li><li>ユーザの利用"
-"状況に関する詳しい情報を閲覧できる統計ダッシュボードが提供されます。</li>"
-"</ul><p>Mozilla Add-ons のサイトに登録されたアドオンが、これらすべての機能を"
-"利用できるようになるには、エディタによるレビューを受ける必要があります。この"
-"プロセスを始める準備ができていて、既にアップロードするアドオンパッケージをお"
-"持ちなら、下の「スタート」をクリックしてください！</p>"
+"最も簡単な方法です。このサイトでは以下のような機能を利用できます。</"
+"p><ul><li>各アドオンには、あなたが提供した情報を含む公開ページが提供されま"
+"す。ここには、アドオンの機能の簡単な要約、より詳しい説明、プレビュー用スク"
+"リーンショットなどを掲載できます。</li><li>あなたのアドオンは、サイト全体の検"
+"索結果などに加えて、Firefox のアドオンマネージャにも表示されます。</li><li>ダ"
+"ウンロードのためのすべてのホスティングが提供され、あなたが新しいバージョンを"
+"アップロードしたときには、既存のユーザ向けに自動更新が行われます。</li><li>"
+"ユーザの利用状況に関する詳しい情報を閲覧できる統計ダッシュボードが提供されま"
+"す。</li></ul><p>Mozilla Add-ons のサイトに登録されたアドオンが、これらすべて"
+"の機能を利用できるようになるには、エディタによるレビューを受ける必要がありま"
+"す。このプロセスを始める準備ができていて、既にアップロードするアドオンパッ"
+"ケージをお持ちなら、下の「スタート」をクリックしてください！</p>"
 
 # %1$s is a URL.
 # %2$s is a full <a href>.
@@ -1051,12 +1051,12 @@ msgstr ""
 "いたい場合はアドオンのオーナーに連絡を取ってください。"
 
 #: views/developers/addon_edit_authors.thtml:47
-#: views/developers/addon_edit_tags.thtml:46
-#: views/developers/addon_edit_properties.thtml:47
-#: views/developers/addon_status.thtml:46
-#: views/developers/addon_edit_descriptions.thtml:47
-#: views/developers/versions_edit.thtml:47
 #: views/developers/addon_edit_categories.thtml:46
+#: views/developers/addon_edit_descriptions.thtml:47
+#: views/developers/addon_edit_properties.thtml:47
+#: views/developers/addon_edit_tags.thtml:46
+#: views/developers/addon_status.thtml:46
+#: views/developers/versions_edit.thtml:47
 msgid ""
 "<span>Your changes have been saved.</span><br />Please note that some "
 "changes may take several hours to appear in all areas of the website."
@@ -1095,8 +1095,8 @@ msgstr[0] "<strong>%1$s</strong> <span>個のアドオンが利用されてい�
 msgstr[1] "<strong>%1$s</strong> <span>個のアドオンが利用されています</span>"
 
 # %1$s is the count of addons in a collection
-#: views/elements/amo2009/collection_listing_item.thtml:51
 #: views/addons/home.thtml:164
+#: views/elements/amo2009/collection_listing_item.thtml:51
 #, php-format
 msgid "<strong>%1$s</strong> add-on"
 msgid_plural "<strong>%1$s</strong> add-ons"
@@ -1104,11 +1104,11 @@ msgstr[0] "<strong>%1$s</strong> 個のアドオン"
 msgstr[1] "<strong>%1$s</strong> 個のアドオン"
 
 # %1$s is the count of subscribers for a collection
+#: views/addons/home.thtml:168 views/collections/detail.thtml:96
 #: views/elements/amo2009/collection_listing_item.thtml:58
-#: views/collections/detail.thtml:96 views/addons/home.thtml:168
 #, php-format
 msgid "<strong>%1$s</strong> subscriber"
-msgid_plural "<strong>%1$s</strong> subscribers"
+msgid_plural "<strong>%1$s</strong> subscriber"
 msgstr[0] "<strong>%1$s</strong> 人の購読者"
 msgstr[1] "<strong>%1$s</strong> 人の購読者"
 
@@ -1185,7 +1185,7 @@ msgstr ""
 "Mozilla Add-ons のエディタが、あなたのアドオン %1$s のバージョン %2$s に関し"
 "て、より詳しい情報を提供するよう求めました。"
 
-#: views/users/register.thtml:81 views/users/edit.thtml:99
+#: views/users/edit.thtml:99 views/users/register.thtml:81
 msgid "A first name, last name or nickname is required."
 msgstr "名、姓、もしくはニックネームの入力が必要です。"
 
@@ -1218,16 +1218,16 @@ msgstr ""
 "このアドオンのバージョンは既に存在します。置き換えるには、まずファイル %1$s "
 "を削除する必要があります。"
 
+#: controllers/editors_controller.php:520
+msgctxt "editors_syntax_about"
+msgid "About"
+msgstr "ヘルプ"
+
 # Link text for the AMO About page.
 #: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
 msgctxt "footer_a_about"
 msgid "About"
 msgstr "このサイトについて"
-
-#: controllers/editors_controller.php:520
-msgctxt "editors_syntax_about"
-msgid "About"
-msgstr "ヘルプ"
 
 #: views/users/info.thtml:57
 msgid "About Me"
@@ -1237,7 +1237,7 @@ msgstr "自分について"
 msgid "About This Collection"
 msgstr "このコレクションについて"
 
-#: views/users/edit.thtml:149 views/admin/users_edit.thtml:131
+#: views/admin/users_edit.thtml:131 views/users/edit.thtml:149
 msgid "About me"
 msgstr "自分について"
 
@@ -1249,21 +1249,26 @@ msgstr "同意してダウンロード"
 msgid "Accept and Install"
 msgstr "同意してインストール"
 
-#: views/errors/error401.thtml:50 controllers/components/simple_acl.php:81
-#: controllers/components/simple_acl.php:82
-#: controllers/components/simple_acl.php:83 controllers/components/amo.php:642
-#: controllers/components/amo.php:643 controllers/components/amo.php:644
-#: controllers/reviews_controller.php:354
-#: controllers/reviews_controller.php:486
-#: controllers/editors_controller.php:1228
-#: controllers/collections_controller.php:455
+#: views/errors/error401.thtml:50 controllers/collections_controller.php:455
 #: controllers/collections_controller.php:513
 #: controllers/collections_controller.php:521
 #: controllers/collections_controller.php:991
 #: controllers/collections_controller.php:1056
 #: controllers/collections_controller.php:1100
+#: controllers/components/amo.php:642 controllers/components/amo.php:643
+#: controllers/components/amo.php:644 controllers/components/simple_acl.php:81
+#: controllers/components/simple_acl.php:82
+#: controllers/components/simple_acl.php:83
+#: controllers/editors_controller.php:1228
+#: controllers/reviews_controller.php:354
+#: controllers/reviews_controller.php:486
 msgid "Access Denied"
 msgstr "アクセスは拒否されました"
+
+#: views/editors/review.thtml:322
+msgctxt "editors_review_th_action"
+msgid "Action"
+msgstr "アクション"
 
 #: views/editors/performance_table.thtml:72 views/editors/reviewlog.thtml:58
 msgctxt "editorcp_reviewlog_column_action"
@@ -1275,14 +1280,14 @@ msgctxt "editors_reviews_header_action"
 msgid "Action"
 msgstr "アクション"
 
-#: views/editors/review.thtml:322
-msgctxt "editors_review_th_action"
-msgid "Action"
-msgstr "アクション"
-
 #: views/developers/dashboard.thtml:68
 msgid "Active"
 msgstr "有効"
+
+#: controllers/statistics_controller.php:307
+msgctxt "statistics_js_plotselection_selector_adu"
+msgid "Active Daily Users"
+msgstr "1 日のアクティブユーザ数"
 
 #: views/statistics/rss/summary.thtml:45 views/statistics/rss/summary.thtml:46
 msgctxt "statistics_summary_updatepings_heading"
@@ -1291,11 +1296,6 @@ msgstr "1 日の平均アクティブユーザ"
 
 #: views/statistics/addon.thtml:103 views/statistics/addon.thtml:161
 msgctxt "statistics_plot_legend_adu"
-msgid "Active Daily Users"
-msgstr "1 日のアクティブユーザ数"
-
-#: controllers/statistics_controller.php:307
-msgctxt "statistics_js_plotselection_selector_adu"
 msgid "Active Daily Users"
 msgstr "1 日のアクティブユーザ数"
 
@@ -1311,18 +1311,18 @@ msgstr "有効ステータス: <span class=\"inactive-1\">無効</span>"
 msgid "Activity By Month"
 msgstr "月ごとの活動"
 
-#: views/collections/edit.thtml:211 views/collections/edit.thtml:233
-msgctxt "collections_edit_formfield_users_submit"
-msgid "Add"
-msgstr "追加"
-
 #: views/editors/featured.thtml:126
 msgctxt "editors_featured_add_feature_submit"
 msgid "Add"
 msgstr "追加"
 
-#: views/developers/addon_edit_tags.thtml:67 views/addons/display.thtml:490
+#: views/addons/display.thtml:490 views/developers/addon_edit_tags.thtml:67
 msgctxt "tags_add_tag_button"
+msgid "Add"
+msgstr "追加"
+
+#: views/collections/edit.thtml:211 views/collections/edit.thtml:233
+msgctxt "collections_edit_formfield_users_submit"
 msgid "Add"
 msgstr "追加"
 
@@ -1388,16 +1388,16 @@ msgstr "新しいバージョンを追加"
 msgid "Add Plot"
 msgstr "座標を追加"
 
-#: views/previews/add.thtml:43
-msgctxt "devcp_previews_header_add"
-msgid "Add Preview"
-msgstr "プレビュー画像を追加"
-
 #: controllers/previews_controller.php:103
 #: controllers/previews_controller.php:104
 msgctxt "devcp_preview_add_pagetitle"
 msgid "Add Preview"
 msgstr "プレビュー画像の追加"
+
+#: views/previews/add.thtml:43
+msgctxt "devcp_previews_header_add"
+msgid "Add Preview"
+msgstr "プレビュー画像を追加"
 
 #: views/developers/uploader.thtml:171
 msgid "Add Release Notes"
@@ -1421,7 +1421,7 @@ msgstr "レビューを投稿"
 msgid "Add a review for %s"
 msgstr "%s のレビューを投稿"
 
-#: views/developers/addon_edit_tags.thtml:54 views/addons/display.thtml:484
+#: views/addons/display.thtml:484 views/developers/addon_edit_tags.thtml:54
 msgid "Add a tag"
 msgstr "タグを追加"
 
@@ -1468,8 +1468,8 @@ msgstr "コレクションへ追加"
 msgid "Add to Delicious"
 msgstr "Delicious へ追加"
 
-#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/elements/amo2009/collections/add_form.thtml:53
+#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/pages/collector_firstrun.thtml:64
 msgid "Add to Favorites"
 msgstr "お気に入りへ追加"
@@ -1478,19 +1478,19 @@ msgstr "お気に入りへ追加"
 msgid "Add to a collection:"
 msgstr "コレクションへ追加:"
 
-#: views/users/edit.thtml:192
-msgctxt "user_notifications_th_addon"
-msgid "Add-on"
-msgstr "アドオン"
-
 #: views/editors/performance_table.thtml:69 views/editors/reviewlog.thtml:56
 msgctxt "editorcp_reviewlog_column_addon"
 msgid "Add-on"
 msgstr "アドオン"
 
-#: views/editors/featured.thtml:63 views/editors/queue.thtml:115
-#: views/admin/flagged_queue.thtml:53
+#: views/admin/flagged_queue.thtml:53 views/editors/featured.thtml:63
+#: views/editors/queue.thtml:115
 msgctxt "editors_th_addon"
+msgid "Add-on"
+msgstr "アドオン"
+
+#: views/users/edit.thtml:192
+msgctxt "user_notifications_th_addon"
 msgid "Add-on"
 msgstr "アドオン"
 
@@ -1498,13 +1498,13 @@ msgstr "アドオン"
 msgid "Add-on Collections"
 msgstr "アドオンコレクション"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
-msgctxt "collections_index_header_collector"
+#: controllers/pages_controller.php:117
+msgctxt "page_title_collector"
 msgid "Add-on Collector"
 msgstr "アドオンコレクター"
 
-#: controllers/pages_controller.php:117
-msgctxt "page_title_collector"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
+msgctxt "collections_index_header_collector"
 msgid "Add-on Collector"
 msgstr "アドオンコレクター"
 
@@ -1521,7 +1521,7 @@ msgid "Add-on Collector Home"
 msgstr "アドオンコレクターのホーム"
 
 #: views/elements/amo2009/collections/collector_sidebar_download.thtml:45
-#: views/pages/collector_firstrun.thtml:116 views/pages/collector.thtml:69
+#: views/pages/collector.thtml:69 views/pages/collector_firstrun.thtml:116
 msgid "Add-on Collector Logo"
 msgstr "アドオンコレクターのロゴ"
 
@@ -1581,8 +1581,8 @@ msgstr "アドオンのアイコン"
 msgid "Add-on Information"
 msgstr "アドオンの情報"
 
-#: views/elements/amo2009/addons/list_options.thtml:45
 #: views/elements/addon_list_options.thtml:45
+#: views/elements/amo2009/addons/list_options.thtml:45
 msgctxt "list_sortby_name"
 msgid "Add-on Name"
 msgstr "タイトル"
@@ -1623,17 +1623,17 @@ msgstr "アドオンの状態"
 msgid "Add-on Status Check Results"
 msgstr "アドオンのステータス確認の結果"
 
-# %s is the (localized) add-on status string in a span, e.g. "Disabled"
-#: views/developers/dashboard.thtml:99
-#, php-format
-msgctxt "devcp_dashboard_disabled_status"
-msgid "Add-on Status: %s"
-msgstr "アドオンのステータス: %s"
-
 # %s is the status in a span, e.g. "<span>_('Public')</span>".
 #: views/developers/addon_status.thtml:58
 #, php-format
 msgctxt "devcp_addon_status_header"
+msgid "Add-on Status: %s"
+msgstr "アドオンのステータス: %s"
+
+# %s is the (localized) add-on status string in a span, e.g. "Disabled"
+#: views/developers/dashboard.thtml:99
+#, php-format
+msgctxt "devcp_dashboard_disabled_status"
 msgid "Add-on Status: %s"
 msgstr "アドオンのステータス: %s"
 
@@ -1653,13 +1653,13 @@ msgstr "アドオンの種類"
 msgid "Add-on Types"
 msgstr "アドオンの種類"
 
-#: controllers/components/stats.php:426
-msgctxt "statistics_longnames_version"
+#: controllers/statistics_controller.php:308
+msgctxt "statistics_js_plotselection_selector_version"
 msgid "Add-on Version"
 msgstr "アドオンのバージョン"
 
-#: controllers/statistics_controller.php:308
-msgctxt "statistics_js_plotselection_selector_version"
+#: controllers/components/stats.php:426
+msgctxt "statistics_longnames_version"
 msgid "Add-on Version"
 msgstr "アドオンのバージョン"
 
@@ -1679,6 +1679,13 @@ msgstr "「リリース前のアドオン」に指定されていません。"
 msgid "Add-on name:"
 msgstr "アドオンの名前:"
 
+#: controllers/addons_controller.php:133 controllers/addons_controller.php:249
+#: controllers/addons_controller.php:315
+#: controllers/addons_controller.php:1548
+#: controllers/addons_controller.php:1605 controllers/api_controller.php:124
+#: controllers/api_controller.php:762
+#: controllers/collections_controller.php:1064
+#: controllers/collections_controller.php:1097
 #: controllers/developers_controller.php:201
 #: controllers/developers_controller.php:597
 #: controllers/developers_controller.php:1147
@@ -1686,21 +1693,15 @@ msgstr "アドオンの名前:"
 #: controllers/downloads_controller.php:95
 #: controllers/downloads_controller.php:102
 #: controllers/downloads_controller.php:164
-#: controllers/statistics_controller.php:190
+#: controllers/editors_controller.php:286
 #: controllers/previews_controller.php:115
 #: controllers/previews_controller.php:206
 #: controllers/previews_controller.php:307
 #: controllers/reviews_controller.php:78
 #: controllers/reviews_controller.php:241
 #: controllers/reviews_controller.php:333
-#: controllers/reviews_controller.php:341 controllers/api_controller.php:124
-#: controllers/api_controller.php:762 controllers/addons_controller.php:133
-#: controllers/addons_controller.php:249 controllers/addons_controller.php:315
-#: controllers/addons_controller.php:1548
-#: controllers/addons_controller.php:1605
-#: controllers/editors_controller.php:286
-#: controllers/collections_controller.php:1064
-#: controllers/collections_controller.php:1097
+#: controllers/reviews_controller.php:341
+#: controllers/statistics_controller.php:190
 msgid "Add-on not found!"
 msgstr "該当するアドオンはありません。"
 
@@ -1717,15 +1718,15 @@ msgstr ""
 "現在、アドオンの統計情報は更新中です。プログラムによって情報の更新が完了する"
 "まで、最近のデータは不完全です。数分後にまた確認してください。"
 
-#: views/elements/header.thtml:62 views/elements/header.thtml:99
-msgctxt "header_main_header"
-msgid "Add-ons"
-msgstr "Add-ons"
-
 #: views/collections/edit.thtml:111
 msgctxt "collections_edit_tabheader_addons"
 msgid "Add-ons"
 msgstr "アドオン"
+
+#: views/elements/header.thtml:62 views/elements/header.thtml:99
+msgctxt "header_main_header"
+msgid "Add-ons"
+msgstr "Add-ons"
 
 # %1$s is the URL to the logo image
 #: views/layouts/amo2009.thtml:218
@@ -1788,7 +1789,8 @@ msgctxt "statistics_addons_downloaded"
 msgid "Add-ons Downloaded"
 msgstr "ダウンロードされたアドオン"
 
-#: views/statistics/index.thtml:92 controllers/statistics_controller.php:126
+#: views/statistics/index.thtml:49 views/statistics/index.thtml:92
+#: controllers/statistics_controller.php:126
 msgid "Add-ons In Use"
 msgstr "利用されているアドオン"
 
@@ -1808,8 +1810,8 @@ msgstr "タイトル順"
 msgid "Add-ons by Rating"
 msgstr "評価順"
 
-#: controllers/components/validation.php:256
 #: controllers/components/developers.php:535
+#: controllers/components/validation.php:256
 msgid ""
 "Add-ons cannot use an external updateURL. Please remove this from install."
 "rdf and try again."
@@ -1817,8 +1819,8 @@ msgstr ""
 "addons.mozilla.org 以外の updateURL を指定することはできません。install.rdf "
 "ファイルから updateURL を削除した上で、再度アップロードしてください。"
 
-#: controllers/components/validation.php:261
 #: controllers/components/developers.php:540
+#: controllers/components/validation.php:261
 msgid ""
 "Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
 "again."
@@ -1838,13 +1840,13 @@ msgstr "%1$s のベータ版もしくはリリース候補版と互換性のあ�
 msgid "Add-ons compatible with an alpha version of %1$s"
 msgstr "%1$s のアルファ版と互換性のあるアドオン"
 
-#: controllers/tags_controller.php:372 controllers/search_controller.php:235
 #: controllers/addons_controller.php:294 controllers/addons_controller.php:535
 #: controllers/addons_controller.php:832
 #: controllers/addons_controller.php:1036
 #: controllers/addons_controller.php:1262
 #: controllers/addons_controller.php:1405
 #: controllers/addons_controller.php:1454
+#: controllers/search_controller.php:235 controllers/tags_controller.php:372
 #, php-format
 msgid ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
@@ -1855,29 +1857,12 @@ msgstr ""
 
 # %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
 # Sunbird
-#: views/users/info.thtml:50 views/pages/collector_faq.thtml:49
-#: views/pages/collector_firstrun.thtml:42 views/pages/collector.thtml:46
+#: views/pages/collector.thtml:46 views/pages/collector_faq.thtml:49
 #: views/pages/collector_features.thtml:54
-#: controllers/developers_controller.php:89
-#: controllers/tags_controller.php:381
-#: controllers/compatibility_controller.php:72
-#: controllers/components/simple_acl.php:81 controllers/components/amo.php:642
-#: controllers/versions_controller.php:63
-#: controllers/statistics_controller.php:67
-#: controllers/statistics_controller.php:293
-#: controllers/previews_controller.php:67 controllers/users_controller.php:96
-#: controllers/users_controller.php:229 controllers/users_controller.php:336
-#: controllers/users_controller.php:422 controllers/users_controller.php:788
-#: controllers/users_controller.php:791 controllers/users_controller.php:804
-#: controllers/reviews_controller.php:205
-#: controllers/reviews_controller.php:252
-#: controllers/reviews_controller.php:347
-#: controllers/reviews_controller.php:426
-#: controllers/search_controller.php:199 controllers/search_controller.php:298
-#: controllers/search_controller.php:302 controllers/addons_controller.php:219
-#: controllers/addons_controller.php:265 controllers/addons_controller.php:389
-#: controllers/addons_controller.php:480 controllers/addons_controller.php:510
-#: controllers/addons_controller.php:828
+#: views/pages/collector_firstrun.thtml:42 views/users/info.thtml:50
+#: controllers/addons_controller.php:219 controllers/addons_controller.php:265
+#: controllers/addons_controller.php:389 controllers/addons_controller.php:480
+#: controllers/addons_controller.php:510 controllers/addons_controller.php:828
 #: controllers/addons_controller.php:1039
 #: controllers/addons_controller.php:1184
 #: controllers/addons_controller.php:1199
@@ -1889,9 +1874,6 @@ msgstr ""
 #: controllers/addons_controller.php:1584
 #: controllers/addons_controller.php:1640
 #: controllers/addons_controller.php:1645
-#: controllers/editors_controller.php:64 controllers/pages_controller.php:138
-#: controllers/groups_controller.php:65 controllers/groups_controller.php:71
-#: controllers/groups_controller.php:89 controllers/groups_controller.php:111
 #: controllers/collections_controller.php:57
 #: controllers/collections_controller.php:99
 #: controllers/collections_controller.php:188
@@ -1901,7 +1883,27 @@ msgstr ""
 #: controllers/collections_controller.php:483
 #: controllers/collections_controller.php:555
 #: controllers/collections_controller.php:847
+#: controllers/compatibility_controller.php:72
+#: controllers/components/amo.php:642 controllers/components/simple_acl.php:81
+#: controllers/developers_controller.php:89
+#: controllers/editors_controller.php:64 controllers/groups_controller.php:65
+#: controllers/groups_controller.php:71 controllers/groups_controller.php:89
+#: controllers/groups_controller.php:111
 #: controllers/localizers_controller.php:73
+#: controllers/pages_controller.php:138 controllers/previews_controller.php:67
+#: controllers/reviews_controller.php:205
+#: controllers/reviews_controller.php:252
+#: controllers/reviews_controller.php:347
+#: controllers/reviews_controller.php:426
+#: controllers/search_controller.php:199 controllers/search_controller.php:298
+#: controllers/search_controller.php:302
+#: controllers/statistics_controller.php:67
+#: controllers/statistics_controller.php:293
+#: controllers/tags_controller.php:381 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:422 controllers/users_controller.php:788
+#: controllers/users_controller.php:791 controllers/users_controller.php:804
+#: controllers/versions_controller.php:63
 #, php-format
 msgid "Add-ons for %1$s"
 msgstr "Add-ons for %1$s"
@@ -1909,10 +1911,6 @@ msgstr "Add-ons for %1$s"
 #: views/elements/header.thtml:87
 msgid "Add-ons for Firefox"
 msgstr "Add-ons for Firefox"
-
-#: views/statistics/index.thtml:49
-msgid "Add-ons in Use"
-msgstr "利用されているアドオン"
 
 # %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:77
@@ -1985,15 +1983,6 @@ msgstr ""
 msgid "Admin Flag"
 msgstr "管理者フラグ"
 
-#: views/elements/developers/editors_review_history_item.thtml:74
-#: views/elements/developers/editors_review_history_item.thtml:85
-#: views/editors/performance_table.thtml:92
-#: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:77
-#: views/editors/reviewlog.thtml:88
-msgctxt "editors_review_history_nominated_adminreview"
-msgid "Admin Review"
-msgstr "管理者レビュー"
-
 #: views/editors/queue.thtml:177
 msgctxt "editors_flag_admin_review"
 msgid "Admin Review"
@@ -2004,12 +1993,21 @@ msgctxt "editors_review_admin_flag"
 msgid "Admin Review"
 msgstr "管理者レビュー"
 
+#: views/editors/performance_table.thtml:92
+#: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:77
+#: views/editors/reviewlog.thtml:88
+#: views/elements/developers/editors_review_history_item.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:85
+msgctxt "editors_review_history_nominated_adminreview"
+msgid "Admin Review"
+msgstr "管理者レビュー"
+
 #: views/developers/addon_edit_properties.thtml:181
 msgid "Admin Settings"
 msgstr "管理者設定"
 
-#: views/elements/developers/sidebar.thtml:68
 #: views/elements/developers/myaddons.thtml:75
+#: views/elements/developers/sidebar.thtml:68
 msgctxt "devcp_myaddons_admincp_link"
 msgid "Admin Tools"
 msgstr "管理者用コントロールパネル"
@@ -2041,13 +2039,13 @@ msgstr "登録からの期間 (日数)"
 msgid "Agree and continue"
 msgstr "同意して続ける"
 
-#: views/developers/uploader.thtml:128
-msgctxt "devcp_uploader_platformtype_all"
+#: views/search/index.thtml:200
+msgctxt "search_refine_all_categories_link"
 msgid "All"
 msgstr "すべて"
 
-#: views/search/index.thtml:200
-msgctxt "search_refine_all_categories_link"
+#: views/developers/uploader.thtml:128
+msgctxt "devcp_uploader_platformtype_all"
 msgid "All"
 msgstr "すべて"
 
@@ -2200,8 +2198,8 @@ msgctxt "advanced_search_form_application"
 msgid "Application"
 msgstr "アプリケーション"
 
-#: views/editors/performance_table.thtml:70
-msgctxt "editorcp_performance_column_application"
+#: controllers/statistics_controller.php:309
+msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "アプリケーション"
 
@@ -2215,8 +2213,8 @@ msgctxt "statistics_longnames_application"
 msgid "Application"
 msgstr "アプリケーション"
 
-#: controllers/statistics_controller.php:309
-msgctxt "statistics_js_plotselection_selector_application"
+#: views/editors/performance_table.thtml:70
+msgctxt "editorcp_performance_column_application"
 msgid "Application"
 msgstr "アプリケーション"
 
@@ -2240,8 +2238,8 @@ msgstr "承認に関する注意"
 msgid "Approved reviews"
 msgstr "承認されたレビュー"
 
-#: views/elements/developers/editors_review_history_item.thtml:79
 #: views/editors/performance_table.thtml:97 views/editors/reviewlog.thtml:82
+#: views/elements/developers/editors_review_history_item.thtml:79
 msgid "Approved/Public"
 msgstr "申請を承認 (一般に公開)"
 
@@ -2362,15 +2360,15 @@ msgstr "自動追加"
 msgid "Available Actions"
 msgstr "可能なアクション"
 
-#: views/statistics/rss/summary.thtml:60 views/statistics/addon.thtml:199
+#: views/statistics/addon.thtml:199 views/statistics/rss/summary.thtml:60
 msgid "Average Daily Active Users"
 msgstr "1 日の平均アクティブユーザ"
 
-#: views/statistics/rss/summary.thtml:42 views/statistics/addon.thtml:196
+#: views/statistics/addon.thtml:196 views/statistics/rss/summary.thtml:42
 msgid "Average Daily Downloads"
 msgstr "1 日の平均ダウンロード数"
 
-#: views/statistics/rss/summary.thtml:61 views/statistics/addon.thtml:207
+#: views/statistics/addon.thtml:207 views/statistics/rss/summary.thtml:61
 msgid "Average Daily Users this Week"
 msgstr "今週の日別平均ユーザ数"
 
@@ -2384,25 +2382,25 @@ msgstr "BSD License"
 
 # %1 is the add-on name
 #: views/addons/policy.thtml:106 views/addons/versions.thtml:130
-#: views/reviews/flag.thtml:61 views/reviews/add.thtml:114
-#: views/reviews/display.thtml:214 views/reviews/review_added.thtml:57
+#: views/reviews/add.thtml:114 views/reviews/display.thtml:214
+#: views/reviews/flag.thtml:61 views/reviews/review_added.thtml:57
 #, php-format
 msgid "Back to %1$s..."
 msgstr "%1$s のページへ戻る"
 
-#: views/elements/developers/editorsmenu.thtml:63
-msgctxt "editorcp_menu_mainpage_link"
+#: views/compatibility/dashboard.thtml:45
+msgctxt "compatibility_dashboard_main_link"
 msgid "Back to Main"
 msgstr "メインページへ戻る"
 
-#: views/elements/developers/sidebar.thtml:70
 #: views/elements/developers/myaddons.thtml:77
+#: views/elements/developers/sidebar.thtml:70
 msgctxt "devcp_myaddons_mainpage_link"
 msgid "Back to Main"
 msgstr "メインページへ戻る"
 
-#: views/compatibility/dashboard.thtml:45
-msgctxt "compatibility_dashboard_main_link"
+#: views/elements/developers/editorsmenu.thtml:63
+msgctxt "editorcp_menu_mainpage_link"
 msgid "Back to Main"
 msgstr "メインページへ戻る"
 
@@ -2424,7 +2422,7 @@ msgid "Back to review"
 msgstr "レビューへ戻る"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:60 views/reviews/add.thtml:113
+#: views/reviews/add.thtml:113 views/reviews/flag.thtml:60
 #: views/reviews/review_added.thtml:56
 msgid "Back to the reviews..."
 msgstr "レビューのページへ戻る"
@@ -2497,7 +2495,7 @@ msgstr "アドオンをブラウズ"
 msgid "Browse Search Engines"
 msgstr "検索エンジンをブラウズ"
 
-#: views/addons/themes_landing.thtml:67 views/addons/browse_thumbs.thtml:87
+#: views/addons/browse_thumbs.thtml:87 views/addons/themes_landing.thtml:67
 msgid "Browse Themes"
 msgstr "テーマをブラウズ"
 
@@ -2562,24 +2560,9 @@ msgstr "CSS"
 msgid "CSV data not found"
 msgstr "CSV データが見つかりませんでした"
 
-#: views/elements/translationbox.thtml:124
-#: views/elements/translationbox.thtml:135
-msgctxt "devcp_transbox_input_cancel"
-msgid "Cancel"
-msgstr "キャンセル"
-
-#: views/collections/edit.thtml:170
-msgctxt "collections_edit_icon_cancel"
-msgid "Cancel"
-msgstr "キャンセル"
-
-#: views/editors/review.thtml:395
-msgctxt "editors_review_input_cancel"
-msgid "Cancel"
-msgstr "キャンセル"
-
-#: views/pages/js_constants.js.thtml:90
-msgctxt "devcp_js_a_cancel"
+#: views/developers/versions_edit.thtml:102
+#: views/developers/versions_edit.thtml:155
+msgctxt "devcp_versions_edit_a_cancel"
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -2588,14 +2571,29 @@ msgctxt "devcp_versions_delete_a_cancel"
 msgid "Cancel"
 msgstr "キャンセル"
 
-#: views/developers/versions_edit.thtml:102
-#: views/developers/versions_edit.thtml:155
-msgctxt "devcp_versions_edit_a_cancel"
+#: views/editors/review.thtml:395
+msgctxt "editors_review_input_cancel"
 msgid "Cancel"
 msgstr "キャンセル"
 
 #: views/developers/versions.thtml:77
 msgctxt "devcp_versions_a_cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: views/pages/js_constants.js.thtml:90
+msgctxt "devcp_js_a_cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: views/collections/edit.thtml:170
+msgctxt "collections_edit_icon_cancel"
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: views/elements/translationbox.thtml:124
+#: views/elements/translationbox.thtml:135
+msgctxt "devcp_transbox_input_cancel"
 msgid "Cancel"
 msgstr "キャンセル"
 
@@ -2607,12 +2605,6 @@ msgstr "インストールを中止する"
 msgid "Cancel and return"
 msgstr "中止して戻る"
 
-#: views/elements/categories.thtml:50
-#: views/elements/amo2009/categories.thtml:42
-msgctxt "categories_header"
-msgid "Categories"
-msgstr "カテゴリ"
-
 #: views/elements/developers/editbox.thtml:47
 msgctxt "devcp_editbox_categories"
 msgid "Categories"
@@ -2620,6 +2612,12 @@ msgstr "カテゴリ"
 
 #: views/search/index.thtml:192
 msgctxt "search_filter_categories_header"
+msgid "Categories"
+msgstr "カテゴリ"
+
+#: views/elements/amo2009/categories.thtml:42
+#: views/elements/categories.thtml:50
+msgctxt "categories_header"
 msgid "Categories"
 msgstr "カテゴリ"
 
@@ -2653,17 +2651,17 @@ msgstr "パスワードまたはメールアドレスを変更"
 msgid "Change Settings"
 msgstr "設定を変更"
 
-#: views/elements/developers/editbox.thtml:62
-msgctxt "devcp_editbox_change_status"
-msgid "Change Status"
-msgstr "ステータスを変更"
-
 #: views/developers/dashboard.thtml:67
 msgctxt "devcp_dashboard_change_status"
 msgid "Change Status"
 msgstr "ステータスを変更"
 
-#: views/statistics/rss/summary.thtml:52 views/statistics/addon.thtml:181
+#: views/elements/developers/editbox.thtml:62
+msgctxt "devcp_editbox_change_status"
+msgid "Change Status"
+msgstr "ステータスを変更"
+
+#: views/statistics/addon.thtml:181 views/statistics/rss/summary.thtml:52
 msgid "Change from previous count"
 msgstr "前回データからの変更"
 
@@ -2710,8 +2708,8 @@ msgstr ""
 msgid "Checking account email..."
 msgstr "アカウントのメールアドレスを確認しています..."
 
-#: views/elements/categories.thtml:50
 #: views/elements/amo2009/categories.thtml:41
+#: views/elements/categories.thtml:50
 msgid "Choose a category"
 msgstr "カテゴリを選択"
 
@@ -2728,8 +2726,8 @@ msgid "Click Update Previews below to upload."
 msgstr ""
 "アップロードを行うには、下の「プレビュー画像を更新」をクリックしてください。"
 
-#: views/users/emailchange.thtml:51 views/users/delete.thtml:53
-#: views/users/delete.thtml:119 views/reviews/flag.thtml:54
+#: views/reviews/flag.thtml:54 views/users/delete.thtml:53
+#: views/users/delete.thtml:119 views/users/emailchange.thtml:51
 msgid "Click here to return to the front page."
 msgstr "トップページに戻るにはここをクリックしてください。"
 
@@ -2787,13 +2785,13 @@ msgstr "コレクションの名前"
 msgid "Collection Nickname"
 msgstr "コレクションのニックネーム"
 
-#: views/search/collections.thtml:51
-msgctxt "search_collections_header"
+#: controllers/search_controller.php:298
+msgctxt "search_collections_pagetitle"
 msgid "Collection Search Results"
 msgstr "コレクションの検索結果"
 
-#: controllers/search_controller.php:298
-msgctxt "search_collections_pagetitle"
+#: views/search/collections.thtml:51
+msgctxt "search_collections_header"
 msgid "Collection Search Results"
 msgstr "コレクションの検索結果"
 
@@ -2806,30 +2804,31 @@ msgstr "コレクションの種類"
 msgid "Collection not found!"
 msgstr "コレクションが見つかりませんでした"
 
-#: views/elements/amo2009/categories.thtml:65 views/addons/home.thtml:142
-msgctxt "addons_home_collections"
-msgid "Collections"
-msgstr "コレクション"
-
-#: views/collections/listing.thtml:52
-msgctxt "collections_index_header_collections"
-msgid "Collections"
-msgstr "コレクション"
-
 #: views/users/edit.thtml:87 views/users/edit.thtml:157
 msgctxt "user_tab_collections"
 msgid "Collections"
 msgstr "コレクション"
 
-#: views/pages/collector_faq.thtml:50 views/pages/collector_firstrun.thtml:43
-#: views/pages/collector.thtml:47 views/pages/collector_features.thtml:55
-#: controllers/search_controller.php:303
+#: views/addons/home.thtml:142 views/elements/amo2009/categories.thtml:65
+msgctxt "addons_home_collections"
+msgid "Collections"
+msgstr "コレクション"
+
+#: views/pages/collector.thtml:47 views/pages/collector_faq.thtml:50
+#: views/pages/collector_features.thtml:55
+#: views/pages/collector_firstrun.thtml:43
 #: controllers/collections_controller.php:189
 #: controllers/collections_controller.php:208
 #: controllers/collections_controller.php:422
 #: controllers/collections_controller.php:484
 #: controllers/collections_controller.php:556
+#: controllers/search_controller.php:303
 msgctxt "collections_breadcrumb"
+msgid "Collections"
+msgstr "コレクション"
+
+#: views/collections/listing.thtml:52
+msgctxt "collections_index_header_collections"
 msgid "Collections"
 msgstr "コレクション"
 
@@ -2858,7 +2857,7 @@ msgstr "%1$s を含むコレクション"
 
 # This just shows an example of tags.  The important thing in the example is to show
 # that tags can be separated with commas and have spaces in them
-#: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:492
+#: views/addons/display.thtml:492 views/developers/addon_edit_tags.thtml:69
 msgid ""
 "Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
 "\">ocean, sail boat, water</span>"
@@ -2953,8 +2952,8 @@ msgstr "パスワードを再度入力"
 msgid "Confirm account deletion"
 msgstr "アカウントの削除を確認"
 
-#: views/users/pwreset.thtml:77 views/users/register.thtml:73
-#: views/users/edit.thtml:224
+#: views/users/edit.thtml:224 views/users/pwreset.thtml:77
+#: views/users/register.thtml:73
 msgid "Confirm password"
 msgstr "新しいパスワードを再入力"
 
@@ -3006,13 +3005,13 @@ msgstr "コレクションを作成"
 msgid "Create Developer Profile"
 msgstr "開発者プロフィールを作成"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
-msgctxt "collections_index_a_create"
+#: views/collections/add.thtml:48
+msgctxt "collections_add_header"
 msgid "Create a Collection"
 msgstr "コレクションを作成"
 
-#: views/collections/add.thtml:48
-msgctxt "collections_add_header"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
+msgctxt "collections_index_a_create"
 msgid "Create a Collection"
 msgstr "コレクションを作成"
 
@@ -3042,13 +3041,13 @@ msgstr "作成日"
 msgid "Created by Me"
 msgstr "自分のアドオン"
 
-#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
-msgctxt "footer_credits"
+#: controllers/pages_controller.php:92
+msgctxt "page_title_credits"
 msgid "Credits"
 msgstr "クレジット"
 
-#: controllers/pages_controller.php:92
-msgctxt "page_title_credits"
+#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
+msgctxt "footer_credits"
 msgid "Credits"
 msgstr "クレジット"
 
@@ -3112,19 +3111,20 @@ msgstr "ダッシュボードへのアクセス権限の設定"
 msgid "Dashboard Home"
 msgstr "ダッシュボードのホーム"
 
+#: views/elements/addon_list_options.thtml:46
 #: views/elements/amo2009/addons/list_options.thtml:46
-#: views/elements/addon_list_options.thtml:46 views/statistics/index.thtml:90
+#: views/statistics/index.thtml:90
 msgctxt "list_sortby_date"
 msgid "Date"
 msgstr "更新日"
 
-#: views/editors/performance_table.thtml:68 views/editors/reviewlog.thtml:55
-msgctxt "editorcp_reviewlog_column_date"
+#: views/editors/review.thtml:320
+msgctxt "editors_review_th_date"
 msgid "Date"
 msgstr "日付"
 
-#: views/editors/review.thtml:320
-msgctxt "editors_review_th_date"
+#: views/editors/performance_table.thtml:68 views/editors/reviewlog.thtml:55
+msgctxt "editorcp_reviewlog_column_date"
 msgid "Date"
 msgstr "日付"
 
@@ -3241,8 +3241,8 @@ msgstr "削除されたレビュー"
 msgid "Deleting your collection will permanently erase it."
 msgstr "コレクションを削除すると、元に戻すことはできません。"
 
-#: views/elements/developers/editors_review_history_item.thtml:82
 #: views/editors/performance_table.thtml:100 views/editors/reviewlog.thtml:85
+#: views/elements/developers/editors_review_history_item.thtml:82
 msgid "Denied/Sandbox"
 msgstr "申請を却下 (サンドボックスに保留)"
 
@@ -3262,6 +3262,10 @@ msgstr "説明"
 #: views/elements/developers/actionbar.thtml:47
 msgid "Detailed Info"
 msgstr "詳細情報"
+
+#: views/addons/display.thtml:362
+msgid "Detailed Review"
+msgstr "詳細なレビュー"
 
 #: views/elements/developers/performanceheader.thtml:60
 msgid "Details"
@@ -3284,15 +3288,15 @@ msgstr[1] "開発者"
 msgid "Developer Agreement"
 msgstr "開発者利用規約"
 
-#: views/editors/review.thtml:291
-msgctxt "editors_review_header_devcomments"
-msgid "Developer Comments"
-msgstr "作者のコメント"
-
 #: views/developers/addon_edit_descriptions.thtml:93
 msgctxt "devcp_edit_descriptions_transbox_comments_name"
 msgid "Developer Comments"
 msgstr "開発者のコメント"
+
+#: views/editors/review.thtml:291
+msgctxt "editors_review_header_devcomments"
+msgid "Developer Comments"
+msgstr "作者のコメント"
 
 #: views/addons/display.thtml:282
 msgctxt "addons_display_developer_comments"
@@ -3319,19 +3323,19 @@ msgstr "開発者プロフィール"
 msgid "Developer Reply:"
 msgstr "開発者の返信:"
 
-#: views/elements/developers/sidebar.thtml:48
+#: views/statistics/addon.thtml:58
+msgctxt "statistics_addon_developertools_link"
+msgid "Developer Tools"
+msgstr "開発者用ツール"
+
 #: views/elements/developers/myaddons.thtml:67
+#: views/elements/developers/sidebar.thtml:48
 msgctxt "devcp_myaddons_title"
 msgid "Developer Tools"
 msgstr "開発者用ツール"
 
 #: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
 msgctxt "sidebar_navlink_developer_tools"
-msgid "Developer Tools"
-msgstr "開発者用ツール"
-
-#: views/statistics/addon.thtml:58
-msgctxt "statistics_addon_developertools_link"
 msgid "Developer Tools"
 msgstr "開発者用ツール"
 
@@ -3363,19 +3367,19 @@ msgctxt "nav_category_dicts_langpacks"
 msgid "Dictionaries & Language Packs"
 msgstr "スペルチェック辞書と言語パック"
 
-#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:721
-#: controllers/addons_controller.php:1402
+#: views/addons/dictionaries.thtml:63 controllers/addons_controller.php:1402
+#: controllers/components/amo.php:721
 msgctxt "langtools_header_dicts_and_langpacks"
 msgid "Dictionaries & Language Packs"
 msgstr "スペルチェック辞書と言語パック"
 
-#: models/addontype.php:79
-msgctxt "general_addontype_dict"
+#: views/elements/pitch.thtml:50 views/elements/pitch.thtml:55
+msgctxt "sidebar_pitch_dictionary"
 msgid "Dictionary"
 msgstr "スペルチェック辞書"
 
-#: views/elements/pitch.thtml:50 views/elements/pitch.thtml:55
-msgctxt "sidebar_pitch_dictionary"
+#: models/addontype.php:79
+msgctxt "general_addontype_dict"
 msgid "Dictionary"
 msgstr "スペルチェック辞書"
 
@@ -3444,7 +3448,9 @@ msgstr "言語パックをダウンロード"
 # %$1s is an optional string that only appears if the add-on is only available for
 # a certain platform.  Examples:  (Windows)  or  (Linux)
 # Note that the parentheses are included in the string. :(
-#: views/elements/amo2009/install.thtml:137
+#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
+#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
+#: views/addons/plugins.thtml:119 views/elements/amo2009/install.thtml:137
 #: views/elements/amo2009/install.thtml:233
 #: views/elements/amo2009/install.thtml:246
 #: views/elements/amo2009/install.thtml:284
@@ -3452,9 +3458,6 @@ msgstr "言語パックをダウンロード"
 #: views/elements/amo2009/install.thtml:339 views/elements/install.thtml:73
 #: views/elements/install.thtml:181 views/elements/install.thtml:205
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
-#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
-#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
-#: views/addons/plugins.thtml:119
 #, php-format
 msgid "Download Now %s"
 msgstr "今すぐダウンロード %s"
@@ -3463,23 +3466,23 @@ msgstr "今すぐダウンロード %s"
 msgid "Download the Add-on Collector:"
 msgstr "アドオンコレクターをダウンロード:"
 
-#: views/elements/amo2009/addons/list_options.thtml:47
-#: views/elements/addon_list_options.thtml:47 views/addons/display.thtml:185
-msgctxt "list_sortby_downloads"
-msgid "Downloads"
-msgstr "ダウンロード数"
-
 #: views/statistics/rss/summary.thtml:39
 msgctxt "statistics_summary_downloads_heading"
 msgid "Downloads"
 msgstr "ダウンロード"
+
+#: views/addons/display.thtml:185 views/elements/addon_list_options.thtml:47
+#: views/elements/amo2009/addons/list_options.thtml:47
+msgctxt "list_sortby_downloads"
+msgid "Downloads"
+msgstr "ダウンロード数"
 
 #: controllers/statistics_controller.php:306
 msgctxt "statistics_js_plotselection_selector_downloads"
 msgid "Downloads"
 msgstr "ダウンロード"
 
-#: views/statistics/rss/summary.thtml:43 views/statistics/addon.thtml:203
+#: views/statistics/addon.thtml:203 views/statistics/rss/summary.thtml:43
 msgid "Downloads in the last 7 days"
 msgstr "過去 7 日間のダウンロード数"
 
@@ -3490,22 +3493,22 @@ msgstr "EULA"
 # %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
-#: views/developers/addon_edit_tags.thtml:43
+#: views/developers/addon_edit_categories.thtml:43
 #: views/developers/addon_edit_contributions.thtml:46
-#: views/developers/versions_delete.thtml:43
+#: views/developers/addon_edit_descriptions.thtml:44
 #: views/developers/addon_edit_profile.thtml:69
 #: views/developers/addon_edit_properties.thtml:44
-#: views/developers/addon_edit_descriptions.thtml:44
-#: views/developers/versions_edit.thtml:44
-#: views/developers/addon_edit_categories.thtml:43
+#: views/developers/addon_edit_tags.thtml:43
 #: views/developers/versions.thtml:43
+#: views/developers/versions_delete.thtml:43
+#: views/developers/versions_edit.thtml:44
 #, php-format
 msgid "Edit %s"
 msgstr "%s を編集"
 
+#: views/developers/dashboard.thtml:64
 #: views/elements/developers/actionbar.thtml:42
 #: views/elements/developers/actionbar.thtml:50
-#: views/developers/dashboard.thtml:64
 msgctxt "devcp_actionbar_link_edit"
 msgid "Edit Add-on"
 msgstr "アドオンを編集"
@@ -3535,16 +3538,16 @@ msgstr "アイテムを編集"
 msgid "Edit My Add-on"
 msgstr "自分のアドオンを編集"
 
-#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
-msgctxt "devcp_previews_header_edit"
-msgid "Edit Preview"
-msgstr "プレビュー画像を編集"
-
 #: controllers/previews_controller.php:194
 #: controllers/previews_controller.php:195
 msgctxt "devcp_preview_edit_pagetitle"
 msgid "Edit Preview"
 msgstr "プレビュー画像の編集"
+
+#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
+msgctxt "devcp_previews_header_edit"
+msgid "Edit Preview"
+msgstr "プレビュー画像を編集"
 
 # %s is the name of the add-on
 #: views/reviews/add.thtml:51
@@ -3578,37 +3581,37 @@ msgstr "エディタのコメント"
 msgid "Editor Review Discussions"
 msgstr "エディタのレビューに関する議論"
 
-#: views/elements/developers/editorsmenu.thtml:55
-msgctxt "editorcp_menu_summary_link"
-msgid "Editor Summary"
-msgstr "エディタについて"
-
 #: views/editors/summary.thtml:42
 msgctxt "editorcp_summary_page_heading"
 msgid "Editor Summary"
 msgstr "エディタについて"
 
-#: views/elements/developers/editorsmenu.thtml:52
-msgctxt "editorcp_menu_title"
-msgid "Editor Tools"
-msgstr "エディタ用ツール"
-
-#: views/elements/developers/sidebar.thtml:65
-#: views/elements/developers/myaddons.thtml:72
-msgctxt "devcp_myaddons_editorcp_link"
-msgid "Editor Tools"
-msgstr "エディタ用コントロールパネル"
+#: views/elements/developers/editorsmenu.thtml:55
+msgctxt "editorcp_menu_summary_link"
+msgid "Editor Summary"
+msgstr "エディタについて"
 
 #: views/elements/header.thtml:148 views/layouts/amo2009.thtml:288
 msgctxt "sidebar_navlink_editor_tools"
 msgid "Editor Tools"
 msgstr "エディタ用ツール"
 
+#: views/elements/developers/myaddons.thtml:72
+#: views/elements/developers/sidebar.thtml:65
+msgctxt "devcp_myaddons_editorcp_link"
+msgid "Editor Tools"
+msgstr "エディタ用コントロールパネル"
+
 #: controllers/editors_controller.php:64 controllers/editors_controller.php:77
 #: controllers/editors_controller.php:81
 msgctxt "editors_pagetitle"
 msgid "Editor Tools"
 msgstr "エディタ用コントロールパネル"
+
+#: views/elements/developers/editorsmenu.thtml:52
+msgctxt "editorcp_menu_title"
+msgid "Editor Tools"
+msgstr "エディタ用ツール"
 
 # A collection that has been chosen by an Editor as notable or exceptional
 #: controllers/collections_controller.php:599
@@ -3642,8 +3645,8 @@ msgctxt "addon_developer_th_email"
 msgid "Email address"
 msgstr "メールアドレス"
 
-#: views/users/pwreset.thtml:52 views/users/login.thtml:84
-#: views/users/register.thtml:63 views/users/edit.thtml:230
+#: views/users/edit.thtml:230 views/users/login.thtml:84
+#: views/users/pwreset.thtml:52 views/users/register.thtml:63
 msgctxt "user_form_email"
 msgid "Email address"
 msgstr "メールアドレス"
@@ -3695,14 +3698,14 @@ msgstr "コメントの保存中にエラーが発生しました！"
 msgid "Error!"
 msgstr "エラー！"
 
-#: views/elements/developers/editorsmenu.thtml:60
-msgctxt "editorcp_menu_eventlog_link"
+#: views/admin/logs.thtml:43 views/editors/logs.thtml:42
+#: controllers/editors_controller.php:1751
+msgctxt "editorcp_logs_page_heading"
 msgid "Event Log"
 msgstr "イベント履歴"
 
-#: views/editors/logs.thtml:42 views/admin/logs.thtml:43
-#: controllers/editors_controller.php:1751
-msgctxt "editorcp_logs_page_heading"
+#: views/elements/developers/editorsmenu.thtml:60
+msgctxt "editorcp_menu_eventlog_link"
 msgid "Event Log"
 msgstr "イベント履歴"
 
@@ -3791,13 +3794,13 @@ msgctxt "sidebar_pitch_featured_addons"
 msgid "Featured Add-ons"
 msgstr "おすすめのアドオン"
 
-#: views/elements/developers/editorsmenu.thtml:59
-msgctxt "devcp_editorsqueue_featured"
+#: controllers/addons_controller.php:542
+msgctxt "rss_featuredaddons"
 msgid "Featured Add-ons"
 msgstr "注目のアドオン"
 
-#: controllers/addons_controller.php:542
-msgctxt "rss_featuredaddons"
+#: views/elements/developers/editorsmenu.thtml:59
+msgctxt "devcp_editorsqueue_featured"
 msgid "Featured Add-ons"
 msgstr "注目のアドオン"
 
@@ -3873,10 +3876,10 @@ msgstr "ファイル形式の検証"
 msgid "File error: %s does not exist."
 msgstr "ファイルエラー: %s が存在しません。"
 
-#: controllers/files_controller.php:75 controllers/files_controller.php:106
-#: controllers/files_controller.php:109 controllers/files_controller.php:240
-#: controllers/files_controller.php:253 controllers/files_controller.php:262
-#: controllers/files_controller.php:281 controllers/editors_controller.php:535
+#: controllers/editors_controller.php:535 controllers/files_controller.php:75
+#: controllers/files_controller.php:106 controllers/files_controller.php:109
+#: controllers/files_controller.php:240 controllers/files_controller.php:253
+#: controllers/files_controller.php:262 controllers/files_controller.php:281
 msgid "File not found!"
 msgstr "ファイルがありません。"
 
@@ -3884,13 +3887,13 @@ msgstr "ファイルがありません。"
 msgid "Files:"
 msgstr "ファイル:"
 
-#: views/editors/performance_table.thtml:52
-#: views/editors/performance_charts.thtml:65 views/editors/reviewlog.thtml:49
+#: views/editors/performance_charts.thtml:65
+#: views/editors/performance_table.thtml:52 views/editors/reviewlog.thtml:49
 msgctxt "editorcp_reviewlog_button_filter"
 msgid "Filter"
 msgstr "フィルタ"
 
-#: views/editors/logs.thtml:56 views/admin/logs.thtml:91
+#: views/admin/logs.thtml:91 views/editors/logs.thtml:56
 msgctxt "editorcp_logs_button_filter"
 msgid "Filter"
 msgstr "フィルタ"
@@ -3904,7 +3907,7 @@ msgstr "フィルタ"
 msgid "Filter Queue"
 msgstr "レビュー待ちを条件で絞り込み"
 
-#: views/editors/logs.thtml:50 views/admin/logs.thtml:50
+#: views/admin/logs.thtml:50 views/editors/logs.thtml:50
 msgid "Filter by type/action"
 msgstr "種類・アクションによるフィルタ"
 
@@ -3916,8 +3919,8 @@ msgstr "他のアプリケーション用のアドオンを探す"
 msgid "Firefox"
 msgstr "Firefox"
 
-#: views/users/register.thtml:78 views/users/edit.thtml:96
-#: views/admin/users_edit.thtml:76
+#: views/admin/users_edit.thtml:76 views/users/edit.thtml:96
+#: views/users/register.thtml:78
 msgid "First name"
 msgstr "名 (例: Taro)"
 
@@ -3936,8 +3939,8 @@ msgid "For information on contributing, please see our %s."
 msgstr "協力方法に関する情報は %s をご覧ください。"
 
 # Full text for the FAQ abbreviation.
-#: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
-#: views/layouts/amo2009.thtml:354
+#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
+#: views/pages/collector_features.thtml:72
 msgctxt "footer_abbr_faq"
 msgid "Frequently Asked Questions"
 msgstr "よくある質問"
@@ -4010,24 +4013,25 @@ msgstr ""
 "コレクションに分かりやすい名前を付けてください。例えば「デイブのお気に入り旅"
 "行用アドオン」などが良い例です。"
 
-#: views/elements/amo2009/collections/sort_form.thtml:55
-#: views/collections/detail.thtml:139 views/search/index.thtml:129
-msgctxt "collections_index_button_go"
-msgid "Go"
-msgstr "表示"
-
-#: views/elements/amo2009/addons/list_options.thtml:113
-#: views/elements/addon_list_options.thtml:109
-msgctxt "addons_options_submit"
-msgid "Go"
-msgstr "移動"
-
 #: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
 msgctxt "footer_lang_form_lang_submit_go"
 msgid "Go"
 msgstr "変更"
 
-#: views/tags/display.thtml:83 views/addons/display.thtml:459
+#: views/elements/addon_list_options.thtml:109
+#: views/elements/amo2009/addons/list_options.thtml:113
+msgctxt "addons_options_submit"
+msgid "Go"
+msgstr "移動"
+
+#: views/collections/detail.thtml:139
+#: views/elements/amo2009/collections/sort_form.thtml:55
+#: views/search/index.thtml:129
+msgctxt "collections_index_button_go"
+msgid "Go"
+msgstr "表示"
+
+#: views/addons/display.thtml:459 views/tags/display.thtml:83
 msgctxt "addons_author_addons_submit"
 msgid "Go"
 msgstr "送信"
@@ -4104,8 +4108,8 @@ msgstr "ヘルプを隠す"
 msgid "Hide Total Count"
 msgstr "合計数を隠す"
 
-#: views/users/register.thtml:94 views/users/edit.thtml:125
-#: views/admin/users_edit.thtml:91
+#: views/admin/users_edit.thtml:91 views/users/edit.thtml:125
+#: views/users/register.thtml:94
 msgid "Hide email address"
 msgstr "メールアドレスを公開しない"
 
@@ -4379,8 +4383,8 @@ msgid ""
 "Manager interface."
 msgstr ""
 "このバージョンでの変更点、新機能、既知のバグ、その他このバージョンに限った参"
-"考になる情報を入力します。これらの情報は、ユーザが Firefox のアドオンマネージ"
-"ャ画面からアドオンを更新する際にも表示させることができます。"
+"考になる情報を入力します。これらの情報は、ユーザが Firefox のアドオンマネー"
+"ジャ画面からアドオンを更新する際にも表示させることができます。"
 
 #: views/developers/addon_edit_properties.thtml:85
 msgid ""
@@ -4431,7 +4435,7 @@ msgstr "言語パックをインストール"
 msgid "Install.js contains a function missing from the whitelist: %s"
 msgstr "Install.js に、ホワイトリストに載っていない関数が含まれています: %s"
 
-#: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
+#: views/admin/users_edit.thtml:132 views/users/edit.thtml:150
 msgid ""
 "Introduce yourself to the community, if you like! This text will appear "
 "publicly on your user info page. Line breaks will be preserved, but no HTML "
@@ -4584,7 +4588,7 @@ msgstr "言語パック (アドオン)"
 msgid "Language Packs (Application)"
 msgstr "言語パック (アプリケーション)"
 
-#: views/statistics/rss/summary.thtml:41 views/statistics/addon.thtml:175
+#: views/statistics/addon.thtml:175 views/statistics/rss/summary.thtml:41
 msgid "Last Day Count"
 msgstr "最新の数字"
 
@@ -4598,8 +4602,8 @@ msgstr "最終更新日"
 msgid "Last edited on %s"
 msgstr "最終更新日: %s"
 
-#: views/users/register.thtml:84 views/users/edit.thtml:102
-#: views/admin/users_edit.thtml:81
+#: views/admin/users_edit.thtml:81 views/users/edit.thtml:102
+#: views/users/register.thtml:84
 msgid "Last name"
 msgstr "姓 (例: Yamada)"
 
@@ -4621,29 +4625,29 @@ msgid ""
 "Learn how to <a href=\"%1$s\">make your own</a> at the <a href=\"%2$s"
 "\">Mozilla Developer Center</a>."
 msgstr ""
-"<a href=\"%1$s\">独自の検索エンジンを作る方法</a> を <a href=\"%2$s\">Mozilla"
-" Developer Center</a> で学びましょう。"
+"<a href=\"%1$s\">独自の検索エンジンを作る方法</a> を <a href=\"%2$s"
+"\">Mozilla Developer Center</a> で学びましょう。"
 
-#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/amo2009/homepage_addon.thtml:124
+#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/feature.thtml:122
 msgid "Learn more"
 msgstr "詳細"
 
 # %1 is the add-on name
-#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/amo2009/homepage_addon.thtml:125
+#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/feature.thtml:123
 #, php-format
 msgid "Learn more about %1$s"
 msgstr "%1$s の詳細"
 
-#: views/elements/amo2009/teaser_collections.thtml:86
-#: views/elements/amo2009/teaser_collections.thtml:92
-#: views/elements/amo2009/results_addon.thtml:90
-#: views/elements/amo2009/results_addon.thtml:92
 #: views/elements/amo2009/homepage_addon.thtml:99
 #: views/elements/amo2009/homepage_addon.thtml:102
+#: views/elements/amo2009/results_addon.thtml:90
+#: views/elements/amo2009/results_addon.thtml:92
+#: views/elements/amo2009/teaser_collections.thtml:86
+#: views/elements/amo2009/teaser_collections.thtml:92
 #: views/elements/feature.thtml:94
 msgid "Learn more about this add-on"
 msgstr "このアドオンに関する詳細"
@@ -4732,13 +4736,13 @@ msgstr "ローカライズ可能な項目"
 msgid "Localizers"
 msgstr "ローカライズ担当者"
 
-#: views/elements/amo2009/users/vcard.thtml:68
-msgctxt "addon_developer_th_location"
+#: views/admin/users_edit.thtml:99 views/users/edit.thtml:112
+msgctxt "user_form_location"
 msgid "Location"
 msgstr "所在地"
 
-#: views/users/edit.thtml:112 views/admin/users_edit.thtml:99
-msgctxt "user_form_location"
+#: views/elements/amo2009/users/vcard.thtml:68
+msgctxt "addon_developer_th_location"
 msgid "Location"
 msgstr "所在地"
 
@@ -4750,8 +4754,8 @@ msgstr "ロックされています"
 msgid "Log In"
 msgstr "ログイン"
 
-#: views/elements/developers/sidebar.thtml:72
-#: views/elements/developers/myaddons.thtml:50 views/elements/header.thtml:159
+#: views/elements/developers/myaddons.thtml:50
+#: views/elements/developers/sidebar.thtml:72 views/elements/header.thtml:159
 msgctxt "header_navlink_login"
 msgid "Log in"
 msgstr "ログイン"
@@ -4968,18 +4972,9 @@ msgid "Misplaced bug report or support request"
 msgstr "場違いなバグ報告またはサポートリクエスト"
 
 # %s is a string representing what's missing.  Example:  file_id
-#: controllers/downloads_controller.php:65
-#: controllers/users_controller.php:191 controllers/users_controller.php:270
-#: controllers/users_controller.php:641 controllers/users_controller.php:739
-#: controllers/users_controller.php:909 controllers/reviews_controller.php:71
-#: controllers/reviews_controller.php:235
-#: controllers/reviews_controller.php:326
-#: controllers/reviews_controller.php:474
-#: controllers/reviews_controller.php:476
 #: controllers/addons_controller.php:175 controllers/addons_controller.php:301
 #: controllers/addons_controller.php:1540
 #: controllers/addons_controller.php:1683
-#: controllers/editors_controller.php:1235
 #: controllers/collections_controller.php:177
 #: controllers/collections_controller.php:279
 #: controllers/collections_controller.php:298
@@ -4998,13 +4993,22 @@ msgstr "場違いなバグ報告またはサポートリクエスト"
 #: controllers/collections_controller.php:1046
 #: controllers/collections_controller.php:1093
 #: controllers/collections_controller.php:1113
+#: controllers/downloads_controller.php:65
+#: controllers/editors_controller.php:1235
+#: controllers/reviews_controller.php:71
+#: controllers/reviews_controller.php:235
+#: controllers/reviews_controller.php:326
+#: controllers/reviews_controller.php:474
+#: controllers/reviews_controller.php:476 controllers/users_controller.php:191
+#: controllers/users_controller.php:270 controllers/users_controller.php:641
+#: controllers/users_controller.php:739 controllers/users_controller.php:909
 #, php-format
 msgid "Missing argument: %s"
 msgstr "引数が不足しています: %s"
 
 # %1 is the review count
-#: views/elements/developers/editorsqueue.thtml:42
 #: views/elements/developers/editorsmenu.thtml:56
+#: views/elements/developers/editorsqueue.thtml:42
 #, php-format
 msgid "Moderated Reviews (%s)"
 msgid_plural "Moderated Reviews (%s)"
@@ -5156,19 +5160,19 @@ msgstr "自分と以下のユーザ:"
 msgid "NEW!"
 msgstr "新着！"
 
-#: views/elements/amo2009/users/vcard.thtml:63
-msgctxt "addon_developer_th_name"
+#: controllers/collections_controller.php:312
+msgctxt "collections_detail_sort_name"
 msgid "Name"
 msgstr "名前"
 
 #: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
-#: views/tags/display.thtml:77 views/search/index.thtml:117
+#: views/search/index.thtml:117 views/tags/display.thtml:77
 msgctxt "advanced_search_form_name"
 msgid "Name"
 msgstr "タイトル"
 
-#: controllers/collections_controller.php:312
-msgctxt "collections_detail_sort_name"
+#: views/elements/amo2009/users/vcard.thtml:63
+msgctxt "addon_developer_th_name"
 msgid "Name"
 msgstr "名前"
 
@@ -5202,20 +5206,20 @@ msgstr "新しいバージョン"
 msgid "New image:"
 msgstr "新しい画像:"
 
-#: views/users/pwreset.thtml:72 views/users/edit.thtml:219
+#: views/users/edit.thtml:219 views/users/pwreset.thtml:72
 msgid "New password"
 msgstr "新しいパスワード"
-
-#: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:143
-#: views/tags/display.thtml:76 views/search/index.thtml:116
-msgctxt "advanced_search_form_newest"
-msgid "Newest"
-msgstr "更新日"
 
 #: controllers/components/collections_listing.php:71
 msgctxt "collections_index_option_newest"
 msgid "Newest"
 msgstr "最新"
+
+#: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:143
+#: views/search/index.thtml:116 views/tags/display.thtml:76
+msgctxt "advanced_search_form_newest"
+msgid "Newest"
+msgstr "更新日"
 
 #: views/elements/pitch.thtml:70
 msgctxt "sidebar_pitch_newest_addons"
@@ -5232,8 +5236,8 @@ msgstr "最近公開されたアドオン"
 msgid "Next"
 msgstr "次へ"
 
-#: views/users/register.thtml:89 views/users/edit.thtml:107
-#: views/admin/users_edit.thtml:86
+#: views/admin/users_edit.thtml:86 views/users/edit.thtml:107
+#: views/users/register.thtml:89
 msgid "Nickname"
 msgstr "ニックネーム"
 
@@ -5257,8 +5261,8 @@ msgstr "データがありません"
 msgid "No Files"
 msgstr "ファイルがありません"
 
-#: controllers/components/validation.php:266
 #: controllers/components/developers.php:545
+#: controllers/components/validation.php:266
 msgid "No ID could be found for this add-on in install.rdf."
 msgstr "このアドオンの ID が install.rdf ファイルで指定されていません。"
 
@@ -5279,8 +5283,8 @@ msgstr "このカテゴリにはまだアドオンが登録されていません
 msgid "No categories are available for this add-on type and application."
 msgstr "このアドオンの種類とアプリケーションに指定できるカテゴリはありません。"
 
-#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 #: views/statistics/addon.thtml:167 views/statistics/addon.thtml:187
+#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 msgid "No data yet"
 msgstr "まだデータがありません"
 
@@ -5288,17 +5292,17 @@ msgstr "まだデータがありません"
 msgid "No file uploaded"
 msgstr "アップロードされたファイルはありません"
 
-#: views/developers/versions_validate.thtml:59
 #: views/developers/versions_edit.thtml:111
+#: views/developers/versions_validate.thtml:59
 msgid "No files found."
 msgstr "ファイルが見つかりませんでした。"
 
-#: controllers/developers_controller.php:505
 #: controllers/components/validation.php:206
+#: controllers/developers_controller.php:505
 msgid "No install.rdf present."
 msgstr "install.rdf ファイルが含まれていません。"
 
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 msgid "No photo"
 msgstr "写真がありません"
 
@@ -5314,8 +5318,8 @@ msgstr "プレビュー画像がありません。"
 msgid "No previous review entries could be found."
 msgstr "これまでにレビューを受けたバージョンはありません。"
 
-#: views/tags/display.thtml:60 views/search/collections.thtml:62
-#: views/search/index.thtml:100
+#: views/search/collections.thtml:62 views/search/index.thtml:100
+#: views/tags/display.thtml:60
 msgid "No results found."
 msgstr "該当するアドオンはありません。"
 
@@ -5327,9 +5331,9 @@ msgstr "この期間にレビューが行われたアドオンはありません
 msgid "No tags for these add-ons"
 msgstr "これらのアドオンにはタグが付けられていません"
 
+#: views/elements/developers/testresults.thtml:61
 #: views/elements/developers/testresults_group.thtml:115
 #: views/elements/developers/testresults_header.thtml:62
-#: views/elements/developers/testresults.thtml:61
 msgctxt "devcp_versions_validate_no_results"
 msgid "No test results found."
 msgstr "テスト結果が見つかりませんでした。"
@@ -5362,21 +5366,21 @@ msgid "Nominate your add-on to become Public"
 msgstr "このアドオンの一般公開を申請します。"
 
 # %1 is the nominated addons count
-#: views/elements/developers/editorsqueue.thtml:44
 #: views/elements/developers/editorsmenu.thtml:58
+#: views/elements/developers/editorsqueue.thtml:44
 #, php-format
 msgid "Nominated Add-ons (%s)"
 msgid_plural "Nominated Add-ons (%s)"
 msgstr[0] "公開申請されているアドオン (%s)"
 msgstr[1] "公開申請されているアドオン (%s)"
 
-#: views/elements/developers/editors_review_history_item.thtml:68
 #: views/editors/performance_table.thtml:86 views/editors/reviewlog.thtml:71
+#: views/elements/developers/editors_review_history_item.thtml:68
 msgid "Nomination Approved/Public"
 msgstr "申請を承認 (一般に公開)"
 
-#: views/elements/developers/editors_review_history_item.thtml:71
 #: views/editors/performance_table.thtml:89 views/editors/reviewlog.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:71
 msgid "Nomination Denied/Sandbox"
 msgstr "申請を却下 (サンドボックスに保留)"
 
@@ -5441,7 +5445,7 @@ msgctxt "addon_developer_th_occupation"
 msgid "Occupation"
 msgstr "職業"
 
-#: views/users/edit.thtml:116 views/admin/users_edit.thtml:103
+#: views/admin/users_edit.thtml:103 views/users/edit.thtml:116
 msgctxt "user_form_occupation"
 msgid "Occupation"
 msgstr "職業"
@@ -5467,7 +5471,7 @@ msgstr "以下のアドオンとよく一緒に利用されています..."
 msgid "Old password"
 msgstr "現在のパスワード"
 
-#: views/statistics/rss/summary.thtml:48 views/statistics/addon.thtml:165
+#: views/statistics/addon.thtml:165 views/statistics/rss/summary.thtml:48
 #, php-format
 msgid "On %1$s"
 msgstr "%1$s 現在"
@@ -5655,8 +5659,8 @@ msgid "PayPal ID"
 msgstr "PayPal ID"
 
 # %1 is the update count
-#: views/elements/developers/editorsqueue.thtml:43
 #: views/elements/developers/editorsmenu.thtml:57
+#: views/elements/developers/editorsqueue.thtml:43
 #, php-format
 msgid "Pending Updates (%s)"
 msgid_plural "Pending Updates (%s)"
@@ -5681,8 +5685,8 @@ msgstr "%1$s のパフォーマンスレポート"
 msgid "Performance Reports"
 msgstr "パフォーマンスレポート"
 
-#: views/elements/amo2009/addons/version_detail.thtml:52
 #: views/elements/addon_version_detail.thtml:52
+#: views/elements/amo2009/addons/version_detail.thtml:52
 msgid "Permanent link to this version"
 msgstr "このバージョンへの固定リンク"
 
@@ -5690,12 +5694,12 @@ msgstr "このバージョンへの固定リンク"
 msgid "Permissions"
 msgstr "権限"
 
-#: views/users/edit.thtml:129 views/admin/users_edit.thtml:112
+#: views/admin/users_edit.thtml:112 views/users/edit.thtml:129
 msgid "Picture"
 msgstr "写真"
 
 # %1$s is a user's email address or name
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 #, php-format
 msgid "Picture of %1$s"
 msgstr "%1$s の写真"
@@ -5711,13 +5715,13 @@ msgstr ""
 msgid "Plain Text"
 msgstr "プレーンテキスト"
 
-#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
-msgctxt "advanced_search_form_platform"
+#: views/developers/versions_edit.thtml:79
+msgctxt "devcp_versions_edit_th_platform"
 msgid "Platform"
 msgstr "プラットフォーム"
 
-#: views/developers/versions_edit.thtml:79
-msgctxt "devcp_versions_edit_th_platform"
+#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
+msgctxt "advanced_search_form_platform"
 msgid "Platform"
 msgstr "プラットフォーム"
 
@@ -5847,9 +5851,9 @@ msgstr "次に進む前に、以下の利用規約をよく読んで同意する
 
 # %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 # in the <a> tag.  This should be fixed.
-#: controllers/developers_controller.php:504
-#: controllers/components/validation.php:346
 #: controllers/components/developers.php:625
+#: controllers/components/validation.php:346
+#: controllers/developers_controller.php:504
 #, php-format
 msgid "Please see <a href=\"%s\">this page</a> for reference."
 msgstr "<a href=\"%s\">このページ</a> を参考にしてください。"
@@ -5868,15 +5872,15 @@ msgstr "レビューアクションを選択してください。"
 msgid "Please select at least one category."
 msgstr "少なくともひとつはカテゴリを選択してください。"
 
-#: controllers/components/editors.php:161
-msgctxt "editor_review_error_no_files"
-msgid "Please select at least one file to review."
-msgstr "レビューを行うファイルを少なくともひとつは選択してください。"
-
 #: controllers/editors_controller.php:401
 msgctxt "editors_error_review_one_file"
 msgid "Please select at least one file to review."
 msgstr "少なくともひとつはレビューを行うファイルを選択してください。"
+
+#: controllers/components/editors.php:161
+msgctxt "editor_review_error_no_files"
+msgid "Please select at least one file to review."
+msgstr "レビューを行うファイルを少なくともひとつは選択してください。"
 
 #: controllers/components/developers.php:75
 msgid "Please select no more than five categories."
@@ -5898,8 +5902,8 @@ msgstr "この情報は機密扱いとしてください。"
 msgid "Please type what you hear."
 msgstr "聞こえた言葉を以下に入力してください。"
 
-#: controllers/developers_controller.php:466
 #: controllers/components/developers.php:285
+#: controllers/developers_controller.php:466
 msgid "Please upload a file."
 msgstr "ファイルをアップロードしてください。"
 
@@ -5911,14 +5915,14 @@ msgstr "このグラフ上に合計数を表示する"
 msgid "Plugin"
 msgstr "プラグイン"
 
-# Plural in this context means many of the add-on type
-#: models/addontype.php:104
-msgctxt "general_addontype_plugin_plural"
+#: controllers/addons_controller.php:1280 controllers/components/amo.php:734
+msgctxt "addons_plugins_pagetitle"
 msgid "Plugins"
 msgstr "プラグイン"
 
-#: controllers/components/amo.php:734 controllers/addons_controller.php:1280
-msgctxt "addons_plugins_pagetitle"
+# Plural in this context means many of the add-on type
+#: models/addontype.php:104
+msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
 msgstr "プラグイン"
 
@@ -5932,13 +5936,13 @@ msgstr ""
 "場合など、ブラウザが特定の機能を実行できるようにする役割を果たします。ブラウ"
 "ザの機能を追加したり変更を加える拡張機能とは若干性質が異なります。"
 
-#: views/addons/home.thtml:110
-msgctxt "addons_home_browse_popular"
+#: controllers/collections_controller.php:111
+msgctxt "collections_index_li_popular"
 msgid "Popular"
 msgstr "人気"
 
-#: controllers/collections_controller.php:111
-msgctxt "collections_index_li_popular"
+#: views/addons/home.thtml:110
+msgctxt "addons_home_browse_popular"
 msgid "Popular"
 msgstr "人気"
 
@@ -5953,7 +5957,7 @@ msgid "Popular Collections"
 msgstr "人気のコレクション"
 
 #: views/elements/amo2009/search.thtml:148 views/elements/search.thtml:146
-#: views/tags/display.thtml:79 views/search/index.thtml:119
+#: views/search/index.thtml:119 views/tags/display.thtml:79
 msgctxt "advanced_search_form_popularity"
 msgid "Popularity"
 msgstr "ダウンロード数"
@@ -6030,12 +6034,13 @@ msgid "Preview File"
 msgstr "プレビュー画像のファイル"
 
 # %s is the add-on name
-#: views/elements/collections_interactive_addon.thtml:62
-#: views/elements/amo2009/results_addon.thtml:77
-#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/addons/browse_thumbs.thtml:107 views/addons/category_landing.thtml:87
 #: views/elements/addon_discussionheader.thtml:62
-#: views/elements/addon_listitem.thtml:67 views/elements/feature.thtml:84
-#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:107
+#: views/elements/addon_listitem.thtml:67
+#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/elements/amo2009/results_addon.thtml:77
+#: views/elements/collections_interactive_addon.thtml:62
+#: views/elements/feature.thtml:84
 #, php-format
 msgid "Preview Image of %s"
 msgstr "%s のプレビュー画像"
@@ -6114,15 +6119,8 @@ msgstr "%1$s のアドオンレビューについてより詳しい情報を提�
 msgid "Provide a way for users to make monetary donations to your project."
 msgstr "あなたのプロジェクトに対して寄付を行う方法をユーザに提供します。"
 
-#: views/elements/header.thtml:76 views/elements/header.thtml:82
-#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
-#: views/sharing_api/addon.thtml:63
-msgctxt "a_header_public"
-msgid "Public"
-msgstr "公開ページ"
-
-#: views/statistics/settings.thtml:52
-msgctxt "statistics_settings_access_public"
+#: views/developers/addon_status.thtml:64
+msgctxt "devcp_addon_status_public"
 msgid "Public"
 msgstr "公開"
 
@@ -6132,8 +6130,15 @@ msgctxt "addons_status_public"
 msgid "Public"
 msgstr "公開"
 
-#: views/developers/addon_status.thtml:64
-msgctxt "devcp_addon_status_public"
+#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
+#: views/elements/header.thtml:76 views/elements/header.thtml:82
+#: views/sharing_api/addon.thtml:63
+msgctxt "a_header_public"
+msgid "Public"
+msgstr "公開ページ"
+
+#: views/statistics/settings.thtml:52
+msgctxt "statistics_settings_access_public"
 msgid "Public"
 msgstr "公開"
 
@@ -6161,15 +6166,15 @@ msgstr "RDF パーサーエラー: ファイルに重複した要素が含まれ
 msgid "Rated %s out of 5 stars"
 msgstr "5 つ星のうち %s つの評価を受けています"
 
-#: views/elements/amo2009/addons/list_options.thtml:48
 #: views/elements/addon_list_options.thtml:48
+#: views/elements/amo2009/addons/list_options.thtml:48
 msgctxt "list_sortby_rating"
 msgid "Rating"
 msgstr "評価"
 
-#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
-#: views/tags/display.thtml:78 views/search/index.thtml:118
 #: views/addons/display.thtml:181 views/addons/display.thtml:338
+#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
+#: views/search/index.thtml:118 views/tags/display.thtml:78
 msgctxt "advanced_search_form_rating"
 msgid "Rating"
 msgstr "評価"
@@ -6198,8 +6203,8 @@ msgstr "最近更新されたアドオン"
 msgid "Recently Viewed"
 msgstr "最近表示されたアドオン"
 
-#: views/addons/searchengines.thtml:57 views/addons/themes_landing.thtml:54
-#: views/addons/home.thtml:108
+#: views/addons/home.thtml:108 views/addons/searchengines.thtml:57
+#: views/addons/themes_landing.thtml:54
 msgid "Recommended"
 msgstr "おすすめ"
 
@@ -6232,13 +6237,13 @@ msgstr "登録ユーザ"
 msgid "Related Collections"
 msgstr "関連するコレクション"
 
-#: views/developers/versions_edit.thtml:182
-msgctxt "devcp_versions_edit_transbox_releasenotes_name"
+#: views/addons/display.thtml:369
+msgctxt "addons_display_release_notes"
 msgid "Release Notes"
 msgstr "リリースノート"
 
-#: views/addons/display.thtml:369
-msgctxt "addons_display_release_notes"
+#: views/developers/versions_edit.thtml:182
+msgctxt "devcp_versions_edit_transbox_releasenotes_name"
 msgid "Release Notes"
 msgstr "リリースノート"
 
@@ -6269,13 +6274,13 @@ msgstr "削除"
 msgid "Remove Application"
 msgstr "アプリケーションを削除"
 
-#: views/pages/js_constants.js.thtml:92
-msgctxt "devcp_js_img_remove_compat"
+#: views/developers/versions_edit.thtml:151
+msgctxt "devcp_versions_edit_remove_compat"
 msgid "Remove Application Compatibility"
 msgstr "アプリケーション互換性を削除"
 
-#: views/developers/versions_edit.thtml:151
-msgctxt "devcp_versions_edit_remove_compat"
+#: views/pages/js_constants.js.thtml:92
+msgctxt "devcp_js_img_remove_compat"
 msgid "Remove Application Compatibility"
 msgstr "アプリケーション互換性を削除"
 
@@ -6303,12 +6308,12 @@ msgstr "注目のアドオンを削除"
 msgid "Remove flags; keep review"
 msgstr "フラグを削除してレビューを残す"
 
-#: views/elements/amo2009/collections/js_init.thtml:71
 #: views/elements/amo2009/collections/add_form.thtml:50
+#: views/elements/amo2009/collections/js_init.thtml:71
 msgid "Remove from Favorites"
 msgstr "お気に入りから削除"
 
-#: views/users/edit.thtml:134 views/admin/users_edit.thtml:116
+#: views/admin/users_edit.thtml:116 views/users/edit.thtml:134
 msgid "Remove this picture?"
 msgstr "この写真を削除しますか？"
 
@@ -6344,14 +6349,14 @@ msgstr "プレビュー画像を置き換え"
 msgid "Replies"
 msgstr "返信"
 
-# a noun: shown in an add-on's editor review history
-#: views/elements/developers/editors_review_history_item.thtml:92
-msgctxt "editors_review_history_info_reply"
+#: views/reviews/display.thtml:76
+msgctxt "addon_review_author_reply_link"
 msgid "Reply"
 msgstr "返信"
 
-#: views/reviews/display.thtml:76
-msgctxt "addon_review_author_reply_link"
+# a noun: shown in an add-on's editor review history
+#: views/elements/developers/editors_review_history_item.thtml:92
+msgctxt "editors_review_history_info_reply"
 msgid "Reply"
 msgstr "返信"
 
@@ -6444,13 +6449,13 @@ msgstr "レビュー担当者のコメント"
 msgid "Review Guidelines"
 msgstr "レビューガイドライン"
 
-#: views/elements/developers/editorsmenu.thtml:61
-msgctxt "editorcp_menu_reviewlog_link"
+#: views/editors/reviewlog.thtml:42
+msgctxt "editorcp_reviewlog_page_heading"
 msgid "Review Log"
 msgstr "レビュー履歴"
 
-#: views/editors/reviewlog.thtml:42
-msgctxt "editorcp_reviewlog_page_heading"
+#: views/elements/developers/editorsmenu.thtml:61
+msgctxt "editorcp_menu_reviewlog_link"
 msgid "Review Log"
 msgstr "レビュー履歴"
 
@@ -6484,20 +6489,20 @@ msgid "Reviews Created"
 msgstr "作成されたレビュー"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:56 views/reviews/display.thtml:55
-#: views/reviews/review_added.thtml:50
-#, php-format
-msgctxt "reviews_header"
-msgid "Reviews for %s"
-msgstr "%s のレビュー"
-
-# %1 is the add-on name
 #: controllers/reviews_controller.php:202
 #: controllers/reviews_controller.php:251
 #: controllers/reviews_controller.php:346
 #: controllers/reviews_controller.php:425
 #, php-format
 msgctxt "addon_review_pagetitle"
+msgid "Reviews for %s"
+msgstr "%s のレビュー"
+
+# %1 is the add-on name
+#: views/reviews/display.thtml:55 views/reviews/flag.thtml:56
+#: views/reviews/review_added.thtml:50
+#, php-format
+msgctxt "reviews_header"
 msgid "Reviews for %s"
 msgstr "%s のレビュー"
 
@@ -6519,15 +6524,15 @@ msgstr "テストを実行中..."
 msgid "SQL"
 msgstr "SQL"
 
-#: views/elements/header.thtml:58 views/elements/header.thtml:75
-#: views/elements/header.thtml:80 views/api/api_addon.thtml:57
-#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:65
-msgctxt "a_header_sandbox"
+#: views/developers/addon_status.thtml:63
+msgctxt "devcp_addon_status_sandbox"
 msgid "Sandbox"
 msgstr "サンドボックス"
 
-#: views/developers/addon_status.thtml:63
-msgctxt "devcp_addon_status_sandbox"
+#: views/api/api_addon.thtml:57 views/api/collections_feed.thtml:77
+#: views/elements/header.thtml:58 views/elements/header.thtml:75
+#: views/elements/header.thtml:80 views/sharing_api/addon.thtml:65
+msgctxt "a_header_sandbox"
 msgid "Sandbox"
 msgstr "サンドボックス"
 
@@ -6886,7 +6891,7 @@ msgstr ""
 # %2$s is a number
 # %3$s is a number
 # %4$s is a word (the add-on is tagged with it)
-#: views/tags/display.thtml:53 views/search/index.thtml:81
+#: views/search/index.thtml:81 views/tags/display.thtml:53
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
 msgstr ""
@@ -6897,7 +6902,7 @@ msgstr ""
 msgid "Sign up for PayPal"
 msgstr "PayPal へログイン"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 #, php-format
 msgid "Since %1$s"
 msgstr "%1$s 以降"
@@ -6988,17 +6993,17 @@ msgstr ""
 "ベースのブラウザをご利用ください。"
 
 #: views/elements/amo2009/search.thtml:254 views/elements/search.thtml:231
-#: views/tags/display.thtml:73 views/search/index.thtml:112
+#: views/search/index.thtml:112 views/tags/display.thtml:73
 msgid "Sort By"
 msgstr "並べ替え"
 
-#: views/elements/amo2009/collections/sort_form.thtml:48
 #: views/collections/detail.thtml:132
+#: views/elements/amo2009/collections/sort_form.thtml:48
 msgid "Sort by"
 msgstr "並べ替え"
 
-#: views/elements/amo2009/addons/list_options.thtml:84
 #: views/elements/addon_list_options.thtml:98
+#: views/elements/amo2009/addons/list_options.thtml:84
 msgid "Sort by:"
 msgstr "並び替え:"
 
@@ -7070,16 +7075,15 @@ msgstr ""
 msgid "Statistics"
 msgstr "統計情報"
 
+#: views/developers/dashboard.thtml:73
 #: views/elements/developers/actionbar.thtml:44
 #: views/elements/developers/actionbar.thtml:49
-#: views/developers/dashboard.thtml:73
 msgctxt "devcp_actionbar_link_stats"
 msgid "Statistics Dashboard"
 msgstr "統計ダッシュボード"
 
-#: views/elements/developers/sidebar.thtml:63
-#: views/elements/developers/myaddons.thtml:70
-msgctxt "devcp_myaddons_statistics_link"
+#: views/statistics/index.thtml:39
+msgctxt "statistics_index_title"
 msgid "Statistics Dashboard"
 msgstr "統計ダッシュボード"
 
@@ -7088,8 +7092,9 @@ msgctxt "devcp_editbox_statistics_dashboard"
 msgid "Statistics Dashboard"
 msgstr "統計ダッシュボード"
 
-#: views/statistics/index.thtml:39
-msgctxt "statistics_index_title"
+#: views/elements/developers/myaddons.thtml:70
+#: views/elements/developers/sidebar.thtml:63
+msgctxt "devcp_myaddons_statistics_link"
 msgid "Statistics Dashboard"
 msgstr "統計ダッシュボード"
 
@@ -7111,13 +7116,13 @@ msgstr "%1$s の統計ダッシュボード設定"
 msgid "Statistics for %1$s"
 msgstr "%1$s の統計情報"
 
-#: views/developers/versions_edit.thtml:81
-msgctxt "devcp_versions_edit_th_status"
+#: views/developers/versions.thtml:58
+msgctxt "devcp_versions_th_status"
 msgid "Status"
 msgstr "ステータス"
 
-#: views/developers/versions.thtml:58
-msgctxt "devcp_versions_th_status"
+#: views/developers/versions_edit.thtml:81
+msgctxt "devcp_versions_edit_th_status"
 msgid "Status"
 msgstr "ステータス"
 
@@ -7155,24 +7160,24 @@ msgctxt "editors_review_label_subject"
 msgid "Subject"
 msgstr "件名"
 
-#: views/elements/developers/additem.thtml:76
-msgctxt "devcp_additem_submissionhelp_link"
-msgid "Submission Help"
-msgstr "申請に関するヘルプ"
-
 #: controllers/pages_controller.php:109
 msgctxt "page_title_submissionhelp"
 msgid "Submission Help"
 msgstr "申請に関するヘルプ"
 
-#: views/elements/developers/additem.thtml:41
-msgctxt "devcp_additem_sidebar_title"
+#: views/elements/developers/additem.thtml:76
+msgctxt "devcp_additem_submissionhelp_link"
+msgid "Submission Help"
+msgstr "申請に関するヘルプ"
+
+#: views/elements/developers/myaddons.thtml:69
+#: views/elements/developers/sidebar.thtml:62
+msgctxt "devcp_myaddons_submitaddon_link"
 msgid "Submit Add-on"
 msgstr "アドオンを登録"
 
-#: views/elements/developers/sidebar.thtml:62
-#: views/elements/developers/myaddons.thtml:69
-msgctxt "devcp_myaddons_submitaddon_link"
+#: views/elements/developers/additem.thtml:41
+msgctxt "devcp_additem_sidebar_title"
 msgid "Submit Add-on"
 msgstr "アドオンを登録"
 
@@ -7257,13 +7262,13 @@ msgstr "作者が希望している寄付の金額: $%1$s"
 msgid "Suggested amount"
 msgstr "希望する金額"
 
-#: views/editors/review.thtml:261
-msgctxt "editors_review_header_summary"
+#: controllers/statistics_controller.php:305
+msgctxt "statistics_js_plotselection_selector_summary"
 msgid "Summary"
 msgstr "概要"
 
-#: controllers/statistics_controller.php:305
-msgctxt "statistics_js_plotselection_selector_summary"
+#: views/editors/review.thtml:261
+msgctxt "editors_review_header_summary"
 msgid "Summary"
 msgstr "概要"
 
@@ -7340,8 +7345,8 @@ msgstr "タグの上限数に達しました"
 msgid "Tag removed"
 msgstr "タグが削除されました"
 
-#: views/elements/developers/editbox.thtml:48
-msgctxt "devcp_editbox_tags"
+#: views/addons/display.thtml:473
+msgctxt "tags_header_tags_title"
 msgid "Tags"
 msgstr "タグ"
 
@@ -7350,8 +7355,8 @@ msgctxt "search_filter_tags_header"
 msgid "Tags"
 msgstr "タグ"
 
-#: views/addons/display.thtml:473
-msgctxt "tags_header_tags_title"
+#: views/elements/developers/editbox.thtml:48
+msgctxt "devcp_editbox_tags"
 msgid "Tags"
 msgstr "タグ"
 
@@ -7359,9 +7364,9 @@ msgstr "タグ"
 msgid "Target Locale"
 msgstr "対象ロケール"
 
-#: views/editors/performance_table.thtml:119
 #: views/editors/performance_charts.thtml:71
 #: views/editors/performance_charts.thtml:96
+#: views/editors/performance_table.thtml:119
 msgid "Team Average"
 msgstr "チーム平均"
 
@@ -7461,14 +7466,14 @@ msgstr "グループの設定は保存されました"
 msgid "The Group with id %s was deleted"
 msgstr "グループ (ID %s) は削除されました"
 
-#: controllers/components/validation.php:276
 #: controllers/components/developers.php:555
+#: controllers/components/validation.php:276
 msgid "The ID of this add-on is already used by an application."
 msgstr "このアドオンの ID は既にアプリケーションによって使用されています。"
 
 # %s is a string
-#: controllers/components/validation.php:271
 #: controllers/components/developers.php:550
+#: controllers/components/validation.php:271
 #, php-format
 msgid "The ID of this add-on is invalid: %s"
 msgstr "このアドオンの ID は不正な形式です: %s"
@@ -7661,14 +7666,14 @@ msgid "The file contains a global variable: %s"
 msgstr "ファイルにグローバル変数が含まれています: %s"
 
 # %s is an error message from the parser.
-#: controllers/components/validation.php:251
 #: controllers/components/developers.php:530
+#: controllers/components/validation.php:251
 #, php-format
 msgid "The following error occurred while parsing install.rdf: %s"
 msgstr "install.rdf のパース中に以下のエラーが発生しました: %s"
 
-#: controllers/components/validation.php:356
 #: controllers/components/developers.php:635
+#: controllers/components/validation.php:356
 msgid "The following errors were found in install.rdf:"
 msgstr "install.rdf ファイルに以下のエラーがあります:"
 
@@ -7731,8 +7736,8 @@ msgid "The password reset link was sent to your email address."
 msgstr ""
 "登録されているメールアドレスにパスワード変更のためのリンクを送信しました。"
 
-#: views/users/pwreset.thtml:79 views/users/register.thtml:75
-#: views/users/edit.thtml:226
+#: views/users/edit.thtml:226 views/users/pwreset.thtml:79
+#: views/users/register.thtml:75
 msgid "The passwords did not match."
 msgstr "パスワードが一致しません。"
 
@@ -7801,8 +7806,8 @@ msgstr ""
 "アップロードされたバージョン (%1$s) は既に存在します。このバージョンに他の"
 "ファイルを追加するには、<a href=\"%2$s\">ここをクリック</a> してください。"
 
-#: controllers/components/validation.php:291
 #: controllers/components/developers.php:570
+#: controllers/components/validation.php:291
 msgid ""
 "The version of this add-on is invalid: please see the <a href=\"http://"
 "developer.mozilla.org/en/docs/Toolkit_version_format\">specification</a>"
@@ -7810,20 +7815,20 @@ msgstr ""
 "このアドオンのバージョンは不正な形式です: <a href=\"https://developer."
 "mozilla.org/ja/Toolkit_version_format\">仕様</a> をご確認ください。"
 
-#: controllers/components/validation.php:286
 #: controllers/components/developers.php:565
+#: controllers/components/validation.php:286
 msgid "The version of this add-on is invalid: versions cannot contain spaces."
 msgstr ""
 "このアドオンのバージョンは不正な形式です: バージョンにスペースを含めることは"
 "できません。"
 
-#: models/addontype.php:77
-msgctxt "general_addontype_theme"
+#: views/elements/pitch.thtml:48 views/elements/pitch.thtml:54
+msgctxt "sidebar_pitch_theme"
 msgid "Theme"
 msgstr "テーマ"
 
-#: views/elements/pitch.thtml:48 views/elements/pitch.thtml:54
-msgctxt "sidebar_pitch_theme"
+#: models/addontype.php:77
+msgctxt "general_addontype_theme"
 msgid "Theme"
 msgstr "テーマ"
 
@@ -7849,7 +7854,7 @@ msgid "Themes"
 msgstr "テーマ"
 
 # %1 is the queue mode
-#: views/editors/queue.thtml:189 views/admin/flagged_queue.thtml:89
+#: views/admin/flagged_queue.thtml:89 views/editors/queue.thtml:189
 msgid "There are currently no add-ons of this type to review."
 msgstr "現在レビュー待ちの %s アドオンはありません。"
 
@@ -7862,8 +7867,8 @@ msgid "There are currently no reviews in moderation."
 msgstr "担当しているレビューはありません。"
 
 #: views/collections/add.thtml:55 views/collections/edit.thtml:89
-#: views/users/register.thtml:54 views/users/edit.thtml:74
-#: views/reviews/add.thtml:70 controllers/groups_controller.php:80
+#: views/reviews/add.thtml:70 views/users/edit.thtml:74
+#: views/users/register.thtml:54 controllers/groups_controller.php:80
 #: controllers/groups_controller.php:102
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr "入力内容にエラーがあります。確認の上、再度送信してください。"
@@ -7939,8 +7944,8 @@ msgstr ""
 "これらのバージョンは、参考として、またテスト目的で利用できるように公開されて"
 "います。特別な理由がない限り、常に最新のバージョンをご利用ください。"
 
-#: views/users/register.thtml:100 views/users/edit.thtml:122
-#: views/admin/users_edit.thtml:109
+#: views/admin/users_edit.thtml:109 views/users/edit.thtml:122
+#: views/users/register.thtml:100
 msgid ""
 "This URL has an invalid format. Valid URLs look like http://example.com/"
 "my_page."
@@ -8016,17 +8021,17 @@ msgstr "このダッシュボードは現在 <b>非公開です</b>。"
 msgid "This dashboard is currently <b>public</b>."
 msgstr "このダッシュボードは現在 <b>公開されています</b>。"
 
-#: views/users/register.thtml:65 views/users/edit.thtml:233
+#: views/users/edit.thtml:233 views/users/register.thtml:65
 #: controllers/users_controller.php:699
 msgid "This email address is already taken by another user."
 msgstr "このメールアドレスは既に他のユーザに使われています。"
 
-#: views/users/pwreset.thtml:74 views/users/register.thtml:70
-#: views/users/register.thtml:80 views/users/register.thtml:86
+#: views/admin/users_edit.thtml:78 views/admin/users_edit.thtml:83
+#: views/reviews/add.thtml:80 views/reviews/add.thtml:104
 #: views/users/edit.thtml:98 views/users/edit.thtml:104
-#: views/users/edit.thtml:235 views/admin/users_edit.thtml:78
-#: views/admin/users_edit.thtml:83 views/reviews/add.thtml:80
-#: views/reviews/add.thtml:104
+#: views/users/edit.thtml:235 views/users/pwreset.thtml:74
+#: views/users/register.thtml:70 views/users/register.thtml:80
+#: views/users/register.thtml:86
 msgid "This field must not be empty."
 msgstr "この項目は必須です。"
 
@@ -8052,12 +8057,12 @@ msgstr "これは正式リリース前のアドオンです"
 msgid "This is a site-specific add-on"
 msgstr "これは特定のサイト用のアドオンです"
 
-#: views/users/register.thtml:65 views/users/edit.thtml:237
+#: views/users/edit.thtml:237 views/users/register.thtml:65
 msgid "This is not a valid email address."
 msgstr "メールアドレスの形式が正しくありません。"
 
-#: views/users/register.thtml:91 views/users/edit.thtml:109
-#: views/admin/users_edit.thtml:88
+#: views/admin/users_edit.thtml:88 views/users/edit.thtml:109
+#: views/users/register.thtml:91
 msgid "This nickname is already taken."
 msgstr "このニックネームは既に他のユーザに使われています。"
 
@@ -8212,7 +8217,7 @@ msgstr "トップユーザカテゴリ"
 msgid "Total"
 msgstr "合計"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:155
+#: views/statistics/addon.thtml:155 views/statistics/rss/summary.thtml:40
 msgid "Total Downloads"
 msgstr "累計ダウンロード数"
 
@@ -8259,13 +8264,13 @@ msgstr "種類"
 msgid "Uk"
 msgstr "不明"
 
-#: controllers/components/stats.php:430
-msgctxt "statistics_longnames_unknown"
+#: controllers/components/amo.php:203
+msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "不明"
 
-#: controllers/components/amo.php:203
-msgctxt "addons_status_unknown"
+#: controllers/components/stats.php:430
+msgctxt "statistics_longnames_unknown"
 msgid "Unknown"
 msgstr "不明"
 
@@ -8357,22 +8362,23 @@ msgid "Updated"
 msgstr "更新日"
 
 # %s is a date in the _('date') format
+#: views/addons/browse_thumbs.thtml:119
+#: views/elements/addon_listitem.thtml:122
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:100
 #: views/elements/amo2009/results_addon.thtml:119
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/addon_listitem.thtml:122 views/elements/feature.thtml:106
-#: views/addons/browse_thumbs.thtml:119
+#: views/elements/feature.thtml:106
 #, php-format
 msgid "Updated %s"
 msgstr "%s 更新"
 
-#: views/elements/pitch.thtml:71
-msgctxt "sidebar_pitch_updated_addons"
+#: controllers/addons_controller.php:540
+msgctxt "rss_updatedaddons"
 msgid "Updated Add-ons"
 msgstr "最近更新されたアドオン"
 
-#: controllers/addons_controller.php:540
-msgctxt "rss_updatedaddons"
+#: views/elements/pitch.thtml:71
+msgctxt "sidebar_pitch_updated_addons"
 msgid "Updated Add-ons"
 msgstr "最近更新されたアドオン"
 
@@ -8396,7 +8402,7 @@ msgstr "プレビュー画像をアップロード: "
 msgid "Upload Your File"
 msgstr "ファイルをアップロード"
 
-#: views/users/edit.thtml:137 views/admin/users_edit.thtml:118
+#: views/admin/users_edit.thtml:118 views/users/edit.thtml:137
 msgid "Upload a new picture?"
 msgstr "新しい写真をアップロードしますか？"
 
@@ -8480,11 +8486,11 @@ msgstr "ユーザプロフィール"
 msgid "User not found"
 msgstr "ユーザが見つかりません"
 
-#: views/users/pwreset.thtml:54 controllers/users_controller.php:197
-#: controllers/users_controller.php:276 controllers/users_controller.php:685
-#: controllers/users_controller.php:744 controllers/users_controller.php:914
-#: controllers/collections_controller.php:1008
+#: views/users/pwreset.thtml:54 controllers/collections_controller.php:1008
 #: controllers/collections_controller.php:1018
+#: controllers/users_controller.php:197 controllers/users_controller.php:276
+#: controllers/users_controller.php:685 controllers/users_controller.php:744
+#: controllers/users_controller.php:914
 msgid "User not found!"
 msgstr "該当するユーザが見つかりません。"
 
@@ -8553,13 +8559,13 @@ msgstr "検証は一時的に利用できなくなっています。また後で
 msgid "Ver"
 msgstr "Ver"
 
-#: views/developers/versions.thtml:56 views/addons/display.thtml:144
+#: views/addons/display.thtml:144 views/developers/versions.thtml:56
 msgid "Version"
 msgstr "バージョン"
 
 # %s is the version of the add-on.  Example:  3.2a1
-#: views/elements/amo2009/addons/version_detail.thtml:51
 #: views/elements/addon_version_detail.thtml:51
+#: views/elements/amo2009/addons/version_detail.thtml:51
 #, php-format
 msgctxt "addon_display_header_version"
 msgid "Version %s"
@@ -8604,13 +8610,13 @@ msgstr "バージョン・ファイル"
 msgid "Versions"
 msgstr "バージョン"
 
-#: views/elements/developers/editbox.thtml:64
-msgctxt "devcp_editbox_versions"
+#: views/developers/dashboard.thtml:82
+msgctxt "devcp_dashboard_versions"
 msgid "Versions and Files"
 msgstr "バージョンとファイル"
 
-#: views/developers/dashboard.thtml:82
-msgctxt "devcp_dashboard_versions"
+#: views/elements/developers/editbox.thtml:64
+msgctxt "devcp_editbox_versions"
 msgid "Versions and Files"
 msgstr "バージョンとファイル"
 
@@ -8618,8 +8624,8 @@ msgstr "バージョンとファイル"
 msgid "View All Collections"
 msgstr "すべてのコレクションを見る"
 
-#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/feature.thtml:95
 msgid "View Author's Profile"
 msgstr "作者のプロフィールを見る"
@@ -8693,14 +8699,14 @@ msgid "View all top rated"
 msgstr "評価の高いアドオンをすべて見る"
 
 # %1$s and %2$s are full <input> tags for dates
+#: views/admin/logs.thtml:46 views/editors/logs.thtml:45
 #: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
-#: views/editors/logs.thtml:45 views/admin/logs.thtml:46
 #, php-format
 msgid "View entries between %1$s and %2$s"
 msgstr "%s から %s までのエントリーを表示"
 
-#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/amo2009/homepage_addon.thtml:129
+#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/feature.thtml:127
 msgid "View more from"
 msgstr "同じカテゴリの他のアドオンを見る:"
@@ -8753,8 +8759,8 @@ msgid ""
 msgstr ""
 "このアドオンのデータはまだ集まっていません。数日後にまた確認してください。"
 
-#: views/users/register.thtml:98 views/users/edit.thtml:120
-#: views/admin/users_edit.thtml:107
+#: views/admin/users_edit.thtml:107 views/users/edit.thtml:120
+#: views/users/register.thtml:98
 msgid "Website URL"
 msgstr "Web サイト URL"
 
@@ -8786,10 +8792,10 @@ msgstr ""
 "%2$s Add-ons へようこそ\\n\\nアカウントの利用を開始するには認証手続きを行う必"
 "要があります。この手続きは、お使いのメールアドレスが正しいかどうかということ"
 "と、あなた自身のアドレスであることを確かめるものです。\\nアカウントを有効にす"
-"るには、以下のリンクをクリックするか、リンクの文字列全体をブラウザのロケーシ"
-"ョンバーに貼り付けてください。\\n\\n%1$s\\n\\n認証手続きが完了したら、このメ"
-"ールは削除しても構いません。\\n\\n%2$s Add-ons にご登録いただきありがとうござ"
-"います。\\n-- %2$s Add-ons スタッフ一同"
+"るには、以下のリンクをクリックするか、リンクの文字列全体をブラウザのロケー"
+"ションバーに貼り付けてください。\\n\\n%1$s\\n\\n認証手続きが完了したら、この"
+"メールは削除しても構いません。\\n\\n%2$s Add-ons にご登録いただきありがとうご"
+"ざいます。\\n-- %2$s Add-ons スタッフ一同"
 
 #: views/users/register.thtml:49
 msgid "Welcome to addons.mozilla.org (AMO)!"
@@ -8841,8 +8847,8 @@ msgstr "このアドオンの今後の開発計画"
 msgid "What's next for %1$s"
 msgstr "%1$s の今後の開発計画"
 
-#: views/elements/amo2009/contribution.thtml:92 views/addons/display.thtml:387
-#: views/addons/display.thtml:530
+#: views/addons/display.thtml:387 views/addons/display.thtml:530
+#: views/elements/amo2009/contribution.thtml:92
 msgctxt "addons_display_a_license_what"
 msgid "What's this?"
 msgstr "これは何？"
@@ -8949,8 +8955,10 @@ msgstr "ユーザ名またはパスワードが正しくありません。"
 # This is a placeholder for a date in the Year-Month-Day format.  This is 
 # NOT a php format string.  Dates going into this box need to remain in the
 # YYYY-MM-DD format so please localize that if necessary or just leave as is.
+#: controllers/admin_controller.php:1733
 #: controllers/editors_controller.php:658
 #: controllers/editors_controller.php:1758
+#: controllers/editors_controller.php:1814
 msgid "YYYY-MM-DD"
 msgstr "YYYY-MM-DD"
 
@@ -9046,11 +9054,11 @@ msgstr ""
 msgid "You cannot review your own add-on."
 msgstr "自分のアドオンをレビューすることはできません。"
 
-#: controllers/statistics_controller.php:202
-#: controllers/statistics_controller.php:432
 #: controllers/previews_controller.php:108
 #: controllers/previews_controller.php:211
 #: controllers/previews_controller.php:312
+#: controllers/statistics_controller.php:202
+#: controllers/statistics_controller.php:432
 msgid "You do not have access to that add-on."
 msgstr "このアドオンへアクセスする権限がありません。"
 
@@ -9099,8 +9107,8 @@ msgstr ""
 msgid "You must give your collection a name."
 msgstr "コレクションの名前を入力してください。"
 
-#: controllers/components/validation.php:350
 #: controllers/components/developers.php:629
+#: controllers/components/validation.php:350
 msgid "You must have at least one valid Mozilla target application."
 msgstr ""
 "少なくともひとつは正しい Mozilla の対象アプリケーションを設定する必要がありま"
@@ -9198,8 +9206,8 @@ msgstr ""
 "るレビューを受けることなく新しいバージョンを公開できます。"
 
 # %1$s is a URL
-#: controllers/components/validation.php:281
 #: controllers/components/developers.php:560
+#: controllers/components/validation.php:281
 #, php-format
 msgid ""
 "Your add-on is attempting to use a GUID that has been blocked.  Please <a "
@@ -9413,17 +9421,19 @@ msgid_plural "and %1$s more collections"
 msgstr[0] "と %1$s 個のコレクション"
 msgstr[1] "と %1$s 個のコレクション"
 
-#: views/elements/amo2009/results_addon.thtml:91
-#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/addons/category_landing.thtml:66 views/addons/display.thtml:64
+#: views/addons/home.thtml:157 views/addons/policy.thtml:57
 #: views/elements/addon_discussionheader.thtml:83
-#: views/elements/addon_listitem.thtml:109 views/elements/feature.thtml:95
-#: views/addons/category_landing.thtml:66 views/addons/policy.thtml:57
-#: views/addons/display.thtml:64 views/addons/home.thtml:157
+#: views/elements/addon_listitem.thtml:109
+#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
+#: views/elements/feature.thtml:95
 msgid "by"
 msgstr "作者:"
 
+#: views/addons/display.thtml:305
 #: views/elements/amo2009/separated_list_items.thtml:106
-#: views/addons/display.thtml:305 views/reviews/display.thtml:72
+#: views/reviews/display.thtml:72
 #, php-format
 msgid "by %1$s on %2$s"
 msgstr "投稿者: %1$s - 投稿日時: %2$s"
@@ -9447,23 +9457,14 @@ msgid "close"
 msgstr "閉じる"
 
 # %1$s is a comma-separated list of author names
-#: views/elements/amo2009/separated_list_items.thtml:72
 #: views/elements/amo2009/collection_listing_item.thtml:84
+#: views/elements/amo2009/separated_list_items.thtml:72
 #, php-format
 msgid "created by %1$s"
 msgstr "作成者: %1$s"
 
-#: views/addons/display.thtml:362
-msgid "Detailed Review"
-msgstr "詳細なレビュー"
-
-#: controllers/admin_controller.php:1733
-msgctxt "YYYY-MM-DD"
-msgid "editors_date_filter_placeholder"
-msgstr ""
-
-#: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:348
-#: views/elements/feature.thtml:89
+#: views/elements/amo2009/install.thtml:348 views/elements/feature.thtml:89
+#: views/helpers/addons_html.php:571
 msgid "experimental"
 msgstr "実験的なアドオン"
 
@@ -9561,9 +9562,9 @@ msgstr "または、別のアドオンを選択してください"
 msgid "others"
 msgstr "その他"
 
+#: views/elements/addon_list_options.thtml:94
 #: views/elements/amo2009/addons/list_options.thtml:103
 #: views/elements/pagination.thtml:67
-#: views/elements/addon_list_options.thtml:94
 msgid "per page"
 msgstr "件ごとに表示"
 
@@ -9571,7 +9572,7 @@ msgstr "件ごとに表示"
 msgid "previous"
 msgstr "前へ"
 
-#: views/helpers/addons_html.php:573 views/elements/amo2009/install.thtml:346
+#: views/elements/amo2009/install.thtml:346 views/helpers/addons_html.php:573
 msgid "recommended"
 msgstr "おすすめのアドオン"
 
@@ -9592,8 +9593,8 @@ msgstr "アドオンを検索"
 msgid "search for collections"
 msgstr "コレクションを検索"
 
-#: views/elements/amo2009/addons/list_options.thtml:108
 #: views/elements/addon_list_options.thtml:105
+#: views/elements/amo2009/addons/list_options.thtml:108
 msgid "show experimental add-ons"
 msgstr "実験的なアドオンを表示する"
 
@@ -9605,11 +9606,12 @@ msgstr "から"
 msgid "version"
 msgstr "バージョン"
 
-#: views/elements/amo2009/results_addon.thtml:97
-#: views/elements/amo2009/homepage_addon.thtml:108
-#: views/elements/addon_listitem.thtml:115 views/elements/feature.thtml:101
-#: views/addons/category_landing.thtml:157
 #: views/addons/browse_thumbs.thtml:126
+#: views/addons/category_landing.thtml:157
+#: views/elements/addon_listitem.thtml:115
+#: views/elements/amo2009/homepage_addon.thtml:108
+#: views/elements/amo2009/results_addon.thtml:97
+#: views/elements/feature.thtml:101
 msgid "weekly downloads"
 msgstr "ダウンロード (週間)"
 
@@ -9633,3 +9635,6 @@ msgstr "投稿者: %1$s - 投稿日時: %2$s"
 #: controllers/editors_controller.php:219
 msgid "yes"
 msgstr "はい"
+
+#~ msgid "Add-ons in Use"
+#~ msgstr "利用されているアドオン"

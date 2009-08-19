@@ -60,8 +60,8 @@ msgstr[0] "%1$s Pengaya pada Koleksi Ini"
 msgstr[1] "%1$s Pengaya pada Koleksi Ini"
 
 # %1$s is a number
-#: views/helpers/localization.php:65 views/developers/versions_edit.thtml:95
-#: views/addons/dictionaries.thtml:92
+#: views/addons/dictionaries.thtml:92 views/developers/versions_edit.thtml:95
+#: views/helpers/localization.php:65
 #, php-format
 msgid "%1$s KB"
 msgstr "%1$s KB"
@@ -79,7 +79,7 @@ msgid "%1$s Version History"
 msgstr "Riwayat Versi %1$s"
 
 # %1 is the add-on count, %2 the category name
-#: views/addons/browse_thumbs.thtml:92 views/addons/browse.thtml:60
+#: views/addons/browse.thtml:60 views/addons/browse_thumbs.thtml:92
 #, php-format
 msgid "%1$s add-on"
 msgid_plural "%1$s add-ons"
@@ -363,7 +363,7 @@ msgstr "%1$s gagal mengotentikasi ulang untuk mengakses %2$s."
 
 # %1$s is the add-on name
 # %2$s is the collection name, linked to the collection's page
-#: views/pages/js_constants.js.thtml:101 views/addons/display.thtml:70
+#: views/addons/display.thtml:70 views/pages/js_constants.js.thtml:101
 #, php-format
 msgid "%1$s has been added to the %2$s collection."
 msgstr "%1$s telah ditambahkan pada koleksi %2$s."
@@ -382,18 +382,18 @@ msgstr "%1$s telah dihapus dari daftar koleksi favorit."
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:324
-#: controllers/components/validation.php:336
 #: controllers/components/developers.php:603
 #: controllers/components/developers.php:615
+#: controllers/components/validation.php:324
+#: controllers/components/validation.php:336
 #, fuzzy, php-format
 msgid "%1$s is not a valid version for %2$s"
 msgstr "%1$s is not a valid version for %2$s"
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:327
 #: controllers/components/developers.php:606
+#: controllers/components/validation.php:327
 #, fuzzy, php-format
 msgid "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
 msgstr ""
@@ -405,7 +405,7 @@ msgstr ""
 msgid "%1$s is not available for %2$s."
 msgstr "%1$s tidak tersedia untuk %2$s."
 
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, fuzzy, php-format
 msgid "%1$s on %2$s"
 msgstr "%1$s on %2$s"
@@ -454,9 +454,9 @@ msgid "%1$s removed feature %2$s"
 msgstr "%1$s menghapus fitur %2$s"
 
 # %1$s is a number
-#: views/elements/amo2009/reviews.thtml:58
-#: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
 #: views/addons/browse_thumbs.thtml:132
+#: views/elements/addon_listitem.thtml:112
+#: views/elements/amo2009/reviews.thtml:58 views/elements/feature.thtml:99
 #, php-format
 msgid "%1$s review"
 msgid_plural "%1$s reviews"
@@ -537,57 +537,58 @@ msgstr "%A, %B %e, %Y"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 #: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
+#: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
 #, fuzzy
 msgid "%A, %b. %e"
 msgstr "%A, %b. %e"
 
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
-#: views/elements/collections_interactive_addon.thtml:85
-#: views/elements/amo2009/users/vcard.thtml:92
+#: views/addons/browse_thumbs.thtml:121 views/addons/display.thtml:159
+#: views/addons/display.thtml:307 views/addons/rss/versions.thtml:42
+#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/developers/dashboard.thtml:65 views/developers/versions.thtml:69
+#: views/developers/versions_edit.thtml:208
+#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
+#: views/elements/addon_listitem.thtml:124
+#: views/elements/addon_version_detail.thtml:54
+#: views/elements/amo2009/addons/version_detail.thtml:53
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:102
 #: views/elements/amo2009/results_addon.thtml:119
 #: views/elements/amo2009/separated_list_items.thtml:108
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/amo2009/addons/version_detail.thtml:53
-#: views/elements/addon_version_detail.thtml:54
-#: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
-#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
+#: views/elements/amo2009/users/vcard.thtml:92
+#: views/elements/collections_interactive_addon.thtml:85
+#: views/elements/feature.thtml:106 views/reviews/add.thtml:63
+#: views/reviews/delete.thtml:54 views/reviews/display.thtml:74
+#: views/reviews/display.thtml:159 views/search/rss/index.thtml:5
 #: views/statistics/index.thtml:108 views/users/info.thtml:108
-#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
-#: views/developers/dashboard.thtml:65
-#: views/developers/versions_edit.thtml:208 views/developers/versions.thtml:69
-#: views/search/rss/index.thtml:5 views/addons/rss/versions.thtml:42
-#: views/addons/display.thtml:159 views/addons/display.thtml:307
-#: views/addons/browse_thumbs.thtml:121 views/reviews/add.thtml:63
-#: views/reviews/display.thtml:74 views/reviews/display.thtml:159
-#: views/reviews/delete.thtml:54 controllers/statistics_controller.php:144
-#: controllers/statistics_controller.php:297
 #: controllers/collections_controller.php:1070
+#: controllers/statistics_controller.php:144
+#: controllers/statistics_controller.php:297
 msgid "%B %e, %Y"
 msgstr "%e %B %Y"
 
 # date and time format string (strftime)
 # http://php.net/strftime
-#: views/elements/addon_version_detail.thtml:53 views/users/edit.thtml:202
-#: views/editors/review.thtml:369 views/developers/discuss.thtml:51
-#: views/developers/discuss.thtml:61 views/admin/addons_status.thtml:57
-#: views/addons/display.thtml:158
+#: views/addons/display.thtml:158 views/admin/addons_status.thtml:57
+#: views/developers/discuss.thtml:51 views/developers/discuss.thtml:61
+#: views/editors/review.thtml:369 views/elements/addon_version_detail.thtml:53
+#: views/users/edit.thtml:202
 msgid "%B %e, %Y, %I:%M %p"
 msgstr "%e %B %Y, %H:%M"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
 #, fuzzy, php-format
 msgid "%b. %e"
 msgstr "%b. %e"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 #, fuzzy
 msgid "%b. %e, %Y"
 msgstr "%b. %e, %Y"
@@ -595,9 +596,8 @@ msgstr "%b. %e, %Y"
 # %s is the name of the add-on and the add-on section.  Example:
 #   Some Add-on :: Firefox Add-ons
 # This should not be concatenated in the code and should be fixed.
-#: controllers/tags_controller.php:381 controllers/addons_controller.php:259
-#: controllers/addons_controller.php:389
-#: controllers/addons_controller.php:1584
+#: controllers/addons_controller.php:259 controllers/addons_controller.php:389
+#: controllers/addons_controller.php:1584 controllers/tags_controller.php:381
 #, php-format
 msgid "%s"
 msgstr "%s"
@@ -632,9 +632,9 @@ msgid "%s Preview Manager"
 msgstr "%s Preview Manager"
 
 # %s is the add-on name.
-#: views/developers/addon_status_nominate.thtml:43
-#: views/developers/addon_status_confirm.thtml:43
 #: views/developers/addon_status.thtml:43
+#: views/developers/addon_status_confirm.thtml:43
+#: views/developers/addon_status_nominate.thtml:43
 #, php-format
 msgid "%s Status"
 msgstr "Status %s"
@@ -659,7 +659,7 @@ msgstr "%s found in range"
 
 # %s is a percentage, like '+22.33%'.  It sits next to another number, so
 # the implied meaning is 'percentage change' from the previous stat point.
-#: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:209
+#: views/statistics/addon.thtml:209 views/statistics/rss/summary.thtml:62
 #, fuzzy, php-format
 msgid "%s from last week"
 msgstr "%s from last week"
@@ -823,22 +823,22 @@ msgstr ""
 "pengaya ini"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:45
 #: views/developers/dashboard.thtml:79
+#: views/elements/developers/statsbar.thtml:45
 #, fuzzy, php-format
 msgid "<em>%s</em> Active Daily Users"
 msgstr "<em>%s</em> Active Daily Users"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:41
 #: views/developers/dashboard.thtml:75
+#: views/elements/developers/statsbar.thtml:41
 #, fuzzy, php-format
 msgid "<em>%s</em> Total Downloads"
 msgstr "<em>%s</em> Total Downloads"
 
 # %s is a number
-#: views/elements/developers/statsbar.thtml:43
 #: views/developers/dashboard.thtml:77
+#: views/elements/developers/statsbar.thtml:43
 #, fuzzy, php-format
 msgid "<em>%s</em> Weekly Downloads"
 msgstr "<em>%s</em> Weekly Downloads"
@@ -1076,12 +1076,12 @@ msgstr ""
 "span><br />Contact the Add-on Owner if you need to make changes."
 
 #: views/developers/addon_edit_authors.thtml:47
-#: views/developers/addon_edit_tags.thtml:46
-#: views/developers/addon_edit_properties.thtml:47
-#: views/developers/addon_status.thtml:46
-#: views/developers/addon_edit_descriptions.thtml:47
-#: views/developers/versions_edit.thtml:47
 #: views/developers/addon_edit_categories.thtml:46
+#: views/developers/addon_edit_descriptions.thtml:47
+#: views/developers/addon_edit_properties.thtml:47
+#: views/developers/addon_edit_tags.thtml:46
+#: views/developers/addon_status.thtml:46
+#: views/developers/versions_edit.thtml:47
 #, fuzzy
 msgid ""
 "<span>Your changes have been saved.</span><br />Please note that some "
@@ -1119,8 +1119,8 @@ msgstr[0] "<strong>%1$s</strong> <span>pengaya digunakan</span>"
 msgstr[1] "<strong>%1$s</strong> <span>pengaya digunakan</span>"
 
 # %1$s is the count of addons in a collection
-#: views/elements/amo2009/collection_listing_item.thtml:51
 #: views/addons/home.thtml:164
+#: views/elements/amo2009/collection_listing_item.thtml:51
 #, php-format
 msgid "<strong>%1$s</strong> add-on"
 msgid_plural "<strong>%1$s</strong> add-ons"
@@ -1128,11 +1128,11 @@ msgstr[0] "<strong>%1$s</strong> pengaya"
 msgstr[1] "<strong>%1$s</strong> pengaya"
 
 # %1$s is the count of subscribers for a collection
+#: views/addons/home.thtml:168 views/collections/detail.thtml:96
 #: views/elements/amo2009/collection_listing_item.thtml:58
-#: views/collections/detail.thtml:96 views/addons/home.thtml:168
 #, php-format
 msgid "<strong>%1$s</strong> subscriber"
-msgid_plural "<strong>%1$s</strong> subscribers"
+msgid_plural "<strong>%1$s</strong> subscriber"
 msgstr[0] "<strong>%1$s</strong> pelanggan"
 msgstr[1] "<strong>%1$s</strong> pelanggan"
 
@@ -1214,7 +1214,7 @@ msgstr ""
 "Seorang Editor Pengaya Mozilla meminta informasi lebih lanjut tentang untuk "
 "pengaya Anda %1$s versi %2$s."
 
-#: views/users/register.thtml:81 views/users/edit.thtml:99
+#: views/users/edit.thtml:99 views/users/register.thtml:81
 #, fuzzy
 msgid "A first name, last name or nickname is required."
 msgstr "A first name, last name or nickname is required."
@@ -1249,17 +1249,17 @@ msgstr ""
 "A version of that add-on already exists. To replace it, you must delete the "
 "file %1$s first."
 
-# Link text for the AMO About page.
-#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
-msgctxt "footer_a_about"
-msgid "About"
-msgstr "Tentang"
-
 #: controllers/editors_controller.php:520
 #, fuzzy
 msgctxt "editors_syntax_about"
 msgid "About"
 msgstr "About"
+
+# Link text for the AMO About page.
+#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
+msgctxt "footer_a_about"
+msgid "About"
+msgstr "Tentang"
 
 #: views/users/info.thtml:57
 #, fuzzy
@@ -1270,7 +1270,7 @@ msgstr "Tentang Saya"
 msgid "About This Collection"
 msgstr "Tentang Koleksi Ini"
 
-#: views/users/edit.thtml:149 views/admin/users_edit.thtml:131
+#: views/admin/users_edit.thtml:131 views/users/edit.thtml:149
 #, fuzzy
 msgid "About me"
 msgstr "About me"
@@ -1283,22 +1283,28 @@ msgstr "Setuju dan Unduh"
 msgid "Accept and Install"
 msgstr "Setuju dan Pasang"
 
-#: views/errors/error401.thtml:50 controllers/components/simple_acl.php:81
-#: controllers/components/simple_acl.php:82
-#: controllers/components/simple_acl.php:83 controllers/components/amo.php:642
-#: controllers/components/amo.php:643 controllers/components/amo.php:644
-#: controllers/reviews_controller.php:354
-#: controllers/reviews_controller.php:486
-#: controllers/editors_controller.php:1228
-#: controllers/collections_controller.php:455
+#: views/errors/error401.thtml:50 controllers/collections_controller.php:455
 #: controllers/collections_controller.php:513
 #: controllers/collections_controller.php:521
 #: controllers/collections_controller.php:991
 #: controllers/collections_controller.php:1056
 #: controllers/collections_controller.php:1100
+#: controllers/components/amo.php:642 controllers/components/amo.php:643
+#: controllers/components/amo.php:644 controllers/components/simple_acl.php:81
+#: controllers/components/simple_acl.php:82
+#: controllers/components/simple_acl.php:83
+#: controllers/editors_controller.php:1228
+#: controllers/reviews_controller.php:354
+#: controllers/reviews_controller.php:486
 #, fuzzy
 msgid "Access Denied"
 msgstr "Access Denied"
+
+#: views/editors/review.thtml:322
+#, fuzzy
+msgctxt "editors_review_th_action"
+msgid "Action"
+msgstr "Action"
 
 #: views/editors/performance_table.thtml:72 views/editors/reviewlog.thtml:58
 #, fuzzy
@@ -1312,15 +1318,15 @@ msgctxt "editors_reviews_header_action"
 msgid "Action"
 msgstr "Action"
 
-#: views/editors/review.thtml:322
-#, fuzzy
-msgctxt "editors_review_th_action"
-msgid "Action"
-msgstr "Action"
-
 #: views/developers/dashboard.thtml:68
 msgid "Active"
 msgstr "Aktif"
+
+#: controllers/statistics_controller.php:307
+#, fuzzy
+msgctxt "statistics_js_plotselection_selector_adu"
+msgid "Active Daily Users"
+msgstr "Active Daily Users"
 
 #: views/statistics/rss/summary.thtml:45 views/statistics/rss/summary.thtml:46
 #, fuzzy
@@ -1331,12 +1337,6 @@ msgstr "Active Daily Users"
 #: views/statistics/addon.thtml:103 views/statistics/addon.thtml:161
 #, fuzzy
 msgctxt "statistics_plot_legend_adu"
-msgid "Active Daily Users"
-msgstr "Active Daily Users"
-
-#: controllers/statistics_controller.php:307
-#, fuzzy
-msgctxt "statistics_js_plotselection_selector_adu"
 msgid "Active Daily Users"
 msgstr "Active Daily Users"
 
@@ -1353,6 +1353,12 @@ msgstr "Status Keaktifan: <span class=\"inactive-1\">Non-aktif</span>"
 msgid "Activity By Month"
 msgstr "Activity By Month"
 
+#: views/addons/display.thtml:490 views/developers/addon_edit_tags.thtml:67
+#, fuzzy
+msgctxt "tags_add_tag_button"
+msgid "Add"
+msgstr "Tambah"
+
 #: views/collections/edit.thtml:211 views/collections/edit.thtml:233
 msgctxt "collections_edit_formfield_users_submit"
 msgid "Add"
@@ -1363,12 +1369,6 @@ msgstr "Tambahkan"
 msgctxt "editors_featured_add_feature_submit"
 msgid "Add"
 msgstr "Add"
-
-#: views/developers/addon_edit_tags.thtml:67 views/addons/display.thtml:490
-#, fuzzy
-msgctxt "tags_add_tag_button"
-msgid "Add"
-msgstr "Tambah"
 
 # %1 is the add-on name, %2 is the app name
 #: views/elements/amo2009/install.thtml:202
@@ -1477,7 +1477,7 @@ msgstr "Tambahkan tinjauan"
 msgid "Add a review for %s"
 msgstr "Tambahkan tinjauan untuk %s"
 
-#: views/developers/addon_edit_tags.thtml:54 views/addons/display.thtml:484
+#: views/addons/display.thtml:484 views/developers/addon_edit_tags.thtml:54
 #, fuzzy
 msgid "Add a tag"
 msgstr "Tambahkan tag"
@@ -1530,8 +1530,8 @@ msgstr "Tambahkan ke Koleksi"
 msgid "Add to Delicious"
 msgstr "Tambahkan ke Delicious"
 
-#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/elements/amo2009/collections/add_form.thtml:53
+#: views/elements/amo2009/collections/js_init.thtml:68
 #: views/pages/collector_firstrun.thtml:64
 msgid "Add to Favorites"
 msgstr "Tambahkan ke Favorit"
@@ -1540,9 +1540,10 @@ msgstr "Tambahkan ke Favorit"
 msgid "Add to a collection:"
 msgstr "Tambahkan ke koleksi:"
 
-#: views/users/edit.thtml:192
+#: views/admin/flagged_queue.thtml:53 views/editors/featured.thtml:63
+#: views/editors/queue.thtml:115
 #, fuzzy
-msgctxt "user_notifications_th_addon"
+msgctxt "editors_th_addon"
 msgid "Add-on"
 msgstr "Add-on"
 
@@ -1552,10 +1553,9 @@ msgctxt "editorcp_reviewlog_column_addon"
 msgid "Add-on"
 msgstr "Add-on"
 
-#: views/editors/featured.thtml:63 views/editors/queue.thtml:115
-#: views/admin/flagged_queue.thtml:53
+#: views/users/edit.thtml:192
 #, fuzzy
-msgctxt "editors_th_addon"
+msgctxt "user_notifications_th_addon"
 msgid "Add-on"
 msgstr "Add-on"
 
@@ -1564,13 +1564,13 @@ msgstr "Add-on"
 msgid "Add-on Collections"
 msgstr "Add-on Collections"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
-msgctxt "collections_index_header_collector"
+#: controllers/pages_controller.php:117
+msgctxt "page_title_collector"
 msgid "Add-on Collector"
 msgstr "Kolektor Pengaya"
 
-#: controllers/pages_controller.php:117
-msgctxt "page_title_collector"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
+msgctxt "collections_index_header_collector"
 msgid "Add-on Collector"
 msgstr "Kolektor Pengaya"
 
@@ -1587,7 +1587,7 @@ msgid "Add-on Collector Home"
 msgstr "Beranda Kolektor Pengaya"
 
 #: views/elements/amo2009/collections/collector_sidebar_download.thtml:45
-#: views/pages/collector_firstrun.thtml:116 views/pages/collector.thtml:69
+#: views/pages/collector.thtml:69 views/pages/collector_firstrun.thtml:116
 msgid "Add-on Collector Logo"
 msgstr "Logo Kolektor Pengaya"
 
@@ -1652,14 +1652,14 @@ msgstr "Ikon Pengaya"
 msgid "Add-on Information"
 msgstr "Informasi Pengaya"
 
-#: views/elements/amo2009/addons/list_options.thtml:45
-#: views/elements/addon_list_options.thtml:45
-msgctxt "list_sortby_name"
+#: views/developers/addon_edit_properties.thtml:78
+msgctxt "devcp_edit_properties_transbox_name_name"
 msgid "Add-on Name"
 msgstr "Nama Pengaya"
 
-#: views/developers/addon_edit_properties.thtml:78
-msgctxt "devcp_edit_properties_transbox_name_name"
+#: views/elements/addon_list_options.thtml:45
+#: views/elements/amo2009/addons/list_options.thtml:45
+msgctxt "list_sortby_name"
 msgid "Add-on Name"
 msgstr "Nama Pengaya"
 
@@ -1754,6 +1754,13 @@ msgstr "Pengaya tidak ditandai sebagai prarilis."
 msgid "Add-on name:"
 msgstr "Nama Pengaya:"
 
+#: controllers/addons_controller.php:133 controllers/addons_controller.php:249
+#: controllers/addons_controller.php:315
+#: controllers/addons_controller.php:1548
+#: controllers/addons_controller.php:1605 controllers/api_controller.php:124
+#: controllers/api_controller.php:762
+#: controllers/collections_controller.php:1064
+#: controllers/collections_controller.php:1097
 #: controllers/developers_controller.php:201
 #: controllers/developers_controller.php:597
 #: controllers/developers_controller.php:1147
@@ -1761,21 +1768,15 @@ msgstr "Nama Pengaya:"
 #: controllers/downloads_controller.php:95
 #: controllers/downloads_controller.php:102
 #: controllers/downloads_controller.php:164
-#: controllers/statistics_controller.php:190
+#: controllers/editors_controller.php:286
 #: controllers/previews_controller.php:115
 #: controllers/previews_controller.php:206
 #: controllers/previews_controller.php:307
 #: controllers/reviews_controller.php:78
 #: controllers/reviews_controller.php:241
 #: controllers/reviews_controller.php:333
-#: controllers/reviews_controller.php:341 controllers/api_controller.php:124
-#: controllers/api_controller.php:762 controllers/addons_controller.php:133
-#: controllers/addons_controller.php:249 controllers/addons_controller.php:315
-#: controllers/addons_controller.php:1548
-#: controllers/addons_controller.php:1605
-#: controllers/editors_controller.php:286
-#: controllers/collections_controller.php:1064
-#: controllers/collections_controller.php:1097
+#: controllers/reviews_controller.php:341
+#: controllers/statistics_controller.php:190
 msgid "Add-on not found!"
 msgstr "Pengaya tidak ditemukan!"
 
@@ -1869,7 +1870,8 @@ msgctxt "statistics_addons_downloaded"
 msgid "Add-ons Downloaded"
 msgstr "Add-ons Downloaded"
 
-#: views/statistics/index.thtml:92 controllers/statistics_controller.php:126
+#: views/statistics/index.thtml:49 views/statistics/index.thtml:92
+#: controllers/statistics_controller.php:126
 #, fuzzy
 msgid "Add-ons In Use"
 msgstr "Add-ons In Use"
@@ -1891,8 +1893,8 @@ msgstr "Pengaya berdasarkan Nama"
 msgid "Add-ons by Rating"
 msgstr "Pengaya berdasarkan Peringkat"
 
-#: controllers/components/validation.php:256
 #: controllers/components/developers.php:535
+#: controllers/components/validation.php:256
 #, fuzzy
 msgid ""
 "Add-ons cannot use an external updateURL. Please remove this from install."
@@ -1901,8 +1903,8 @@ msgstr ""
 "Add-ons cannot use an external updateURL. Please remove this from install."
 "rdf and try again."
 
-#: controllers/components/validation.php:261
 #: controllers/components/developers.php:540
+#: controllers/components/validation.php:261
 #, fuzzy
 msgid ""
 "Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
@@ -1923,13 +1925,13 @@ msgstr "Pengaya yang kompatibel dengan versi beta atau kandidat rilis %1$s"
 msgid "Add-ons compatible with an alpha version of %1$s"
 msgstr "Pengaya yang kompatibel dengan versi alfa %1$s"
 
-#: controllers/tags_controller.php:372 controllers/search_controller.php:235
 #: controllers/addons_controller.php:294 controllers/addons_controller.php:535
 #: controllers/addons_controller.php:832
 #: controllers/addons_controller.php:1036
 #: controllers/addons_controller.php:1262
 #: controllers/addons_controller.php:1405
 #: controllers/addons_controller.php:1454
+#: controllers/search_controller.php:235 controllers/tags_controller.php:372
 #, php-format
 msgid ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
@@ -1940,29 +1942,12 @@ msgstr ""
 
 # %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
 # Sunbird
-#: views/users/info.thtml:50 views/pages/collector_faq.thtml:49
-#: views/pages/collector_firstrun.thtml:42 views/pages/collector.thtml:46
+#: views/pages/collector.thtml:46 views/pages/collector_faq.thtml:49
 #: views/pages/collector_features.thtml:54
-#: controllers/developers_controller.php:89
-#: controllers/tags_controller.php:381
-#: controllers/compatibility_controller.php:72
-#: controllers/components/simple_acl.php:81 controllers/components/amo.php:642
-#: controllers/versions_controller.php:63
-#: controllers/statistics_controller.php:67
-#: controllers/statistics_controller.php:293
-#: controllers/previews_controller.php:67 controllers/users_controller.php:96
-#: controllers/users_controller.php:229 controllers/users_controller.php:336
-#: controllers/users_controller.php:422 controllers/users_controller.php:788
-#: controllers/users_controller.php:791 controllers/users_controller.php:804
-#: controllers/reviews_controller.php:205
-#: controllers/reviews_controller.php:252
-#: controllers/reviews_controller.php:347
-#: controllers/reviews_controller.php:426
-#: controllers/search_controller.php:199 controllers/search_controller.php:298
-#: controllers/search_controller.php:302 controllers/addons_controller.php:219
-#: controllers/addons_controller.php:265 controllers/addons_controller.php:389
-#: controllers/addons_controller.php:480 controllers/addons_controller.php:510
-#: controllers/addons_controller.php:828
+#: views/pages/collector_firstrun.thtml:42 views/users/info.thtml:50
+#: controllers/addons_controller.php:219 controllers/addons_controller.php:265
+#: controllers/addons_controller.php:389 controllers/addons_controller.php:480
+#: controllers/addons_controller.php:510 controllers/addons_controller.php:828
 #: controllers/addons_controller.php:1039
 #: controllers/addons_controller.php:1184
 #: controllers/addons_controller.php:1199
@@ -1974,9 +1959,6 @@ msgstr ""
 #: controllers/addons_controller.php:1584
 #: controllers/addons_controller.php:1640
 #: controllers/addons_controller.php:1645
-#: controllers/editors_controller.php:64 controllers/pages_controller.php:138
-#: controllers/groups_controller.php:65 controllers/groups_controller.php:71
-#: controllers/groups_controller.php:89 controllers/groups_controller.php:111
 #: controllers/collections_controller.php:57
 #: controllers/collections_controller.php:99
 #: controllers/collections_controller.php:188
@@ -1986,7 +1968,27 @@ msgstr ""
 #: controllers/collections_controller.php:483
 #: controllers/collections_controller.php:555
 #: controllers/collections_controller.php:847
+#: controllers/compatibility_controller.php:72
+#: controllers/components/amo.php:642 controllers/components/simple_acl.php:81
+#: controllers/developers_controller.php:89
+#: controllers/editors_controller.php:64 controllers/groups_controller.php:65
+#: controllers/groups_controller.php:71 controllers/groups_controller.php:89
+#: controllers/groups_controller.php:111
 #: controllers/localizers_controller.php:73
+#: controllers/pages_controller.php:138 controllers/previews_controller.php:67
+#: controllers/reviews_controller.php:205
+#: controllers/reviews_controller.php:252
+#: controllers/reviews_controller.php:347
+#: controllers/reviews_controller.php:426
+#: controllers/search_controller.php:199 controllers/search_controller.php:298
+#: controllers/search_controller.php:302
+#: controllers/statistics_controller.php:67
+#: controllers/statistics_controller.php:293
+#: controllers/tags_controller.php:381 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:422 controllers/users_controller.php:788
+#: controllers/users_controller.php:791 controllers/users_controller.php:804
+#: controllers/versions_controller.php:63
 #, php-format
 msgid "Add-ons for %1$s"
 msgstr "Pengaya untuk %1$s"
@@ -1994,11 +1996,6 @@ msgstr "Pengaya untuk %1$s"
 #: views/elements/header.thtml:87
 msgid "Add-ons for Firefox"
 msgstr "Pengaya untuk Firefox"
-
-#: views/statistics/index.thtml:49
-#, fuzzy
-msgid "Add-ons in Use"
-msgstr "Add-ons in Use"
 
 # %1$s is an application name and version.  Example: Firefox 3.1
 #: views/compatibility/dashboard.thtml:77
@@ -2074,11 +2071,11 @@ msgstr ""
 msgid "Admin Flag"
 msgstr "Admin Flag"
 
-#: views/elements/developers/editors_review_history_item.thtml:74
-#: views/elements/developers/editors_review_history_item.thtml:85
 #: views/editors/performance_table.thtml:92
 #: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:77
 #: views/editors/reviewlog.thtml:88
+#: views/elements/developers/editors_review_history_item.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:85
 #, fuzzy
 msgctxt "editors_review_history_nominated_adminreview"
 msgid "Admin Review"
@@ -2100,8 +2097,8 @@ msgstr "Admin Review"
 msgid "Admin Settings"
 msgstr "Pengaturan Admin"
 
-#: views/elements/developers/sidebar.thtml:68
 #: views/elements/developers/myaddons.thtml:75
+#: views/elements/developers/sidebar.thtml:68
 msgctxt "devcp_myaddons_admincp_link"
 msgid "Admin Tools"
 msgstr "Perangkat Admin"
@@ -2299,16 +2296,21 @@ msgstr ""
 "Append {.syntax} to the opening line of code block ~ tildes, where syntax is "
 "one of: html, css, javascript, diff, or sql."
 
-#: views/elements/amo2009/search.thtml:224 views/elements/search.thtml:212
-msgctxt "advanced_search_form_application"
-msgid "Application"
-msgstr "Aplikasi"
-
 #: views/editors/performance_table.thtml:70
 #, fuzzy
 msgctxt "editorcp_performance_column_application"
 msgid "Application"
 msgstr "Application"
+
+#: views/elements/amo2009/search.thtml:224 views/elements/search.thtml:212
+msgctxt "advanced_search_form_application"
+msgid "Application"
+msgstr "Aplikasi"
+
+#: controllers/statistics_controller.php:309
+msgctxt "statistics_js_plotselection_selector_application"
+msgid "Application"
+msgstr "Aplikasi"
 
 #: views/editors/queue.thtml:56
 #, fuzzy
@@ -2318,11 +2320,6 @@ msgstr "Application"
 
 #: controllers/components/stats.php:427
 msgctxt "statistics_longnames_application"
-msgid "Application"
-msgstr "Aplikasi"
-
-#: controllers/statistics_controller.php:309
-msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "Aplikasi"
 
@@ -2350,8 +2347,8 @@ msgstr "Approval Notes"
 msgid "Approved reviews"
 msgstr "Approved reviews"
 
-#: views/elements/developers/editors_review_history_item.thtml:79
 #: views/editors/performance_table.thtml:97 views/editors/reviewlog.thtml:82
+#: views/elements/developers/editors_review_history_item.thtml:79
 #, fuzzy
 msgid "Approved/Public"
 msgstr "Approved/Public"
@@ -2492,17 +2489,17 @@ msgstr "Auto-publisher"
 msgid "Available Actions"
 msgstr "Aksi Tersedia"
 
-#: views/statistics/rss/summary.thtml:60 views/statistics/addon.thtml:199
+#: views/statistics/addon.thtml:199 views/statistics/rss/summary.thtml:60
 #, fuzzy
 msgid "Average Daily Active Users"
 msgstr "Average Daily Active Users"
 
-#: views/statistics/rss/summary.thtml:42 views/statistics/addon.thtml:196
+#: views/statistics/addon.thtml:196 views/statistics/rss/summary.thtml:42
 #, fuzzy
 msgid "Average Daily Downloads"
 msgstr "Average Daily Downloads"
 
-#: views/statistics/rss/summary.thtml:61 views/statistics/addon.thtml:207
+#: views/statistics/addon.thtml:207 views/statistics/rss/summary.thtml:61
 #, fuzzy
 msgid "Average Daily Users this Week"
 msgstr "Average Daily Users this Week"
@@ -2517,23 +2514,23 @@ msgstr "Lisensi BSD"
 
 # %1 is the add-on name
 #: views/addons/policy.thtml:106 views/addons/versions.thtml:130
-#: views/reviews/flag.thtml:61 views/reviews/add.thtml:114
-#: views/reviews/display.thtml:214 views/reviews/review_added.thtml:57
+#: views/reviews/add.thtml:114 views/reviews/display.thtml:214
+#: views/reviews/flag.thtml:61 views/reviews/review_added.thtml:57
 #, php-format
 msgid "Back to %1$s..."
 msgstr "Kembali ke %1$s..."
+
+#: views/elements/developers/myaddons.thtml:77
+#: views/elements/developers/sidebar.thtml:70
+msgctxt "devcp_myaddons_mainpage_link"
+msgid "Back to Main"
+msgstr "Kembali ke Utama"
 
 #: views/elements/developers/editorsmenu.thtml:63
 #, fuzzy
 msgctxt "editorcp_menu_mainpage_link"
 msgid "Back to Main"
 msgstr "Back to Main"
-
-#: views/elements/developers/sidebar.thtml:70
-#: views/elements/developers/myaddons.thtml:77
-msgctxt "devcp_myaddons_mainpage_link"
-msgid "Back to Main"
-msgstr "Kembali ke Utama"
 
 #: views/compatibility/dashboard.thtml:45
 msgctxt "compatibility_dashboard_main_link"
@@ -2559,7 +2556,7 @@ msgid "Back to review"
 msgstr "Kembali ke tinjauan"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:60 views/reviews/add.thtml:113
+#: views/reviews/add.thtml:113 views/reviews/flag.thtml:60
 #: views/reviews/review_added.thtml:56
 msgid "Back to the reviews..."
 msgstr "Kembali ke tinjauan..."
@@ -2637,7 +2634,7 @@ msgstr "Jelajahi Pengaya"
 msgid "Browse Search Engines"
 msgstr "Jelajahi Mesin Pencarian"
 
-#: views/addons/themes_landing.thtml:67 views/addons/browse_thumbs.thtml:87
+#: views/addons/browse_thumbs.thtml:87 views/addons/themes_landing.thtml:67
 #, fuzzy
 msgid "Browse Themes"
 msgstr "Jelajahi Tema"
@@ -2709,26 +2706,26 @@ msgstr "CSS"
 msgid "CSV data not found"
 msgstr "CSV data not found"
 
-#: views/elements/translationbox.thtml:124
-#: views/elements/translationbox.thtml:135
-msgctxt "devcp_transbox_input_cancel"
+#: views/pages/js_constants.js.thtml:90
+#, fuzzy
+msgctxt "devcp_js_a_cancel"
 msgid "Cancel"
-msgstr "Batal"
+msgstr "Cancel"
 
 #: views/collections/edit.thtml:170
 msgctxt "collections_edit_icon_cancel"
 msgid "Cancel"
 msgstr "Batal"
 
-#: views/editors/review.thtml:395
+#: views/developers/versions.thtml:77
 #, fuzzy
-msgctxt "editors_review_input_cancel"
+msgctxt "devcp_versions_a_cancel"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: views/pages/js_constants.js.thtml:90
+#: views/editors/review.thtml:395
 #, fuzzy
-msgctxt "devcp_js_a_cancel"
+msgctxt "editors_review_input_cancel"
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -2745,11 +2742,11 @@ msgctxt "devcp_versions_edit_a_cancel"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: views/developers/versions.thtml:77
-#, fuzzy
-msgctxt "devcp_versions_a_cancel"
+#: views/elements/translationbox.thtml:124
+#: views/elements/translationbox.thtml:135
+msgctxt "devcp_transbox_input_cancel"
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Batal"
 
 #: views/addons/policy.thtml:103
 msgid "Cancel Installation"
@@ -2759,8 +2756,8 @@ msgstr "Batalkan Pemasangan"
 msgid "Cancel and return"
 msgstr "Batalkan dan kembali"
 
-#: views/elements/categories.thtml:50
 #: views/elements/amo2009/categories.thtml:42
+#: views/elements/categories.thtml:50
 msgctxt "categories_header"
 msgid "Categories"
 msgstr "Kategori"
@@ -2820,7 +2817,7 @@ msgctxt "devcp_dashboard_change_status"
 msgid "Change Status"
 msgstr "Ganti Status"
 
-#: views/statistics/rss/summary.thtml:52 views/statistics/addon.thtml:181
+#: views/statistics/addon.thtml:181 views/statistics/rss/summary.thtml:52
 #, fuzzy
 msgid "Change from previous count"
 msgstr "Change from previous count"
@@ -2868,8 +2865,8 @@ msgstr "Tandai kotak, kemudian klik \"%1$s\" untuk menghapus koleksi ini."
 msgid "Checking account email..."
 msgstr "Memeriksa email akun..."
 
-#: views/elements/categories.thtml:50
 #: views/elements/amo2009/categories.thtml:41
+#: views/elements/categories.thtml:50
 msgid "Choose a category"
 msgstr "Pilih kategori"
 
@@ -2887,8 +2884,8 @@ msgstr "Clear"
 msgid "Click Update Previews below to upload."
 msgstr "Click Update Previews below to upload."
 
-#: views/users/emailchange.thtml:51 views/users/delete.thtml:53
-#: views/users/delete.thtml:119 views/reviews/flag.thtml:54
+#: views/reviews/flag.thtml:54 views/users/delete.thtml:53
+#: views/users/delete.thtml:119 views/users/emailchange.thtml:51
 #, fuzzy
 msgid "Click here to return to the front page."
 msgstr "Click here to return to the front page."
@@ -2971,31 +2968,32 @@ msgstr "Jenis Koleksi"
 msgid "Collection not found!"
 msgstr "Koleksi tidak ditemukan!"
 
-#: views/elements/amo2009/categories.thtml:65 views/addons/home.thtml:142
-msgctxt "addons_home_collections"
+#: views/collections/listing.thtml:52
+msgctxt "collections_index_header_collections"
 msgid "Collections"
 msgstr "Koleksi"
 
-#: views/collections/listing.thtml:52
-msgctxt "collections_index_header_collections"
+#: views/pages/collector.thtml:47 views/pages/collector_faq.thtml:50
+#: views/pages/collector_features.thtml:55
+#: views/pages/collector_firstrun.thtml:43
+#: controllers/collections_controller.php:189
+#: controllers/collections_controller.php:208
+#: controllers/collections_controller.php:422
+#: controllers/collections_controller.php:484
+#: controllers/collections_controller.php:556
+#: controllers/search_controller.php:303
+msgctxt "collections_breadcrumb"
+msgid "Collections"
+msgstr "Koleksi"
+
+#: views/addons/home.thtml:142 views/elements/amo2009/categories.thtml:65
+msgctxt "addons_home_collections"
 msgid "Collections"
 msgstr "Koleksi"
 
 #: views/users/edit.thtml:87 views/users/edit.thtml:157
 #, fuzzy
 msgctxt "user_tab_collections"
-msgid "Collections"
-msgstr "Koleksi"
-
-#: views/pages/collector_faq.thtml:50 views/pages/collector_firstrun.thtml:43
-#: views/pages/collector.thtml:47 views/pages/collector_features.thtml:55
-#: controllers/search_controller.php:303
-#: controllers/collections_controller.php:189
-#: controllers/collections_controller.php:208
-#: controllers/collections_controller.php:422
-#: controllers/collections_controller.php:484
-#: controllers/collections_controller.php:556
-msgctxt "collections_breadcrumb"
 msgid "Collections"
 msgstr "Koleksi"
 
@@ -3027,7 +3025,7 @@ msgstr "Koleksi yang mengandung %1$s"
 
 # This just shows an example of tags.  The important thing in the example is to show
 # that tags can be separated with commas and have spaces in them
-#: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:492
+#: views/addons/display.thtml:492 views/developers/addon_edit_tags.thtml:69
 #, fuzzy
 msgid ""
 "Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
@@ -3139,8 +3137,8 @@ msgstr "Konfirmasi Kata Sandi"
 msgid "Confirm account deletion"
 msgstr "Konfirmasi penghapusan akun"
 
-#: views/users/pwreset.thtml:77 views/users/register.thtml:73
-#: views/users/edit.thtml:224
+#: views/users/edit.thtml:224 views/users/pwreset.thtml:77
+#: views/users/register.thtml:73
 #, fuzzy
 msgid "Confirm password"
 msgstr "Confirm password"
@@ -3196,13 +3194,13 @@ msgstr "Buat Koleksi"
 msgid "Create Developer Profile"
 msgstr "Buat Profil Pengembang"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
-msgctxt "collections_index_a_create"
+#: views/collections/add.thtml:48
+msgctxt "collections_add_header"
 msgid "Create a Collection"
 msgstr "Buat Koleksi"
 
-#: views/collections/add.thtml:48
-msgctxt "collections_add_header"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:52
+msgctxt "collections_index_a_create"
 msgid "Create a Collection"
 msgstr "Buat Koleksi"
 
@@ -3234,13 +3232,13 @@ msgstr "Created"
 msgid "Created by Me"
 msgstr "Created by Me"
 
-#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
-msgctxt "footer_credits"
+#: controllers/pages_controller.php:92
+msgctxt "page_title_credits"
 msgid "Credits"
 msgstr "Kredit"
 
-#: controllers/pages_controller.php:92
-msgctxt "page_title_credits"
+#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
+msgctxt "footer_credits"
 msgid "Credits"
 msgstr "Kredit"
 
@@ -3307,11 +3305,11 @@ msgstr "Akses Dasbor"
 msgid "Dashboard Home"
 msgstr "Beranda Dasbor"
 
-#: views/elements/amo2009/addons/list_options.thtml:46
-#: views/elements/addon_list_options.thtml:46 views/statistics/index.thtml:90
-msgctxt "list_sortby_date"
+#: views/editors/review.thtml:320
+#, fuzzy
+msgctxt "editors_review_th_date"
 msgid "Date"
-msgstr "Tanggal"
+msgstr "Date"
 
 #: views/editors/performance_table.thtml:68 views/editors/reviewlog.thtml:55
 #, fuzzy
@@ -3319,11 +3317,12 @@ msgctxt "editorcp_reviewlog_column_date"
 msgid "Date"
 msgstr "Date"
 
-#: views/editors/review.thtml:320
-#, fuzzy
-msgctxt "editors_review_th_date"
+#: views/elements/addon_list_options.thtml:46
+#: views/elements/amo2009/addons/list_options.thtml:46
+#: views/statistics/index.thtml:90
+msgctxt "list_sortby_date"
 msgid "Date"
-msgstr "Date"
+msgstr "Tanggal"
 
 #: controllers/collections_controller.php:311
 msgid "Date Added"
@@ -3452,8 +3451,8 @@ msgid "Deleting your collection will permanently erase it."
 msgstr ""
 "Menghapus koleksi Anda berarti menghapus koleksi tersebut secara permanen."
 
-#: views/elements/developers/editors_review_history_item.thtml:82
 #: views/editors/performance_table.thtml:100 views/editors/reviewlog.thtml:85
+#: views/elements/developers/editors_review_history_item.thtml:82
 #, fuzzy
 msgid "Denied/Sandbox"
 msgstr "Denied/Sandbox"
@@ -3476,6 +3475,10 @@ msgstr "Keterangan"
 #: views/elements/developers/actionbar.thtml:47
 msgid "Detailed Info"
 msgstr "Info Detail"
+
+#: views/addons/display.thtml:362
+msgid "Detailed Review"
+msgstr "tinjauan secara detail"
 
 #: views/elements/developers/performanceheader.thtml:60
 #, fuzzy
@@ -3500,12 +3503,6 @@ msgstr[1] "Pengembang"
 msgid "Developer Agreement"
 msgstr "Perjanjian Pengembang"
 
-#: views/editors/review.thtml:291
-#, fuzzy
-msgctxt "editors_review_header_devcomments"
-msgid "Developer Comments"
-msgstr "Developer Comments"
-
 #: views/developers/addon_edit_descriptions.thtml:93
 msgctxt "devcp_edit_descriptions_transbox_comments_name"
 msgid "Developer Comments"
@@ -3514,6 +3511,12 @@ msgstr "Komentar Pengembang"
 #: views/addons/display.thtml:282
 #, fuzzy
 msgctxt "addons_display_developer_comments"
+msgid "Developer Comments"
+msgstr "Developer Comments"
+
+#: views/editors/review.thtml:291
+#, fuzzy
+msgctxt "editors_review_header_devcomments"
 msgid "Developer Comments"
 msgstr "Developer Comments"
 
@@ -3537,19 +3540,8 @@ msgstr "Profil Pengembang"
 msgid "Developer Reply:"
 msgstr "Balasan Pengembang:"
 
-#: views/elements/developers/sidebar.thtml:48
-#: views/elements/developers/myaddons.thtml:67
-msgctxt "devcp_myaddons_title"
-msgid "Developer Tools"
-msgstr "Perangkat Pengembang"
-
 #: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
 msgctxt "sidebar_navlink_developer_tools"
-msgid "Developer Tools"
-msgstr "Perangkat Pengembang"
-
-#: views/statistics/addon.thtml:58
-msgctxt "statistics_addon_developertools_link"
 msgid "Developer Tools"
 msgstr "Perangkat Pengembang"
 
@@ -3564,6 +3556,17 @@ msgctxt "devcp_pagetitle"
 msgid "Developer Tools"
 msgstr "Developer Tools"
 
+#: views/statistics/addon.thtml:58
+msgctxt "statistics_addon_developertools_link"
+msgid "Developer Tools"
+msgstr "Perangkat Pengembang"
+
+#: views/elements/developers/myaddons.thtml:67
+#: views/elements/developers/sidebar.thtml:48
+msgctxt "devcp_myaddons_title"
+msgid "Developer Tools"
+msgstr "Perangkat Pengembang"
+
 #: views/reviews/add.thtml:57
 msgid "Developer reply to:"
 msgstr "Balasan pengembang kepada:"
@@ -3577,19 +3580,19 @@ msgstr "Pengembang"
 msgid "Dictionaries"
 msgstr "Kamus"
 
+#: views/addons/dictionaries.thtml:63 controllers/addons_controller.php:1402
+#: controllers/components/amo.php:721
+msgctxt "langtools_header_dicts_and_langpacks"
+msgid "Dictionaries & Language Packs"
+msgstr "Kamus & Paket Bahasa"
+
 #: views/elements/addon_categories.thtml:52
 msgctxt "nav_category_dicts_langpacks"
 msgid "Dictionaries & Language Packs"
 msgstr "Kamus & Paket Bahasa"
 
-#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:721
-#: controllers/addons_controller.php:1402
-msgctxt "langtools_header_dicts_and_langpacks"
-msgid "Dictionaries & Language Packs"
-msgstr "Kamus & Paket Bahasa"
-
-#: models/addontype.php:79
-msgctxt "general_addontype_dict"
+#: views/addons/dictionaries.thtml:69
+msgctxt "langtools_tableheader_dictionary"
 msgid "Dictionary"
 msgstr "Kamus"
 
@@ -3598,8 +3601,8 @@ msgctxt "sidebar_pitch_dictionary"
 msgid "Dictionary"
 msgstr "Kamus"
 
-#: views/addons/dictionaries.thtml:69
-msgctxt "langtools_tableheader_dictionary"
+#: models/addontype.php:79
+msgctxt "general_addontype_dict"
 msgid "Dictionary"
 msgstr "Kamus"
 
@@ -3669,7 +3672,9 @@ msgstr "Unduh Paket Bahasa"
 # %$1s is an optional string that only appears if the add-on is only available for
 # a certain platform.  Examples:  (Windows)  or  (Linux)
 # Note that the parentheses are included in the string. :(
-#: views/elements/amo2009/install.thtml:137
+#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
+#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
+#: views/addons/plugins.thtml:119 views/elements/amo2009/install.thtml:137
 #: views/elements/amo2009/install.thtml:233
 #: views/elements/amo2009/install.thtml:246
 #: views/elements/amo2009/install.thtml:284
@@ -3677,9 +3682,6 @@ msgstr "Unduh Paket Bahasa"
 #: views/elements/amo2009/install.thtml:339 views/elements/install.thtml:73
 #: views/elements/install.thtml:181 views/elements/install.thtml:205
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
-#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
-#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
-#: views/addons/plugins.thtml:119
 #, php-format
 msgid "Download Now %s"
 msgstr "Unduh Sekarang %s"
@@ -3688,9 +3690,8 @@ msgstr "Unduh Sekarang %s"
 msgid "Download the Add-on Collector:"
 msgstr "Dapatkan Kolektor Pengaya:"
 
-#: views/elements/amo2009/addons/list_options.thtml:47
-#: views/elements/addon_list_options.thtml:47 views/addons/display.thtml:185
-msgctxt "list_sortby_downloads"
+#: controllers/statistics_controller.php:306
+msgctxt "statistics_js_plotselection_selector_downloads"
 msgid "Downloads"
 msgstr "Unduhan"
 
@@ -3700,12 +3701,13 @@ msgctxt "statistics_summary_downloads_heading"
 msgid "Downloads"
 msgstr "Downloads"
 
-#: controllers/statistics_controller.php:306
-msgctxt "statistics_js_plotselection_selector_downloads"
+#: views/addons/display.thtml:185 views/elements/addon_list_options.thtml:47
+#: views/elements/amo2009/addons/list_options.thtml:47
+msgctxt "list_sortby_downloads"
 msgid "Downloads"
 msgstr "Unduhan"
 
-#: views/statistics/rss/summary.thtml:43 views/statistics/addon.thtml:203
+#: views/statistics/addon.thtml:203 views/statistics/rss/summary.thtml:43
 #, fuzzy
 msgid "Downloads in the last 7 days"
 msgstr "Downloads in the last 7 days"
@@ -3718,28 +3720,28 @@ msgstr "EULA"
 # %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
-#: views/developers/addon_edit_tags.thtml:43
+#: views/developers/addon_edit_categories.thtml:43
 #: views/developers/addon_edit_contributions.thtml:46
-#: views/developers/versions_delete.thtml:43
+#: views/developers/addon_edit_descriptions.thtml:44
 #: views/developers/addon_edit_profile.thtml:69
 #: views/developers/addon_edit_properties.thtml:44
-#: views/developers/addon_edit_descriptions.thtml:44
-#: views/developers/versions_edit.thtml:44
-#: views/developers/addon_edit_categories.thtml:43
+#: views/developers/addon_edit_tags.thtml:43
 #: views/developers/versions.thtml:43
+#: views/developers/versions_delete.thtml:43
+#: views/developers/versions_edit.thtml:44
 #, fuzzy, php-format
 msgid "Edit %s"
 msgstr "Edit %s"
 
-#: views/elements/developers/actionbar.thtml:42
-#: views/elements/developers/actionbar.thtml:50
-#: views/developers/dashboard.thtml:64
-msgctxt "devcp_actionbar_link_edit"
+#: views/elements/developers/editbox.thtml:43
+msgctxt "devcp_editbox_edit_addon"
 msgid "Edit Add-on"
 msgstr "Sunting Pengaya"
 
-#: views/elements/developers/editbox.thtml:43
-msgctxt "devcp_editbox_edit_addon"
+#: views/developers/dashboard.thtml:64
+#: views/elements/developers/actionbar.thtml:42
+#: views/elements/developers/actionbar.thtml:50
+msgctxt "devcp_actionbar_link_edit"
 msgid "Edit Add-on"
 msgstr "Sunting Pengaya"
 
@@ -3765,16 +3767,16 @@ msgstr "Edit Item"
 msgid "Edit My Add-on"
 msgstr "Edit My Add-on"
 
-#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
-#, fuzzy
-msgctxt "devcp_previews_header_edit"
-msgid "Edit Preview"
-msgstr "Edit Preview"
-
 #: controllers/previews_controller.php:194
 #: controllers/previews_controller.php:195
 #, fuzzy
 msgctxt "devcp_preview_edit_pagetitle"
+msgid "Edit Preview"
+msgstr "Edit Preview"
+
+#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
+#, fuzzy
+msgctxt "devcp_previews_header_edit"
 msgid "Edit Preview"
 msgstr "Edit Preview"
 
@@ -3831,8 +3833,15 @@ msgctxt "editorcp_menu_title"
 msgid "Editor Tools"
 msgstr "Editor Tools"
 
-#: views/elements/developers/sidebar.thtml:65
+#: controllers/editors_controller.php:64 controllers/editors_controller.php:77
+#: controllers/editors_controller.php:81
+#, fuzzy
+msgctxt "editors_pagetitle"
+msgid "Editor Tools"
+msgstr "Editor Tools"
+
 #: views/elements/developers/myaddons.thtml:72
+#: views/elements/developers/sidebar.thtml:65
 #, fuzzy
 msgctxt "devcp_myaddons_editorcp_link"
 msgid "Editor Tools"
@@ -3842,13 +3851,6 @@ msgstr "Perangkat Editor"
 msgctxt "sidebar_navlink_editor_tools"
 msgid "Editor Tools"
 msgstr "Perangkat Editor"
-
-#: controllers/editors_controller.php:64 controllers/editors_controller.php:77
-#: controllers/editors_controller.php:81
-#, fuzzy
-msgctxt "editors_pagetitle"
-msgid "Editor Tools"
-msgstr "Editor Tools"
 
 # A collection that has been chosen by an Editor as notable or exceptional
 #: controllers/collections_controller.php:599
@@ -3879,15 +3881,15 @@ msgstr ""
 "\"https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox"
 "\">read the documentation</a>, verify your add-on, and try again."
 
-#: views/elements/amo2009/users/vcard.thtml:86
-msgctxt "addon_developer_th_email"
+#: views/users/edit.thtml:230 views/users/login.thtml:84
+#: views/users/pwreset.thtml:52 views/users/register.thtml:63
+#, fuzzy
+msgctxt "user_form_email"
 msgid "Email address"
 msgstr "Alamat email"
 
-#: views/users/pwreset.thtml:52 views/users/login.thtml:84
-#: views/users/register.thtml:63 views/users/edit.thtml:230
-#, fuzzy
-msgctxt "user_form_email"
+#: views/elements/amo2009/users/vcard.thtml:86
+msgctxt "addon_developer_th_email"
 msgid "Email address"
 msgstr "Alamat email"
 
@@ -3948,7 +3950,7 @@ msgctxt "editorcp_menu_eventlog_link"
 msgid "Event Log"
 msgstr "Event Log"
 
-#: views/editors/logs.thtml:42 views/admin/logs.thtml:43
+#: views/admin/logs.thtml:43 views/editors/logs.thtml:42
 #: controllers/editors_controller.php:1751
 #, fuzzy
 msgctxt "editorcp_logs_page_heading"
@@ -4047,9 +4049,9 @@ msgstr "Fashion your Firefox FAQ"
 msgid "Favorites"
 msgstr "Favorites"
 
-#: views/elements/pitch.thtml:72
+#: controllers/addons_controller.php:542
 #, fuzzy
-msgctxt "sidebar_pitch_featured_addons"
+msgctxt "rss_featuredaddons"
 msgid "Featured Add-ons"
 msgstr "Featured Add-ons"
 
@@ -4059,16 +4061,16 @@ msgctxt "devcp_editorsqueue_featured"
 msgid "Featured Add-ons"
 msgstr "Featured Add-ons"
 
-#: controllers/addons_controller.php:542
-#, fuzzy
-msgctxt "rss_featuredaddons"
-msgid "Featured Add-ons"
-msgstr "Featured Add-ons"
-
 #: controllers/editors_controller.php:1674
 #: controllers/editors_controller.php:1676
 #, fuzzy
 msgctxt "editors_featured_addons_pagetitle"
+msgid "Featured Add-ons"
+msgstr "Featured Add-ons"
+
+#: views/elements/pitch.thtml:72
+#, fuzzy
+msgctxt "sidebar_pitch_featured_addons"
 msgid "Featured Add-ons"
 msgstr "Featured Add-ons"
 
@@ -4144,10 +4146,10 @@ msgstr "File Type Verification"
 msgid "File error: %s does not exist."
 msgstr "Kesalahan berkas: %s tidak ada."
 
-#: controllers/files_controller.php:75 controllers/files_controller.php:106
-#: controllers/files_controller.php:109 controllers/files_controller.php:240
-#: controllers/files_controller.php:253 controllers/files_controller.php:262
-#: controllers/files_controller.php:281 controllers/editors_controller.php:535
+#: controllers/editors_controller.php:535 controllers/files_controller.php:75
+#: controllers/files_controller.php:106 controllers/files_controller.php:109
+#: controllers/files_controller.php:240 controllers/files_controller.php:253
+#: controllers/files_controller.php:262 controllers/files_controller.php:281
 msgid "File not found!"
 msgstr "Berkas tidak ditemukan!"
 
@@ -4156,14 +4158,14 @@ msgstr "Berkas tidak ditemukan!"
 msgid "Files:"
 msgstr "Files:"
 
-#: views/editors/performance_table.thtml:52
-#: views/editors/performance_charts.thtml:65 views/editors/reviewlog.thtml:49
+#: views/editors/performance_charts.thtml:65
+#: views/editors/performance_table.thtml:52 views/editors/reviewlog.thtml:49
 #, fuzzy
 msgctxt "editorcp_reviewlog_button_filter"
 msgid "Filter"
 msgstr "Filter"
 
-#: views/editors/logs.thtml:56 views/admin/logs.thtml:91
+#: views/admin/logs.thtml:91 views/editors/logs.thtml:56
 #, fuzzy
 msgctxt "editorcp_logs_button_filter"
 msgid "Filter"
@@ -4180,7 +4182,7 @@ msgstr "Filter"
 msgid "Filter Queue"
 msgstr "Filter Queue"
 
-#: views/editors/logs.thtml:50 views/admin/logs.thtml:50
+#: views/admin/logs.thtml:50 views/editors/logs.thtml:50
 #, fuzzy
 msgid "Filter by type/action"
 msgstr "Filter by type/action"
@@ -4193,8 +4195,8 @@ msgstr "Temukan pengaya untuk aplikasi lainnya"
 msgid "Firefox"
 msgstr "Firefox"
 
-#: views/users/register.thtml:78 views/users/edit.thtml:96
-#: views/admin/users_edit.thtml:76
+#: views/admin/users_edit.thtml:76 views/users/edit.thtml:96
+#: views/users/register.thtml:78
 #, fuzzy
 msgid "First name"
 msgstr "Nama depan"
@@ -4215,15 +4217,15 @@ msgstr "Flags:"
 msgid "For information on contributing, please see our %s."
 msgstr "Untuk informasi cara kontribusi, silakan kunjungi %s kami."
 
-# Full text for the FAQ abbreviation.
-#: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
-#: views/layouts/amo2009.thtml:354
-msgctxt "footer_abbr_faq"
+#: controllers/pages_controller.php:111
+msgctxt "page_title_faq"
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
-#: controllers/pages_controller.php:111
-msgctxt "page_title_faq"
+# Full text for the FAQ abbreviation.
+#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
+#: views/pages/collector_features.thtml:72
+msgctxt "footer_abbr_faq"
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
@@ -4272,13 +4274,13 @@ msgstr "General Verification Tests"
 msgid "Geolocation Check"
 msgstr "Geolocation Check"
 
-#: views/developers/dashboard.thtml:113
-msgctxt "devcp_dashboard_start"
+#: views/developers/uploader.thtml:68
+msgctxt "devcp_uploader_a_start"
 msgid "Get Started"
 msgstr "Mulai"
 
-#: views/developers/uploader.thtml:68
-msgctxt "devcp_uploader_a_start"
+#: views/developers/dashboard.thtml:113
+msgctxt "devcp_dashboard_start"
 msgid "Get Started"
 msgstr "Mulai"
 
@@ -4295,24 +4297,12 @@ msgstr ""
 "Beri nama untuk koleksi Anda yang dapat menggambarkan tentang isi koleksi "
 "Anda, contohnya \"Pengaya Favorit Budi untuk Liburan\""
 
-#: views/elements/amo2009/collections/sort_form.thtml:55
-#: views/collections/detail.thtml:139 views/search/index.thtml:129
-msgctxt "collections_index_button_go"
-msgid "Go"
-msgstr "Buka"
-
-#: views/elements/amo2009/addons/list_options.thtml:113
-#: views/elements/addon_list_options.thtml:109
-msgctxt "addons_options_submit"
-msgid "Go"
-msgstr "Buka"
-
 #: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
 msgctxt "footer_lang_form_lang_submit_go"
 msgid "Go"
 msgstr "Buka"
 
-#: views/tags/display.thtml:83 views/addons/display.thtml:459
+#: views/addons/display.thtml:459 views/tags/display.thtml:83
 msgctxt "addons_author_addons_submit"
 msgid "Go"
 msgstr "Kirim"
@@ -4322,6 +4312,19 @@ msgstr "Kirim"
 msgctxt "editors_featured_edit_feature_submit"
 msgid "Go"
 msgstr "Go"
+
+#: views/elements/addon_list_options.thtml:109
+#: views/elements/amo2009/addons/list_options.thtml:113
+msgctxt "addons_options_submit"
+msgid "Go"
+msgstr "Buka"
+
+#: views/collections/detail.thtml:139
+#: views/elements/amo2009/collections/sort_form.thtml:55
+#: views/search/index.thtml:129
+msgctxt "collections_index_button_go"
+msgid "Go"
+msgstr "Buka"
 
 #: controllers/groups_controller.php:65
 msgid "Group Admin"
@@ -4351,16 +4354,16 @@ msgstr "HTML"
 msgid "Hate it"
 msgstr "Benci"
 
+#: views/statistics/addon.thtml:60
+msgctxt "statistics_help_link"
+msgid "Help"
+msgstr "Bantuan"
+
 #: views/elements/translationbox.thtml:68
 #, fuzzy
 msgctxt "devcp_transbox_alt_help"
 msgid "Help"
 msgstr "Help"
-
-#: views/statistics/addon.thtml:60
-msgctxt "statistics_help_link"
-msgid "Help"
-msgstr "Bantuan"
 
 # title attribute for a javascript link that pops up a help dialog.
 #: views/elements/translationbox.thtml:68
@@ -4398,8 +4401,8 @@ msgstr "Hide Help"
 msgid "Hide Total Count"
 msgstr "Hide Total Count"
 
-#: views/users/register.thtml:94 views/users/edit.thtml:125
-#: views/admin/users_edit.thtml:91
+#: views/admin/users_edit.thtml:91 views/users/edit.thtml:125
+#: views/users/register.thtml:94
 #, fuzzy
 msgid "Hide email address"
 msgstr "Sembunyikan alamat email"
@@ -4752,7 +4755,7 @@ msgstr "Pasang Paket Bahasa"
 msgid "Install.js contains a function missing from the whitelist: %s"
 msgstr "Install.js contains a function missing from the whitelist: %s"
 
-#: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
+#: views/admin/users_edit.thtml:132 views/users/edit.thtml:150
 #, fuzzy
 msgid ""
 "Introduce yourself to the community, if you like! This text will appear "
@@ -4918,7 +4921,7 @@ msgstr "Paket Bahasa (Pengaya)"
 msgid "Language Packs (Application)"
 msgstr "Paket Bahasa (Aplikasi)"
 
-#: views/statistics/rss/summary.thtml:41 views/statistics/addon.thtml:175
+#: views/statistics/addon.thtml:175 views/statistics/rss/summary.thtml:41
 #, fuzzy
 msgid "Last Day Count"
 msgstr "Last Day Count"
@@ -4933,8 +4936,8 @@ msgstr "Diperbarui Pada"
 msgid "Last edited on %s"
 msgstr "Disunting terakhir pada %s"
 
-#: views/users/register.thtml:84 views/users/edit.thtml:102
-#: views/admin/users_edit.thtml:81
+#: views/admin/users_edit.thtml:81 views/users/edit.thtml:102
+#: views/users/register.thtml:84
 #, fuzzy
 msgid "Last name"
 msgstr "Nama Belakang"
@@ -4959,26 +4962,26 @@ msgid ""
 "\">Mozilla Developer Center</a>."
 msgstr ""
 
-#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/amo2009/homepage_addon.thtml:124
+#: views/elements/amo2009/results_addon.thtml:126
 #: views/elements/feature.thtml:122
 msgid "Learn more"
 msgstr "Pelajari lebih lanjut"
 
 # %1 is the add-on name
-#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/amo2009/homepage_addon.thtml:125
+#: views/elements/amo2009/results_addon.thtml:127
 #: views/elements/feature.thtml:123
 #, php-format
 msgid "Learn more about %1$s"
 msgstr "Pelanjari lebih lanjut tentang %1$s"
 
-#: views/elements/amo2009/teaser_collections.thtml:86
-#: views/elements/amo2009/teaser_collections.thtml:92
-#: views/elements/amo2009/results_addon.thtml:90
-#: views/elements/amo2009/results_addon.thtml:92
 #: views/elements/amo2009/homepage_addon.thtml:99
 #: views/elements/amo2009/homepage_addon.thtml:102
+#: views/elements/amo2009/results_addon.thtml:90
+#: views/elements/amo2009/results_addon.thtml:92
+#: views/elements/amo2009/teaser_collections.thtml:86
+#: views/elements/amo2009/teaser_collections.thtml:92
 #: views/elements/feature.thtml:94
 msgid "Learn more about this add-on"
 msgstr "Pelajari lebih lanjut tentang pengaya ini"
@@ -5081,7 +5084,7 @@ msgctxt "addon_developer_th_location"
 msgid "Location"
 msgstr "Lokasi"
 
-#: views/users/edit.thtml:112 views/admin/users_edit.thtml:99
+#: views/admin/users_edit.thtml:99 views/users/edit.thtml:112
 #, fuzzy
 msgctxt "user_form_location"
 msgid "Location"
@@ -5097,8 +5100,8 @@ msgstr "Locked"
 msgid "Log In"
 msgstr "Log In"
 
-#: views/elements/developers/sidebar.thtml:72
-#: views/elements/developers/myaddons.thtml:50 views/elements/header.thtml:159
+#: views/elements/developers/myaddons.thtml:50
+#: views/elements/developers/sidebar.thtml:72 views/elements/header.thtml:159
 msgctxt "header_navlink_login"
 msgid "Log in"
 msgstr "Log-masuk"
@@ -5331,18 +5334,9 @@ msgid "Misplaced bug report or support request"
 msgstr "Misplaced bug report or support request"
 
 # %s is a string representing what's missing.  Example:  file_id
-#: controllers/downloads_controller.php:65
-#: controllers/users_controller.php:191 controllers/users_controller.php:270
-#: controllers/users_controller.php:641 controllers/users_controller.php:739
-#: controllers/users_controller.php:909 controllers/reviews_controller.php:71
-#: controllers/reviews_controller.php:235
-#: controllers/reviews_controller.php:326
-#: controllers/reviews_controller.php:474
-#: controllers/reviews_controller.php:476
 #: controllers/addons_controller.php:175 controllers/addons_controller.php:301
 #: controllers/addons_controller.php:1540
 #: controllers/addons_controller.php:1683
-#: controllers/editors_controller.php:1235
 #: controllers/collections_controller.php:177
 #: controllers/collections_controller.php:279
 #: controllers/collections_controller.php:298
@@ -5361,13 +5355,22 @@ msgstr "Misplaced bug report or support request"
 #: controllers/collections_controller.php:1046
 #: controllers/collections_controller.php:1093
 #: controllers/collections_controller.php:1113
+#: controllers/downloads_controller.php:65
+#: controllers/editors_controller.php:1235
+#: controllers/reviews_controller.php:71
+#: controllers/reviews_controller.php:235
+#: controllers/reviews_controller.php:326
+#: controllers/reviews_controller.php:474
+#: controllers/reviews_controller.php:476 controllers/users_controller.php:191
+#: controllers/users_controller.php:270 controllers/users_controller.php:641
+#: controllers/users_controller.php:739 controllers/users_controller.php:909
 #, php-format
 msgid "Missing argument: %s"
 msgstr "Argumen tidak ada: %s"
 
 # %1 is the review count
-#: views/elements/developers/editorsqueue.thtml:42
 #: views/elements/developers/editorsmenu.thtml:56
+#: views/elements/developers/editorsqueue.thtml:42
 #, fuzzy, php-format
 msgid "Moderated Reviews (%s)"
 msgid_plural "Moderated Reviews (%s)"
@@ -5527,14 +5530,14 @@ msgstr "Saya dan pengguna berikut:"
 msgid "NEW!"
 msgstr "Baru!"
 
-#: views/elements/amo2009/users/vcard.thtml:63
-msgctxt "addon_developer_th_name"
+#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
+#: views/search/index.thtml:117 views/tags/display.thtml:77
+msgctxt "advanced_search_form_name"
 msgid "Name"
 msgstr "Nama"
 
-#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
-#: views/tags/display.thtml:77 views/search/index.thtml:117
-msgctxt "advanced_search_form_name"
+#: views/elements/amo2009/users/vcard.thtml:63
+msgctxt "addon_developer_th_name"
 msgid "Name"
 msgstr "Nama"
 
@@ -5576,13 +5579,13 @@ msgstr "Versi Baru"
 msgid "New image:"
 msgstr "New image:"
 
-#: views/users/pwreset.thtml:72 views/users/edit.thtml:219
+#: views/users/edit.thtml:219 views/users/pwreset.thtml:72
 #, fuzzy
 msgid "New password"
 msgstr "Kata sandi baru"
 
 #: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:143
-#: views/tags/display.thtml:76 views/search/index.thtml:116
+#: views/search/index.thtml:116 views/tags/display.thtml:76
 msgctxt "advanced_search_form_newest"
 msgid "Newest"
 msgstr "Terbaru"
@@ -5592,14 +5595,14 @@ msgctxt "collections_index_option_newest"
 msgid "Newest"
 msgstr "Terbaru"
 
-#: views/elements/pitch.thtml:70
-msgctxt "sidebar_pitch_newest_addons"
-msgid "Newest Add-ons"
-msgstr "Pengaya Terbaru"
-
 #: controllers/addons_controller.php:539
 #: controllers/addons_controller.php:1175
 msgctxt "browse_addons_newest"
+msgid "Newest Add-ons"
+msgstr "Pengaya Terbaru"
+
+#: views/elements/pitch.thtml:70
+msgctxt "sidebar_pitch_newest_addons"
 msgid "Newest Add-ons"
 msgstr "Pengaya Terbaru"
 
@@ -5607,8 +5610,8 @@ msgstr "Pengaya Terbaru"
 msgid "Next"
 msgstr "Selanjutnya"
 
-#: views/users/register.thtml:89 views/users/edit.thtml:107
-#: views/admin/users_edit.thtml:86
+#: views/admin/users_edit.thtml:86 views/users/edit.thtml:107
+#: views/users/register.thtml:89
 #, fuzzy
 msgid "Nickname"
 msgstr "Nama alias (nick)"
@@ -5634,8 +5637,8 @@ msgstr "No Data"
 msgid "No Files"
 msgstr "Tidak Ada Berkas"
 
-#: controllers/components/validation.php:266
 #: controllers/components/developers.php:545
+#: controllers/components/validation.php:266
 #, fuzzy
 msgid "No ID could be found for this add-on in install.rdf."
 msgstr "No ID could be found for this add-on in install.rdf."
@@ -5660,8 +5663,8 @@ msgstr "Tidak ada pengaya pada kategori ini!"
 msgid "No categories are available for this add-on type and application."
 msgstr "No categories are available for this add-on type and application."
 
-#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 #: views/statistics/addon.thtml:167 views/statistics/addon.thtml:187
+#: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
 #, fuzzy
 msgid "No data yet"
 msgstr "No data yet"
@@ -5670,19 +5673,19 @@ msgstr "No data yet"
 msgid "No file uploaded"
 msgstr "Tidak ada berkas diunggah"
 
-#: views/developers/versions_validate.thtml:59
 #: views/developers/versions_edit.thtml:111
+#: views/developers/versions_validate.thtml:59
 #, fuzzy
 msgid "No files found."
 msgstr "No files found."
 
-#: controllers/developers_controller.php:505
 #: controllers/components/validation.php:206
+#: controllers/developers_controller.php:505
 #, fuzzy
 msgid "No install.rdf present."
 msgstr "No install.rdf present."
 
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 #, fuzzy
 msgid "No photo"
 msgstr "Tidak ada foto"
@@ -5702,8 +5705,8 @@ msgstr "No previews found."
 msgid "No previous review entries could be found."
 msgstr "No previous review entries could be found."
 
-#: views/tags/display.thtml:60 views/search/collections.thtml:62
-#: views/search/index.thtml:100
+#: views/search/collections.thtml:62 views/search/index.thtml:100
+#: views/tags/display.thtml:60
 msgid "No results found."
 msgstr "Tidak ada hasil yang ditemukan."
 
@@ -5717,9 +5720,9 @@ msgstr "No reviews found for this period."
 msgid "No tags for these add-ons"
 msgstr "No tags for these add-ons"
 
+#: views/elements/developers/testresults.thtml:61
 #: views/elements/developers/testresults_group.thtml:115
 #: views/elements/developers/testresults_header.thtml:62
-#: views/elements/developers/testresults.thtml:61
 #, fuzzy
 msgctxt "devcp_versions_validate_no_results"
 msgid "No test results found."
@@ -5758,22 +5761,22 @@ msgid "Nominate your add-on to become Public"
 msgstr "Nominate your add-on to become Public"
 
 # %1 is the nominated addons count
-#: views/elements/developers/editorsqueue.thtml:44
 #: views/elements/developers/editorsmenu.thtml:58
+#: views/elements/developers/editorsqueue.thtml:44
 #, fuzzy, php-format
 msgid "Nominated Add-ons (%s)"
 msgid_plural "Nominated Add-ons (%s)"
 msgstr[0] "Nominated Add-ons (%s)"
 msgstr[1] "Nominated Add-ons (%s)"
 
-#: views/elements/developers/editors_review_history_item.thtml:68
 #: views/editors/performance_table.thtml:86 views/editors/reviewlog.thtml:71
+#: views/elements/developers/editors_review_history_item.thtml:68
 #, fuzzy
 msgid "Nomination Approved/Public"
 msgstr "Nomination Approved/Public"
 
-#: views/elements/developers/editors_review_history_item.thtml:71
 #: views/editors/performance_table.thtml:89 views/editors/reviewlog.thtml:74
+#: views/elements/developers/editors_review_history_item.thtml:71
 #, fuzzy
 msgid "Nomination Denied/Sandbox"
 msgstr "Nomination Denied/Sandbox"
@@ -5845,7 +5848,7 @@ msgctxt "addon_developer_th_occupation"
 msgid "Occupation"
 msgstr "Pekerjaan"
 
-#: views/users/edit.thtml:116 views/admin/users_edit.thtml:103
+#: views/admin/users_edit.thtml:103 views/users/edit.thtml:116
 #, fuzzy
 msgctxt "user_form_occupation"
 msgid "Occupation"
@@ -5873,7 +5876,7 @@ msgstr ""
 msgid "Old password"
 msgstr "Kata sandi lama"
 
-#: views/statistics/rss/summary.thtml:48 views/statistics/addon.thtml:165
+#: views/statistics/addon.thtml:165 views/statistics/rss/summary.thtml:48
 #, fuzzy, php-format
 msgid "On %1$s"
 msgstr "On %1$s"
@@ -5930,13 +5933,13 @@ msgstr "Buka di jendela baru"
 msgid "Opensearch Format Check"
 msgstr "Opensearch Format Check"
 
-#: controllers/components/stats.php:429
-msgctxt "statistics_longnames_os"
+#: controllers/statistics_controller.php:311
+msgctxt "statistics_js_plotselection_selector_os"
 msgid "Operating System"
 msgstr "Sistem Operasi"
 
-#: controllers/statistics_controller.php:311
-msgctxt "statistics_js_plotselection_selector_os"
+#: controllers/components/stats.php:429
+msgctxt "statistics_longnames_os"
 msgid "Operating System"
 msgstr "Sistem Operasi"
 
@@ -6079,8 +6082,8 @@ msgid "PayPal ID"
 msgstr "ID PayPal"
 
 # %1 is the update count
-#: views/elements/developers/editorsqueue.thtml:43
 #: views/elements/developers/editorsmenu.thtml:57
+#: views/elements/developers/editorsqueue.thtml:43
 #, fuzzy, php-format
 msgid "Pending Updates (%s)"
 msgid_plural "Pending Updates (%s)"
@@ -6107,8 +6110,8 @@ msgstr "Performance Report For %1$s"
 msgid "Performance Reports"
 msgstr "Performance Reports"
 
-#: views/elements/amo2009/addons/version_detail.thtml:52
 #: views/elements/addon_version_detail.thtml:52
+#: views/elements/amo2009/addons/version_detail.thtml:52
 msgid "Permanent link to this version"
 msgstr "Tautan permanen ke versi ini"
 
@@ -6116,13 +6119,13 @@ msgstr "Tautan permanen ke versi ini"
 msgid "Permissions"
 msgstr "Hak Akses"
 
-#: views/users/edit.thtml:129 views/admin/users_edit.thtml:112
+#: views/admin/users_edit.thtml:112 views/users/edit.thtml:129
 #, fuzzy
 msgid "Picture"
 msgstr "Foto"
 
 # %1$s is a user's email address or name
-#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
+#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
 #, fuzzy, php-format
 msgid "Picture of %1$s"
 msgstr "Foto dari %1$s"
@@ -6141,14 +6144,14 @@ msgstr ""
 msgid "Plain Text"
 msgstr "Plain Text"
 
-#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
-msgctxt "advanced_search_form_platform"
-msgid "Platform"
-msgstr "Platform"
-
 #: views/developers/versions_edit.thtml:79
 #, fuzzy
 msgctxt "devcp_versions_edit_th_platform"
+msgid "Platform"
+msgstr "Platform"
+
+#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
+msgctxt "advanced_search_form_platform"
 msgid "Platform"
 msgstr "Platform"
 
@@ -6298,9 +6301,9 @@ msgstr ""
 
 # %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 # in the <a> tag.  This should be fixed.
-#: controllers/developers_controller.php:504
-#: controllers/components/validation.php:346
 #: controllers/components/developers.php:625
+#: controllers/components/validation.php:346
+#: controllers/developers_controller.php:504
 #, fuzzy, php-format
 msgid "Please see <a href=\"%s\">this page</a> for reference."
 msgstr "Silakan kunjungi %s untuk referensi."
@@ -6321,15 +6324,15 @@ msgstr "Please select a review action."
 msgid "Please select at least one category."
 msgstr "Please select at least one category."
 
-#: controllers/components/editors.php:161
-#, fuzzy
-msgctxt "editor_review_error_no_files"
-msgid "Please select at least one file to review."
-msgstr "Please select at least one file to review."
-
 #: controllers/editors_controller.php:401
 #, fuzzy
 msgctxt "editors_error_review_one_file"
+msgid "Please select at least one file to review."
+msgstr "Please select at least one file to review."
+
+#: controllers/components/editors.php:161
+#, fuzzy
+msgctxt "editor_review_error_no_files"
 msgid "Please select at least one file to review."
 msgstr "Please select at least one file to review."
 
@@ -6355,8 +6358,8 @@ msgstr "Please treat this information as confidential."
 msgid "Please type what you hear."
 msgstr "Ketikkan apa yang Anda dengar."
 
-#: controllers/developers_controller.php:466
 #: controllers/components/developers.php:285
+#: controllers/developers_controller.php:466
 #, fuzzy
 msgid "Please upload a file."
 msgstr "Please upload a file."
@@ -6376,7 +6379,7 @@ msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
 msgstr "Plugin"
 
-#: controllers/components/amo.php:734 controllers/addons_controller.php:1280
+#: controllers/addons_controller.php:1280 controllers/components/amo.php:734
 msgctxt "addons_plugins_pagetitle"
 msgid "Plugins"
 msgstr "Plugin"
@@ -6392,13 +6395,13 @@ msgstr ""
 "Plugin sedikit berbeda dengan ekstensi, yang memodifikasi atau menambahkan "
 "fungsi pada fungsi yang sudah tersedia."
 
-#: views/addons/home.thtml:110
-msgctxt "addons_home_browse_popular"
+#: controllers/collections_controller.php:111
+msgctxt "collections_index_li_popular"
 msgid "Popular"
 msgstr "Populer"
 
-#: controllers/collections_controller.php:111
-msgctxt "collections_index_li_popular"
+#: views/addons/home.thtml:110
+msgctxt "addons_home_browse_popular"
 msgid "Popular"
 msgstr "Populer"
 
@@ -6413,7 +6416,7 @@ msgid "Popular Collections"
 msgstr "Koleksi Populer"
 
 #: views/elements/amo2009/search.thtml:148 views/elements/search.thtml:146
-#: views/tags/display.thtml:79 views/search/index.thtml:119
+#: views/search/index.thtml:119 views/tags/display.thtml:79
 msgctxt "advanced_search_form_popularity"
 msgid "Popularity"
 msgstr "Kepopuleran"
@@ -6477,17 +6480,17 @@ msgstr "Pratinjau %s tidak dapat dihapus dari basis data. Silakan coba lagi."
 msgid "Preview %s has been deleted successfully."
 msgstr "Pratinjau %s sukses dihapus."
 
-#: views/developers/previews.thtml:80
-#, fuzzy
-msgctxt "devcp_previews_header_caption"
-msgid "Preview Caption"
-msgstr "Preview Caption"
-
 #: controllers/previews_controller.php:168
 #: controllers/previews_controller.php:277
 msgctxt "devcp_addon_field_preview_caption_displaytitle"
 msgid "Preview Caption"
 msgstr "Judul Pratinjau"
+
+#: views/developers/previews.thtml:80
+#, fuzzy
+msgctxt "devcp_previews_header_caption"
+msgid "Preview Caption"
+msgstr "Preview Caption"
 
 #: views/previews/add.thtml:54
 #, fuzzy
@@ -6495,12 +6498,13 @@ msgid "Preview File"
 msgstr "Preview File"
 
 # %s is the add-on name
-#: views/elements/collections_interactive_addon.thtml:62
-#: views/elements/amo2009/results_addon.thtml:77
-#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/addons/browse_thumbs.thtml:107 views/addons/category_landing.thtml:87
 #: views/elements/addon_discussionheader.thtml:62
-#: views/elements/addon_listitem.thtml:67 views/elements/feature.thtml:84
-#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:107
+#: views/elements/addon_listitem.thtml:67
+#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/elements/amo2009/results_addon.thtml:77
+#: views/elements/collections_interactive_addon.thtml:62
+#: views/elements/feature.thtml:84
 #, php-format
 msgid "Preview Image of %s"
 msgstr "Gambar Pratinjau %s"
@@ -6539,16 +6543,16 @@ msgstr "Previews"
 msgid "Print"
 msgstr "Print"
 
-#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
-msgctxt "footer_privacy_policy"
-msgid "Privacy Policy"
-msgstr "Kebijakan Privasi"
-
 #: views/editors/review.thtml:285
 #, fuzzy
 msgctxt "editors_review_header_privacy"
 msgid "Privacy Policy"
 msgstr "Privacy Policy"
+
+#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
+msgctxt "footer_privacy_policy"
+msgid "Privacy Policy"
+msgstr "Kebijakan Privasi"
 
 #: views/developers/addon_edit_descriptions.thtml:111
 msgctxt "devcp_edit_descriptions_transbox_privacy_name"
@@ -6590,26 +6594,26 @@ msgstr "Provide More Information For the Add-on Review of %1$s"
 msgid "Provide a way for users to make monetary donations to your project."
 msgstr "Provide a way for users to make monetary donations to your project."
 
-#: views/elements/header.thtml:76 views/elements/header.thtml:82
-#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
-#: views/sharing_api/addon.thtml:63
-msgctxt "a_header_public"
-msgid "Public"
-msgstr "Publik"
-
-#: views/statistics/settings.thtml:52
-msgctxt "statistics_settings_access_public"
-msgid "Public"
-msgstr "Publik"
-
 #: views/pages/js_constants.js.thtml:79 controllers/components/amo.php:199
 #: controllers/components/amo.php:228
 msgctxt "addons_status_public"
 msgid "Public"
 msgstr "Publik"
 
+#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
+#: views/elements/header.thtml:76 views/elements/header.thtml:82
+#: views/sharing_api/addon.thtml:63
+msgctxt "a_header_public"
+msgid "Public"
+msgstr "Publik"
+
 #: views/developers/addon_status.thtml:64
 msgctxt "devcp_addon_status_public"
+msgid "Public"
+msgstr "Publik"
+
+#: views/statistics/settings.thtml:52
+msgctxt "statistics_settings_access_public"
 msgid "Public"
 msgstr "Publik"
 
@@ -6638,15 +6642,15 @@ msgstr "RDF Parser error: the file contained a duplicate element: %s"
 msgid "Rated %s out of 5 stars"
 msgstr "Rated %s out of 5 stars"
 
-#: views/elements/amo2009/addons/list_options.thtml:48
 #: views/elements/addon_list_options.thtml:48
+#: views/elements/amo2009/addons/list_options.thtml:48
 msgctxt "list_sortby_rating"
 msgid "Rating"
 msgstr "Peringkat"
 
-#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
-#: views/tags/display.thtml:78 views/search/index.thtml:118
 #: views/addons/display.thtml:181 views/addons/display.thtml:338
+#: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
+#: views/search/index.thtml:118 views/tags/display.thtml:78
 msgctxt "advanced_search_form_rating"
 msgid "Rating"
 msgstr "Peringkat"
@@ -6677,8 +6681,8 @@ msgstr "Pengaya yang Baru Diperbarui"
 msgid "Recently Viewed"
 msgstr "Baru Saja Ditambahkan"
 
-#: views/addons/searchengines.thtml:57 views/addons/themes_landing.thtml:54
-#: views/addons/home.thtml:108
+#: views/addons/home.thtml:108 views/addons/searchengines.thtml:57
+#: views/addons/themes_landing.thtml:54
 msgid "Recommended"
 msgstr "Rekomendasi Kami"
 
@@ -6694,14 +6698,14 @@ msgstr "Rekomendasi Pengaya"
 msgid "Refine Results"
 msgstr "Refine Results"
 
-#: views/elements/header.thtml:158
-msgctxt "header_navlink_register"
-msgid "Register"
-msgstr "Daftar"
-
 #: views/users/register.thtml:113
 #, fuzzy
 msgctxt "user_form_submit_register"
+msgid "Register"
+msgstr "Daftar"
+
+#: views/elements/header.thtml:158
+msgctxt "header_navlink_register"
 msgid "Register"
 msgstr "Daftar"
 
@@ -6714,16 +6718,16 @@ msgstr "Registered Users"
 msgid "Related Collections"
 msgstr "Koleksi Lain yang Mirip"
 
+#: views/addons/display.thtml:369
+msgctxt "addons_display_release_notes"
+msgid "Release Notes"
+msgstr "Catatan Rilis"
+
 #: views/developers/versions_edit.thtml:182
 #, fuzzy
 msgctxt "devcp_versions_edit_transbox_releasenotes_name"
 msgid "Release Notes"
 msgstr "Release Notes"
-
-#: views/addons/display.thtml:369
-msgctxt "addons_display_release_notes"
-msgid "Release Notes"
-msgstr "Catatan Rilis"
 
 #: views/users/login.thtml:93
 #, fuzzy
@@ -6740,6 +6744,11 @@ msgstr "Remote JavaScript Tests"
 msgid "Remote Loading Check"
 msgstr "Remote Loading Check"
 
+#: views/collections/edit.thtml:261
+msgctxt "collections_edit_addons_listitem_remove"
+msgid "Remove"
+msgstr "Hapus"
+
 # Alt text to remove tag (verb)
 #: views/elements/addon_tags.thtml:63
 #, fuzzy
@@ -6747,26 +6756,21 @@ msgctxt "tags_alt_remove_tag"
 msgid "Remove"
 msgstr "Remove"
 
-#: views/collections/edit.thtml:261
-msgctxt "collections_edit_addons_listitem_remove"
-msgid "Remove"
-msgstr "Hapus"
-
 #: views/developers/versions_edit.thtml:154
 #, fuzzy
 msgid "Remove Application"
 msgstr "Remove Application"
-
-#: views/pages/js_constants.js.thtml:92
-msgctxt "devcp_js_img_remove_compat"
-msgid "Remove Application Compatibility"
-msgstr "Hapus Kompatibilitas Aplikasi"
 
 #: views/developers/versions_edit.thtml:151
 #, fuzzy
 msgctxt "devcp_versions_edit_remove_compat"
 msgid "Remove Application Compatibility"
 msgstr "Remove Application Compatibility"
+
+#: views/pages/js_constants.js.thtml:92
+msgctxt "devcp_js_img_remove_compat"
+msgid "Remove Application Compatibility"
+msgstr "Hapus Kompatibilitas Aplikasi"
 
 #: views/pages/js_constants.js.thtml:89
 msgid "Remove Author"
@@ -6796,12 +6800,12 @@ msgstr "Remove feature"
 msgid "Remove flags; keep review"
 msgstr "Remove flags; keep review"
 
-#: views/elements/amo2009/collections/js_init.thtml:71
 #: views/elements/amo2009/collections/add_form.thtml:50
+#: views/elements/amo2009/collections/js_init.thtml:71
 msgid "Remove from Favorites"
 msgstr "Hapus dari Favorit"
 
-#: views/users/edit.thtml:134 views/admin/users_edit.thtml:116
+#: views/admin/users_edit.thtml:116 views/users/edit.thtml:134
 #, fuzzy
 msgid "Remove this picture?"
 msgstr "Remove this picture?"
@@ -6842,17 +6846,17 @@ msgstr "Replace Preview"
 msgid "Replies"
 msgstr "Balasan"
 
+#: views/reviews/display.thtml:76
+msgctxt "addon_review_author_reply_link"
+msgid "Reply"
+msgstr "Balas"
+
 # a noun: shown in an add-on's editor review history
 #: views/elements/developers/editors_review_history_item.thtml:92
 #, fuzzy
 msgctxt "editors_review_history_info_reply"
 msgid "Reply"
 msgstr "Reply"
-
-#: views/reviews/display.thtml:76
-msgctxt "addon_review_author_reply_link"
-msgid "Reply"
-msgstr "Balas"
 
 # %1 is the user, %2 is the (localized) date
 #: views/reviews/display.thtml:159
@@ -6953,15 +6957,15 @@ msgstr "Review Comments"
 msgid "Review Guidelines"
 msgstr "Petunjuk untuk Tinjauan"
 
-#: views/elements/developers/editorsmenu.thtml:61
-#, fuzzy
-msgctxt "editorcp_menu_reviewlog_link"
-msgid "Review Log"
-msgstr "Review Log"
-
 #: views/editors/reviewlog.thtml:42
 #, fuzzy
 msgctxt "editorcp_reviewlog_page_heading"
+msgid "Review Log"
+msgstr "Review Log"
+
+#: views/elements/developers/editorsmenu.thtml:61
+#, fuzzy
+msgctxt "editorcp_menu_reviewlog_link"
 msgid "Review Log"
 msgstr "Review Log"
 
@@ -6999,7 +7003,7 @@ msgid "Reviews Created"
 msgstr "Reviews Created"
 
 # %1 is the add-on name
-#: views/reviews/flag.thtml:56 views/reviews/display.thtml:55
+#: views/reviews/display.thtml:55 views/reviews/flag.thtml:56
 #: views/reviews/review_added.thtml:50
 #, fuzzy, php-format
 msgctxt "reviews_header"
@@ -7037,9 +7041,9 @@ msgstr "Running test..."
 msgid "SQL"
 msgstr "SQL"
 
+#: views/api/api_addon.thtml:57 views/api/collections_feed.thtml:77
 #: views/elements/header.thtml:58 views/elements/header.thtml:75
-#: views/elements/header.thtml:80 views/api/api_addon.thtml:57
-#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:65
+#: views/elements/header.thtml:80 views/sharing_api/addon.thtml:65
 msgctxt "a_header_sandbox"
 msgid "Sandbox"
 msgstr "Bak Pasir"
@@ -7434,7 +7438,7 @@ msgstr ""
 # %2$s is a number
 # %3$s is a number
 # %4$s is a word (the add-on is tagged with it)
-#: views/tags/display.thtml:53 views/search/index.thtml:81
+#: views/search/index.thtml:81 views/tags/display.thtml:53
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
 msgstr ""
@@ -7444,7 +7448,7 @@ msgstr ""
 msgid "Sign up for PayPal"
 msgstr "Daftar ke Paypal"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
 #, fuzzy, php-format
 msgid "Since %1$s"
 msgstr "Since %1$s"
@@ -7539,17 +7543,17 @@ msgstr ""
 "Firefox) untuk memasang plugin pencarian."
 
 #: views/elements/amo2009/search.thtml:254 views/elements/search.thtml:231
-#: views/tags/display.thtml:73 views/search/index.thtml:112
+#: views/search/index.thtml:112 views/tags/display.thtml:73
 msgid "Sort By"
 msgstr "Urut Berdasarkan"
 
-#: views/elements/amo2009/collections/sort_form.thtml:48
 #: views/collections/detail.thtml:132
+#: views/elements/amo2009/collections/sort_form.thtml:48
 msgid "Sort by"
 msgstr "Urut berdasarkan"
 
-#: views/elements/amo2009/addons/list_options.thtml:84
 #: views/elements/addon_list_options.thtml:98
+#: views/elements/amo2009/addons/list_options.thtml:84
 msgid "Sort by:"
 msgstr "Urut berdasarkan:"
 
@@ -7632,15 +7636,15 @@ msgstr ""
 msgid "Statistics"
 msgstr "Statistik"
 
+#: views/developers/dashboard.thtml:73
 #: views/elements/developers/actionbar.thtml:44
 #: views/elements/developers/actionbar.thtml:49
-#: views/developers/dashboard.thtml:73
 msgctxt "devcp_actionbar_link_stats"
 msgid "Statistics Dashboard"
 msgstr "Dasbor Statistik"
 
-#: views/elements/developers/sidebar.thtml:63
 #: views/elements/developers/myaddons.thtml:70
+#: views/elements/developers/sidebar.thtml:63
 msgctxt "devcp_myaddons_statistics_link"
 msgid "Statistics Dashboard"
 msgstr "Dasbor Statistik"
@@ -7650,16 +7654,16 @@ msgctxt "devcp_editbox_statistics_dashboard"
 msgid "Statistics Dashboard"
 msgstr "Dasbor Statistik"
 
-#: views/statistics/index.thtml:39
-msgctxt "statistics_index_title"
-msgid "Statistics Dashboard"
-msgstr "Dasbor Statistik"
-
 #: controllers/statistics_controller.php:67
 #: controllers/statistics_controller.php:78
 #: controllers/statistics_controller.php:81
 #: controllers/statistics_controller.php:293
 msgctxt "statistics_pagetitle"
+msgid "Statistics Dashboard"
+msgstr "Dasbor Statistik"
+
+#: views/statistics/index.thtml:39
+msgctxt "statistics_index_title"
 msgid "Statistics Dashboard"
 msgstr "Dasbor Statistik"
 
@@ -7722,25 +7726,25 @@ msgctxt "editors_review_label_subject"
 msgid "Subject"
 msgstr "Subject"
 
-#: views/elements/developers/additem.thtml:76
-msgctxt "devcp_additem_submissionhelp_link"
-msgid "Submission Help"
-msgstr "Bantuan Pengajuan"
-
 #: controllers/pages_controller.php:109
 #, fuzzy
 msgctxt "page_title_submissionhelp"
 msgid "Submission Help"
 msgstr "Submission Help"
 
-#: views/elements/developers/additem.thtml:41
-msgctxt "devcp_additem_sidebar_title"
+#: views/elements/developers/additem.thtml:76
+msgctxt "devcp_additem_submissionhelp_link"
+msgid "Submission Help"
+msgstr "Bantuan Pengajuan"
+
+#: views/elements/developers/myaddons.thtml:69
+#: views/elements/developers/sidebar.thtml:62
+msgctxt "devcp_myaddons_submitaddon_link"
 msgid "Submit Add-on"
 msgstr "Ajukan Pengaya"
 
-#: views/elements/developers/sidebar.thtml:62
-#: views/elements/developers/myaddons.thtml:69
-msgctxt "devcp_myaddons_submitaddon_link"
+#: views/elements/developers/additem.thtml:41
+msgctxt "devcp_additem_sidebar_title"
 msgid "Submit Add-on"
 msgstr "Ajukan Pengaya"
 
@@ -7927,10 +7931,11 @@ msgstr "Jumlah maksimum tagTag limit reached"
 msgid "Tag removed"
 msgstr "Tag dihapus"
 
-#: views/elements/developers/editbox.thtml:48
-msgctxt "devcp_editbox_tags"
+#: views/addons/display.thtml:473
+#, fuzzy
+msgctxt "tags_header_tags_title"
 msgid "Tags"
-msgstr "Tag"
+msgstr "Tags"
 
 #: views/search/index.thtml:220
 #, fuzzy
@@ -7938,19 +7943,18 @@ msgctxt "search_filter_tags_header"
 msgid "Tags"
 msgstr "Tags"
 
-#: views/addons/display.thtml:473
-#, fuzzy
-msgctxt "tags_header_tags_title"
+#: views/elements/developers/editbox.thtml:48
+msgctxt "devcp_editbox_tags"
 msgid "Tags"
-msgstr "Tags"
+msgstr "Tag"
 
 #: views/developers/addon_edit_properties.thtml:202
 msgid "Target Locale"
 msgstr "Target Locale"
 
-#: views/editors/performance_table.thtml:119
 #: views/editors/performance_charts.thtml:71
 #: views/editors/performance_charts.thtml:96
+#: views/editors/performance_table.thtml:119
 #, fuzzy
 msgid "Team Average"
 msgstr "Team Average"
@@ -8055,15 +8059,15 @@ msgstr "Grup telah disimpan"
 msgid "The Group with id %s was deleted"
 msgstr "Group dengan id %s telah dihapus"
 
-#: controllers/components/validation.php:276
 #: controllers/components/developers.php:555
+#: controllers/components/validation.php:276
 #, fuzzy
 msgid "The ID of this add-on is already used by an application."
 msgstr "The ID of this add-on is already used by an application."
 
 # %s is a string
-#: controllers/components/validation.php:271
 #: controllers/components/developers.php:550
+#: controllers/components/validation.php:271
 #, fuzzy, php-format
 msgid "The ID of this add-on is invalid: %s"
 msgstr "The ID of this add-on is invalid: %s"
@@ -8266,14 +8270,14 @@ msgid "The file contains a global variable: %s"
 msgstr "The file contains a global variable: %s"
 
 # %s is an error message from the parser.
-#: controllers/components/validation.php:251
 #: controllers/components/developers.php:530
+#: controllers/components/validation.php:251
 #, fuzzy, php-format
 msgid "The following error occurred while parsing install.rdf: %s"
 msgstr "The following error occurred while parsing install.rdf: %s"
 
-#: controllers/components/validation.php:356
 #: controllers/components/developers.php:635
+#: controllers/components/validation.php:356
 #, fuzzy
 msgid "The following errors were found in install.rdf:"
 msgstr "The following errors were found in install.rdf:"
@@ -8338,8 +8342,8 @@ msgstr ""
 msgid "The password reset link was sent to your email address."
 msgstr "Taut untuk me-reset kata sandi telah dikirim ke alamat email Anda."
 
-#: views/users/pwreset.thtml:79 views/users/register.thtml:75
-#: views/users/edit.thtml:226
+#: views/users/edit.thtml:226 views/users/pwreset.thtml:79
+#: views/users/register.thtml:75
 msgid "The passwords did not match."
 msgstr "Kata sandi tidak sama."
 
@@ -8415,8 +8419,8 @@ msgstr ""
 "are trying to add another file to this version, <a href=\"%2$s\">click here</"
 "a>."
 
-#: controllers/components/validation.php:291
 #: controllers/components/developers.php:570
+#: controllers/components/validation.php:291
 #, fuzzy
 msgid ""
 "The version of this add-on is invalid: please see the <a href=\"http://"
@@ -8425,8 +8429,8 @@ msgstr ""
 "The version of this add-on is invalid: please see the <a href=\"http://"
 "developer.mozilla.org/en/docs/Toolkit_version_format\">specification</a>"
 
-#: controllers/components/validation.php:286
 #: controllers/components/developers.php:565
+#: controllers/components/validation.php:286
 #, fuzzy
 msgid "The version of this add-on is invalid: versions cannot contain spaces."
 msgstr "The version of this add-on is invalid: versions cannot contain spaces."
@@ -8465,7 +8469,7 @@ msgid "Themes"
 msgstr "Tema"
 
 # %1 is the queue mode
-#: views/editors/queue.thtml:189 views/admin/flagged_queue.thtml:89
+#: views/admin/flagged_queue.thtml:89 views/editors/queue.thtml:189
 #, fuzzy
 msgid "There are currently no add-ons of this type to review."
 msgstr "There are currently no add-ons of this type to review."
@@ -8481,8 +8485,8 @@ msgid "There are currently no reviews in moderation."
 msgstr "There are currently no reviews in moderation."
 
 #: views/collections/add.thtml:55 views/collections/edit.thtml:89
-#: views/users/register.thtml:54 views/users/edit.thtml:74
-#: views/reviews/add.thtml:70 controllers/groups_controller.php:80
+#: views/reviews/add.thtml:70 views/users/edit.thtml:74
+#: views/users/register.thtml:54 controllers/groups_controller.php:80
 #: controllers/groups_controller.php:102
 #, fuzzy
 msgid "There are errors in this form. Please correct them and resubmit."
@@ -8565,8 +8569,8 @@ msgstr ""
 "Versi berikut hanya ditampilkan sebagai referensi dan pengujian. Sebaiknya "
 "Anda hanya menggunakan pengaya versi terbaru."
 
-#: views/users/register.thtml:100 views/users/edit.thtml:122
-#: views/admin/users_edit.thtml:109
+#: views/admin/users_edit.thtml:109 views/users/edit.thtml:122
+#: views/users/register.thtml:100
 #, fuzzy
 msgid ""
 "This URL has an invalid format. Valid URLs look like http://example.com/"
@@ -8647,17 +8651,17 @@ msgstr "This dashboard is currently <b>private</b>."
 msgid "This dashboard is currently <b>public</b>."
 msgstr "This dashboard is currently <b>public</b>."
 
-#: views/users/register.thtml:65 views/users/edit.thtml:233
+#: views/users/edit.thtml:233 views/users/register.thtml:65
 #: controllers/users_controller.php:699
 msgid "This email address is already taken by another user."
 msgstr "Alamat email ini telah digunakan oleh pengguna lain."
 
-#: views/users/pwreset.thtml:74 views/users/register.thtml:70
-#: views/users/register.thtml:80 views/users/register.thtml:86
+#: views/admin/users_edit.thtml:78 views/admin/users_edit.thtml:83
+#: views/reviews/add.thtml:80 views/reviews/add.thtml:104
 #: views/users/edit.thtml:98 views/users/edit.thtml:104
-#: views/users/edit.thtml:235 views/admin/users_edit.thtml:78
-#: views/admin/users_edit.thtml:83 views/reviews/add.thtml:80
-#: views/reviews/add.thtml:104
+#: views/users/edit.thtml:235 views/users/pwreset.thtml:74
+#: views/users/register.thtml:70 views/users/register.thtml:80
+#: views/users/register.thtml:86
 msgid "This field must not be empty."
 msgstr "Isian ini tidak boleh kosong."
 
@@ -8685,12 +8689,12 @@ msgstr "Pengaya prarilis"
 msgid "This is a site-specific add-on"
 msgstr "Pengaya khusus untuk situs tertentu"
 
-#: views/users/register.thtml:65 views/users/edit.thtml:237
+#: views/users/edit.thtml:237 views/users/register.thtml:65
 msgid "This is not a valid email address."
 msgstr "Ini bukan alamat email yang sah."
 
-#: views/users/register.thtml:91 views/users/edit.thtml:109
-#: views/admin/users_edit.thtml:88
+#: views/admin/users_edit.thtml:88 views/users/edit.thtml:109
+#: views/users/register.thtml:91
 #, fuzzy
 msgid "This nickname is already taken."
 msgstr "This nickname is already taken."
@@ -8863,7 +8867,7 @@ msgstr "Top User Categories"
 msgid "Total"
 msgstr "Total"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:155
+#: views/statistics/addon.thtml:155 views/statistics/rss/summary.thtml:40
 #, fuzzy
 msgid "Total Downloads"
 msgstr "Total Downloads"
@@ -9026,11 +9030,12 @@ msgid "Updated"
 msgstr "Diperbarui"
 
 # %s is a date in the _('date') format
+#: views/addons/browse_thumbs.thtml:119
+#: views/elements/addon_listitem.thtml:122
+#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:100
 #: views/elements/amo2009/results_addon.thtml:119
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/addon_listitem.thtml:122 views/elements/feature.thtml:106
-#: views/addons/browse_thumbs.thtml:119
+#: views/elements/feature.thtml:106
 #, php-format
 msgid "Updated %s"
 msgstr "Diperbarui pada %s"
@@ -9070,7 +9075,7 @@ msgstr "Upload Preview: "
 msgid "Upload Your File"
 msgstr "Upload Your File"
 
-#: views/users/edit.thtml:137 views/admin/users_edit.thtml:118
+#: views/admin/users_edit.thtml:118 views/users/edit.thtml:137
 #, fuzzy
 msgid "Upload a new picture?"
 msgstr "Unggah foto baru?"
@@ -9164,11 +9169,11 @@ msgstr "Profil Pengguna"
 msgid "User not found"
 msgstr "User not found"
 
-#: views/users/pwreset.thtml:54 controllers/users_controller.php:197
-#: controllers/users_controller.php:276 controllers/users_controller.php:685
-#: controllers/users_controller.php:744 controllers/users_controller.php:914
-#: controllers/collections_controller.php:1008
+#: views/users/pwreset.thtml:54 controllers/collections_controller.php:1008
 #: controllers/collections_controller.php:1018
+#: controllers/users_controller.php:197 controllers/users_controller.php:276
+#: controllers/users_controller.php:685 controllers/users_controller.php:744
+#: controllers/users_controller.php:914
 msgid "User not found!"
 msgstr "Pengguna tidak ditemukan!"
 
@@ -9245,23 +9250,23 @@ msgstr "Validation temporarily disabled, try again later."
 msgid "Ver"
 msgstr "Ver"
 
-#: views/developers/versions.thtml:56 views/addons/display.thtml:144
+#: views/addons/display.thtml:144 views/developers/versions.thtml:56
 #, fuzzy
 msgid "Version"
 msgstr "Version"
-
-# %s is the version of the add-on.  Example:  3.2a1
-#: views/elements/amo2009/addons/version_detail.thtml:51
-#: views/elements/addon_version_detail.thtml:51
-#, php-format
-msgctxt "addon_display_header_version"
-msgid "Version %s"
-msgstr "Versi %s"
 
 # %s is a version number.  Example:  3.0
 #: views/developers/versions.thtml:66
 #, php-format
 msgctxt "devcp_details_version"
+msgid "Version %s"
+msgstr "Versi %s"
+
+# %s is the version of the add-on.  Example:  3.2a1
+#: views/elements/addon_version_detail.thtml:51
+#: views/elements/amo2009/addons/version_detail.thtml:51
+#, php-format
+msgctxt "addon_display_header_version"
 msgid "Version %s"
 msgstr "Versi %s"
 
@@ -9299,13 +9304,13 @@ msgstr "Version/File"
 msgid "Versions"
 msgstr "Versi"
 
-#: views/elements/developers/editbox.thtml:64
-msgctxt "devcp_editbox_versions"
+#: views/developers/dashboard.thtml:82
+msgctxt "devcp_dashboard_versions"
 msgid "Versions and Files"
 msgstr "Berkas dan Versi"
 
-#: views/developers/dashboard.thtml:82
-msgctxt "devcp_dashboard_versions"
+#: views/elements/developers/editbox.thtml:64
+msgctxt "devcp_editbox_versions"
 msgid "Versions and Files"
 msgstr "Berkas dan Versi"
 
@@ -9313,8 +9318,8 @@ msgstr "Berkas dan Versi"
 msgid "View All Collections"
 msgstr "Tampilkan Semua Koleksi"
 
-#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/feature.thtml:95
 msgid "View Author's Profile"
 msgstr "Tampilkan Profil Penyusun"
@@ -9394,14 +9399,14 @@ msgid "View all top rated"
 msgstr "Tampilkan peringkat tertinggi"
 
 # %1$s and %2$s are full <input> tags for dates
+#: views/admin/logs.thtml:46 views/editors/logs.thtml:45
 #: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
-#: views/editors/logs.thtml:45 views/admin/logs.thtml:46
 #, fuzzy, php-format
 msgid "View entries between %1$s and %2$s"
 msgstr "View entries between %1$s and %2$s"
 
-#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/amo2009/homepage_addon.thtml:129
+#: views/elements/amo2009/results_addon.thtml:131
 #: views/elements/feature.thtml:127
 #, fuzzy
 msgid "View more from"
@@ -9456,8 +9461,8 @@ msgid ""
 msgstr ""
 "We don't have any data for your add-on yet. Please check back in a few days."
 
-#: views/users/register.thtml:98 views/users/edit.thtml:120
-#: views/admin/users_edit.thtml:107
+#: views/admin/users_edit.thtml:107 views/users/edit.thtml:120
+#: views/users/register.thtml:98
 #, fuzzy
 msgid "Website URL"
 msgstr "URL Situs web"
@@ -9557,8 +9562,8 @@ msgstr "What's Next for this Add-on"
 msgid "What's next for %1$s"
 msgstr "What's next for %1$s"
 
-#: views/elements/amo2009/contribution.thtml:92 views/addons/display.thtml:387
-#: views/addons/display.thtml:530
+#: views/addons/display.thtml:387 views/addons/display.thtml:530
+#: views/elements/amo2009/contribution.thtml:92
 msgctxt "addons_display_a_license_what"
 msgid "What's this?"
 msgstr "Apa ini?"
@@ -9673,8 +9678,10 @@ msgstr "Nama pengguna atau kata sandi salah!"
 # This is a placeholder for a date in the Year-Month-Day format.  This is 
 # NOT a php format string.  Dates going into this box need to remain in the
 # YYYY-MM-DD format so please localize that if necessary or just leave as is.
+#: controllers/admin_controller.php:1733
 #: controllers/editors_controller.php:658
 #: controllers/editors_controller.php:1758
+#: controllers/editors_controller.php:1814
 #, fuzzy
 msgid "YYYY-MM-DD"
 msgstr "YYYY-MM-DD"
@@ -9777,11 +9784,11 @@ msgstr ""
 msgid "You cannot review your own add-on."
 msgstr "Anda tidak dapat meninjau pengaya Anda sendiri."
 
-#: controllers/statistics_controller.php:202
-#: controllers/statistics_controller.php:432
 #: controllers/previews_controller.php:108
 #: controllers/previews_controller.php:211
 #: controllers/previews_controller.php:312
+#: controllers/statistics_controller.php:202
+#: controllers/statistics_controller.php:432
 msgid "You do not have access to that add-on."
 msgstr "Anda tidak mempunyai hak akses ke pengaya tersebut."
 
@@ -9834,8 +9841,8 @@ msgstr ""
 msgid "You must give your collection a name."
 msgstr "Anda harus memberi nama koleksi Anda."
 
-#: controllers/components/validation.php:350
 #: controllers/components/developers.php:629
+#: controllers/components/validation.php:350
 #, fuzzy
 msgid "You must have at least one valid Mozilla target application."
 msgstr "You must have at least one valid Mozilla target application."
@@ -9950,8 +9957,8 @@ msgstr ""
 "submit updates to your add-on without editor review."
 
 # %1$s is a URL
-#: controllers/components/validation.php:281
 #: controllers/components/developers.php:560
+#: controllers/components/validation.php:281
 #, fuzzy, php-format
 msgid ""
 "Your add-on is attempting to use a GUID that has been blocked.  Please <a "
@@ -10175,17 +10182,19 @@ msgid_plural "and %1$s more collections"
 msgstr[0] "dan %1$s koleksi lainnya"
 msgstr[1] "dan %1$s koleksi lainnya"
 
-#: views/elements/amo2009/results_addon.thtml:91
-#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/addons/category_landing.thtml:66 views/addons/display.thtml:64
+#: views/addons/home.thtml:157 views/addons/policy.thtml:57
 #: views/elements/addon_discussionheader.thtml:83
-#: views/elements/addon_listitem.thtml:109 views/elements/feature.thtml:95
-#: views/addons/category_landing.thtml:66 views/addons/policy.thtml:57
-#: views/addons/display.thtml:64 views/addons/home.thtml:157
+#: views/elements/addon_listitem.thtml:109
+#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/amo2009/results_addon.thtml:91
+#: views/elements/feature.thtml:95
 msgid "by"
 msgstr "oleh"
 
+#: views/addons/display.thtml:305
 #: views/elements/amo2009/separated_list_items.thtml:106
-#: views/addons/display.thtml:305 views/reviews/display.thtml:72
+#: views/reviews/display.thtml:72
 #, php-format
 msgid "by %1$s on %2$s"
 msgstr "oleh %1$s pada %2$s"
@@ -10210,23 +10219,14 @@ msgid "close"
 msgstr "tutup"
 
 # %1$s is a comma-separated list of author names
-#: views/elements/amo2009/separated_list_items.thtml:72
 #: views/elements/amo2009/collection_listing_item.thtml:84
+#: views/elements/amo2009/separated_list_items.thtml:72
 #, php-format
 msgid "created by %1$s"
 msgstr "dibuat oleh %1$s"
 
-#: views/addons/display.thtml:362
-msgid "Detailed Review"
-msgstr "tinjauan secara detail"
-
-#: controllers/admin_controller.php:1733
-msgctxt "YYYY-MM-DD"
-msgid "editors_date_filter_placeholder"
-msgstr ""
-
-#: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:348
-#: views/elements/feature.thtml:89
+#: views/elements/amo2009/install.thtml:348 views/elements/feature.thtml:89
+#: views/helpers/addons_html.php:571
 msgid "experimental"
 msgstr "eksperimental"
 
@@ -10243,17 +10243,17 @@ msgstr "untuk Mac OS X"
 msgid "for Windows"
 msgstr "untuk Windows"
 
-# A small link following each test.  This goes to a help page specific to the test.
-#: views/elements/developers/testresults_group.thtml:58
-#, fuzzy
-msgctxt "devcp_validation_help"
-msgid "help"
-msgstr "help"
-
 # A link after the main header
 #: views/editors/review.thtml:301
 #, fuzzy
 msgctxt "editors_review_header_validation_help"
+msgid "help"
+msgstr "help"
+
+# A small link following each test.  This goes to a help page specific to the test.
+#: views/elements/developers/testresults_group.thtml:58
+#, fuzzy
+msgctxt "devcp_validation_help"
 msgid "help"
 msgstr "help"
 
@@ -10297,16 +10297,16 @@ msgstr "next &raquo;"
 msgid "no"
 msgstr "no"
 
+#: controllers/statistics_controller.php:299
+msgctxt "statistics_js_dropdowns_none"
+msgid "none"
+msgstr "tidak ada"
+
 #: views/editors/review.thtml:121
 #, fuzzy
 msgctxt "editors_review_list_none"
 msgid "none"
 msgstr "none"
-
-#: controllers/statistics_controller.php:299
-msgctxt "statistics_js_dropdowns_none"
-msgid "none"
-msgstr "tidak ada"
 
 # This is a separator between the graphical [contribute] button and the 
 # graphical [download now] button
@@ -10332,9 +10332,9 @@ msgstr "atau pilih pengaya lain"
 msgid "others"
 msgstr "pengguna lainnya"
 
+#: views/elements/addon_list_options.thtml:94
 #: views/elements/amo2009/addons/list_options.thtml:103
 #: views/elements/pagination.thtml:67
-#: views/elements/addon_list_options.thtml:94
 msgid "per page"
 msgstr "per halaman"
 
@@ -10342,7 +10342,7 @@ msgstr "per halaman"
 msgid "previous"
 msgstr "sebelumnya"
 
-#: views/helpers/addons_html.php:573 views/elements/amo2009/install.thtml:346
+#: views/elements/amo2009/install.thtml:346 views/helpers/addons_html.php:573
 msgid "recommended"
 msgstr "rekomendasi"
 
@@ -10364,8 +10364,8 @@ msgstr "cari pengaya"
 msgid "search for collections"
 msgstr "cari koleksi"
 
-#: views/elements/amo2009/addons/list_options.thtml:108
 #: views/elements/addon_list_options.thtml:105
+#: views/elements/amo2009/addons/list_options.thtml:108
 msgid "show experimental add-ons"
 msgstr "tampilkan pengaya eksperimental"
 
@@ -10377,11 +10377,12 @@ msgstr "hingga"
 msgid "version"
 msgstr "versi"
 
-#: views/elements/amo2009/results_addon.thtml:97
-#: views/elements/amo2009/homepage_addon.thtml:108
-#: views/elements/addon_listitem.thtml:115 views/elements/feature.thtml:101
-#: views/addons/category_landing.thtml:157
 #: views/addons/browse_thumbs.thtml:126
+#: views/addons/category_landing.thtml:157
+#: views/elements/addon_listitem.thtml:115
+#: views/elements/amo2009/homepage_addon.thtml:108
+#: views/elements/amo2009/results_addon.thtml:97
+#: views/elements/feature.thtml:101
 msgid "weekly downloads"
 msgstr "unduhan mingguan"
 
@@ -10424,6 +10425,10 @@ msgstr "yes"
 #~ msgctxt "statistics_index_addons_downloaded"
 #~ msgid "Add-ons Downloaded"
 #~ msgstr "Add-ons Downloaded"
+
+#, fuzzy
+#~ msgid "Add-ons in Use"
+#~ msgstr "Add-ons in Use"
 
 #, fuzzy
 #~ msgctxt "editors_review_history_pending_adminreview"
