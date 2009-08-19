@@ -474,9 +474,7 @@ Bandwagon.Controller.Settings._openLocalizedURL = function(url)
     if (locale && locale != "")
         url = url.replace(/en-US/, locale, "g");
 
-    var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
-                       .getService(Components.interfaces.nsIWindowMediator);
-    var mainWindow = wm.getMostRecentWindow("navigator:browser");
+    var mainWindow = Bandwagon.Util.getMostRecentAppWindow();
 
     if (mainWindow)
     {

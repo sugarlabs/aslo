@@ -41,9 +41,15 @@ try
 {
     // try and re-use the Bandwagon singletons from a recent browser window
 
+    var info = Components.classes["@mozilla.org/xre/app-info;1"]
+      .getService(Components.interfaces.nsIXULAppInfo);
+    var appWinString = "navigator:browser"; // default, Firefox
+    if (info.name == "Thunderbird")
+        appWinString = "mail:3pane";
+    // Can't use the util function here because we don't have the Bandwagon object yet
     var bw = Components.classes["@mozilla.org/appshell/window-mediator;1"]
         .getService(Components.interfaces.nsIWindowMediator)
-        .getMostRecentWindow("navigator:browser");
+        .getMostRecentWindow(appWinString);
 
     if (bw)
     {

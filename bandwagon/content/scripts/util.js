@@ -53,6 +53,18 @@ Bandwagon.Util.getMainWindow = function()
         .getInterface(this.Ci.nsIDOMWindow);
 }
 
+Bandwagon.Util.getMostRecentAppWindow = function()
+{
+    var app = Bandwagon.Util.getAppName();
+    var appWinString = "navigator:browser"; // default, Firefox
+    if (app == "Thunderbird")
+        appWinString = "mail:3pane";
+    var appWindow = Components.classes["@mozilla.org/appshell/window-mediator;1"]
+                .getService(Components.interfaces.nsIWindowMediator)
+                .getMostRecentWindow(appWinString);
+    return appWindow;
+}
+
 Bandwagon.Util.getExtensionVersion = function(emid)
 {
     var bits = {major: 1, minor: 0, revision: 0, increment: 0};
@@ -109,6 +121,11 @@ Bandwagon.Util.getHostEnvironmentInfo = function()
     return hostEnvInfo;
 }
 
+Bandwagon.Util.getAppName = function()
+{
+    var envinfo = Bandwagon.Util.getHostEnvironmentInfo();
+    return envinfo.name; // Returns "Firefox" for Firefox, "Thunderbird" for TB
+}
 
 Bandwagon.Util.compareVersions = function(versionA, versionB)
 {
