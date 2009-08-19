@@ -382,7 +382,7 @@ class AddonsController extends AppController
             $this->redirect('/browse/type:' . $addon_data['Addon']['addontype_id']);
         }
 
-        $this->publish('previews', $this->Preview->findAllByAddonId($id, array('id', 'addon_id', 'caption'), 'highlight desc'));
+        $this->publish('previews', $this->Preview->findAllByAddonId($id, array('id', 'addon_id', 'caption'), 'highlight desc, id'));
         $this->publish('addon', $addon_data);
         $this->publish('addonIconPath', $this->Image->getAddonIconURL($id), false);
         $this->publish('addonPreviewPath', $this->Image->getHighlightedPreviewURL($id));
