@@ -306,6 +306,56 @@ class CollectionsController extends AppController
         return;
     }
 
+    /** 
+     * Share Collection
+     */
+    function share($uuid = null) {
+        if (!$uuid) {
+            $this->flash(sprintf(___('Missing argument: %s'), 'collection_id'), '/', 3);
+            return;
+        }
+
+        $this->Collection->unbindFully();
+        $id = $this->Collection->getIdForUuidOrNickname($uuid);
+        if (!$id) {
+            $this->flash(___('Collection not found!'), '/', 3);
+            return;
+        }
+        $_conditions['Collection.id'] = $id;
+        $collection = $this->Collection->find($_conditions, null, null, 1);
+
+        $service = @$this->Amo->link_sharing_services[$_GET['service']];
+
+        // Panic if either the addon or the sharing service is not found.
+        if (empty($collection) || empty($service)) {
+            $this->flash(___('Collection not found!'), '/', 3);
+            return;
+        }
+
+        $this->publish('collection_uuid', $uuid);
+
+        // Build a suitable link title based on the addon name, version, and
+        // the site title.
+        $title =
+            sprintf(
+                ___('%s'),
+                $collection['Translation']['name']['string']
+            ) .
+            ' :: '.
+            sprintf(
+                ___('Add-ons for %1$s'),
+                APP_PRETTYNAME
+            );
+
+        $this->publish('share_title', $title);
+
+        // Come up with description text from the summary
+        $this->publish('description', $addon['Translation']['description']['string']);
+        $this->publish('service_url', $service['url']);
+
+        $this->layout = 'ajax';
+    }
+    
     function _getSortedAddons($collection_id) {
         $sort_options = array(
             'date-added' => ___('Date Added'),
@@ -379,6 +429,9 @@ class CollectionsController extends AppController
         $this->publish('collection', $collection);
         $this->publish('sort_options', $sort_options);
         $this->publish('sortby', $sortby);
+
+        $this->set('link_sharing_services', $this->Amo->link_sharing_services);
+
         $this->pageTitle = $collection['Translation']['name']['string'] . " :: " . sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         // User-specific stuff.

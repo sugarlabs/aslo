@@ -1,0 +1,28 @@
+<?php
+
+        $url = FULL_BASE_URL . $html->url("/collection/{$collection_uuid}");
+
+        $description = $html->truncateChars(250, $description);
+
+        $title = $share_title;
+
+        // Grab the URL template for the link sharing service and fill in the 
+        // placeholders with the strings composed above.
+        $link_data = compact('url', 'title', 'description');
+        foreach ($link_data as $name => $value) {
+            // replace &#42; with -
+            $value = htmlspecialchars_decode($value);
+            $value = html_entity_decode($value);
+            
+            $service_url = str_replace(
+                '{'.strtoupper($name).'}', 
+                rawurlencode($value), 
+                $service_url
+            );
+        }
+
+        // Finally, bounce the user off to the populated sharing URL.
+        header('HTTP/1.1 302 Found');
+        header('Location: ' . $service_url);
+        exit;
+?>

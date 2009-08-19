@@ -117,6 +117,23 @@ $c = $collection['Collection'];
             <?=___('<strong>Updated:</strong>')?>
             <?=strftime(___('%B %e, %Y'), strtotime($c['modified']))?>
           </p>
+            
+          <div class="share-this">
+            <a class="share" href="#"><?=___('Share this Collection')?></a>
+            <div class="share-networks">
+              <ul>
+                <?php foreach ($link_sharing_services as $l_name => $l_details) :?>
+                  <li class="<?= $l_name ?>">
+                    <?php $share_url = str_replace('/collection/', '/collections/share/', $html->url()) ?>
+                    <a class="uniquify" target="_blank" href="<?= $share_url . '?service=' . $l_name ?>">
+                      <?php // Escaping here because these details came via set() ?>
+                      <?=htmlentities($l_details['label'], ENT_COMPAT, 'UTF-8')?>
+                    </a>
+                  </li>
+                <?php endforeach ?>
+              </ul>
+            </div>
+          </div> <!-- share-this -->
         </div>
       </div> <!-- featured-inner -->
     </div> <!-- featured -->

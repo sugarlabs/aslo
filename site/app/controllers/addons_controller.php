@@ -55,8 +55,6 @@ class AddonsController extends AppController
 
     var $securityLevel = 'low';
 
-    var $link_sharing_services;
-
     function beforeFilter() {
         // Disable ACLs because this controller is entirely public.
         $this->SimpleAuth->enabled = false;
@@ -65,53 +63,6 @@ class AddonsController extends AppController
         if (array_key_exists('addons-author-addons-select', $this->params['url']) && ctype_digit($this->params['url']['addons-author-addons-select'])) {
             redirectWithNewLocaleAndExit(array('addon',$this->params['url']['addons-author-addons-select']));
         }
-
-        // Set of available link sharing services with associated labels and
-        // submission URL templates.
-        // @TODO: Move this to a model class when share counts are enabled in DB
-        // @TODO: In addition to this variable there is a duplicated variable in /bin/maintenance.php
-        // with these values as well.  If you add/remove something here you need to add/remove something there.
-        // There should be 1 global variable holding this array at some point.
-        $this->link_sharing_services = array(
-
-            // see: http://digg.com/tools/integrate#3
-            'digg' => array(
-                'label' => ___('Digg this!'),
-                'url' => 'http://digg.com/submit?url={URL}&title={TITLE}&bodytext={DESCRIPTION}&media=news&topic=tech_news'
-            ),
-
-            // see: http://www.facebook.com/share_options.php
-            'facebook' => array(
-                'label' => ___('Post to Facebook'),
-                'url' => 'http://www.facebook.com/share.php?u={URL}&t={TITLE}'
-            ),
-
-            // see: http://delicious.com/help/savebuttons
-            'delicious' => array(
-                'label' => ___('Add to Delicious'),
-                'url' => 'http://delicious.com/save?url={URL}&title={TITLE}&notes={DESCRIPTION}'
-            ),
-
-            // see: http://www.myspace.com/posttomyspace
-            'myspace' => array(
-                'label' => ___('Post to MySpace'),
-                'url' => 'http://www.myspace.com/index.cfm?fuseaction=postto&t={TITLE}&c={DESCRIPTION}&u={URL}&l=1'
-            ),
-
-            // see: http://friendfeed.com/embed/link
-            'friendfeed' => array(
-                'label' => ___('Share on FriendFeed'),
-                'url' => 'http://friendfeed.com/?url={URL}&title={TITLE}'
-            ),
-
-            // See Nick Nguyen
-            'twitter' => array(
-                'label' => ___('Post to Twitter'),
-                'url' => 'https://twitter.com/home?status={TITLE} {URL}'
-            )
-
-        );
-
     }
 
     /**
@@ -242,7 +193,7 @@ class AddonsController extends AppController
         );
         $addon = $this->Addon->find($_conditions, null , null , 1);
 
-        $service = @$this->link_sharing_services[$_GET['service']];
+        $service = @$this->Amo->link_sharing_services[$_GET['service']];
 
         // Panic if either the addon or the sharing service is not found.
         if (empty($addon) || empty($service)) {
@@ -349,7 +300,7 @@ class AddonsController extends AppController
 
         // Not using publish() here because this will all be app constants,
         // localized strings with placeholders, or counts from the DB.
-        $this->set('link_sharing_services', $this->link_sharing_services);
+        $this->set('link_sharing_services', $this->Amo->link_sharing_services);
 
         if($loggedIn) {
           $isauthor = $this->Amo->checkOwnership($id, $addon_data['Addon'], true);

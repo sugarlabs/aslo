@@ -41,6 +41,7 @@ class AmoComponent extends Object {
     var $applications;
     var $versionIds;
     var $navCategories;
+    var $link_sharing_services;
 
    /**
     * Save a reference to the controller on startup
@@ -48,6 +49,52 @@ class AmoComponent extends Object {
     */
     function startup(&$controller) {
         $this->controller =& $controller;
+
+        // Set of available link sharing services with associated labels and
+        // submission URL templates.
+        // @TODO: Move this to a model class when share counts are enabled in DB
+        // @TODO: In addition to this variable there is a duplicated variable in /bin/maintenance.php
+        // with these values as well.  If you add/remove something here you need to add/remove something there.
+        // There should be 1 global variable holding this array at some point.
+        $this->link_sharing_services = array(
+
+            // see: http://digg.com/tools/integrate#3
+            'digg' => array(
+                'label' => ___('Digg this!'),
+                'url' => 'http://digg.com/submit?url={URL}&title={TITLE}&bodytext={DESCRIPTION}&media=news&topic=tech_news'
+            ),
+
+            // see: http://www.facebook.com/share_options.php
+            'facebook' => array(
+                'label' => ___('Post to Facebook'),
+                'url' => 'http://www.facebook.com/share.php?u={URL}&t={TITLE}'
+            ),
+
+            // see: http://delicious.com/help/savebuttons
+            'delicious' => array(
+                'label' => ___('Add to Delicious'),
+                'url' => 'http://delicious.com/save?url={URL}&title={TITLE}&notes={DESCRIPTION}'
+            ),
+
+            // see: http://www.myspace.com/posttomyspace
+            'myspace' => array(
+                'label' => ___('Post to MySpace'),
+                'url' => 'http://www.myspace.com/index.cfm?fuseaction=postto&t={TITLE}&c={DESCRIPTION}&u={URL}&l=1'
+            ),
+
+            // see: http://friendfeed.com/embed/link
+            'friendfeed' => array(
+                'label' => ___('Share on FriendFeed'),
+                'url' => 'http://friendfeed.com/?url={URL}&title={TITLE}'
+            ),
+
+            // See Nick Nguyen
+            'twitter' => array(
+                'label' => ___('Post to Twitter'),
+                'url' => 'https://twitter.com/home?status={TITLE} {URL}'
+            )
+
+        );
     }
 
    /**
