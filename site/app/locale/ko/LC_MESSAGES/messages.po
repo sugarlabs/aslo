@@ -3675,7 +3675,7 @@ msgstr "Firefox 부가 기능 계정의 이메일 주소를 콤마로 구분해 
 msgid "Enter the e-mail address of a Firefox Add-ons account:"
 msgstr "Firefox 부가 기능 계정의 이메일 주소를 입력하세요:"
 
-#: views/elements/recaptcha.thtml:81
+#: views/elements/recaptcha.thtml:77
 msgid "Enter your answer here:"
 msgstr "코드 입력:"
 
@@ -4014,26 +4014,10 @@ msgid ""
 msgstr ""
 "\"데이브가 좋아하는 여행 관련 부가 기능\" 같은 알기 쉬운 이름으로 지어주세요."
 
-#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
-msgctxt "footer_lang_form_lang_submit_go"
-msgid "Go"
-msgstr "이동"
-
 #: views/addons/display.thtml:459 views/tags/display.thtml:83
 msgctxt "addons_author_addons_submit"
 msgid "Go"
 msgstr "확인"
-
-#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
-msgctxt "editors_featured_edit_feature_submit"
-msgid "Go"
-msgstr "전송"
-
-#: views/elements/addon_list_options.thtml:109
-#: views/elements/amo2009/addons/list_options.thtml:113
-msgctxt "addons_options_submit"
-msgid "Go"
-msgstr "전송"
 
 #: views/collections/detail.thtml:139
 #: views/elements/amo2009/collections/sort_form.thtml:55
@@ -4041,6 +4025,22 @@ msgstr "전송"
 msgctxt "collections_index_button_go"
 msgid "Go"
 msgstr "실행"
+
+#: views/elements/addon_list_options.thtml:109
+#: views/elements/amo2009/addons/list_options.thtml:113
+msgctxt "addons_options_submit"
+msgid "Go"
+msgstr "전송"
+
+#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
+msgctxt "footer_lang_form_lang_submit_go"
+msgid "Go"
+msgstr "이동"
+
+#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
+msgctxt "editors_featured_edit_feature_submit"
+msgid "Go"
+msgstr "전송"
 
 #: controllers/groups_controller.php:65
 msgid "Group Admin"
@@ -4114,13 +4114,13 @@ msgstr "총 횟수 숨기기"
 msgid "Hide email address"
 msgstr "이메일 주소 감추기"
 
-#: views/elements/amo2009/users/vcard.thtml:80
-msgctxt "addon_developer_th_homepage"
+#: views/addons/display.thtml:174
+msgctxt "addons_display_header_homepage"
 msgid "Homepage"
 msgstr "홈페이지"
 
-#: views/addons/display.thtml:174
-msgctxt "addons_display_header_homepage"
+#: views/elements/amo2009/users/vcard.thtml:80
+msgctxt "addon_developer_th_homepage"
 msgid "Homepage"
 msgstr "홈페이지"
 
@@ -4188,13 +4188,27 @@ msgstr ""
 "시 등록 정보 부분에 나와있는 부가 기능의 기본 언어로 대체될 것입니다. 아무런 "
 "번역판도 준비되어있지 않다면, 모국어인 당신의 기본 언어로 입력해 주세요."
 
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to an audio captcha
 #: views/elements/recaptcha.thtml:67
-msgid "If this is hard to read, you "
+#, php-format
+msgid ""
+"If this is hard to read, you can <a href=\"%1$s\">try different words</a> or "
+"<a href=\"%2$s\">listen to something</a> instead."
 msgstr ""
+"이 문장을 읽기 어렵다면, <a href=\"%1$s\">다른 단어로 재시도</a>하거나 <a "
+"href=\"%2$s\">음성 듣기</a>로 대신 할 수 있습니다."
 
-#: views/elements/recaptcha.thtml:75
-msgid "If this is hard to understand, "
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to a text captcha
+#: views/elements/recaptcha.thtml:73
+#, fuzzy, php-format
+msgid ""
+"If this is hard to understand, you can <a href=\"%1$s\">listen to something "
+"else</a> or <a href=\"%2$s\"> switch back to text</a>."
 msgstr ""
+"이 음성을 알아듣기 어렵다면, <a href=\"%1$s\">다른 음성 듣기</a> 및 <a href="
+"\"%2$s\">텍스트로 전환</a>할 수 있습니다."
 
 # %1$s is the text on the "create collection" button
 #: views/collections/add.thtml:92
@@ -5885,7 +5899,7 @@ msgstr ""
 msgid "Please treat this information as confidential."
 msgstr "아래 정보는 신중하게 입력하시기 바랍니다."
 
-#: views/elements/recaptcha.thtml:73
+#: views/elements/recaptcha.thtml:71
 msgid "Please type what you hear."
 msgstr "들리는 것을 입력해 주세요."
 
@@ -9672,31 +9686,13 @@ msgstr "예"
 #~ msgid "File Layout Check"
 #~ msgstr "파일 래이아웃 검사"
 
-#~ msgctxt "test_case_name_dictionary_general_checkExtraFiles"
-#~ msgid "File Type Verification"
-#~ msgstr "파일 형식 검증"
-
 #~ msgctxt "test_case_name_langpack_general_checkExtraFiles"
 #~ msgid "File Type Verification"
 #~ msgstr "파일 형식 검증"
 
-# %1 is the link switching refreshing the captcha
-# %2 is the link switching to an audio captcha
-#~ msgid ""
-#~ "If this is hard to read, you can <a href=\"%1$s\">try different words</a> "
-#~ "or <a href=\"%2$s\">listen to something</a> instead."
-#~ msgstr ""
-#~ "이 문장을 읽기 어렵다면, <a href=\"%1$s\">다른 단어로 재시도</a>하거나 <a "
-#~ "href=\"%2$s\">음성 듣기</a>로 대신 할 수 있습니다."
-
-# %1 is the link switching refreshing the captcha
-# %2 is the link switching to a text captcha
-#~ msgid ""
-#~ "If this is hard to understand, you can <a href=\"%1$s\">listen to "
-#~ "something else</a> or <a href=\"%2$s\">switch back to text</a>."
-#~ msgstr ""
-#~ "이 음성을 알아듣기 어렵다면, <a href=\"%1$s\">다른 음성 듣기</a> 및 <a "
-#~ "href=\"%2$s\">텍스트로 전환</a>할 수 있습니다."
+#~ msgctxt "test_case_name_dictionary_general_checkExtraFiles"
+#~ msgid "File Type Verification"
+#~ msgstr "파일 형식 검증"
 
 #~ msgctxt "editors_review_header_itemhistory"
 #~ msgid "Item History"
@@ -9778,14 +9774,14 @@ msgstr "예"
 #~ msgid "make your own"
 #~ msgstr "자신만의 검색도구 제작"
 
-# This is the link text in the <a> for devcp_error_appversion_reference_link.  This
-# should be fixed.
-#~ msgctxt "devcp_error_appversion_reference_link_text"
-#~ msgid "this page"
-#~ msgstr "현재 페이지"
-
 # This is the text in the <a> tag for devcp_valid_app_reference.  This should be
 # fixed.
 #~ msgctxt "devcp_valid_app_reference_linktext"
 #~ msgid "this page"
 #~ msgstr "참고 정보"
+
+# This is the link text in the <a> for devcp_error_appversion_reference_link.  This
+# should be fixed.
+#~ msgctxt "devcp_error_appversion_reference_link_text"
+#~ msgid "this page"
+#~ msgstr "현재 페이지"

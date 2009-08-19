@@ -3705,7 +3705,7 @@ msgstr ""
 msgid "Enter the e-mail address of a Firefox Add-ons account:"
 msgstr "Vložte e-mailovou adresu svého účtu na webu Doplňky Firefoxu:"
 
-#: views/elements/recaptcha.thtml:81
+#: views/elements/recaptcha.thtml:77
 msgid "Enter your answer here:"
 msgstr "Zde vložte odpověď"
 
@@ -4043,24 +4043,8 @@ msgid ""
 msgstr ""
 "Pojmenujte vaši sbírku rozumně. Například \"Mé oblíbené doplňky pro vývoj\"."
 
-#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
-msgctxt "footer_lang_form_lang_submit_go"
-msgid "Go"
-msgstr "Přejít"
-
 #: views/addons/display.thtml:459 views/tags/display.thtml:83
 msgctxt "addons_author_addons_submit"
-msgid "Go"
-msgstr "Odeslat"
-
-#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
-msgctxt "editors_featured_edit_feature_submit"
-msgid "Go"
-msgstr "Odeslat"
-
-#: views/elements/addon_list_options.thtml:109
-#: views/elements/amo2009/addons/list_options.thtml:113
-msgctxt "addons_options_submit"
 msgid "Go"
 msgstr "Odeslat"
 
@@ -4070,6 +4054,22 @@ msgstr "Odeslat"
 msgctxt "collections_index_button_go"
 msgid "Go"
 msgstr "Přejít"
+
+#: views/elements/addon_list_options.thtml:109
+#: views/elements/amo2009/addons/list_options.thtml:113
+msgctxt "addons_options_submit"
+msgid "Go"
+msgstr "Odeslat"
+
+#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
+msgctxt "footer_lang_form_lang_submit_go"
+msgid "Go"
+msgstr "Přejít"
+
+#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
+msgctxt "editors_featured_edit_feature_submit"
+msgid "Go"
+msgstr "Odeslat"
 
 #: controllers/groups_controller.php:65
 msgid "Group Admin"
@@ -4143,15 +4143,15 @@ msgstr "Skrýt celkový počet"
 msgid "Hide email address"
 msgstr "Skrýt e-mailovou adresu"
 
-#: views/elements/amo2009/users/vcard.thtml:80
-msgctxt "addon_developer_th_homepage"
-msgid "Homepage"
-msgstr "Domovská stránka"
-
 #: views/addons/display.thtml:174
 msgctxt "addons_display_header_homepage"
 msgid "Homepage"
 msgstr "Titulní stránka"
+
+#: views/elements/amo2009/users/vcard.thtml:80
+msgctxt "addon_developer_th_homepage"
+msgid "Homepage"
+msgstr "Domovská stránka"
 
 #: views/developers/addon_edit_categories.thtml:91
 msgid "Hover over a category to see its description."
@@ -4218,13 +4218,27 @@ msgstr ""
 "části úprav vlastností doplňku. Pokud nemáte k dispozici žádný překlad, "
 "použijte jako výchozí lokalizaci váš mateřský jazyk."
 
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to an audio captcha
 #: views/elements/recaptcha.thtml:67
-msgid "If this is hard to read, you "
+#, php-format
+msgid ""
+"If this is hard to read, you can <a href=\"%1$s\">try different words</a> or "
+"<a href=\"%2$s\">listen to something</a> instead."
 msgstr ""
+"Pokud je tento text těžko čitelný, můžete <a href=\"%1$s\">zkusit jiná slova "
+"</a> nebo <a href=\"%2$s\">si ho poslechnout</a>."
 
-#: views/elements/recaptcha.thtml:75
-msgid "If this is hard to understand, "
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to a text captcha
+#: views/elements/recaptcha.thtml:73
+#, fuzzy, php-format
+msgid ""
+"If this is hard to understand, you can <a href=\"%1$s\">listen to something "
+"else</a> or <a href=\"%2$s\"> switch back to text</a>."
 msgstr ""
+"Pokud tomu není rozumnět, můžete <a href=\"%1$s\">si poslechnout něco jiného "
+"</a> nebo <a href=\"%2$s\">se přepnou zpět na text</a>."
 
 # %1$s is the text on the "create collection" button
 #: views/collections/add.thtml:92
@@ -5942,7 +5956,7 @@ msgstr ""
 msgid "Please treat this information as confidential."
 msgstr "Považujte prosím tyto informace za důvěrné."
 
-#: views/elements/recaptcha.thtml:73
+#: views/elements/recaptcha.thtml:71
 msgid "Please type what you hear."
 msgstr "Vložte prosím, co jste slyšeli."
 
@@ -9770,31 +9784,13 @@ msgstr "ano"
 #~ msgid "File Layout Check"
 #~ msgstr "Kontrola struktury souborů"
 
-#~ msgctxt "test_case_name_dictionary_general_checkExtraFiles"
-#~ msgid "File Type Verification"
-#~ msgstr "Kontrola typů souborů"
-
 #~ msgctxt "test_case_name_langpack_general_checkExtraFiles"
 #~ msgid "File Type Verification"
 #~ msgstr "Kontrola typů souborů"
 
-# %1 is the link switching refreshing the captcha
-# %2 is the link switching to an audio captcha
-#~ msgid ""
-#~ "If this is hard to read, you can <a href=\"%1$s\">try different words</a> "
-#~ "or <a href=\"%2$s\">listen to something</a> instead."
-#~ msgstr ""
-#~ "Pokud je tento text těžko čitelný, můžete <a href=\"%1$s\">zkusit jiná "
-#~ "slova </a> nebo <a href=\"%2$s\">si ho poslechnout</a>."
-
-# %1 is the link switching refreshing the captcha
-# %2 is the link switching to a text captcha
-#~ msgid ""
-#~ "If this is hard to understand, you can <a href=\"%1$s\">listen to "
-#~ "something else</a> or <a href=\"%2$s\">switch back to text</a>."
-#~ msgstr ""
-#~ "Pokud tomu není rozumnět, můžete <a href=\"%1$s\">si poslechnout něco "
-#~ "jiného </a> nebo <a href=\"%2$s\">se přepnou zpět na text</a>."
+#~ msgctxt "test_case_name_dictionary_general_checkExtraFiles"
+#~ msgid "File Type Verification"
+#~ msgstr "Kontrola typů souborů"
 
 #~ msgctxt "editors_review_header_itemhistory"
 #~ msgid "Item History"
@@ -9875,14 +9871,14 @@ msgstr "ano"
 #~ msgid "make your own"
 #~ msgstr "vytvářet vlastní moduly"
 
-# This is the link text in the <a> for devcp_error_appversion_reference_link.  This
-# should be fixed.
-#~ msgctxt "devcp_error_appversion_reference_link_text"
-#~ msgid "this page"
-#~ msgstr "platných verzí aplikace"
-
 # This is the text in the <a> tag for devcp_valid_app_reference.  This should be
 # fixed.
 #~ msgctxt "devcp_valid_app_reference_linktext"
 #~ msgid "this page"
 #~ msgstr "této stránce"
+
+# This is the link text in the <a> for devcp_error_appversion_reference_link.  This
+# should be fixed.
+#~ msgctxt "devcp_error_appversion_reference_link_text"
+#~ msgid "this page"
+#~ msgstr "platných verzí aplikace"

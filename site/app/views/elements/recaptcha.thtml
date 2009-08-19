@@ -64,18 +64,14 @@ if (isset($this->controller->Recaptcha) && $this->controller->Recaptcha->enabled
         <?php /* image captcha text */ ?>
         <div class="recaptcha_description recaptcha_only_if_image"><?=___('Please enter <strong>both words</strong> below, <strong>separated by a space</strong>.')?></div>
         <div class="recaptcha_refresh recaptcha_only_if_image">
-            <?=sprintf(___('If this is hard to read, you '
-            .'can <a href="%1$s">try different words</a> or <a href="%2$s">listen '
-            .'to something</a> instead.'), 'javascript:Recaptcha.reload()',
-            "javascript:Recaptcha.switch_type('audio')")?>
+            <?=sprintf(___('If this is hard to read, you can <a href="%1$s">try different words</a> or <a href="%2$s">listen to something</a> instead.'),
+                'javascript:Recaptcha.reload()', "javascript:Recaptcha.switch_type('audio')")?>
         </div>
         <?php /* audio captcha text */ ?>
         <div class="recaptcha_description recaptcha_only_if_audio"><?=___('Please type what you hear.')?></div>
         <div class="recaptcha_refresh recaptcha_only_if_audio">
-            <?=sprintf(___('If this is hard to understand, '
-            .'you can <a href="%1$s">listen to something else</a> or <a href="%2$s">'
-            .'switch back to text</a>.'), 'javascript:Recaptcha.reload()',
-            "javascript:Recaptcha.switch_type('image')")?>
+            <?=sprintf(___('If this is hard to understand, you can <a href="%1$s">listen to something else</a> or <a href="%2$s"> switch back to text</a>.'),
+            'javascript:Recaptcha.reload()', "javascript:Recaptcha.switch_type('image')")?>
         </div>
         <div id="recaptcha_image"></div>
         <div class="recaptcha_response"><?=___('Enter your answer here:')?>

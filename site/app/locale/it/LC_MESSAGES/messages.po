@@ -3753,7 +3753,7 @@ msgid "Enter the e-mail address of a Firefox Add-ons account:"
 msgstr ""
 "Inserisci l'indirizzo e-mail di un account per questo sito (Firefox Add-ons):"
 
-#: views/elements/recaptcha.thtml:81
+#: views/elements/recaptcha.thtml:77
 msgid "Enter your answer here:"
 msgstr "Inserisci qui la risposta:"
 
@@ -4103,18 +4103,15 @@ msgstr ""
 "Assegna alla tua raccolta un nome descrittivo, come ad esempio \"Estensioni "
 "preferite di Paolo per netbook\""
 
-#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
-msgctxt "footer_lang_form_lang_submit_go"
-msgid "Go"
-msgstr "Vai"
-
 #: views/addons/display.thtml:459 views/tags/display.thtml:83
 msgctxt "addons_author_addons_submit"
 msgid "Go"
 msgstr "Vai"
 
-#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
-msgctxt "editors_featured_edit_feature_submit"
+#: views/collections/detail.thtml:139
+#: views/elements/amo2009/collections/sort_form.thtml:55
+#: views/search/index.thtml:129
+msgctxt "collections_index_button_go"
 msgid "Go"
 msgstr "Vai"
 
@@ -4124,10 +4121,13 @@ msgctxt "addons_options_submit"
 msgid "Go"
 msgstr "Vai"
 
-#: views/collections/detail.thtml:139
-#: views/elements/amo2009/collections/sort_form.thtml:55
-#: views/search/index.thtml:129
-msgctxt "collections_index_button_go"
+#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
+msgctxt "footer_lang_form_lang_submit_go"
+msgid "Go"
+msgstr "Vai"
+
+#: views/editors/featured.thtml:54 views/editors/featured.thtml:107
+msgctxt "editors_featured_edit_feature_submit"
 msgid "Go"
 msgstr "Vai"
 
@@ -4204,13 +4204,13 @@ msgstr "Nascondi il conteggio totale"
 msgid "Hide email address"
 msgstr "Nascondi indirizzo e-mail"
 
-#: views/elements/amo2009/users/vcard.thtml:80
-msgctxt "addon_developer_th_homepage"
+#: views/addons/display.thtml:174
+msgctxt "addons_display_header_homepage"
 msgid "Homepage"
 msgstr "Sito web"
 
-#: views/addons/display.thtml:174
-msgctxt "addons_display_header_homepage"
+#: views/elements/amo2009/users/vcard.thtml:80
+msgctxt "addon_developer_th_homepage"
 msgid "Homepage"
 msgstr "Sito web"
 
@@ -4282,13 +4282,27 @@ msgstr ""
 "informazioni disponibili nel locale predefinito (dovrebbe corrispondere alla "
 "tua lingua madre)."
 
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to an audio captcha
 #: views/elements/recaptcha.thtml:67
-msgid "If this is hard to read, you "
+#, php-format
+msgid ""
+"If this is hard to read, you can <a href=\"%1$s\">try different words</a> or "
+"<a href=\"%2$s\">listen to something</a> instead."
 msgstr ""
+"Se è difficile da leggere, puoi <a href=\"%1$s\">provare con un testo "
+"diverso</a> oppure <a href=\"%2$s\">tornare al testo</a>."
 
-#: views/elements/recaptcha.thtml:75
-msgid "If this is hard to understand, "
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to a text captcha
+#: views/elements/recaptcha.thtml:73
+#, fuzzy, php-format
+msgid ""
+"If this is hard to understand, you can <a href=\"%1$s\">listen to something "
+"else</a> or <a href=\"%2$s\"> switch back to text</a>."
 msgstr ""
+"Se è difficile da comprendere, puoi <a href=\"%1$s\">provare con un testo "
+"diverso</a> oppure <a href=\"%2$s\">tornare al testo</a>."
 
 # %1$s is the text on the "create collection" button
 #: views/collections/add.thtml:92
@@ -6052,7 +6066,7 @@ msgstr ""
 msgid "Please treat this information as confidential."
 msgstr "Mantenere queste informazioni come confidenziali."
 
-#: views/elements/recaptcha.thtml:73
+#: views/elements/recaptcha.thtml:71
 msgid "Please type what you hear."
 msgstr "Digita quello che hai ascoltato."
 
@@ -9993,32 +10007,14 @@ msgstr "sì"
 #~ msgstr "File Layout Check"
 
 #, fuzzy
-#~ msgctxt "test_case_name_dictionary_general_checkExtraFiles"
-#~ msgid "File Type Verification"
-#~ msgstr "File Type Verification"
-
-#, fuzzy
 #~ msgctxt "test_case_name_langpack_general_checkExtraFiles"
 #~ msgid "File Type Verification"
 #~ msgstr "File Type Verification"
 
-# %1 is the link switching refreshing the captcha
-# %2 is the link switching to an audio captcha
-#~ msgid ""
-#~ "If this is hard to read, you can <a href=\"%1$s\">try different words</a> "
-#~ "or <a href=\"%2$s\">listen to something</a> instead."
-#~ msgstr ""
-#~ "Se è difficile da leggere, puoi <a href=\"%1$s\">provare con un testo "
-#~ "diverso</a> oppure <a href=\"%2$s\">tornare al testo</a>."
-
-# %1 is the link switching refreshing the captcha
-# %2 is the link switching to a text captcha
-#~ msgid ""
-#~ "If this is hard to understand, you can <a href=\"%1$s\">listen to "
-#~ "something else</a> or <a href=\"%2$s\">switch back to text</a>."
-#~ msgstr ""
-#~ "Se è difficile da comprendere, puoi <a href=\"%1$s\">provare con un testo "
-#~ "diverso</a> oppure <a href=\"%2$s\">tornare al testo</a>."
+#, fuzzy
+#~ msgctxt "test_case_name_dictionary_general_checkExtraFiles"
+#~ msgid "File Type Verification"
+#~ msgstr "File Type Verification"
 
 #~ msgctxt "editors_review_header_itemhistory"
 #~ msgid "Item History"
@@ -10102,14 +10098,14 @@ msgstr "sì"
 #~ msgid "make your own"
 #~ msgstr "realizzare il tuo"
 
-# This is the link text in the <a> for devcp_error_appversion_reference_link.  This
-# should be fixed.
-#~ msgctxt "devcp_error_appversion_reference_link_text"
-#~ msgid "this page"
-#~ msgstr "questa pagina"
-
 # This is the text in the <a> tag for devcp_valid_app_reference.  This should be
 # fixed.
 #~ msgctxt "devcp_valid_app_reference_linktext"
+#~ msgid "this page"
+#~ msgstr "questa pagina"
+
+# This is the link text in the <a> for devcp_error_appversion_reference_link.  This
+# should be fixed.
+#~ msgctxt "devcp_error_appversion_reference_link_text"
 #~ msgid "this page"
 #~ msgstr "questa pagina"

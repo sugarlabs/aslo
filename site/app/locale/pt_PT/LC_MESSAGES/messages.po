@@ -3341,7 +3341,7 @@ msgstr ""
 msgid "Enter the e-mail address of a Firefox Add-ons account:"
 msgstr ""
 
-#: views/elements/recaptcha.thtml:81
+#: views/elements/recaptcha.thtml:77
 msgid "Enter your answer here:"
 msgstr ""
 
@@ -3845,11 +3845,17 @@ msgid ""
 msgstr ""
 
 #: views/elements/recaptcha.thtml:67
-msgid "If this is hard to read, you "
+#, php-format
+msgid ""
+"If this is hard to read, you can <a href=\"%1$s\">try different words</a> or "
+"<a href=\"%2$s\">listen to something</a> instead."
 msgstr ""
 
-#: views/elements/recaptcha.thtml:75
-msgid "If this is hard to understand, "
+#: views/elements/recaptcha.thtml:73
+#, php-format
+msgid ""
+"If this is hard to understand, you can <a href=\"%1$s\">listen to something "
+"else</a> or <a href=\"%2$s\"> switch back to text</a>."
 msgstr ""
 
 #: views/collections/add.thtml:92
@@ -4709,11 +4715,6 @@ msgstr ""
 msgid "NEW!"
 msgstr ""
 
-#: views/elements/amo2009/users/vcard.thtml:63
-msgctxt "addon_developer_th_name"
-msgid "Name"
-msgstr ""
-
 #: controllers/collections_controller.php:312
 msgctxt "collections_detail_sort_name"
 msgid "Name"
@@ -4722,6 +4723,11 @@ msgstr ""
 #: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
 #: views/search/index.thtml:117 views/tags/display.thtml:77
 msgctxt "advanced_search_form_name"
+msgid "Name"
+msgstr ""
+
+#: views/elements/amo2009/users/vcard.thtml:63
+msgctxt "addon_developer_th_name"
 msgid "Name"
 msgstr ""
 
@@ -4772,16 +4778,16 @@ msgctxt "collections_index_option_newest"
 msgid "Newest"
 msgstr ""
 
+#: views/elements/pitch.thtml:70
+#, fuzzy
+msgctxt "sidebar_pitch_newest_addons"
+msgid "Newest Add-ons"
+msgstr "Novos Extras"
+
 #: controllers/addons_controller.php:539
 #: controllers/addons_controller.php:1175
 #, fuzzy
 msgctxt "browse_addons_newest"
-msgid "Newest Add-ons"
-msgstr "Novos Extras"
-
-#: views/elements/pitch.thtml:70
-#, fuzzy
-msgctxt "sidebar_pitch_newest_addons"
 msgid "Newest Add-ons"
 msgstr "Novos Extras"
 
@@ -4889,15 +4895,15 @@ msgstr ""
 msgid "No tags for these add-ons"
 msgstr ""
 
-#: views/elements/developers/testresults_stats.thtml:74
-msgctxt "devcp_error_no_test_results"
-msgid "No test results found."
-msgstr ""
-
 #: views/elements/developers/testresults.thtml:61
 #: views/elements/developers/testresults_group.thtml:115
 #: views/elements/developers/testresults_header.thtml:62
 msgctxt "devcp_versions_validate_no_results"
+msgid "No test results found."
+msgstr ""
+
+#: views/elements/developers/testresults_stats.thtml:74
+msgctxt "devcp_error_no_test_results"
 msgid "No test results found."
 msgstr ""
 
@@ -5069,13 +5075,13 @@ msgstr ""
 msgid "Opensearch Format Check"
 msgstr ""
 
-#: controllers/components/stats.php:429
-msgctxt "statistics_longnames_os"
+#: controllers/statistics_controller.php:311
+msgctxt "statistics_js_plotselection_selector_os"
 msgid "Operating System"
 msgstr ""
 
-#: controllers/statistics_controller.php:311
-msgctxt "statistics_js_plotselection_selector_os"
+#: controllers/components/stats.php:429
+msgctxt "statistics_longnames_os"
 msgid "Operating System"
 msgstr ""
 
@@ -5257,13 +5263,13 @@ msgstr ""
 msgid "Plain Text"
 msgstr ""
 
-#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
-msgctxt "advanced_search_form_platform"
+#: views/developers/versions_edit.thtml:79
+msgctxt "devcp_versions_edit_th_platform"
 msgid "Platform"
 msgstr ""
 
-#: views/developers/versions_edit.thtml:79
-msgctxt "devcp_versions_edit_th_platform"
+#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
+msgctxt "advanced_search_form_platform"
 msgid "Platform"
 msgstr ""
 
@@ -5418,7 +5424,7 @@ msgstr ""
 msgid "Please treat this information as confidential."
 msgstr ""
 
-#: views/elements/recaptcha.thtml:73
+#: views/elements/recaptcha.thtml:71
 #, fuzzy
 msgid "Please type what you hear."
 msgstr "Escreva o que ouve."
@@ -5436,13 +5442,13 @@ msgstr ""
 msgid "Plugin"
 msgstr ""
 
-#: models/addontype.php:104
-msgctxt "general_addontype_plugin_plural"
+#: controllers/addons_controller.php:1280 controllers/components/amo.php:734
+msgctxt "addons_plugins_pagetitle"
 msgid "Plugins"
 msgstr ""
 
-#: controllers/addons_controller.php:1280 controllers/components/amo.php:734
-msgctxt "addons_plugins_pagetitle"
+#: models/addontype.php:104
+msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
 msgstr ""
 
@@ -5453,13 +5459,13 @@ msgid ""
 "from extensions, which modify or add to existing functionality."
 msgstr ""
 
-#: controllers/collections_controller.php:111
-msgctxt "collections_index_li_popular"
+#: views/addons/home.thtml:110
+msgctxt "addons_home_browse_popular"
 msgid "Popular"
 msgstr ""
 
-#: views/addons/home.thtml:110
-msgctxt "addons_home_browse_popular"
+#: controllers/collections_controller.php:111
+msgctxt "collections_index_li_popular"
 msgid "Popular"
 msgstr ""
 
@@ -5475,14 +5481,14 @@ msgstr "Extras populares"
 msgid "Popular Collections"
 msgstr "Colecções"
 
-#: controllers/collections_controller.php:313
-msgctxt "collections_detail_sort_popularity"
-msgid "Popularity"
-msgstr ""
-
 #: views/elements/amo2009/search.thtml:148 views/elements/search.thtml:146
 #: views/search/index.thtml:119 views/tags/display.thtml:79
 msgctxt "advanced_search_form_popularity"
+msgid "Popularity"
+msgstr ""
+
+#: controllers/collections_controller.php:313
+msgctxt "collections_detail_sort_popularity"
 msgid "Popularity"
 msgstr ""
 
@@ -5534,16 +5540,16 @@ msgstr ""
 msgid "Preview %s has been deleted successfully."
 msgstr "Comentário eliminado com sucesso."
 
+#: views/developers/previews.thtml:80
+#, fuzzy
+msgctxt "devcp_previews_header_caption"
+msgid "Preview Caption"
+msgstr "Acção do comentário"
+
 #: controllers/previews_controller.php:168
 #: controllers/previews_controller.php:277
 #, fuzzy
 msgctxt "devcp_addon_field_preview_caption_displaytitle"
-msgid "Preview Caption"
-msgstr "Acção do comentário"
-
-#: views/developers/previews.thtml:80
-#, fuzzy
-msgctxt "devcp_previews_header_caption"
 msgid "Preview Caption"
 msgstr "Acção do comentário"
 
@@ -5601,6 +5607,12 @@ msgstr "Comentários para %s"
 msgid "Print"
 msgstr ""
 
+#: views/developers/addon_edit_descriptions.thtml:111
+#, fuzzy
+msgctxt "devcp_edit_descriptions_transbox_privacy_name"
+msgid "Privacy Policy"
+msgstr "Política de privacidade"
+
 #: views/editors/review.thtml:285
 #, fuzzy
 msgctxt "editors_review_header_privacy"
@@ -5610,12 +5622,6 @@ msgstr "Política de privacidade"
 #: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
 #, fuzzy
 msgctxt "footer_privacy_policy"
-msgid "Privacy Policy"
-msgstr "Política de privacidade"
-
-#: views/developers/addon_edit_descriptions.thtml:111
-#, fuzzy
-msgctxt "devcp_edit_descriptions_transbox_privacy_name"
 msgid "Privacy Policy"
 msgstr "Política de privacidade"
 
@@ -5653,8 +5659,10 @@ msgctxt "statistics_settings_access_public"
 msgid "Public"
 msgstr ""
 
-#: views/developers/addon_status.thtml:64
-msgctxt "devcp_addon_status_public"
+#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
+#: views/elements/header.thtml:76 views/elements/header.thtml:82
+#: views/sharing_api/addon.thtml:63
+msgctxt "a_header_public"
 msgid "Public"
 msgstr ""
 
@@ -5664,10 +5672,8 @@ msgctxt "addons_status_public"
 msgid "Public"
 msgstr ""
 
-#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
-#: views/elements/header.thtml:76 views/elements/header.thtml:82
-#: views/sharing_api/addon.thtml:63
-msgctxt "a_header_public"
+#: views/developers/addon_status.thtml:64
+msgctxt "devcp_addon_status_public"
 msgid "Public"
 msgstr ""
 
@@ -5748,13 +5754,13 @@ msgstr ""
 msgid "Refine Results"
 msgstr ""
 
-#: views/users/register.thtml:113
-msgctxt "user_form_submit_register"
+#: views/elements/header.thtml:158
+msgctxt "header_navlink_register"
 msgid "Register"
 msgstr ""
 
-#: views/elements/header.thtml:158
-msgctxt "header_navlink_register"
+#: views/users/register.thtml:113
+msgctxt "user_form_submit_register"
 msgid "Register"
 msgstr ""
 
@@ -5767,13 +5773,13 @@ msgstr ""
 msgid "Related Collections"
 msgstr "Colecções"
 
-#: views/developers/versions_edit.thtml:182
-msgctxt "devcp_versions_edit_transbox_releasenotes_name"
+#: views/addons/display.thtml:369
+msgctxt "addons_display_release_notes"
 msgid "Release Notes"
 msgstr ""
 
-#: views/addons/display.thtml:369
-msgctxt "addons_display_release_notes"
+#: views/developers/versions_edit.thtml:182
+msgctxt "devcp_versions_edit_transbox_releasenotes_name"
 msgid "Release Notes"
 msgstr ""
 
@@ -5803,13 +5809,13 @@ msgstr ""
 msgid "Remove Application"
 msgstr ""
 
-#: views/pages/js_constants.js.thtml:92
-msgctxt "devcp_js_img_remove_compat"
+#: views/developers/versions_edit.thtml:151
+msgctxt "devcp_versions_edit_remove_compat"
 msgid "Remove Application Compatibility"
 msgstr ""
 
-#: views/developers/versions_edit.thtml:151
-msgctxt "devcp_versions_edit_remove_compat"
+#: views/pages/js_constants.js.thtml:92
+msgctxt "devcp_js_img_remove_compat"
 msgid "Remove Application Compatibility"
 msgstr ""
 
@@ -5878,13 +5884,13 @@ msgstr "%1$s comentário"
 msgid "Replies"
 msgstr ""
 
-#: views/elements/developers/editors_review_history_item.thtml:92
-msgctxt "editors_review_history_info_reply"
+#: views/reviews/display.thtml:76
+msgctxt "addon_review_author_reply_link"
 msgid "Reply"
 msgstr ""
 
-#: views/reviews/display.thtml:76
-msgctxt "addon_review_author_reply_link"
+#: views/elements/developers/editors_review_history_item.thtml:92
+msgctxt "editors_review_history_info_reply"
 msgid "Reply"
 msgstr ""
 
@@ -5989,13 +5995,13 @@ msgstr ""
 "sobre comentários</a> para mais detalhes sobre comentários feitos por "
 "utilizadores.</p>"
 
-#: views/editors/reviewlog.thtml:42
-msgctxt "editorcp_reviewlog_page_heading"
+#: views/elements/developers/editorsmenu.thtml:61
+msgctxt "editorcp_menu_reviewlog_link"
 msgid "Review Log"
 msgstr ""
 
-#: views/elements/developers/editorsmenu.thtml:61
-msgctxt "editorcp_menu_reviewlog_link"
+#: views/editors/reviewlog.thtml:42
+msgctxt "editorcp_reviewlog_page_heading"
 msgid "Review Log"
 msgstr ""
 
@@ -6066,15 +6072,15 @@ msgstr ""
 msgid "SQL"
 msgstr ""
 
+#: views/developers/addon_status.thtml:63
+msgctxt "devcp_addon_status_sandbox"
+msgid "Sandbox"
+msgstr ""
+
 #: views/api/api_addon.thtml:57 views/api/collections_feed.thtml:77
 #: views/elements/header.thtml:58 views/elements/header.thtml:75
 #: views/elements/header.thtml:80 views/sharing_api/addon.thtml:65
 msgctxt "a_header_sandbox"
-msgid "Sandbox"
-msgstr ""
-
-#: views/developers/addon_status.thtml:63
-msgctxt "devcp_addon_status_sandbox"
 msgid "Sandbox"
 msgstr ""
 
@@ -6561,23 +6567,6 @@ msgstr ""
 msgid "Statistics"
 msgstr "Ajuda"
 
-#: controllers/statistics_controller.php:67
-#: controllers/statistics_controller.php:78
-#: controllers/statistics_controller.php:81
-#: controllers/statistics_controller.php:293
-#, fuzzy
-msgctxt "statistics_pagetitle"
-msgid "Statistics Dashboard"
-msgstr "Início do Painel"
-
-#: views/developers/dashboard.thtml:73
-#: views/elements/developers/actionbar.thtml:44
-#: views/elements/developers/actionbar.thtml:49
-#, fuzzy
-msgctxt "devcp_actionbar_link_stats"
-msgid "Statistics Dashboard"
-msgstr "Início do Painel"
-
 #: views/statistics/index.thtml:39
 #, fuzzy
 msgctxt "statistics_index_title"
@@ -6594,6 +6583,23 @@ msgstr "Início do Painel"
 #: views/elements/developers/sidebar.thtml:63
 #, fuzzy
 msgctxt "devcp_myaddons_statistics_link"
+msgid "Statistics Dashboard"
+msgstr "Início do Painel"
+
+#: views/developers/dashboard.thtml:73
+#: views/elements/developers/actionbar.thtml:44
+#: views/elements/developers/actionbar.thtml:49
+#, fuzzy
+msgctxt "devcp_actionbar_link_stats"
+msgid "Statistics Dashboard"
+msgstr "Início do Painel"
+
+#: controllers/statistics_controller.php:67
+#: controllers/statistics_controller.php:78
+#: controllers/statistics_controller.php:81
+#: controllers/statistics_controller.php:293
+#, fuzzy
+msgctxt "statistics_pagetitle"
 msgid "Statistics Dashboard"
 msgstr "Início do Painel"
 
@@ -6651,26 +6657,26 @@ msgctxt "user_notifications_th_subject"
 msgid "Subject"
 msgstr ""
 
-#: views/elements/developers/additem.thtml:76
-#, fuzzy
-msgctxt "devcp_additem_submissionhelp_link"
-msgid "Submission Help"
-msgstr "Ajuda sobre submissões"
-
 #: controllers/pages_controller.php:109
 #, fuzzy
 msgctxt "page_title_submissionhelp"
 msgid "Submission Help"
 msgstr "Ajuda sobre submissões"
 
-#: views/elements/developers/additem.thtml:41
-msgctxt "devcp_additem_sidebar_title"
-msgid "Submit Add-on"
-msgstr ""
+#: views/elements/developers/additem.thtml:76
+#, fuzzy
+msgctxt "devcp_additem_submissionhelp_link"
+msgid "Submission Help"
+msgstr "Ajuda sobre submissões"
 
 #: views/elements/developers/myaddons.thtml:69
 #: views/elements/developers/sidebar.thtml:62
 msgctxt "devcp_myaddons_submitaddon_link"
+msgid "Submit Add-on"
+msgstr ""
+
+#: views/elements/developers/additem.thtml:41
+msgctxt "devcp_additem_sidebar_title"
 msgid "Submit Add-on"
 msgstr ""
 
@@ -6757,13 +6763,13 @@ msgstr ""
 msgid "Suggested amount"
 msgstr "Doação sugerida: $%1$s"
 
-#: views/editors/review.thtml:261
-msgctxt "editors_review_header_summary"
+#: controllers/statistics_controller.php:305
+msgctxt "statistics_js_plotselection_selector_summary"
 msgid "Summary"
 msgstr ""
 
-#: controllers/statistics_controller.php:305
-msgctxt "statistics_js_plotselection_selector_summary"
+#: views/editors/review.thtml:261
+msgctxt "editors_review_header_summary"
 msgid "Summary"
 msgstr ""
 
@@ -6837,6 +6843,11 @@ msgstr "Limite da etiqueta alcançado"
 msgid "Tag removed"
 msgstr ""
 
+#: views/search/index.thtml:220
+msgctxt "search_filter_tags_header"
+msgid "Tags"
+msgstr ""
+
 #: views/elements/developers/editbox.thtml:48
 msgctxt "devcp_editbox_tags"
 msgid "Tags"
@@ -6844,11 +6855,6 @@ msgstr ""
 
 #: views/addons/display.thtml:473
 msgctxt "tags_header_tags_title"
-msgid "Tags"
-msgstr ""
-
-#: views/search/index.thtml:220
-msgctxt "search_filter_tags_header"
 msgid "Tags"
 msgstr ""
 
@@ -7236,15 +7242,15 @@ msgstr ""
 msgid "Theme-specific security"
 msgstr ""
 
-#: views/elements/addon_categories.thtml:55
-#, fuzzy
-msgctxt "nav_category_themes"
-msgid "Themes"
-msgstr "início"
-
 #: models/addontype.php:99 views/addons/browse_thumbs.thtml:57
 #, fuzzy
 msgctxt "general_addontype_theme_plural"
+msgid "Themes"
+msgstr "início"
+
+#: views/elements/addon_categories.thtml:55
+#, fuzzy
+msgctxt "nav_category_themes"
 msgid "Themes"
 msgstr "início"
 
@@ -7598,13 +7604,13 @@ msgstr ""
 msgid "Trusted add-ons can become public without Editor review."
 msgstr ""
 
-#: views/editors/queue.thtml:131
-msgctxt "editors_th_addontype"
+#: views/elements/amo2009/search.thtml:242 views/elements/search.thtml:223
+msgctxt "advanced_search_form_type"
 msgid "Type"
 msgstr ""
 
-#: views/elements/amo2009/search.thtml:242 views/elements/search.thtml:223
-msgctxt "advanced_search_form_type"
+#: views/editors/queue.thtml:131
+msgctxt "editors_th_addontype"
 msgid "Type"
 msgstr ""
 
@@ -7612,13 +7618,13 @@ msgstr ""
 msgid "Uk"
 msgstr ""
 
-#: controllers/components/amo.php:203
-msgctxt "addons_status_unknown"
+#: controllers/components/stats.php:430
+msgctxt "statistics_longnames_unknown"
 msgid "Unknown"
 msgstr ""
 
-#: controllers/components/stats.php:430
-msgctxt "statistics_longnames_unknown"
+#: controllers/components/amo.php:203
+msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr ""
 
@@ -7906,16 +7912,16 @@ msgstr ""
 msgid "Version"
 msgstr ""
 
-#: views/developers/versions.thtml:66
-#, php-format
-msgctxt "devcp_details_version"
-msgid "Version %s"
-msgstr ""
-
 #: views/elements/addon_version_detail.thtml:51
 #: views/elements/amo2009/addons/version_detail.thtml:51
 #, php-format
 msgctxt "addon_display_header_version"
+msgid "Version %s"
+msgstr ""
+
+#: views/developers/versions.thtml:66
+#, php-format
+msgctxt "devcp_details_version"
 msgid "Version %s"
 msgstr ""
 
@@ -8169,14 +8175,14 @@ msgstr ""
 msgid "What's next for %1$s"
 msgstr ""
 
-#: views/users/register.thtml:106
-msgctxt "recaptcha_whatsthis"
-msgid "What's this?"
-msgstr ""
-
 #: views/addons/display.thtml:387 views/addons/display.thtml:530
 #: views/elements/amo2009/contribution.thtml:92
 msgctxt "addons_display_a_license_what"
+msgid "What's this?"
+msgstr ""
+
+#: views/users/register.thtml:106
+msgctxt "recaptcha_whatsthis"
 msgid "What's this?"
 msgstr ""
 
