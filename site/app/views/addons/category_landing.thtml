@@ -137,7 +137,7 @@ $summaryLimit = 70;
             <?php foreach ($new_addons as $idx=>$addon): ?>
                 <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
                     <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
-                    <span class="name"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
+                    <span class="name" title="<?php echo $addon['name'] ?>"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
                     <span class="meta created">
                         added <?php echo strftime('%m/%d/%Y', strtotime($addon['created'])) ?>
                     </span>
@@ -153,7 +153,7 @@ $summaryLimit = 70;
             <?php foreach ($popular_addons as $idx=>$addon): ?>
                 <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
                     <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
-                    <span class="name"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
+                    <span class="name" title="<?php echo $addon['name'] ?>"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
                     <span class="meta downloads"><?php echo $html->number_format($addon['weeklydownloads']) ?> <?= ___('weekly downloads') ?></span>
                 </a></li>
             <?php endforeach ?>
@@ -167,7 +167,7 @@ $summaryLimit = 70;
             <?php foreach ($updated_addons as $idx=>$addon): ?>
                 <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
                     <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
-                    <span class="name"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
+                    <span class="name" title="<?php echo $addon['name'] ?>"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
                     <span class="meta rating"><?=$this->renderElement('amo2009/stars',array('rating' => $addon['averagerating']))?></span>
                 </a></li>
             <?php endforeach ?>
