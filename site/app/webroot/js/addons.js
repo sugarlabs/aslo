@@ -44,7 +44,7 @@ function getInstallURL(aEvent) {
 }
 
 function checkMatchUserAgentAppId() {
-    var uapattern = /(?:Firefox|Minefield|Shiretoko|GranParadiso|BonEcho|Iceweasel)/;
+    var uapattern = /(?:Firefox|Minefield|Namoroka|Shiretoko|GranParadiso|BonEcho|Iceweasel)/;
     var ua = navigator.userAgent;
     var uamatch = uapattern.exec(ua);
 	
@@ -145,7 +145,7 @@ function fixPlatformLinks(versionID, name) {
 function installVersusDownloadCheck(triggerID, installString, downloadString)
 {
     var buttonMessage = installString;
-    var uapattern = /Mozilla.*(Firefox|Minefield|Shiretoko|GranParadiso|BonEcho|SeaMonkey|Iceweasel|Iceape)\/.*$/;
+    var uapattern = /Mozilla.*(Firefox|Minefield|Namoroka|Shiretoko|GranParadiso|BonEcho|SeaMonkey|Iceweasel|Iceape)\/.*$/;
     var ua = navigator.userAgent;
     var uamatch = uapattern.exec(ua);
     if (!uamatch || uamatch.length < 2 || !checkMatchUserAgentAppId()) // not a Firefox-like browser
@@ -169,7 +169,7 @@ function installVersusDownloadCheck(triggerID, installString, downloadString)
  *              addCompatibilityHints() if we don't want it in /views/addons/versions.thtml?
  */
 function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLink, versionsPage) {
-    var uapattern = /Mozilla.*(?:Firefox|Minefield|Shiretoko|GranParadiso|BonEcho|Iceweasel)\/([^\s]*).*$/;
+    var uapattern = /Mozilla.*(?:Firefox|Minefield|Namoroka|Shiretoko|GranParadiso|BonEcho|Iceweasel)\/([^\s]*).*$/;
     var ua = navigator.userAgent;
     var uamatch = uapattern.exec(ua);
     if (!uamatch || uamatch.length < 2) return true;
