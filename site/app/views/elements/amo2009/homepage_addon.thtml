@@ -107,6 +107,8 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
         <?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?>
         <span class="downloads"><strong><?=$html->number_format($addonWeeklyDownloads, 0)?></strong> <?=___('weekly downloads')?></span>
     </div>
+    <?=$this->renderElement('amo2009/support_addon_in_listing',
+                            array('addon' => $addon))?>
 </div>
 
 <?php if (false): ?>

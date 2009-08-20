@@ -133,8 +133,8 @@ class AddonsController extends AppController
         global $valid_status;
 
         $associations = array(
-            'single_category', 'all_categories', 'authors', 'contrib_details',
-            'compatible_apps', 'files', 'latest_version', 'list_details'
+            'all_categories', 'authors', 'compatible_apps',
+            'contrib_details', 'files', 'latest_version', 'list_details'
         );
         $addon = $this->Addon->getAddon($addon_id, $associations);
 
@@ -253,7 +253,10 @@ class AddonsController extends AppController
             return;
         }
 
-        $_associations = array( 'all_categories', 'all_tags', 'authors', 'default_fields', 'latest_version', 'contrib_details', 'recommendations');
+        $_associations = array(
+            'all_categories', 'all_tags', 'authors', 'contrib_details',
+            'default_fields', 'latest_version', 'recommendations'
+        );
 
         $addon_data = $this->Addon->getAddon($id, $_associations);
 
@@ -508,8 +511,8 @@ class AddonsController extends AppController
         global $app_listedtypes;
 
         $associations = array(
-            'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
-            'latest_version', 'list_details'
+            'all_categories', 'authors', 'compatible_apps',
+            'contrib_details', 'files', 'latest_version', 'list_details'
         );
         $list_num = 5;
 
@@ -561,7 +564,7 @@ class AddonsController extends AppController
             $teaser_collections = array();
 
             $associations = array(
-                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
+                'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
 
@@ -910,8 +913,8 @@ class AddonsController extends AppController
         global $valid_status, $app_listedtypes;
 
         $associations = array(
-            'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
-            'latest_version', 'list_details'
+            'all_categories', 'authors', 'compatible_apps',
+            'contrib_details', 'files', 'latest_version', 'list_details'
         );
 
         $valid_status = array(STATUS_PUBLIC);
@@ -1190,7 +1193,7 @@ class AddonsController extends AppController
 
         if (!empty($_feat_ids)) {
             $associations = array(
-                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
+                'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
             $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
@@ -1383,7 +1386,7 @@ class AddonsController extends AppController
 
         if (!empty($_feat_ids)) {
             $associations = array(
-                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
+                'all_categories', 'authors', 'compatible_apps', 'files',
                 'latest_version', 'list_details'
             );
             $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
@@ -1448,8 +1451,8 @@ class AddonsController extends AppController
         }
         if (!empty($_addon_ids)) {
             $associations = array(
-                'single_category', 'all_categories', 'authors', 'compatible_apps', 'files',
-                'latest_version', 'list_details'
+                'all_categories', 'authors', 'compatible_apps',
+                'contrib_details', 'files', 'latest_version', 'list_details'
             );
             $featAddons = $this->Addon->getAddonList($_addon_ids, $associations);
         } else {

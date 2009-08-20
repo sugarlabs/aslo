@@ -1,0 +1,19 @@
+<?php
+/**
+ * Required arguments:
+ *   $addon
+ */
+
+if ($this->controller->Addon->acceptContributions($addon)):
+    $url = $html->url("/addon/{$addon['Addon']['id']}/developers");
+?>
+    <div class="support-this-addon">
+        <?php if (!empty($addon['Addon']['suggested_amount'])): ?>
+            <?=sprintf(___('Support this add-on: <a href="%1$s">Contribute $%2$s</a>'),
+                       $url,
+                       $addon['Addon']['suggested_amount'])?>
+        <?php else: ?>
+            <a href="<?=$url?>"><?=___('Support this add-on')?></a>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

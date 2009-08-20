@@ -109,26 +109,6 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
     </div>
 
     <blockquote cite="#"><p><?=$addonSummary?></p></blockquote>
+    <?=$this->renderElement('amo2009/support_addon_in_listing',
+                            array('addon' => $addon))?>
 </div>
-
-<?php if (false): ?>
-<? if (!empty($flag)) echo '<h6 class="flag">'.$flag.'</h6>'; ?>
-<?php if (isset($addonFiles)): ?>
-
-<p class="updated">
-    <?php echo sprintf(___('Updated %s'), strftime(___('%B %e, %Y'), strtotime($addonVersionCreated))); ?>
-</p>
-
-<?=$this->renderElement('install',array(
-    'addonType' => $addonType
-))?>
-<?php else: ?>
-<p class="learn-more"><?=$html->link(___('Learn more'), "/addon/{$addonId}",
-    array('class'=>'view', 'title'=>sprintf(___('Learn more about %1$s'), $addonName)))?></p>
-<?php endif; ?>
-
-<?php if(!empty($addonCategories)): ?>
-<p class="more-from"><?=___('View more from')?> <a href="<?=$html->url('/browse/type:'.$addonType.'/cat:'.$addonCategories[0]['Category']['id'])?>" class="view"><?=$addonCategories[0]['Translation']['name']['string']?></a></p>
-<?php endif; ?>
-
-<?php endif ?>
