@@ -46,6 +46,17 @@ vendor('product-details/firefoxDetails.class');
 header('Content-Type: application/x-javascript');
 $this->layout = null; // no layout!
 
+// Returns the largest file you can upload to the server, in bytes.
+function getMaxFileSize() {
+    $size = ini_get('upload_max_filesize');
+    switch (substr($size, -1)) {
+        case 'M' :
+            return (int)$size * 1024 * 1024;
+        default :
+            return $size; // assume bytes
+    }
+}
+
 ?>
 var BASEDIR = "<?=$html->url('/', null, false, false) ?>";
 var LANG = "<?=LANG?>";
@@ -59,6 +70,7 @@ var APP_SEAMONKEY = '<?=APP_SEAMONKEY?>';
 var APP_THUNDERBIRD = '<?=APP_THUNDERBIRD?>';
 var APP_SUNBIRD = '<?=APP_SUNBIRD?>';
 var APP_FENNEC = '<?=APP_FENNEC?>';
+var MAXFILESIZE = '<?=getMaxFileSize()?>';
 <?php /* generic constants */ ?>
 var KEYCODE_ENTER = 13;
 <?php
@@ -75,6 +87,8 @@ $constants = array(
     'app_compat_incompatible' => ___('This add-on is incompatible with your version of %1$s'),
 
     /* developers.js */
+    'devcp_js_upload_badfilename' => ___('Bad filename received. Files must be of type .xpi, .xml, or .jar', 'devcp_js_upload_badfilename'),
+    'devcp_js_upload_toolarge' => sprintf(___('This file is too large. The file must be no bigger than %1$s.', 'devcp_js_upload_toolarge'), ini_get('upload_max_filesize')),
     'devcp_js_upload_alert' => ___('You must select a file to upload.'),
     'addons_status_public' => ___('Public', 'addons_status_public'),
     'addons_status_sandbox' => ___('In Sandbox'),

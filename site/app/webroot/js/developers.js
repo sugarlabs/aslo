@@ -51,13 +51,21 @@ var upload = {
     },
     
     uploadFile: function() {
+        var upload = $('#upload-field');
         if (!license_picker.acceptable()) {
             $('#file-upload').slideUp();
             upload.showAgreement();
             upload.acceptAgreement();
             return false;
         }
-        else if ($('#upload-field').val() != '') {
+        else if (upload.val() != '') {
+            if (!this.checkFileName(upload.val())) {
+                alert(devcp_js_upload_badfilename);
+                return false;
+            } else if (!this.checkFileSize(upload.get(0))) {
+                alert(devcp_js_upload_toolarge);
+                return false;
+            }
             $('#file-upload input[type=submit]').attr('disabled', 'disabled');
             $('#upload-loading').show();
             $('#upload-error').slideUp('slow');
@@ -71,6 +79,21 @@ var upload = {
             alert(devcp_js_upload_alert);
             return false;
         }
+    },
+
+    checkFileName : function(filename) {
+        return filename.match(/\.(xml|xpi|jar)$/i) != null;
+    },
+
+    // Checking file size across browsers is problematic. Mainly because there
+    // is no cross-browser way of doing it. So this bit of functionality is
+    // exclusive to Gecko browsers because it exposes this data.
+    checkFileSize : function(o) {
+        if (o.files) {
+            return o.files[0].fileSize <= MAXFILESIZE;
+        }
+
+        return true; // oh well
     }
 };
 
