@@ -514,14 +514,6 @@ class CollectionsController extends AppController
             }
 
             $result = $this->Collection->execute($sql);
-            // TODO: not from PHP code
-            $this->Collection->execute(
-                "UPDATE collections
-                 SET upvotes=(SELECT COUNT(1) FROM collections_votes
-                              WHERE collection_id={$collection_id} AND vote='1'),
-                     downvotes=(SELECT COUNT(1) FROM collections_votes
-                                WHERE collection_id={$collection_id} AND vote='-1')
-                 WHERE id={$collection_id}");
         }
 
         if ($this->isAjax()) {
