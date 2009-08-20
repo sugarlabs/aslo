@@ -77,7 +77,11 @@
             foreach ($myApprovals as $k => $approval) {
                 echo '<tr>';
                     echo "<td>{$approval['Approval']['created']}</td>";
-                    echo '<td>'.$html->link($approval['Addon']['Translation']['name']['string'], '/editors/review/'.$approval['File']['version_id']).'</td>';
+                    if (!empty($approval['File']['version_id'])) {
+                        echo '<td>'.$html->link($approval['Addon']['Translation']['name']['string'], '/editors/review/'.$approval['File']['version_id']).'</td>';
+                    } else {
+                        echo "<td>{$approval['Addon']['Translation']['name']['string']}</td>";
+                    }
                     echo "<td>{$approval['Approval']['applications']}</td>";
                     echo "<td>{$addonTypes[$approval['Addon']['Addon']['addontype_id']]}</td>";
                     echo '<td>';
