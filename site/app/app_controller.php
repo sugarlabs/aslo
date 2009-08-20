@@ -454,6 +454,18 @@ class AppController extends Controller
                     break;
         }
     }
+
+    /**
+     * Looks at the request headers to see if
+     *   HTTP_X_REQUESTED_WITH: XMLHttpRequest
+     * is set.
+     *
+     * @return boolean
+     */
+    function isAjax() {
+        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+                $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest');
+    }
     
     /**
      * Forces use of the shadowDb.

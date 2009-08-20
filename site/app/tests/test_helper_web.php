@@ -83,6 +83,35 @@ class WebTestHelper extends WebTestCase {
         $this->assertNoUnwantedText(___('Wrong username or password!'), 'Logged in with test account');        
     }
 
+    function logout() {
+        $this->getAction('/users/logout');
+    }
+
+    /**
+     * Applies actionURI automatically, injects CSRF token.
+     */
+    function postAction($url, $data=array()) {
+        if (!isset($this->_csrfToken)) {
+            $this->_csrfToken = $this->getCsrfToken();
+        }
+        $data['sessionCheck'] = $this->_csrfToken;
+        $this->post($this->actionURI($url), $data);
+    }
+
+    /**
+     * Scrape a sessionCheck token from $url.
+     */
+    function getCsrfToken($url='/users/edit') {
+        $this->getAction($url);
+        phpQuery::newDocument($this->_browser->getContent());
+        return pq('input[name=sessionCheck]')->val();
+    }
+
+    function assertRedirect($location, $code=301) {
+        $this->assertResponse($code);
+        $this->assertHeader('Location', $location);
+    }
+
     /**
      * Check if the retrieved XML document is well-formed/trivially parsable
      * (no DTD validity for now)

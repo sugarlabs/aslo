@@ -98,6 +98,12 @@ $c = $collection['Collection'];
                               $subscribers),
                          $subscribers);?>
             </li>
+            <li><?=$this->renderElement('amo2009/collections/barometer',
+                array('up' => $c['upvotes'],
+                      'down' => $c['downvotes'],
+                      'user' => $user,
+                      'collection' => $collection))?>
+            </li>
             <li>
               <?php if ($writable): ?>
                 <a href="<?=$html->url('/collections/edit/'.$c['uuid'])?>">

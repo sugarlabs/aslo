@@ -443,11 +443,13 @@ class CollectionsController extends AppController
             } else {
                 $action = $this->Collection->getSubscribeUrl();
             }
+            $this->publish('user', $this->User->getUser($user['id'], array('votes')));
             $this->publish('is_subscribed', $is_subscribed);
             $this->publish('subscribe_action', $action);
             $this->_getUserRights($user, $id);
         } else {
             // Use 0 as a dummy user.
+            $this->publish('user', null);
             $this->_getUserRights(array('id' => 0), $id);
         }
 
@@ -476,6 +478,59 @@ class CollectionsController extends AppController
         ));
 
         $this->render('detail');
+    }
+
+    function vote($uuid, $direction) {
+        $this->Amo->checkLoggedIn();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!$uuid) {
+                $this->flash(sprintf(___('Missing argument: %s'), 'collection_id'), '/', 3);
+                return;
+            }
+
+            $collection_id = $this->Collection->getIdForUuidOrNickname($uuid);
+            if (!$collection_id) {
+                $this->flash(___('Collection not found!'), '/', 3);
+                return;
+            }
+
+            $directions = array('up' => 1, 'down' => -1, 'cancel' => 0);
+
+            if (!array_key_exists($direction, $directions)) {
+                $this->flash(___('Access Denied'), '/collection/'.$uuid, 3);
+            }
+
+            $user = $this->Session->read('User');
+            $vote = $directions[$direction];
+
+            if ($vote == 0) {
+                $sql = "DELETE FROM collections_votes
+                        WHERE user_id={$user['id']}
+                          AND collection_id={$collection_id}";
+            } else {
+                $sql = "REPLACE INTO collections_votes (collection_id, user_id, vote, created)
+                        VALUE ({$collection_id}, {$user['id']}, {$vote}, NOW())";
+            }
+
+            $result = $this->Collection->execute($sql);
+            // TODO: not from PHP code
+            $this->Collection->execute(
+                "UPDATE collections
+                 SET upvotes=(SELECT COUNT(1) FROM collections_votes
+                              WHERE collection_id={$collection_id} AND vote='1'),
+                     downvotes=(SELECT COUNT(1) FROM collections_votes
+                                WHERE collection_id={$collection_id} AND vote='-1')
+                 WHERE id={$collection_id}");
+        }
+
+        if ($this->isAjax()) {
+            // This is stupid, I just want a 200 status code.
+            $this->publish('json', array());
+            $this->render('json', 'ajax');
+        } else {
+            $this->redirect('/collection/'.$uuid, 302);
+        }
     }
 
     /**

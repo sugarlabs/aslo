@@ -1642,6 +1642,7 @@ dl.faq dt:target { color: #df731b; }
 }
 
 /* Clearfix! */
+.barometer:after,
 .vcard:after,
 #addon-install:after,
 .stand-alone-options:after,
@@ -2421,7 +2422,9 @@ ul.tag-cloud:after {
     border-radius: 3px;
 }
 
-/* Support this add-on box. */
+
+/** Support this add-on box. **/
+
 .support-this-addon {
     text-align: center;
     -moz-border-radius: 5px;
@@ -2457,4 +2460,127 @@ ul.tag-cloud:after {
     margin-right: inherit;
 }
 
-/* END Support this add-on box. */
+/** END Support this add-on box. **/
+
+/** Ratings barometer **/
+
+.barometer .bars,
+.barometer .upbar, .barometer .downbar,
+.barometer .upvotes, .barometer .downvotes {
+    float: left;
+}
+
+.html-rtl .barometer .bars,
+.html-rtl .barometer .upbar, .html-rtl .barometer .downbar,
+.html-rtl .barometer .upvotes, .html-rtl .barometer .downvotes {
+    float: right;
+}
+
+.html-rtl .barometer {
+    clear: right;
+}
+
+/* .upvotes and .downvotes are the numbers + thumb images, in inputs. */
+.barometer .upvotes, .barometer .downvotes {
+    /* Override native input styling. */
+    margin: 0;
+    padding: 0;
+    border: 0 none;
+    cursor: pointer;
+    text-shadow: none;
+    -moz-border-radius: 0;
+
+    padding-top: 0.1em; /* Push the text down a bit. */
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.barometer .upvotes {
+    color: #00b960;
+    padding-left: 1.2em; /* Space for the image. */
+    margin-right: 0.2em; /* Space between number and bar. */
+    background-image: url('../../img/amo2009/icons/thumbs.png');
+    background-position: left 33%;
+}
+
+.html-rtl .barometer .upvotes {
+    padding: 0 1.2em 0 0; /* Space for the image. */
+    margin: 0 0 0 0.2em; /* Space between number and bar. */
+    background-position: right 32%;
+}
+
+.barometer .upvotes.voted,
+.barometer .upvotes:hover {
+    background-image: url('../../img/amo2009/icons/thumbs.png');
+    background-position: left 0;
+}
+
+.html-rtl .barometer .upvotes.voted,
+.html-rtl .barometer .upvotes:hover {
+    background-position: right 0;
+}
+
+.barometer .downvotes {
+    color: #d93a40;
+    padding-right: 1.2em; /* Space for the image. */
+    margin-left: 0.2em; /* Space between number and bar. */
+    background-image: url('../../img/amo2009/icons/thumbs.png');
+    background-position: right 100%;
+}
+
+.html-rtl .barometer .downvotes {
+    padding: 0 0 0 1.2em; /* Space for the image. */
+    margin: 0 0.2em 0 0; /* Space between number and bar. */
+    background-position: left 100%;
+}
+
+.barometer .downvotes.voted,
+.barometer .downvotes:hover {
+    background-image: url('../../img/amo2009/icons/thumbs.png');
+    background-position: right 67%;
+}
+
+.html-rtl .barometer .downvotes.voted,
+.html-rtl .barometer .downvotes:hover {
+    background-position: left 67%;
+}
+
+.barometer .downvotes:hover, .barometer .upvotes:hover,
+.barometer .downvotes.voted, .barometer .upvotes.voted {
+    font-weight: bold;
+    text-shadow: none;
+}
+
+.barometer .bars {
+    /* Slip the bars between the numbers; won't overflow until there's more
+     * than 13 digits in the numbers (12 with commas).
+     */
+    width: 7em;
+}
+
+.barometer .bars.novotes {
+    background-color: #d9d9d9;
+}
+
+.barometer .upbar, .barometer .downbar, .barometer .bars.novotes {
+    /* Make the bars short, centered using the top margin. */
+    height: 0.7em;
+    margin-top: 0.4em;
+    text-indent: -1000em;
+}
+
+.barometer .upbar {
+    background-color: #a3e4cf;
+    margin-right: 1%; /* Little bit of space between the bars. */
+}
+
+.html-rtl .barometer .upbar {
+    margin-left: 1%; /* Little bit of space between the bars. */
+    margin-right: 0;
+}
+
+.barometer .downbar {
+    background-color: #ffc3c6;
+}
+
+/** END Ratings barometer **/

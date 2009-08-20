@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * Required arguments:
+ *   $up: number of upvotes
+ *   $down: number of downvotes
+ *   $collection
+ *
+ * Optional:
+ *   $user
+ */
+
+$c = $collection['Collection'];
+
+$total = $up + $down;
+$has_votes = $total !== 0;
+if ($has_votes) {
+    $upratio = ceil(round(100 * $up / $total, 2));
+    $downratio = floor(round(100 * $down / $total, 2));
+}
+
+$action = $html->url("/collections/vote/{$c['uuid']}");
+$upvote = $action.'/up';
+$downvote = $action.'/down';
+$cancel = $action.'/cancel';
+
+/* If the user has voted, this will turn into 1 or -1. */
+$user_vote = 0;
+
+if (empty($user)) {
+    /* All links go to login for unauthenticated users. */
+    $upvote = $downvote = $cancel = $html->url($html->login_url());
+} else if (isset($user['Votes'][$c['id']])) {
+
+    /* No really, let's have numbers. */
+    $user_vote = (int) html_entity_decode($user['Votes'][$c['id']]);
+
+    /* Replace a redundant voting form with a cancel form. */
+    if ($user_vote === 1) {
+        $upvote = $cancel;
+    } else {
+        $downvote = $cancel;
+    }
+}
+?>
+
+<div class="barometer">
+  <form method="post" action="<?=$upvote?>">
+    <?=$html->hiddenSession()?>
+    <input class="upvotes <?php if ($user_vote === 1) echo 'voted'?>"
+           value="<?=$up?>" type="submit"
+           title="<?=___('Add a positive vote for this collection')?>" />
+  </form>
+  <?php if ($has_votes): ?>
+    <div class="bars">
+      <?/* Subtract 1 from each percentage so we can slip a little spacing in between. */?>
+      <div class="upbar" style="width: <?=$upratio - 1?>%">
+        <?=sprintf(___('%1$s%% positive votes for this collection'), $upratio)?>
+      </div>
+      <div class="downbar" style="width: <?=$downratio - 1?>%">
+        <?=sprintf(___('%1$s%% negative votes for this collection'), $downratio)?>
+      </div>
+    </div>
+  <?php else: ?>
+    <div class="bars novotes"><?=___('No votes for this collection yet.')?></div>
+  <?php endif; ?>
+  <form method="post" action="<?=$downvote?>">
+    <?=$html->hiddenSession()?>
+    <input class="downvotes <?php if ($user_vote === -1) echo 'voted'?>"
+           value="<?=$down?>" type="submit"
+           title="<?=___('Add a negative vote for this collection')?>" />
+  </form>
+</div>

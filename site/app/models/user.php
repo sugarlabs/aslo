@@ -130,6 +130,7 @@ class User extends AppModel
      * @param array associations:
      *   'addons'
      *   'reviews'
+     *   'votes'
      * @param array addon_associations
      */
     function getUser($id, $associations = array(),
@@ -191,6 +192,16 @@ class User extends AppModel
                 foreach ($user['Review'] as &$review) {
                     $review['Translation'] = (array_key_exists(LANG, $review['Translation']) ?
                         $review['Translation'][LANG] : current($review['Translation']));
+                }
+            }
+
+            if (in_array('votes', $associations)) {
+                $user['Votes'] = array();
+                $result = $this->execute("SELECT collection_id, vote FROM collections_votes
+                                          WHERE user_id={$id}");
+                foreach ($result as $r) {
+                    $a = $r['collections_votes'];
+                    $user['Votes'][$a['collection_id']] = $a['vote'];
                 }
             }
         }
