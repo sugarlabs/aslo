@@ -686,7 +686,7 @@ class DevelopersController extends AppController
             }
         }
 
-        $addon = $this->Addon->findById($addon_id);
+        $addon = $this->Addon->getAddon($addon_id, array('list_details', 'contrib_details'));
         $a = $addon['Addon'];
         $this->set('addon', $addon);
         $this->set('a', $a);
@@ -901,7 +901,7 @@ class DevelopersController extends AppController
             $this->publish('success', true);
         }
 
-        $addon_data = $this->Addon->findById($addon_id);
+        $addon_data = $this->Addon->getAddon($addon_id, array('all_tags', 'authors'));
         $this->publish('addon_data',$addon_data);
 
         // MAke the tag list, passing in this addon and the currently logged in user
