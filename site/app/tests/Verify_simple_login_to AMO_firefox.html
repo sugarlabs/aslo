@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://preview.addons.mozilla.org/" />
+<title>Verify_simple_login_to AMO_firefox</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Verify_simple_login_to AMO_firefox</td></tr>
+</thead><tbody>
+<!--Description:This testcase verifies log in functionality-->
+<!--Storing email and password values in variables-->
+<tr>
+	<td>store</td>
+	<td>krupa.raj@gmail.com</td>
+	<td>email</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>1234</td>
+	<td>password</td>
+</tr>
+<!--Navigate to the Firefox homepage-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<!--Navigate to the log in page...-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log in</td>
+	<td></td>
+</tr>
+<!--Enter valid input for login email id and password fields;Select "Remember me" checkbox and submit the login form.-->
+<tr>
+	<td>type</td>
+	<td>LoginEmail</td>
+	<td>${email}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>LoginPassword</td>
+	<td>${password}</td>
+</tr>
+<tr>
+	<td>check</td>
+	<td>LoginRemember</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button[class=&quot;prominent&quot;][type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<!--Adding pause=3000 as log in takes a while in AMO-->
+<tr>
+	<td>pause</td>
+	<td>3000</td>
+	<td></td>
+</tr>
+<!--Validating whether "My Account"  and "Log out" links are present post log-in.-->
+<tr>
+	<td>verifyText</td>
+	<td>css=a[href=&quot;/en-US/firefox/users/edit&quot;]</td>
+	<td>My Account</td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>css=a[href=&quot;/en-US/firefox/users/logout?to=en-US%2Ffirefox%2F&quot;]</td>
+	<td>Log out</td>
+</tr>
+<!--Logging out....-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+<!--Ensuring that homepage loads after successful logout-->
+<tr>
+	<td>verifyLocation</td>
+	<td>regexpi:.*addons.mozilla.org/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>DONE</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

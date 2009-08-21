@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>Verify_login_fails_with_no:incorrect_email</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Verify_login_fails_with_no:incorrect_email</td></tr>
+</thead><tbody>
+<!--Description:this testcase verifies that clicking "log in" button a)without providing email id fails and throws an appropriate error message b)providing invalid email-id fails and throws an appropriate error message-->
+<tr>
+	<td>storeEval</td>
+	<td>new Array(&quot;&quot;,&quot;krupa.raj@gmail.com'&quot;,&quot;krupa&quot;)</td>
+	<td>emailArray</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>0</td>
+	<td>index</td>
+</tr>
+<!--Navigating to the AMO homepage...-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox</td>
+	<td></td>
+</tr>
+<!--Clicking "Log in" link to navigate to the Log in page-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log in</td>
+	<td></td>
+</tr>
+<!--Verifying that tester navigates to log in page -->
+<tr>
+	<td>verifyLocation</td>
+	<td>regexpi:.*addons.mozilla.org/en-US/firefox/users/login.*to=en-US.*2Ffirefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>while</td>
+	<td>(${index}&lt;storedVars['emailArray'].length)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>(${index}&lt;storedVars['emailArray'].length)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars['emailArray'][${index}]</td>
+	<td>email</td>
+</tr>
+<!--Enter a valid email-id-->
+<tr>
+	<td>type</td>
+	<td>LoginEmail</td>
+	<td>${email}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>LoginPassword</td>
+	<td>1234</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>email is&nbsp;&nbsp;&quot;${email}&quot;</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>when email is &quot;${email} &quot;,login fails</td>
+	<td></td>
+</tr>
+<!--Clicking the log in button-->
+<tr>
+	<td>clickAndWait</td>
+	<td>css=button[class=&quot;prominent&quot;][type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
+<!--Ensuring that there is an error message-->
+<tr>
+	<td>verifyTextPresent</td>
+	<td>exact:Wrong username or password!</td>
+	<td></td>
+</tr>
+<!--Checking that "My Account" and "Log Out" links are not present-this ensures that user did not log in.-->
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>css=a[href=&quot;/en-US/firefox/users/edit&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>css=a[href=&quot;/en-US/firefox/users/logout?to=en-US%2Ffirefox%2F&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>${index}+1</td>
+	<td>index</td>
+</tr>
+<tr>
+	<td>endWhile</td>
+	<td></td>
+	<td></td>
+</tr>
+<!--Navigate to the homepage-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>DONE</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
