@@ -47,7 +47,7 @@ $c = $collection['Collection'];
     <?=$this->renderElement('amo2009/categories')?>
     <?=$this->renderElement('amo2009/search')?>
   </div>
-  <div class="primary" role="main">
+  <div id="collections-detail" class="primary" role="main">
     <?=$this->renderElement('amo2009/breadcrumbs')?>
     <h2>
       <img class="icon" alt=""
@@ -106,10 +106,16 @@ $c = $collection['Collection'];
             </li>
             <li>
               <?php if ($writable): ?>
-                <a href="<?=$html->url('/collections/edit/'.$c['uuid'])?>">
+                <a class="manage" href="<?=$html->url('/collections/edit/'.$c['uuid'])?>">
                   <?=sprintf(___('Manage Collection'))?>
                 </a>
               <?php endif; ?>
+              <?php if ($isadmin || $role !== false): ?>
+                <a href="<?=$html->url('/statistics/collection/'.$c['uuid'])?>">
+                  <?=sprintf(___('Usage Statistics'))?>
+                </a>
+              <?php endif; ?>
+            </li>
           </ul>
         </div> <!-- meta -->
         <h3><?=___('About This Collection')?></h3>
