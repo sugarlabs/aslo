@@ -515,15 +515,26 @@ class CollectionsController extends AppController
             $result = $this->Collection->execute($sql);
             $this->Collection->purge($collection_id);
             $this->User->purge($user['id']);
+
+            if ($this->isAjax()) {
+                // We need to flush everything now so the user sees their
+                // updated vote.
+                $this->Config->Cache->flushMarkedLists();
+
+                // We don't really need users, but let's take advantage of caching elsewhere!
+                $collection = $this->Collection->getCollection($collection_id, array('users'));
+                $c = $collection['Collection'];
+                print $this->renderElement('amo2009/collections/barometer', array(
+                    'up' => $c['upvotes'], 'down' => $c['downvotes'],
+                    'collection' => $collection,
+                    'user' => $this->User->getUser($user['id'], array('votes')),
+                ));
+                return;
+            }
         }
 
-        if ($this->isAjax()) {
-            // This is stupid, I just want a 200 status code.
-            $this->publish('json', array());
-            $this->render('json', 'ajax');
-        } else {
-            $this->redirect('/collection/'.$uuid, 302);
-        }
+        // If it wasn't a post, or was a post but not ajax, we jump.
+        return $this->redirect('/collection/'.$uuid, 302);
     }
 
     /**

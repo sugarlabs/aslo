@@ -491,5 +491,24 @@ class AppController extends Controller
             }
         }
     }
+
+    /**
+     * Call renderElement straght from a controller.
+     *
+     * If you're printing this out, leave $autoRender set to False so Cake does
+     * try rendering any unnecessary views.  If you just want to get the string
+     * content, set $autoRender to True so Cake keeps on truckin'.
+     *
+     * @params same as renderElement in a view
+     * @return string of rendered content
+     */
+    function renderElement($path, $vars=array(), $autoRender=False) {
+        $view = new View($this, 'helpers');
+        loadHelper('AddonsHtml');
+        $vars['html'] = new AddonsHtmlHelper();
+        $vars['html']->base = $this->base;
+        $this->autoRender = $autoRender;
+        return $view->renderElement($path, $vars);
+    }
 }
 ?>

@@ -71,3 +71,18 @@ if (empty($user)) {
            title="<?=___('Add a negative vote for this collection')?>" />
   </form>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    /* Hijack the voting forms to submit over xhr.
+     *
+     * On success we get all this HTML back again, so it's replaced with a more
+     * up-to-date version of itself.
+     */
+    $('.barometer form').submit(function(e) {
+        e.preventDefault();
+        $.post(this.action, $(this).serialize(), function(content) {
+           $('.barometer').parent().html(content);
+        });
+    });
+})
+</script>
