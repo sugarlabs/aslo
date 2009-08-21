@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: addons-koKR\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-16 11:45-0800\n"
-"PO-Revision-Date: 2009-08-05 19:30+0900\n"
+"PO-Revision-Date: 2009-08-20 10:56+0900\n"
 "Last-Translator: Seonguk Gong <arbi316@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -508,7 +508,7 @@ msgstr[1] "경고 %1$s개"
 # This is the password reset email
 # %1 is the pw reset URL, %2 is the application
 #: views/users/email/pwreset_plain.thtml:5
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "%2$s Add-ons Password Reset\\n\\nA request was received to reset the "
 "password for this account on addons.mozilla.org. To change this password "
@@ -525,7 +525,7 @@ msgstr ""
 "\n"
 "메일을 신청하지 않았는데도 메일이 온거라면 아무것도 할 필요가 없습니다.\n"
 "\n"
-"감사합니다,\n"
+"감사합니다.\n"
 "-- %2$s 부가 기능 관리자"
 
 #: views/statistics/rss/summary.thtml:68
@@ -578,7 +578,7 @@ msgstr "%Y년 %B %e일 %I:%M %p"
 # This is a date format.
 # http://php.net/strftime
 #: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
-#, fuzzy, php-format
+#, php-format
 msgid "%b. %e"
 msgstr "%B %e일"
 
@@ -657,7 +657,7 @@ msgstr "조건 내 %s 조회"
 #: views/statistics/addon.thtml:209 views/statistics/rss/summary.thtml:62
 #, php-format
 msgid "%s from last week"
-msgstr "지난 주에 %s"
+msgstr "지난 주 대비 %s"
 
 # %s is a number
 #: controllers/editors_controller.php:1864
@@ -820,14 +820,14 @@ msgstr "일일 사용자 <em>%s</em>명"
 #: views/elements/developers/statsbar.thtml:41
 #, php-format
 msgid "<em>%s</em> Total Downloads"
-msgstr "총 다운로드 횟수 <em>%s</em>회"
+msgstr "총 다운로드 <em>%s</em>회"
 
 # %s is a number
 #: views/developers/dashboard.thtml:77
 #: views/elements/developers/statsbar.thtml:43
 #, php-format
 msgid "<em>%s</em> Weekly Downloads"
-msgstr "주간 다운로드 횟수 <em>%s</em>회"
+msgstr "주간 다운로드 <em>%s</em>회"
 
 #: views/elements/amo2009/install.thtml:361 views/elements/install.thtml:112
 msgid ""
@@ -979,7 +979,7 @@ msgstr ""
 # %1$s is a URL.
 # %2$s is a full <a href>.
 #: views/collections/detail.thtml:62
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "<p>You can view your new collection below. If you'd like to set a collection "
 "nickname, upload an icon, or change additional settings, please visit the <a "
@@ -988,7 +988,7 @@ msgid ""
 msgstr ""
 "<p>아래에서 당신의 새 모음집을 볼 수 있습니다. 모음집 닉네임 설정, 아이콘 업"
 "로드, 추가 설정 변경을 원한다면 <a href='%1$s'>모음집 관리</a>페이지를 방문"
-"해 보세요.</p> <p>모음집은 이곳에서 볼 수 있습니다: %2$s</p>"
+"해 보세요.</p><p>모음집은 이곳에서 볼 수 있습니다: %2$s</p>"
 
 # %1$s is a URL.
 #: controllers/collections_controller.php:148
@@ -1194,16 +1194,16 @@ msgid ""
 "A link to activate your user account was sent by email to your address %1$s. "
 "You have to click it before you can log into %2$s Add-ons."
 msgstr ""
-"이메일 주소 %1$s에 당신의 계정을 활성화 할 수 있는 링크를 보냈습니다.Mozilla "
-"부가 기능 사이트에 로그인 하기 전에 계정 활성화를 해야 합니다."
+"이메일 주소 %1$s에 계정 활성화 링크를 보냈습니다. %2$s 부가 기능에 로그인 하"
+"기 전에 링크를 먼저 클릭해야 합니다."
 
 #: controllers/developers_controller.php:1857
 msgid ""
 "A new section is added to your add-on's page and Developer Profile "
 "requesting a contribution from your users."
 msgstr ""
-"당신의 부가 기능 페이지에 새 항목이 추가되었으며 개발자 프로필은 사용자들에"
-"게 기부금을 요청합니다."
+"당신의 부가 기능 페이지에 새 항목이 추가되어 개발자 프로필에서 사용"
+"자에게 기부금을 요청하게 됩니다."
 
 # %1$s is the name of the file
 #: controllers/components/developers.php:692
@@ -1216,10 +1216,9 @@ msgstr ""
 "합니다."
 
 #: controllers/editors_controller.php:520
-#, fuzzy
 msgctxt "editors_syntax_about"
 msgid "About"
-msgstr "About"
+msgstr "소개"
 
 # Link text for the AMO About page.
 #: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
@@ -1333,11 +1332,11 @@ msgstr "추가"
 #: views/elements/install.thtml:246
 #, php-format
 msgid "Add %1$s to %2$s"
-msgstr "%1$s를 %2$s에 설치"
+msgstr "%2$s에 %1$s 설치"
 
 #: views/developers/previews.thtml:120
 msgid "Add Another Preview"
-msgstr "다른 미리 보기 추가"
+msgstr "다른 미리보기 추가"
 
 #: views/developers/addon_edit_authors.thtml:96
 msgid "Add Author"
@@ -1376,7 +1375,7 @@ msgstr "새 파일 추가"
 
 #: views/developers/previews.thtml:115 views/developers/previews.thtml:124
 msgid "Add New Preview"
-msgstr "새 미리 보기 추가"
+msgstr "새 미리보기 추가"
 
 #: views/developers/versions.thtml:93
 msgid "Add New Version"
@@ -1389,13 +1388,13 @@ msgstr "조건 추가"
 #: views/previews/add.thtml:43
 msgctxt "devcp_previews_header_add"
 msgid "Add Preview"
-msgstr "미리 보기 추가"
+msgstr "미리보기 추가"
 
 #: controllers/previews_controller.php:103
 #: controllers/previews_controller.php:104
 msgctxt "devcp_preview_add_pagetitle"
 msgid "Add Preview"
-msgstr "미리 보기 추가"
+msgstr "미리보기 추가"
 
 #: views/developers/uploader.thtml:171
 msgid "Add Release Notes"
@@ -1417,7 +1416,7 @@ msgstr "평가 추가"
 #: views/reviews/add.thtml:51
 #, php-format
 msgid "Add a review for %s"
-msgstr "%s 평가 추가"
+msgstr "%s에 대해 평가 달기"
 
 #: views/addons/display.thtml:484 views/developers/addon_edit_tags.thtml:54
 msgid "Add a tag"
@@ -1445,7 +1444,7 @@ msgstr "이 부가 기능을 관리할 사용자를 추가 또는 삭제합니�
 
 #: views/collections/edit.thtml:263
 msgid "Add publisher comment"
-msgstr "발행자 내용 추가"
+msgstr "발행자 코멘트 추가"
 
 #: views/developers/addon_edit.thtml:51
 msgid "Add tags to your add-on."
@@ -1493,9 +1492,8 @@ msgid "Add-on"
 msgstr "부가 기능"
 
 #: views/statistics/index.thtml:58
-#, fuzzy
 msgid "Add-on Collections"
-msgstr "Add-on Collections"
+msgstr "부가 기능 모음집"
 
 #: controllers/pages_controller.php:117
 msgctxt "page_title_collector"
@@ -1583,13 +1581,13 @@ msgstr "부가 기능 정보"
 #: views/developers/addon_edit_properties.thtml:78
 msgctxt "devcp_edit_properties_transbox_name_name"
 msgid "Add-on Name"
-msgstr "부가 기능의 이름"
+msgstr "부가 기능 이름"
 
 #: views/elements/addon_list_options.thtml:45
 #: views/elements/amo2009/addons/list_options.thtml:45
 msgctxt "list_sortby_name"
 msgid "Add-on Name"
-msgstr "부가 기능명"
+msgstr "부가 기능 이름"
 
 #: views/developers/addon_status.thtml:99
 msgid "Add-on Name required"
@@ -1604,9 +1602,8 @@ msgid "Add-on Policy"
 msgstr "부가 기능 정책"
 
 #: views/statistics/index.thtml:55
-#, fuzzy
 msgid "Add-on Reviews"
-msgstr "Add-on Reviews"
+msgstr "부가 기능 평가"
 
 #: controllers/components/stats.php:428
 msgctxt "statistics_longnames_status"
@@ -1772,9 +1769,8 @@ msgid "Add-ons <img alt=\"Add-ons\" src=\"%1$s\" />"
 msgstr "부가 기능 <img alt=\"Add-ons\" src=\"%1$s\" />"
 
 #: views/statistics/index.thtml:93 controllers/statistics_controller.php:127
-#, fuzzy
 msgid "Add-ons Created"
-msgstr "Add-ons Created"
+msgstr "제작된 부가 기능"
 
 # The title for a user if they are a developer
 #: views/users/info.thtml:62
@@ -1783,25 +1779,22 @@ msgstr "부가 기능 개발자"
 
 #: views/statistics/index.thtml:46 views/statistics/index.thtml:91
 #: controllers/statistics_controller.php:125
-#, fuzzy
 msgctxt "statistics_addons_downloaded"
 msgid "Add-ons Downloaded"
-msgstr "Add-ons Downloaded"
+msgstr "다운로드된 부가 기능"
 
 #: views/statistics/index.thtml:49 views/statistics/index.thtml:92
 #: controllers/statistics_controller.php:126
-#, fuzzy
 msgid "Add-ons In Use"
-msgstr "Add-ons In Use"
+msgstr "사용중인 부가 기능"
 
 #: controllers/pages_controller.php:101
 msgid "Add-ons Policy"
 msgstr "부가 기능 정책"
 
 #: views/statistics/index.thtml:94 controllers/statistics_controller.php:128
-#, fuzzy
 msgid "Add-ons Updated"
-msgstr "Add-ons Updated"
+msgstr "업데이트된 부가 기능"
 
 #: controllers/addons_controller.php:1177
 msgid "Add-ons by Name"
@@ -2055,7 +2048,7 @@ msgstr "모든 언어"
 
 #: views/addons/searchengines.thtml:76
 msgid "All Search Engines"
-msgstr "전체 검색 사이트"
+msgstr "전체 검색 엔진"
 
 #: views/addons/themes_landing.thtml:70
 msgid "All Themes"
@@ -2181,7 +2174,7 @@ msgstr "누구나 통계를 볼수 있음"
 
 #: controllers/components/stats.php:434
 msgid "App"
-msgstr "어플"
+msgstr "앱"
 
 #: views/editors/review.thtml:419
 msgid ""
@@ -2266,7 +2259,7 @@ msgstr "정말 %s 버전을 완전히 삭제하시겠습니까?"
 
 #: views/previews/edit.thtml:55
 msgid "Are you sure you wish to delete this preview?"
-msgstr "현재 미리보기 그림을 삭제하시겠습니까?"
+msgstr "이 미리보기를 삭제하시겠습니까?"
 
 #: views/reviews/delete.thtml:62
 msgid "Are you sure you wish to delete this review?"
@@ -2449,8 +2442,8 @@ msgid ""
 "Before downloading this add-on, please consider supporting the development "
 "of this add-on by making a small contribution."
 msgstr ""
-"이 부가 기능을 다운로드 하기 전에, 소액 기부를 통한 부가 기능 개발 지원을 고"
-"려해 보세요."
+"이 부가 기능을 다운로드 하기 전에, 소액 기부를 통한 부가 기능 개발 지원을 "
+"고려해 보세요."
 
 #: views/developers/addon_edit_contributions.thtml:69
 msgid "Before you begin, you must create a developer profile."
@@ -2488,7 +2481,7 @@ msgstr "%1$s 테마 둘러보기 :: %2$s 부가 기능"
 #: controllers/addons_controller.php:1181
 #, php-format
 msgid "Browse %s"
-msgstr "%s 탐색"
+msgstr "%s 둘러보기"
 
 #: views/addons/home.thtml:101
 msgid "Browse Add-ons"
@@ -2496,7 +2489,7 @@ msgstr "부가 기능 둘러보기"
 
 #: views/addons/searchengines.thtml:72
 msgid "Browse Search Engines"
-msgstr "검색 사이트 보기"
+msgstr "검색 엔진 둘러보기"
 
 #: views/addons/browse_thumbs.thtml:87 views/addons/themes_landing.thtml:67
 msgid "Browse Themes"
@@ -2524,7 +2517,7 @@ msgstr "버튼 조정자 키"
 #: views/addons/plugins.thtml:103 views/addons/plugins.thtml:116
 #: views/addons/plugins.thtml:126
 msgid "By"
-msgstr " / "
+msgstr "제작: "
 
 #: views/users/delete.thtml:97
 msgid ""
@@ -2559,9 +2552,8 @@ msgid "CSS"
 msgstr "CSS"
 
 #: controllers/statistics_controller.php:347
-#, fuzzy
 msgid "CSV data not found"
-msgstr "CSV data not found"
+msgstr "CSV 데이터가 없습니다"
 
 #: views/pages/js_constants.js.thtml:90
 msgctxt "devcp_js_a_cancel"
@@ -2683,9 +2675,8 @@ msgid "Characters used: %1$s / %2$s"
 msgstr "글자 수: %1$s / %2$s"
 
 #: views/elements/developers/performanceheader.thtml:61
-#, fuzzy
 msgid "Charts"
-msgstr "Charts"
+msgstr "도표"
 
 #: views/collections/edit.thtml:153
 msgid "Check Availability"
@@ -2771,7 +2762,7 @@ msgstr "코드 블럭:"
 
 #: controllers/statistics_controller.php:325
 msgid "Collapse Graph"
-msgstr "그래프 닫기"
+msgstr "그래프 축소"
 
 #: views/collections/add.thtml:73 views/collections/edit.thtml:140
 msgid "Collection Description"
@@ -2833,17 +2824,16 @@ msgid "Collections"
 msgstr "모음집"
 
 #: views/statistics/index.thtml:97 controllers/statistics_controller.php:131
-#, fuzzy
 msgid "Collections Created"
-msgstr "Collections Created"
+msgstr "제작된 모음집"
 
 #: views/addons/home.thtml:145
 msgid ""
 "Collections are a way for you to categorize, mix, match and mingle add-ons.  "
 "Subscribe to collections created by other users or create your own."
 msgstr ""
-"모음집은 부가 기능을 분류 및 조합하는 기능입니다.  다른 사용자 또는 자신이 만"
-"든 모음집을 구독하세요."
+"모음집은 부가 기능을 분류 및 조합하는 기능입니다.  다른 사용자나 자신이 만든 "
+"모음집을 구독하세요."
 
 #: views/elements/amo2009/collections/collector_info_secondary.thtml:48
 msgid "Collections are groups of related add-ons assembled for easy sharing."
@@ -2873,7 +2863,7 @@ msgstr "코멘트 도움말"
 
 #: controllers/components/editors.php:349
 msgid "Comment body is required"
-msgstr "내용 본문이 있어야 합니다"
+msgstr "코멘트 본문이 있어야 합니다"
 
 #: controllers/editors_controller.php:1251
 msgid "Comment does not start a thread"
@@ -2881,27 +2871,27 @@ msgstr "코멘트는 글타래를 시작하지 않습니다"
 
 #: controllers/components/editors.php:346
 msgid "Comment subject is required"
-msgstr "내용 제목이 있어야 합니다"
+msgstr "코멘트 제목이 있어야 합니다"
 
 #: controllers/editors_controller.php:336
 msgid "Comment successfully posted"
-msgstr "내용가 성공적으로 올라갔습니다"
+msgstr "코멘트가 성공적으로 올라갔습니다"
 
 #: views/editors/review.thtml:323
 msgid "Comments"
-msgstr "내용"
+msgstr "코멘트"
 
 # %1$s is the comment count
 #: views/elements/developers/editors_review_history_item.thtml:53
 #, php-format
 msgid "Comments (%1$s)"
 msgid_plural "Comments (%1$s)"
-msgstr[0] "내용 (%1$s)"
-msgstr[1] "내용 (%1$s)"
+msgstr[0] "코멘트 (%1$s)"
+msgstr[1] "코멘트 (%1$s)"
 
 #: views/editors/review.thtml:206
 msgid "Comments:"
-msgstr "내용:"
+msgstr "코멘트:"
 
 #: models/test_case.php:74 models/test_case.php:102
 msgid "Common Library Checksum Tests"
@@ -2965,7 +2955,7 @@ msgstr "축하합니다! 계정 등록이 완료 되었습니다."
 
 #: views/elements/amo2009/contribution.thtml:64
 msgid "Contribute"
-msgstr "기부"
+msgstr "기부하기"
 
 # %1 is a number like 32 or 47.99.
 #: views/elements/amo2009/contribution.thtml:102
@@ -3044,7 +3034,7 @@ msgstr "나의 저작물"
 #: controllers/pages_controller.php:92
 msgctxt "page_title_credits"
 msgid "Credits"
-msgstr "크레딧"
+msgstr "공헌자"
 
 #: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
 msgctxt "footer_credits"
@@ -3138,7 +3128,7 @@ msgstr "기본 언어"
 
 #: views/developers/previews.thtml:93
 msgid "Default Preview"
-msgstr "기본 미리 보기"
+msgstr "기본 미리보기"
 
 #: views/reviews/display.thtml:77 views/reviews/display.thtml:160
 msgid "Delete"
@@ -3176,7 +3166,7 @@ msgstr "삭제하기"
 #: views/developers/previews.thtml:96
 msgctxt "devcp_previews_a_delete"
 msgid "Delete Preview"
-msgstr "미리 보기 삭제"
+msgstr "미리보기 삭제"
 
 #: views/previews/edit.thtml:55
 msgctxt "devcp_previews_submit_delete"
@@ -3219,7 +3209,7 @@ msgstr "지금 내 사용자 계정 삭제하기"
 
 #: views/collections/edit.thtml:266
 msgid "Delete publisher comment"
-msgstr "발행자 내용 삭제"
+msgstr "발행자 코멘트 삭제"
 
 #: views/editors/reviews_queue.thtml:106
 msgid "Delete review"
@@ -3264,13 +3254,12 @@ msgid "Detailed Info"
 msgstr "상세 정보"
 
 #: views/addons/display.thtml:362
-msgid "Detailed Review"
-msgstr "세부 평가"
+msgid "Detailed review"
+msgstr "자세한 평가"
 
 #: views/elements/developers/performanceheader.thtml:60
-#, fuzzy
 msgid "Details"
-msgstr "Details"
+msgstr "세부 내역"
 
 # <option> text in a <select> for Author role in an add-on.
 #: views/pages/js_constants.js.thtml:85
@@ -3279,7 +3268,6 @@ msgid "Developer"
 msgstr "개발자"
 
 #: views/addons/display.thtml:166
-#, fuzzy
 msgid "Developer"
 msgid_plural "Developers"
 msgstr[0] "개발자"
@@ -3293,18 +3281,17 @@ msgstr "개발자 동의서"
 #: views/developers/addon_edit_descriptions.thtml:93
 msgctxt "devcp_edit_descriptions_transbox_comments_name"
 msgid "Developer Comments"
-msgstr "개발자 내용"
+msgstr "개발자 코멘트"
 
 #: views/addons/display.thtml:282
-#, fuzzy
 msgctxt "addons_display_developer_comments"
 msgid "Developer Comments"
-msgstr "Developer Comments"
+msgstr "개발자 코멘트"
 
 #: views/editors/review.thtml:291
 msgctxt "editors_review_header_devcomments"
 msgid "Developer Comments"
-msgstr "개발자 내용"
+msgstr "개발자 코멘트"
 
 #: views/developers/dashboard.thtml:43
 msgid "Developer Dashboard"
@@ -3463,7 +3450,7 @@ msgstr "언어팩 다운로드"
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
 #, php-format
 msgid "Download Now %s"
-msgstr "%s 다운로드"
+msgstr "다운로드 %s"
 
 #: views/elements/amo2009/collections/collector_sidebar_download.thtml:49
 msgid "Download the Add-on Collector:"
@@ -3545,12 +3532,12 @@ msgstr "내 부가기능 편집"
 #: controllers/previews_controller.php:195
 msgctxt "devcp_preview_edit_pagetitle"
 msgid "Edit Preview"
-msgstr "미리 보기 편집"
+msgstr "미리보기 편집"
 
 #: views/previews/edit.thtml:43 views/previews/edit.thtml:54
 msgctxt "devcp_previews_header_edit"
 msgid "Edit Preview"
-msgstr "미리 보기 편집"
+msgstr "미리보기 편집"
 
 # %s is the name of the add-on
 #: views/reviews/add.thtml:51
@@ -3560,7 +3547,7 @@ msgstr "%s 평가 편집"
 
 #: views/collections/edit.thtml:265
 msgid "Edit publisher comment"
-msgstr "발행자 내용 편집"
+msgstr "발행자 코멘트 편집"
 
 #: views/users/edit.thtml:79
 #, php-format
@@ -3578,7 +3565,7 @@ msgstr "편집자"
 #: views/editors/review.thtml:165 views/editors/review.thtml:359
 msgctxt "editors_review_a_comments"
 msgid "Editor Comments"
-msgstr "편집자 내용"
+msgstr "편집자 코멘트"
 
 #: views/users/edit.thtml:185
 msgid "Editor Review Discussions"
@@ -3677,23 +3664,23 @@ msgstr "Firefox 부가 기능 계정의 이메일 주소를 입력하세요:"
 
 #: views/elements/recaptcha.thtml:77
 msgid "Enter your answer here:"
-msgstr "코드 입력:"
+msgstr "여기에 답을 입력해주세요:"
 
 #: controllers/collections_controller.php:1088
 msgid "Error deleting add-on!"
-msgstr "%s 추가됨"
+msgstr "부가 기능 삭제 오류!"
 
 #: controllers/reviews_controller.php:558
 msgid "Error flagging this review!"
-msgstr "평가 올리기 실패!"
+msgstr "평가 표시작업 오류!"
 
 #: controllers/collections_controller.php:1074
 msgid "Error saving add-on!"
-msgstr "%s 추가됨"
+msgstr "부가 기능 저장 오류!"
 
 #: controllers/collections_controller.php:1103
 msgid "Error saving comment!"
-msgstr "평가 내용을 입력해 주세요."
+msgstr "코멘트 저장 오류!"
 
 #: views/users/emailchange.thtml:50
 msgid "Error!"
@@ -3775,7 +3762,7 @@ msgstr "상세 기능를 지울 수 없습니다."
 
 #: controllers/components/editors.php:361
 msgid "Failed to save comment"
-msgstr "내용 저장에 실패했습니다"
+msgstr "코멘트 저장에 실패했습니다"
 
 #: views/users/delete.thtml:50
 msgid "Farewell!"
@@ -4095,7 +4082,7 @@ msgstr "%s 이벤트 숨기기"
 
 #: views/editors/reviewlog.thtml:94
 msgid "Hide Comments"
-msgstr "내용 숨기기"
+msgstr "코멘트 숨김"
 
 #: controllers/statistics_controller.php:317
 msgid "Hide Firefox Events"
@@ -4150,7 +4137,7 @@ msgstr "계정이 없습니다."
 
 #: views/users/login.thtml:111
 msgid "I forgot my password."
-msgstr "비밀번호를 잊어먹었습니다."
+msgstr "비밀번호가 기억나지 않습니다."
 
 #: views/users/delete.thtml:113
 msgid "I understand that this step cannot be undone."
@@ -4196,13 +4183,13 @@ msgid ""
 "If this is hard to read, you can <a href=\"%1$s\">try different words</a> or "
 "<a href=\"%2$s\">listen to something</a> instead."
 msgstr ""
-"이 문장을 읽기 어렵다면, <a href=\"%1$s\">다른 단어로 재시도</a>하거나 <a "
-"href=\"%2$s\">음성 듣기</a>로 대신 할 수 있습니다."
+"이 문장을 읽기 어렵다면, <a href=\"%1$s\">다른 단어로 재시도</a>하거나 <a hre"
+"f=\"%2$s\">음성 듣기</a>로 대신 할 수 있습니다."
 
 # %1 is the link switching refreshing the captcha
 # %2 is the link switching to a text captcha
 #: views/elements/recaptcha.thtml:73
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "If this is hard to understand, you can <a href=\"%1$s\">listen to something "
 "else</a> or <a href=\"%2$s\"> switch back to text</a>."
@@ -4279,9 +4266,9 @@ msgid ""
 "other concerns that an administrator should look into, enter your comments "
 "in the area below. They will be sent to administrators, not the author."
 msgstr ""
-"이 부가 기능에서 보안, 저작권 문제 등과 같은 우려가 있을 경우 편집자에게 상"
-"위 심사를 요청할 수 있습니다. 아래 항목에 내용를 입력하면 개발자가 아닌 편집"
-"자에게 전달 됩니다."
+"이 부가 기능에서 보안, 저작권 문제 등과 같은 우려가 있을 경우 관리자에게 상"
+"급 심사를 요청할 수 있습니다. 아래에서 코멘트를 입력하면 개발자 대신 관리자"
+"에게 전달됩니다."
 
 #: views/developers/addon_edit_descriptions.thtml:112
 msgid ""
@@ -4323,14 +4310,14 @@ msgstr ""
 
 # %s is a full <a> tag
 #: views/pages/appversions.thtml:93
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "If your supported application does not require an install.rdf file, you "
 "still must include one with the required properties as specified <a href=\"%s"
 "\">here</a>."
 msgstr ""
-"지원할 애플리케이션이 install.rdf를 요구하지 않으면 %s의 요청 항목 중 하나는 "
-"추가하여야 합니다."
+"지원하는 애플리케이션이 install.rdf 파일을 필요로하지 않으면, <a href=\""
+"%s\">여기</a>에 명시된 요구 항목을 반드시 포함하고 있어야 합니다."
 
 #: views/pages/js_constants.js.thtml:74
 msgid "Ignore version check"
@@ -4439,9 +4426,9 @@ msgstr "언어팩 설치"
 
 # %s is a string.  Example: testo
 #: controllers/components/validation.php:691
-#, fuzzy, php-format
+#, php-format
 msgid "Install.js contains a function missing from the whitelist: %s"
-msgstr "Install.js contains a function missing from the whitelist: %s"
+msgstr "Install.js는 화이트리스트에서 빠져있는 기능을 포함하고 있습니다: %s"
 
 #: views/admin/users_edit.thtml:132 views/users/edit.thtml:150
 msgid ""
@@ -4449,9 +4436,9 @@ msgid ""
 "publicly on your user info page. Line breaks will be preserved, but no HTML "
 "is allowed."
 msgstr ""
-"소개하길 좋아한다면, 커뮤니티에 자기 자신을 소개해 보세요! 이 문구는 당신의 "
-"사용자 정보 페이지에 공개적으로 표시됩니다. 줄 바꿈은 보존되나, HTML은 허용되"
-"지 않습니다."
+"자기 소개 하는걸 좋아한다면, 커뮤니티에 자신을 소개해 보세요! 아래 문구"
+"가 당신의 사용자 정보 페이지에 공개적으로 표시됩니다. 줄 바꿈은 보존되지만, "
+"HTML은 허용되지 않습니다."
 
 #: views/elements/amo2009/teaser_collections.thtml:45
 msgid "Introduction"
@@ -4521,9 +4508,9 @@ msgid ""
 "disabled.  Please enable JavaScript before trying to install any of the "
 "search plugins below."
 msgstr ""
-"플러그인을 설치하려면 자바스크립트가 필요합니다. 아마 자바스크립트 사용 설정"
-"을 꺼두신 것 같습니다. 검색 플러그인 설치를 위해 설정에서 자바 스크립트 사용 "
-"옵션을 켜주시기 바랍니다."
+"플러그인을 설치하려면 자바스크립트가 필요하지만, 자바스크립트 사용 설정"
+"이 꺼져있는 것 같습니다.  아래의 검색 플러그인을 설치하기에 앞서 자바스"
+"크립트를 켜주시기 바랍니다."
 
 #: views/statistics/addon.thtml:127 views/statistics/index.thtml:79
 msgid "JavaScript is required to view the Statistics Dashboard graphs."
@@ -4699,9 +4686,9 @@ msgstr "보통"
 
 # %1$s is the HTML collection name link.
 #: views/elements/amo2009/teaser_collections.thtml:110
-#, fuzzy, php-format
+#, php-format
 msgid "Like these? Find more add-ons in the %1$s collection."
-msgstr "마음에 드시나요? %1$s 모음집에서 관련 부가 기능을 찾아보세요."
+msgstr "마음에 드시나요? %1$s 모음집에서 관련 부가 기능을 더 찾아보세요."
 
 #: views/editors/review.thtml:404
 msgid "Line Break"
@@ -4805,7 +4792,7 @@ msgstr "공개하기"
 
 #: views/previews/add.thtml:59 views/previews/edit.thtml:50
 msgid "Make this the default preview image"
-msgstr "현재 그림을 기본 미리 보기로 설정"
+msgstr "이것을 기본 미리보기 이미지로 설정"
 
 #: views/developers/addon_status.thtml:148
 msgid "Make your add-on Public again."
@@ -4841,8 +4828,8 @@ msgid ""
 "Making this the default preview will remove default status from the current "
 "default preview."
 msgstr ""
-"현재 그림을 미리 보기 기본 설정으로 하면 원래 미리 보기 그림이 자동적으로  사"
-"용 정지 됩니다."
+"이것을 기본 미리보기로 설정하면 이전 미리보기는 자동으로 기본 상태가 해제됩"
+"니다."
 
 # %1$s is the name of the collection
 #: views/collections/edit.thtml:68
@@ -5098,9 +5085,9 @@ msgid ""
 "ecosystem. Your optional contribution helps sustain further development of "
 "this add-on."
 msgstr ""
-"Mozilla는 열정적이며 왕성한 개발자 생태계를 지원하고 있습니다. 여러분의 선택"
-"적 기부는 이 부가 기능의 유지, 보수는 물론 더 나아가 개발에까지 도움이 됩니"
-"다."
+"Mozilla는 열정적이며 왕성한 개발자 생태계를 지원하고 있습니다. 여러"
+"분의 선택적 기부는 이 부가 기능의 유지, 보수는 물론 더 나아가 개발에까지 도"
+"움이 됩니다."
 
 #: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:358
 msgid ""
@@ -5109,9 +5096,9 @@ msgid ""
 "to. Any questions, complaints or claims regarding the applications must be "
 "directed to the appropriate software vendor."
 msgstr ""
-"Mozilla는 편의를 위해 여러 애플리케이션에 대한 링크를 제공하고 있으나, 애플리"
-"케이션과 관련된 정보에 대하여 어떠한 책임도 지지 않습니다. 애플리케이션에 대"
-"한 질문이나 의견 등은 해당 소프트웨어 판매자에게 전달하시기 바랍니다."
+"Mozilla에선 편의상 여러 애플리케이션에 대한 링크를 제공하고 있으나, 이들 애플"
+"리케이션과 관련된 정보에 대해선 어떠한 책임도 지지 않습니다. 애플리케이션에 "
+"대한 질문이나 의견 등은 해당 소프트웨어 판매자에게 전달하시기 바랍니다."
 
 #: views/users/edit.thtml:180
 msgid ""
@@ -5315,7 +5302,7 @@ msgstr "플랫폼을 선택하지 않음"
 
 #: views/editors/review.thtml:352
 msgid "No previews found."
-msgstr "미리 보기가 없습니다."
+msgstr "미리보기가 없습니다."
 
 #: views/editors/review.thtml:333
 msgid "No previous review entries could be found."
@@ -5665,8 +5652,8 @@ msgstr "PayPal ID"
 #, php-format
 msgid "Pending Updates (%s)"
 msgid_plural "Pending Updates (%s)"
-msgstr[0] "업데이트 대기 (1개)"
-msgstr[1] "업데이트 대기 갯수 (%s개)"
+msgstr[0] "업데이트 대기 (%s개)"
+msgstr[1] "업데이트 대기 (%s개)"
 
 #: views/elements/amo2009/search.thtml:246 views/elements/search.thtml:230
 msgid "Per Page"
@@ -5790,7 +5777,7 @@ msgstr ""
 #: controllers/components/editors.php:84
 #: controllers/components/editors.php:187
 msgid "Please enter review comments."
-msgstr "심사 내용를 입력하세요."
+msgstr "심사 코멘트를 입력하세요."
 
 #: views/pages/js_constants.js.thtml:94
 msgid "Please enter text for your license."
@@ -5855,9 +5842,9 @@ msgstr "작업을 수행하기 전에 아래의 개발자 동의서를 읽고 �
 #: controllers/components/developers.php:625
 #: controllers/components/validation.php:346
 #: controllers/developers_controller.php:504
-#, fuzzy, php-format
+#, php-format
 msgid "Please see <a href=\"%s\">this page</a> for reference."
-msgstr "참고 자료는 %s을(를) 보시기 바랍니다."
+msgstr "참고 자료는 <a href=\"%s\">이 페이지</a>를 보시기 바랍니다."
 
 #: views/pages/js_constants.js.thtml:93
 msgid "Please select a license."
@@ -5933,9 +5920,9 @@ msgid ""
 "graphic formats or playing multimedia files. Plugins are slightly different "
 "from extensions, which modify or add to existing functionality."
 msgstr ""
-"플러그인은 브라우저가 특별한 기능을 수행하는데 도움을 줍니다.이미지를 보여 주"
-"거나 및 멀티미디어 정보를 표시하는 데 유용 합니다. 외부 기능과 연동한다는 점"
-"에서 확장 기능과 조금 다릅니다."
+"플러그인은 브라우저가 특수 그래픽 형식 표시 및 멀티미디어 파일 재생같은 특"
+"정 기능을 구현하는 것을 도와줍니다. 이미 있는 기능을 조정하거나 또는 거기에 "
+"좀 더 추가한다는 점이 확장 기능과는 조금 다릅니다."
 
 #: controllers/collections_controller.php:111
 msgctxt "collections_index_li_popular"
@@ -5970,7 +5957,7 @@ msgstr "인기도"
 
 #: views/editors/review.thtml:394
 msgid "Post Comment"
-msgstr "내용 달기"
+msgstr "코멘트 달기"
 
 #: views/addons/display.thtml:349
 msgid "Post Review"
@@ -6028,11 +6015,11 @@ msgstr "미리보기 설명"
 #: views/developers/previews.thtml:80
 msgctxt "devcp_previews_header_caption"
 msgid "Preview Caption"
-msgstr "미리 보기 설명"
+msgstr "미리보기 설명"
 
 #: views/previews/add.thtml:54
 msgid "Preview File"
-msgstr "미리 보기 파일"
+msgstr "미리보기 파일"
 
 # %s is the add-on name
 #: views/addons/browse_thumbs.thtml:107 views/addons/category_landing.thtml:87
@@ -6044,37 +6031,36 @@ msgstr "미리 보기 파일"
 #: views/elements/feature.thtml:84
 #, php-format
 msgid "Preview Image of %s"
-msgstr "이미지 %s 미리 보기"
+msgstr "이미지 %s 미리보기"
 
 #: views/elements/developers/editbox.thtml:70
 msgid "Preview Screenshots"
-msgstr "스크린샷 미리 보기"
+msgstr "스크린샷 미리보기"
 
 #: controllers/previews_controller.php:135
 msgid "Preview added successfully."
-msgstr "미리 보기를 입력하였습니다."
+msgstr "미리보기를 입력하였습니다."
 
 #: controllers/previews_controller.php:323
 msgid "Preview deleted successfully."
-msgstr "미리 보기를 삭제하였습니다."
+msgstr "미리보기를 삭제하였습니다."
 
 #: controllers/previews_controller.php:200
 msgid "Preview not found!"
-msgstr "미리 보기 없음!"
+msgstr "미리보기 없음!"
 
 #: controllers/previews_controller.php:237
 msgid "Preview updated successfully."
-msgstr "미리 보기를 수정하였습니다."
+msgstr "미리보기를 수정하였습니다."
 
 #: views/editors/review.thtml:162 views/editors/review.thtml:341
 msgctxt "editors_review_a_previews"
 msgid "Previews"
-msgstr "미리 보기"
+msgstr "미리보기"
 
 #: controllers/editors_controller.php:519
-#, fuzzy
 msgid "Print"
-msgstr "Print"
+msgstr "출력"
 
 #: views/editors/review.thtml:285
 msgctxt "editors_review_header_privacy"
@@ -6158,9 +6144,9 @@ msgstr "공개 하기"
 
 # %s is a string.  example:   em:id
 #: controllers/components/rdf.php:107
-#, fuzzy, php-format
+#, php-format
 msgid "RDF Parser error: the file contained a duplicate element: %s"
-msgstr "RDF Parser error: the file contained a duplicate element: %s"
+msgstr "RDF Parser 오류: 이 파일은 동일한 구성 요소를 포함하고 있습니다: %s"
 
 # %1 is the number of stars this add-on has
 #: views/elements/amo2009/stars.thtml:49 views/elements/stars.thtml:54
@@ -6202,7 +6188,6 @@ msgid "Recently Updated Add-ons"
 msgstr "최신"
 
 #: views/elements/amo2009/collections/recently_viewed.thtml:57
-#, fuzzy
 msgid "Recently Viewed"
 msgstr "신규 등록순"
 
@@ -6233,9 +6218,8 @@ msgid "Register"
 msgstr "등록"
 
 #: views/statistics/index.thtml:52
-#, fuzzy
 msgid "Registered Users"
-msgstr "Registered Users"
+msgstr "등록한 사용자"
 
 #: views/addons/display.thtml:504
 msgid "Related Collections"
@@ -6244,7 +6228,7 @@ msgstr "관련 모음집"
 #: views/addons/display.thtml:369
 msgctxt "addons_display_release_notes"
 msgid "Release Notes"
-msgstr "기능 소개서"
+msgstr "릴리즈 노트"
 
 #: views/developers/versions_edit.thtml:182
 msgctxt "devcp_versions_edit_transbox_releasenotes_name"
@@ -6338,8 +6322,8 @@ msgid ""
 "Removing this as the default preview will cause another preview to "
 "automatically become the default preview."
 msgstr ""
-"현재 미리 보기 기본 설정을 제거하면 다른 미리 보기 그림이 자동적으로 기본 설"
-"정 됩니다."
+"현재 기본 미리보기를 삭제하면 다른 미리보기가 자동으로 기본 미리보"
+"기로 설정됩니다."
 
 #: views/collections/edit.thtml:178
 msgid "Replace Icon"
@@ -6347,7 +6331,7 @@ msgstr "아이콘 교체"
 
 #: views/developers/previews.thtml:95
 msgid "Replace Preview"
-msgstr "미리 보기 교체"
+msgstr "미리보기 교체"
 
 #: views/developers/discuss.thtml:56
 msgid "Replies"
@@ -6447,7 +6431,7 @@ msgstr "부가 기능 심사"
 
 #: controllers/editors_controller.php:397
 msgid "Review Comments"
-msgstr "심사 내용"
+msgstr "심사 코멘트"
 
 #: controllers/pages_controller.php:105
 msgid "Review Guidelines"
@@ -6456,12 +6440,12 @@ msgstr "평가 가이드라인"
 #: views/editors/reviewlog.thtml:42
 msgctxt "editorcp_reviewlog_page_heading"
 msgid "Review Log"
-msgstr "심사 로그"
+msgstr "심사 기록"
 
 #: views/elements/developers/editorsmenu.thtml:61
 msgctxt "editorcp_menu_reviewlog_link"
 msgid "Review Log"
-msgstr "심사 로그"
+msgstr "심사 기록"
 
 #: controllers/editors_controller.php:148
 #: controllers/editors_controller.php:150
@@ -6489,9 +6473,8 @@ msgid "Reviews"
 msgstr "평가"
 
 #: views/statistics/index.thtml:96 controllers/statistics_controller.php:130
-#, fuzzy
 msgid "Reviews Created"
-msgstr "Reviews Created"
+msgstr "작성된 평가"
 
 # %1 is the add-on name
 #: views/reviews/display.thtml:55 views/reviews/flag.thtml:56
@@ -6513,7 +6496,7 @@ msgstr "%s에 대한 평가"
 
 #: controllers/editors_controller.php:1507
 msgid "Reviews processed successfully!"
-msgstr "심사 내용이 잘 처리되었습니다."
+msgstr "심사 과정이 잘 처리되었습니다."
 
 # Column name in a table.
 #: views/developers/addon_edit_authors.thtml:63
@@ -6522,9 +6505,8 @@ msgstr "역할"
 
 # Showed on screen briefly while a test is running
 #: views/elements/developers/testresults_stats.thtml:77
-#, fuzzy
 msgid "Running test..."
-msgstr "Running test..."
+msgstr "테스트 수행중..."
 
 #: controllers/editors_controller.php:515
 msgid "SQL"
@@ -6560,7 +6542,7 @@ msgstr "개발자 프로필 변경사항 저장"
 
 #: views/collections/edit.thtml:270
 msgid "Save Comment"
-msgstr "내용 저장"
+msgstr "코멘트 저장"
 
 #: views/statistics/settings.thtml:56
 msgid "Save Settings"
@@ -6648,8 +6630,8 @@ msgstr "보안"
 #, php-format
 msgid "See %1$s previous review submitted by %2$s for this add-on."
 msgid_plural "See %1$s previous reviews submitted by %2$s for this add-on."
-msgstr[0] "%2$s님이 이 부가기능에 올린 %1$s개의 예전 평가 보기"
-msgstr[1] "%2$s님이 이 부가기능에 올린 %1$s개의 예전 평가 보기"
+msgstr[0] "이 부가기능에 대한 %2$s님의 이전 평가 %1$s개 보기"
+msgstr[1] "이 부가기능에 대한 %2$s님의 이전 평가 %1$s개 보기"
 
 # %1$s is the category name
 #: views/addons/searchengines.thtml:86
@@ -6675,7 +6657,7 @@ msgid ""
 "See the <a href=\"%1$s\">support section</a> to find out where to get "
 "assistance for this add-on."
 msgstr ""
-"이 부가 기능에 대한 지원은 <a href=\"%1$s\">고객 지원</a> 항목에 명시되어 있"
+"이 부가 기능에 대한 지원은 <a href=\"%1$s\">기술 지원</a> 항목에 명시되어 있"
 "습니다."
 
 #: views/editors/performance_charts.thtml:80
@@ -6778,7 +6760,7 @@ msgstr "0.00 에서 99.99 사이의 양수로 입력해야 합니다."
 
 # %1 is a number
 #: views/elements/developers/testresults_group.thtml:99
-#, fuzzy, php-format
+#, php-format
 msgid "Show %1$s more result"
 msgid_plural "Show %1$s more results"
 msgstr[0] "결과 %d개 더 표시"
@@ -6791,7 +6773,7 @@ msgstr "%s 이벤트 보이기"
 
 #: views/editors/reviewlog.thtml:93
 msgid "Show Comments"
-msgstr "내용 보이기"
+msgstr "코멘트 표시"
 
 #: controllers/statistics_controller.php:318
 msgid "Show Firefox Events"
@@ -6802,58 +6784,48 @@ msgid "Show Total Count"
 msgstr "총 횟수 보이기"
 
 #: controllers/statistics_controller.php:141
-#, fuzzy
 msgid "Show last: 12 months"
-msgstr "Show last: 12 months"
+msgstr "표시 기간: 12개월"
 
 #: controllers/statistics_controller.php:138
-#, fuzzy
 msgid "Show last: 18 weeks"
-msgstr "Show last: 18 weeks"
+msgstr "표시 기간: 18주"
 
 #: controllers/statistics_controller.php:142
-#, fuzzy
 msgid "Show last: 24 months"
-msgstr "Show last: 24 months"
+msgstr "표시 기간: 24개월"
 
 #: controllers/statistics_controller.php:135
-#, fuzzy
 msgid "Show last: 30 days"
-msgstr "Show last: 30 days"
+msgstr "표시 기간: 30일"
 
 #: controllers/statistics_controller.php:143
-#, fuzzy
 msgid "Show last: 36 months"
-msgstr "Show last: 36 months"
+msgstr "표시 기간: 36개월"
 
 #: controllers/statistics_controller.php:139
-#, fuzzy
 msgid "Show last: 36 weeks"
-msgstr "Show last: 36 weeks"
+msgstr "표시 기간: 36주"
 
 #: controllers/statistics_controller.php:140
-#, fuzzy
 msgid "Show last: 54 weeks"
-msgstr "Show last: 54 weeks"
+msgstr "표시 기간: 54주"
 
 #: controllers/statistics_controller.php:136
-#, fuzzy
 msgid "Show last: 60 days"
-msgstr "Show last: 60 days"
+msgstr "표시 기간: 60일"
 
 #: controllers/statistics_controller.php:137
-#, fuzzy
 msgid "Show last: 90 days"
-msgstr "Show last: 90 days"
+msgstr "표시 기간: 90일"
 
 # "pass" in this context refers to a passing test.  An alternative string for
 # this could be "Show passing tests"
 #: views/elements/developers/testresults_group.thtml:112
-#, fuzzy
 msgid "Show pass"
 msgid_plural "Show passes"
-msgstr[0] "Show pass"
-msgstr[1] "Show passes"
+msgstr[0] "통과된 사항 표시"
+msgstr[1] "통과된 사항 표시"
 
 #: views/admin/users_edit.thtml:95
 msgid "Show sandbox?"
@@ -6884,7 +6856,7 @@ msgstr "%1$s개 표시중 - %3$s개 중 %2$s개 검색됨"
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>"
 msgstr ""
-"%1$s개 표시중 - 검색어 <strong>%4$s</strong>로(으로) %3$s개 중 %2$s개 검색됨"
+"%1$s개 표시중 - 검색어 <strong>%4$s</strong>(으)로 %3$s개 중 %2$s개 검색됨"
 
 # %1$s is a number
 # %2$s is a number
@@ -6897,8 +6869,8 @@ msgid ""
 "Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong> tagged with "
 "<strong>%5$s</strong>"
 msgstr ""
-"%1$s개 표시중 - 검색어 <strong>%4$s</strong>로(으로) <strong>%5$s</strong> 태"
-"그가 달린 검색 결과 %3$s개 중 %2$s개"
+"%1$s개 표시중 - 검색어 <strong>%4$s</strong>(으)로 <strong>%5$s</strong> "
+"태그가 달린 검색 결과 %3$s개 중 %2$s개"
 
 # %1$s is a number
 # %2$s is a number
@@ -6924,9 +6896,8 @@ msgid "Site Specific"
 msgstr "사이트 기반"
 
 #: views/statistics/index.thtml:43
-#, fuzzy
 msgid "Site Statistics"
-msgstr "Site Statistics"
+msgstr "사이트 통계"
 
 #: views/developers/versions_edit.thtml:80
 msgid "Size"
@@ -7256,11 +7227,11 @@ msgstr "상세 기능을 삭제하였습니다."
 
 #: controllers/users_controller.php:215
 msgid "Successfully verified!"
-msgstr "확인 완료!"
+msgstr "검증 완료!"
 
 #: views/elements/amo2009/contribution.thtml:105
 msgid "Suggested"
-msgstr "제안됨"
+msgstr "권장 금액"
 
 # This is a monetary value like:  $3.99
 # Note that as of 2009-07-06 this only supports USD
@@ -7271,7 +7242,7 @@ msgstr "권장 기부금: $%1$s"
 
 #: views/developers/addon_edit_contributions.thtml:125
 msgid "Suggested amount"
-msgstr "권장 액수"
+msgstr "권장 금액"
 
 #: views/editors/review.thtml:261
 msgctxt "editors_review_header_summary"
@@ -7414,8 +7385,8 @@ msgid ""
 "That file extension (%1$s) is not allowed for a preview. Please use one of "
 "the following: %2$s"
 msgstr ""
-"이 파일 확장자 (%s)는 미리 보기에 사용할 수 없습니다. 아래 중 하나를 선택하세"
-"요: %s"
+"이 파일 확장자(%1$s)는 미리보기로 사용할 수 없습니다. 다음중 하나를 사용하"
+"세요: %2$s"
 
 # %1$s is a file extension.  Example:  .exe
 # %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
@@ -7426,8 +7397,8 @@ msgid ""
 "That file extension (%1$s) is not allowed for an icon. Please use one of the "
 "following: %2$s"
 msgstr ""
-"이 파일 확장자(%s)는 아이콘에 사용할 수 없습니다. 아래 중 하나를 사용하세요: "
-"%s"
+"이 파일 확장자(%1$s)는 아이콘으로 사용할 수 없습니다. 다음중 하나를 사용하세요"
+": %2$s"
 
 # %1$s is a file extension.  Example:  .exe
 # %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
@@ -7437,8 +7408,8 @@ msgid ""
 "That file extension (%1$s) is not allowed for the selected add-on type. "
 "Please use one of the following: %2$s"
 msgstr ""
-"이 파일 확장자는(%s)는 부가 기능에 사용할 수 없습니다. 아래 중 하나를 사용하"
-"세요: %s"
+"이 파일 확장자(%1$s)는 선택한 부가 기능 형식에선 사용할 수 없습니다. 다음"
+"중 하나를 사용하세요: %2$s"
 
 # %1$s is a locale code. Example: en-US or fr
 # %2$s is an integer
@@ -7452,7 +7423,7 @@ msgstr[1] "%1$s 언어엔 %2$s개의 수정되지 않은 번역이 들어있습�
 # %1$s is a locale code. Example: en-US or fr
 # %2$s is an integer
 #: controllers/components/validation.php:624
-#, fuzzy, php-format
+#, php-format
 msgid "The %1$s locale is missing %2$s translation"
 msgid_plural "The %1$s locale is missing %2$s translations"
 msgstr[0] "%1$s 언어에 %2$s개의 번역이 없습니다"
@@ -7556,9 +7527,9 @@ msgstr ""
 
 # %1$s is a filename.  Example: windows.com
 #: controllers/components/validation.php:1019
-#, fuzzy, php-format
+#, php-format
 msgid "The add-on was missing a required file: %1$s"
-msgstr "이 add-on 빠져있는 다음의 파일이 필요합니다: %1$s"
+msgstr "이 부가 기능엔 다음 파일이 빠져있습니다: %1$s"
 
 # %1 is the link to the sandbox/policy explanation page
 # This message is for a specific add-on not found
@@ -7574,21 +7545,20 @@ msgstr ""
 "아보기</a>를 참고해도 됩니다."
 
 #: views/compatibility/report.thtml:45
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "The add-ons below make up 95% of add-on usage known to Mozilla and are "
 "ordered by their usage size."
 msgstr ""
-"점유율 95% 이하인 부가 기능은 Mozilla에 알려져 있으며 사용량 크기에 따라 정렬"
-"되어 있습니다."
+"메모리 사용량 95% 이하의 부가 기능은 Mozilla에 알려져 있으며 사용량 크"
+"기별로 정렬되어 있습니다."
 
 #: controllers/components/validation.php:805
 msgid ""
 "The chrome.manifest file contains a line identifying the plugin as a conduit "
 "toolbar."
 msgstr ""
-"이 chrome.manifest 파일은 툴바 연결 플러그인을 식별하는 행을 포함하고 있습니"
-"다."
+"이 chrome.manifest 파일엔 툴바 연결 플러그인을 식별하는 행이 들어있습니다."
 
 #: views/collections/listing.thtml:59
 msgid "The collection has been deleted."
@@ -7603,7 +7573,7 @@ msgid ""
 "The contents.rdf file contains a line identifying the plugin as a conduit "
 "toolbar."
 msgstr ""
-"이 contents.rdf 파일은 툴바 연결 플러그인을 식별하는 행을 포함하고 있습니다."
+"이 contents.rdf 파일엔 툴바 연결 플러그인을 식별하는 행이 들어있습니다."
 
 #: views/developers/addon_edit_descriptions.thtml:86
 msgid ""
@@ -7625,8 +7595,8 @@ msgid ""
 "The developer of this add-on asks that you help support its continued "
 "development by making a small contribution."
 msgstr ""
-"이 부가 기능의 개발자는 여러분의 소액 기부로 개발이 지속되도록 지원을 요청하"
-"고 있습니다."
+"이 부가 기능의 개발자는 여러분의 소액 기부로 개발이 지속되도록 지원을 "
+"요청하고 있습니다."
 
 #: controllers/users_controller.php:678
 msgid ""
@@ -7638,9 +7608,8 @@ msgstr ""
 "하시고 바로 보내 드리는 확인 이메일의 링크를 다시 한번 눌러 주세요. "
 
 #: controllers/components/validation.php:596
-#, fuzzy
 msgid "The extension does not appear to be localized."
-msgstr "이 확장 기능은 부가 기능의 형식과 맞지 않습니다."
+msgstr "이 확장 기능은 번역된 상태로 표시되지 않습니다."
 
 #: controllers/components/validation.php:178
 msgid "The extension does not match the type of the add-on."
@@ -7654,21 +7623,21 @@ msgstr "%s 파일은 이 부가 기능에 속한 상태로 표시되지 않습�
 
 # %s is a string.  Example: testo
 #: controllers/components/validation.php:428
-#, fuzzy, php-format
+#, php-format
 msgid "The file contains a global constant: %s"
-msgstr "The file contains a global constant: %s"
+msgstr "이 파일에 전역 상수가 들어있습니다: %s"
 
 # %s is a string.  Example: testo
 #: controllers/components/validation.php:429
-#, fuzzy, php-format
+#, php-format
 msgid "The file contains a global function: %s"
-msgstr "The file contains a global function: %s"
+msgstr "이 파일에 전역 함수가 들어있습니다: %s"
 
 # %s is a string.  Example: testo
 #: controllers/components/validation.php:427
-#, fuzzy, php-format
+#, php-format
 msgid "The file contains a global variable: %s"
-msgstr "The file contains a global variable: %s"
+msgstr "이 파일에 전역 변수가 들어있습니다: %s"
 
 # %s is an error message from the parser.
 #: controllers/components/developers.php:530
@@ -7889,7 +7858,7 @@ msgstr "부가 기능 개발자 정보를 한명 이상 입력해야 합니다."
 #, php-format
 msgid ""
 "There was an error saving your reply. Please contact %1$s about the issue."
-msgstr "댓글 저장에 오류가 발생했습니다. %1$s으로(로) 문제를 보고해 주세요."
+msgstr "댓글 저장에 오류가 발생했습니다. %1$s(으)로 문제를 보고해 주세요."
 
 #: views/collections/edit.thtml:181
 msgid "There was an error uploading your icon."
@@ -7905,8 +7874,8 @@ msgid ""
 "There's a new way to manage and find favorite add-ons. Comment, share and "
 "sync collections, all from your browser"
 msgstr ""
-"좋아하는 부가 기능을 관리 및 검색하는 새 기능입니다. 내용 달기, 공유하기 및 "
-"모음집 연동하기, 이 모두를 브라우저를 통해서 할 수 있습니다"
+"좋아하는 부가 기능을 관리 및 검색하는 새 기능입니다. 코멘트 달기, 공유하"
+"기, 모음집 동기화 이 모두를 브라우저를 통해서 할 수 있습니다"
 
 #: views/editors/queue.thtml:47
 msgid "These filters will remain in place for this session or until cleared."
@@ -7978,9 +7947,9 @@ msgstr "Firefox 구버전용 부가 기능"
 
 # %1$s is an application name and version.  Example: Firefox 3.1
 #: views/pages/js_constants.js.thtml:75
-#, fuzzy, php-format
+#, php-format
 msgid "This add-on is incompatible with your version of %1$s"
-msgstr "%1$s 의 모든 버전과 호환되지 않는 부가 기능"
+msgstr "이 부가 기능은 %1$s 버전과 호환되지 않습니다."
 
 #: views/elements/amo2009/install.thtml:158 views/elements/install.thtml:94
 msgid "This add-on is not available."
@@ -8010,11 +7979,11 @@ msgstr ""
 
 #: views/statistics/addon.thtml:249
 msgid "This dashboard is currently <b>private</b>."
-msgstr "현재 대시보드가 <b>비공개</b>상태 입니다."
+msgstr "현재 대시보드가 <b>비공개</b> 상태입니다."
 
 #: views/statistics/addon.thtml:245
 msgid "This dashboard is currently <b>public</b>."
-msgstr "현재 대시보드가 <b>공개</b>중 입니다."
+msgstr "현재 대시보드가 <b>공개</b> 중입니다."
 
 #: views/users/edit.thtml:233 views/users/register.thtml:65
 #: controllers/users_controller.php:699
@@ -8331,7 +8300,7 @@ msgstr "업데이트 설명"
 
 #: views/developers/previews.thtml:126
 msgid "Update Previews"
-msgstr "미리 보기 업데이트"
+msgstr "미리보기 업데이트"
 
 #: views/developers/addon_edit_properties.thtml:212
 msgid "Update Properties"
@@ -8351,7 +8320,7 @@ msgstr "UpdateURL 검사"
 
 #: views/addons/display.thtml:155 views/addons/home.thtml:114
 msgid "Updated"
-msgstr "최신"
+msgstr "최근 업데이트"
 
 # %s is a date in the _('date') format
 #: views/addons/browse_thumbs.thtml:119
@@ -8388,7 +8357,7 @@ msgstr "미리보기 업로드"
 
 #: views/developers/previews.thtml:118
 msgid "Upload Preview: "
-msgstr "미리 보기 올리기:"
+msgstr "미리보기 올리기:"
 
 #: views/developers/uploader.thtml:120
 msgid "Upload Your File"
@@ -8436,8 +8405,8 @@ msgid ""
 "Images larger than 700 pixels wide and 525 pixels high will automatically be "
 "resized."
 msgstr ""
-"현재 부가 기능 미리 보기 그림을 PNG, JPG, GIF 형식으로 700x525 픽셀 보다 큰 "
-"이미지로 올려 주시기 바랍니다. 자동으로 크기가 조정됩니다."
+"아래 양식을 사용해 부가 기능의 PNG, JPG, GIF 스크린샷을 올려주세요. 가로 70"
+"0 세로 525 픽셀보다 큰 이미지는 자동으로 크기가 재조정됩니다."
 
 #: views/editors/review.thtml:198
 msgid ""
@@ -8484,12 +8453,11 @@ msgstr "사용자가 존재하지 않습니다!"
 
 #: views/elements/amo2009/users/vcard.thtml:91
 msgid "User since"
-msgstr "사용자 이력"
+msgstr "가입한 날짜"
 
 #: views/statistics/index.thtml:95 controllers/statistics_controller.php:129
-#, fuzzy
 msgid "Users Created"
-msgstr "Users Created"
+msgstr "등록한 사용자"
 
 #: controllers/collections_controller.php:1005
 msgid ""
@@ -8511,40 +8479,39 @@ msgstr "유효 애플리케이션 버전"
 # Button text (verb)
 #: views/elements/developers/testresults.thtml:45
 msgid "Validate"
-msgstr "비준하기"
+msgstr "승인하기"
 
 # %1$s is the add-on name.
 # %2$s is the add-on version.  Example: 3.1
 #: views/developers/versions_validate.thtml:43
 #, php-format
 msgid "Validate %1$s version %2$s"
-msgstr "%1$s 버전 %2$s 비준하기"
+msgstr "%1$s %2$s 버전 승인하기"
 
 # %s is a filename
 #: views/developers/versions_validate.thtml:52
 #, php-format
 msgid "Validate File %s"
-msgstr "%s 파일 비준하기"
+msgstr "%s 파일 승인하기"
 
 # Header for a column in a table
 #: views/developers/versions.thtml:57
 msgid "Validation"
-msgstr "비준"
+msgstr "승인"
 
 #: views/editors/review.thtml:301
-#, fuzzy
 msgid "Validation Results"
-msgstr "Validation Results"
+msgstr "승인 결과"
 
 # %s is a filename. example: windows.exe
 #: views/editors/review.thtml:306
-#, fuzzy, php-format
+#, php-format
 msgid "Validation results for %s"
-msgstr "Validation results for %s"
+msgstr "%s의 승인 결과"
 
 #: views/elements/developers/testresults.thtml:52
 msgid "Validation temporarily disabled, try again later."
-msgstr "비준이 잠시 사용정지 되었습니다. 나중에 다시 해주세요."
+msgstr "승인 작업이 잠시 사용정지 되었습니다. 나중에 다시 해주세요."
 
 #: controllers/components/stats.php:433
 msgid "Ver"
@@ -8650,9 +8617,8 @@ msgid "View Older Versions"
 msgstr "구버전 보기"
 
 #: controllers/editors_controller.php:518
-#, fuzzy
 msgid "View Source"
-msgstr "View Source"
+msgstr "소스 보기"
 
 #: views/developers/addon_edit_properties.thtml:160
 msgid "View Source Online"
@@ -8773,7 +8739,7 @@ msgstr "환영합니다"
 # account:
 # %1 is the confirmation URL, %2 is the current app
 #: views/users/email/confirm_plain.thtml:6
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "Welcome to %2$s Add-ons.\\n\\nBefore you can use your new account you must "
 "activate it - this ensures the e-mail address you used is valid and belongs "
@@ -8784,8 +8750,8 @@ msgid ""
 msgstr ""
 "%2$s 부가 기능에 오신 것을 환영합니다.\n"
 "\n"
-"새 계정을 사용하려면 먼저 계정 활성화를 해야 합니다. - 이 작업은 이메일 주소"
-"의 실제 사용 여부와 당신 소유가 맞는지를 확인하는 작업입니다.\n"
+"새 계정을 사용하려면 먼저 계정 활성화를 해야합니다. - 이 작업은 이메일 주소"
+"의 실제 사용 여부 및 당신의 소유가 맞는지를 확인하는 작업입니다.\n"
 "계정을 활성화 하려면, 아래의 링크를 클릭하거나 복사해서 웹 브라우저 주소창에 "
 "붙여넣기 한 후 방문하면 됩니다:\n"
 "\n"
@@ -8904,25 +8870,25 @@ msgstr "이 모음집을 볼 수 있는 사람은?"
 #: views/addons/developers.thtml:56
 #, php-format
 msgid "Who is %1$s?"
-msgstr "%1$s은(는) 누구인가?"
+msgstr "%1$s은(는) 어떤 사람인가요?"
 
 #: views/developers/addon_edit_profile.thtml:94
 msgid "Why I Made this Add-on"
-msgstr "나는 왜 이 부가 기능을 만들었나"
+msgstr "내가 이 부가 기능을 만든 이유"
 
 # %1 is an add-on name.
 #: views/elements/amo2009/addons/developers/about_addon.thtml:46
 #, php-format
 msgid "Why was %1$s created?"
-msgstr "왜 %1$s을(를) 만들었나?"
+msgstr "왜 %1$s을(를) 만들었나요?"
 
 #: views/addons/recommended.thtml:51 controllers/addons_controller.php:1524
 msgid ""
 "With so many great add-ons available, there's something for everyone. To get "
 "you started, here's a list of some of the most popular. Enjoy!"
 msgstr ""
-"수 천여개의 부가 기능 중에는 당신에게 적합한 부가 기능도 있습니다. 가장 인기"
-"있는 부가 기능들 중에 골라서 사용해 보세요!"
+"수천가지 부가 기능 중에는 당신에게 적합한 부가 기능도 있습니다. 가장 인기있"
+"는 부가 기능 중에서 골라보세요!"
 
 #: views/addons/display.thtml:148
 msgid "Works with"
@@ -9036,17 +9002,17 @@ msgstr ""
 
 # %1 is the URL of the user's info page
 #: views/users/delete.thtml:62
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "You cannot delete your account if you are listed as an <a href=\"%1$s\"> "
 "author of any add-ons</a>. To delete your account, please have another "
 "person in your development group delete you from the list of authors for "
 "your add-ons. Afterwards you will be able to delete your account here."
 msgstr ""
-"자신이 <a href=\"%1$s\">부가 기능의 제작자</a>라면 계정을 삭제할 수 없습니"
-"다. 계정을 삭제하려면, 당신의 개발 그룹에서 다른 사람을 확보 후 당신의 부가 "
-"기능 제작자 명단에서 자신을 삭제하시기 바랍니다. 그 후에 이곳에서 계정을 삭"
-"제 할 수 있습니다."
+"<a href=\"%1$s\">부가 기능의 제작자</a> 명단에 등록되어 있다면 계정을 삭"
+"제할 수 없습니다. 계정을 삭제하려면, 당신의 개발 그룹에서 다른 사람을 "
+"확보해 부가 기능 제작자 명단에서 자신을 삭제하도록 해야합니다. 그 후에 여"
+"기서 계정을 삭제할 수 있습니다."
 
 #: controllers/reviews_controller.php:247
 msgid "You cannot review your own add-on."
@@ -9130,7 +9096,7 @@ msgstr ""
 
 # %1 is the confirmation url, %2 is the application name
 #: views/users/email/emailchange_plain.thtml:5
-#, fuzzy, php-format
+#, php-format
 msgid ""
 "You requested a change to your email address at %2$s Add-ons.\\n\\nIn order "
 "to confirm the new address, please click the link below or copy and paste "
@@ -9146,7 +9112,7 @@ msgstr ""
 "%1$s\n"
 "\n"
 "새 주소로 변경하려면 48시간 이내에 승인 링크를 클릭해야 합니다. 이메일 주소"
-"를 변경할 필요가 없으면 그냥 메일을 무시하면 됩니다.\n"
+"를 변경을 원치 않을경우 그냥 메일을 무시하면 됩니다.\n"
 "\n"
 "감사합니다!\n"
 "-- %2$s 부가 기능 관리자"
@@ -9175,7 +9141,7 @@ msgid ""
 "on is showing up in all available listings appropriate for its status above."
 msgstr ""
 "부가 기능이 <span class=\"inactive-0\">활성화</span> 상태입니다. 이는 부가 기"
-"능이 모든 사용가능 목록에 표시되도 적합하다는 상태를 나타냅니다."
+"능이 모든 사용가능 목록에 표시되도 적합하다는 상태를 의미합니다."
 
 #: views/developers/addon_status.thtml:165
 msgid ""
@@ -9196,7 +9162,7 @@ msgid ""
 "check service."
 msgstr ""
 "당신의 부가 기능은 <span class=\"status-4\">공개</span> 상태로, 모든 목록에 "
-"표시가 되며 검색 및 다운에 제한이 없음을 나타냅니다. 업데이트 검사 서비스를 "
+"표시가 되며 검색 및 다운에 제한이 없음을 의미합니다. 업데이트 검사 서비스를 "
 "통해 당신의 부가 기능에 업데이트를 제공할 수 있습니다."
 
 #: views/developers/addon_status.thtml:191
@@ -9228,7 +9194,7 @@ msgid ""
 msgstr ""
 "당신의 부가 기능은 현재 <span class=\"status-0\">미완료</span> 상태입니다. 이"
 "는 당신의 부가 기능이 사이트의 어떤 부위에서도, 업데이트 검사 서비스에서도 표"
-"시되지 않는다는 것을 나타냅니다. 완료를 위해 아래의 기준을 검토하고 <span "
+"시되지 않는다는 것을 의미합니다. 완료를 위해 아래의 기준을 검토하고 <span "
 "class=\"status-1\">샌드박스</span>로 전송한 후에 이 페이지로 와서 완료해야 합"
 "니다."
 
@@ -9263,8 +9229,8 @@ msgid ""
 "Your add-on is pending. This shouldn't have happened. Please e-mail %s with "
 "your add-on ID and state this error."
 msgstr ""
-"당신의 부가 기능이 심사 계류중입니다. 이런 일이 발생해선 안됩니다. %s로(으"
-"로) 부가 기능 ID와 오류 상태를 보내주시기 바랍니다."
+"당신의 부가 기능이 심사 계류중입니다. 이런 일이 발생해선 안됩니다. %s(으)로 "
+"부가 기능 ID와 오류 상태를 보내주시기 바랍니다."
 
 #: views/developers/addon_edit_authors.thtml:76
 msgid "Your add-on must have at least one owner."
@@ -9385,19 +9351,19 @@ msgstr ""
 
 #: views/statistics/addon.thtml:111
 msgid "Zoom In"
-msgstr "자세히 보기"
+msgstr "확대하기"
 
 #: views/statistics/addon.thtml:114
 msgid "Zoom Out"
-msgstr "간략히 보기"
+msgstr "축소하기"
 
 #: views/statistics/addon.thtml:110
 msgid "Zoom in one month"
-msgstr "한달로 보기"
+msgstr "1개월 더하기"
 
 #: views/statistics/addon.thtml:113
 msgid "Zoom out one month"
-msgstr "한달로 보기"
+msgstr "1개월 빼기"
 
 #: views/elements/amo2009/search.thtml:189 views/elements/search.thtml:187
 #: views/elements/search_mini.thtml:54
@@ -9425,7 +9391,7 @@ msgstr[1] "모음집이 %1$s개 더 있습니다"
 #: views/elements/amo2009/results_addon.thtml:91
 #: views/elements/feature.thtml:95
 msgid "by"
-msgstr "만든이 "
+msgstr "제작: "
 
 #: views/addons/display.thtml:305
 #: views/elements/amo2009/separated_list_items.thtml:106
@@ -9457,7 +9423,7 @@ msgstr "닫기"
 #: views/elements/amo2009/separated_list_items.thtml:72
 #, php-format
 msgid "created by %1$s"
-msgstr "만든이 %1$s"
+msgstr "제작: %1$s"
 
 #: views/elements/amo2009/install.thtml:348 views/elements/feature.thtml:89
 #: views/helpers/addons_html.php:571
@@ -9479,10 +9445,9 @@ msgstr "윈도우용"
 
 # A link after the main header
 #: views/editors/review.thtml:301
-#, fuzzy
 msgctxt "editors_review_header_validation_help"
 msgid "help"
-msgstr "help"
+msgstr "도움말"
 
 # A small link following each test.  This goes to a help page specific to the test.
 #: views/elements/developers/testresults_group.thtml:58
@@ -9492,7 +9457,6 @@ msgstr "도움말"
 
 # link path to search plugins instructions, relative to devmo
 #: views/addons/searchengines.thtml:88
-#, fuzzy
 msgid ""
 "http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox"
 msgstr "/en/docs/Creating_OpenSearch_plugins_for_Firefox"
@@ -9557,7 +9521,7 @@ msgstr "다른 부가 기능 선택"
 # In a user list: user 1, user 2, "others"
 #: views/helpers/addons_html.php:222
 msgid "others"
-msgstr "다른 사용자들"
+msgstr "그 외 여러명"
 
 #: views/elements/addon_list_options.thtml:94
 #: views/elements/amo2009/addons/list_options.thtml:103
@@ -9627,7 +9591,7 @@ msgstr "포함"
 #: views/developers/discuss.thtml:51 views/developers/discuss.thtml:61
 #, php-format
 msgid "written by %1$s on %2$s"
-msgstr "%2$s %1$s님이 작성"
+msgstr "%2$s에 %1$s님이 작성"
 
 #: controllers/editors_controller.php:219
 msgid "yes"
