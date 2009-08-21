@@ -149,6 +149,34 @@ class Collection extends AppModel
     const MAX_DESC_LENGTH = 200;
 
     /**
+     * Fetch a collection with desired associations, using object-caching.
+     * @param int collection id
+     * @param array associations
+     *   'users'
+     */
+    function getCollection($id, $associations=array()) {
+        list($in_cache, $cached) = $this->startCache($id, $associations);
+        if ($in_cache)
+            return $cached;
+
+        $bindings = array();
+
+        if (in_array('users', $associations)) {
+            $bindings[] = 'Users';
+        }
+
+        $this->bindOnly($bindings);
+        $collection = $this->findById($id, $this->default_fields);
+
+        $c =& $collection['Collection'];
+
+        // We want to use the nickname if it's available.
+        $c['handle'] = empty($c['nickname']) ? $c['uuid'] : $c['nickname'];
+
+        return $this->endCache($collection);
+    }
+
+    /**
      * Generates a pseudo-random UUID.
      * Slightly modified version of a function submitted to php.net:
      * http://us2.php.net/manual/en/function.com-create-guid.php#52354
@@ -201,6 +229,11 @@ class Collection extends AppModel
         }
 
         return parent::beforeSave();
+    }
+
+    function afterSave() {
+        if (QUERY_CACHE) $this->purge($this->id);
+        return parent::afterSave();
     }
 
     /**

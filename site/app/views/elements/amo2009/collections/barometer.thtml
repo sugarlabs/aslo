@@ -19,7 +19,7 @@ if ($has_votes) {
     $downratio = floor(round(100 * $down / $total, 2));
 }
 
-$action = $html->url("/collections/vote/{$c['uuid']}");
+$action = $html->url("/collections/vote/{$c['handle']}");
 $upvote = $action.'/up';
 $downvote = $action.'/down';
 $cancel = $action.'/cancel';

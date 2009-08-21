@@ -420,7 +420,12 @@ class AppModel extends Model
         $bindings = $this->_bindings();
         $this->unbindFully();
 
+        // Could be passed in as a bunch of params or as an explicit array.
         $models = func_get_args();
+        if (isset($models[0]) && is_array($models[0])) {
+            $models = $models[0];
+        }
+
         foreach ($models as $model) {
             list($assoc, $def) = $bindings[$model];
             $this->bindModel(array($assoc => array($model => $def)));
@@ -827,5 +832,73 @@ class AppModel extends Model
         return $safe;
     }
 
+    /**
+     * This function should be paired with endCache for best results.
+     *
+     * Our object caching goes like this: return an object from the cache if we
+     * have it; if not, turn off caching and create a fresh object.  Stick that
+     * fresh object back in the cache and move along.
+     *
+     * startCache and endCache do the setup and teardown for you.  Call
+     * startCache with an id and some associations and it will check the cache.
+     * If the object is found startCache returns [True, <the object>];
+     * otherwise it returns [False, null].  Use it like this:
+     *
+     *    >>> list($is_cached, $object) = $this->startCache($id, $associations)
+     *
+     * If $is_cached is false, caching will be turned off and you can start
+     * creating a fresh object.  When that's done, put it back in the cache:
+     *
+     *    >>> return endCache($fresh_object);
+     *
+     * That caches the objects, turns caching back on, and return the object you
+     * just saved because that's more convenient.
+     *
+     * @param int object id
+     * @param array object associations
+     * @return [bool was-there-a-cached-object?, mixed|null your object]
+     */
+    function startCache($id, $associations) {
+        $cache_name = $this->_cacheName($id);
+        $identifier = array($cache_name, $associations);
+        if (QUERY_CACHE && $cached=$this->Cache->readCacheObject($identifier)) {
+            if (DEBUG >= 2) debug("{$this->name} $id pulled from cache");
+            return array(True, $cached);
+        }
+
+        // Save metadata for caching once we've created an object, turn off
+        // caching so we get fresh data.  We're storing data on the class
+        // instead of a separate object because THIS IS PHP.
+        $this->_cache_later = array($this->caching, $identifier, $cache_name);
+        $this->caching = False;
+        return array(False, null);
+    }
+
+    /**
+     * Check the startCache docs for the whole story.
+     *
+     * @param object the fresh object you want to stick in the cache
+     * @return the same object you passed in, for convenience
+     */
+    function endCache($object) {
+        list($caching_was, $identifier, $cache_name) = $this->_cache_later;
+
+        if (QUERY_CACHE)
+            $this->Cache->writeCacheObject($identifier, $object, $cache_name);
+
+        // Turn caching back to what it was.
+        $this->caching = $caching_was;
+
+        return $object;
+    }
+
+    function purge($id) {
+        if (QUERY_CACHE)
+            $this->Cache->markListForFlush($this->_cacheName($id));
+    }
+
+    function _cacheName($id) {
+        return strtolower($this->name).':'.$id;
+    }
 }
 ?>

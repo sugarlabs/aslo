@@ -420,8 +420,7 @@ class CollectionsController extends AppController
         }
         $_conditions['Collection.id'] = $id;
 
-        $this->Collection->bindOnly('Users');
-        $collection = $this->Collection->find($_conditions, null, null, 1);
+        $collection = $this->Collection->getCollection($id, array('users'));
 
         list($addons, $sort_options, $sortby) = $this->_getSortedAddons($collection['Collection']['id']);
 
@@ -514,6 +513,8 @@ class CollectionsController extends AppController
             }
 
             $result = $this->Collection->execute($sql);
+            $this->Collection->purge($collection_id);
+            $this->User->purge($user['id']);
         }
 
         if ($this->isAjax()) {
