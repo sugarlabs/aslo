@@ -1,0 +1,168 @@
+<h1>Pomoc dla weryfikacji dodatków</h1>
+
+<p>Tutaj znajdują się objaśnienia testów używanych przez automatyczną weryfikację dodatków. Każda sekcja objaśnia grupę, do której należy test łącznie ze szczegółami dotyczącymi każdego poszczególnego testu. 
+Aby wykonać sprawdzenie dodatku, należy z poziomu Panelu kontrolnego autora dodatku wybrać rozszerzenie, przejść do sekcji „Wersje i pliki”, wybrać wersję do sprawdzenia i nacisnąć przycisk „Weryfikuj”.</p>
+
+<h2>Co oznaczają wyniki testów?</h2>
+
+<p>Jeśli dodatek generuje ostrzeżenia, nie oznacza to, że nie może być on opublikowany na witrynie <abbr title="addons.mozilla.org">AMO</abbr>. Poszczególne wyniki oznaczają:</p>
+
+<ul>
+    <li><strong>Zaliczony:</strong> Ten wynik oznacza, że w tym dodatku nie znaleziono żadnych problemów w danym obszarze. Nie ma potrzeby wykonania żadnych zmian w dodatku.</li>
+    <li><strong>Ostrzeżenie:</strong> Ostrzeżenie wskazuje, że w dodatku powinien zostać poprawiony jakiś element. Wiele ostrzeżeń nie wymaga wykonywania w dodatku zmian, ale informuje autora i edytorów AMO, że może być jakiś problem z danym dodatkiem. Aby rozwiązać problem, prześledź otrzymane informacje i porównaj je z informacjami znajdującymi się na tej stronie.</li>
+    <li><strong>Nie spełnia wymagań:</strong> Ten wynik oznacza, że występują poważne problemy z tym dodatkiem i do czasu ich usunięcia nie może być on utrzymywany na witrynie AMO. Określenie „Nie spełnia wymagań”, ogólnie oznacza, że dodatek jest niebezpieczny i nie może być instalowany z powodu istotnego problemu.</li>
+</ul>
+
+<h2>Masz pytania, na które nie znajdujesz tutaj odpowiedzi?</h2>
+<p>Jeśli po zapoznaniu się z zawartością tej strony nadal masz pytania, na które nie ma tutaj odpowiedzi:</p>
+<ul>
+    <li><a href="%s">Skontaktuj się z nami</a></li>
+    <li>AMO jest oprogramowaniem o otwartych źródłach: <a href="%s">Sprawdź źródła</a>, aby zweryfikować komponent.</li>
+</ul>
+ 
+<hr />
+
+<h2>Testy ogólne</h2>
+<p>Testy ogólne są testami wysokiego poziomu weryfikującymi podstawową strukturę i stabilność dodatku. Pozwalają upewnić się, że dodatek ma prawidłową strukturę plików, zawiera  wymagane pliki, może być rozpakowany i zainstalowany.</p>
+
+<dl>
+<dt id="help-11">Ogólne testy weryfikacyjne</dt>
+<dd>Ta grupa testów pozwala upewnić się, że typ dodatku zawiera wymagane rozszerzenia plików i pliki mogą być bez problemów wysłane na witrynę AMO.</dd>
+
+<dt id="help-12">Testy weryfikujące plik install.rdf</dt>
+<dd>Ta grupa testów wydziela i przetwarza plik install.rdf znajdujący się w wielu typach dodatków. Sprawdza czy w tym pliku nie ma niedozwolonych elementów i czy jest prawidłowo określona wersja obsługiwanego przez dodatek programu.</dd>
+
+<dt id="help-13">Weryfikacja typu plików</dt>
+<dd>Pewne typy plików są niedozwolone w rozszerzeniach.  Są to głównie pliki wykonywalne i binarne takie jak: .exe, .dll, .dylib, .so, i .sh. Dodatek zawierający pliki z tego typu rozszerzeniami będzie generował ostrzeżenie.</dd>
+
+<dt id="help-14">Testy czystości przestrzeni nazw kodu JavaScript</dt>
+<dd>JavaScript umożliwia użytkownikom definiowanie obiektów w globalnej przestrzeni nazw, łatwo nadpisując predefiniowane dane lub funkcje. Ten test skanuje dodatek w poszukiwaniu wszystkich miejsc, gdzie mogą one występować i generuje ostrzeżenie dla każdej znalezionej globalnej zmiennej i funkcji.</dd>
+</dl>
+
+<h2>Testy bezpieczeństwa</h2>
+<p>Ta grupa testów skanuje dodatki w poszukiwaniu potencjalnych zagrożeń bezpieczeństwa.</p>
+
+<dl>
+<dt id="help-21">Test bezpieczeństwa kodu JavaScript</dt>
+<dd>Ten test skanuje dodatki w poszukiwaniu błędów bezpieczeństwa, których obecność może spowodować, że użycie dodatku stanie się niebezpieczne. Oto kilka przykładów:
+
+<ul>
+    <li>eval</li>
+    <li>&lt;browser&gt; bez typu atrybutu</li>
+    <li>mozIJSSubscriptLoader</li>
+</ul>
+
+Obecność tych elementów w dodatku będzie generowała ostrzeżenia.</dd>
+
+<dt id="help-22">Test bezpieczeństwa ustawień</dt>
+<dd>Ten test skanuje dodatek w poszukiwaniu wzorców, które mogą doprowadzić do zagrożeń bezpieczeństwa. Oto kilka przykładów:
+
+<ul>
+    <li>extensions.update.enabled</li>
+    <li>extensions.$your-addon-id.update.enabled</li>
+    <li>extensions.blocklist.url</li>
+</ul>
+
+Obecność tych elementów w dodatku będzie generowała ostrzeżenia.</dd>
+
+<dt id="help-23">Test odnośników zawartych w kodzie Javascript</dt>
+<dd>Ten rodzaj testu wyszukuje atrybut -moz-binding o innej postaci adresu URL niż <em>chrome://&lt;dowolna_nazwa&gt;/content/</em> i generuje ostrzeżenie dla każdego znalezionego wystąpienia niezgodnego z podanym wzorcem.</dd>
+
+<dt id="help-24">Test sum kontrolnych biblioteki</dt>
+<dd>Aby uprościć proces tworzenia dodatku i dodać do niego funkcje, wiele dodatków zawiera ogólnie znane biblioteki JavaScript. Ten test przeprowadza skanowanie dodatku w poszukiwaniu znanych bibliotek i porównuje znane publiczne sumy kontrolne z plikiem znajdującym się w dodatku. Jeśli suma kontrolna nie zgadza się, będzie generowane ostrzeżenie.</dd>
+</dl>
+
+<h2>Testy specyficzne dla rozszerzeń</h2>
+<p>Ta grupa testów skanuje dodatki w poszukiwaniu potencjalnych problemów specyficznych dla rozszerzeń. Sprawdzana jest obecność wymaganych i dodatkowych plików, a także przeprowadzane są testy wymienione poniżej.</p>
+
+<dl>
+<dt id="help-121">Sprawdzenie geolokalizacji</dt>
+<dd>Ten test sprawdza czy w dodatku jest używana funkcja geolokalizacji lub połączenia bezprzewodowego. Te funkcje są dozwolone, ale użytkownik musi zostać poinformowany o ich zastosowaniu i wyrazić zgodę na ich użycie.</dd>
+
+<dt id="help-122">Sprawdzenie paska kanałowego</dt>
+<dd>Obecnie na witrynie AMO publikowanie pasków kanałowych jest niedozwolone. Jeśli taki pasek zostanie wykryty, będzie generowane ostrzeżenie.</dd>
+</dl>
+
+<h2>Testy słowników</h2>
+<p>Ta grupa testów skanuje dodatki w poszukiwaniu potencjalnych problemów specyficznych dla słowników. Sprawdzana jest obecność wymaganych i dodatkowych plików, a także przeprowadzane są testy wymienione poniżej.</p>
+
+<dl>
+<dt id="help-211">Sprawdzenie struktury słownika</dt>
+<dd>Słowniki muszą zawierać przynajmniej plik install.rdf oraz pliki .aff dla danej lokalizacji. Ten test generuje informacje o niespełnieniu wymagań dla każdego brakującego pliku.</dd>
+
+<dt id="help-212">Weryfikacja typu plików/dt>
+<dd>Ten test sprawdza czy dodatek nie zawiera dodatkowych plików. W słownikach dozwolone są następujące typy plików:
+
+<ul>
+    <li>dictionaries/&lt;locale&gt;.aff</li>
+    <li>dictionaries/&lt;locale&gt;.dic</li>
+    <li>install.js</li>
+    <li>install.rdf</li>
+    <li>*.txt</li>
+</ul>
+
+Wszystkie inne typy plików obecne w folderze słownika będą powodowały generowanie ostrzeżeń.</dd>
+
+<dt id="help-213">Sprawdzenie poprawności plików SeaMonkey</dt>
+<dd>Jeśli plik install.rdf wskazuje, że słownik obsługuje program SeaMonkey, test ten sprawdza poprawność tej deklaracji – sprawdza czy w rozszerzeniu znajduje się plik install.js wymagany do instalacji rozszerzenia w programie SeaMonkey.</dd>
+
+<dt id="help-221">Weryfikacja pliku install.js</dt>
+<dd>Ten test sprawdza plik install.js (jeśli jest obecny) w poszukiwaniu potencjalnych zagrożeń bezpieczeństwa i innych wad. Każdy znaleziony problem powoduje wyświetlenie ostrzeżenia.</dd>
+</dl>
+
+<h2>Testy pakietów językowych</h2>
+<p>Ta grupa testów sprawdza dodatki w poszukiwaniu potencjalnych problemów specyficznych dla pakietów językowych. Sprawdzana jest obecność wymaganych i dodatkowych plików, a także przeprowadzane są testy wymienione poniżej.</p>
+
+<dl>
+<dt id="help-311">Sprawdzenie struktury pakietu językowego</dt>
+<dd>Pakiety językowe muszą zawierać przynajmniej plik install.rdf oraz pliki .aff dla danej lokalizacji, plik chrome.manifest i przynajmniej jeden plik .jar w folderze chrome. Ten test generuje informacje o niespełnieniu wymagań dla każdego brakującego pliku.</dd>
+
+<dt id="help-312">Weryfikacja typu plików</dt>
+<dd>Ten test sprawdza czy dodatek nie zawiera dodatkowych plików. W pakietach językowych dozwolone są następujące typy plików:
+
+<ul>
+    <li>*.rdf</li>
+    <li>*.manifest</li>
+    <li>*.jar</li>
+    <li>*.dtd</li>
+    <li>*.properties</li>
+    <li>*.xhtml</li>
+    <li>*.css</li>
+</ul>
+
+Wszystkie inne typy plików będą powodowały generowanie ostrzeżeń.</dd>
+
+<dt id="help-321">Sprawdzenie bezpieczeństwa kodu HTML</dt>
+<dd>Pakiety językowe nie powinny zawierać żadnych skryptów, obiektów lub elementów osadzonych. Każde wystąpienie takich elementów będzie powodowało generowanie ostrzeżenia.</dd>
+
+<dt id="help-322">Sprawdzenie odnośników</dt>
+<dd>Odnośniki pakietów językowych powinny być adresowane tylko do folderu chrome. Jakiekolwiek inne adresowanie będzie powodowało wyświetlanie ostrzeżeń.</dd>
+
+<dt id="help-323">Sprawdzenie pliku chrome.manifest</dt>
+<dd>Dozwolone wiersze w pliku chrome.manifest to: komentarze (#), lokalizacje i zamiana (nadpisanie).</dd>
+</dl>
+
+<h2>Testy wtyczek wyszukiwarek</h2>
+<p>Ta grupa testów sprawdza dodatki w poszukiwaniu potencjalnych problemów specyficznych dla wtyczek wyszukiwarek. Testy te wykonują sprawdzenie przetwarzania i weryfikują format kodu XML pliku wtyczki.</p>
+
+<dl>
+<dt id="help-511">Sprawdzenie formatu OpenSearch</dt>
+<dd>Wtyczki wyszukiwarek powinny być zgodne z formatem OpenSearch. Wtyczki, których nie można przetworzyć używając formatu OpenSearch zostaną odrzucone.</dd>
+
+<dt id="help-521">Sprawdzenie adresu URL aktualizacji</dt>
+<dd>We wtyczkach wyszukiwarek nie można określać adresu URL aktualizacji jak we wszystkich aktualizacjach obsługiwanych przez usługę aktualizacyjną AMO.</dd>
+
+</dl>
+
+<h2>Testy motywów</h2>
+<p>Ta grupa testów sprawdza dodatki w poszukiwaniu potencjalnych problemów specyficznych dla motywów. Sprawdzana jest obecność wymaganych plików i poprawność pliku chrome.manifest.</p>
+
+<dl>
+<dt id="help-411">Sprawdzenie struktury pliku motywu</dt>
+<dd>Plik motywu musi zawierać pliki install.rdf i chrome.manifest. Ten test generuje informacje o niespełnieniu wymagań dla każdego brakującego w motywie pliku.</dd>
+
+<dt id="help-421">Sprawdzenie pliku chrome.manifest</dt>
+<dd>Dozwolone wiersze w pliku chrome.manifest to: komentarze (#), skin, i style. Wiersze niespełniające jednego z tych trzech wzorców będą powodowały generowanie ostrzeżenia.</dd>
+
+</dl>
+
