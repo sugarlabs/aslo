@@ -39,9 +39,9 @@
 class StatisticsController extends AppController
 {
     var $name = 'Statistics';
-    var $uses = array('Addon', 'Addontype', 'Application', 'User', 'Version');
-    var $components = array('Amo', 'Image', 'Stats');
-    var $helpers = array('Html', 'Javascript', 'Listing', 'Localization', 'Statistics', 'Time');
+    var $uses = array('Addon', 'Addontype', 'Application', 'Collection', 'User', 'Version');
+    var $components = array('Amo', 'Image', 'Pagination', 'Stats');
+    var $helpers = array('Html', 'Javascript', 'Listing', 'Localization', 'Pagination', 'Statistics', 'Time');
 
     function __construct() {
         if (QUERY_CACHE) {
@@ -337,6 +337,176 @@ class StatisticsController extends AppController
             $this->render('rss/summary', 'rss');
         }
     }
+
+   /**
+    * Collection statistics overview for all "My Collections"
+    */
+    function collections($uuid=null) {
+        $this->Amo->checkLoggedIn();
+
+        // this action doesn't take an argument. for convenience redirect if we find one
+        // also the nonJS case puts uuid in the querystring for navigation
+        if (isset($_GET['uuid']) || !is_null($uuid)) {
+            $query = isset($_GET['period']) ? "?period={$_GET['period']}" : '';
+            $this->redirect('/statistics/collection/' . (isset($_GET['uuid']) ? $_GET['uuid'] : $uuid) . $query);
+            return;
+        }
+
+        return $this->_collectionStats($uuid);
+    }
+
+   /**
+    * Collection statistics for a single collection
+    */
+    function collection($uuid=null) {
+        $this->Amo->checkLoggedIn();
+
+        // the nonJS case puts uuid in the querystring for navigation
+        if (isset($_GET['uuid'])) {
+            $query = isset($_GET['period']) ? "?period={$_GET['period']}" : '';
+            if (empty($_GET['uuid'])) {
+                $this->redirect('/statistics/collections' . $query);
+            } else {
+                $this->redirect('/statistics/collection/' . $_GET['uuid'] . $query);
+            }
+            return;
+        }
+
+        if (is_null($uuid)) {
+            $this->flash(sprintf(_('error_missing_argument'), 'collection_id'), '/', 3);
+            return;
+        }
+
+        return $this->_collectionStats($uuid);
+    }
+
+   /**
+    * Collection statistics for a single collection or all "my collections"
+    */
+    function _collectionStats($uuid=null) {
+        $this->Amo->checkLoggedIn();
+        $session = $this->Session->read('User');
+
+        // single collection prep
+        if (!is_null($uuid)) {
+            $collection_id = $this->Collection->getIdForUuidOrNickname($uuid);
+            if (!$collection_id) {
+                $this->flash(_('Collection Not Found!'), '/', 3);
+                return;
+            }
+
+            // only viewable by users with a role on the collection, plus admins
+            if (! $this->_checkCollectionAccess($collection_id)) {
+                $this->flash(_('You do not have access to that collection.'), '/');
+                return;
+            }
+
+            // fetch collection 
+            $this->Collection->unbindFully();
+            $collection = $this->Collection->find(array('Collection.id' => $collection_id), null, null, -1);
+
+            // fetch addons in collection
+            $addons = $this->_getCollectionAddons($collection_id);
+
+            // fetch total downloads for addons in collection
+            $addon_downloads = $this->Stats->getCollectionAddonTotalDownloads($collection_id);
+
+            $this->publish('subpagetitle', sprintf(_('Statistics for %1$s'), $collection['Translation']['name']['string']));
+            $this->publish('addons', $addons);
+            $this->publish('addon_downloads', $addon_downloads);
+
+        // My Collections prep
+        } else {
+            $this->publish('subpagetitle', _('Statistics for My Collections'));
+        }
+
+        // fetch users collections for dropdown menu
+        $collection_id = $this->Collection->getCollectionsByUser($session['id']);
+        $this->Collection->unbindFully();
+        $collections = $this->Collection->findAll(array('Collection.id' => $collection_id), null, null, null, null, -1);
+
+        // initially show counts over the last week... unless specified otherwise
+        $period = 'week';
+        if (isset($_GET['period']) && in_array($_GET['period'], array('month', 'year'))) {
+            $period = $_GET['period'];
+        }
+
+        // fetch collection stat totals
+        $period_totals = $this->_getCollectionPeriodTotals($collection_id, $period);
+
+        $this->jsAdd = array(
+            'jquery-compressed.js',
+            'jquery.sparkline.min.js',
+            'strftime-min-1.3.js',
+            //'simile/amo-bundle.compressed.js',
+            'simile/amo-bundle.js',
+            'stats/stats.js',
+            'stats/collection-stats.js',
+        );
+        $this->publish('jsAdd', $this->jsAdd);
+        $this->set('prescriptJS', "var Simile_urlPrefix = '{$this->base}/js/simile';");
+        
+        $this->cssAdd = array(
+            'simile/bundle',
+            'stats/stats',
+        );
+        $this->publish('cssAdd', $this->cssAdd);
+
+        $this->publish('breadcrumbs', array(
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Collections') => '/collections',
+        ));
+        $this->publish('uuid', $uuid);
+        $this->publish('period', $period);
+        $this->publish('collections', $collections);
+        $this->publish('period_totals', $period_totals);
+
+        $this->render('collections');
+    }
+
+    /**
+     * CSV data for collection stats
+     */
+    function collectioncsv($uuid=null) {
+        $this->Amo->checkLoggedIn();
+
+        // Stats for a specific collection
+        if (!is_null($uuid)) {
+            $collection_id = $this->Collection->getIdForUuidOrNickname($uuid);
+
+            if (!$collection_id) {
+                header('HTTP/1.1 404 Not Found');
+                $this->flash(_('Collection Not Found!'), '/statistics/collections', 3);
+                return;
+            }
+
+            // only viewable by users with a role on the collection, plus admins
+            if (! $this->_checkCollectionAccess($collection_id)) {
+                header('HTTP/1.1 403 Forbidden');
+                $this->flash(_('You do not have access to that collection.'), '/');
+                return;
+            }
+
+            $ids = array($collection_id);
+            $description = sprintf(_('Statistics for collection %1$s'), $uuid);
+            $url = SITE_URL . $this->url("/statistics/collectioncsv/{$uuid}");
+
+        // stats for all My Collections
+        } else {
+            $session = $this->Session->read('User');
+            $ids = $this->Collection->getCollectionsByUser($session['id']);
+
+            $description = _('Statistics for My Collections');
+            $url = SITE_URL . $this->url("/statistics/collectioncsv");
+        }
+
+        $this->set('description', $description);
+        $this->set('url', $url);
+        
+        $startDate = date('Y-m-d', strtotime('-364 days'));
+        $this->set('csv', $this->Stats->getCollectionDailyStats($ids, $startDate));
+        $this->render('csv', 'ajax');
+    }
     
     /**
      * CSV data for site stats
@@ -348,7 +518,8 @@ class StatisticsController extends AppController
             return;
         }
 
-        $this->publish('plot', $plot);
+        $this->set('description', "{$plot} Site Statistics");
+        $this->set('url', SITE_URL . $this->url("/statistics/sitecsv/{$plot}"));
         
         $csv = $this->_cachedStats('getSiteStats', array($plot));
         
@@ -361,7 +532,8 @@ class StatisticsController extends AppController
      */
     function csv($addon_id, $plot) {
         $this->publish('addon_id', $addon_id);
-        $this->publish('plot', $plot);
+        $this->set('description', "Statistics for add-on {$addon_id}");
+        $this->set('url', SITE_URL . $this->url("/statistics/csv/{$addon_id}/{$plot}"));
         
         $addon = $this->Addon->find("Addon.id={$addon_id}", null, null, -1);
         
@@ -375,6 +547,44 @@ class StatisticsController extends AppController
         
         $this->set('csv', $csv);
         $this->render('csv', 'ajax');
+    }
+
+    /**
+     * JSON data for collection stats: daily downloads per add-on
+     */
+    function collectionjson($uuid=null) {
+        $this->Amo->checkLoggedIn();
+        $session = $this->Session->read('User');
+
+        $collection_id = $this->Collection->getIdForUuidOrNickname($uuid);
+        if (!$collection_id) {
+            header('HTTP/1.1 404 Not Found');
+            $this->flash(_('Collection Not Found!'), '/statistics/collections', 3);
+            return;
+        }
+
+        // only viewable by users with a role on the collection, plus admins
+        if (! $this->_checkCollectionAccess($collection_id)) {
+            header('HTTP/1.1 403 Forbidden');
+            $this->flash(_('You do not have access to that collection.'), '/');
+            return;
+        }
+
+        // fetch some stats
+        $startDate = date('Y-m-d', strtotime('-364 days'));
+        $downloads = $this->Stats->getCollectionAddonDailyDownloads($collection_id, $startDate);
+
+        // strip date keys for now since it is much easier to work with arrays
+        foreach ($downloads as $addon_id => &$download_data) {
+            $downloads[$addon_id] = array_values($download_data);
+        }
+
+        // WTF - $listing->json() blindly turns all php arrays into javascript objects.
+        // When order is important, arrays are so much easier. The javascript
+        // helper will be just fine, thank you very much.
+        $this->set('use_javascript_helper_for_json', true);
+        $this->set('json', array('addon_data' => $downloads));
+        $this->render('json', 'ajax');
     }
     
     /**
@@ -474,6 +684,59 @@ class StatisticsController extends AppController
         
         // If no access yet, no access at all
         return false;
+    }
+
+    /**
+     * Determines if a user has access to view the collection's stats
+     */
+    function _checkCollectionAccess($collection_id) {
+        $session = $this->Session->read('User');
+
+        // check admin
+        if ($this->SimpleAcl->actionAllowed('Admin', 'ViewAnyCollectionStats', $session)) {
+            return true;
+        }
+
+        // check for any role 
+        if ($this->Collection->getUserRole($collection_id, $session['id']) !== false) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Fetch add-ons in a collection (sorted by name)
+     */
+    function _getCollectionAddons($collection_id) {
+        // Fetch #1.  What's in the collection?
+        $addonIds = $this->Addon->getAddonsFromCollection($collection_id);
+
+        // Fetch #2.  Sort addon ids by name
+        $addonIds = $this->Addon->sorted($addonIds, 'name ASC');
+
+        // Fetch #3!  Pull useful addon data this time.
+        $addons = $this->Addon->getAddonList($addonIds, array());
+            
+        return $addons;
+    }
+
+    /**
+     * Calculate stat totals for a collection over the specified time period
+     * @param mixed $collection_id or array of collection ids
+     * @param string $period - week, month, or year
+     */
+    function _getCollectionPeriodTotals($collection_id, $period) {
+        $days = ($period == 'week' ? 6 :
+                ($period == 'month' ? 30 : 364));
+        $startDate = date('Y-m-d', strtotime("-{$days} days"));
+
+        return array(
+            'subscribers'  => $this->Stats->getCollectionSubscriberSum($collection_id, $startDate),
+            'votes_up'   => $this->Stats->getCollectionVotesUpSum($collection_id, $startDate),
+            'votes_down' => $this->Stats->getCollectionVotesDownSum($collection_id, $startDate),
+            'downloads'    => $this->Stats->getCollectionDownloadSum($collection_id, $startDate),
+        );
     }
 
     /**

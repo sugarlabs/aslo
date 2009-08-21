@@ -1,0 +1,144 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Scott McCammon <smccammon@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse';
+?>
+
+<div class="section">
+  <div class="stand-alone-options">
+    <?=$this->renderElement('amo2009/categories')?>
+    <?=$this->renderElement('amo2009/search')?>
+  </div>
+  <div class="primary" role="main">
+    <?=$this->renderElement('amo2009/breadcrumbs')?>
+    <h2><?=$subpagetitle?></h2>
+    <div id="stats-plot-listing" class="featured listing">
+      <div class="featured-inner">
+        <div class="listing-header">
+          <ul>
+            <li id="period-week"<?=($period == 'week' ? ' class="selected"' : '')?>><a href="?period=week"><?=_('Past Week')?></a></li>
+            <li id="period-month"<?=($period == 'month' ? ' class="selected"' : '')?>><a href="?period=month"><?=_('Past Month')?></a></li>
+            <li id="period-year"<?=($period == 'year' ? ' class="selected"' : '')?>><a href="?period=year"><?=_('Past Year')?></a></li>
+          </ul>
+          <form class="item-sort go" method="get" action="">
+            <div>
+              <input type="hidden" id="plot-period" name="period" value="<?=$period?>" />
+              <select id="collection-uuid" name="uuid">
+                <option value=""<?=(empty($uuid) ? ' selected="selected"' : '')?>><?=_('All My Collections')?></option>
+              <?php foreach ($collections as $c): ?>
+                <option value="<?=$c['Collection']['uuid']?>"<?=($uuid == $c['Collection']['uuid'] ? ' selected="selected"' : '')?>><?=$c['Translation']['name']['string']?></option>
+              <?php endforeach; ?>
+              </select>
+              <button class="hide"><?=___('Go', 'collections_index_button_go')?></button>
+            </div>
+          </form>
+        </div> <!-- listing-header -->
+        <?php if (empty($collections)): ?>
+          <div class="item">
+            <p class="addon-search-message"><?=_('No collections found.')?></p>
+          </div>
+        <?php else: ?>
+          <div class="item">
+            <h4 class="plot-title"><?=_('Collection Subscribers')?></h4>
+            <div id="collection-subscribers" class="plot-summary"><?=sprintf(_('<em>%s</em> total'), $period_totals['subscribers'])?></div>
+            <div id="timeplot-container-subscribers" class="plot-container">
+              <div id="not-enough-data" class="warning" style="display: none;"><div>
+                <?=_('statistics_notice_data_insufficient')?>
+              </div></div>
+            </div>
+          </div>
+          <div class="item">
+            <h4 class="plot-title">Collection Ratings</h4>
+            <div id="collection-ratings" class="plot-summary">
+              <div id="ratings-up"><em><?=$period_totals['votes_up']?></em></div>
+              <div id="ratings-down"><em><?=$period_totals['votes_down']?></em></div>
+            </div>
+            <div id="timeplot-container-ratings" class="plot-container">
+            </div>
+          </div>
+          <div class="item">
+            <h4 class="plot-title">Downloads from Collection</h4>
+            <div id="collection-downloads" class="plot-summary"><?=sprintf(_('<em>%s</em> total'), $period_totals['downloads'])?></div>
+            <div id="timeplot-container-downloads" class="plot-container">
+            </div>
+          </div>
+        <?php endif; ?>
+      </div> <!-- featured-inner -->
+    </div> <!-- featured listing -->
+
+  <?php if (!empty($addons)): ?>
+    <h3><?=_('Add-ons Downloaded from this Collection')?></h3>
+    <div id="stats-addon-listing" class="featured listing">
+    <?php
+    // sparkline bullet chart needs a target greater than 0
+    $max_downloads = (empty($addon_downloads) ? 1 : max($addon_downloads));
+    foreach ($addons as $a):
+        if (array_key_exists($a['Addon']['id'], $addon_downloads)) {
+            $total_downloads = $addon_downloads[$a['Addon']['id']];
+        } else {
+            $total_downloads = 0;
+        }
+    ?>
+      <div id="addon-item<?=$a['Addon']['id']?>" class="item default">
+        <h4>
+          <a href="<?=$html->url('/addon/'.$a['Addon']['id'])?>">
+            <?=$a['Translation']['name']['string']?>
+          </a>
+        </h4>
+        <a href="<?=$html->url('/addon/'.$a['Addon']['id'])?>">
+          <img class="icon" alt="" src="<?=$this->controller->Image->getAddonIconUrl($a['Addon']['id'])?>" />
+        </a>
+        <div class="download-line" title="<?=_('Daily downloads over collection timeframe')?>"></div>
+        <div class="download-bullet hidden" title="<?=_('Downloads relative to most downloaded add-on in collection')?>"><?=$max_downloads?>,<?=$total_downloads?></div>
+        <div class="download-total"><?=sprintf(_('<em>%s</em> downloads'), $total_downloads)?></div>
+      </div>
+    <?php endforeach; ?>
+    </div> <!-- #stats-addon-listing -->
+  <?php endif; ?>
+  </div> <!-- primary -->
+  <?=$this->renderElement('amo2009/collections/collector_info_secondary')?>
+</div>
+
+<script type="text/javascript">
+// <![CDATA[
+    var statsURL = '<?=$html->url('/statistics/')?>';
+    $(document).ready(function() {
+        CollectionStats.initialize();
+    });
+// ]]>
+</script>

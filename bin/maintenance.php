@@ -691,6 +691,47 @@ switch ($action) {
 
 
     /**
+     * Daily collection stats
+     */
+    case 'collection_stats':
+        echo "Starting collection stats update...\n";
+
+        $affected_rows = 0;
+        $date = date('Y-m-d');
+
+        $collection_stats = array(
+            'new_subscribers' => "
+                SELECT '{$date}', 'new_subscribers', collection_id, COUNT(*)
+                  FROM collection_subscriptions
+                 WHERE DATE(created) = '{$date}'
+                 GROUP BY collection_id",
+
+            'new_votes_up' => "
+                SELECT '{$date}', 'new_votes_up', collection_id, COUNT(*)
+                  FROM collections_votes
+                 WHERE DATE(created) = '{$date}' AND vote = 1
+                GROUP BY collection_id",
+
+            'new_votes_down' => "
+                SELECT '{$date}', 'new_votes_down', collection_id, COUNT(*)
+                  FROM collections_votes
+                 WHERE DATE(created) = '{$date}' AND vote = -1
+                 GROUP BY collection_id",
+        );
+
+        foreach ($collection_stats as $stat => $query) {
+            echo "Updating {$stat}...\n";
+
+            $db->write("REPLACE INTO stats_collections (`date`, `name`, `collection_id`, `count`) {$query}");
+
+            $affected_rows += mysql_affected_rows();
+        }
+
+    break;
+
+
+
+    /**
      * Collection weekly and monthly subscriber counts
      */
     case 'collection_subscribers':

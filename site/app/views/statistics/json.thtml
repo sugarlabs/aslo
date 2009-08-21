@@ -3,5 +3,12 @@ if (!defined('NO_MICROTIME'))
     define('NO_MICROTIME', true);
 header('Content-type: text/plain');
 
-$listing->json($json);
+if (!empty($use_javascript_helper_for_json)) {
+    // because gosh darn it, regular php arrays should translate to arrays - not objects
+    echo $javascript->object($json);
+
+} else {
+    // represent php arrays as javascript objects no matter what
+    $listing->json($json);
+}
 ?>

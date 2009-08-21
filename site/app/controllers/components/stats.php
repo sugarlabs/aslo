@@ -724,5 +724,274 @@ class StatsComponent extends Object {
 
         return $results;
     }
+
+    /**
+     * Calculate daily downloads for addons in a collection
+     *
+     * @param mixed collection_id or array of collection_ids
+     * @param string $startDate 'YYYY-MM-DD' ('0000-00-00' as default)
+     * @param string $endDate 'YYYY-MM-DD' (today as default)
+     * @return array Array of Arrays:
+     *         array(<addon_id> => array('<date1>' => count, '<date2>' => count, ...))
+     */
+    function getCollectionAddonDailyDownloads($collectionId, $startDate=null, $endDate=null) {
+
+        // massage parameters
+        if (!is_array($collectionId)) {
+            $collectionId = array($collectionId);
+        }
+        $startDate = is_null($startDate) ? '0000-00-00' : date('Y-m-d', strtotime($startDate));
+        $endDate = is_null($endDate) ? date('Y-m-d') : date('Y-m-d', strtotime($endDate));
+
+        // fetch daily download counts for all addons in collection(s)
+        $in_collections = '0';
+        foreach ($collectionId as $id) {
+            $in_collections .= ',' . intval($id);
+        }
+
+        $model =& $this->controller->GlobalStat;
+        $rows = $model->query("
+            SELECT `addon_id`, `date`, SUM(`count`) AS total
+              FROM `stats_addons_collections_counts` AS `sacc`
+             WHERE `collection_id` IN({$in_collections})
+               AND `date` BETWEEN '{$startDate}' AND '{$endDate}'
+               AND `date` != '0000-00-00'
+             GROUP BY `addon_id`, `date`
+        ");
+
+        // fill in counts for addons/days found in query
+        $results = array();
+        $addon_id = 0;
+        $downloads = array();
+        foreach ($rows as $row) {
+            $addonKey = $row['sacc']['addon_id'];
+            $dateKey = $row['sacc']['date'];
+
+            // starting a new addon
+            if ($addonKey != $addon_id) {
+                // save data for previous addon
+                if ($addon_id != 0) {
+                    $results[$addon_id] = $downloads;
+                }
+                $addon_id = $addonKey;
+                $downloads = array();
+            }
+
+            $downloads[$dateKey] = $row[0]['total'];
+        }
+        // save data for the last addon in the result set
+        if ($addon_id != 0) {
+            $results[$addon_id] = $downloads;
+        }
+
+        // fill in any holes in the date range starting with
+        // the first date having results (or startDate if specified)
+        foreach ($results as &$result_row) {
+            if (!empty($result_row) || $startDate != '0000-00-00') {
+                if ($startDate == '0000-00-00') {
+                    $keys = array_keys($result_row);
+                    $tsStart = strtotime($keys[0]);
+                } else {
+                    $tsStart = strtotime($startDate);
+                }
+                $tsEnd = strtotime($endDate);
+
+                for ($ts = $tsStart; $ts <= $tsEnd; $ts = strtotime('+1 day', $ts)) {
+                    $dateKey = date('Y-m-d', $ts);
+                    if (!array_key_exists($dateKey, $result_row)) {
+                        $result_row[$dateKey] = 0;
+                    }
+                }
+
+                // re-sort downloads by date keys
+                ksort($result_row);
+            }
+        }
+
+        return $results;
+    }
+
+    function getCollectionAddonTotalDownloads($collectionId) {
+        $results = array();
+
+        $collectionId = intval($collectionId);
+
+        $model =& $this->controller->GlobalStat;
+
+        $rows = $model->query("
+            SELECT `addon_id`, SUM(`count`) AS total
+              FROM stats_addons_collections_counts AS stats
+             WHERE collection_id = '{$collectionId}'
+             GROUP BY `addon_id`
+        ");
+
+        if ($rows) {
+            foreach ($rows as $row) {
+                $results[$row['stats']['addon_id']] = $row[0]['total'];
+            }
+        }
+
+        return $results;
+    }
+
+    function getCollectionSubscriberSum($collectionId, $startDate=null, $endDate=null) {
+        return $this->_getCollectionStatSum($collectionId, 'new_subscribers', $startDate, $endDate);
+    }
+
+    function getCollectionVotesUpSum($collectionId, $startDate=null, $endDate=null) {
+        return $this->_getCollectionStatSum($collectionId, 'new_votes_up', $startDate, $endDate);
+    }
+
+    function getCollectionVotesDownSum($collectionId, $startDate=null, $endDate=null) {
+        return $this->_getCollectionStatSum($collectionId, 'new_votes_down', $startDate, $endDate);
+    }
+
+    function getCollectionDownloadSum($collectionId, $startDate=null, $endDate=null) {
+
+        if (!is_array($collectionId)) {
+            $collectionId = array($collectionId);
+        }
+
+        $in_string = '0';
+        foreach ($collectionId as $id) {
+            $in_string .= ',' . intval($id);
+        }
+
+        $startDate = is_null($startDate) ? '0000-00-00' : date('Y-m-d', strtotime($startDate));
+        $endDate = is_null($endDate) ? date('Y-m-d') : date('Y-m-d', strtotime($endDate));
+
+        $model =& $this->controller->GlobalStat;
+
+        $result = $model->query("
+            SELECT IFNULL(SUM(`count`), 0) AS total
+              FROM stats_addons_collections_counts
+             WHERE collection_id IN({$in_string})
+               AND `date` BETWEEN '{$startDate}' AND '{$endDate}'
+               AND `date` != '0000-00-00'
+        ");
+
+        return empty($result) ? 0 : $result[0][0]['total'];
+    }
+
+    function getCollectionDailyStats($collectionId, $startDate=null, $endDate=null) {
+
+        // massage parameters
+        if (!is_array($collectionId)) {
+            $collectionId = array($collectionId);
+        }
+        $startDate = is_null($startDate) ? '0000-00-00' : date('Y-m-d', strtotime($startDate));
+        $endDate = is_null($endDate) ? date('Y-m-d') : date('Y-m-d', strtotime($endDate));
+
+        // initialize results and a template for each row
+        $results = array();
+        $result_row = array(
+            'date'             => 'YYYY-MM-DD',
+            'subscribers'      => 0,
+            'votes_up'         => 0,
+            'votes_down'       => 0,
+            'downloads'        => 0,
+        );
+
+        // fetch subscriber and vote counts
+        $in_collections = '0';
+        foreach ($collectionId as $id) {
+            $in_collections .= ',' . intval($id);
+        }
+        $in_stats = "'new_subscribers','new_votes_up','new_votes_down'";
+
+        $model =& $this->controller->GlobalStat;
+        $rows = $model->query("
+            SELECT `date`,
+                   SUM( IF(`name` = 'new_subscribers',  `count`, 0) ) AS `new_subscribers`,
+                   SUM( IF(`name` = 'new_votes_up',   `count`, 0) ) AS `new_votes_up`,
+                   SUM( IF(`name` = 'new_votes_down', `count`, 0) ) AS `new_votes_down`
+              FROM `stats_collections` AS `sc`
+             WHERE `collection_id` IN({$in_collections})
+               AND `name` IN({$in_stats})
+               AND `date` BETWEEN '{$startDate}' AND '{$endDate}'
+               AND `date` != '0000-00-00'
+             GROUP BY `date`
+        ");
+
+        // fill in counts for days found in query
+        foreach ($rows as $row) {
+            $dateKey = $row['sc']['date'];
+            if (!array_key_exists($dateKey, $results)) {
+                $results[$dateKey] = $result_row;
+                $results[$dateKey]['date'] = $dateKey;
+            }
+            $results[$dateKey]['subscribers'] = $row[0]['new_subscribers'];
+            $results[$dateKey]['votes_up'] = $row[0]['new_votes_up'];
+            $results[$dateKey]['votes_down'] = $row[0]['new_votes_down'];
+        }
+
+        // fetch download counts
+        $rows = $model->query("
+            SELECT `date`, SUM(`count`) AS total
+              FROM `stats_addons_collections_counts` AS `sacc`
+             WHERE `collection_id` IN({$in_collections})
+               AND `date` BETWEEN '{$startDate}' AND '{$endDate}'
+               AND `date` != '0000-00-00'
+             GROUP BY `date`
+        ");
+
+        // fill in counts for days found in query
+        foreach ($rows as $row) {
+            $dateKey = $row['sacc']['date'];
+            if (!array_key_exists($dateKey, $results)) {
+                $results[$dateKey] = $result_row;
+                $results[$dateKey]['date'] = $dateKey;
+            }
+            $results[$dateKey]['downloads'] = $row[0]['total'];
+        }
+
+        // fill in any holes in the date range starting with
+        // the first date having results (or startDate if specified)
+        if (!empty($results) || $startDate != '0000-00-00') {
+            $keys = array_keys($results);
+            $tsStart = ($startDate == '0000-00-00' ? strtotime($keys[0]): strtotime($startDate));
+            $tsEnd = strtotime($endDate);
+
+            for ($ts = $tsStart; $ts <= $tsEnd; $ts = strtotime('+1 day', $ts)) {
+                $dateKey = date('Y-m-d', $ts);
+                if (!array_key_exists($dateKey, $results)) {
+                    $results[$dateKey] = $result_row;
+                    $results[$dateKey]['date'] = $dateKey;
+                }
+            }
+        }
+
+        // sort by date and return 
+        ksort($results);
+        return array_values($results);
+    }
+
+    function _getCollectionStatSum($collectionId, $statName, $startDate=null, $endDate=null) {
+
+        if (!is_array($collectionId)) {
+            $collectionId = array($collectionId);
+        }
+
+        $in_string = '0';
+        foreach ($collectionId as $id) {
+            $in_string .= ',' . intval($id);
+        }
+
+        $startDate = is_null($startDate) ? '0000-00-00' : date('Y-m-d', strtotime($startDate));
+        $endDate = is_null($endDate) ? date('Y-m-d') : date('Y-m-d', strtotime($endDate));
+
+        $model =& $this->controller->GlobalStat;
+
+        $result = $model->query("
+            SELECT IFNULL(SUM(`count`), 0) AS total
+              FROM stats_collections
+             WHERE collection_id IN({$in_string})
+               AND `name` = '{$statName}'
+               AND `date` BETWEEN '{$startDate}' AND '{$endDate}'
+               AND `date` != '0000-00-00'
+        ");
+
+        return empty($result) ? 0 : $result[0][0]['total'];
+    }
 }
 ?>

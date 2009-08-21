@@ -3,18 +3,10 @@ if (!defined('NO_MICROTIME'))
     define('NO_MICROTIME', true);
 header('Content-type: text/plain');
 
-if (isset($addon_id)) {
-echo "#    addons.mozilla.org Statistics for add-on {$addon_id}\n";
-} else {
-echo "#    addons.mozilla.org {$plot} Site Statistics\n";
-}
+echo "#    addons.mozilla.org {$description}\n";
 echo "#\n";
 echo "#    Generated ".date('r')."\n";
-if (isset($addon_id)) {
-echo "#    from ".SITE_URL.$html->url("/statistics/csv/{$addon_id}/{$plot}")."\n";
-} else {
-echo "#    from ".SITE_URL.$html->url("/statistics/sitecsv/{$plot}")."\n";
-}
+echo "#    from {$url}\n";
 echo "#\n";
 echo "#    This data is provided \"AS IS\" and is subject to Mozilla's Legal Disclaimers\n";
 echo "#    and Limitations policy, available at http://www.mozilla.com/en-US/about/legal.html.\n";
