@@ -341,7 +341,7 @@ class StatsComponent extends Object {
                 if ($data = $model->query("
                     SELECT DATE(`created`) AS `date`, SUM(`amount`) AS `count` 
                     FROM `stats_contributions` 
-                    WHERE `addon_id`={$addon_id} AND `uuid` IS NULL
+                    WHERE `addon_id`={$addon_id} AND `uuid` IS NULL AND `amount` > 0
                     GROUP BY `date`
                     HAVING `date` != '0000-00-00'
                 ", true)) {
@@ -473,7 +473,7 @@ class StatsComponent extends Object {
         // Contributions
         if ($include_contributions) {
             $json['contributions'] = array('availableDates' => array());
-            $data = $this->controller->Addon->query("SELECT DISTINCT DATE(`created`) AS `date` FROM `stats_contributions` WHERE `addon_id`={$addon_id} AND `uuid` IS NULL ORDER BY `date`", true);
+            $data = $this->controller->Addon->query("SELECT DISTINCT DATE(`created`) AS `date` FROM `stats_contributions` WHERE `addon_id`={$addon_id} AND `uuid` IS NULL AND `amount` > 0 ORDER BY `date`", true);
             if ($data) {
                 foreach ($data as $date) {
                     $json['contributions']['availableDates'][] = $date['0']['date'];
