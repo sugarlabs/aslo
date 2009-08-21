@@ -561,6 +561,8 @@ class ValidationComponent extends Object {
         $unsafePatterns = array('/nsIProcess/',
                           '/\.launch\s*\(/',
                           '/\beval\s*\(/',
+                          '/\bsetInterval\s*\(["\']/',
+                          '/\bsetTimeout\s*\(["\']/',
                           '/<browser\s*(?![^<>]*type=["\'])[^<>]*>/i',
                           '/<iframe\s*(?![^<>]*type=["\'])[^<>]*>/i',
                           '/xpcnativewrappers=/',

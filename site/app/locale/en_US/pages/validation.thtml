@@ -47,12 +47,13 @@ To validate your add-on, visit the "Versions and Files" page in the developers c
 <dd>This test scans add-ons for common security mistakes that could make using your add-on unsafe.  Some example patterns are:
 
 <ul>
-    <li>eval</li>
+    <li>eval()</li>
+    <li>setTimeout('with a string')</li>
     <li>&lt;browser&gt; without a type attribute</li>
     <li>mozIJSSubscriptLoader</li>
 </ul>
 
-A matched pattern will generate a warning.</dd>
+A matched pattern will generate a warning.  Note that since these tests are simply pattern matches, some of the code they match might be false positives, so examine any warnings closely to determine whether this is the case.</dd>
 
 <dt id="help-22">Unsafe Settings Tests</dt>
 <dd>This test scans the add-on for some common patterns that can lead to security vulnerabilities.  A matched pattern will generate a warning.  The current tests include:

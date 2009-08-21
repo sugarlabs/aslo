@@ -421,6 +421,8 @@ class ValidationTest extends UnitTestCase {
         $badJs = "nsIProcess
                   .launch();
                   eval();
+                  setInterval('with a string!');
+                  setTimeout(\"double quotes!\");
                   <browser without-type-oh-no>
                   <iframe without-type-oh-no>
                   xpcnativewrappers=
@@ -430,7 +432,7 @@ class ValidationTest extends UnitTestCase {
         file_put_contents(CACHE_PFX . '1/bad.js', $badJs);
         
         $results = $this->controller->Validation->all_security_filterUnsafeJS($file);
-        $this->assertEqual(count($results), 9, 'All flagged patters should generate warnings: %s');
+        $this->assertEqual(count($results), 11, 'All flagged patters should generate warnings: %s');
         
         $expected = $this->controller->Validation->_result(TEST_WARN, 1, 'bad.js', 'Matched Pattern: "/nsIProcess/"');
         $this->assertEqual($results[0], $expected, 'Results are warnings with appropriate file and line numbers: %s');
