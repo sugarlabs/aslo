@@ -129,8 +129,9 @@ class AddonsController extends AppController
         $this->redirect('/addon/'.$addon_id);
     }
 
-    function developers($addon_id, $extra=null) {
+    function developers($addon_id, $extra=null, $fullPage = true) {
         global $valid_status;
+
 
         $associations = array(
             'all_categories', 'authors', 'compatible_apps',
@@ -159,6 +160,7 @@ class AddonsController extends AppController
             }
         }
 
+        $this->publish('fullPage', $fullPage);
         $this->publish('authors', $authors);
         $this->publish('num_authors', count($authors));
         $this->publish('multiple', count($authors) > 1);
@@ -173,6 +175,12 @@ class AddonsController extends AppController
 
         $this->pageTitle = sprintf(n___('Meet the %1$s Developer', 'Meet the %1$s Developers',
                                 count($authors)), $addon['Translation']['name']['string']);
+    }
+
+    function about($addon_id, $extra=null) {
+        $this->developers($addon_id, $extra, false);
+        $addon = $this->Addon->getAddon($addon_id);
+        $this->pageTitle = sprintf(___('Thank-you for installing %s!'), $addon['Translation']['name']['string']);
     }
 
     /**

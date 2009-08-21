@@ -48,6 +48,9 @@
 
 <?php
 $has_suggested = !empty($addon['Addon']['suggested_amount']);
+if(!isset($show_help)) {
+    $show_help = true;
+}
 ?>
 
 <div class="notification">
@@ -87,11 +90,13 @@ $has_suggested = !empty($addon['Addon']['suggested_amount']);
                       $addon['Addon']['suggested_amount'])?>
         </p>
       <?php endif; ?>
-      <p>
-        <a class="toggle-help" href="#contribute-why">
-          <?=___('What\'s this?', 'addons_display_a_license_what')?>
-        </a>
-      </p>
+      <?php if($show_help): ?>
+          <p>
+            <a class="toggle-help" href="#contribute-why">
+              <?=___('What\'s this?', 'addons_display_a_license_what')?>
+            </a>
+          </p>
+       <?php endif; ?>
     </div>
   </div>
   <?php if ($has_suggested): ?>

@@ -50,6 +50,11 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
     $jsParams = '?'.time();
     $cssParams = '?'.time();
 }
+
+if(!isset($fullPage)) {
+    $fullPage = true;
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -197,19 +202,20 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
 </head>
 
 <body id="mozilla-com" class="html-<?=TEXTDIR?> <?=APP_SHORTNAME?> <?= ($this->controller->Session->check('User')) ? 'user-login' : 'user-anon' ?><?= isset($bodyclass) ? ' ' . $bodyclass : '' ?>">
-
+    <?php if($fullPage): ?>
     <ul id="nav-access" role="navigation">
         <li><a href="#content"><?=___('Skip to main content')?></a></li>
         <li><a href="#search-form"><?=___('Skip to search form')?></a></li>
         <li><a href="#categories"><?=___('Skip to categories menu')?></a></li>
         <li><a href="#other-apps"><?=___('Skip to other applications menu')?></a></li>
     </ul>
-
+    <?php endif; ?>
     <?php if (is_object($this->controller->Config) && $this->controller->Config->getValue('site_notice') != ''): ?>
         <div id="site-notice"><p><?= $this->controller->Config->getValue('site_notice') ?></p></div>
     <?php endif ?>
 
     <div class="section">
+        <?php if($fullPage): ?>
         <div id="header" role="banner">
             <?php
                 switch (APP_SHORTNAME) {
@@ -317,11 +323,11 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
 
             </div>
         </div>
-
+        <?php endif; ?>
     <?=$content_for_layout ?>
 
 </div> <!-- /.container -->
-
+<?php if($fullPage): ?>
 <div id="footer" role="contentinfo">
     <div class="section">
         <div class="primary">
@@ -362,7 +368,7 @@ if(defined('SITE_STATE') && (SITE_STATE == 'production' || SITE_STATE == 'stagin
         </div>
     </div> <!-- /.section -->
 </div> <!-- /#footer -->
-
+<?php endif; ?>
 <?php
 if(defined('REVISION')) {
     echo '<!-- r'.REVISION.' -->';

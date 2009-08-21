@@ -85,6 +85,22 @@ $this->translationBox = array(
     <!-- TODO: user profile -->
 
     <div id="dev-profile">
+        <div class="graybox field rounded spaced">
+            <p><strong><a href="<?=$html->url('/addon/'.$addon_id.'/developers')?>" class="view"><?php echo ___("View Developer Profile") ?></a></strong></p>
+
+
+            <h4><?php echo ___("Standalone Contributions Page") ?></h4>
+
+            <p><?php echo ___("Use this URL to show your users a standalone page containing your developer
+            profile and a \"Contribute\" button.  You can use this page as a first-run page
+            or link to it from anywhere you'd like.  To see how it looks, click the
+            \"Preview\" link.") ?></p>
+
+            <textarea name="previewlink" rows="1" cols="50"><?=SITE_URL.$html->url('/addon/'.$addon_id.'/about')?></textarea>
+
+            <p><strong><a href="<?=$html->url('/addon/'.$addon_id.'/about')?>" class="view"><?php echo ___("Preview standalone contributions page") ?></a></strong></p>
+        </div>
+
       <form method="post" action="">
         <?=$html->hiddenSession();?>
         <div class="graybox field rounded spaced">

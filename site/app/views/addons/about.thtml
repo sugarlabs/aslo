@@ -1,0 +1,97 @@
+<?php
+    $this->layout = 'amo2009';
+    if ($multiple) {
+        $this->viewVars['bodyclass'] = 'inverse about';
+    } else {
+        $this->viewVars['bodyclass'] = 'about';
+    }
+?>
+<h2><?php echo sprintf(___('Thank-you for installing %s!'), $addon['Translation']['name']['string']) ?></h2>
+
+  <?php
+  if ($this->controller->Addon->acceptContributions($addon)) {
+      $source = 'meet-the-developer';
+      if ($roadblock) {
+          $source .= '-roadblock';
+      }
+      else if ($post_install) {
+          $source .= '-post-install';
+      }
+
+      $contrib_element = $this->renderElement('amo2009/contribution', array(
+          'addon_id' => $addon['Addon']['id'],
+          'text' =>  ___('Support the developer of this add-on by making a small contribution.'),
+          'source' => $source,
+          'show_install' => false,
+          'show_help' => false,
+          ));
+  } else {
+      $contrib_element = '';
+  }
+  $other_addons_element = $this->renderElement('amo2009/addons/developers/other_addons',
+      array('addons' => $other_addons,
+            'skip' => $addon['Addon']['id'],
+            'force_output' => false));
+  ?>
+<?=$contrib_element?>
+  <?php if (!$multiple): ?>
+    <?php $author = $authors[0]; ?>
+    <div class="secondary" role="complementary">
+      <div class="vcard">
+        <?php $this->viewVars['user'] = $author['User'];?>
+        <?=$this->renderElement('amo2009/users/avatar')?>
+        <?=$this->renderElement('amo2009/users/vcard')?>
+      </div>
+    </div>
+    <div class="primary" role="main">
+
+      <div class="primary prose">
+        <?php if($author['Translation']['bio']['string']): ?>
+          <h3><?=sprintf(___('Who is %1$s?'), $author['User']['display_name'])?></h3>
+          <p class="intro"><?=$author['Translation']['bio']['string']?></p>
+        <?php endif; ?>
+        <?=$this->renderElement('amo2009/addons/developers/about_addon')?>
+      </div>
+      <?=$other_addons_element?>
+    </div>
+
+  <?php else: ?>
+
+    <script type="text/javascript">
+      /* Disable the freaking rotation. */
+      $(document).ready(AmoSlideshow);
+      Slideshow.prototype.autoRotate = function(){};
+    </script>
+    <div class="primary featured section-teaser">
+      <div class="featured-inner inverse">
+        <div class="teaser-header">
+        <ol>
+          <?php foreach ($authors as $author): ?>
+            <li><a href="#t-author-<?=$author['User']['id']?>"><?=$author['User']['display_name']?></a></li>
+          <?php endforeach; ?>
+        </ol>
+        </div>
+        <ol class="teaser-items">
+          <?php foreach ($authors as $author): ?>
+            <li class="vcard" id="t-author-<?=$user['id']?>">
+              <?php $user = $this->viewVars['user'] = $author['User'];?>
+              <div class="secondary">
+                <?=$this->renderElement('amo2009/users/avatar')?>
+              </div>
+              <div class="primary">
+                <h3><?=$user['display_name']?></h3>
+                <?php if($author['Translation']['bio']['string']): ?>
+                  <p class="intro"><?=$author['Translation']['bio']['string']?></p>
+                <?php endif; ?>
+                <?=$this->renderElement('amo2009/users/vcard')?>
+              </div>
+            </li>
+          <?php endforeach; ?>
+        </ol>
+      </div>
+    </div>
+    <?=$other_addons_element?>
+    <div class="primary prose">
+      <?=$this->renderElement('amo2009/addons/developers/about_addon')?>
+    </div>
+  <?php endif; ?>
