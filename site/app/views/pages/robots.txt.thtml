@@ -61,6 +61,8 @@ foreach ($supported_languages as $lang => $loc) {
         echo "Disallow: ".$html->url("/{$lang}/{$app}/search/\n", true, false, false);
         /* do not index share links */
         echo "Disallow: ".$html->url("/{$lang}/{$app}/addon/share/\n", true, false, false);
+        /* do not index contribute links */
+        echo "Disallow: ".$html->url("/{$lang}/{$app}/addons/contribute/\n", true, false, false);
     }
 }
 ?>
