@@ -1436,6 +1436,16 @@ CREATE TABLE `test_results` (
   CONSTRAINT `test_results_ibfk_2` FOREIGN KEY (`test_case_id`) REFERENCES `test_cases` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `test_results_cache`;
+CREATE TABLE `test_results_cache` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `date` datetime NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `test_case_id` int(11) NOT NULL,
+  `value` mediumtext,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 --
 -- Default data that doesn't change over time (or isn't supposed to anyway).
 --

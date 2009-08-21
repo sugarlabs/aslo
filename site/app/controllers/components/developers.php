@@ -688,6 +688,7 @@ class DevelopersComponent extends Object {
         // Move file
         if (file_exists($currentPath)) {
             // Bail if the file exists. See bug 470652 for a rough explanation
+            // Unless the file is being re-uploaded due to failed validation
             if (file_exists($newPath)) {
                 return sprintf(___('A version of that add-on already exists. To replace it, you must delete the file %1$s first.'), $filename);
             }

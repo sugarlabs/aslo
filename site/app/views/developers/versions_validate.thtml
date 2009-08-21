@@ -36,6 +36,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
+<script type="text/javascript">
+    var verifyurl = '<?= $html->url('/developers/verify/') ?>';
+</script>
 <div id="content">
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
@@ -50,7 +53,7 @@
             foreach($files as $file) {
                 echo '<div id="test-results-'.$file['File']['id'].'">';
                 echo '<h2>'.sprintf(___('Validate File %s'), $file['File']['filename']).'</h2>';
-                echo $this->renderElement('developers/testresults', array('file' => $file, 'test_groups' => $file['groups'], 'all_groups' => $all_groups, 'counts' => $file['counts']));
+                echo $this->renderElement('developers/testresults', array('file' => $file, 'test_groups' => $file['groups'], 'all_groups' => $all_groups, 'counts' => $file['counts'], 'addon' => $addon));
                 echo '</div><br/>';
             }
         }

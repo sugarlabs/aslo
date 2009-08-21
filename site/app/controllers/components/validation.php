@@ -51,22 +51,44 @@ class ValidationComponent extends Object {
 
     /**
      * Runs a particular test group
-     * @param int $file_id the file to run the tests on
+     * @param mixed $file_id int: the id of file to run the tests on
+     *                    string: the name of the file in the temp folder
      * @param int $test_group_id the test group to run
+     * @param array &$all_results a by-ref array to return test results in.
      */
-    function runTest($file_id, $test_group_id) {
+    function runTest($file_id, $test_group_id, &$all_results = array()) {
 
         // Delete any tests we previously ran
-        $this->controller->TestResult->deleteOldResults($file_id, $test_group_id);
-
+        if (is_numeric($file_id)) {
+            $this->controller->TestResult->deleteOldResults($file_id, $test_group_id);
+        }
+        
         // Pull in needed data - fail when we can't find it
         $test_group = $this->controller->TestGroup->findById($test_group_id);
         if (empty($test_group)) return false;
 
         $test_cases = $this->controller->TestCase->findAllByTestGroupId($test_group_id);
 
+        // Check for the existence of the file model, otherwise use the temp file
         $file = $this->controller->File->findById($file_id);
-        if (empty($file)) return false;
+        if (empty($file))  {
+            if (is_numeric($file_id)) {
+                return false;
+            } else {
+                // Filename is REPO_PATH/temp/addon-file.xpi 
+                // Build a temporary model to extract this
+                $file = array(
+                    'File' => array( 
+                        'id' => '',
+                        'filename' => basename($file_id)
+                    ),
+                    'Version' => array(
+                        'id' => '',
+                        'addon_id' => 'temp'  // This allows us to grab the temp name
+                    )
+                );
+            }
+        }
 
         if (!empty($test_cases)) {
             foreach($test_cases as $case) {
@@ -96,8 +118,26 @@ class ValidationComponent extends Object {
 
                     $query .= implode(', ', $sql);
                     $query .= ';';
+                    
+                    if (is_numeric($file_id)) {
+                        $this->controller->TestResult->query($query);
+                    } else {
+                        // Cache while other tests finish
+                        // Key format is filename-test_case_id
+                        foreach ($results as $result) {
+                            $tmp['TestResult'] = $result;
+                            $tmp['TestCase'] = $case['TestCase'];
+                            $all_results[] = $tmp;
+                        }
 
-                    $this->controller->TestResult->query($query);
+                        $query = 'INSERT INTO `test_results_cache` (`date`, `key`, `test_case_id`, `value`) VALUES';
+                        $data = serialize($results);
+                        $this->Amo->clean($data);
+                        $filename = $file['File']['filename'];
+                        $this->Amo->clean($filename);
+                        $query .= "(NOW(), '{$filename}', {$case['TestCase']['id']}, '{$data}')";
+                        $this->controller->TestResult->query($query);
+                    }
                     if ($failed) return false;
                 }
             }
@@ -141,6 +181,9 @@ class ValidationComponent extends Object {
      */
     function all_general_verifyExtension($file) {
 
+        // If this is the first run, we can't verify the extension, so bail
+        if ($file['Version']['addon_id'] == 'temp') return $this->_resultPass();
+
         $extension = substr($file['File']['filename'], strrpos($file['File']['filename'], '.'));
         $type = 0;
 
@@ -178,7 +221,7 @@ class ValidationComponent extends Object {
             return $this->_resultFail(0, '', ___('The extension does not match the type of the add-on.'));
         }
 
-		// Verify that the file exits
+        // Verify that the file exits
 		if (!file_exists(REPO_PATH . '/' . $addon['Addon']['id'] . '/' . $file['File']['filename'])) {
 			return $this->_resultFail(0, '', ___('The add-on could not be found on the server.'));
 		}
@@ -194,12 +237,16 @@ class ValidationComponent extends Object {
     function all_general_verifyInstallRDF($file) {
 
         // This test is only valid on certain addon types, so bail if we shouldn't be here
-        $addon = $this->controller->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
-        if (!in_array($addon['Addon']['addontype_id'], array(ADDON_EXTENSION,
-                    ADDON_THEME, ADDON_DICT, ADDON_LPAPP))) return array();
+        if (is_numeric($file['Version']['addon_id'])) {
+            $addon = $this->controller->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
+            if (!in_array($addon['Addon']['addontype_id'], array(ADDON_EXTENSION,
+                        ADDON_THEME, ADDON_DICT, ADDON_LPAPP))) return array();
+        } else if (strpos($file['File']['filename'], '.xml') !== false) {
+            return array();
+        }
 
         // Extract install.rdf from xpi or jar
-        $extraction = $this->_extract($file,'by_name', array('install.rdf'));
+        $extraction = $this->_extract($file, 'by_name', array('install.rdf'));
 
         // Make sure install.rdf is present, fail otherwise
         if (empty($extraction)) {
@@ -1076,7 +1123,7 @@ class ValidationComponent extends Object {
     function _extract($file, $extract_by, $extract_what, $get_contents = true, $expires = '+1 day') {
 
         // Cache location
-        $tmp_loc = NETAPP_STORAGE . '/validate-' . $file['File']['id'];
+        $tmp_loc = NETAPP_STORAGE . '/validate-' . (empty($file['File']['id']) ? $file['File']['filename'] : $file['File']['id']);
 
         // Check to see if the file has expired if it exists
         if (file_exists($tmp_loc)) {
@@ -1087,7 +1134,7 @@ class ValidationComponent extends Object {
                 $this->_deleteDir($tmp_loc);
             }
         }
-
+        
         // If the file doesn't exist, do the extraction
         if (!file_exists($tmp_loc)) {
 

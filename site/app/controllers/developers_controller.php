@@ -152,19 +152,36 @@ class DevelopersController extends AppController
         $this->render('dashboard');
     }
 
-    function json($action, $additional = '') {
+    function json($action, $additional = '', $file = '') {
         switch ($action) {
             case 'fileupload':
+                $data = $this->_validateUpload($additional);
+                if ($data['error'] == 1) {
+                    $json = $data;
+                } else {
+                    $json = array(
+                        'file_id' => -1,
+                        'file_name' => $data['File']['db']['filename'],
+                        'addon_type' => $data['Addon']['addontype_id'],
+                        'uploadtype' => $additional
+                    );
+                }
+                $this->publish('encapsulate', true);
+                break;
+
+            case 'complete':
                 if ($additional == 'new') {
-                    $json = $this->_newAddonFromFile();
+                    $json = $this->_newAddonFromFile($file);
                 }
                 elseif ($additional == 'update') {
-                    $json = $this->_updateAddonFromFile($additional);
+                    $json = $this->_updateAddonFromFile($additional, $file);
                 }
                 elseif ($additional == 'file') {
-                    $json = $this->_updateAddonFromFile($additional);
+                    $json = $this->_updateAddonFromFile($additional, $file);
                 }
-
+                if ($json['error'] == 0) {
+                    $this->_saveCachedData($json['file_id'], $file);
+                }
                 $this->publish('encapsulate', true);
                 break;
 
@@ -244,19 +261,14 @@ class DevelopersController extends AppController
     /**
      * Called via AJAX to handle creation of a new add-on
      */
-    function _newAddonFromFile() {
-        $data = $this->_validateUpload();
-        if ($data['error'] == 1) {
-            return $data;
-        }
-
-        // For non-search-engines
-        if ($data['Addon']['addontype_id'] != ADDON_SEARCH) {
-            // Make sure GUID doesn't exist already
-            if ($existing = $this->Addon->findAll("Addon.guid='{$data['Addon']['guid']}'")) {
-                return $this->Error->getJSONforError(sprintf(___('This add-on ID (%1$s) already exists in the database. If this is your add-on, you can <a href="%2$s">upload a new version</a>.'), $data['Addon']['guid'], $this->url("/developers/versions/add/{$existing[0]['Addon']['id']}")));
-            }
-        }
+    function _newAddonFromFile($filename = '') {
+        
+        // Grab the data from our cache, and then de-serialize it
+        $this->Amo->clean($filename);
+        $data = $this->Addon->query("SELECT value FROM `test_results_cache` WHERE `key` = '{$filename}' AND `test_case_id` = -1");
+        $data = $data[0]['test_results_cache']['value'];
+        $this->Amo->unclean($data);
+        $data = unserialize($data);
 
         // Insert new add-on row
         $this->Addon->id = 0;
@@ -287,7 +299,7 @@ class DevelopersController extends AppController
                 $this->Version->addCompatibleApp($data['Version']['id'], $appversion['application_id'], $appversion['min'], $appversion['max']);
             }
         }
-
+        
         // Add Files
         $data['File']['db']['version_id'] = $data['Version']['id'];
         $platforms = $data['File']['db']['platform_id'];
@@ -301,6 +313,7 @@ class DevelopersController extends AppController
             }
             $data['File']['db']['filename'] = $validate['filename'];
             $this->File->save($data['File']['db']);
+            $file_id = $this->File->id;
         }
         // Remove temp file
         $tempFile = $data['File']['details']['path'];
@@ -311,7 +324,9 @@ class DevelopersController extends AppController
         return array(
             'error' => 0,
             'uploadtype' => 'new',
-            'addon_id' => $data['Addon']['id']
+            'addon_id' => $data['Addon']['id'],
+            'version_id' => $data['Version']['id'],
+            'file_id' => $file_id
             );
     }
 
@@ -319,15 +334,17 @@ class DevelopersController extends AppController
      * Called via AJAX to handle updating of an add-on
      * @param string $type whether an update or new file
      */
-    function _updateAddonFromFile($type = '') {
-        // Validate file for content problems
-        $data = $this->_validateUpload();
-        if ($data['error'] == 1) {
-            return $data;
-        }
+    function _updateAddonFromFile($type = '', $filename = '') {
 
-        $addon_id = $this->data['Addon']['id'];
-        $data['Addon']['id'] = $addon_id;
+        // Grab the data from our cache, and then de-serialize it
+        $this->Amo->clean($filename);
+        $data = $this->Addon->query("SELECT `value` FROM `test_results_cache` WHERE `key` = '{$filename}' AND `test_case_id` = -1");        
+        $data = $data[0]['test_results_cache']['value'];
+        $this->Amo->unclean($data);
+        $data = unserialize($data);
+
+        $addon_id = $data['Addon']['id'];
+        $version_id = $data['Version']['id'];  // This will fail if there's a new version, but this is OK
 
         // Make sure user has upload permissions
         $role = $this->Amo->getAuthorRole($addon_id);
@@ -337,20 +354,7 @@ class DevelopersController extends AppController
 
         $addon = $this->Addon->findById($addon_id);
 
-        // For non-search-engines
-        if ($data['Addon']['addontype_id'] != ADDON_SEARCH) {
-            // Make sure GUID matches add-on ID
-            if ($addon['Addon']['guid'] != $data['Addon']['guid']) {
-                return $this->Error->getJSONforError(sprintf(___('The add-on GUID used in this file (%1$s) does not match the existing GUID for this add-on (%2$s).'), $data['Addon']['guid'], $addon['Addon']['guid']));
-            }
-        }
-
         if ($type == 'update') {
-            // Make sure version doesn't exist already
-            $vcheck = $this->Version->find("Version.addon_id={$addon_id} AND Version.version='{$data['Version']['version']}'");
-            if (!empty($vcheck)) {
-                return $this->Error->getJSONforError(sprintf(___('The version number uploaded (%1$s) already exists for this add-on. If you are trying to add another file to this version, <a href="%2$s">click here</a>.'), $data['Version']['version'], $this->url('/developers/versions/addfile/'.$vcheck['Version']['id'])));
-            }
 
             // Save License
             if ($addon['Addon']['dev_agreement'] == true) {
@@ -391,22 +395,6 @@ class DevelopersController extends AppController
             // notify subscribed editors of update (if any)
             $this->Editors->updateNotify($addon['Addon']['id'], $version_id);
         }
-        elseif ($type == 'file') {
-            $version_id = $this->data['Version']['id'];
-
-            // Make sure version id belongs to this add-on
-            $vcheck = $this->Version->find("Version.id={$version_id} AND Version.addon_id={$addon_id}");
-            if (empty($vcheck)) {
-                return $this->Error->getJSONforError(sprintf(___('The specified version (%1$s) does not belong to this add-on (%2$s).'), $version_id, $addon_id));
-                return $this->Error->getJSONforError(sprintf('The specified version (%1$s) does not belong to this add-on (%2$s).', $version_id, $addon_id));
-            }
-
-            // Make sure version number matches
-            if ($vcheck['Version']['version'] != $data['Version']['version']) {
-                return $this->Error->getJSONforError(sprintf(___('The uploaded version number (%1$s) does not match the existing version number (%2$s).'), $data['Version']['version'], $vcheck['Version']['version']));
-            }
-        }
-        $data['Version']['id'] = $version_id;
 
         // Add Files
         $data['File']['db']['version_id'] = $version_id;
@@ -432,8 +420,11 @@ class DevelopersController extends AppController
                 return $this->Error->getJSONforError($validate);
             }
             $data['File']['db']['filename'] = $validate['filename'];
+            
             $this->File->save($data['File']['db']);
+            $file_id = $this->File->id;
         }
+
         // Remove temp file
         $tempFile = $data['File']['details']['path'];
         if (file_exists($tempFile)) {
@@ -448,16 +439,47 @@ class DevelopersController extends AppController
             'uploadtype' => $type,
             'addon_id' => $addon_id,
             'version_id' => $version_id,
+            'file_id' => $file_id,
             'version' => (string) $data['Version']['version'],
             'status' => $data['File']['db']['status'],
             'queuecount' => $pendingCount
-            );
+        );
+    }
+
+    /**
+     * Saves the data that was cached during asynchronous validation
+     */
+    function _saveCachedData($file_id, $filename = '') {
+        $this->Amo->clean($filename);
+        $data = $this->Addon->execute("SELECT * FROM `test_results_cache` WHERE `key` = '{$filename}' AND `test_case_id` != -1");
+
+        $query = 'INSERT INTO `test_results` (`result`, `line`, `filename`, `message`, `file_id`, `test_case_id`) VALUES ';
+        $sql = array();
+        if (!empty($data)) {
+            foreach ($data as $info) {
+                $info = $info['test_results_cache'];
+                $results = $info['value'];
+                $this->Amo->unclean($results);
+                $results = unserialize($results);
+                $case = $info['test_case_id'];
+                
+                if (!empty($results)) {
+                    foreach ($results as $result) {
+                        $this->Amo->clean($result);
+                        $sql[] = "({$result['result']}, {$result['line']}, '{$result['filename']}', '{$result['message']}', {$file_id}, {$case})";
+                    }
+                }
+            }
+         
+            $query .= implode(', ', $sql);
+            $this->Addon->execute($query);
+        }
     }
 
     /**
      * Validates the file upload for all types of uploads
      */
-    function _validateUpload() {
+    function _validateUpload($additional = '') {
         // This will store all data to be saved
         $addon = array();
 
@@ -492,18 +514,27 @@ class DevelopersController extends AppController
                 'datestatuschanged' => $this->Amo->getNOW()
             );
         }
+        // Run validation tests here for inital group
+        $allResults = array();
+        if (!$this->Validation->runTest($validate['filename'],  1, $allResults)) {
+            // If things failed, find out why 
+            foreach ($allResults as $result) {
+                if ($result['TestResult']['result'] == TEST_FAIL) {
+                    return $this->Error->getJSONforError(sprintf(___('The add-on failed a validation test: %s'), $result['TestResult']['message']));
+                }
+            }
+        }
+        
+        // Clear duplicates
+        $filename = $validate['filename'];
+        $this->Amo->clean($filename);
+        $this->Addon->execute("DELETE FROM `test_results_cache` WHERE `key` = '{$filename}'");
 
         // Parse install.rdf file if not a search plugin
         if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
             // Extract install.rdf from xpi or jar
             $zip = new Archive_Zip($addon['File']['details']['path']);
             $extraction = $zip->extract(array('extract_as_string' => true, 'by_name' => array('install.rdf')));
-
-            // Make sure install.rdf is present
-            if (empty($extraction)) {
-                $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->url('/pages/appversions'));
-                return $this->Error->getJSONforError(___('No install.rdf present.').'<br />'.$validAppReference);
-            }
 
             $fileContents = $extraction[0]['content'];
 
@@ -515,13 +546,6 @@ class DevelopersController extends AppController
 
             // Clean manifest data
             $this->Amo->clean($manifestData);
-
-            // Validate manifest data
-            $validate = $this->Developers->validateManifestData($manifestData);
-            if (is_string($validate)) {
-                // If a string is returned, there was an error
-                return $this->Error->getJSONforError($validate);
-            }
 
             // Last minute add-on type correction
             if ($manifestData['type'] == 8) {
@@ -538,24 +562,11 @@ class DevelopersController extends AppController
             $addon['Version']['version'] = $manifestData['version'];
 
             // Validate target applications
-            $validate = $this->Developers->validateTargetApplications($manifestData['targetApplication']);
-            if (is_string($validate)) {
-                // If a string is returned, there was an error
-                return $this->Error->getJSONforError($validate);
-            }
-            else {
-                // If an array is returned, there were no errors
-                $addon['appversions'] = $validate;
-            }
+            $addon['appversions'] = $this->Developers->validateTargetApplications($manifestData['targetApplication']);
         }
         elseif ($addon['Addon']['addontype_id'] == ADDON_SEARCH) {
             // Get search engine properties
             $search = $this->Opensearch->parse($addon['File']['details']['path']);
-
-            // There was a parse error, the name was empty, etc.  Bad things.
-            if ($search == null) {
-                return $this->Error->getJSONforError(___('Either the XML is invalid or required fields are missing.  Please <a href="https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox">read the documentation</a>, verify your add-on, and try again.'));
-            }
 
             $addon['Addon']['name'] = $search->name;
             $addon['Addon']['summary'] = $search->description;
@@ -565,7 +576,71 @@ class DevelopersController extends AppController
             $this->Amo->clean($addon);
         }
 
+        // Unbind add-ons
+        $this->Addon->unbindFully();
+
+        // For non-search-engines
+        if ($additional == 'new') {
+            if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
+                // Make sure GUID doesn't exist already
+                if ($existing = $this->Addon->findAll(array('Addon.guid' => $addon['Addon']['guid']), array('guid'))) {
+                    return $this->Error->getJSONforError(sprintf(___('This add-on ID (%1$s) already exists in the database. If this is your add-on, you can <a href="%2$s">upload a new version</a>.'), $addon['Addon']['guid'], $this->url("/developers/versions/add/{$existing[0]['Addon']['id']}")));
+                }
+            }
+        } else {
+            
+            $addon_id = $this->data['Addon']['id'];
+            $existing = $this->Addon->getAddon($addon_id, array('default_fields'));
+            if ($existing['Addon']['addontype_id'] != ADDON_SEARCH) {
+                // Make sure GUID matches add-on ID
+                if ($addon['Addon']['guid'] != $existing['Addon']['guid']) {
+                    return $this->Error->getJSONforError(sprintf(___('The add-on GUID used in this file (%1$s) does not match the existing GUID for this add-on (%2$s).'), $addon['Addon']['guid'], $existing['Addon']['guid']));
+                }
+            }
+
+            if ($additional == 'update') {
+
+                // Make sure version doesn't exist already
+                $vcheck = $this->Version->find("Version.addon_id={$addon_id} AND Version.version='{$addon['Version']['version']}'");
+                if (!empty($vcheck)) {
+                    return $this->Error->getJSONforError(sprintf(___('The version number uploaded (%1$s) already exists for this add-on. If you are trying to add another file to this version, <a href="%2$s">click here</a>.'), $addon['Version']['version'], $this->url('/developers/versions/addfile/'.$vcheck['Version']['id'])));
+                }
+                
+            } else if ($additional == 'file') {
+                
+                $version_id = $this->data['Version']['id'];
+                
+                // Make sure version id belongs to this add-on
+                $vcheck = $this->Version->find("Version.id={$version_id} AND Version.addon_id={$addon_id}");
+                if (empty($vcheck)) {
+                    return $this->Error->getJSONforError(sprintf(___('The specified version (%1$s) does not belong to this add-on (%2$s).'), $version_id, $addon_id));
+                }
+                
+                // Make sure version number matches
+                if ($vcheck['Version']['version'] != $addon['Version']['version']) {
+                    return $this->Error->getJSONforError(sprintf(___('The uploaded version number (%1$s) does not match the existing version number (%2$s).'), $addon['Version']['version'], $vcheck['Version']['version']));
+                }
+
+            }
+        }
+
         $addon['error'] = 0;
+        
+        // Save some additional data for later
+        $addon['Addon']['id'] = $this->data['Addon']['id'];
+        $addon['Version']['id'] = $this->data['Version']['id'];
+        $addon['License'] = $this->data['License'];
+        $addon['Version.License.text'] = getitem($this->data, 'Version.License.text');
+        $addon['form.data.Version.License'] = getitem($this->params, 'form.data.Version.License');
+
+        // Save this data for insertion if/when things pass
+        $data = serialize($addon);
+        $this->Amo->clean($data);
+        
+        $filename = $addon['File']['db']['filename'];
+        $this->Amo->clean($filename);
+        $this->TestResult->execute("INSERT INTO `test_results_cache` (`date`, `key`, `test_case_id`, `value`) VALUES (NOW(), '{$filename}', -1, '{$data}')");
+
         return $addon;
     }
 
@@ -1311,11 +1386,11 @@ class DevelopersController extends AppController
                 }
             }
 
-            // Save license.
+            // Save license
             $license_id = $this->Developers->saveLicense(
-                 $this->data['License'],
-                 getitem($this->data, 'Version.License.text'),
-                 getitem($this->params, 'form.data.Version.License'));
+                 $data['License'],
+                 $data['Version.License.text'],
+                 $data['form.data.Version.License']);
             $this->Version->saveField('license_id', $license_id);
 
             // flush cached add-on objects
@@ -1449,6 +1524,7 @@ class DevelopersController extends AppController
         $this->publish('all_groups', $test_groups);
 
         $this->publish('version', $version);
+        $this->publish('addon', $addon);
         $this->publish('validation_disabled',$this->Config->getValue('validation_disabled'));
 
         $this->render('versions_validate');
@@ -1458,8 +1534,9 @@ class DevelopersController extends AppController
      * Verifies the addon using the test cases given by the validation component
      * @param int $file_id the id of the file to verify
      * @param int $test_group_id the id of the test group to run
+     * @param string $file_name the temporary file name, if applicable
      */
-    function verify($file_id, $test_group_id) {
+    function verify($file_id, $test_group_id, $addon_type, $file_name = '') {
 
         // Don't show the view if validation is disabled.  OK to return
         // nothing here, since this view is just the AJAX handle
@@ -1472,25 +1549,42 @@ class DevelopersController extends AppController
 
         // Grab the file to pass over to the view
         $this->File->cacheQueries = false;
-        $file = $this->File->findById($file_id);
+        if ($file_id != -1) {
+            $file = $this->File->findById($file_id);
+        } else {
+            $file = array(
+                'File' => array( 
+                    'id' => '',
+                    'filename' => $file_name
+                ),
+                'Version' => array(
+                    'id' => '',
+                    'addon_id' => 'temp'  // This allows us to grab the temp name
+                )
+            );
+            $file_id = $file_name;
+        }
 
         // Do whatever tests were specified, then find the next tests
         // if we need to continue
         $next_tests = array();
-        if ($this->Validation->runTest($file_id, $test_group_id)) {
-            $addon = $this->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
-
+        $all_results = array();
+        if ($this->Validation->runTest($file_id, $test_group_id, $all_results)) {
             $next_tier = $test_group['TestGroup']['tier'] + 1;
             $conditions = array('TestGroup.tier' => $next_tier);
             $next_cat = $test_group['TestGroup']['category'];
             if ($test_group_id != 1)
                 $conditions['TestGroup.category'] = $next_cat;
 
-            $next_tests = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id'], $conditions, array('id'));
+            $next_tests = $this->TestGroup->getTestGroupsForAddonType($addon_type, $conditions, array('id'));
         }
 
         // Load the results into the group and build the group/case/result hierarchy
-        $results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));
+        if (is_numeric($file_id)) {
+            $results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));    
+        } else { 
+            $results = $all_results;
+        }
 
         // Total results for this test group
         $counts = array(0,0,0);
@@ -1512,25 +1606,6 @@ class DevelopersController extends AppController
         }
         $test_group['counts'] = $counts;
 
-        // Total results for this test group
-        $counts = array(0,0,0);
-        $test_group['cases'] = array();
-
-        // Build a hierarchical view that cake just doesn't give
-        // us to make life easier in the view
-        if (!empty($results)) {
-            foreach ($results as $result) {
-                $case_id = $result['TestCase']['id'];
-                if (empty($test_group['cases'][$case_id])) {
-                    $test_group['cases'][$case_id] = $result['TestCase'];
-                    $test_group['cases'][$case_id]['results'] = array();
-                }
-                $this->Validation->getResultPreview($result, $file);
-                $test_group['cases'][$case_id]['results'][] = $result['TestResult'];
-                $counts[$result['TestResult']['result']]++;
-            }
-        }
-
         // We need a view to call renderElement, see
         // https://trac.cakephp.org/ticket/3132
         // This means we also pull in the HTML helper
@@ -1547,17 +1622,30 @@ class DevelopersController extends AppController
         $stats = $view->renderElement('developers/testresults_stats',
                  array('counts' => $counts, 'short' => true, 'multiline' => false, 'html' => $html));
 
-        // We also need the total stats so far
-        $totals = $this->TestResult->query("SELECT COUNT(*) as count, `result` from `test_results` where `file_id` = {$file_id} GROUP BY `result`");
-        $counts = array(0,0,0);
-        foreach ($totals as $data) {
-            $counts[$data['test_results']['result']] = $data[0]['count'];
-        }
-        $total_stats = $view->renderElement('developers/testresults_stats',
-                       array('counts' => $counts, 'short' => false, 'multiline' => false, 'html' => $html));
+        $json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests, 'stats' => $stats, 'stats_data' => $counts);
 
-        $json = array('result' => $testresult, 'file_id' => $file_id, 'test_group_id' => $test_group_id, 'next_tests' => $next_tests, 'stats' => $stats, 'total_stats' => $total_stats);
+        $this->set('json', $json);
+        $this->render('json', 'ajax');
+    }
 
+    /**
+     * Renderts the total stats after a series of tests
+     * @param int $passes the total passes
+     * @param int $warns the total warns
+     * @param int $fails the total fails
+     */
+    function teststats($passes, $warns, $fails) {
+        // We need a view to call renderElement, see
+        // https://trac.cakephp.org/ticket/3132
+        // This means we also pull in the HTML helper
+        $view = new View($this, 'helpers');
+        loadHelper('Html');
+        $html = new HtmlHelper();
+
+        $stats = $view->renderElement('developers/testresults_stats',
+                 array('counts' => array($passes, $warns, $fails), 'short' => false, 'multiline' => false, 'html' => $html));
+        $json = array('stats' => $stats);
+        
         $this->set('json', $json);
         $this->render('json', 'ajax');
     }

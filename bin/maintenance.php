@@ -289,6 +289,16 @@ switch ($action) {
         $db->write($sharing_sql);
         $affected_rows += mysql_affected_rows($db->write);
 
+        echo 'Cleaning up test results cache...'."\n";
+        $results_sql = "
+            DELETE FROM
+                `test_results_cache`
+            WHERE
+                date < DATE_SUB(CURDATE(), INTERVAL 1 HOUR)
+            ";
+        $db->write($sharing_sql);
+        $affected_rows += mysql_affected_rows($db->write);
+
     break;
 
 

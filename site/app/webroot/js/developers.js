@@ -25,7 +25,7 @@ var upload = {
         $('#step-intro').slideUp();
         $('#step-agreement').slideDown();
     },
-    
+
     hideAgreement: function() {
         $('#step-agreement').slideUp();
         $('#step-intro').slideDown();
@@ -51,18 +51,18 @@ var upload = {
     },
     
     uploadFile: function() {
-        var upload = $('#upload-field');
+        var uploadField = $('#upload-field');
         if (!license_picker.acceptable()) {
             $('#file-upload').slideUp();
             upload.showAgreement();
             upload.acceptAgreement();
             return false;
         }
-        else if (upload.val() != '') {
-            if (!this.checkFileName(upload.val())) {
+        else if (uploadField.val() != '') {
+            if (!this.checkFileName(uploadField.val())) {
                 alert(devcp_js_upload_badfilename);
                 return false;
-            } else if (!this.checkFileSize(upload.get(0))) {
+            } else if (!this.checkFileSize(uploadField.get(0))) {
                 alert(devcp_js_upload_toolarge);
                 return false;
             }
@@ -79,6 +79,103 @@ var upload = {
             alert(devcp_js_upload_alert);
             return false;
         }
+    },
+
+    completeUpload: function() {
+        $('#complete-loading').slideDown('slow');
+        $('#continue-button').addClass('disabled');
+        $('#new-file-button').addClass('disabled');
+        $.ajax({    
+            type: 'GET',
+            url: verifyurl + '../json/complete/' + upload.additional + '/' + upload.fileName,
+            success: function(response) {
+                $('#continue-button').removeClass('disabled');
+                $('#new-file-button').removeClass('disabled');
+                $('#complete-loading').hide();
+
+                $('#test-results-action').hide();
+                $('#test-results-message span').hide();
+                $('#test-results-action .action-button').hide();
+
+                // Sanitize response
+                response = response.replace(/'/g, '"');            
+                upload.response = JSON.parse($('<div>' + response + '</div>').find('#json').html());
+           
+                $('.validation').slideUp('slow');
+                if (upload.response.error == '1') {
+                    $('#upload-error-text').html(urldecode(upload.response.error_message));
+                    $('#upload-error').slideDown('slow');
+                    $('#file-upload input[type=submit]').attr('disabled', '');
+                    $('#submission-area').slideDown('slow');
+                    return;                    
+                }
+                $('#upload-success').slideDown('slow');
+
+                if (upload.response.uploadtype == 'new') {
+                    $('#status-link').attr('href', $('#status-link').attr('href') + upload.response.addon_id);
+                    $('#complete-link').attr('href', $('#complete-link').attr('href') + upload.response.addon_id);
+                }
+                else if (upload.response.uploadtype == 'update') {
+                    if (upload.response.status == addon_statuses.PUBLIC) {
+                        $('#pending-message').hide();
+                        $('#new-file-status').text(addons_status_public);
+                    }
+                    else if (upload.response.status == addon_statuses.SANDBOX) {
+                        $('#new-file-status').text(addons_status_sandbox);
+                    }   
+                    else if (upload.response.status == addon_statuses.PENDING) {
+                        $('#new-file-status').text(addons_status_pending);
+                    }
+                    $('#new-file-status').addClass('status-' + upload.response.status);
+                    $('#new-version-number').text(upload.response.version);
+                    $('#queue-count').text(upload.response.queuecount);
+                    $('#version-link').attr('href', $('#version-link').attr('href') + upload.response.version_id);
+                    $('#complete-link').attr('href', $('#complete-link').attr('href') + upload.response.version_id);
+                }
+                else if (upload.response.uploadtype == 'file') {
+                    if (upload.response.status == addon_statuses.PUBLIC) {
+                        $('#pending-message').hide();
+                        $('#new-file-status').text(addons_status_public);
+                    }
+                    else if (upload.response.status == addon_statuses.SANDBOX) {
+                        $('#new-file-status').text(addons_status_sandbox);
+                    }   
+                    else if (upload.response.status == addon_statuses.PENDING) {
+                        $('#new-file-status').text(addons_status_pending);
+                    }   
+                    $('#new-file-status').addClass('status-' + upload.response.status);
+                    $('#queue-count').text(upload.response.queuecount);
+                }
+
+            },
+            error: function() {}
+        });
+    },
+
+    displayStatus: function(result) {
+        if ($('#test-results-action').length == 0) return;
+        $('#test-results-action').slideDown('slow');
+        if (versions_validate.counts[2] > 0) {
+            $('#test-results-message #fail-message').show();
+            $('#new-file-button').show();
+        } else if (versions_validate.counts[1] > 0) {
+            $('#test-results-message #warn-message').show();
+            $('#new-file-button').show();
+            $('#continue-button').show();
+        } else {
+            $('#test-results-message #pass-message').show();
+            $('#continue-button').show();
+        }
+    },
+    
+    uploadNewFile: function() {
+        $('.validation').slideUp('slow');
+        $('#submission-area').slideDown();
+        $('#file-upload input[type=submit]').attr('disabled', '');
+        
+        $('#test-results-action').hide();
+        $('#test-results-message span').hide();
+        $('#test-results-action .action-button').hide();
     },
 
     checkFileName : function(filename) {
@@ -112,40 +209,24 @@ function iframeLoaded() {
     }
     else {
         $('#submission-area').slideUp('slow');
-        $('#upload-success').slideDown('slow');
         
-        if (upload.response.uploadtype == 'new') {
-            $('#status-link').attr('href', $('#status-link').attr('href') + upload.response.addon_id);
-            $('#complete-link').attr('href', $('#complete-link').attr('href') + upload.response.addon_id);
-        }
-        else if (upload.response.uploadtype == 'update') {
-            if (upload.response.status == addon_statuses.PUBLIC) {
-                $('#pending-message').hide();
-                $('#new-file-status').text(addons_status_public);
-            }
-            else if (upload.response.status == addon_statuses.SANDBOX) {
-                $('#new-file-status').text(addons_status_sandbox);
-            }
-            else if (upload.response.status == addon_statuses.PENDING) {
-                $('#new-file-status').text(addons_status_pending);
-            }
-            $('#new-file-status').addClass('status-' + upload.response.status);
-            $('#new-version-number').text(upload.response.version);
-            $('#queue-count').text(upload.response.queuecount);
-            $('#version-link').attr('href', $('#version-link').attr('href') + upload.response.version_id);
-            $('#complete-link').attr('href', $('#complete-link').attr('href') + upload.response.version_id);
-        }
-        else if (upload.response.uploadtype == 'file') {
-            if (upload.response.status == addon_statuses.PUBLIC) {
-                $('#pending-message').hide();
-                $('#new-file-status').text(addons_status_public);
-            }
-            else if (upload.response.status == addon_statuses.PENDING) {
-                $('#new-file-status').text(addons_status_pending);
-            }
-            $('#new-file-status').addClass('status-' + upload.response.status);
-            $('#queue-count').text(upload.response.queuecount);
-        }
+        $('#validation-results').attr('id', 'test-results-' + upload.response.file_id);
+        $('#test-results-' + upload.response.file_id).slideDown('slow');
+        $('#test-results-total').attr('id', 'test-results-total-' + upload.response.file_id);
+        $('#test-results-total-' + upload.response.file_id).hide();
+        $('#validation-details').attr('id', 'test-details-' + upload.response.file_id)
+        $('#test-details-' + upload.response.file_id).hide();
+        versions_validate.runTest(upload.response.file_id, upload.response.addon_type, upload.response.file_name);
+        upload.fileName = upload.response.file_name;
+        upload.additional = upload.response.uploadtype;
+
+        if (upload.response.addon_id) 
+            $('#addon-id').val(upload.response.addon_id);
+        if (upload.response.version_id) 
+            $('#version-id').val(upload.response.version_id);
+        if (upload.response.file_id) 
+            $('#file-id').val(upload.response.file_id);
+
     }
 }
 
@@ -377,16 +458,21 @@ var versions_validate = {
         a.parent().slideUp();
     },
 
-    runTest: function(fileId) {
+    runTest: function(fileId, addonType, fileName) {
 
         // If tests are running, just bail
         if($('#test-results-' + fileId + ' .action-button').hasClass('disabled')) return;
 
-        var sendRequest = function(file, testNum, name) {
+        // For temporary uploads
+        if(!fileName) fileName = '';
+
+        versions_validate.counts = [0, 0, 0];
+
+        var sendRequest = function(testNum, name) {
             versions_validate.running_tests++;
             $.ajax({
                 type: 'GET',
-                url: '../../verify/' + fileId + '/' + testNum,
+                url: verifyurl + fileId + '/' + testNum + '/' + addonType + '/' + fileName,
                 success: displayResults,
                 error: displayError
             });
@@ -396,27 +482,43 @@ var versions_validate = {
         var displayResults = function(response, status) {
             // JSON parser chokes on ', since it uses eval().  
             // Since the result is just a big tree, we can simply replace them.
-            response = response.replace(/'/g, '"');
+            response = response.replace(/'/g, '"');            
             var result = JSON.parse(response);
         
-            $('#test-details-' + result.file_id).append(result.result);
-            $('#results-summary-' + result.file_id + '-' + result.test_group_id + ' .results').fadeOut('slow', function () {
+            $('#test-details-' + fileId).append(result.result);
+            $('#results-summary-' + fileId + '-' + result.test_group_id + ' .results').fadeOut('slow', function () {
                 $(this).html(result.stats).fadeIn('slow');
             });
 
             for (var i in result.next_tests) {
                 var testInfo = result.next_tests[i].TestGroup;
-                sendRequest(result.file_id, testInfo.id, testInfo.name);
+                sendRequest(testInfo.id, testInfo.name);
             } 
+
+            for (var i in result.stats_data) {
+                versions_validate.counts[i] += result.stats_data[i];
+            }            
 
             versions_validate.running_tests--;
             if (versions_validate.running_tests == 0) {
-                $('#test-details-' + result.file_id).slideDown('slow');
+                $('#test-details-' + fileId).slideDown('slow');
                 $('#test-results-' + fileId + ' .action-button').removeClass('disabled');
                 $('#test-results-' + fileId + ' .tests-running').hide();
                 $('#test-results-total-' + fileId).fadeOut('slow', function() {
-                    $(this).html(result.total_stats).fadeIn('slow');
+                    var that = $(this);
+                    var counts = versions_validate.counts;
+                    $.ajax({
+                        type: 'GET',
+                        url: verifyurl + '../teststats/' + counts[0] + '/' + counts[1] + '/' + counts[2],
+                        success: function(response) {
+                            response = response.replace(/'/g, '"');
+                            var result = JSON.parse(response);
+                            that.html(result.stats).fadeIn('slow');
+                        },
+                        error: function() {}
+                    });            
                 });
+                upload.displayStatus(result);
             }
         };
     
@@ -427,7 +529,7 @@ var versions_validate = {
         $('#test-details-' + fileId).slideUp('slow', function () {
             $('#test-details-' + fileId).html('');
             versions_validate.running_tests = 0;
-            sendRequest(fileId, 1, 'General');
+            sendRequest(1, 'General');
         });
 
         $('#test-results-' + fileId + ' .action-button').addClass('disabled');
