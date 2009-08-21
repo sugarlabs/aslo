@@ -538,6 +538,21 @@ switch ($action) {
         $affected_rows = mysql_affected_rows();
     break;
 
+    case 'collections_ratings':
+        debug('Starting collection rating calculations...');
+        /* Multiplying by the log of the total number of votes so collections
+         * with lots of votes have precedence over those with a few votes, but
+         * taking the log so the mulitplier isn't ridiculous.
+         */
+        $db->write("
+            UPDATE collections
+            SET rating=
+              IFNULL(
+                CAST(upvotes - downvotes AS SIGNED) * LN(upvotes + downvotes),
+                0)
+        ");
+        $affected_rows = mysql_affected_rows();
+
 
     /**
      * Update share count totals.

@@ -67,6 +67,9 @@ class CollectionsListingComponent extends Object {
             'all' => array(
                 'text' => ___('Most popular all time'),
                 'sort' => 'subscribers'),
+            'rating' => array(
+                'text' => ___('Highest Rated'),
+                'sort' => 'rating'),
             'newest' => array(
                 'text' => ___('Newest', 'collections_index_option_newest'),
                 'sort' => 'created'),

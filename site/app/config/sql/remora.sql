@@ -1202,6 +1202,7 @@ CREATE TABLE `collections` (
   `addonCount` int(11) unsigned NOT NULL default '0',
   `upvotes` int(11) unsigned NOT NULL DEFAULT '0',
   `downvotes` int(11) unsigned NOT NULL DEFAULT '0',
+  `rating` float NOT NULL default '0',
   PRIMARY KEY `id` (`id`),
   UNIQUE KEY `uuid` (`uuid`),
   UNIQUE KEY `nickname` (`nickname`),
