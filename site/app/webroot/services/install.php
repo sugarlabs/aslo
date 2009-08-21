@@ -139,26 +139,57 @@ $addons = array(
             
             // Foxytunes (see above)
         
-        /* Other */
+        /* Labs */
             'personas' => array(
                     'name' => 'Personas for Firefox',
                     'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/10900',
                     'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/10900/1236031798',
                     'referrers' => array_merge($default_referrers, array(
-                            'document.referrer.match('.REGEX_PERSONAS.')'
+                            'document.referrer.match('.REGEX_PERSONAS.')',
+                            'document.referrer.match('.REGEX_LABS.')'
                     ))
             ),
             
             'weave' => array(
                     'name' => 'Weave',
                     'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/10868',
-                    'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/10868/1236131155'
+                    'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/10868/1236131155',
+                    'referrers' => array_merge($default_referrers, array(
+                            'document.referrer.match('.REGEX_LABS.')'
+                    ))
             ),
             
             'jetpack' => array(
                     'name' => 'Jetpack',
                     'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/12025',
                     'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/12025',
+                    'referrers' => array_merge($default_referrers, array(
+                            'document.referrer.match('.REGEX_LABS.')'
+                    ))
+            ),
+            
+            'prism' => array(
+                    'name' => 'Prism for Firefox',
+                    'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/6665',
+                    'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/6665',
+                    'referrers' => array_merge($default_referrers, array(
+                            'document.referrer.match('.REGEX_LABS.')'
+                    ))
+            ),
+            
+            'ubiquity' => array(
+                    'name' => 'Ubiquity',
+                    'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/9527',
+                    'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/9527',
+                    'referrers' => array_merge($default_referrers, array(
+                            'document.referrer.match('.REGEX_LABS.')'
+                    ))
+            ),
+            
+            'testpilot' => array(
+                    'name' => 'Test Pilot',
+                    'xpi' => 'https://addons.mozilla.org/en-US/firefox/downloads/latest/13661',
+                    'icon' => 'https://addons.mozilla.org/en-US/firefox/images/addon_icon/13661',
                     'referrers' => array_merge($default_referrers, array(
                             'document.referrer.match('.REGEX_LABS.')'
                     ))
@@ -193,7 +224,7 @@ $addons = array(
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>AMO Install Service</title>
+<title>Mozilla Add-ons</title>
 <script language="JavaScript" type="text/javascript" src="/js/__utm.js"></script>
 <script type="text/javascript">
     function install() {
