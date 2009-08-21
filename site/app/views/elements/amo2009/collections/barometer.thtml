@@ -24,12 +24,18 @@ $upvote = $action.'/up';
 $downvote = $action.'/down';
 $cancel = $action.'/cancel';
 
+$up_title = ___('Add a positive vote for this collection');
+$down_title = ___('Add a negative vote for this collection');
+$cancel_title = ___('Remove my vote for this collection');
+$login_title = ___('Log in to vote for this collection');
+
 /* If the user has voted, this will turn into 1 or -1. */
 $user_vote = 0;
 
 if (empty($user)) {
     /* All links go to login for unauthenticated users. */
     $upvote = $downvote = $cancel = $html->url($html->login_url());
+    $up_title = $down_title = $cancel_title = $login_title;
 } else if (isset($user['Votes'][$c['id']])) {
 
     /* No really, let's have numbers. */
@@ -38,8 +44,10 @@ if (empty($user)) {
     /* Replace a redundant voting form with a cancel form. */
     if ($user_vote === 1) {
         $upvote = $cancel;
+        $up_title = $cancel_title;
     } else {
         $downvote = $cancel;
+        $down_title = $cancel_title;
     }
 }
 ?>
@@ -49,7 +57,7 @@ if (empty($user)) {
     <?=$html->hiddenSession()?>
     <input class="upvotes <?php if ($user_vote === 1) echo 'voted'?>"
            value="<?=$up?>" type="submit"
-           title="<?=___('Add a positive vote for this collection')?>" />
+           title="<?=$up_title?>" />
   </form>
   <?php if ($has_votes): ?>
     <div class="bars">
@@ -68,7 +76,7 @@ if (empty($user)) {
     <?=$html->hiddenSession()?>
     <input class="downvotes <?php if ($user_vote === -1) echo 'voted'?>"
            value="<?=$down?>" type="submit"
-           title="<?=___('Add a negative vote for this collection')?>" />
+           title="<?=$down_title?>" />
   </form>
 </div>
 <script type="text/javascript">
