@@ -289,7 +289,8 @@ class SearchController extends AppController
 
         // Fetch a sorted page of collections
         $page_options = array('show' => $pp);
-        $collections = $this->CollectionsListing->fetchPage($_result_ids, $page_options);
+        $collections = $this->CollectionsListing->fetchPage($_result_ids, array('users'),
+                                                            $page_options);
 
         // Our view needs the current sort options
         list($sort_opts, $sortby) = $this->CollectionsListing->sorting();
@@ -302,6 +303,13 @@ class SearchController extends AppController
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
             ___('Collections', 'collections_breadcrumb') => '/collections'
         ));
+
+        if ($this->Session->check('User')) {
+            $user = $this->Session->read('User');
+            $this->publish('user', $this->User->getUser($user['id'], array('votes')));
+        } else {
+            $this->publish('user', null);
+        }
 
         $this->publish('collapse_categories', true);
         $this->publish('collectionSearch', true);

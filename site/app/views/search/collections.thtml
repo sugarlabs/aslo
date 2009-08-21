@@ -63,7 +63,6 @@ $this->layout = 'amo2009';
           </div>
         <?php endif; ?>
         <?php
-        $user = $this->controller->Session->read('User');
         foreach ($collections as $collection) {
           echo $this->renderElement('amo2009/collection_listing_item',
                                     array('collection' => $collection,

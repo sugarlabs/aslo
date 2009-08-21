@@ -83,13 +83,21 @@ class CollectionsController extends AppController
             $ids = $collections;
         }
 
-        $collections = $this->CollectionsListing->fetchPage($ids, $pagination_options);
+        $collections = $this->CollectionsListing->fetchPage($ids, array('users'),
+                                                            $pagination_options);
         list($sort_opts, $sortby) = $this->CollectionsListing->sorting();
 
         $this->publish('sort_opts', $sort_opts);
         $this->publish('sortby', $sortby);
         $this->publish('collections', $collections);
         $this->set('tabs', $this->_collectionTabs());
+
+        if ($this->Session->check('User')) {
+            $user = $this->Session->read('User');
+            $this->publish('user', $this->User->getUser($user['id'], array('votes')));
+        } else {
+            $this->publish('user', null);
+        }
 
         // if a collection was just deleted, show success message
         $this->publish('collection_deleted', $this->Session->delete('collection_deleted'), false);

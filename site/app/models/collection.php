@@ -176,6 +176,12 @@ class Collection extends AppModel
         return $this->endCache($collection);
     }
 
+    function getCollectionList($ids, $associations=array()) {
+        $a = array();
+        foreach ($ids as $id) $a[] = $this->getCollection($id, $associations);
+        return $a;
+    }
+
     /**
      * Generates a pseudo-random UUID.
      * Slightly modified version of a function submitted to php.net:

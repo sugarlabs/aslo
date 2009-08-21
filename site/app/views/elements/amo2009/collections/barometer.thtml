@@ -78,10 +78,11 @@ $(document).ready(function() {
      * On success we get all this HTML back again, so it's replaced with a more
      * up-to-date version of itself.
      */
-    $('.barometer form').submit(function(e) {
+    $('.user-login .barometer form').submit(function(e) {
         e.preventDefault();
+        var the_form = this;
         $.post(this.action, $(this).serialize(), function(content) {
-           $('.barometer').parent().html(content);
+           $(the_form).closest('.barometer').parent().html(content);
         });
     });
 })

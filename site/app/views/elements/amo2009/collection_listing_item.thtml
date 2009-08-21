@@ -60,11 +60,18 @@
                         $subscribers),
                    $subscribers);?>
       </li>
+      <li>
+        <?php $c = $collection['Collection']; ?>
+        <?=$this->renderElement('amo2009/collections/barometer', array(
+            'up' => $c['upvotes'], 'down' => $c['downvotes'],
+            'collection' => $collection, 'user' => $user,
+        ))?>
+      </li>
       <?php if ($this->controller->Session->check('User')): ?>
         <li>
           <?php
           $fav = $this->controller->Collection->isSubscribed(
-              $collection['Collection']['id'], $user['id']);
+              $collection['Collection']['id'], $user['User']['id']);
           $params = array('collection' => $collection,
                           'is_subscribed' => $fav,
                           'buttonClass' => 'add-to-fav',

@@ -80,10 +80,11 @@ class CollectionsListingComponent extends Object {
     /**
      * Fetch a sorted page of collections
      * @param array $ids array of collection ids
+     * @param array $associations for getCollection
      * @param array array of pagination options
      * @return array Collections query result
      */
-    function fetchPage($ids, $pagination_options=array()) {
+    function fetchPage($ids, $associations, $pagination_options=array()) {
         $conditions = array('Collection.id' => $ids);
 
         list($sort_opts, $sortby) = $this->sorting();
@@ -93,9 +94,15 @@ class CollectionsListingComponent extends Object {
         $opts['sortBy'] = $sort_opts[$sortby]['sort'] . ' DESC';
 
         list($order, $limit, $page) = $this->controller->Pagination->init($conditions, array(), $opts);
-        $this->controller->Collection->bindOnly('Users');
 
-        return $this->controller->Collection->findAll($conditions, null, $order, $limit, $page);
+        $this->controller->Collection->unbindFully();
+        $paged = $this->controller->Collection->findAll($conditions, 'Collection.id', $order, $limit, $page);
+
+        $paged_ids = array();
+        foreach ($paged as $p)
+            $paged_ids[] = $p['Collection']['id'];
+
+        return $this->controller->Collection->getCollectionList($paged_ids, $associations);
     }
 
 }
