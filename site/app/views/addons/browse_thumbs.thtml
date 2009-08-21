@@ -95,8 +95,10 @@ $this->layout = 'amo2009';
     <div class="featured listing" id="addon-listing">
         <?= $this->renderElement('amo2009/addons/list_options', array('paging' => $paging)) ?>
 
-            <ul class="thumbs clearfix">
             <?php
+            $linethumbs = 0; // thumbs per line, counter
+            $MAX_THUMBS = 4; // thumbs per line, max
+
             foreach ($addons as $addon) {
                 $addonID   = $addon['Addon']['id'];
                 $addonName = $addon['Translation']['name']['string'];
@@ -107,7 +109,12 @@ $this->layout = 'amo2009';
                 $_alt = sprintf(___('Preview Image of %s'),$addonName);
                 $previmg = '<img src="'.$prevPath.'" alt="'.$_alt.'" title="'.$_alt.'"/>';
                 $previmg = $html->link($previmg, "/addon/{$addonID}");
+
+                // start a new line?
+                if ($linethumbs == 0):
                 ?>
+                <ul class="thumbs clearfix">
+                <?php endif; ?>
                     <li class="thumb <?=$html->extraClass($addon)?>" id="addon-<?=$addon['Addon']['id']?>">
                         <div class="thumb_item">
                             <div class="img"><?=$previmg?></div>
@@ -146,8 +153,12 @@ $this->layout = 'amo2009';
                     });
                     </script>
                     <?php endif; ?>
+                <?php
+                $linethumbs = ($linethumbs+1)%$MAX_THUMBS;
+                if ($linethumbs == 0): // end of line? ?>
+                </ul>
+                <?php endif; ?>
             <?php } ?>
-            </ul>
 
     </div><!-- /#addon-listing -->
 
