@@ -47,7 +47,7 @@ msgstr[0] "%1$s Tiện ích"
 msgstr[1] "%1$s Tiện ích"
 
 # %1$s is a number.
-#: views/collections/detail.thtml:149
+#: views/collections/detail.thtml:155
 #, php-format
 msgid "%1$s Add-on in this Collection"
 msgid_plural "%1$s Add-ons in this Collection"
@@ -61,14 +61,14 @@ msgstr[1] "%1$s Tiện ích trong Bộ sưu tập"
 msgid "%1$s KB"
 msgstr "%1$s kB"
 
-#: views/statistics/addon.thtml:67 controllers/statistics_controller.php:239
-#: controllers/statistics_controller.php:335
+#: views/statistics/addon.thtml:67 controllers/statistics_controller.php:245
+#: controllers/statistics_controller.php:372
 #, php-format
 msgid "%1$s Statistics"
 msgstr "Thống kê %1$s"
 
 # %1$s is the add-on name
-#: controllers/addons_controller.php:1591
+#: controllers/addons_controller.php:1599
 #, php-format
 msgid "%1$s Version History"
 msgstr "%1$s Lược sử Phiên bản"
@@ -188,7 +188,7 @@ msgid "%1$s committed unknown security action %2$s to ID %3$s"
 msgstr "%1$s thực hiện thao tác bảo mật chưa biết %2$s để ID %3$s"
 
 # %1$s is an add-on name and version.  Example:  Add-on 3.5
-#: controllers/components/stats.php:548
+#: controllers/components/stats.php:575
 #, php-format
 msgid "%1$s created"
 msgstr "%1$s được tạo"
@@ -377,8 +377,8 @@ msgstr "%1$s vừa bị xóa khỏi danh sách bộ sưu tập ưa thích của 
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:371
-#: controllers/components/validation.php:383
+#: controllers/components/validation.php:367
+#: controllers/components/validation.php:379
 #: controllers/components/developers.php:603
 #: controllers/components/developers.php:615
 #, php-format
@@ -387,7 +387,7 @@ msgstr "%s không phải là một phiên bản hợp lệ cho %s"
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
-#: controllers/components/validation.php:374
+#: controllers/components/validation.php:370
 #: controllers/components/developers.php:606
 #, php-format
 msgid "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
@@ -401,7 +401,7 @@ msgstr ""
 msgid "%1$s is not available for %2$s."
 msgstr "%1$s không hiện hữu cho %2$s."
 
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:188
 #, php-format
 msgid "%1$s on %2$s"
 msgstr "%1$s vào %2$s"
@@ -422,7 +422,7 @@ msgid "%1$s recalculated the hash for file %2$s"
 msgstr "%1$s đã tính toán lại mã băm cho tập tin %2$s"
 
 # %1$s is an application name and version.  Example:  Firefox 3.5
-#: controllers/components/stats.php:529
+#: controllers/components/stats.php:556
 #, php-format
 msgid "%1$s released"
 msgstr "%1$s được phát hành"
@@ -503,13 +503,13 @@ msgstr[0] "%1$s warning"
 msgstr[1] "%1$s warnings"
 
 # %1$s is a number.
-#: views/elements/amo2009/collections/barometer.thtml:61
+#: views/elements/amo2009/collections/barometer.thtml:69
 #, fuzzy, php-format
 msgid "%1$s%% negative votes for this collection"
 msgstr "%1$s Tiện ích trong Bộ sưu tập"
 
 # %1$s is a number.
-#: views/elements/amo2009/collections/barometer.thtml:58
+#: views/elements/amo2009/collections/barometer.thtml:66
 #, fuzzy, php-format
 msgid "%1$s%% positive votes for this collection"
 msgstr "%1$s Tiện ích trong Bộ sưu tập"
@@ -548,7 +548,7 @@ msgstr "%A, %e tháng %m năm %Y"
 # This is a date format.
 # http://php.net/strftime
 #: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
-#: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
+#: views/statistics/addon.thtml:168 views/statistics/addon.thtml:179
 msgid "%A, %b. %e"
 msgstr "%A, %e tháng %m"
 
@@ -562,7 +562,7 @@ msgstr "%A, %e tháng %m"
 #: views/elements/amo2009/addons/version_detail.thtml:53
 #: views/elements/addon_version_detail.thtml:54
 #: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
-#: views/collections/detail.thtml:124 views/collections/edit.thtml:324
+#: views/collections/detail.thtml:130 views/collections/edit.thtml:324
 #: views/statistics/index.thtml:108 views/users/info.thtml:108
 #: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
 #: views/developers/dashboard.thtml:65
@@ -572,7 +572,7 @@ msgstr "%A, %e tháng %m"
 #: views/addons/browse_thumbs.thtml:128 views/reviews/add.thtml:63
 #: views/reviews/display.thtml:74 views/reviews/display.thtml:159
 #: views/reviews/delete.thtml:54 controllers/statistics_controller.php:144
-#: controllers/statistics_controller.php:297
+#: controllers/statistics_controller.php:333
 #: controllers/collections_controller.php:1190
 msgid "%B %e, %Y"
 msgstr "%e tháng %m năm %Y"
@@ -588,23 +588,23 @@ msgstr "%e tháng %m năm %Y, %I:%M %p"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
+#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:188
 #, fuzzy, php-format
 msgid "%b. %e"
 msgstr "%e tháng %m"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:159
 msgid "%b. %e, %Y"
 msgstr "%e tháng %m, %Y"
 
 # %s is the name of the add-on and the add-on section.  Example:
 #   Some Add-on :: Firefox Add-ons
 # This should not be concatenated in the code and should be fixed.
-#: controllers/tags_controller.php:381 controllers/addons_controller.php:210
-#: controllers/addons_controller.php:343
-#: controllers/addons_controller.php:1538
+#: controllers/tags_controller.php:381 controllers/addons_controller.php:218
+#: controllers/addons_controller.php:351
+#: controllers/addons_controller.php:1546
 #: controllers/collections_controller.php:349
 #, php-format
 msgid "%s"
@@ -662,14 +662,14 @@ msgid_plural "%s files"
 msgstr[0] "%s tập tin"
 msgstr[1] "%s tập tin"
 
-#: controllers/statistics_controller.php:313
+#: controllers/statistics_controller.php:350
 #, php-format
 msgid "%s found in range"
 msgstr "%s được tìm thấy trong khoảng"
 
 # %s is a percentage, like '+22.33%'.  It sits next to another number, so
 # the implied meaning is 'percentage change' from the previous stat point.
-#: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:209
+#: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:212
 #, php-format
 msgid "%s from last week"
 msgstr "%s kể từ tuần trước"
@@ -803,7 +803,7 @@ msgstr ""
 
 # %1 is the URL to the registration page
 # %2 is the URL to the login page
-#: views/layouts/amo2009.thtml:278
+#: views/layouts/amo2009.thtml:284
 #, php-format
 msgid "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a>"
 msgstr "<a href=\"%1$s\">Đăng kí</a> hoặc <a href=\"%2$s\">Đăng nhập</a>"
@@ -1157,7 +1157,7 @@ msgid_plural "<strong>%1$s</strong> subscribers"
 msgstr[0] "<strong>%1$s</strong> người đăng kí"
 msgstr[1] "<strong>%1$s</strong> người đăng kí"
 
-#: views/collections/detail.thtml:119
+#: views/collections/detail.thtml:125
 #, php-format
 msgid "<strong>Created by:</strong> %1$s"
 msgstr "<strong>Tạo bởi:</strong> %1$s"
@@ -1190,7 +1190,7 @@ msgstr ""
 "<strong>Người sở hữu</strong> - Có thể quản lí tất cả khía cạnh của việc "
 "liệt kê tiện ích, bao gồm cả việc thêm và xóa các tác giả khác."
 
-#: views/collections/detail.thtml:123
+#: views/collections/detail.thtml:129
 msgid "<strong>Updated:</strong>"
 msgstr "<strong>Cập nhật:</strong>"
 
@@ -1262,7 +1262,7 @@ msgstr ""
 "tin %1$S trước."
 
 # Link text for the AMO About page.
-#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
+#: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:359
 msgctxt "footer_a_about"
 msgid "About"
 msgstr "Giới thiệu"
@@ -1277,7 +1277,7 @@ msgstr "About"
 msgid "About Me"
 msgstr "Về tôi"
 
-#: views/collections/detail.thtml:115
+#: views/collections/detail.thtml:121
 msgid "About This Collection"
 msgstr "Thông tin về Bộ sưu tập này"
 
@@ -1334,12 +1334,12 @@ msgctxt "statistics_summary_updatepings_heading"
 msgid "Active Daily Users"
 msgstr "Người dùng Trung bình Mỗi ngày"
 
-#: views/statistics/addon.thtml:103 views/statistics/addon.thtml:161
+#: views/statistics/addon.thtml:103 views/statistics/addon.thtml:164
 msgctxt "statistics_plot_legend_adu"
 msgid "Active Daily Users"
 msgstr "Người dùng Mỗi ngày"
 
-#: controllers/statistics_controller.php:307
+#: controllers/statistics_controller.php:343
 msgctxt "statistics_js_plotselection_selector_adu"
 msgid "Active Daily Users"
 msgstr "Người dùng Mỗi ngày"
@@ -1430,7 +1430,7 @@ msgstr "Thêm Hình ảnh Xem trước Mới"
 msgid "Add New Version"
 msgstr "Thêm Phiên Bản Mới"
 
-#: controllers/statistics_controller.php:323
+#: controllers/statistics_controller.php:360
 msgid "Add Plot"
 msgstr "Thêm Đồ Thị"
 
@@ -1457,12 +1457,12 @@ msgstr "Thêm Trả Lời"
 msgid "Add Translation"
 msgstr "Thêm Bản Dịch"
 
-#: views/elements/amo2009/collections/barometer.thtml:71
+#: views/elements/amo2009/collections/barometer.thtml:28
 #, fuzzy
 msgid "Add a negative vote for this collection"
 msgstr "Thêm vào một bộ sưu tập:"
 
-#: views/elements/amo2009/collections/barometer.thtml:52
+#: views/elements/amo2009/collections/barometer.thtml:27
 #, fuzzy
 msgid "Add a positive vote for this collection"
 msgstr "Thêm vào một bộ sưu tập:"
@@ -1490,7 +1490,7 @@ msgstr ""
 "Thêm hoặc sửa đổi các bản dịch cho các phần chính sách riêng tư, giấy phép, "
 "người dùng cuối, mô tả và tóm tắt cho tiện ích của bạn."
 
-#: controllers/statistics_controller.php:324
+#: controllers/statistics_controller.php:361
 msgid "Add another plot to this graph"
 msgstr "Thêm đồ thị vào biểu đồ này"
 
@@ -1668,12 +1668,12 @@ msgstr "Chính sách Tiện ích"
 msgid "Add-on Reviews"
 msgstr "Add-on Reviews"
 
-#: controllers/components/stats.php:428
+#: controllers/components/stats.php:444
 msgctxt "statistics_longnames_status"
 msgid "Add-on Status"
 msgstr "Trạng thái Tiện ích"
 
-#: controllers/statistics_controller.php:310
+#: controllers/statistics_controller.php:346
 msgctxt "statistics_js_plotselection_selector_status"
 msgid "Add-on Status"
 msgstr "Trạng thái Tiện ích"
@@ -1713,12 +1713,12 @@ msgstr "Kiểu của Tiện ích"
 msgid "Add-on Types"
 msgstr "Kiểu tiện ích"
 
-#: controllers/components/stats.php:426
+#: controllers/components/stats.php:442
 msgctxt "statistics_longnames_version"
 msgid "Add-on Version"
 msgstr "Phiên bản Tiện ích"
 
-#: controllers/statistics_controller.php:308
+#: controllers/statistics_controller.php:344
 msgctxt "statistics_js_plotselection_selector_version"
 msgid "Add-on Version"
 msgstr "Phiên bản Tiện ích"
@@ -1755,9 +1755,9 @@ msgstr "Tên tiện ích:"
 #: controllers/reviews_controller.php:333
 #: controllers/reviews_controller.php:341 controllers/api_controller.php:124
 #: controllers/api_controller.php:762 controllers/addons_controller.php:84
-#: controllers/addons_controller.php:200 controllers/addons_controller.php:269
-#: controllers/addons_controller.php:1502
-#: controllers/addons_controller.php:1559
+#: controllers/addons_controller.php:208 controllers/addons_controller.php:277
+#: controllers/addons_controller.php:1510
+#: controllers/addons_controller.php:1567
 #: controllers/editors_controller.php:286
 #: controllers/collections_controller.php:1184
 #: controllers/collections_controller.php:1217
@@ -1789,7 +1789,7 @@ msgid "Add-ons"
 msgstr "Tiện ích"
 
 # %1$s is the URL to the logo image
-#: views/layouts/amo2009.thtml:218
+#: views/layouts/amo2009.thtml:224
 #, php-format
 msgid ""
 "Add-ons <em>for</em> <img alt=\"Firefox\" src=\"%1$s\" /> <strong>Firefox</"
@@ -1799,7 +1799,7 @@ msgstr ""
 "Cáo Lửa</strong>"
 
 # %1$s is the URL to the logo image
-#: views/layouts/amo2009.thtml:224
+#: views/layouts/amo2009.thtml:230
 #, php-format
 msgid ""
 "Add-ons <em>for</em> <img alt=\"seamonkey\" src=\"%1$s\" /> "
@@ -1809,7 +1809,7 @@ msgstr ""
 "<strong>SeaMonkey - Khỉ Biển</strong>"
 
 # %1$s is the URL to the logo image
-#: views/layouts/amo2009.thtml:230
+#: views/layouts/amo2009.thtml:236
 #, php-format
 msgid ""
 "Add-ons <em>for</em> <img alt=\"sunbird\" src=\"%1$s\" /> <strong>Sunbird</"
@@ -1819,7 +1819,7 @@ msgstr ""
 "Chim Hút Mật</strong>"
 
 # %1$s is the URL to the logo image
-#: views/layouts/amo2009.thtml:236
+#: views/layouts/amo2009.thtml:242
 #, php-format
 msgid ""
 "Add-ons <em>for</em> <img alt=\"thunderbird\" src=\"%1$s\" /> "
@@ -1829,7 +1829,7 @@ msgstr ""
 "<strong>Thunderbird - Chim Sét</strong>"
 
 # %1$s is the URL to the logo image
-#: views/layouts/amo2009.thtml:242
+#: views/layouts/amo2009.thtml:248
 #, php-format
 msgid "Add-ons <img alt=\"Add-ons\" src=\"%1$s\" />"
 msgstr "Tiện ích <img alt=\"Tiện ích\" src=\"%1$s\" />"
@@ -1873,15 +1873,15 @@ msgstr "Chính sách về Tiện ích"
 msgid "Add-ons Updated"
 msgstr "Add-ons Updated"
 
-#: controllers/addons_controller.php:1131
+#: controllers/addons_controller.php:1139
 msgid "Add-ons by Name"
 msgstr "Tiện ích xếp theo Tên"
 
-#: controllers/addons_controller.php:1130
+#: controllers/addons_controller.php:1138
 msgid "Add-ons by Rating"
 msgstr "Tiện ích xếp theo Xếp hạng"
 
-#: controllers/components/validation.php:303
+#: controllers/components/validation.php:299
 #: controllers/components/developers.php:535
 msgid ""
 "Add-ons cannot use an external updateURL. Please remove this from install."
@@ -1890,7 +1890,7 @@ msgstr ""
 "Tiện ích không thể dùng URL cập nhật bên ngoài. Vui lòng xóa khỏi install."
 "rdf và thử lại."
 
-#: controllers/components/validation.php:308
+#: controllers/components/validation.php:304
 #: controllers/components/developers.php:540
 msgid ""
 "Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
@@ -1913,11 +1913,11 @@ msgid "Add-ons compatible with an alpha version of %1$s"
 msgstr "Các tiện ích tương thích với phiên bản alpha của %1$s"
 
 #: controllers/tags_controller.php:372 controllers/search_controller.php:235
-#: controllers/addons_controller.php:245 controllers/addons_controller.php:489
-#: controllers/addons_controller.php:786 controllers/addons_controller.php:990
-#: controllers/addons_controller.php:1216
-#: controllers/addons_controller.php:1359
-#: controllers/addons_controller.php:1408
+#: controllers/addons_controller.php:253 controllers/addons_controller.php:497
+#: controllers/addons_controller.php:794 controllers/addons_controller.php:998
+#: controllers/addons_controller.php:1224
+#: controllers/addons_controller.php:1367
+#: controllers/addons_controller.php:1416
 #, php-format
 msgid ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
@@ -1937,8 +1937,8 @@ msgstr ""
 #: controllers/components/simple_acl.php:81 controllers/components/amo.php:689
 #: controllers/versions_controller.php:63
 #: controllers/statistics_controller.php:67
-#: controllers/statistics_controller.php:293
-#: controllers/statistics_controller.php:461
+#: controllers/statistics_controller.php:329
+#: controllers/statistics_controller.php:498
 #: controllers/previews_controller.php:67 controllers/users_controller.php:96
 #: controllers/users_controller.php:229 controllers/users_controller.php:336
 #: controllers/users_controller.php:422 controllers/users_controller.php:788
@@ -1948,20 +1948,21 @@ msgstr ""
 #: controllers/reviews_controller.php:347
 #: controllers/reviews_controller.php:426
 #: controllers/search_controller.php:199 controllers/search_controller.php:299
-#: controllers/search_controller.php:303 controllers/addons_controller.php:170
-#: controllers/addons_controller.php:216 controllers/addons_controller.php:343
-#: controllers/addons_controller.php:434 controllers/addons_controller.php:464
-#: controllers/addons_controller.php:782 controllers/addons_controller.php:993
-#: controllers/addons_controller.php:1138
-#: controllers/addons_controller.php:1153
-#: controllers/addons_controller.php:1214
-#: controllers/addons_controller.php:1234
-#: controllers/addons_controller.php:1357
-#: controllers/addons_controller.php:1470
-#: controllers/addons_controller.php:1477
-#: controllers/addons_controller.php:1538
-#: controllers/addons_controller.php:1594
-#: controllers/addons_controller.php:1599
+#: controllers/search_controller.php:303 controllers/addons_controller.php:172
+#: controllers/addons_controller.php:224 controllers/addons_controller.php:351
+#: controllers/addons_controller.php:442 controllers/addons_controller.php:472
+#: controllers/addons_controller.php:790
+#: controllers/addons_controller.php:1001
+#: controllers/addons_controller.php:1146
+#: controllers/addons_controller.php:1161
+#: controllers/addons_controller.php:1222
+#: controllers/addons_controller.php:1242
+#: controllers/addons_controller.php:1365
+#: controllers/addons_controller.php:1478
+#: controllers/addons_controller.php:1485
+#: controllers/addons_controller.php:1546
+#: controllers/addons_controller.php:1602
+#: controllers/addons_controller.php:1607
 #: controllers/editors_controller.php:64 controllers/pages_controller.php:138
 #: controllers/groups_controller.php:65 controllers/groups_controller.php:71
 #: controllers/groups_controller.php:89 controllers/groups_controller.php:111
@@ -2087,7 +2088,7 @@ msgctxt "devcp_myaddons_admincp_link"
 msgid "Admin Tools"
 msgstr "Công cụ Quản trị"
 
-#: views/elements/header.thtml:154 views/layouts/amo2009.thtml:292
+#: views/elements/header.thtml:154 views/layouts/amo2009.thtml:298
 msgctxt "sidebar_navlink_admin_tools"
 msgid "Admin Tools"
 msgstr "Công cụ Quản trị"
@@ -2142,6 +2143,11 @@ msgstr "Tất cả Bộ máy Tìm kiếm"
 msgid "All Themes"
 msgstr "Tất cả Giao diện"
 
+#: views/statistics/addon.thtml:225
+#, fuzzy
+msgid "All Time"
+msgstr "Tất cả Giao diện"
+
 #: views/search/index.thtml:154
 #, fuzzy
 msgid "All Versions"
@@ -2153,7 +2159,7 @@ msgid ""
 msgstr ""
 "Tất cả dãy đánh giá hiện đang bị vô hiệu hóa. Vui lòng kiểm tra lại sau."
 
-#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:348
+#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:354
 msgid "All rights reserved."
 msgstr ""
 "Mọi quyền được bảo lưu. <br/><b>Vào trang web</b> <a href=\"http://vi.mozdev."
@@ -2274,7 +2280,7 @@ msgstr "Bất kì lúc nào"
 msgid "Anyone can view this add-on's statistics"
 msgstr "Bất kì ai cũng có thể xem thống kê của tiện ích này"
 
-#: controllers/components/stats.php:434
+#: controllers/components/stats.php:450
 msgid "App"
 msgstr "Ứ.dụng"
 
@@ -2302,12 +2308,12 @@ msgctxt "editors_queue_filter_label_application"
 msgid "Application"
 msgstr "Chương trình"
 
-#: controllers/components/stats.php:427
+#: controllers/components/stats.php:443
 msgctxt "statistics_longnames_application"
 msgid "Application"
 msgstr "Ứng dụng"
 
-#: controllers/statistics_controller.php:309
+#: controllers/statistics_controller.php:345
 msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "Ứng dụng"
@@ -2460,15 +2466,19 @@ msgstr "Tự động Xuất bản"
 msgid "Available Actions"
 msgstr "Thao tác Khả thi"
 
-#: views/statistics/rss/summary.thtml:60 views/statistics/addon.thtml:199
+#: views/statistics/addon.thtml:244 views/statistics/addon.thtml:247
+msgid "Average Amount"
+msgstr ""
+
+#: views/statistics/rss/summary.thtml:60 views/statistics/addon.thtml:202
 msgid "Average Daily Active Users"
 msgstr "Số người dùng Trung bình Mỗi ngày"
 
-#: views/statistics/rss/summary.thtml:42 views/statistics/addon.thtml:196
+#: views/statistics/rss/summary.thtml:42 views/statistics/addon.thtml:199
 msgid "Average Daily Downloads"
 msgstr "Số lượt tải Trung bình Mỗi ngày"
 
-#: views/statistics/rss/summary.thtml:61 views/statistics/addon.thtml:207
+#: views/statistics/rss/summary.thtml:61 views/statistics/addon.thtml:210
 msgid "Average Daily Users this Week"
 msgstr "Người dùng Hàng ngày Trung bình của Tuần này"
 
@@ -2570,7 +2580,7 @@ msgid "Block Quote"
 msgstr "Block Quote"
 
 # Link text to the AMO blog.
-#: views/elements/footer.thtml:74 views/layouts/amo2009.thtml:355
+#: views/elements/footer.thtml:74 views/layouts/amo2009.thtml:361
 msgid "Blog"
 msgstr "Blog"
 
@@ -2585,13 +2595,13 @@ msgstr "Mô tả ngắn gọn bộ sưu tập của bạn và kiểu tiện ích
 
 # %1 is the name of the theme category (eg. Modern)
 # %2 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:778
+#: controllers/addons_controller.php:786
 #, php-format
 msgid "Browse %1$s Themes :: %2$s Add-ons"
 msgstr "Duyệt xem Giao diện %1$s :: Tiện ích %2$s"
 
 # %s is the name of the category
-#: controllers/addons_controller.php:1135
+#: controllers/addons_controller.php:1143
 #, php-format
 msgid "Browse %s"
 msgstr "Duyệt %s"
@@ -2609,8 +2619,8 @@ msgid "Browse Themes"
 msgstr "Duyệt xem Giao diện"
 
 # %1 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:776
-#: controllers/addons_controller.php:1406
+#: controllers/addons_controller.php:784
+#: controllers/addons_controller.php:1414
 #, php-format
 msgid "Browse all Themes :: %1$s Add-ons"
 msgstr "Duyệt xem tất cả Giao diện :: Tiện ích %1$s"
@@ -2668,7 +2678,7 @@ msgstr ""
 msgid "CSS"
 msgstr "CSS"
 
-#: controllers/statistics_controller.php:522
+#: controllers/statistics_controller.php:559
 #, fuzzy
 msgid "CSV data not found"
 msgstr "CSV data not found"
@@ -2762,7 +2772,7 @@ msgstr "Thay đổi Địa chỉ Email"
 msgid "Change Password or Email"
 msgstr "Thay đổi Mật khẩu hoặc Email"
 
-#: views/statistics/addon.thtml:255
+#: views/statistics/addon.thtml:288
 msgid "Change Settings"
 msgstr "Thay đổi Thiết lập"
 
@@ -2776,7 +2786,7 @@ msgctxt "devcp_dashboard_change_status"
 msgid "Change Status"
 msgstr "Thay đổi Trạng thái"
 
-#: views/statistics/rss/summary.thtml:52 views/statistics/addon.thtml:181
+#: views/statistics/rss/summary.thtml:52 views/statistics/addon.thtml:184
 msgid "Change from previous count"
 msgstr "Thay đổi kể từ lượt đếm trước"
 
@@ -2884,7 +2894,7 @@ msgstr "Close"
 msgid "Code Block"
 msgstr "Code Block"
 
-#: controllers/statistics_controller.php:325
+#: controllers/statistics_controller.php:362
 msgid "Collapse Graph"
 msgstr "Thu gọn Biểu đồ"
 
@@ -2900,12 +2910,17 @@ msgstr "Tên bộ sưu tập"
 msgid "Collection Nickname"
 msgstr "Biệt hiệu Bộ sưu tập"
 
-#: controllers/statistics_controller.php:394
-#: controllers/statistics_controller.php:484
-#: controllers/statistics_controller.php:567
+#: controllers/statistics_controller.php:431
+#: controllers/statistics_controller.php:521
+#: controllers/statistics_controller.php:605
 #, fuzzy
 msgid "Collection Not Found!"
 msgstr "Không tìm thấy bộ sưu tập!"
+
+#: views/statistics/collections.thtml:86
+#, fuzzy
+msgid "Collection Ratings"
+msgstr "Bộ sưu tập"
 
 #: views/search/collections.thtml:51
 msgctxt "search_collections_header"
@@ -2961,7 +2976,7 @@ msgctxt "collections_breadcrumb"
 msgid "Collections"
 msgstr "Bộ sưu tập"
 
-#: controllers/statistics_controller.php:462
+#: controllers/statistics_controller.php:499
 #, fuzzy
 msgid "Collections"
 msgstr "Bộ sưu tập"
@@ -3047,12 +3062,12 @@ msgid "Common Library Checksum Tests"
 msgstr "Common Library Checksum Tests"
 
 # %1$s is the application name.  Example: Firefox, Thunderbird, Sunbird
-#: controllers/addons_controller.php:1235
+#: controllers/addons_controller.php:1243
 #, php-format
 msgid "Common Plugins for %1$s"
 msgstr "Phần bổ trợ Thông dụng cho %1$s"
 
-#: controllers/statistics_controller.php:303
+#: controllers/statistics_controller.php:339
 msgid "Compare by: Week"
 msgstr "So sánh theo: Tuần"
 
@@ -3114,17 +3129,17 @@ msgstr "Chúc mừng! Tài khoản của bạn đã được tạo thành công.
 msgid "Continue"
 msgstr "Đóng góp"
 
-#: views/elements/amo2009/contribution.thtml:64
+#: views/elements/amo2009/contribution.thtml:67
 msgid "Contribute"
 msgstr "Đóng góp"
 
 # %1 is a number like 32 or 47.99.
-#: views/elements/amo2009/contribution.thtml:102
+#: views/elements/amo2009/contribution.thtml:107
 #, php-format
 msgid "Contribute $%1$s"
 msgstr "Đóng góp $%1$s"
 
-#: views/elements/amo2009/contribution.thtml:109
+#: views/elements/amo2009/contribution.thtml:114
 msgid "Contribute a Different Amount"
 msgstr "Đóng góp một Khoản Khác"
 
@@ -3138,11 +3153,18 @@ msgstr "Tài khoản Đóng góp"
 msgid "Contribution for %1$s"
 msgstr "Đóng góp cho %1$s"
 
-#: views/elements/developers/editbox.thtml:58
+#: views/elements/developers/editbox.thtml:58 views/statistics/addon.thtml:230
+#: views/statistics/addon.thtml:233
 msgid "Contributions"
 msgstr "Khoản đóng góp"
 
-#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:348
+#: controllers/statistics_controller.php:348
+#, fuzzy
+msgctxt "statistics_js_plotselection_selector_contributions"
+msgid "Contributions"
+msgstr "Khoản đóng góp"
+
+#: views/elements/footer.thtml:67 views/layouts/amo2009.thtml:354
 msgid "Copyright"
 msgstr "Bản quyền"
 
@@ -3154,7 +3176,7 @@ msgstr "Không thể di chuyển tập tin"
 msgid "Create Collection"
 msgstr "Tạo mới Bộ sưu tập"
 
-#: views/developers/addon_edit_profile.thtml:114
+#: views/developers/addon_edit_profile.thtml:130
 msgid "Create Developer Profile"
 msgstr "Tạo Hồ sơ Nhà phát triển"
 
@@ -3195,7 +3217,7 @@ msgstr "Đã tạo"
 msgid "Created by Me"
 msgstr "Created by Me"
 
-#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
+#: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:358
 msgctxt "footer_credits"
 msgid "Credits"
 msgstr "Công trạng"
@@ -3231,7 +3253,7 @@ msgstr "Phân mục Hiện tại"
 msgid "Current Icon"
 msgstr "Biểu tượng Hiện tại"
 
-#: controllers/statistics_controller.php:312
+#: controllers/statistics_controller.php:349
 msgid "Custom"
 msgstr "Tùy biến"
 
@@ -3254,7 +3276,7 @@ msgstr "Số lần tải Mỗi ngày"
 msgid "Daily downloads over collection timeframe"
 msgstr ""
 
-#: controllers/statistics_controller.php:336
+#: controllers/statistics_controller.php:373
 #, php-format
 msgid "Daily summary of statistics for %1$s"
 msgstr "Tóm tắt thống kê mỗi ngày cho %1$s"
@@ -3491,7 +3513,7 @@ msgctxt "devcp_myaddons_title"
 msgid "Developer Tools"
 msgstr "Công cụ Nhà phát triển"
 
-#: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
+#: views/elements/header.thtml:146 views/layouts/amo2009.thtml:292
 msgctxt "sidebar_navlink_developer_tools"
 msgid "Developer Tools"
 msgstr "Công cụ Nhà phát triển"
@@ -3530,7 +3552,7 @@ msgid "Dictionaries & Language Packs"
 msgstr "Từ điển & Gói ngôn ngữ"
 
 #: views/addons/dictionaries.thtml:63 controllers/components/amo.php:768
-#: controllers/addons_controller.php:1356
+#: controllers/addons_controller.php:1364
 msgctxt "langtools_header_dicts_and_langpacks"
 msgid "Dictionaries & Language Packs"
 msgstr "Từ điển và Gói ngôn ngữ"
@@ -3643,12 +3665,18 @@ msgctxt "statistics_summary_downloads_heading"
 msgid "Downloads"
 msgstr "Số lần tải"
 
-#: controllers/statistics_controller.php:306
+#: controllers/statistics_controller.php:342
 msgctxt "statistics_js_plotselection_selector_downloads"
 msgid "Downloads"
 msgstr "Số lần tải"
 
-#: views/statistics/rss/summary.thtml:43 views/statistics/addon.thtml:203
+# %1$s is a number.
+#: views/statistics/collections.thtml:95
+#, fuzzy
+msgid "Downloads from Collection"
+msgstr "%1$s Tiện ích trong Bộ sưu tập"
+
+#: views/statistics/rss/summary.thtml:43 views/statistics/addon.thtml:206
 msgid "Downloads in the last 7 days"
 msgstr "Số lượt tải trong 7 ngày vừa qua"
 
@@ -3774,7 +3802,7 @@ msgctxt "devcp_myaddons_editorcp_link"
 msgid "Editor Tools"
 msgstr "Công cụ Biên tập"
 
-#: views/elements/header.thtml:148 views/layouts/amo2009.thtml:288
+#: views/elements/header.thtml:148 views/layouts/amo2009.thtml:294
 msgctxt "sidebar_navlink_editor_tools"
 msgid "Editor Tools"
 msgstr "Công cụ Biên tập viên"
@@ -3882,7 +3910,7 @@ msgstr "Mọi người đều có thể xem bộ sưu tập của tôi trong th�
 msgid "Exceeds maximum upload size"
 msgstr "Vượt quá kích thước tải lên tối đa"
 
-#: controllers/statistics_controller.php:326
+#: controllers/statistics_controller.php:363
 msgid "Expand Graph"
 msgstr "Mở rộng Biểu đồ"
 
@@ -3919,7 +3947,7 @@ msgid "External Software"
 msgstr "Phần mềm Bên ngoài"
 
 # Link text to the Frequently Asked Questions page.
-#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
+#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:360
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -3966,7 +3994,7 @@ msgctxt "devcp_editorsqueue_featured"
 msgid "Featured Add-ons"
 msgstr "Tiện ích Nổi bật"
 
-#: controllers/addons_controller.php:496
+#: controllers/addons_controller.php:504
 msgctxt "rss_featuredaddons"
 msgid "Featured Add-ons"
 msgstr "Tiện ích được Đề cao"
@@ -4082,7 +4110,7 @@ msgstr "Dãy Bộ Lọc"
 msgid "Filter by type/action"
 msgstr "Lọc theo kiểu/thao tác"
 
-#: views/elements/app_chooser.thtml:47 views/layouts/amo2009.thtml:255
+#: views/elements/app_chooser.thtml:47 views/layouts/amo2009.thtml:261
 msgid "Find add-ons for other applications"
 msgstr "Tìm tiện ích cho các chương trình khác"
 
@@ -4113,7 +4141,7 @@ msgstr "Để biết thêm thông tin về việc đóng góp, vui lòng xem %s.
 
 # Full text for the FAQ abbreviation.
 #: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
-#: views/layouts/amo2009.thtml:354
+#: views/layouts/amo2009.thtml:360
 msgctxt "footer_abbr_faq"
 msgid "Frequently Asked Questions"
 msgstr "Hỏi đáp Thường gặp"
@@ -4178,7 +4206,7 @@ msgctxt "devcp_uploader_a_start"
 msgid "Get Started"
 msgstr "Bắt Đầu"
 
-#: controllers/statistics_controller.php:329
+#: controllers/statistics_controller.php:366
 msgid "Get a Comma Separated Values file of this data"
 msgstr ""
 "Lấy một tập tin Giá trị Ngăn cách Theo dấu phẩy (Comma Separated Values) của "
@@ -4193,7 +4221,7 @@ msgstr ""
 "thích của Mạnh Hùng\""
 
 #: views/elements/amo2009/collections/sort_form.thtml:55
-#: views/collections/detail.thtml:162 views/statistics/collections.thtml:67
+#: views/collections/detail.thtml:168 views/statistics/collections.thtml:67
 #: views/search/index.thtml:129
 msgctxt "collections_index_button_go"
 msgid "Go"
@@ -4205,7 +4233,7 @@ msgctxt "addons_options_submit"
 msgid "Go"
 msgstr "Gửi đi"
 
-#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
+#: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:349
 msgctxt "footer_lang_form_lang_submit_go"
 msgid "Go"
 msgstr "Gửi đi"
@@ -4225,17 +4253,17 @@ msgid "Group Admin"
 msgstr "Quản trị Nhóm"
 
 #: controllers/statistics_controller.php:132
-#: controllers/statistics_controller.php:301
+#: controllers/statistics_controller.php:337
 msgid "Group by: Day"
 msgstr "Nhóm theo: Ngày"
 
 #: controllers/statistics_controller.php:134
-#: controllers/statistics_controller.php:304
+#: controllers/statistics_controller.php:340
 msgid "Group by: Month"
 msgstr "Nhóm theo: Tháng"
 
 #: controllers/statistics_controller.php:133
-#: controllers/statistics_controller.php:302
+#: controllers/statistics_controller.php:338
 msgid "Group by: Week"
 msgstr "Nhóm theo: Tuần"
 
@@ -4267,7 +4295,7 @@ msgstr "Trợ giúp (không rời trang)"
 msgid "Helpful Links"
 msgstr "Liên kết Hữu ích"
 
-#: controllers/statistics_controller.php:320
+#: controllers/statistics_controller.php:357
 #, php-format
 msgid "Hide %s Events"
 msgstr "Ẩn Sự Kiện %s"
@@ -4276,7 +4304,7 @@ msgstr "Ẩn Sự Kiện %s"
 msgid "Hide Comments"
 msgstr "Ẩn bình luận"
 
-#: controllers/statistics_controller.php:317
+#: controllers/statistics_controller.php:354
 msgid "Hide Firefox Events"
 msgstr "Ẩn Sự Kiện Firefox"
 
@@ -4284,7 +4312,7 @@ msgstr "Ẩn Sự Kiện Firefox"
 msgid "Hide Help"
 msgstr "Ẩn Trợ giúp"
 
-#: controllers/statistics_controller.php:314
+#: controllers/statistics_controller.php:351
 msgid "Hide Total Count"
 msgstr "Ẩn Tổng Số Lần Đếm"
 
@@ -4633,10 +4661,14 @@ msgid "Install Language Pack"
 msgstr "Cài đặt Gói ngôn ngữ"
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:738
+#: controllers/components/validation.php:736
 #, fuzzy, php-format
 msgid "Install.js contains a function missing from the whitelist: %s"
 msgstr "Install.js contains a function missing from the whitelist: %s"
+
+#: views/statistics/collections.thtml:81
+msgid "Insufficient Data"
+msgstr ""
 
 #: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
 msgid ""
@@ -4725,7 +4757,7 @@ msgstr ""
 "nó. Vui lòng kích hoạt JavaScript trước khi có ý định cài đặt bất kì phần bổ "
 "trợ tìm kiếm nào."
 
-#: views/statistics/addon.thtml:127 views/statistics/index.thtml:79
+#: views/statistics/addon.thtml:130 views/statistics/index.thtml:79
 msgid "JavaScript is required to view the Statistics Dashboard graphs."
 msgstr "JavaScript cần có để xem biểu đồ Bảng Thống Kê."
 
@@ -4755,7 +4787,7 @@ msgid "L10n Completeness Check"
 msgstr "L10n Completeness Check"
 
 # %s is an English string from an external validation program.  (An error)
-#: controllers/components/validation.php:648
+#: controllers/components/validation.php:646
 #, fuzzy, php-format
 msgid "L10n test returned an error: %s"
 msgstr "L10n test returned an error: %s"
@@ -4798,7 +4830,7 @@ msgstr "Gói ngôn ngữ (Tiện ích)"
 msgid "Language Packs (Application)"
 msgstr "Gói ngôn ngữ (Chương trình)"
 
-#: views/statistics/rss/summary.thtml:41 views/statistics/addon.thtml:175
+#: views/statistics/rss/summary.thtml:41 views/statistics/addon.thtml:178
 msgid "Last Day Count"
 msgstr "Số lượt của Ngày Cuối"
 
@@ -4866,7 +4898,7 @@ msgstr ""
 "Tìm hiểu tại sao %1$s được tạo ra và tìm xem cái nào sẽ là tiếp theo của "
 "tiện ích này."
 
-#: views/elements/footer.thtml:70 views/layouts/amo2009.thtml:351
+#: views/elements/footer.thtml:70 views/layouts/amo2009.thtml:357
 msgid "Legal Notices"
 msgstr "Lưu ý Pháp lí"
 
@@ -4882,7 +4914,7 @@ msgid ""
 msgstr ""
 "Hãy để tôi cài đặt tiện ích thử nghiệm này. <a href=\"%1$s\">Đây là gì?</a>"
 
-#: views/developers/addon_edit_profile.thtml:95
+#: views/developers/addon_edit_profile.thtml:111
 msgid ""
 "Let your users know why you created an add-on.  Whether it was an idea while "
 "in line at the grocery store or the solution to one of life's great "
@@ -4957,7 +4989,7 @@ msgctxt "user_form_location"
 msgid "Location"
 msgstr "Location"
 
-#: views/statistics/addon.thtml:250
+#: views/statistics/addon.thtml:283
 msgid "Locked"
 msgstr "Đã khóa"
 
@@ -4977,7 +5009,12 @@ msgctxt "user_form_submit_login"
 msgid "Log in"
 msgstr "Đăng nhập"
 
-#: views/elements/header.thtml:156 views/layouts/amo2009.thtml:314
+#: views/elements/amo2009/collections/barometer.thtml:30
+#, fuzzy
+msgid "Log in to vote for this collection"
+msgstr "Không tìm thấy đánh giá nào trong khoảng thời gian này."
+
+#: views/elements/header.thtml:156 views/layouts/amo2009.thtml:320
 msgid "Log out"
 msgstr "Thoát"
 
@@ -5151,7 +5188,7 @@ msgstr ""
 "nhật trên máy khách. Bạn có thể trở lại đây và kích hoạt nó nếu muốn."
 
 # %s is a string.  Example: /test.*pattern/
-#: controllers/components/validation.php:1101
+#: controllers/components/validation.php:1099
 #, fuzzy, php-format
 msgid "Matched Pattern: \"%s\""
 msgstr "Matched Pattern: \"%s\""
@@ -5167,7 +5204,7 @@ msgid "Meet %1$s"
 msgstr "Gặp gỡ %1$s"
 
 # %1 is an add-on name.
-#: controllers/addons_controller.php:174
+#: controllers/addons_controller.php:176
 #, php-format
 msgid "Meet the %1$s Developer"
 msgid_plural "Meet the %1$s Developers"
@@ -5187,6 +5224,7 @@ msgstr "Yêu cầu hỗ trợ hoặc báo cáo lỗi bị đặt nhầm"
 
 # %s is a string representing what's missing.  Example:  file_id
 #: controllers/downloads_controller.php:65
+#: controllers/statistics_controller.php:413
 #: controllers/users_controller.php:191 controllers/users_controller.php:270
 #: controllers/users_controller.php:641 controllers/users_controller.php:739
 #: controllers/users_controller.php:909 controllers/reviews_controller.php:71
@@ -5194,9 +5232,9 @@ msgstr "Yêu cầu hỗ trợ hoặc báo cáo lỗi bị đặt nhầm"
 #: controllers/reviews_controller.php:326
 #: controllers/reviews_controller.php:474
 #: controllers/reviews_controller.php:476
-#: controllers/addons_controller.php:126 controllers/addons_controller.php:252
-#: controllers/addons_controller.php:1494
-#: controllers/addons_controller.php:1637
+#: controllers/addons_controller.php:126 controllers/addons_controller.php:260
+#: controllers/addons_controller.php:1502
+#: controllers/addons_controller.php:1645
 #: controllers/editors_controller.php:1235
 #: controllers/collections_controller.php:185
 #: controllers/collections_controller.php:287
@@ -5290,7 +5328,7 @@ msgstr ""
 "hiện tại. Vì tiện ích của bạn hiện đang là công cộng, bạn có thể trở lại đây "
 "vào bất kì lúc nào để chuyển nó thành công cộng."
 
-#: views/layouts/amo2009.thtml:249
+#: views/layouts/amo2009.thtml:255
 msgid "Mozilla"
 msgstr "Mozilla"
 
@@ -5306,7 +5344,7 @@ msgstr "Chính sách Riêng tư của Mozilla"
 msgid "Mozilla Public License, version 1.1"
 msgstr "Giấy phép Công cộng Mozilla, phiên bản 1.1"
 
-#: views/elements/amo2009/contribution.thtml:116
+#: views/elements/amo2009/contribution.thtml:121
 msgid ""
 "Mozilla is committed to supporting a vibrant and healthy developer "
 "ecosystem. Your optional contribution helps sustain further development of "
@@ -5315,7 +5353,7 @@ msgstr ""
 "Mozilla cam kết hỗ trợ hệ thống phát triển khỏe mạnh và sôi động. Sự đóng "
 "góp thêm của bạn giúp duy trì việc phát triển của tiện ích này."
 
-#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:358
+#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:364
 msgid ""
 "Mozilla is providing links to these applications as a courtesy, and makes no "
 "representations regarding the applications or any information related there "
@@ -5343,7 +5381,7 @@ msgstr ""
 "Mozilla gửi lời cảm ơn đến những người sau vì sự đóng góp của họ cho dự án "
 "addons.mozilla.org trong các năm qua:"
 
-#: views/elements/header.thtml:145 views/layouts/amo2009.thtml:313
+#: views/elements/header.thtml:145 views/layouts/amo2009.thtml:319
 msgid "My Account"
 msgstr "Tài khoản của Tôi"
 
@@ -5444,8 +5482,8 @@ msgctxt "sidebar_pitch_newest_addons"
 msgid "Newest Add-ons"
 msgstr "Tiện ích Mới nhất"
 
-#: controllers/addons_controller.php:493
-#: controllers/addons_controller.php:1129
+#: controllers/addons_controller.php:501
+#: controllers/addons_controller.php:1137
 msgctxt "browse_addons_newest"
 msgid "Newest Add-ons"
 msgstr "Tiện ích Mới nhất"
@@ -5479,7 +5517,7 @@ msgstr "Không có Dữ liệu"
 msgid "No Files"
 msgstr "Không có Tập tin"
 
-#: controllers/components/validation.php:313
+#: controllers/components/validation.php:309
 #: controllers/components/developers.php:545
 msgid "No ID could be found for this add-on in install.rdf."
 msgstr "Không tìm thấy định danh cho tiện ích này trong install.rdf."
@@ -5493,7 +5531,7 @@ msgstr "No Test Results"
 msgid "No account found for that email address."
 msgstr "Không tìm thấy tài khoản cho địa chỉ email đó."
 
-#: controllers/addons_controller.php:1089
+#: controllers/addons_controller.php:1097
 msgid "No add-ons in this category!"
 msgstr "Không có tiện ích trong phân mục này!"
 
@@ -5508,7 +5546,7 @@ msgid "No collections found."
 msgstr "Không tìm thấy tập tin."
 
 #: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
-#: views/statistics/addon.thtml:167 views/statistics/addon.thtml:187
+#: views/statistics/addon.thtml:170 views/statistics/addon.thtml:190
 msgid "No data yet"
 msgstr "Chưa có dữ liệu"
 
@@ -5574,7 +5612,7 @@ msgstr "No test results found."
 msgid "No versions."
 msgstr "Không có phiên bản nào."
 
-#: views/elements/amo2009/collections/barometer.thtml:65
+#: views/elements/amo2009/collections/barometer.thtml:73
 #, fuzzy
 msgid "No votes for this collection yet."
 msgstr "Không tìm thấy đánh giá nào trong khoảng thời gian này."
@@ -5672,7 +5710,12 @@ msgstr ""
 msgid "Number of Add-ons Developed"
 msgstr "Số lượng Tiện ích đã Phát triển"
 
-#: controllers/components/stats.php:436
+#: views/statistics/addon.thtml:237 views/statistics/addon.thtml:240
+#, fuzzy
+msgid "Number of Contributions"
+msgstr "Khoản đóng góp"
+
+#: controllers/components/stats.php:452
 msgid "OS"
 msgstr "HĐH"
 
@@ -5707,7 +5750,7 @@ msgstr ""
 msgid "Old password"
 msgstr "Mật khẩu cũ"
 
-#: views/statistics/rss/summary.thtml:48 views/statistics/addon.thtml:165
+#: views/statistics/rss/summary.thtml:48 views/statistics/addon.thtml:168
 #, php-format
 msgid "On %1$s"
 msgstr "Vào %1$s"
@@ -5759,12 +5802,12 @@ msgstr "Mở trong cửa sổ mới"
 msgid "Opensearch Format Check"
 msgstr "Opensearch Format Check"
 
-#: controllers/components/stats.php:429
+#: controllers/components/stats.php:445
 msgctxt "statistics_longnames_os"
 msgid "Operating System"
 msgstr "Hệ điều hành"
 
-#: controllers/statistics_controller.php:311
+#: controllers/statistics_controller.php:347
 msgctxt "statistics_js_plotselection_selector_os"
 msgid "Operating System"
 msgstr "Hệ điều hành"
@@ -5800,7 +5843,7 @@ msgstr "Khác (vui lòng chỉ ra)"
 msgid "Other Actions"
 msgstr "Thao tác Khác"
 
-#: views/elements/app_chooser.thtml:48 views/layouts/amo2009.thtml:257
+#: views/elements/app_chooser.thtml:48 views/layouts/amo2009.thtml:263
 msgid "Other Applications"
 msgstr "Chương trình Khác"
 
@@ -5832,15 +5875,15 @@ msgid_plural "Other add-ons by these developers"
 msgstr[0] "Tiện ích khác của nhà phát triển này"
 msgstr[1] "Tiện ích khác của các nhà phát triển này"
 
-#: views/elements/footer.thtml:50 views/layouts/amo2009.thtml:332
+#: views/elements/footer.thtml:50 views/layouts/amo2009.thtml:338
 msgid "Other languages:"
 msgstr "Ngôn ngữ khác:"
 
-#: controllers/statistics_controller.php:319
+#: controllers/statistics_controller.php:356
 msgid "Overlay Firefox release dates on the plots"
 msgstr "Cho ngày phát hành Firefox phủ lên đồ thị"
 
-#: controllers/statistics_controller.php:322
+#: controllers/statistics_controller.php:359
 msgid "Overlay add-on release dates on the plots"
 msgstr "Cho ngày phát hành tiện ích phủ lên đồ thị"
 
@@ -6113,7 +6156,7 @@ msgstr ""
 
 # %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 # in the <a> tag.  This should be fixed.
-#: controllers/components/validation.php:393
+#: controllers/components/validation.php:389
 #: controllers/components/developers.php:625
 #, fuzzy, php-format
 msgid "Please see <a href=\"%s\">this page</a> for reference."
@@ -6155,7 +6198,7 @@ msgstr ""
 "Vui lòng chọn một giấy phép phù hợp cho tiện ích của bạn. Giấy phép này xác "
 "định các quyền mà bạn xác lập cho mã nguồn của mình."
 
-#: views/statistics/addon.thtml:257
+#: views/statistics/addon.thtml:290
 msgid "Please treat this information as confidential."
 msgstr "Vui lòng xem như thông tin này là bí mật."
 
@@ -6168,7 +6211,7 @@ msgstr "Vui lòng gõ những gì bạn nghe thấy."
 msgid "Please upload a file."
 msgstr "Vui lòng tải lên một tập tin."
 
-#: controllers/statistics_controller.php:316
+#: controllers/statistics_controller.php:353
 msgid "Plot the total count on this graph"
 msgstr "Vẽ đồ thị tổng số lần đếm trên biểu đồ này"
 
@@ -6182,7 +6225,7 @@ msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
 msgstr "Phần bổ trợ"
 
-#: controllers/components/amo.php:781 controllers/addons_controller.php:1234
+#: controllers/components/amo.php:781 controllers/addons_controller.php:1242
 msgctxt "addons_plugins_pagetitle"
 msgid "Plugins"
 msgstr "Phần bổ trợ"
@@ -6208,8 +6251,8 @@ msgctxt "collections_index_li_popular"
 msgid "Popular"
 msgstr "Thông dụng"
 
-#: controllers/addons_controller.php:495
-#: controllers/addons_controller.php:1127
+#: controllers/addons_controller.php:503
+#: controllers/addons_controller.php:1135
 msgctxt "browse_addons_popular"
 msgid "Popular Add-ons"
 msgstr "Tiện ích Thông dụng"
@@ -6324,6 +6367,10 @@ msgstr "Ảnh xem trước đã được xóa thành công."
 msgid "Preview not found!"
 msgstr "Không tìm thấy ảnh xem trước!"
 
+#: views/developers/addon_edit_profile.thtml:101
+msgid "Preview standalone contributions page"
+msgstr ""
+
 #: controllers/previews_controller.php:237
 msgid "Preview updated successfully."
 msgstr "Ảnh xem trước được cập nhật thành công."
@@ -6338,7 +6385,7 @@ msgstr "Xem trước"
 msgid "Print"
 msgstr "Print"
 
-#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
+#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:356
 msgctxt "footer_privacy_policy"
 msgid "Privacy Policy"
 msgstr "Chính sách Riêng tư"
@@ -6461,7 +6508,7 @@ msgstr "Hoạt động Biên tập Gần đây"
 msgid "Recently Added"
 msgstr "Vừa được Thêm"
 
-#: controllers/addons_controller.php:1128
+#: controllers/addons_controller.php:1136
 msgid "Recently Updated Add-ons"
 msgstr "Tiện ích được Cập nhật Gần đây"
 
@@ -6475,9 +6522,9 @@ msgstr "Vừa được Thêm"
 msgid "Recommended"
 msgstr "Khuyên dùng"
 
-#: controllers/addons_controller.php:1470
-#: controllers/addons_controller.php:1473
-#: controllers/addons_controller.php:1477
+#: controllers/addons_controller.php:1478
+#: controllers/addons_controller.php:1481
+#: controllers/addons_controller.php:1485
 msgctxt "addons_recommended_pagetitle"
 msgid "Recommended Add-ons"
 msgstr "Tiện ích được Khuyên dùng"
@@ -6580,6 +6627,11 @@ msgstr "Xóa cờ; tiếp tục đánh giá"
 msgid "Remove from Favorites"
 msgstr "Xóa khỏi Ưa thích"
 
+#: views/elements/amo2009/collections/barometer.thtml:29
+#, fuzzy
+msgid "Remove my vote for this collection"
+msgstr "Không tìm thấy đánh giá nào trong khoảng thời gian này."
+
 #: views/collections/edit.thtml:261
 #, fuzzy
 msgid "Remove this add-on"
@@ -6590,7 +6642,7 @@ msgstr "Xóa bỏ đồ thị này"
 msgid "Remove this picture?"
 msgstr "Remove this picture?"
 
-#: controllers/statistics_controller.php:298
+#: controllers/statistics_controller.php:334
 msgid "Remove this plot"
 msgstr "Xóa bỏ đồ thị này"
 
@@ -6660,7 +6712,7 @@ msgstr "Đề nghị Đánh giá Cấp cao"
 msgid "Reset your %s Add-ons password"
 msgstr "Khôi phục mật khẩu Tiện ích %s"
 
-#: controllers/statistics_controller.php:327
+#: controllers/statistics_controller.php:364
 msgid "Resize the graph"
 msgstr "Điều chỉnh kích thước Biểu đồ"
 
@@ -6692,7 +6744,7 @@ msgstr "Trở lại Bảng"
 
 # %1$s is the application name.  Example:  Firefox
 #: views/elements/header.thtml:111 views/elements/header.thtml:122
-#: views/layouts/amo2009.thtml:248
+#: views/layouts/amo2009.thtml:254
 #, php-format
 msgid "Return to the %1$s Add-ons homepage"
 msgstr "Trở lại trang chủ Tiện ích %1$s"
@@ -6826,7 +6878,7 @@ msgstr "Hệ thống Đánh giá Hộp cát"
 msgid "Save"
 msgstr "Lưu"
 
-#: views/developers/addon_edit_profile.thtml:112
+#: views/developers/addon_edit_profile.thtml:128
 msgid "Save Changes to Developer Profile"
 msgstr "Lưu các Thay đổi vào Hồ sơ Nhà phát triển"
 
@@ -6881,8 +6933,8 @@ msgctxt "general_addontype_search_plural"
 msgid "Search Engines"
 msgstr "Máy tìm kiếm"
 
-#: controllers/addons_controller.php:1213
-#: controllers/addons_controller.php:1223
+#: controllers/addons_controller.php:1221
+#: controllers/addons_controller.php:1231
 msgctxt "addons_searchengines_pagetitle"
 msgid "Search Engines"
 msgstr "Máy tìm kiếm"
@@ -7042,7 +7094,7 @@ msgstr "Chia sẻ trên FriendFeed"
 msgid "Share this Add-on"
 msgstr "Chia sẻ Tiện ích này"
 
-#: views/collections/detail.thtml:128
+#: views/collections/detail.thtml:134
 #, fuzzy
 msgid "Share this Collection"
 msgstr "Tạo mới Bộ sưu tập"
@@ -7068,7 +7120,7 @@ msgid_plural "Show %1$s more results"
 msgstr[0] "Show %1$s more result"
 msgstr[1] "Show %1$s more results"
 
-#: controllers/statistics_controller.php:321
+#: controllers/statistics_controller.php:358
 #, php-format
 msgid "Show %s Events"
 msgstr "Hiện Sự Kiện %s"
@@ -7077,11 +7129,11 @@ msgstr "Hiện Sự Kiện %s"
 msgid "Show Comments"
 msgstr "Hiện bình luận"
 
-#: controllers/statistics_controller.php:318
+#: controllers/statistics_controller.php:355
 msgid "Show Firefox Events"
 msgstr "Hiện Sự Kiện Firefox"
 
-#: controllers/statistics_controller.php:315
+#: controllers/statistics_controller.php:352
 msgid "Show Total Count"
 msgstr "Hiện Tổng Số Lần Đếm"
 
@@ -7196,7 +7248,7 @@ msgstr "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
 msgid "Sign up for PayPal"
 msgstr "Đăng kí Paypal"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
+#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:159
 #, php-format
 msgid "Since %1$s"
 msgstr "Từ %1$s"
@@ -7218,19 +7270,19 @@ msgstr "Dung lượng"
 msgid "Skip"
 msgstr "Bỏ qua"
 
-#: views/layouts/amo2009.thtml:204
+#: views/layouts/amo2009.thtml:209
 msgid "Skip to categories menu"
 msgstr "Đi tới trình đơn phân mục"
 
-#: views/layouts/amo2009.thtml:202
+#: views/layouts/amo2009.thtml:207
 msgid "Skip to main content"
 msgstr "Đi tới nội dung chính"
 
-#: views/layouts/amo2009.thtml:205
+#: views/layouts/amo2009.thtml:210
 msgid "Skip to other applications menu"
 msgstr "Đi tới trình đơn chương trình khác"
 
-#: views/layouts/amo2009.thtml:203
+#: views/layouts/amo2009.thtml:208
 msgid "Skip to search form"
 msgstr "Đi tới biểu mẫu tìm kiếm"
 
@@ -7294,7 +7346,7 @@ msgid "Sort By"
 msgstr "Sắp xếp theo"
 
 #: views/elements/amo2009/collections/sort_form.thtml:48
-#: views/collections/detail.thtml:155
+#: views/collections/detail.thtml:161
 msgid "Sort by"
 msgstr "Sắp xếp theo"
 
@@ -7336,9 +7388,14 @@ msgid ""
 msgstr ""
 "Xác định bao nhiêu người dùng sẽ được đề nghị đóng góp và nơi họ sẽ được hỏi."
 
-#: controllers/components/stats.php:435
+#: controllers/components/stats.php:451
 msgid "St"
 msgstr "Tr.thái"
+
+#: views/developers/addon_edit_profile.thtml:92
+#, fuzzy
+msgid "Standalone Contributions Page"
+msgstr "Quản lí các Khoản đóng góp"
 
 #: views/developers/addon_edit_contributions.thtml:62
 #: views/developers/addon_edit_contributions.thtml:66
@@ -7400,7 +7457,7 @@ msgstr "Bảng Thống Kê"
 #: controllers/statistics_controller.php:67
 #: controllers/statistics_controller.php:78
 #: controllers/statistics_controller.php:81
-#: controllers/statistics_controller.php:293
+#: controllers/statistics_controller.php:329
 msgctxt "statistics_pagetitle"
 msgid "Statistics Dashboard"
 msgstr "Bảng Thống Kê"
@@ -7411,18 +7468,18 @@ msgid "Statistics Dashboard Settings for %1$s"
 msgstr "Thiết lập Bảng Thống Kê cho %1$s"
 
 #: views/statistics/rss/summary.thtml:68
-#: controllers/statistics_controller.php:414
+#: controllers/statistics_controller.php:451
 #, php-format
 msgid "Statistics for %1$s"
 msgstr "Thống kê cho %1$s"
 
-#: controllers/statistics_controller.php:421
-#: controllers/statistics_controller.php:504
+#: controllers/statistics_controller.php:458
+#: controllers/statistics_controller.php:541
 #, fuzzy
 msgid "Statistics for My Collections"
 msgstr "Thống kê cho %1$s"
 
-#: controllers/statistics_controller.php:496
+#: controllers/statistics_controller.php:533
 #, fuzzy, php-format
 msgid "Statistics for collection %1$s"
 msgstr "Thống kê cho %1$s"
@@ -7564,13 +7621,13 @@ msgstr "Xóa bỏ tính năng thành công."
 msgid "Successfully verified!"
 msgstr "Đã xác thực thành công!"
 
-#: views/elements/amo2009/contribution.thtml:105
+#: views/elements/amo2009/contribution.thtml:110
 msgid "Suggested"
 msgstr "Đề nghị"
 
 # This is a monetary value like:  $3.99
 # Note that as of 2009-07-06 this only supports USD
-#: views/elements/amo2009/contribution.thtml:86
+#: views/elements/amo2009/contribution.thtml:89
 #, php-format
 msgid "Suggested Donation: $%1$s"
 msgstr "Khoản quyên góp đề nghị: $%1$s"
@@ -7584,7 +7641,7 @@ msgctxt "editors_review_header_summary"
 msgid "Summary"
 msgstr "Tóm tắt"
 
-#: controllers/statistics_controller.php:305
+#: controllers/statistics_controller.php:341
 msgctxt "statistics_js_plotselection_selector_summary"
 msgid "Summary"
 msgstr "Tóm tắt"
@@ -7633,6 +7690,13 @@ msgstr ""
 msgctxt "addons_display_paragraph_supportinfoemail"
 msgid "Support for this add-on is provided by the developer at %s"
 msgstr "Hỗ trợ cho tiện ích này được cung cấp bởi nhà phát triển tại %s"
+
+#: views/addons/about.thtml:23
+#, fuzzy
+msgid "Support the developer of this add-on by making a small contribution."
+msgstr ""
+"Trước khi tải xuống tiện ích này, xin hãy cân nhắc đến khả năng hỗ trợ một "
+"khoản tài chính nhỏ cho việc phát triển."
 
 #: views/elements/amo2009/support_addon_in_listing.thtml:54
 #, fuzzy
@@ -7712,6 +7776,11 @@ msgstr "Ứng dụng đã được Thử nghiệm"
 msgid "Tested Operating Systems"
 msgstr "Hệ điều hành đã được Thử nghiệm"
 
+#: views/addons/about.thtml:9 controllers/addons_controller.php:183
+#, fuzzy, php-format
+msgid "Thank-you for installing %s!"
+msgstr "Cảm ơn đã tham gia Tiện ích %s "
+
 #: controllers/users_controller.php:174
 #, php-format
 msgid "Thanks for joining %s Add-ons"
@@ -7764,7 +7833,7 @@ msgstr ""
 
 # %1$s is a locale code. Example: en-US or fr
 # %2$s is an integer
-#: controllers/components/validation.php:668
+#: controllers/components/validation.php:666
 #, fuzzy, php-format
 msgid "The %1$s locale contains %2$s unmodified translation"
 msgid_plural "The %1$s locale contains %2$s unmodified translations"
@@ -7773,7 +7842,7 @@ msgstr[1] "The %1$s locale contains %2$s unmodified translations"
 
 # %1$s is a locale code. Example: en-US or fr
 # %2$s is an integer
-#: controllers/components/validation.php:671
+#: controllers/components/validation.php:669
 #, fuzzy, php-format
 msgid "The %1$s locale is missing %2$s translation"
 msgid_plural "The %1$s locale is missing %2$s translations"
@@ -7800,13 +7869,13 @@ msgstr "Nhóm đã được lưu"
 msgid "The Group with id %s was deleted"
 msgstr "Nhóm có định danh %s đã được xóa"
 
-#: controllers/components/validation.php:323
+#: controllers/components/validation.php:319
 #: controllers/components/developers.php:555
 msgid "The ID of this add-on is already used by an application."
 msgstr "Định danh của tiện ích này đã được dùng bởi một chương trình."
 
 # %s is a string
-#: controllers/components/validation.php:318
+#: controllers/components/validation.php:314
 #: controllers/components/developers.php:550
 #, php-format
 msgid "The ID of this add-on is invalid: %s"
@@ -7816,7 +7885,7 @@ msgstr "Định danh của tiện ích này không hợp lệ: %s"
 msgid "The Mozilla Add-ons community is sad to see you go."
 msgstr "Cộng đồng Tiện Ích Mozilla rất buồn khi thấy bạn bỏ đi."
 
-#: views/statistics/addon.thtml:140
+#: views/statistics/addon.thtml:143
 msgid ""
 "The Statistics Dashboard is currently disabled. Please check back later."
 msgstr "Bảng Thống Kê hiện đang bị vô hiệu hóa. Vui lòng kiểm tra lại sau."
@@ -7831,7 +7900,7 @@ msgstr ""
 "GUID tiện ích dùng trong tập tin này (%1$s) không phù hợp với GUID có sẵn "
 "của tiện ích này (%2$s)."
 
-#: controllers/components/validation.php:822
+#: controllers/components/validation.php:820
 #, fuzzy
 msgid ""
 "The add-on appears to be a conduit toolbar due to its updateURL element."
@@ -7839,19 +7908,19 @@ msgstr ""
 "The add-on appears to be a conduit toolbar due to its updateURL element."
 
 # %s is a filename.  Example:  windows.com
-#: controllers/components/validation.php:831
+#: controllers/components/validation.php:829
 #, fuzzy, php-format
 msgid "The add-on appears to be a conduit toolbar due to the file '%s'"
 msgstr "The add-on appears to be a conduit toolbar due to the file '%s'"
 
 # %s is a filename.  Example:  windows.com
-#: controllers/components/validation.php:546
+#: controllers/components/validation.php:542
 #, fuzzy, php-format
 msgid "The add-on contains a file '%s', which failed a library checksum"
 msgstr "The add-on contains a file '%s', which failed a library checksum"
 
 # %s is a filename.  Example:  windows.com
-#: controllers/components/validation.php:423
+#: controllers/components/validation.php:419
 #, fuzzy, php-format
 msgid "The add-on contains a file '%s', which is a flagged type."
 msgstr "The add-on contains a file '%s', which is a flagged type."
@@ -7886,7 +7955,7 @@ msgstr ""
 "một trong các kiểu hình ảnh sau: %s"
 
 # %1$s is a filename.  Example: windows.com
-#: controllers/components/validation.php:1066
+#: controllers/components/validation.php:1064
 #, fuzzy, php-format
 msgid "The add-on was missing a required file: %1$s"
 msgstr "The add-on was missing a required file: %1$s"
@@ -7913,7 +7982,7 @@ msgstr ""
 "Các tiện ích bên dưới chiếm 95% số lượng sử dụng tiện ích của Mozilla và "
 "được sắp xếp theo khối lượng sử dụng."
 
-#: controllers/components/validation.php:852
+#: controllers/components/validation.php:850
 #, fuzzy
 msgid ""
 "The chrome.manifest file contains a line identifying the plugin as a conduit "
@@ -7930,7 +7999,7 @@ msgstr "Bộ sưu tập đã được xóa."
 msgid "The confirmation code was resent!"
 msgstr "Mã xác nhận đã được gửi lại!"
 
-#: controllers/components/validation.php:842
+#: controllers/components/validation.php:840
 #, fuzzy
 msgid ""
 "The contents.rdf file contains a line identifying the plugin as a conduit "
@@ -7973,7 +8042,7 @@ msgstr ""
 "trong hồ sơ của bạn và nhấn vào liên kết trong email ngay khi bạn nhận được "
 "nó."
 
-#: controllers/components/validation.php:643
+#: controllers/components/validation.php:641
 #, fuzzy
 msgid "The extension does not appear to be localized."
 msgstr "The extension does not match the type of the add-on."
@@ -7984,37 +8053,37 @@ msgid "The extension does not match the type of the add-on."
 msgstr "The extension does not match the type of the add-on."
 
 # %s is a filename.  Example:  windows.exe
-#: controllers/components/validation.php:1047
+#: controllers/components/validation.php:1045
 #, fuzzy, php-format
 msgid "The file %s does not appear to belong in this add-on"
 msgstr "The file %s does not appear to belong in this add-on"
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:475
+#: controllers/components/validation.php:471
 #, fuzzy, php-format
 msgid "The file contains a global constant: %s"
 msgstr "The file contains a global constant: %s"
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:476
+#: controllers/components/validation.php:472
 #, fuzzy, php-format
 msgid "The file contains a global function: %s"
 msgstr "The file contains a global function: %s"
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:474
+#: controllers/components/validation.php:470
 #, fuzzy, php-format
 msgid "The file contains a global variable: %s"
 msgstr "The file contains a global variable: %s"
 
 # %s is an error message from the parser.
-#: controllers/components/validation.php:298
+#: controllers/components/validation.php:289
 #: controllers/components/developers.php:530
 #, php-format
 msgid "The following error occurred while parsing install.rdf: %s"
 msgstr "Lỗi sau xảy ra trong khi phân tích install.rdf: %s"
 
-#: controllers/components/validation.php:403
+#: controllers/components/validation.php:399
 #: controllers/components/developers.php:635
 msgid "The following errors were found in install.rdf:"
 msgstr "Tìm thấy những lỗi sau trong install.rdf:"
@@ -8092,12 +8161,12 @@ msgstr ""
 "thay đổi tiêu đề hoặc hình ảnh. Hình xem trước Mặc định là hình được hiển "
 "thị bên canh tiện ích của bạn trong liệt kê và tìm kiếm."
 
-#: controllers/components/validation.php:958
+#: controllers/components/validation.php:956
 #, fuzzy
 msgid "The search engine contains an updateURL element, which is not allowed."
 msgstr "The search engine contains an updateURL element, which is not allowed."
 
-#: controllers/components/validation.php:941
+#: controllers/components/validation.php:939
 #, fuzzy
 msgid ""
 "The search engine could not be parsed according to the OpenSearch format."
@@ -8149,7 +8218,7 @@ msgstr ""
 "Số phiên bản tải lên (%1$s) đã tồn tại. Nếu bạn đang cố thêm tập tin khác "
 "cho phiên bản này, <a href=\"%2$s\">nhấn vào đây</a>."
 
-#: controllers/components/validation.php:338
+#: controllers/components/validation.php:334
 #: controllers/components/developers.php:570
 msgid ""
 "The version of this add-on is invalid: please see the <a href=\"http://"
@@ -8158,7 +8227,7 @@ msgstr ""
 "Phiên bản của tiện ích này không hợp lệ: vui lòng xem <a href=\"http://"
 "developer.mozilla.org/en/docs/Toolkit_version_format\">chi tiết kĩ thuật</a>"
 
-#: controllers/components/validation.php:333
+#: controllers/components/validation.php:329
 #: controllers/components/developers.php:565
 msgid "The version of this add-on is invalid: versions cannot contain spaces."
 msgstr ""
@@ -8302,6 +8371,11 @@ msgstr ""
 "URL có định dạng sai. URL đúng sẽ trông như thế này http://www.mozilla.com/"
 "vi."
 
+#: views/statistics/addon.thtml:227
+#, fuzzy
+msgid "This Week"
+msgstr "Tuần qua"
+
 # %1$s is an add-on ID, perhaps 167.
 # %2$s is a URL.
 #: controllers/developers_controller.php:587
@@ -8361,11 +8435,11 @@ msgstr ""
 "Tiện ích này yêu cầu phiên bản <a href=\"%1$s\">Firefox %2$s</a> chưa phát "
 "hành."
 
-#: views/statistics/addon.thtml:249
+#: views/statistics/addon.thtml:282
 msgid "This dashboard is currently <b>private</b>."
 msgstr "Bảng thống kê hiện đang ở chế độ <b>riêng tư</b>."
 
-#: views/statistics/addon.thtml:245
+#: views/statistics/addon.thtml:278
 msgid "This dashboard is currently <b>public</b>."
 msgstr "Bảng thống kê hiện đang ở chế độ <b>công khai</b>."
 
@@ -8540,7 +8614,7 @@ msgstr ""
 "Thanh công cụ, giao diện và nhà cung cấp tìm kiếm <strong>giúp bạn thực hiện "
 "các tác vụ thông thường.</strong>"
 
-#: views/layouts/amo2009.thtml:298
+#: views/layouts/amo2009.thtml:304
 msgid "Tools"
 msgstr "Công cụ"
 
@@ -8575,7 +8649,7 @@ msgstr "Các phân mục Người dùng đứng đầu"
 msgid "Total"
 msgstr "Tổng"
 
-#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:155
+#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:158
 msgid "Total Downloads"
 msgstr "Tổng số lượt Tải"
 
@@ -8619,11 +8693,11 @@ msgctxt "editors_th_addontype"
 msgid "Type"
 msgstr "Kiểu"
 
-#: controllers/components/stats.php:437
+#: controllers/components/stats.php:453
 msgid "Uk"
 msgstr "Ko.rõ"
 
-#: controllers/components/stats.php:430
+#: controllers/components/stats.php:446
 msgctxt "statistics_longnames_unknown"
 msgid "Unknown"
 msgstr "Không rõ"
@@ -8633,7 +8707,7 @@ msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "Không rõ"
 
-#: views/statistics/addon.thtml:246
+#: views/statistics/addon.thtml:279
 msgid "Unlocked"
 msgstr "Không khóa"
 
@@ -8742,7 +8816,7 @@ msgctxt "sidebar_pitch_updated_addons"
 msgid "Updated Add-ons"
 msgstr "Tiện ích Cập nhật"
 
-#: controllers/addons_controller.php:494
+#: controllers/addons_controller.php:502
 msgctxt "rss_updatedaddons"
 msgid "Updated Add-ons"
 msgstr "Tiện ích được Cập nhật"
@@ -8810,6 +8884,11 @@ msgstr ""
 "tiếp tục chỉnh sửa bộ sưu tập. Nếu bạn rời trang này mà không lưu, bộ sưu "
 "tập cũng sẽ không bị xóa."
 
+#: views/collections/detail.thtml:115
+#, fuzzy
+msgid "Usage Statistics"
+msgstr "Thống kê %1$s"
+
 #: views/previews/add.thtml:45
 msgid ""
 "Use the form below to upload a PNG, JPG, or GIF screenshot of your add-on. "
@@ -8819,6 +8898,16 @@ msgstr ""
 "Dùng biểu mẫu bên dưới để tải lên một ảnh chụp PNG, JPG, hoặc GIF của tiện "
 "ích của bạn. Các hình ảnh rộng hơn 700 pixel và cao hơn 525 pixel sẽ tự động "
 "được điều chỉnh kích thước."
+
+#: views/developers/addon_edit_profile.thtml:94
+msgid ""
+"Use this URL to show your users a standalone page containing your developer\n"
+"            profile and a \"Contribute\" button.  You can use this page as a "
+"first-run page\n"
+"            or link to it from anywhere you'd like.  To see how it looks, "
+"click the\n"
+"            \"Preview\" link."
+msgstr ""
 
 #: views/editors/review.thtml:198
 msgid ""
@@ -8931,7 +9020,7 @@ msgstr "Validation results for %s"
 msgid "Validation temporarily disabled, try again later."
 msgstr "Validation temporarily disabled, try again later."
 
-#: controllers/components/stats.php:433
+#: controllers/components/stats.php:449
 msgid "Ver"
 msgstr "P.bản"
 
@@ -8966,7 +9055,7 @@ msgstr "Phiên bản %s Đã được tạo"
 msgid "Version %s deleted successfully."
 msgstr "Phiên bản %s đã được xóa thành công."
 
-#: controllers/addons_controller.php:1605
+#: controllers/addons_controller.php:1613
 msgid "Version History with Changelogs"
 msgstr "Lược sử Phiên bản cùng với Lưu kí Thay đổi"
 
@@ -9014,13 +9103,18 @@ msgstr "Hiển thị Báo cáo Tính tương thích"
 msgid "View Contents"
 msgstr "Xem Nội Dung"
 
-#: controllers/statistics_controller.php:328
+#: controllers/statistics_controller.php:365
 msgid "View Data (CSV)"
 msgstr "Xem Dữ Liệu (CSV)"
 
 #: views/compatibility/dashboard.thtml:94
 msgid "View Detailed Report"
 msgstr "Hiển thị Báo cáo Chi tiết"
+
+#: views/developers/addon_edit_profile.thtml:89
+#, fuzzy
+msgid "View Developer Profile"
+msgstr "Hồ sơ Nhà phát triển"
 
 #: views/elements/developers/license_picker.thtml:51
 msgid "View License"
@@ -9095,8 +9189,8 @@ msgstr "Xem chính sách riêng tư"
 msgid "View the source"
 msgstr "Xem mã nguồn"
 
-#: views/statistics/addon.thtml:226 views/statistics/index.thtml:124
-#: controllers/statistics_controller.php:300
+#: views/statistics/addon.thtml:259 views/statistics/index.thtml:124
+#: controllers/statistics_controller.php:336
 msgid "View this table in CSV format"
 msgstr "Xem bảng này trong dạng CSV"
 
@@ -9130,7 +9224,7 @@ msgstr ""
 msgid "Viewer"
 msgstr "Người quan sát"
 
-#: views/statistics/addon.thtml:134
+#: views/statistics/addon.thtml:137
 msgid ""
 "We don't have any data for your add-on yet. Please check back in a few days."
 msgstr ""
@@ -9159,7 +9253,7 @@ msgstr "Tuần"
 msgid "Weekly Totals"
 msgstr "Tổng tuần"
 
-#: views/layouts/amo2009.thtml:312
+#: views/layouts/amo2009.thtml:318
 msgid "Welcome"
 msgstr "Chào mừng"
 
@@ -9206,7 +9300,7 @@ msgid "Welcome to the Developer Dashboard"
 msgstr "Chào mừng đến Bảng điều khiển của Nhà phát triển"
 
 # %s is the user's name
-#: views/layouts/amo2009.thtml:312
+#: views/layouts/amo2009.thtml:318
 #, php-format
 msgid "Welcome, %s"
 msgstr "Chào mừng, %s"
@@ -9233,7 +9327,7 @@ msgstr "Bạn nghĩ sao?"
 msgid "What if I don't have any translations?"
 msgstr "Nếu tôi không có bất kì bản dịch nào thì sao?"
 
-#: views/developers/addon_edit_profile.thtml:104
+#: views/developers/addon_edit_profile.thtml:120
 msgid "What's Next for this Add-on"
 msgstr "Điều gì Tiếp theo cho Tiện ích này"
 
@@ -9243,7 +9337,7 @@ msgstr "Điều gì Tiếp theo cho Tiện ích này"
 msgid "What's next for %1$s"
 msgstr "Cái gì tiếp theo cho %1$s"
 
-#: views/elements/amo2009/contribution.thtml:92 views/addons/display.thtml:387
+#: views/elements/amo2009/contribution.thtml:96 views/addons/display.thtml:387
 #: views/addons/display.thtml:532
 msgctxt "addons_display_a_license_what"
 msgid "What's this?"
@@ -9277,7 +9371,7 @@ msgstr ""
 msgid "Where to ask"
 msgstr "Nơi đề nghị"
 
-#: views/developers/addon_edit_profile.thtml:105
+#: views/developers/addon_edit_profile.thtml:121
 msgid ""
 "Whether or not you request contributions for future development of your add-"
 "on, telling your users what's coming soon will give them something to look "
@@ -9300,12 +9394,12 @@ msgid "Who can view your collection?"
 msgstr "Ai có thể xem bộ sưu tập của bạn?"
 
 # %1 is a user's name.
-#: views/addons/developers.thtml:56
+#: views/addons/developers.thtml:56 views/addons/about.thtml:50
 #, php-format
 msgid "Who is %1$s?"
 msgstr "Ai là %1$s?"
 
-#: views/developers/addon_edit_profile.thtml:94
+#: views/developers/addon_edit_profile.thtml:110
 msgid "Why I Made this Add-on"
 msgstr "Tại sao Tôi tạo ra Tiện ích này"
 
@@ -9315,7 +9409,7 @@ msgstr "Tại sao Tôi tạo ra Tiện ích này"
 msgid "Why was %1$s created?"
 msgstr "Tại sao %1$s được tạo ra?"
 
-#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1478
+#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1486
 msgid ""
 "With so many great add-ons available, there's something for everyone. To get "
 "you started, here's a list of some of the most popular. Enjoy!"
@@ -9457,16 +9551,16 @@ msgid "You cannot review your own add-on."
 msgstr "Bạn không thể tự đánh giá tiện ích của bạn."
 
 #: controllers/statistics_controller.php:202
-#: controllers/statistics_controller.php:647
+#: controllers/statistics_controller.php:689
 #: controllers/previews_controller.php:108
 #: controllers/previews_controller.php:211
 #: controllers/previews_controller.php:312
 msgid "You do not have access to that add-on."
 msgstr "Bạn không có quyền truy nhập tiện ích đó."
 
-#: controllers/statistics_controller.php:400
-#: controllers/statistics_controller.php:491
-#: controllers/statistics_controller.php:574
+#: controllers/statistics_controller.php:437
+#: controllers/statistics_controller.php:528
+#: controllers/statistics_controller.php:612
 #, fuzzy
 msgid "You do not have access to that collection."
 msgstr "Bạn không có quyền truy nhập tiện ích đó."
@@ -9496,6 +9590,10 @@ msgstr ""
 msgid "You have unsaved changes."
 msgstr "Bạn có các thay đổi chưa lưu."
 
+#: views/statistics/addon.thtml:125
+msgid "You haven't received any Contributions yet."
+msgstr ""
+
 #: views/developers/addon_status.thtml:108
 msgid ""
 "You may now complete your add-on and move it to the <span class=\"status-1"
@@ -9516,7 +9614,7 @@ msgstr ""
 msgid "You must give your collection a name."
 msgstr "Bạn phải đặt tên cho bộ sưu tập."
 
-#: controllers/components/validation.php:397
+#: controllers/components/validation.php:393
 #: controllers/components/developers.php:629
 msgid "You must have at least one valid Mozilla target application."
 msgstr "Bạn phải có ít nhất một chương trình hợp lệ dùng với Mozilla."
@@ -9629,7 +9727,7 @@ msgstr ""
 "cần đánh giá của biên tập viên."
 
 # %1$s is a URL
-#: controllers/components/validation.php:328
+#: controllers/components/validation.php:324
 #: controllers/components/developers.php:560
 #, fuzzy, php-format
 msgid ""
@@ -9876,7 +9974,7 @@ msgid "chrome.manifest Check"
 msgstr "chrome.manifest Check"
 
 # This refers to closing a small pop-up window
-#: views/elements/amo2009/contribution.thtml:117
+#: views/elements/amo2009/contribution.thtml:122
 msgid "close"
 msgstr "đóng"
 
@@ -9886,12 +9984,6 @@ msgstr "đóng"
 #, php-format
 msgid "created by %1$s"
 msgstr "tạo bởi %1$s"
-
-# %s is a string representing what's missing.  Example:  file_id
-#: controllers/statistics_controller.php:376
-#, fuzzy, php-format
-msgid "error_missing_argument"
-msgstr "Thiếu tham số: %s"
 
 #: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:348
 #: views/elements/feature.thtml:89
@@ -9970,14 +10062,14 @@ msgctxt "editors_review_list_none"
 msgid "none"
 msgstr "none"
 
-#: controllers/statistics_controller.php:299
+#: controllers/statistics_controller.php:335
 msgctxt "statistics_js_dropdowns_none"
 msgid "none"
 msgstr "không có"
 
 # This is a separator between the graphical [contribute] button and the 
 # graphical [download now] button
-#: views/elements/amo2009/contribution.thtml:72
+#: views/elements/amo2009/contribution.thtml:75
 msgid "or"
 msgstr "hoặc"
 
@@ -10017,15 +10109,15 @@ msgid "resend the confirmation message"
 msgstr "gửi lại thư xác nhận"
 
 #: views/elements/amo2009/search.thtml:185
-#: views/elements/amo2009/search.thtml:390
-#: views/elements/amo2009/search.thtml:413 views/elements/search.thtml:171
+#: views/elements/amo2009/search.thtml:382
+#: views/elements/amo2009/search.thtml:405 views/elements/search.thtml:171
 #: views/elements/search.thtml:183 views/elements/search_mini.thtml:43
 #: views/elements/search_mini.thtml:49 views/layouts/mozilla.thtml:188
 msgid "search for add-ons"
 msgstr "tìm kiếm tiện ích"
 
 #: views/elements/amo2009/search.thtml:185
-#: views/elements/amo2009/search.thtml:409
+#: views/elements/amo2009/search.thtml:401
 msgid "search for collections"
 msgstr "tìm kiếm các bộ sưu tập"
 
@@ -10033,10 +10125,6 @@ msgstr "tìm kiếm các bộ sưu tập"
 #: views/elements/addon_list_options.thtml:105
 msgid "show experimental add-ons"
 msgstr "hiện các tiện ích đang thử nghiệm"
-
-#: views/statistics/collections.thtml:81
-msgid "statistics_notice_data_insufficient"
-msgstr ""
 
 #: views/elements/amo2009/search.thtml:234 views/elements/search.thtml:216
 msgid "to"
@@ -10225,6 +10313,11 @@ msgstr "yes"
 
 #~ msgid "downloads"
 #~ msgstr "số lượt tải"
+
+# %s is a string representing what's missing.  Example:  file_id
+#, fuzzy
+#~ msgid "error_missing_argument"
+#~ msgstr "Thiếu tham số: %s"
 
 # this is the text inside of an <a> tag for pages_appversions_required_files.  This
 # should be fixed.

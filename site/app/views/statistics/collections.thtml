@@ -78,12 +78,12 @@ $this->viewVars['bodyclass'] = 'inverse';
             <div id="collection-subscribers" class="plot-summary"><?=sprintf(_('<em>%s</em> total'), $period_totals['subscribers'])?></div>
             <div id="timeplot-container-subscribers" class="plot-container">
               <div id="not-enough-data" class="warning" style="display: none;"><div>
-                <?=_('statistics_notice_data_insufficient')?>
+                <?=_('Insufficient Data')?>
               </div></div>
             </div>
           </div>
           <div class="item">
-            <h4 class="plot-title">Collection Ratings</h4>
+            <h4 class="plot-title"><?=___('Collection Ratings')?></h4>
             <div id="collection-ratings" class="plot-summary">
               <div id="ratings-up"><em><?=$period_totals['votes_up']?></em></div>
               <div id="ratings-down"><em><?=$period_totals['votes_down']?></em></div>
@@ -92,7 +92,7 @@ $this->viewVars['bodyclass'] = 'inverse';
             </div>
           </div>
           <div class="item">
-            <h4 class="plot-title">Downloads from Collection</h4>
+            <h4 class="plot-title"><?=___('Downloads from Collection')?></h4>
             <div id="collection-downloads" class="plot-summary"><?=sprintf(_('<em>%s</em> total'), $period_totals['downloads'])?></div>
             <div id="timeplot-container-downloads" class="plot-container">
             </div>
