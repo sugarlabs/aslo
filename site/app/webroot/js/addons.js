@@ -1,3 +1,8 @@
+/**
+ * This file is DEPRECATED since the amo2009 redesign.
+ * If in doubt, do not edit it.
+ */
+
 /* Addons display js */
 var gPlatform = PLATFORM_WINDOWS;
 var gLatestVersionID = null; //latest version ID of any compatible addon for versions page.

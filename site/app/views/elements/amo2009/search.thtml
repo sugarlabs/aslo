@@ -295,23 +295,15 @@ if (!isset($category)) $category = array(0, 0);
 ?>
 
     var current_app_id = 0;
-    var uapattern = /Mozilla.*(?:Firefox|Minefield|Namoroka|Shiretoko|GranParadiso|BonEcho|Iceweasel)\/([^\s]*).*$/;
-    var ua = navigator.userAgent;
-    var uamatch = uapattern.exec(ua);
-    if (uamatch != null) {
-        version = uamatch[1].split(".");
+    if (gIsFirefox || gIsSeaMonkey) {
+        version = gBrowserVersion.split(".");
         low_appversion = version[0]+"."+parseInt(version[1]);
-        current_app_id = <?=APP_FIREFOX ?>;
     }
 
-    uapattern = /Mozilla.*(?:SeaMonkey|Iceape)\/([^\s]*).*$/;
-    ua = navigator.userAgent;
-    uamatch = uapattern.exec(ua);
-    if (uamatch != null) {
-        version = uamatch[1].split(".");
-        low_appversion = version[0]+"."+parseInt(version[1]);
-        current_app_id = <?=APP_SEAMONKEY ?>;
-    }
+    if (gIsFirefox)
+        current_app_id = APP_FIREFOX;
+    else if (gIsSeaMonkey)
+        current_app_id = APP_SEAMONKEY;
 
     default_low = ( ('<?=$oldver ?>' == '-1' || '<?=$oldver?>' == '')  && current_app_id == <?=APP_ID; ?>) ? low_appversion : <?=$lver ?>;
 

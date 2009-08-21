@@ -63,19 +63,8 @@ function getInstallURL(aEvent) {
 }
 
 function checkMatchUserAgentAppId() {
-    var uapattern = /(?:Firefox|Minefield|Shiretoko|GranParadiso|BonEcho|Iceweasel)/;
-    var ua = navigator.userAgent;
-    var uamatch = uapattern.exec(ua);
-
-    if( uamatch !=null && APP_ID == 1)	return true;
-
-    uapattern = /(SeaMonkey|Iceape)/;
-    ua = navigator.userAgent;
-    uamatch = uapattern.exec(ua);
-    if( uamatch !=null && APP_ID == 59) return true;
-
-    return false;
-
+    return (gIsFirefox && APP_ID == APP_FIREFOX
+        || gIsSeaMonkey && APP_ID == APP_SEAMONKEY)
 }
 
 /**
@@ -159,16 +148,11 @@ function fixPlatformLinks(versionID, name) {
 }
 
 /**
-*   Used to select between the string Add to App and Download depending on whether Firefox is the UA
+* Show "add to x" or "download now" depending on user agent
 */
-function installVersusDownloadCheck(triggerID, installString, downloadString)
-{
+function installVersusDownloadCheck(triggerID, installString, downloadString) {
     var buttonMessage = installString;
-    var uapattern = /Mozilla.*(Firefox|Minefield|Namoroka|Shiretoko|GranParadiso|BonEcho|SeaMonkey|Iceweasel|Iceape)\/.*$/;
-    var ua = navigator.userAgent;
-    var uamatch = uapattern.exec(ua);
-    var mustDownload = (!uamatch || uamatch.length < 2 || !checkMatchUserAgentAppId()) // not a Firefox-like browser
-    if (mustDownload)
+    if (!checkMatchUserAgentAppId())
         buttonMessage = downloadString;
     $("#" + triggerID + " strong").text(buttonMessage);
     $("#" + triggerID + " .install-button-text").text(buttonMessage);
@@ -213,18 +197,14 @@ function initDownloadPopup(triggerID, popupID)
  * @param bool showVersionLink offer a link to the user which will remove the compatibility hint (and allow them to download the add-on)
  */
 function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLink) {
-    var uapattern = /Mozilla.*(?:Firefox|Minefield|Shiretoko|GranParadiso|BonEcho|Iceweasel)\/([^\s]*).*$/;
-    var ua = navigator.userAgent;
-    var uamatch = uapattern.exec(ua);
-    if (!uamatch || uamatch.length < 2) return true;
+    if (!gIsFirefox) return true;
 
     var outer = $("#install-"+ versionID);
 
-    var version = uamatch[1];
     var vc = new VersionCompare();
-    if (vc.compareVersions(version, fromVer)<0)
+    if (vc.compareVersions(gBrowserVersion, fromVer)<0)
         var needUpgrade = true;
-    else if(vc.compareVersions(version, toVer)>0)
+    else if(vc.compareVersions(gBrowserVersion, toVer)>0)
         var needUpgrade = false;
     else {
         return true;
