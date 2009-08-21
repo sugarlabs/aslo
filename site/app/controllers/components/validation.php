@@ -261,15 +261,6 @@ class ValidationComponent extends Object {
         // Clean manifest data
         $this->Amo->clean($manifestData);
 
-        // Check for any immediate parsing errors
-        if (isset($manifestData['errors'])) {
-            $results = array();
-            foreach ($manifestData['errors'] as $error) {
-                $results[] = $this->_result(TEST_FAIL, 0, 'install.rdf', $error);
-            }
-            return $results;
-        }
-
         // Validate manifest data
         $validate = $this->validateManifestData($manifestData);
         if (is_string($validate)) {
@@ -296,6 +287,11 @@ class ValidationComponent extends Object {
         // If the data is a string, it is an error message
         if (is_string($manifestData)) {
             return sprintf(___('The following error occurred while parsing install.rdf: %s'), $manifestData);
+        }
+
+        // Check for any immediate parsing errors
+        if (isset($manifestData['errors'])) {
+            return $manifestData['errors'][0];
         }
 
         // Check if install.rdf has an updateURL
