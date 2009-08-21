@@ -11,7 +11,7 @@ class LinkHelper extends Helper
         $link = $this->Html->link($name, "/addon/$addon", $attributes);
         return $this->output($link);
     }
-    
+
     function addonBrowse($tag="", $attributes="", $name="") {
         if (empty($name)) {
             $link = $this->Html->link($tag, "/browse/" . $tag, $attributes);
@@ -19,15 +19,15 @@ class LinkHelper extends Helper
         else {
             $link = $this->Html->link($name, "/browse/" . $tag, $attributes);
         }
-            
+
         return $this->output($link);
     }
-    
+
     /**
      * Make an email link that displays the real email by javascript
      * including noscript fallback for spam protection.
      * Relies on emailLink from addons.js.
-     * 
+     *
      * @param string Email address to link to
      * @param string js_id (Unique) Javascript ID for the email field
      * @param sting spanclass CSS class to give to email string
@@ -41,7 +41,7 @@ class LinkHelper extends Helper
         // unsanitize and re-encode email so html entities are not shown in plain text by javascript code
         $email = addslashes($this->Html->unsanitize($email));
         $emailparts = explode('@', $email, 2);
-        
+
         $o = '<span id="'.$js_id.'" class="'.$spanclass.'">'.$noscriptemail."</span>\n"
         . "<script language=\"JavaScript\">"
         . "emailLink('{$js_id}', '{$emailparts[0]}', '{$emailparts[1]}');"
@@ -55,7 +55,7 @@ class LinkHelper extends Helper
      * @param array $coll Collection (from collection model)
      * @param string $app (optional) application to link to, defaults to current app
      */
-    function collection($coll, $app = null) {
+    function collection($coll, $app = null, $attributes=array()) {
         if (empty($coll)) return false;
 
         $url = '/collection/';
@@ -66,9 +66,9 @@ class LinkHelper extends Helper
 
         if (!empty($app)) {
             return $this->Html->linkNoLocaleNoApp($coll['Translation']['name']['string'],
-                sprintf('/%s/%s%s', LANG, $app, $url));
+                sprintf('/%s/%s%s', LANG, $app, $url), $attributes);
         } else {
-            return $this->Html->link($coll['Translation']['name']['string'], $url);
+            return $this->Html->link($coll['Translation']['name']['string'], $url, $attributes);
         }
     }
 }

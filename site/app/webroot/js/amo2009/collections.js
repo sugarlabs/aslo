@@ -161,14 +161,14 @@ collections.recently_viewed = function() {
 
     var list = $.map(recentlyViewed.list(), function(e) {
         if (e.url != current_url) {
-            return '<li><a href="' + e.url + '">' + e.title + '</a></li>';
+            return '<li><a class="collectionitem" href="' + e.url + '">' + e.title + '</a></li>';
         }
     });
 
     if (list.length != 0) {
         list = list.slice(0, RECENTLY_VIEWED_LIMIT);
         $('#recently-viewed')
-          .append('<ul class="xoxo">' + list.join('') + "</ul>")
+          .append('<ul class="addon-collections">' + list.join('') + "</ul>")
           .show();
     }
 };

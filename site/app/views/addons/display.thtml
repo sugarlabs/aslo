@@ -417,7 +417,7 @@ if (!empty($coll_addon_added)) {
   $dev = $addon['User'][array_rand($addon['User'])];
   $dev = $this->controller->User->getUser($dev['id']);
   ?>
-  <h3><?=n___('Meet the Developer', 'Meet the Developers', count($devs))?></h3>
+  <h3 class="compact-bottom"><?=n___('Meet the Developer', 'Meet the Developers', count($devs))?></h3>
   <img class="avatar" alt="<?=$dev['User']['display_name']?>" height="64" width="64"
        src="<?=$html->url('/users/picture/'.$dev['User']['id'])?>" />
   <p><?=sprintf(___('Learn why %1$s was created and find out what\'s next for this add-on.'),
@@ -440,9 +440,11 @@ if (!empty($coll_addon_added)) {
       <?php
       if (is_array($relatedCategories)) {
           $_sort_opt = ($addon['Addon']['addontype_id'] == ADDON_SEARCH) ? '?sort=rated' : '';
+          echo '<ul>';
           foreach ($relatedCategories as $category) {
-              echo $html->link(sprintf(___('See All %1$s Add-ons'),$category['Translation']['name']['string']), '/browse/' . "type:" . $category['Category']['addontype_id'] . '/' . "cat:" . $category['Category']['id'] . $_sort_opt , array('class'=>'more-info')) . "\n";
+              echo '<li>'.$html->link(sprintf(___('See All %1$s Add-ons'),$category['Translation']['name']['string']), '/browse/' . "type:" . $category['Category']['addontype_id'] . '/' . "cat:" . $category['Category']['id'] . $_sort_opt , array('class'=>'more-info')) . "</li>\n";
           }
+          echo '</ul>';
       }
       ?>
 
@@ -459,8 +461,8 @@ if (!empty($coll_addon_added)) {
               echo '<input class="hidden" type="submit" value="'.___('Go', 'addons_author_addons_submit').'"/>';
               echo '</form>';
           } else {
-              echo '<ul class="xoxo">';
-              echo $this->renderElement('addon_author_addons', array('tag' => 'li'));
+              echo '<ul class="addon-otheraddons">';
+              echo $this->renderElement('addon_author_addons', array('tag' => 'li', 'class' => 'addonitem'));
               echo '</ul>';
           }
           ?>
@@ -469,8 +471,8 @@ if (!empty($coll_addon_added)) {
     </div>
 <?php endif; ?>
 
-<div class="highlight">
-<h3><?=___('Tags', 'tags_header_tags_title')?></h3>
+<div class="clearboth">
+<h3 class="compact-bottom"><?=___('Tags', 'tags_header_tags_title')?></h3>
 
     <script type="text/javascript">
         <?=$this->renderElement('tags_js_init')?>
@@ -500,15 +502,15 @@ if (!empty($coll_addon_added)) {
 </div>
 <!-- /.highlight-->
 
-    <div class="highlight collections-add">
-        <h3><?=___('Related Collections')?></h3>
+    <div class="collections-add">
+        <h3 class="compact-bottom"><?=___('Related Collections')?></h3>
 
         <?php if (empty($pop_collections)): ?>
             <p><?=___('This add-on is not yet in any collections.')?></p>
         <?php else: ?>
-            <ul class="xoxo">
+            <ul class="addon-collections">
                 <?php foreach($pop_collections as &$_coll): ?>
-                    <li><?=$link->collection($_coll)?></li>
+                    <li><?=$link->collection($_coll, null, array('class' => 'collectionitem'))?></li>
                 <?php endforeach; ?>
             <?php if (($_othercolls = $collection_count - count($pop_collections)) > 0): ?>
                 <li>
@@ -544,12 +546,12 @@ if (!empty($coll_addon_added)) {
     </div>
 
     <?php if (!empty($addon['Recommendations'])): ?>
-      <div class="highlight">
-        <h3><?=___('Often Used with&hellip;')?></h3>
-        <ul class="xoxo">
+      <div>
+        <h3 class="compact-bottom"><?=___('Often Used with&hellip;')?></h3>
+        <ul class="addon-otheraddons">
           <?php foreach ($addon['Recommendations'] as $rec): ?>
             <li>
-              <a href="<?=$html->url('/addon/'.$rec['Addon']['id'])?>">
+              <a href="<?=$html->url('/addon/'.$rec['Addon']['id'])?>" class="addonitem">
                 <?=$rec['Translation']['name']['string']?>
               </a>
             </li>

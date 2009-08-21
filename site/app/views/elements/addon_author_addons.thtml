@@ -44,6 +44,8 @@
  * - $authorAddons (list of other addons by the authors)
  */
 
+$class = isset($class) ? $class : '';
+
 foreach ($authorAddons as $authorAddon) {
     $id = $authorAddon['Addon']['id'];
     // Truncating at 25 because that lines the select box up with the natural
@@ -56,7 +58,7 @@ foreach ($authorAddons as $authorAddon) {
     $title = implode(', ', $nicknames);
 
     if ($tag == 'li' && $id != $addon['Addon']['id']) {
-        echo "<li><a href='{$html->url('/addon/'.$id)}' title='{$title}'>{$name}</a></li>";
+        echo "<li><a href='{$html->url('/addon/'.$id)}' title='{$title}' class='{$class}'>{$name}</a></li>";
     } else if ($tag == 'option') {
         $selected = $id == $addon['Addon']['id'] ? 'selected="selected"' : '';
         echo "<option value='{$id}' title='{$title}' {$selected}>{$name}</option>";
