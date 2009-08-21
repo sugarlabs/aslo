@@ -25,7 +25,7 @@ echo "Merging & compiling all locales..."
 for i in `find locale -type f -name "messages.po"`; do
     dir=`dirname $i`
     stem=`basename $i .po`
-    msgmerge -s -U "$i" ./locale/keys.pot
+    msgmerge --sort-output --no-fuzzy-matching -U "$i" ./locale/keys.pot
     msgfmt -o ${dir}/${stem}.mo $i
 done
 rm ./locale/keys.pot
