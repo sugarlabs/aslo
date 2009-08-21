@@ -421,7 +421,8 @@ VALUES ('site_notice', ''),
 ('firefox_notice_version', ''),
 ('firefox_notice_url', ''),
 ('stats_disabled', '0'),
-('validation_disabled', '0');
+('validation_disabled', '0'),
+('cron_debug_enabled', '0');
 
 -- --------------------------------------------------------
 

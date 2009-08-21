@@ -87,8 +87,8 @@ $addon_qry = $db->read("
                 INNER JOIN translations ON addons.name = translations.id
                 INNER JOIN appversions ON applications_versions.max = appversions.id
                 LEFT JOIN features ON addons.id = features.addon_id
-            WHERE 
-                update_counts.date = '{$latest_date}' AND 
+            WHERE
+                update_counts.date = '{$latest_date}' AND
                 applications_versions.application_id = 1 AND
                 translations.locale = 'en-US' AND
                 versions.id = (
@@ -128,9 +128,9 @@ foreach ($compatibility_versions as $compatibility_version) {
         $compat_addons[] = $addon;
         $adu_total += $addon['updatepings'];
     }
-    
+
     $adu_top95 = floor($adu_total * .95);
-    
+
     $totals = array(
         COMPAT_LATEST => array(
             'count' => 0,
@@ -159,23 +159,23 @@ foreach ($compatibility_versions as $compatibility_version) {
     while ($version = mysql_fetch_assoc($versions_qry)) {
         $versions[$version['id']] = $version['version'];
     }
-    
+
     $appversions = $versioncompare->getCompatibilityGrades($compatibility_version, $versions);
-    
-    
+
+
     $adu_counter = 0;
     $addons = array();
-    
+
     // Iterate through each add-on
     foreach ($compat_addons as $addon) {
         // Only include add-ons that make up the top 95%
         if ($adu_counter >= $adu_top95) break;
-        
+
         $classification = $versioncompare->gradeCompatibility($addon['maxversion'], $compatibility_version, $appversions);
-        
+
         $totals[$classification]['count']++;
         $totals[$classification]['adu'] += $addon['updatepings'];
-        
+
         $addons[] = array(
             'id' => $addon['id'],
             'name' => $addon['name'],
@@ -184,19 +184,14 @@ foreach ($compatibility_versions as $compatibility_version) {
             'percentage' => ($addon['updatepings'] / $adu_top95),
             'classification' => $classification
         );
-        
+
         $adu_counter += $addon['updatepings'];
     }
-    
+
     $totals['adu95'] = $adu_top95;
     $totals['adu'] = $adu_total;
     $totals['addons95'] = count($addons);
     $totals['addons'] = mysql_num_rows($addon_qry);
-    
-    echo "Report for Firefox {$compatibility_version}\n";
-    echo "Using data from {$latest_date}\n";
-    echo "{$totals['adu']} total active users; {$totals['adu95']} making up top 95%\n";
-    echo "{$totals['addons']} rows returned; {$totals['addons95']} addons counted\n\n";
 
     $output = array(
         'addons' => $addons,
@@ -204,7 +199,14 @@ foreach ($compatibility_versions as $compatibility_version) {
         'appversions' => $appversions
     );
 
-    print_r($output);
+    if (CRON_DEBUG) {
+        echo "Report for Firefox {$compatibility_version}\n";
+        echo "Using data from {$latest_date}\n";
+        echo "{$totals['adu']} total active users; {$totals['adu95']} making up top 95%\n";
+        echo "{$totals['addons']} rows returned; {$totals['addons95']} addons counted\n\n";
+
+        print_r($output);
+    }
 
     file_put_contents(NETAPP_STORAGE.'/compatibility-fx-'.$compatibility_version.'.serialized', serialize($output));
 

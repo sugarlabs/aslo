@@ -40,7 +40,7 @@
 
     <div id="content-main">
         <h3>Site Config</h3>
-        <?php        
+        <?php
         if (!empty($errors['main'])) {
             echo '<div class="error">'.$errors['main'].'</div>';
         }
@@ -54,7 +54,7 @@
                 <div class="description">Banner that will appear at the top of every page. Default: Empty</div>
                 <?=$html->textarea('Config/site_notice', array('cols' => 50, 'rows' => 3, 'value' => $config['site_notice']))?>
             </div>
-            
+
             <h4>Disable Functionality</h4>
             <?=$this->renderElement('config_radio', array(
                 'label' => 'Submissions Disabled',
@@ -84,6 +84,10 @@
                 'label' => 'Validation Disabled',
                 'description' => 'Disable validation.  Default: No',
                 'key' => 'validation_disabled'))?>
+            <?=$this->renderElement('config_radio', array(
+                'label' => 'Cron Debug Enabled',
+                'description' => 'If enabled, cron will spew ridiculous amounts of data for all cron jobs.  Default: No',
+                'key' => 'cron_debug_enabled'))?>
 
             <h4>Special Events</h4>
             <div>

@@ -49,7 +49,7 @@ require_once("{$root}/site/app/config/constants.php");
 class Database {
     var $write; // Writable database
     var $read; // Read-only database
-    
+
    /**
     * Connect to databases
     */
@@ -78,8 +78,10 @@ class Database {
 
         $this->connectWrite($write_config['host'], $write_config['user'], $write_config['pass'], $write_config['name']);
         $this->connectRead($read_config['host'], $read_config['user'], $read_config['pass'], $read_config['name']);
+
+        $this->define_debug();
     }
-    
+
    /**
     * Connects to read-only database
     */
@@ -112,7 +114,7 @@ class Database {
 
    /**
     * Performs query using read-only database by default
-    * 
+    *
     * @param str $qry the query to execute
     * @param bool $useWrite whether to use the writable database
     */
@@ -121,7 +123,7 @@ class Database {
             trigger_error('MySQL Error '.mysql_errno().': '.mysql_error()."\nQuery was: [".$qry.']', E_USER_NOTICE);
             return false;
         }
-        
+
         return $result;
     }
 
@@ -146,13 +148,32 @@ class Database {
         else
             return false;
     }
-    
+
    /**
     * Close database connections
     */
     function close() {
         mysql_close($this->write);
         mysql_close($this->read);
+    }
+
+    /**
+     * Define the CRON_DEBUG constant.  Perhaps a little out of place in this class but all the maintenance scripts
+     * that need it are including this file already.
+     */
+    function define_debug() {
+        $_debug_result = $this->read('SELECT value FROM config WHERE `config`.`key`="cron_debug_enabled"');
+        if (mysql_num_rows($_debug_result) == 1) {
+            $row = mysql_fetch_array($_debug_result);
+            if ($row['value'] == 1) {
+                define('CRON_DEBUG', true);
+            } else {
+                define('CRON_DEBUG', false);
+            }
+        } else {
+            // Default to true
+            define('CRON_DEBUG', true);
+        }
     }
 }
 

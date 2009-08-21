@@ -25,6 +25,7 @@
  *   Justin Scott <fligtar@mozilla.com>
  *   Frederic Wenzel <fwenzel@mozilla.com>
  *   Les Orchard <lorchard@mozilla.com>
+ *   Wil Clouser <wclouser@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -107,7 +108,7 @@ switch ($action) {
         $seven_day_counts = array();
 
         $addons_sql = "SELECT id FROM addons";
-        echo "Retrieving all add-on ids...\n";
+        debug("Retrieving all add-on ids...");
         $addons_result = $db->read($addons_sql);
 
         $affected_rows = mysql_num_rows($addons_result);
@@ -133,7 +134,7 @@ switch ($action) {
                 download_counts.addon_id
         ";
 
-        echo 'Retrieving seven-day counts from `download_counts` ...'."\n";
+        debug('Retrieving seven-day counts from `download_counts` ...');
         $seven_day_count_result = $db->read($seven_day_count_sql);
 
         $affected_rows = mysql_num_rows($seven_day_count_result);
@@ -143,7 +144,7 @@ switch ($action) {
                 $seven_day_counts[$row['addon_id']] = ($row['seven_day_count']>0) ? $row['seven_day_count'] : 0;
             }
 
-            echo 'Updating seven day counts in `main` ...'."\n";
+            debug('Updating seven day counts in `main` ...');
 
             foreach ($seven_day_counts as $id=>$seven_day_count) {
                 $seven_day_count_update_sql = "
@@ -180,7 +181,7 @@ switch ($action) {
                 download_counts.addon_id
         ";
 
-        echo 'Retrieving total counts from `download_counts` ...'."\n";
+        debug('Retrieving total counts from `download_counts` ...');
         $total_count_result = $db->read($total_count_sql);
 
         $affected_rows = mysql_num_rows($total_count_result);
@@ -223,7 +224,7 @@ switch ($action) {
                 update_counts.addon_id
         ";
 
-        echo 'Retrieving ADU counts from `update_counts` ...'."\n";
+        debug('Retrieving ADU counts from `update_counts` ...');
         $adu_count_result = $db->read($adu_count_sql);
 
         $affected_rows = mysql_num_rows($adu_count_result);
@@ -252,24 +253,10 @@ switch ($action) {
      * Garbage collection for all records that are older than 8 days.
      */
     case 'gc':
-        echo 'Starting garbage collection ...'."\n";
+        debug('Starting garbage collection...');
         $affected_rows = 0;
 
-        /* Disabling download count clean-up for better statistics
-        echo 'Cleaning up download_counts table ...'."\n";
-        $gc_sql = "
-            DELETE FROM
-                `download_counts`
-            WHERE
-                `date` < DATE_SUB(CURDATE(), INTERVAL 31 DAY)
-        ";
-        $gc_result = mysql_query($gc_sql, $write)
-            or trigger_error('MySQL Error '.mysql_errno().': '.mysql_error()."",
-                             E_USER_NOTICE);
-
-        $affected_rows = mysql_affected_rows($write);*/
-
-        echo 'Cleaning up sessions table ...'."\n";
+        debug('Cleaning up sessions table...');
         $session_sql = "
             DELETE FROM
                 `cake_sessions`
@@ -279,7 +266,7 @@ switch ($action) {
         $session_result = $db->write($session_sql);
         $affected_rows += mysql_affected_rows($db->write);
 
-        echo 'Cleaning up sharing services...'."\n";
+        debug('Cleaning up sharing services...');
         $sharing_sql = "
             DELETE FROM
                 `stats_share_counts`
@@ -289,7 +276,7 @@ switch ($action) {
         $db->write($sharing_sql);
         $affected_rows += mysql_affected_rows($db->write);
 
-        echo 'Cleaning up test results cache...'."\n";
+        debug('Cleaning up test results cache...');
         $results_sql = "
             DELETE FROM
                 `test_results_cache`
@@ -308,7 +295,7 @@ switch ($action) {
      * If files already exist, overwrite them.
      */
     case 'publish_files':
-        echo 'Starting public file copy ...'."\n";
+        debug('Starting public file copy...');
 
         $files_sql = "
             SELECT DISTINCT
@@ -330,9 +317,9 @@ switch ($action) {
         while ($row = mysql_fetch_array($files_result)) {
             // For each valid file, copy it from REPO_PATH to STAGING_PUBLIC_PATH.
             if (copyFileToPublic($row['addon_id'],$row['filename'],true)) {
-                echo 'Copy SUCCEEDED for add-on '.$row['addon_id'].' file '.$row['filename']."\n";
+                debug('Copy SUCCEEDED for add-on '.$row['addon_id'].' file '.$row['filename']);
             } else {
-                echo 'Copy FAILED for add-on '.$row['addon_id'].' file '.$row['filename']."\n";
+                debug('Copy FAILED for add-on '.$row['addon_id'].' file '.$row['filename'], true);
             }
         }
 
@@ -344,7 +331,7 @@ switch ($action) {
      * Get review totals and update addons table.
      */
     case 'reviews':
-        echo 'Starting review total updates...'."\n";
+        debug('Starting review total updates...');
 
         $reviews_sql = "
             UPDATE addons AS a
@@ -368,7 +355,7 @@ switch ($action) {
 
 
     case 'user_ratings':
-        echo "Updating user ratings...\n";
+        debug("Updating user ratings...");
 
         global $valid_status;
         $status = join(",", $valid_status);
@@ -401,7 +388,7 @@ switch ($action) {
      * Get average ratings and update addons table.
      */
     case 'ratings':
-        echo 'Updating average ratings...'."\n";
+        debug('Updating average ratings...');
         $rating_sql = "
             UPDATE addons AS a
             INNER JOIN (
@@ -418,7 +405,7 @@ switch ($action) {
         ";
         $rating_result = $db->write($rating_sql);
 
-        echo 'Updating bayesian ratings...'."\n";
+        debug('Updating bayesian ratings...');
         // get average review count and average rating
         $rows = $db->read("
             SELECT AVG(a.cnt) AS avg_cnt
@@ -469,7 +456,7 @@ switch ($action) {
      * Delete user accounts that have not been confirmed for two weeks
      */
     case 'unconfirmed':
-        echo "Removing user accounts that haven't been confirmed for two weeks...\n";
+        debug("Removing user accounts that haven't been confirmed for two weeks...");
         $unconfirmed_sql = "
             DELETE users
             FROM users
@@ -489,7 +476,7 @@ switch ($action) {
      * Delete password reset codes that have expired.
      */
     case 'expired_resetcode':
-        echo "Removing reset codes that have expired...\n";
+        debug("Removing reset codes that have expired...");
         $db->write("UPDATE users
                     SET resetcode=DEFAULT,
                         resetcode_expires=DEFAULT
@@ -503,7 +490,7 @@ switch ($action) {
      * Update addon-collection download totals.
      */
     case 'addons_collections_total':
-        echo "Starting addon_collection totals update...\n";
+        debug("Starting addon_collection totals update...");
         $addons_collections_total = "
             UPDATE
                 addons_collections AS ac
@@ -531,7 +518,7 @@ switch ($action) {
      * Update collection downloads total.
      */
     case 'collections_total':
-        echo "Starting collection totals update...\n";
+        debug("Starting collection totals update...");
         $collections_sql = "
             UPDATE
                 collections AS c
@@ -556,7 +543,7 @@ switch ($action) {
      * Update share count totals.
      */
     case 'share_count_totals':
-        echo "Starting share count totals update...\n";
+        debug("Starting share count totals update...");
 
         $affected_rows = 0;
         $rows = $db->read("SELECT addon_id, SUM(count) as sum, service from stats_share_counts GROUP BY addon_id, service");
@@ -573,7 +560,7 @@ switch ($action) {
      * Update category counts for sidebar navigation
      */
     case 'category_totals':
-        echo "Starting category counts update...\n";
+        debug("Starting category counts update...");
 
         global $valid_status;
         $valid_status = join(',', $valid_status);
@@ -617,7 +604,7 @@ switch ($action) {
      * Update global stats counters
      */
     case 'global_stats':
-        echo "Starting global stats update...\n";
+        debug("Starting global stats update...");
 
         $affected_rows = 0;
 
@@ -662,7 +649,7 @@ switch ($action) {
 
         // Update all "total" stats that don't require a date
         foreach ($stats as $stat => $query) {
-            echo "Updating {$stat}...\n";
+            debug("Updating {$stat}...");
 
             $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), '{$date}')");
 
@@ -679,7 +666,7 @@ switch ($action) {
         );
 
         foreach ($variable_date_stats as $stat => $query) {
-            echo "Updating {$stat}...\n";
+            debug("Updating {$stat}...");
 
             $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), ({$date}))");
 
@@ -694,7 +681,7 @@ switch ($action) {
      * Daily collection stats
      */
     case 'collection_stats':
-        echo "Starting collection stats update...\n";
+        debug("Starting collection stats update...");
 
         $affected_rows = 0;
         $date = date('Y-m-d');
@@ -720,7 +707,7 @@ switch ($action) {
         );
 
         foreach ($collection_stats as $stat => $query) {
-            echo "Updating {$stat}...\n";
+            debug("Updating {$stat}...");
 
             $db->write("REPLACE INTO stats_collections (`date`, `name`, `collection_id`, `count`) {$query}");
 
@@ -735,7 +722,7 @@ switch ($action) {
      * Collection weekly and monthly subscriber counts
      */
     case 'collection_subscribers':
-        echo "Starting collection subscriber update...\n";
+        debug("Starting collection subscriber update...");
         // Clear out existing data.
         $db->write("UPDATE collections
                     SET weekly_subscribers = 0, monthly_subscribers = 0");
@@ -768,7 +755,7 @@ switch ($action) {
      * Unknown command.
      */
     default:
-        echo 'Command not found. Exiting ...'."\n";
+        debug('Command not found. Exiting ...', true);
         exit;
     break;
 }
@@ -782,9 +769,9 @@ $exectime = getmicrotime() - $start;
 
 
 // Display script output.
-echo 'Affected rows: '.$affected_rows.'    ';
-echo 'Time: '.$exectime."\n";
-echo 'Exiting ...'."\n";
+debug('Affected rows: '.$affected_rows);
+debug('Time: '.$exectime);
+debug('Exiting ...');
 
 
 
@@ -799,6 +786,7 @@ function copyFileToPublic($addon_id, $filename, $overwrite = true) {
     // Only copy if the path has been defined
     if (!defined('PUBLIC_STAGING_PATH')) {
         // return true because false indicates error
+        debug("Public staging path doesn't exist", true);
         return false;
     }
 
@@ -808,6 +796,7 @@ function copyFileToPublic($addon_id, $filename, $overwrite = true) {
 
     // Make sure source file exists
     if (!file_exists($currentFile)) {
+        debug("Source file doesn't exist: {$currentFile}", true);
         return false;
     }
 
@@ -820,6 +809,7 @@ function copyFileToPublic($addon_id, $filename, $overwrite = true) {
     // Make directory if necessary
     if (!file_exists($newDir)) {
         if (!mkdir($newDir)) {
+            debug("Can't make a new directory: {$newDir}", true);
             return false;
         }
     }
@@ -827,7 +817,17 @@ function copyFileToPublic($addon_id, $filename, $overwrite = true) {
     return copy($currentFile, $newFile);
 }
 
-
+/**
+ * Give this function your output.  If the debug flag (in the database) is set or if the error is serious it will get printed
+ *
+ * @param string what to print
+ * @param boolean if the error is fatal or not
+ */
+function debug($msg, $serious=false) {
+    if (CRON_DEBUG || $serious) {
+        echo "{$msg}\n";
+    }
+}
 
 exit;
 ?>

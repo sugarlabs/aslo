@@ -96,28 +96,34 @@ while ($fileInfo = mysql_fetch_array($fileQry_result)) {
         $hash = hash_file("sha256", $file);
         $size = round((filesize($file) / 1024), 0); //in KB
 
-        echo "{$fileInfo['name']} {$fileInfo['version']} (file {$fileInfo['file_id']}): ";
+        debug("{$fileInfo['name']} {$fileInfo['version']} (file {$fileInfo['file_id']}): ");
         if ('sha256:'.$hash != $fileInfo['hash'] || $size != $fileInfo['size']) {
             $hash_update_sql = "UPDATE files SET hash='sha256:{$hash}', size='{$size}' WHERE id={$fileInfo['file_id']}";
             $hash_update_result = $db->write($hash_update_sql);
 
             if ('sha256:'.$hash != $fileInfo['hash']) {
-                echo "HASH - new: sha256:{$hash}; old: {$fileInfo['hash']}";
+                debug("HASH - new: sha256:{$hash}; old: {$fileInfo['hash']}");
             }
 
             if ($size != $fileInfo['size']) {
-                echo "SIZE - new: {$size} KB; old: {$fileInfo['size']} KB";
+                debug("SIZE - new: {$size} KB; old: {$fileInfo['size']} KB");
             }
-            echo "\n";
+            debug('');
         }
         else {
-            echo "No update needed.\n";
+            debug("No update needed.");
         }
     }
 }
 
 // Close our db connection
 $db->close();
+
+function debug($msg) {
+    if (CRON_DEBUG) {
+        echo "{$msg}\n";
+    }
+}
 
 exit;
 ?>
