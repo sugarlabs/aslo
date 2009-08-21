@@ -225,6 +225,12 @@ class StatisticsController extends AppController
         );
         $this->publish('cssAdd', $this->cssAdd);
 
+        // Only show contribution stats for add-on owners (and admins). This
+        // view variable is only used to hide contribution related elements.
+        // The data feeds perform additional checks.
+        $show_contributions = $this->Amo->checkOwnership($addon_id, $addon);
+        $this->publish('show_contributions', $show_contributions);
+
         // We only show the RSS key if the user could access if it wasn't public
         if ($this->Amo->checkOwnership($addon_id, $addon, true) || $this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User')))
             $key = "/key:".md5($addon['Addon']['created']);
@@ -288,7 +294,37 @@ class StatisticsController extends AppController
                 $stats['weekly_updatepings'] = $thisWeek;
                 $stats['weekly_updatepings_change'] = $prevWeek > 0 ? (($thisWeek - $prevWeek) / $prevWeek) * 100 : 0;
             }
+
+            // Data for contributions overview
+            if ($show_contributions) {
+                $query = "
+                    SELECT IFNULL(SUM(amount), 0) AS contrib_total, COUNT(*) AS contrib_count
+                      FROM stats_contributions
+                     WHERE addon_id='{$addon_id}' AND uuid IS NULL
+                ";
+                if ($statsQry = $this->Addon->query($query, true)) {      
+                    $stats['alltime_contribution_amount'] = $statsQry[0][0]['contrib_total'];
+                    $stats['alltime_contribution_count'] = $statsQry[0][0]['contrib_count'];
+                    if (intval($stats['alltime_contribution_count']) > 0) {
+                        $stats['alltime_contribution_average'] = floatval($stats['alltime_contribution_amount']) / intval($stats['alltime_contribution_count']);
+                    } else {
+                        $stats['alltime_contribution_average'] = 0;
+                    }
+                }
+
+                $query .= " AND created >= DATE_SUB(CURDATE(), INTERVAL DAYOFWEEK(CURDATE())-1 DAY)";
+                if ($statsQry = $this->Addon->query($query, true)) {      
+                    $stats['thisweek_contribution_amount'] = $statsQry[0][0]['contrib_total'];
+                    $stats['thisweek_contribution_count'] = $statsQry[0][0]['contrib_count'];
+                    if (intval($stats['thisweek_contribution_count']) > 0) {
+                        $stats['thisweek_contribution_average'] = floatval($stats['thisweek_contribution_amount']) / intval($stats['thisweek_contribution_count']);
+                    } else {
+                        $stats['thisweek_contribution_average'] = 0;
+                    }
+                }
+            }
         }
+
         $this->set('stats', $stats);
         $this->pageTitle = $addon['Translation']['name']['string'].' :: '.___('Statistics Dashboard', 'statistics_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
@@ -309,6 +345,7 @@ class StatisticsController extends AppController
                     'statistics_js_plotselection_selector_application' => ___('Application', 'statistics_js_plotselection_selector_application'),
                     'statistics_js_plotselection_selector_status' => ___('Add-on Status', 'statistics_js_plotselection_selector_status'),
                     'statistics_js_plotselection_selector_os' => ___('Operating System', 'statistics_js_plotselection_selector_os'),
+                    'statistics_js_plotselection_selector_contributions' => ___('Contributions', 'statistics_js_plotselection_selector_contributions'),
                     'statistics_js_plotselection_selector_custom' => ___('Custom'),
                     'statistics_js_plotselection_foundinrange' => ___('%s found in range'),
                     'statistics_js_plotselection_options_count_name_checked' => ___('Hide Total Count'),
@@ -543,7 +580,8 @@ class StatisticsController extends AppController
         $addon = $this->Addon->find("Addon.id={$addon_id}", null, null, -1);
 
         // Make sure user has permission to view this add-on's stats
-        if (!$this->_checkAccess($addon_id, $addon)) {
+        if (!$this->_checkAccess($addon_id, $addon) ||
+            ($plot == 'contributions' && !$this->Amo->checkOwnership($addon_id, $addon))) {
             $this->Amo->accessDenied();
             return;
         }
@@ -597,15 +635,19 @@ class StatisticsController extends AppController
      */
     function json($addon_id, $type) {
         $this->publish('addon_id', $addon_id);
-
+        $this->Amo->clean($addon_id);
+        
         $addon = $this->Addon->find("Addon.id={$addon_id}", null, null, -1);
 
         // Make sure user has permission to view this add-on's stats
         if (!$this->_checkAccess($addon_id, $addon))
             return;
 
+        // Only include contribution stats for add-on owners
+        $include_contributions = $this->Amo->checkOwnership($addon_id, $addon);
+        
         if ($type == 'summary')
-            $json = $this->Stats->getSummary($addon_id);
+            $json = $this->Stats->getSummary($addon_id, $include_contributions);
 
         $this->set('json', $json);
         $this->render('json', 'ajax');

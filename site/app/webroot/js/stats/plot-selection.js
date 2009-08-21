@@ -1,6 +1,7 @@
 var plotSelection = {
     summary: {}, // JSON summary retrieved with field names and other data
     dropdowns: {},
+    showContributions: false,
     
     /**************************************
      *       Dropdown Data Utilities      *
@@ -44,6 +45,9 @@ var plotSelection = {
         menu.addItem({'value': 'application', 'name': localized['statistics_js_plotselection_selector_application'], 'indented': true});
         menu.addItem({'value': 'status', 'name': localized['statistics_js_plotselection_selector_status'], 'indented': true});
         menu.addItem({'value': 'os', 'name': localized['statistics_js_plotselection_selector_os'], 'indented': true});
+        if (this.showContributions) {
+            menu.addItem({'value': 'contributions', 'name': localized['statistics_js_plotselection_selector_contributions']});
+        }
         //menu.addItem({'value': 'custom', 'name': localized['statistics_js_plotselection_selector_custom']});
     },
 
@@ -264,7 +268,7 @@ var plotSelection = {
                 'showNoneForLevel1': false
             });
         
-        if (type != 'summary' && type != 'downloads') {
+        if (type != 'summary' && type != 'downloads' && type != 'contributions') {
             menu.addItem({
                     'value': 'count',
                     'name': localized['statistics_js_plotselection_options_count_name_checked'],
@@ -302,7 +306,7 @@ var plotSelection = {
             $('#' + addonItem.config.id + ' .item-toggle-icon').html('<img src="' + $('#addon-icon').attr('src') + '" width="16" height="16" />');
         }
         
-        if (type != 'summary' && type != 'downloads') {
+        if (type != 'summary' && type != 'downloads' && type != 'contributions') {
             menu.addItem({
                     'value': 'add-plot',
                     'name': localized['statistics_js_plotselection_options_addplot_name'],

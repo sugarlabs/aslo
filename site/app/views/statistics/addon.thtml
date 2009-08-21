@@ -121,6 +121,9 @@ echo '<div id="content">';
             <div id="not-enough-data" class="warning" style="display: none;"><div>
                 <?=___('There is not yet enough data to display this graph. Please check back later.')?>
             </div></div>
+            <div id="no-contributions" class="warning" style="display: none;"><div>
+                <?=___('You haven\'t received any Contributions yet.')?>
+            </div></div>
 
             <noscript>
                 <div class="warning"><div>
@@ -216,6 +219,36 @@ echo '<div id="content">';
                 </td>
             </tr>
         </table>
+    <?php if ($show_contributions): ?>
+        <table width="100%" cellpadding="5" id="stats_contributions_overview">
+            <tr>
+                <td class="biglabel" colspan="2"><?=_('All Time')?></td>
+                <td class="spacer"></td>
+                <td class="biglabel" colspan="2"><?=_('This Week')?></td>
+            </tr>
+            <tr>
+                <td class="biglabel" valign="middle" style="width: 30%;"><?=_('Contributions')?></td>
+                <td class="bigvalue" style="width: 19%;"><?=$statistics->dollar_format($stats, 'alltime_contribution_amount')?></td>
+                <td class="spacer" style="width: 2%;"></td>
+                <td class="biglabel" valign="middle" style="width: 30%;"><?=_('Contributions')?></td>
+                <td class="bigvalue" style="width: 19%;"><?=$statistics->dollar_format($stats, 'thisweek_contribution_amount')?></td>
+            </tr>
+            <tr>
+                <td class="label"><?=_('Number of Contributions')?></td>
+                <td class="value"><?=$statistics->number_format($stats, 'alltime_contribution_count')?></td>
+                <td class="spacer"></td>
+                <td class="label"><?=_('Number of Contributions')?></td>
+                <td class="value"><?=$statistics->number_format($stats, 'thisweek_contribution_count')?></td>
+            </tr>
+            <tr>
+                <td class="label"><?=_('Average Amount')?></td>
+                <td class="value"><?=$statistics->dollar_format($stats, 'alltime_contribution_average')?></td>
+                <td class="spacer"></td>
+                <td class="label"><?=_('Average Amount')?></td>
+                <td class="value"><?=$statistics->dollar_format($stats, 'thisweek_contribution_average')?></td>
+            </tr>
+        </table>
+    <?php endif; ?>
     </div>
     <div class="greenbox-br"><div class="greenbox-bl"></div></div>
 </div></div>
@@ -266,7 +299,9 @@ echo '<div id="content">';
 
     <?php if ($stats['totaldownloads'] > 0): ?>
     $(document).ready(function() {
+        $('#stats_contributions_overview').hide();
         $('#plot-options').show();
+        plotSelection.showContributions = <?=($show_contributions ? 'true' : 'false')?>;
         plotSelection.loadSummary();
         plotSelection.addPlotSelector();
         plotSelection.addGroupBySelector();

@@ -335,6 +335,22 @@ class StatsComponent extends Object {
 
                 }
                 break;
+
+            // Contribution $USD per day
+            case 'contributions':
+                if ($data = $model->query("
+                    SELECT DATE(`created`) AS `date`, SUM(`amount`) AS `count` 
+                    FROM `stats_contributions` 
+                    WHERE `addon_id`={$addon_id} AND `uuid` IS NULL
+                    GROUP BY `date`
+                    HAVING `date` != '0000-00-00'
+                ", true)) {
+                    foreach ($data as $download) {
+                        $csv[] = array('date' => $download['0']['date'],
+                                       'count' => $download['0']['count']);
+                    }
+                }
+                break;
         }
         
         arsort($dynamicFields);
@@ -408,7 +424,7 @@ class StatsComponent extends Object {
         return $new_dates;
     }
     
-    function getSummary($addon_id) {
+    function getSummary($addon_id, $include_contributions = false) {
         $json = array(
                       'downloads' => array(
                                 'availableDates' => array()
@@ -451,6 +467,17 @@ class StatsComponent extends Object {
                 // if date isn't recorded, record it
                 if (!in_array($date['download_counts']['date'], $json['downloads']['availableDates']))
                     $json['downloads']['availableDates'][] = $date['download_counts']['date'];
+            }
+        }
+
+        // Contributions
+        if ($include_contributions) {
+            $json['contributions'] = array('availableDates' => array());
+            $data = $this->controller->Addon->query("SELECT DISTINCT DATE(`created`) AS `date` FROM `stats_contributions` WHERE `addon_id`={$addon_id} AND `uuid` IS NULL ORDER BY `date`", true);
+            if ($data) {
+                foreach ($data as $date) {
+                    $json['contributions']['availableDates'][] = $date['0']['date'];
+                }
             }
         }
         

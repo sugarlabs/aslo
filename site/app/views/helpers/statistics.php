@@ -16,6 +16,15 @@ class StatisticsHelper extends Helper {
         }
     }
 
+    /**
+     * Formats $array[$member] as US Dollars
+     * If the member isn't set, outputs a $0.00
+     */
+    function dollar_format($array, $member) {
+        $val = (empty($array[$member]) ? 0 : $array[$member]);
+        return sprintf('$%0.2f', $array[$member]);
+    }
+
     function colored_percentage($array, $member) {
         if (empty($array[$member])) {
             return 0;

@@ -31,6 +31,7 @@ var Plots = {
         this.timeplotCount++;
         
         $('#not-enough-data').hide();
+        $('#no-contributions').hide();
         
         this.timeplot_id = 'timeplot' + this.timeplotCount;
         $('#timeplot-container').append('<div id="' + this.timeplot_id + '" class="timeplot"></div>');
@@ -156,12 +157,24 @@ var Plots = {
                 $('#summary-legend').show();
                 $('#summary-options').show();
                 $('#group-by-selector').hide();
+                $('#stats_contributions_overview').hide();
+                $('#stats_overview').show();
+            }
+            else if (plotType == 'contributions') {
+                $('#weeks-legend').hide();
+                $('#summary-legend').hide();
+                $('#summary-options').hide();
+                $('#group-by-selector').hide();
+                $('#stats_contributions_overview').show();
+                $('#stats_overview').hide();
             }
             else {
                 $('#weeks-legend').hide();
                 $('#summary-legend').hide();
                 $('#summary-options').hide();
                 $('#group-by-selector').show();
+                $('#stats_contributions_overview').hide();
+                $('#stats_overview').show();
             }
         },
         
@@ -260,7 +273,9 @@ var Plots = {
             };
             
             var min = '2007-07-01';
-            if (type == 'downloads' && plotSelection.summary.downloads.availableDates)
+            if (type == 'contributions' && plotSelection.summary.contributions.availableDates)
+                min = plotSelection.summary.contributions.availableDates[0];
+            else if (type == 'downloads' && plotSelection.summary.downloads.availableDates)
                 min = plotSelection.summary.downloads.availableDates[0];
             else if (plotSelection.summary.updatepings.availableDates)
                 min = plotSelection.summary.updatepings.availableDates[0];
@@ -295,7 +310,7 @@ var Plots = {
                 }
             };
 
-            if (type == 'downloads' || type == 'updatepings') {
+            if (type == 'downloads' || type == 'updatepings' || type == 'contributions') {
                 if (type == 'downloads') {
                     var dark = '#3366CC';
                     var light = '#3399CC';
@@ -303,6 +318,10 @@ var Plots = {
                 else if (type == 'updatepings') {
                     var dark = '#9966CC';
                     var light = '#CC99CC';
+                }
+                else if (type == 'contributions') {
+                    var dark = '#009933';
+                    var light = '#339933';
                 }
                 
                 this.plotInfo['count'].fillColor = dark;
@@ -547,6 +566,7 @@ function parseFields(data) {
         if (lineCount > 1) {
             // Enough data
             $('#not-enough-data').hide();
+            $('#no-contributions').hide();
             
             var start = data.indexOf('Fields: [');
             var end = data.indexOf(']', start);
@@ -564,7 +584,13 @@ function parseFields(data) {
         }
         else {
             // Not enough data
-            $('#not-enough-data').show();
+
+            var plotType = plotSelection.dropdowns['plot-selector'].selectedItem.value;
+            if (plotType == 'contributions') {
+                $('#no-contributions').show();
+            } else {
+                $('#not-enough-data').show();
+            }
             
             if (Plots.timeplot_id != '') {
                 $('#' + Plots.timeplot_id).remove();
