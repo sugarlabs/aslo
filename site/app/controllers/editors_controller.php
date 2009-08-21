@@ -57,15 +57,15 @@ class EditorsController extends AppController
         //beforeFilter() is apparently called before components are initialized. Cake++
         $this->Amo->startup($this);
         $this->Editors->startup($this);
-        
+
         $this->Amo->checkLoggedIn();
-        
+
         $this->layout = 'mozilla';
         $this->pageTitle = ___('Editor Tools', 'editors_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
-        
+
         $this->cssAdd = array('editors', 'admin', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
-        
+
         $this->jsAdd = array('jquery-compressed.js',
                                 'jquery.autocomplete.pack.js',
                                 'jquery.tablesorter.min.js',
@@ -84,50 +84,50 @@ class EditorsController extends AppController
         foreach ($this->uses as $_model) {
             $this->$_model->caching = false;
         }
-        
+
         //Get counts
         $count['pending'] = $this->_getCount('pending');
         $count['nominated'] = $this->_getCount('nominated');
         $count['reviews'] = $this->_getCount('reviews');
         $this->publish('count', $count);
     }
-    
+
    /**
     * Index
     */
     function index() {
         $this->summary();
     }
-    
+
    /**
     * Summary
     */
     function summary() {
         $this->cssAdd[] = 'summary';
         $this->publish('cssAdd', $this->cssAdd);
-        
+
         //Total reviews
         $totalReviews = $this->Approval->query("SELECT users.firstname, users.lastname, COUNT(*) as total FROM approvals LEFT JOIN users ON users.id=approvals.user_id GROUP BY approvals.user_id ORDER BY total DESC LIMIT 5");
         $this->set('totalReviews', $totalReviews);
-        
+
         //Reviews this month
         $monthStart = date('Y-m-01');
         $monthReviews = $this->Approval->query("SELECT users.firstname, users.lastname, COUNT(*) as total FROM approvals LEFT JOIN users ON users.id=approvals.user_id WHERE approvals.created >= '{$monthStart} 00:00:00' GROUP BY approvals.user_id ORDER BY total DESC LIMIT 5");
         $this->set('monthReviews', $monthReviews);
-        
+
         //New editors
         $newEditors = $this->Eventlog->query("SELECT users.firstname, users.lastname, eventlog.created FROM eventlog LEFT JOIN users ON eventlog.added=users.id WHERE eventlog.type='admin' AND eventlog.action='group_addmember' AND eventlog.changed_id='2' ORDER BY eventlog.created DESC LIMIT 5");
         $this->set('newEditors', $newEditors);
-        
+
         //Recent activity
         $logs = $this->Eventlog->findAll(array('type' => 'editor'), null, 'Eventlog.created DESC', 5);
         $logs = $this->Audit->explainLog($logs);
         $this->set('logs', $logs);
-        
+
         $this->set('page', 'summary');
         $this->render('summary');
     }
-    
+
    /**
     * Review queue
     */
@@ -137,18 +137,18 @@ class EditorsController extends AppController
             $this->flash(___('All review queues are currently disabled. Please check back at a later time.'), '/', 3);
             return;
         }
-        
+
         // if num=... argument is set, jump to specific item in queue
         if (isset($this->params['url']['num']) && is_numeric($this->params['url']['num']))
             $this->Editors->redirectByQueueRank($mode, $this->params['url']['num']);
-        
+
         $this->publish('collapse_categories', true);
-        
+
         $this->Amo->clean($mode);
         $this->breadcrumbs[___('Review Queue')] = '/editors/queue';
         $this->publish('breadcrumbs', $this->breadcrumbs);
         $this->publish('subpagetitle', ___('Review Queue'));
-        
+
         $this->publish('mode', $mode);
 
         // Setup queue filter
@@ -189,7 +189,7 @@ class EditorsController extends AppController
             $this->redirect('/editors');
             return;
         }
-        
+
         //Setup filter form fields
         $selected = array('Application'=>'', 'MaxVersion'=>'', 'AdminFlag'=>'',
                         'SubmissionAge'=>'', 'Addontype'=>'', 'Platform'=>'',);
@@ -223,7 +223,7 @@ class EditorsController extends AppController
         $filteredCount = $this->_getCount($mode, true);
 
         $sortOpts = $this->Editors->getQueueSort($mode);
-        
+
         // raw values for selectTags
         $this->set('selected', $selected);
         $this->set('platforms', $platforms);
@@ -244,7 +244,7 @@ class EditorsController extends AppController
         $this->publish('addons', $addons);
         $this->render('queue');
     }
-    
+
    /**
     * Review a specific version
     * @param int $id The version id
@@ -281,12 +281,12 @@ class EditorsController extends AppController
             $this->flash(___('Version not found!'), '/editors/queue');
             return;
         }
-        
+
         if (!$addon = $this->Addon->findById($version['Version']['addon_id'])) {
             $this->flash(___('Add-on not found!'), '/editors/queue');
             return;
         }
-        
+
         //Make sure user is not an author (or is an admin)
         $session = $this->Session->read('User');
         if (!$this->SimpleAcl->actionAllowed('*', '*', $session)) {
@@ -314,7 +314,7 @@ class EditorsController extends AppController
             else {
                 $this->Editors->reviewPendingFiles($addon, $this->data);
             }
-        
+
             if ($this->Error->noErrors()) {
                 if (isset($this->data['Versioncomment'])) {
                     // autosubscribe to notifications
@@ -340,12 +340,12 @@ class EditorsController extends AppController
                 // if editor chose to be reminded of the next upcoming update, save this
                 if ($this->data['Approval']['subscribe'])
                     $this->EditorSubscription->subscribeToUpdates($session['id'], $addon['Addon']['id']);
-                
+
                 $this->flash(___('Review successfully processed.'), '/editors/queue/'.$this->data['Approval']['Type']);
                 return;
             }
         }
-        
+
         $this->pageTitle = $addon['Translation']['name']['string'] . ' :: ' . $this->pageTitle;
 
         if (!empty($addon['Category'])) {
@@ -356,9 +356,9 @@ class EditorsController extends AppController
         }
         else
             $addon['Categories'] = array();
-        
-        $platforms = $this->Amo->getPlatformName();   
-        
+
+        $platforms = $this->Amo->getPlatformName();
+
         //get min/max versions
         if ($targetApps = $this->Amo->getMinMaxVersions($id)) {
             foreach ($targetApps as $targetApp) {
@@ -367,7 +367,7 @@ class EditorsController extends AppController
                 $addon['targetApps'][$appName]['max'] = $targetApp['max']['version'];
             }
         }
-        
+
         $fileIds = array();
         if (!empty($version['File'])) {
             $version['pendingCount'] = 0;
@@ -375,7 +375,7 @@ class EditorsController extends AppController
                 $fileIds[] = $file['id'];
                 $version['File'][$k]['counts'] = array(0,0,0);
                 $version['File'][$k]['groups'] = array();
-                        
+
                 if ($file['status'] == STATUS_PENDING) {
                     $version['File'][$k]['disabled'] = 'false';
                     $version['pendingCount']++;
@@ -385,14 +385,14 @@ class EditorsController extends AppController
                 }
             }
         }
-        
+
         if ($responses = $this->Cannedresponse->findAll()) {
             foreach ($responses as $response) {
                 $cannedresponses[$response['Translation']['response']['string']] = $response['Translation']['name']['string'];
             }
             $this->publish('cannedresponses', $cannedresponses);
         }
-        
+
         $this->publish('jsLocalization', array( 'action' => ___('Review Action'),
                                             'comments' => ___('Review Comments'),
                                             'os' => ___('Tested Operating Systems'),
@@ -400,7 +400,7 @@ class EditorsController extends AppController
                                             'errors' => ___('Please complete the following fields:'),
                                             'files' => ___('Please select at least one file to review.', 'editors_error_review_one_file')
                                     ));
-        
+
         // Validation results
         $test_groups = $this->TestGroup->getTestGroupsForAddonType($addon['Addon']['addontype_id']);
         if (!empty($test_groups)) {
@@ -418,7 +418,7 @@ class EditorsController extends AppController
 
                 if (!empty($version['File'])) {
                     foreach ($version['File'] as &$file) {
-                        
+
                         $file['counts'][$count['test_results']['result']] += $count[0]['count'];
 
                         if (!empty($test_groups)) {
@@ -435,7 +435,7 @@ class EditorsController extends AppController
         }
 
         $this->publish('test_groups', $test_groups);
-                                    
+
         //Review History
         if ($history = $this->Approval->findAll(array('Approval.addon_id' => $addon['Addon']['id'], 'reply_to IS NULL'))) {
             foreach ($history as $k => &$hist) {
@@ -443,7 +443,7 @@ class EditorsController extends AppController
                     $vLookup = $this->Version->findById($hist['File']['version_id'], array('Version.version'));
                     $history[$k] = array_merge_recursive($history[$k], $vLookup);
                 }
-                
+
                 // add replies to information requests
                 if ($hist['Approval']['reviewtype'] == 'info') {
                     $hist['replies'] = $this->Approval->findAll(array('Approval.reply_to' => $hist['Approval']['id']), null, 'Approval.created');
@@ -456,7 +456,7 @@ class EditorsController extends AppController
             }
             unset($hist); // PHP bug 35106
         }
-        
+
         //pr($history);
 
         //Editor Comments
@@ -469,7 +469,7 @@ class EditorsController extends AppController
         array_pop($this->dontsanitize);
 
         //pr($comments);
-        
+
         if ($addon['Addon']['status'] == STATUS_NOMINATED) {
             $reviewType = 'nominated';
         } else {
@@ -479,7 +479,7 @@ class EditorsController extends AppController
         // count of filtered queue
         $filtered = (true && $this->Editors->getQueueFilter($reviewType));
         $filteredCount = $this->_getCount($reviewType, true);
-        
+
         // rank in nomination/update queue
         if (isset($this->params['url']['num']) && is_numeric($this->params['url']['num']))
             $queueRank = $this->params['url']['num'];
@@ -493,8 +493,8 @@ class EditorsController extends AppController
         $this->publish('platforms', $platforms);
         $this->publish('addontypes', $this->Addontype->getNames());
         $this->publish('addontype', $addon['Addon']['addontype_id']);
-        $this->publish('approval', $this->Amo->getApprovalStatus());  
-        $this->publish('history', $history); 
+        $this->publish('approval', $this->Amo->getApprovalStatus());
+        $this->publish('history', $history);
         $this->publish('errors', $this->Error->errors);
         $this->publish('reviewType', $reviewType, false);
         $this->publish('filtered', $filtered);
@@ -519,10 +519,10 @@ class EditorsController extends AppController
             'editors_syntax_print' => ___('Print'),
             'editors_syntax_about' => ___('About', 'editors_syntax_about'),
         ));
-        
+
         $this->render('review');
     }
-    
+
    /**
     * Reads the approval file
     * @param int $id The file id
@@ -530,23 +530,23 @@ class EditorsController extends AppController
     function file($id) {
         $this->Amo->clean($id);
         $this->File->id = $id;
-        
+
         if (!$file = $this->File->read()) {
             $this->flash(___('File not found!'), '/editors/queue');
         }
-        
+
         $this->Addon->id = $file['Version']['addon_id'];
         $this->Version->id = $file['Version']['id'];
-        
+
         $filename = $file['File']['filename'];
         $file = REPO_PATH.'/'.$this->Addon->id.'/'.$filename;
-        
+
         if (file_exists($file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Length: ' . filesize($file));
             header('Content-Disposition: attachment; filename=' . $filename);
-            
+
             readfile($file);
         }
         else {
@@ -555,7 +555,7 @@ class EditorsController extends AppController
         exit;
     }
 
-    
+
     /**
      * Performance reports jump off point
      * Handles report selection, and user parameter
@@ -657,7 +657,7 @@ class EditorsController extends AppController
         $startTime = strtotime($startDate);
         $endDate = ___('YYYY-MM-DD');
         $endTime = $ytdEndTime;
-        
+
         //If user has specified own conditions, use those
         if (!empty($this->params['url']['start'])) {
             $ts = strtotime($this->params['url']['start']);
@@ -873,7 +873,7 @@ class EditorsController extends AppController
 
         $endTime = strtotime(sprintf('%04d-%02d-01 00:00:00 +1 month', $endYear, $endMonth));
         $startTime = strtotime(sprintf('-%d month', $months), $endTime);
-        
+
         $sql = "SELECT DATE_FORMAT(`Approval`.`created`, '%Y-%m') AS yearmonth,
                        `Approval`.`created`, `User`.`id`, COUNT(*) AS `total`
                   FROM `approvals` AS `Approval`
@@ -1153,7 +1153,7 @@ class EditorsController extends AppController
 
             // search author emails
             $sql = "SELECT `User`.`email`
-                    {$sql_base['FROM']} 
+                    {$sql_base['FROM']}
                     {$sql_base['JOIN']}
                     LEFT JOIN `addons_users` AS `au` ON (`Addon`.`id`=`au`.`addon_id`)
                     LEFT JOIN `users` AS `User` ON (`au`.`user_id`=`User`.`id`)
@@ -1176,7 +1176,7 @@ class EditorsController extends AppController
             $emails = array_unique($emails);
             $addonsAndEmails = array_merge($addonsAndEmails, $emails);
         }
-        
+
         $this->set('addonsAndEmails', $addonsAndEmails);
         $this->render('ajax/addon_and_author_lookup', 'ajax');
     }
@@ -1337,7 +1337,7 @@ class EditorsController extends AppController
         }
 
         $sql = $this->Editors->buildQueueFilterQuery($queue);
-    
+
         // Setup pagination
         $this->Pagination->total = $this->_getCount($queue, true);
 
@@ -1402,7 +1402,7 @@ class EditorsController extends AppController
 
         $platforms = $this->Amo->getPlatformName();
         $applications = $this->Amo->getApplicationName();
-        
+
         //make modifications to the queue array
         if (!empty($addons)) {
             foreach ($addons as $k => $addon) {
@@ -1424,12 +1424,12 @@ class EditorsController extends AppController
                     $nominationage = time() - strtotime($addon['Addon']['nominationdate']);
                     $addons[$k]['nominationage'] = $this->_humanizeAge($nominationage);
                 }
-                
+
                 $addons[$k]['age'] = $this->_humanizeAge($age);
 
                 //Generate any additional notes
                 $addons[$k]['notes'] = array();
-                
+
                 //Platform-specific?
                 if (!empty($addon['Version'][0]['File'][0]['platform_id']) && $addon['Version'][0]['File'][0]['platform_id'] != 1) {
                     $os = array();
@@ -1441,10 +1441,10 @@ class EditorsController extends AppController
                 elseif (!empty($addon['File']['platform_id']) && $addon['File']['platform_id'] != 1) {
                     $addons[$k]['notes'][] = sprintf(___('%s only'), $platforms[$addon['File']['platform_id']]);
                 }
-                
+
                 //Featured?
                 //@TODO
-                
+
                 //Site specific?
                 if ($addon['Addon']['sitespecific'] == 1) {
                     $addons[$k]['notes'][] = ___('Site Specific');
@@ -1463,7 +1463,7 @@ class EditorsController extends AppController
 
         return $addons;
     }
-    
+
    /**
     * Moderated Reviews Queue
     */
@@ -1473,11 +1473,11 @@ class EditorsController extends AppController
                 if ($review != 'skip') {
                     preg_match("/^review(\d+)$/", $k, $matches);
                     $this->Review->id = intval($matches[1]);
-                    
+
                     if ($review == 'approve') {
                         //Log editor action
                         $this->Eventlog->log($this, 'editor', 'review_approve', null, $this->Review->id);
-                        
+
                         $this->Review->save(array('editorreview' => 0));
                         // HACK: not sure how this is done without deleteAll()
                         $reviews_flags = $this->ReviewsModerationFlag->query(
@@ -1489,12 +1489,12 @@ class EditorsController extends AppController
                         $this->Review->setLang('en-US', $this);
                         $review = $this->Review->read();
                         $this->Review->setLang(LANG, $this);
-                        
+
                         $reviewArray = array('title' => $review['Translation']['title']['string'],
                                              'body' => $review['Translation']['body']['string']);
                         //Log editor action
                         $this->Eventlog->log($this, 'editor', 'review_delete', null, $this->Review->id, null, null, serialize($reviewArray));
-                        
+
                         // HACK: not sure how this is done without deleteAll()
                         $reviews_flags = $this->ReviewsModerationFlag->query(
                             'DELETE FROM reviews_moderation_flags WHERE review_id='.$this->Review->id
@@ -1503,13 +1503,13 @@ class EditorsController extends AppController
                     }
                 }
             }
-            
+
             $this->flash(___('Reviews processed successfully!'), '/editors/queue/reviews');
             return;
         }
-        
+
         $criteria = array('Review.editorreview' => '1');
-        
+
         // initialize pagination
         $this->Pagination->total = $count;
         if (!array_key_exists('show', $_GET) && $this->Session->read('editor_queue_reviews_show')) {
@@ -1545,10 +1545,10 @@ class EditorsController extends AppController
         foreach ($_reviews_flags as $flag) {
             $review_id = $flag['ReviewsModerationFlag']['review_id'];
             $flag_name = $flag['ReviewsModerationFlag']['flag_name'];
-            
-            // Count the occurrences of each flag per review, building 
+
+            // Count the occurrences of each flag per review, building
             // the data structure as we go.
-            if (!isset($reviews_flags[$review_id])) 
+            if (!isset($reviews_flags[$review_id]))
                 $reviews_flags[$review_id] = array();
             if (!isset($reviews_flags[$review_id][$flag_name]))
                 $reviews_flags[$review_id][$flag_name] = 1;
@@ -1559,7 +1559,7 @@ class EditorsController extends AppController
             if ($flag_name == 'review_flag_reason_other') {
                 if (!isset($reviews_flags_notes[$review_id]))
                     $reviews_flags_notes[$review_id] = array();
-                $reviews_flags_notes[$review_id][] = 
+                $reviews_flags_notes[$review_id][] =
                     $flag['ReviewsModerationFlag']['flag_notes'];
             }
         }
@@ -1567,9 +1567,9 @@ class EditorsController extends AppController
         $this->publish('reviews', $reviews);
         $this->publish('reviews_flags', $reviews_flags);
         $this->publish('reviews_flags_notes', $reviews_flags_notes);
-        $this->publish('review_flag_reasons', 
+        $this->publish('review_flag_reasons',
             $this->ReviewsModerationFlag->reasons);
-        
+
         $this->render('reviews_queue');
     }
 
@@ -1579,12 +1579,12 @@ class EditorsController extends AppController
     */
     function featured($command=null, $ajax=null) {
         $this->Amo->clean($this->data);
-        
+
         switch($command) {
             case 'add':
                 if (preg_match('/\[(\d+)\]/', $this->data['Addon']['id'], $matches)) {
                     $this->data['Addon']['id'] = $matches[1];
-                } 
+                }
 
                 if (!is_numeric($this->data['Addon']['id']) || !is_numeric($this->data['Category']['id'])) {
                     header('HTTP/1.1 400 Bad Request');
@@ -1635,9 +1635,9 @@ class EditorsController extends AppController
                 sort($_locales);
                 $this->data['AddonCategory']['feature_locales'] = implode(',',$_locales);
 
-                $_edit_feature_query = "UPDATE addons_categories 
-                                        SET feature_locales='{$this->data['AddonCategory']['feature_locales']}' 
-                                        WHERE addon_id='{$this->data['Addon']['id']}' 
+                $_edit_feature_query = "UPDATE addons_categories
+                                        SET feature_locales='{$this->data['AddonCategory']['feature_locales']}'
+                                        WHERE addon_id='{$this->data['Addon']['id']}'
                                         AND category_id='{$this->data['Category']['id']}'";
 
                 if ($this->AddonCategory->query($_edit_feature_query)) {
@@ -1696,7 +1696,7 @@ class EditorsController extends AppController
 
                         $addons_by_category[$attributes['category_id']][] = $feature;
                     }
-                    
+
                 }
 
             }
@@ -1707,7 +1707,7 @@ class EditorsController extends AppController
         foreach ($this->Category->findAll('', null, array('Category.application_id', 'Category.addontype_id', 'Translation.name')) as $category) {
             $categories[$category['Category']['id']] = $category;
         }
-        
+
         $this->set('applications', $this->Amo->getApplicationName());
         $this->set('addontypes', $this->Addontype->getNames());
         $this->set('categories', $categories);
@@ -1757,7 +1757,7 @@ class EditorsController extends AppController
         $startDate = $monthStart;
         $endDate = ___('YYYY-MM-DD');
         $filter = '';
-        
+
         //If user has specified own conditions, use those
         if (!empty($this->params['url']['start'])) {
             $startTime = strtotime($this->params['url']['start']);
@@ -1777,20 +1777,20 @@ class EditorsController extends AppController
             $filter = $this->params['url']['filter'];
             $filterParts = explode(':', $filter);
             $conditions['type'] = $filterParts[0];
-            
+
             if ($filterParts[1] != '*') {
                 $conditions['action'] = $filterParts[1];
             }
         }
         $conditions['type'] = 'editor';
-            
+
         // set up pagination
         list($order,$limit,$page) = $this->Pagination->init($conditions, null,
             array('modelClass'=>'Eventlog', 'show'=>50, 'sortby'=>'created', 'direction'=>'DESC'));
-        
+
         $logs = $this->Eventlog->findAll($conditions, null, $order, $limit, $page);
         $logs = $this->Audit->explainLog($logs);
-        
+
         $this->set('logs', $logs);
         $this->publish('startDate', $startDate);
         $this->publish('endDate', $endDate);
@@ -1801,18 +1801,18 @@ class EditorsController extends AppController
                 'editor:review_approve' => ___('Approved reviews'),
                 'editor:review_delete' => ___('Deleted reviews')
         ));
-        
+
         $this->set('page', 'logs');
         $this->render('logs');
     }
-    
+
     function reviewlog() {
         //Default conditions are the current month
         $monthStart = date('Y-m-01');
         $conditions = "Approval.created >= '{$monthStart} 00:00:00'";
         $startdate = $monthStart;
         $enddate = ___('YYYY-MM-DD');
-        
+
         //If user has specified own conditions, use those
         if (!empty($this->params['url']['start'])) {
             $start_time = strtotime($this->params['url']['start']);
@@ -1822,27 +1822,27 @@ class EditorsController extends AppController
                     "Approval.created >= FROM_UNIXTIME('{$start_time}')"
                 );
                 $startdate = $this->params['url']['start'];
-                
+
                 if ($end_time !== false && $end_time != -1) {
                     $conditions[] = "Approval.created < FROM_UNIXTIME('".strtotime('+1 day', $end_time)."')";
                     $enddate = $this->params['url']['end'];
                 }
             }
         }
-            
+
         // set up pagination
         list($order,$limit,$page) = $this->Pagination->init($conditions, null,
             array('modelClass'=>'Approval', 'show'=>50));
-        
+
         $approvals = $this->Approval->findAll($conditions, null, $order, $limit, $page);
         foreach ($approvals as $k => $approval) {
             $approvals[$k]['Addon'] = $this->Addon->getAddon($approval['Approval']['addon_id']);
         }
-        
+
         $this->publish('approvals', $approvals);
         $this->publish('startdate', $startdate);
         $this->publish('enddate', $enddate);
-        
+
         $this->set('page', 'reviewlog');
         $this->render('reviewlog');
     }
@@ -1853,7 +1853,7 @@ class EditorsController extends AppController
 
         //days
         if ($age >= (60*60*24*2)) {
-            $humanized = sprintf(___('%s days'), floor($age/(60*60*24)));
+            $humanized = sprintf(n___('%s day', '%s days', floor($age/(60*60*24))), floor($age/(60*60*24)));
         }
         //1 day
         elseif ($age >= (60*60*24)) {
@@ -1861,7 +1861,7 @@ class EditorsController extends AppController
         }
         //hours
         elseif ($age >= (60*60*2)) {
-            $humanized = sprintf(___('%s hours'), floor($age/(60*60)));
+            $humanized = sprintf(n___('%s hour', '%s hours', floor($age/(60*60))), floor($age/(60*60)));
         }
         //hour
         elseif ($age >= (60*60)) {
@@ -1869,7 +1869,7 @@ class EditorsController extends AppController
         }
         //minutes
         elseif ($age > 60) {
-            $humanized = sprintf(___('%s minutes'), floor($age/60));
+            $humanized = sprintf(n___('%s minute', '%s minutes', floor($age/60)), floor($age/60));
         }
         //minute
         else {

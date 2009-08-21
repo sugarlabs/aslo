@@ -299,6 +299,26 @@ class EditorsControllerTest extends WebTestHelper {
         $this->assertTrue(array_sum($summary['teamcount']) > 0, 'team has approvals in monthly summary');
     }
 
+    function testHumanizeAge() {
+        $age = time() - strtotime('yesterday');
+        $this->assertEqual('1 day', $this->controller->_humanizeAge($age));
+
+        $age = time() - strtotime('yesterday') + 86400;
+        $this->assertEqual('2 days', $this->controller->_humanizeAge($age));
+
+        $age = '7500';
+        $this->assertEqual('2 hours', $this->controller->_humanizeAge($age));
+
+        $age = '3800';
+        $this->assertEqual('1 hour', $this->controller->_humanizeAge($age));
+
+        $age = '125';
+        $this->assertEqual('2 minutes', $this->controller->_humanizeAge($age));
+
+        $age = '30';
+        $this->assertEqual('1 minute', $this->controller->_humanizeAge($age));
+    }
+
     /**
      * We've got to use direct queries here because cake 1.1 doesn't support getting data in join tables. :-/
      */

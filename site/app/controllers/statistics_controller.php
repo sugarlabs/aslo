@@ -59,28 +59,28 @@ class StatisticsController extends AppController
 
         // beforeFilter() is apparently called before components are initialized. Cake++
         $this->Amo->startup($this);
-        
+
         // Clean post data
-        $this->Amo->clean($this->data); 
-        
+        $this->Amo->clean($this->data);
+
         $this->layout = 'amo2009';
         $this->pageTitle = ___('Statistics Dashboard', 'statistics_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
-        
+
         $this->cssAdd = array('stats/stats');
         $this->publish('cssAdd', $this->cssAdd);
-        
+
         $this->jsAdd = array('stats/stats.js',);
         $this->publish('jsAdd', $this->jsAdd);
-        
+
         $prescriptJS = "var statsURL = '".$this->url('/statistics/')."';";
         $this->set('prescriptJS', $prescriptJS);
-        
+
         $this->breadcrumbs = array(___('Statistics Dashboard', 'statistics_pagetitle') => '/statistics/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
-        
+
         $this->publish('subpagetitle', ___('Statistics Dashboard', 'statistics_pagetitle'));
     }
-    
+
    /**
     * Index
     */
@@ -92,7 +92,7 @@ class StatisticsController extends AppController
                 $this->addon($addon_id);
             elseif (!empty($_GET['data']['Addon']['id']))
                 $this->addon($_GET['data']['Addon']['id']);
-            
+
             return;
         }
         // If not, show the public overview
@@ -110,7 +110,7 @@ class StatisticsController extends AppController
         );
         $this->publish('jsAdd', $this->jsAdd);
         $this->set('prescriptJS', "var Simile_urlPrefix = '{$this->base}/js/simile';");
-        
+
         $this->cssAdd = array(
             'simile/bundle',
             'stats/stats',
@@ -155,7 +155,7 @@ class StatisticsController extends AppController
             $addons = array();
         }
         $this->publish('addons', $addons);
-        
+
         // If user can access all add-on stats, pull all
         if ($this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User'))) {
             $otherAddons = $this->Addon->findAll(null, array('Addon.id', 'Addon.name'), null, null, null, -1);
@@ -164,7 +164,7 @@ class StatisticsController extends AppController
             // Otherwise, pull all public stats add-ons
             $otherAddons = $this->Addon->findAll("Addon.publicstats=1", array('Addon.id', 'Addon.name'), null, null, null, -1);
         }
-        
+
         if (!empty($otherAddons)) {
             foreach ($otherAddons as $otherAddon) {
                 $name = trim($otherAddon['Translation']['name']['string']);
@@ -172,37 +172,37 @@ class StatisticsController extends AppController
                     $other_addons[$otherAddon['Addon']['id']] = substr($name, 0, 50);
             }
             asort($other_addons);
-            
+
             $this->set('otherAddons', $other_addons);
         }
     }
-    
+
    /**
     * Add-on Statistics
     */
     function addon($addon_id) {
         $this->Amo->clean($addon_id);
         $this->publish('addon_id', $addon_id);
-        
+
         $this->Addon->id = $addon_id;
         $this->Addon->unbindFully();
         if (!$addon = $this->Addon->read()) {
             $this->flash(___('Add-on not found!'), '/statistics/index');
             return;
         }
-        
+
         if (isset($this->namedArgs['format']) && $this->namedArgs['format'] == 'rss')
             $rss = true;
         else
             $rss = false;
-        
+
         // Make sure user has permission to view this add-on's stats
-        if (!$this->_checkAccess($addon_id, $addon) && 
+        if (!$this->_checkAccess($addon_id, $addon) &&
             !($rss && !empty($this->namedArgs['key']) && md5($addon['Addon']['created']) == $this->namedArgs['key'])) {
             $this->flash(___('You do not have access to that add-on.'), '/developers/index');
             return;
         }
-        
+
         $this->jsAdd = array(
             //'simile/timeplot/timeplot-api.js?local',
             'jquery-compressed.js',
@@ -217,14 +217,14 @@ class StatisticsController extends AppController
             'stats/plots.js'
             );
         $this->publish('jsAdd', $this->jsAdd);
-        
+
         $this->cssAdd = array(
             'simile/bundle',
             'stats/stats',
             'stats/dropdowns'
         );
         $this->publish('cssAdd', $this->cssAdd);
-        
+
         // We only show the RSS key if the user could access if it wasn't public
         if ($this->Amo->checkOwnership($addon_id, $addon, true) || $this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User')))
             $key = "/key:".md5($addon['Addon']['created']);
@@ -232,29 +232,29 @@ class StatisticsController extends AppController
             $key = '';
         $this->publish('key', $key);
         $this->publish('rssAdd', array("/statistics/addon/{$addon['Addon']['id']}/format:rss{$key}"));
-        
+
         $this->publish('addon', $addon);
         $this->publish('addon_name', $addon['Translation']['name']['string']);
-        
+
         $this->breadcrumbs[sprintf(___('%1$s Statistics'), $addon['Translation']['name']['string'])] = '/statistics/addon/'.$addon_id;
         $this->publish('breadcrumbs', $this->breadcrumbs);
-        
+
         $prescriptJS = "var Simile_urlPrefix = '".SITE_URL.$this->base.'/js/simile'."';";
         $this->set('prescriptJS', $prescriptJS);
-        
+
         $session = $this->Session->read('User');
         $this->publish('email', $session['email']);
-        $this->set('all_addons', empty($session['id']) ? 
+        $this->set('all_addons', empty($session['id']) ?
 		array() : $this->Addon->getAddonsByUser($session['id']));
-        
+
         // Add-on icon
         $addonIcon = $this->Image->getAddonIconURL($addon_id);
         $this->publish('addonIcon', $addonIcon);
-        
+
         // Data for overview
         $stats = array('totaldownloads' => 0);
         if (!$this->Config->getValue('stats_disabled') || $this->SimpleAcl->actionAllowed('*', '*', $this->Session->read('User'))) {
-            if ($statsQry = $this->Addon->query("SELECT totaldownloads, weeklydownloads, average_daily_downloads, average_daily_users FROM addons WHERE id={$addon_id}", true)) {      
+            if ($statsQry = $this->Addon->query("SELECT totaldownloads, weeklydownloads, average_daily_downloads, average_daily_users FROM addons WHERE id={$addon_id}", true)) {
                 $stats['totaldownloads'] = $statsQry[0]['addons']['totaldownloads'];
                 $stats['avg_downloads']  = $statsQry[0]['addons']['average_daily_downloads'];
                 $stats['weeklydownloads'] = $statsQry[0]['addons']['weeklydownloads'];
@@ -291,7 +291,7 @@ class StatisticsController extends AppController
         }
         $this->set('stats', $stats);
         $this->pageTitle = $addon['Translation']['name']['string'].' :: '.___('Statistics Dashboard', 'statistics_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
-        
+
         if (!$rss) {
             $this->publish('jsLocalization', array(
                     'date' => ___('%B %e, %Y'),
@@ -328,7 +328,7 @@ class StatisticsController extends AppController
                     'statistics_js_plotselection_options_csv_name' => ___('View Data (CSV)'),
                     'statistics_js_plotselection_options_csv_tooltip' => ___('Get a Comma Separated Values file of this data')
                 ));
-            
+
             $this->render('addon', 'amo2009');
         }
         else {
@@ -373,7 +373,7 @@ class StatisticsController extends AppController
         }
 
         if (is_null($uuid)) {
-            $this->flash(sprintf(_('error_missing_argument'), 'collection_id'), '/', 3);
+            $this->flash(sprintf(_('Missing argument: %s'), 'collection_id'), '/', 3);
             return;
         }
 
@@ -401,7 +401,7 @@ class StatisticsController extends AppController
                 return;
             }
 
-            // fetch collection 
+            // fetch collection
             $this->Collection->unbindFully();
             $collection = $this->Collection->find(array('Collection.id' => $collection_id), null, null, -1);
 
@@ -450,7 +450,7 @@ class StatisticsController extends AppController
         );
         $this->publish('jsAdd', $this->jsAdd);
         $this->set('prescriptJS', "var Simile_urlPrefix = '{$this->base}/js/simile';");
-        
+
         $this->cssAdd = array(
             'simile/bundle',
             'stats/stats',
@@ -507,12 +507,12 @@ class StatisticsController extends AppController
 
         $this->set('description', $description);
         $this->set('url', $url);
-        
+
         $startDate = date('Y-m-d', strtotime('-364 days'));
         $this->set('csv', $this->Stats->getCollectionDailyStats($ids, $startDate));
         $this->render('csv', 'ajax');
     }
-    
+
     /**
      * CSV data for site stats
      */
@@ -525,13 +525,13 @@ class StatisticsController extends AppController
 
         $this->set('description', "{$plot} Site Statistics");
         $this->set('url', SITE_URL . $this->url("/statistics/sitecsv/{$plot}"));
-        
+
         $csv = $this->_cachedStats('getSiteStats', array($plot));
-        
+
         $this->set('csv', $csv);
         $this->render('csv', 'ajax');
     }
-    
+
     /**
      * CSV data
      */
@@ -539,17 +539,17 @@ class StatisticsController extends AppController
         $this->publish('addon_id', $addon_id);
         $this->set('description', "Statistics for add-on {$addon_id}");
         $this->set('url', SITE_URL . $this->url("/statistics/csv/{$addon_id}/{$plot}"));
-        
+
         $addon = $this->Addon->find("Addon.id={$addon_id}", null, null, -1);
-        
+
         // Make sure user has permission to view this add-on's stats
         if (!$this->_checkAccess($addon_id, $addon)) {
             $this->Amo->accessDenied();
             return;
         }
-        
+
         $csv = $this->Stats->historicalPlot($addon_id, $plot, @$_GET['group_by']);
-        
+
         $this->set('csv', $csv);
         $this->render('csv', 'ajax');
     }
@@ -591,32 +591,32 @@ class StatisticsController extends AppController
         $this->set('json', array('addon_data' => $downloads));
         $this->render('json', 'ajax');
     }
-    
+
     /**
      * JSON data
      */
     function json($addon_id, $type) {
         $this->publish('addon_id', $addon_id);
-        
+
         $addon = $this->Addon->find("Addon.id={$addon_id}", null, null, -1);
-        
+
         // Make sure user has permission to view this add-on's stats
         if (!$this->_checkAccess($addon_id, $addon))
             return;
-        
+
         if ($type == 'summary')
             $json = $this->Stats->getSummary($addon_id);
-        
+
         $this->set('json', $json);
         $this->render('json', 'ajax');
     }
-    
+
     /**
      * XML data
      */
     function xml($action, $type, $addon_id = 0) {
         $addon = $this->Addon->find("Addon.id={$addon_id}", null, null, -1);
-        
+
         if ($action == 'events') {
             if ($type == 'addon') {
                 $xml = $this->Stats->getEventsAddon($addon_id);
@@ -625,48 +625,48 @@ class StatisticsController extends AppController
                 $xml = $this->Stats->getEventsApp($type);
             }
         }
-        
+
         $this->set('xml', $xml);
         $this->render('xml', 'ajax');
     }
-    
+
     /**
      * Change dashboard settings
      */
     function settings($addon_id) {
         $this->Amo->clean($addon_id);
         $this->publish('addon_id', $addon_id);
-        
+
         // Disable query caching
         foreach ($this->uses as $_model) {
             $this->$_model->caching = false;
         }
-        
+
         // Make sure user is owner in order to change this setting
         if (!$this->Amo->checkOwnership($addon_id, null, true)) {
             $this->flash(___('You do not have access to that add-on.'), '/statistics/addon/'.$addon_id);
             return;
         }
-        
+
         $this->Addon->id = $addon_id;
-        
+
         // Save data if POSTed
         if (!empty($this->data)) {
             $this->Addon->save($this->data);
-            
+
             $this->redirect('/statistics/addon/'.$addon_id.'/?settings');
             return;
         }
-        
+
         $addon = $this->Addon->read();
         $this->publish('addon', $addon);
-        
+
         $session = $this->Session->read('User');
         $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
-        
+
         $this->render('settings');
     }
-    
+
     /**
      * Determines if a user has access to view the add-on's stats
      */
@@ -674,19 +674,19 @@ class StatisticsController extends AppController
         // If add-on has opted-in to public stats, allow access
         if ($addon['Addon']['publicstats'] == 1)
             return true;
-        
+
         // If not publicstats, make sure logged in
         if (!$this->Session->check('User'))
             return false;
-        
+
         // If user can view any add-on's stats, allow access
         if ($this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User')))
             return true;
-        
+
         // If user is the add-on's author, allow access
         if ($this->Amo->checkOwnership($addon_id, $addon))
             return true;
-        
+
         // If no access yet, no access at all
         return false;
     }
@@ -702,7 +702,7 @@ class StatisticsController extends AppController
             return true;
         }
 
-        // check for any role 
+        // check for any role
         if ($this->Collection->getUserRole($collection_id, $session['id']) !== false) {
             return true;
         }
@@ -722,7 +722,7 @@ class StatisticsController extends AppController
 
         // Fetch #3!  Pull useful addon data this time.
         $addons = $this->Addon->getAddonList($addonIds, array());
-            
+
         return $addons;
     }
 
@@ -769,7 +769,7 @@ class StatisticsController extends AppController
 
         return $stats;
     }
-    
+
 }
 
 ?>

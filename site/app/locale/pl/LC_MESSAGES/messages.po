@@ -24,7 +24,7 @@ msgstr ""
 
 # %1$s is the count of files, a number
 # %2$s is a status string like _('Public') or _('Incomplete')
-#: controllers/components/amo.php:549
+#: controllers/components/amo.php:596
 #, php-format
 msgid "%1$s %2$s file"
 msgid_plural "%1$s %2$s files"
@@ -59,7 +59,7 @@ msgstr[1] "%1$s dodatki"
 msgstr[2] "%1$s dodatków"
 
 # %1$s is a number.
-#: views/collections/detail.thtml:126
+#: views/collections/detail.thtml:149
 #, php-format
 msgid "%1$s Add-on in this Collection"
 msgid_plural "%1$s Add-ons in this Collection"
@@ -68,8 +68,8 @@ msgstr[1] "W kolekcji znajdują się %1$s dodatki"
 msgstr[2] "W kolekcji znajduje się %1$s dodatków"
 
 # %1$s is a number
-#: views/addons/dictionaries.thtml:92 views/developers/versions_edit.thtml:95
-#: views/helpers/localization.php:65
+#: views/helpers/localization.php:65 views/developers/versions_edit.thtml:95
+#: views/addons/dictionaries.thtml:92
 #, php-format
 msgid "%1$s KB"
 msgstr "%1$s KB"
@@ -81,13 +81,13 @@ msgid "%1$s Statistics"
 msgstr "%1$s – statystyki"
 
 # %1$s is the add-on name
-#: controllers/addons_controller.php:1637
+#: controllers/addons_controller.php:1591
 #, php-format
 msgid "%1$s Version History"
 msgstr "%1$s – historia wersji"
 
 # %1 is the add-on count, %2 the category name
-#: views/addons/browse.thtml:60 views/addons/browse_thumbs.thtml:92
+#: views/addons/browse_thumbs.thtml:92 views/addons/browse.thtml:60
 #, php-format
 msgid "%1$s add-on"
 msgid_plural "%1$s add-ons"
@@ -375,7 +375,7 @@ msgstr "%1$s nie uzyskał dostępu do %2$s."
 
 # %1$s is the add-on name
 # %2$s is the collection name, linked to the collection's page
-#: views/addons/display.thtml:70 views/pages/js_constants.js.thtml:101
+#: views/pages/js_constants.js.thtml:115 views/addons/display.thtml:70
 #, php-format
 msgid "%1$s has been added to the %2$s collection."
 msgstr "Dodatek %1$s został dodany do kolekcji %2$s."
@@ -394,18 +394,18 @@ msgstr "Kolekcja %1$s została usunięta ze zbioru Twoich ulubionych kolekcji."
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
+#: controllers/components/validation.php:371
+#: controllers/components/validation.php:383
 #: controllers/components/developers.php:603
 #: controllers/components/developers.php:615
-#: controllers/components/validation.php:324
-#: controllers/components/validation.php:336
 #, php-format
 msgid "%1$s is not a valid version for %2$s"
 msgstr "%1$s nie jest prawidłową wersją dla %2$s"
 
 # %$1s is a version.  Example: 3.1.1
 # %$2s is an add-on name.
+#: controllers/components/validation.php:374
 #: controllers/components/developers.php:606
-#: controllers/components/validation.php:327
 #, php-format
 msgid "%1$s is not a valid version for %2$s: minimum versions cannot contain *"
 msgstr ""
@@ -413,12 +413,12 @@ msgstr ""
 "zawierać *"
 
 # %1 is the add-on name, %2 is the platform
-#: views/pages/js_constants.js.thtml:66
+#: views/pages/js_constants.js.thtml:78
 #, php-format
 msgid "%1$s is not available for %2$s."
 msgstr "Dodatek %1$s nie jest dostępny dla systemu %2$s."
 
-#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
+#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
 #, php-format
 msgid "%1$s on %2$s"
 msgstr "%1$s – %2$s"
@@ -468,9 +468,9 @@ msgid "%1$s removed feature %2$s"
 msgstr "%1$s usunął element %2$s"
 
 # %1$s is a number
-#: views/addons/browse_thumbs.thtml:132
-#: views/elements/addon_listitem.thtml:112
-#: views/elements/amo2009/reviews.thtml:58 views/elements/feature.thtml:99
+#: views/elements/amo2009/reviews.thtml:58
+#: views/elements/addon_listitem.thtml:112 views/elements/feature.thtml:99
+#: views/addons/browse_thumbs.thtml:139
 #, php-format
 msgid "%1$s review"
 msgid_plural "%1$s reviews"
@@ -480,7 +480,7 @@ msgstr[2] "%1$s recenzji"
 
 # %1$s is a date
 # %2$s is a date
-#: views/editors/performance_table.thtml:124
+#: views/editors/performance_table.thtml:128
 #, php-format
 msgid "%1$s to %2$s"
 msgstr "%1$s do %2$s"
@@ -522,6 +522,18 @@ msgstr[0] "Ostrzeżenia: %1$s"
 msgstr[1] "Ostrzeżenia: %1$s"
 msgstr[2] "Ostrzeżenia: %1$s"
 
+# %1$s is a number.
+#: views/elements/amo2009/collections/barometer.thtml:61
+#, fuzzy, php-format
+msgid "%1$s%% negative votes for this collection"
+msgstr "W kolekcji znajduje się %1$s dodatek"
+
+# %1$s is a number.
+#: views/elements/amo2009/collections/barometer.thtml:58
+#, fuzzy, php-format
+msgid "%1$s%% positive votes for this collection"
+msgstr "W kolekcji znajduje się %1$s dodatek"
+
 # This is the password reset email
 # %1 is the pw reset URL, %2 is the application
 #: views/users/email/pwreset_plain.thtml:5
@@ -553,65 +565,65 @@ msgstr "%A, %d.%m.%Y"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
 #: views/statistics/rss/summary.thtml:41 views/statistics/rss/summary.thtml:48
+#: views/statistics/addon.thtml:165 views/statistics/addon.thtml:176
 msgid "%A, %b. %e"
 msgstr "%A, %d.%m."
 
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
-#: views/addons/browse_thumbs.thtml:121 views/addons/display.thtml:159
-#: views/addons/display.thtml:307 views/addons/rss/versions.thtml:42
-#: views/collections/detail.thtml:118 views/collections/edit.thtml:324
-#: views/developers/dashboard.thtml:65 views/developers/versions.thtml:69
-#: views/developers/versions_edit.thtml:208
-#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
-#: views/elements/addon_listitem.thtml:124
-#: views/elements/addon_version_detail.thtml:54
-#: views/elements/amo2009/addons/version_detail.thtml:53
-#: views/elements/amo2009/homepage_addon.thtml:117
-#: views/elements/amo2009/results_addon.thtml:102
-#: views/elements/amo2009/results_addon.thtml:119
-#: views/elements/amo2009/separated_list_items.thtml:108
-#: views/elements/amo2009/users/vcard.thtml:92
 #: views/elements/collections_interactive_addon.thtml:85
-#: views/elements/feature.thtml:106 views/reviews/add.thtml:63
-#: views/reviews/delete.thtml:54 views/reviews/display.thtml:74
-#: views/reviews/display.thtml:159 views/search/rss/index.thtml:5
+#: views/elements/amo2009/users/vcard.thtml:92
+#: views/elements/amo2009/results_addon.thtml:102
+#: views/elements/amo2009/separated_list_items.thtml:108
+#: views/elements/amo2009/homepage_addon.thtml:119
+#: views/elements/amo2009/addons/version_detail.thtml:53
+#: views/elements/addon_version_detail.thtml:54
+#: views/elements/addon_listitem.thtml:124 views/elements/feature.thtml:106
+#: views/collections/detail.thtml:124 views/collections/edit.thtml:324
 #: views/statistics/index.thtml:108 views/users/info.thtml:108
-#: controllers/collections_controller.php:1070
-#: controllers/statistics_controller.php:144
+#: views/editors/reviews_queue.thtml:57 views/editors/reviews_queue.thtml:68
+#: views/developers/dashboard.thtml:65
+#: views/developers/versions_edit.thtml:208 views/developers/versions.thtml:69
+#: views/search/rss/index.thtml:5 views/addons/rss/versions.thtml:42
+#: views/addons/display.thtml:159 views/addons/display.thtml:307
+#: views/addons/browse_thumbs.thtml:128 views/reviews/add.thtml:63
+#: views/reviews/display.thtml:74 views/reviews/display.thtml:159
+#: views/reviews/delete.thtml:54 controllers/statistics_controller.php:144
 #: controllers/statistics_controller.php:297
+#: controllers/collections_controller.php:1190
 msgid "%B %e, %Y"
 msgstr "%e %b %Y"
 
 # date and time format string (strftime)
 # http://php.net/strftime
-#: views/addons/display.thtml:158 views/admin/addons_status.thtml:57
-#: views/developers/discuss.thtml:51 views/developers/discuss.thtml:61
-#: views/editors/review.thtml:369 views/elements/addon_version_detail.thtml:53
-#: views/users/edit.thtml:202
+#: views/elements/addon_version_detail.thtml:53 views/users/edit.thtml:202
+#: views/editors/review.thtml:369 views/developers/discuss.thtml:51
+#: views/developers/discuss.thtml:61 views/admin/addons_status.thtml:57
+#: views/addons/display.thtml:158
 msgid "%B %e, %Y, %I:%M %p"
 msgstr "%e %b %Y, %H:%M"
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/addon.thtml:185 views/statistics/rss/summary.thtml:54
+#: views/statistics/rss/summary.thtml:54 views/statistics/addon.thtml:185
 #, fuzzy, php-format
 msgid "%b. %e"
 msgstr "%d.%m."
 
 # This is a date format.
 # http://php.net/strftime
-#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
+#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
 msgid "%b. %e, %Y"
 msgstr "%d.%m.%Y"
 
 # %s is the name of the add-on and the add-on section.  Example:
 #   Some Add-on :: Firefox Add-ons
 # This should not be concatenated in the code and should be fixed.
-#: controllers/addons_controller.php:259 controllers/addons_controller.php:389
-#: controllers/addons_controller.php:1584 controllers/tags_controller.php:381
+#: controllers/tags_controller.php:381 controllers/addons_controller.php:210
+#: controllers/addons_controller.php:343
+#: controllers/addons_controller.php:1538
+#: controllers/collections_controller.php:349
 #, php-format
 msgid "%s"
 msgstr "%s"
@@ -628,7 +640,7 @@ msgid "%s Categories"
 msgstr "Kategorie programu %s"
 
 # %1$s is the name of the collection
-#: controllers/collections_controller.php:409
+#: controllers/collections_controller.php:471
 #, php-format
 msgid "%s Collection"
 msgstr "Kolekcja %s"
@@ -646,18 +658,21 @@ msgid "%s Preview Manager"
 msgstr "Menedżer obrazków dodatku %s"
 
 # %s is the add-on name.
-#: views/developers/addon_status.thtml:43
-#: views/developers/addon_status_confirm.thtml:43
 #: views/developers/addon_status_nominate.thtml:43
+#: views/developers/addon_status_confirm.thtml:43
+#: views/developers/addon_status.thtml:43
 #, php-format
 msgid "%s Status"
 msgstr "Status %s"
 
 # %s is a number
 #: controllers/editors_controller.php:1856
-#, php-format
-msgid "%s days"
-msgstr "%s dni"
+#, fuzzy, php-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] "%s dni"
+msgstr[1] "%s dni"
+msgstr[2] "%s dni"
 
 #: views/developers/versions_delete.thtml:53
 #, php-format
@@ -674,22 +689,28 @@ msgstr "Odnaleziono w zakresie: %s"
 
 # %s is a percentage, like '+22.33%'.  It sits next to another number, so
 # the implied meaning is 'percentage change' from the previous stat point.
-#: views/statistics/addon.thtml:209 views/statistics/rss/summary.thtml:62
+#: views/statistics/rss/summary.thtml:62 views/statistics/addon.thtml:209
 #, php-format
 msgid "%s from last week"
 msgstr "%s od ostatniego tygodnia"
 
 # %s is a number
 #: controllers/editors_controller.php:1864
-#, php-format
-msgid "%s hours"
-msgstr "%s godzin"
+#, fuzzy, php-format
+msgid "%s hour"
+msgid_plural "%s hours"
+msgstr[0] "%s godzin"
+msgstr[1] "%s godzin"
+msgstr[2] "%s godzin"
 
 # %s is a number
 #: controllers/editors_controller.php:1872
-#, php-format
-msgid "%s minutes"
-msgstr "%s min"
+#, fuzzy, php-format
+msgid "%s minute"
+msgid_plural "%s minutes"
+msgstr[0] "%s min"
+msgstr[1] "%s min"
+msgstr[2] "%s min"
 
 # %s is a comma separated list of platforms.  Example:  Windows, OS X
 #: controllers/editors_controller.php:1439
@@ -753,7 +774,7 @@ msgstr "(Dolary USA.  Na przykład: 3.99)"
 msgid "(Unsubscribe)"
 msgstr "(Zakończ obserwowanie)"
 
-#: controllers/components/developers.php:1200
+#: controllers/components/developers.php:1201
 msgid "(auto-detect)"
 msgstr "(wykryj automatycznie)"
 
@@ -809,7 +830,7 @@ msgstr ""
 
 # %1$s is a URL
 # %2$s is a URL
-#: views/addons/display.thtml:496
+#: views/addons/display.thtml:498
 #, php-format
 msgid ""
 "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a> to add tags"
@@ -823,7 +844,7 @@ msgstr ""
 msgid "<a href=\"%s\">Review Guidelines</a>"
 msgstr "<a href=\"%s\">Wskazówki dla recenzentów</a>"
 
-#: views/pages/js_constants.js.thtml:69
+#: views/pages/js_constants.js.thtml:81
 msgid ""
 "<a href=\"http://getfirefox.com\">Upgrade Firefox</a> to use this add-on"
 msgstr ""
@@ -831,25 +852,46 @@ msgstr ""
 "dodatku"
 
 # %s is a number
-#: views/developers/dashboard.thtml:79
 #: views/elements/developers/statsbar.thtml:45
-#, php-format
-msgid "<em>%s</em> Active Daily Users"
-msgstr "<em>%s</em> aktywnych dziennych użytkowników"
+#: views/developers/dashboard.thtml:79
+#, fuzzy, php-format
+msgid "<em>%s</em> Active Daily User"
+msgid_plural "<em>%s</em> Active Daily Users"
+msgstr[0] "<em>%s</em> aktywnych dziennych użytkowników"
+msgstr[1] "<em>%s</em> aktywnych dziennych użytkowników"
+msgstr[2] "<em>%s</em> aktywnych dziennych użytkowników"
 
 # %s is a number
-#: views/developers/dashboard.thtml:75
 #: views/elements/developers/statsbar.thtml:41
-#, php-format
-msgid "<em>%s</em> Total Downloads"
+#: views/developers/dashboard.thtml:75
+#, fuzzy, php-format
+msgid "<em>%s</em> Total Download"
+msgid_plural "<em>%s</em> Total Downloads"
+msgstr[0] "Liczba wszystkich pobrań: <em>%s</em>"
+msgstr[1] "Liczba wszystkich pobrań: <em>%s</em>"
+msgstr[2] "Liczba wszystkich pobrań: <em>%s</em>"
+
+# %s is a number
+#: views/elements/developers/statsbar.thtml:43
+#: views/developers/dashboard.thtml:77
+#, fuzzy, php-format
+msgid "<em>%s</em> Weekly Download"
+msgid_plural "<em>%s</em> Weekly Downloads"
+msgstr[0] "Tygodniowa liczba pobrań <em>%s</em>"
+msgstr[1] "Tygodniowa liczba pobrań <em>%s</em>"
+msgstr[2] "Tygodniowa liczba pobrań <em>%s</em>"
+
+# %s is a number
+#: views/statistics/collections.thtml:128
+#, fuzzy, php-format
+msgid "<em>%s</em> downloads"
 msgstr "Liczba wszystkich pobrań: <em>%s</em>"
 
 # %s is a number
-#: views/developers/dashboard.thtml:77
-#: views/elements/developers/statsbar.thtml:43
-#, php-format
-msgid "<em>%s</em> Weekly Downloads"
-msgstr "Tygodniowa liczba pobrań <em>%s</em>"
+#: views/statistics/collections.thtml:78 views/statistics/collections.thtml:96
+#, fuzzy, php-format
+msgid "<em>%s</em> total"
+msgstr "Liczba wszystkich pobrań: <em>%s</em>"
 
 #: views/elements/amo2009/install.thtml:361 views/elements/install.thtml:112
 msgid ""
@@ -874,7 +916,7 @@ msgstr ""
 "otwartym oknie naciśnij przycisk „Zainstaluj”.</li></ol>"
 
 # %1$s is a URL.
-#: controllers/collections_controller.php:163
+#: controllers/collections_controller.php:171
 #, php-format
 msgid ""
 "<p><strong>You don't have any favorite collections yet.</strong></p> "
@@ -975,7 +1017,7 @@ msgstr ""
 "<a href='%1$s' title='Informacje prawne'>informacjami prawnymi</a> oraz <a "
 "href='%2$s' title='Polityka prywatności'>polityką prywatności</a>.</p>"
 
-#: views/developers/uploader.thtml:67
+#: views/developers/uploader.thtml:70
 msgid ""
 "<p>Thanks for your interest in submitting your add-on to Mozilla Add-ons. "
 "Hosting your add-on on Mozilla Add-ons is the easiest way to handle "
@@ -1026,7 +1068,7 @@ msgstr ""
 "dostępna pod następującym adresem: %2$s</p>"
 
 # %1$s is a URL.
-#: controllers/collections_controller.php:148
+#: controllers/collections_controller.php:156
 #, php-format
 msgid ""
 "<p>You haven't created any collections yet. Collections are easy to create "
@@ -1036,7 +1078,7 @@ msgstr ""
 "i uzupełniać ulubionymi dodatkami. <a href='%1$s'>Wypróbuj je</a>!</p>"
 
 # %s is href=... and should stay in the <a> tag.
-#: views/developers/uploader.thtml:159
+#: views/developers/uploader.thtml:163
 #, php-format
 msgid ""
 "<p>Your add-on listing has been successfully created. The basic information "
@@ -1084,12 +1126,12 @@ msgstr ""
 "span><br />Jeśli chcesz dokonać zmian, skontaktuj się z właścicielem dodatku."
 
 #: views/developers/addon_edit_authors.thtml:47
-#: views/developers/addon_edit_categories.thtml:46
-#: views/developers/addon_edit_descriptions.thtml:47
-#: views/developers/addon_edit_properties.thtml:47
 #: views/developers/addon_edit_tags.thtml:46
+#: views/developers/addon_edit_properties.thtml:47
 #: views/developers/addon_status.thtml:46
+#: views/developers/addon_edit_descriptions.thtml:47
 #: views/developers/versions_edit.thtml:47
+#: views/developers/addon_edit_categories.thtml:46
 msgid ""
 "<span>Your changes have been saved.</span><br />Please note that some "
 "changes may take several hours to appear in all areas of the website."
@@ -1128,8 +1170,8 @@ msgstr[1] "<span>Dodatki używane:</span> <strong>%1$s</strong>"
 msgstr[2] "<span>Dodatki używane:</span> <strong>%1$s</strong>"
 
 # %1$s is the count of addons in a collection
-#: views/addons/home.thtml:164
 #: views/elements/amo2009/collection_listing_item.thtml:51
+#: views/addons/home.thtml:164
 #, php-format
 msgid "<strong>%1$s</strong> add-on"
 msgid_plural "<strong>%1$s</strong> add-ons"
@@ -1138,16 +1180,16 @@ msgstr[1] "<strong>%1$s</strong> dodatki"
 msgstr[2] "<strong>%1$s</strong> dodatków"
 
 # %1$s is the count of subscribers for a collection
-#: views/addons/home.thtml:168 views/collections/detail.thtml:96
 #: views/elements/amo2009/collection_listing_item.thtml:58
+#: views/collections/detail.thtml:96 views/addons/home.thtml:168
 #, php-format
 msgid "<strong>%1$s</strong> subscriber"
-msgid_plural "<strong>%1$s</strong> subscriber"
+msgid_plural "<strong>%1$s</strong> subscribers"
 msgstr[0] "<strong>%1$s</strong> subskrybent"
 msgstr[1] "<strong>%1$s</strong> subskrybentów"
 msgstr[2] "<strong>%1$s</strong> subskrybentów"
 
-#: views/collections/detail.thtml:113
+#: views/collections/detail.thtml:119
 #, php-format
 msgid "<strong>Created by:</strong> %1$s"
 msgstr "<strong>Utworzona przez:</strong> %1$s"
@@ -1182,7 +1224,7 @@ msgstr ""
 "<strong>Właściciel</strong> - Może zarządzać wszystkimi parametrami dodatku, "
 "włącznie z dodawaniem i usuwaniem autorów."
 
-#: views/collections/detail.thtml:117
+#: views/collections/detail.thtml:123
 msgid "<strong>Updated:</strong>"
 msgstr "<strong>Zaktualizowana:</strong>"
 
@@ -1220,7 +1262,7 @@ msgstr ""
 "Edytor dodatku poprosił o dodatkowe informacje dotyczące wersji %2$s dodatku "
 "%1$s."
 
-#: views/users/edit.thtml:99 views/users/register.thtml:81
+#: views/users/register.thtml:81 views/users/edit.thtml:99
 msgid "A first name, last name or nickname is required."
 msgstr "Wymagane jest imię, nazwisko lub pseudonim."
 
@@ -1234,7 +1276,7 @@ msgstr ""
 "Odnośnik aktywujący konto został wysłany e-mailem na adres %1$s. Należy "
 "kliknąć go przed pierwszym logowaniem do %2$s – dodatki."
 
-#: controllers/developers_controller.php:1857
+#: controllers/developers_controller.php:1945
 msgid ""
 "A new section is added to your add-on's page and Developer Profile "
 "requesting a contribution from your users."
@@ -1243,7 +1285,7 @@ msgstr ""
 "zawierająca prośbę o dotację."
 
 # %1$s is the name of the file
-#: controllers/components/developers.php:692
+#: controllers/components/developers.php:693
 #, php-format
 msgid ""
 "A version of that add-on already exists. To replace it, you must delete the "
@@ -1252,27 +1294,27 @@ msgstr ""
 "Ta wersja dodatku już istnieje. Aby dokonać zamiany, musisz najpierw usunąć "
 "plik %1$s."
 
-#: controllers/editors_controller.php:520
-#, fuzzy
-msgctxt "editors_syntax_about"
-msgid "About"
-msgstr "About"
-
 # Link text for the AMO About page.
 #: views/elements/footer.thtml:72 views/layouts/amo2009.thtml:353
 msgctxt "footer_a_about"
 msgid "About"
 msgstr "Informacje o AMO"
 
+#: controllers/editors_controller.php:520
+#, fuzzy
+msgctxt "editors_syntax_about"
+msgid "About"
+msgstr "About"
+
 #: views/users/info.thtml:57
 msgid "About Me"
 msgstr "O mnie"
 
-#: views/collections/detail.thtml:109
+#: views/collections/detail.thtml:115
 msgid "About This Collection"
 msgstr "Informacje o kolekcji"
 
-#: views/admin/users_edit.thtml:131 views/users/edit.thtml:149
+#: views/users/edit.thtml:149 views/admin/users_edit.thtml:131
 msgid "About me"
 msgstr "O mnie"
 
@@ -1284,26 +1326,22 @@ msgstr "Akceptuj i pobierz"
 msgid "Accept and Install"
 msgstr "Akceptuj i instaluj"
 
-#: views/errors/error401.thtml:50 controllers/collections_controller.php:455
-#: controllers/collections_controller.php:513
-#: controllers/collections_controller.php:521
-#: controllers/collections_controller.php:991
-#: controllers/collections_controller.php:1056
-#: controllers/collections_controller.php:1100
-#: controllers/components/amo.php:642 controllers/components/amo.php:643
-#: controllers/components/amo.php:644 controllers/components/simple_acl.php:81
+#: views/errors/error401.thtml:50 controllers/components/simple_acl.php:81
 #: controllers/components/simple_acl.php:82
-#: controllers/components/simple_acl.php:83
-#: controllers/editors_controller.php:1228
+#: controllers/components/simple_acl.php:83 controllers/components/amo.php:689
+#: controllers/components/amo.php:690 controllers/components/amo.php:691
 #: controllers/reviews_controller.php:354
 #: controllers/reviews_controller.php:486
+#: controllers/editors_controller.php:1228
+#: controllers/collections_controller.php:508
+#: controllers/collections_controller.php:575
+#: controllers/collections_controller.php:633
+#: controllers/collections_controller.php:641
+#: controllers/collections_controller.php:1111
+#: controllers/collections_controller.php:1176
+#: controllers/collections_controller.php:1220
 msgid "Access Denied"
 msgstr "Brak dostępu"
-
-#: views/editors/review.thtml:322
-msgctxt "editors_review_th_action"
-msgid "Action"
-msgstr "Czynność"
 
 #: views/editors/performance_table.thtml:72 views/editors/reviewlog.thtml:58
 msgctxt "editorcp_reviewlog_column_action"
@@ -1315,14 +1353,14 @@ msgctxt "editors_reviews_header_action"
 msgid "Action"
 msgstr "Czynność"
 
+#: views/editors/review.thtml:322
+msgctxt "editors_review_th_action"
+msgid "Action"
+msgstr "Czynność"
+
 #: views/developers/dashboard.thtml:68
 msgid "Active"
 msgstr "Aktywny"
-
-#: controllers/statistics_controller.php:307
-msgctxt "statistics_js_plotselection_selector_adu"
-msgid "Active Daily Users"
-msgstr "Aktywni dzienni użytkownicy"
 
 #: views/statistics/rss/summary.thtml:45 views/statistics/rss/summary.thtml:46
 msgctxt "statistics_summary_updatepings_heading"
@@ -1331,6 +1369,11 @@ msgstr "Aktywni dzienni użytkownicy"
 
 #: views/statistics/addon.thtml:103 views/statistics/addon.thtml:161
 msgctxt "statistics_plot_legend_adu"
+msgid "Active Daily Users"
+msgstr "Aktywni dzienni użytkownicy"
+
+#: controllers/statistics_controller.php:307
+msgctxt "statistics_js_plotselection_selector_adu"
 msgid "Active Daily Users"
 msgstr "Aktywni dzienni użytkownicy"
 
@@ -1346,11 +1389,6 @@ msgstr "Status aktywności: <span class=\"inactive-1\">Nieaktywny</span>"
 msgid "Activity By Month"
 msgstr "Aktywność wg miesięcy"
 
-#: views/addons/display.thtml:490 views/developers/addon_edit_tags.thtml:67
-msgctxt "tags_add_tag_button"
-msgid "Add"
-msgstr "Dodaj"
-
 #: views/collections/edit.thtml:211 views/collections/edit.thtml:233
 msgctxt "collections_edit_formfield_users_submit"
 msgid "Add"
@@ -1358,6 +1396,11 @@ msgstr "Dodaj"
 
 #: views/editors/featured.thtml:126
 msgctxt "editors_featured_add_feature_submit"
+msgid "Add"
+msgstr "Dodaj"
+
+#: views/developers/addon_edit_tags.thtml:67 views/addons/display.thtml:492
+msgctxt "tags_add_tag_button"
 msgid "Add"
 msgstr "Dodaj"
 
@@ -1381,7 +1424,7 @@ msgid "Add Author"
 msgstr "Dodaj"
 
 # %1$s is the add-on name, %2$s is the version number.
-#: views/developers/uploader.thtml:57
+#: views/developers/uploader.thtml:60
 #, php-format
 msgid "Add File to %1$s %2$s"
 msgstr "Dodawanie pliku do %1$s %2$s"
@@ -1434,7 +1477,7 @@ msgctxt "devcp_preview_add_pagetitle"
 msgid "Add Preview"
 msgstr "Dodawanie obrazka"
 
-#: views/developers/uploader.thtml:171
+#: views/developers/uploader.thtml:175
 msgid "Add Release Notes"
 msgstr "Dodaj informacje o wydaniu"
 
@@ -1446,6 +1489,16 @@ msgstr "Dodaj odpowiedź"
 msgid "Add Translation"
 msgstr "Dodaj tłumaczenie"
 
+#: views/elements/amo2009/collections/barometer.thtml:71
+#, fuzzy
+msgid "Add a negative vote for this collection"
+msgstr "Dodaj do kolekcji:"
+
+#: views/elements/amo2009/collections/barometer.thtml:52
+#, fuzzy
+msgid "Add a positive vote for this collection"
+msgstr "Dodaj do kolekcji:"
+
 #: views/reviews/display.thtml:220
 msgid "Add a review"
 msgstr "Dodaj recenzję"
@@ -1456,7 +1509,7 @@ msgstr "Dodaj recenzję"
 msgid "Add a review for %s"
 msgstr "Dodaj recenzję dla: %s"
 
-#: views/addons/display.thtml:484 views/developers/addon_edit_tags.thtml:54
+#: views/developers/addon_edit_tags.thtml:54 views/addons/display.thtml:486
 msgid "Add a tag"
 msgstr "Dodaj etykietę"
 
@@ -1499,23 +1552,22 @@ msgstr "Instaluj %2$s"
 msgid "Add to Collection"
 msgstr "Dodaj do kolekcji"
 
-#: controllers/addons_controller.php:91
+#: controllers/components/amo.php:75
 msgid "Add to Delicious"
 msgstr "Dodaj do Delicious"
 
-#: views/elements/amo2009/collections/add_form.thtml:53
 #: views/elements/amo2009/collections/js_init.thtml:68
+#: views/elements/amo2009/collections/add_form.thtml:53
 #: views/pages/collector_firstrun.thtml:64
 msgid "Add to Favorites"
 msgstr "Dodaj do ulubionych"
 
-#: views/addons/display.thtml:529
+#: views/addons/display.thtml:531
 msgid "Add to a collection:"
 msgstr "Dodaj do kolekcji:"
 
-#: views/admin/flagged_queue.thtml:53 views/editors/featured.thtml:63
-#: views/editors/queue.thtml:115
-msgctxt "editors_th_addon"
+#: views/users/edit.thtml:192
+msgctxt "user_notifications_th_addon"
 msgid "Add-on"
 msgstr "Dodatek"
 
@@ -1524,8 +1576,9 @@ msgctxt "editorcp_reviewlog_column_addon"
 msgid "Add-on"
 msgstr "Dodatek"
 
-#: views/users/edit.thtml:192
-msgctxt "user_notifications_th_addon"
+#: views/editors/featured.thtml:63 views/editors/queue.thtml:115
+#: views/admin/flagged_queue.thtml:53
+msgctxt "editors_th_addon"
 msgid "Add-on"
 msgstr "Dodatek"
 
@@ -1534,13 +1587,13 @@ msgstr "Dodatek"
 msgid "Add-on Collections"
 msgstr "Add-on Collections"
 
-#: controllers/pages_controller.php:117
-msgctxt "page_title_collector"
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
+msgctxt "collections_index_header_collector"
 msgid "Add-on Collector"
 msgstr "Kolekcjoner dodatków"
 
-#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
-msgctxt "collections_index_header_collector"
+#: controllers/pages_controller.php:117
+msgctxt "page_title_collector"
 msgid "Add-on Collector"
 msgstr "Kolekcjoner dodatków"
 
@@ -1557,7 +1610,7 @@ msgid "Add-on Collector Home"
 msgstr "Strona domowa"
 
 #: views/elements/amo2009/collections/collector_sidebar_download.thtml:45
-#: views/pages/collector.thtml:69 views/pages/collector_firstrun.thtml:116
+#: views/pages/collector_firstrun.thtml:116 views/pages/collector.thtml:69
 msgid "Add-on Collector Logo"
 msgstr "Logo Kolekcjonera dodatków"
 
@@ -1580,7 +1633,7 @@ msgstr "Informacje o kompatybilności dodatków"
 msgid "Add-on Completion Criteria"
 msgstr "Kryteria kompletacji dodatku"
 
-#: views/developers/uploader.thtml:157
+#: views/developers/uploader.thtml:161
 msgid "Add-on Created!"
 msgstr "Dodatek został utworzony!"
 
@@ -1592,7 +1645,7 @@ msgstr "Opis dodatku"
 msgid "Add-on Description required"
 msgstr "Dodatek musi mieć opis"
 
-#: views/developers/uploader.thtml:127
+#: views/developers/uploader.thtml:131
 msgid "Add-on File: "
 msgstr "Plik dodatku: "
 
@@ -1617,16 +1670,16 @@ msgstr "Ikona dodatku"
 msgid "Add-on Information"
 msgstr "Informacje o dodatku"
 
+#: views/elements/amo2009/addons/list_options.thtml:45
+#: views/elements/addon_list_options.thtml:45
+msgctxt "list_sortby_name"
+msgid "Add-on Name"
+msgstr "Nazwy"
+
 #: views/developers/addon_edit_properties.thtml:78
 msgctxt "devcp_edit_properties_transbox_name_name"
 msgid "Add-on Name"
 msgstr "Nazwa dodatku"
-
-#: views/elements/addon_list_options.thtml:45
-#: views/elements/amo2009/addons/list_options.thtml:45
-msgctxt "list_sortby_name"
-msgid "Add-on Name"
-msgstr "Nazwy"
 
 #: views/developers/addon_status.thtml:99
 msgid "Add-on Name required"
@@ -1700,7 +1753,7 @@ msgctxt "statistics_js_plotselection_selector_version"
 msgid "Add-on Version"
 msgstr "Wersja dodatku"
 
-#: controllers/collections_controller.php:1061
+#: controllers/collections_controller.php:1181
 msgid "Add-on already exists!"
 msgstr "Ten dodatek już istnieje!"
 
@@ -1716,29 +1769,28 @@ msgstr "Dodatek nie może być oznaczony jako wydanie wstępne."
 msgid "Add-on name:"
 msgstr "Nazwa dodatku:"
 
-#: controllers/addons_controller.php:133 controllers/addons_controller.php:249
-#: controllers/addons_controller.php:315
-#: controllers/addons_controller.php:1548
-#: controllers/addons_controller.php:1605 controllers/api_controller.php:124
-#: controllers/api_controller.php:762
-#: controllers/collections_controller.php:1064
-#: controllers/collections_controller.php:1097
-#: controllers/developers_controller.php:201
-#: controllers/developers_controller.php:597
-#: controllers/developers_controller.php:1147
-#: controllers/developers_controller.php:1764
+#: controllers/developers_controller.php:218
+#: controllers/developers_controller.php:672
+#: controllers/developers_controller.php:1222
+#: controllers/developers_controller.php:1852
 #: controllers/downloads_controller.php:95
 #: controllers/downloads_controller.php:102
 #: controllers/downloads_controller.php:164
-#: controllers/editors_controller.php:286
+#: controllers/statistics_controller.php:190
 #: controllers/previews_controller.php:115
 #: controllers/previews_controller.php:206
 #: controllers/previews_controller.php:307
 #: controllers/reviews_controller.php:78
 #: controllers/reviews_controller.php:241
 #: controllers/reviews_controller.php:333
-#: controllers/reviews_controller.php:341
-#: controllers/statistics_controller.php:190
+#: controllers/reviews_controller.php:341 controllers/api_controller.php:124
+#: controllers/api_controller.php:762 controllers/addons_controller.php:84
+#: controllers/addons_controller.php:200 controllers/addons_controller.php:269
+#: controllers/addons_controller.php:1502
+#: controllers/addons_controller.php:1559
+#: controllers/editors_controller.php:286
+#: controllers/collections_controller.php:1184
+#: controllers/collections_controller.php:1217
 msgid "Add-on not found!"
 msgstr "Nie znaleziono dodatku!"
 
@@ -1829,6 +1881,12 @@ msgctxt "statistics_addons_downloaded"
 msgid "Add-ons Downloaded"
 msgstr "Add-ons Downloaded"
 
+# %1$s is a number.
+#: views/statistics/collections.thtml:105
+#, fuzzy
+msgid "Add-ons Downloaded from this Collection"
+msgstr "W kolekcji znajduje się %1$s dodatek"
+
 #: views/statistics/index.thtml:49 views/statistics/index.thtml:92
 #: controllers/statistics_controller.php:126
 #, fuzzy
@@ -1844,16 +1902,16 @@ msgstr "Polityka dodatków"
 msgid "Add-ons Updated"
 msgstr "Add-ons Updated"
 
-#: controllers/addons_controller.php:1177
+#: controllers/addons_controller.php:1131
 msgid "Add-ons by Name"
 msgstr "Dodatki wg nazwy"
 
-#: controllers/addons_controller.php:1176
+#: controllers/addons_controller.php:1130
 msgid "Add-ons by Rating"
 msgstr "Dodatki wg oceny"
 
+#: controllers/components/validation.php:303
 #: controllers/components/developers.php:535
-#: controllers/components/validation.php:256
 msgid ""
 "Add-ons cannot use an external updateURL. Please remove this from install."
 "rdf and try again."
@@ -1861,8 +1919,8 @@ msgstr ""
 "Dodatki nie mogą używać zewnętrznych adresów aktualizacji. Usuń go z pliku "
 "install.rdf i spróbuj ponownie."
 
+#: controllers/components/validation.php:308
 #: controllers/components/developers.php:540
-#: controllers/components/validation.php:261
 msgid ""
 "Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
 "again."
@@ -1883,13 +1941,12 @@ msgstr ""
 msgid "Add-ons compatible with an alpha version of %1$s"
 msgstr "Dodatki kompatybilne z wersją alfa programu %1$s"
 
-#: controllers/addons_controller.php:294 controllers/addons_controller.php:535
-#: controllers/addons_controller.php:832
-#: controllers/addons_controller.php:1036
-#: controllers/addons_controller.php:1262
-#: controllers/addons_controller.php:1405
-#: controllers/addons_controller.php:1454
-#: controllers/search_controller.php:235 controllers/tags_controller.php:372
+#: controllers/tags_controller.php:372 controllers/search_controller.php:235
+#: controllers/addons_controller.php:245 controllers/addons_controller.php:489
+#: controllers/addons_controller.php:786 controllers/addons_controller.php:990
+#: controllers/addons_controller.php:1216
+#: controllers/addons_controller.php:1359
+#: controllers/addons_controller.php:1408
 #, php-format
 msgid ""
 "Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
@@ -1901,53 +1958,54 @@ msgstr ""
 
 # %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
 # Sunbird
-#: views/pages/collector.thtml:46 views/pages/collector_faq.thtml:49
+#: views/users/info.thtml:50 views/pages/collector_faq.thtml:49
+#: views/pages/collector_firstrun.thtml:42 views/pages/collector.thtml:46
 #: views/pages/collector_features.thtml:54
-#: views/pages/collector_firstrun.thtml:42 views/users/info.thtml:50
-#: controllers/addons_controller.php:219 controllers/addons_controller.php:265
-#: controllers/addons_controller.php:389 controllers/addons_controller.php:480
-#: controllers/addons_controller.php:510 controllers/addons_controller.php:828
-#: controllers/addons_controller.php:1039
-#: controllers/addons_controller.php:1184
-#: controllers/addons_controller.php:1199
-#: controllers/addons_controller.php:1260
-#: controllers/addons_controller.php:1280
-#: controllers/addons_controller.php:1403
-#: controllers/addons_controller.php:1516
-#: controllers/addons_controller.php:1523
-#: controllers/addons_controller.php:1584
-#: controllers/addons_controller.php:1640
-#: controllers/addons_controller.php:1645
-#: controllers/collections_controller.php:57
-#: controllers/collections_controller.php:99
-#: controllers/collections_controller.php:188
-#: controllers/collections_controller.php:207
-#: controllers/collections_controller.php:382
-#: controllers/collections_controller.php:421
-#: controllers/collections_controller.php:483
-#: controllers/collections_controller.php:555
-#: controllers/collections_controller.php:847
-#: controllers/compatibility_controller.php:72
-#: controllers/components/amo.php:642 controllers/components/simple_acl.php:81
 #: controllers/developers_controller.php:89
-#: controllers/editors_controller.php:64 controllers/groups_controller.php:65
-#: controllers/groups_controller.php:71 controllers/groups_controller.php:89
-#: controllers/groups_controller.php:111
-#: controllers/localizers_controller.php:73
-#: controllers/pages_controller.php:138 controllers/previews_controller.php:67
+#: controllers/tags_controller.php:381
+#: controllers/compatibility_controller.php:72
+#: controllers/components/simple_acl.php:81 controllers/components/amo.php:689
+#: controllers/versions_controller.php:63
+#: controllers/statistics_controller.php:67
+#: controllers/statistics_controller.php:293
+#: controllers/statistics_controller.php:461
+#: controllers/previews_controller.php:67 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:422 controllers/users_controller.php:788
+#: controllers/users_controller.php:791 controllers/users_controller.php:804
 #: controllers/reviews_controller.php:205
 #: controllers/reviews_controller.php:252
 #: controllers/reviews_controller.php:347
 #: controllers/reviews_controller.php:426
-#: controllers/search_controller.php:199 controllers/search_controller.php:298
-#: controllers/search_controller.php:302
-#: controllers/statistics_controller.php:67
-#: controllers/statistics_controller.php:293
-#: controllers/tags_controller.php:381 controllers/users_controller.php:96
-#: controllers/users_controller.php:229 controllers/users_controller.php:336
-#: controllers/users_controller.php:422 controllers/users_controller.php:788
-#: controllers/users_controller.php:791 controllers/users_controller.php:804
-#: controllers/versions_controller.php:63
+#: controllers/search_controller.php:199 controllers/search_controller.php:299
+#: controllers/search_controller.php:303 controllers/addons_controller.php:170
+#: controllers/addons_controller.php:216 controllers/addons_controller.php:343
+#: controllers/addons_controller.php:434 controllers/addons_controller.php:464
+#: controllers/addons_controller.php:782 controllers/addons_controller.php:993
+#: controllers/addons_controller.php:1138
+#: controllers/addons_controller.php:1153
+#: controllers/addons_controller.php:1214
+#: controllers/addons_controller.php:1234
+#: controllers/addons_controller.php:1357
+#: controllers/addons_controller.php:1470
+#: controllers/addons_controller.php:1477
+#: controllers/addons_controller.php:1538
+#: controllers/addons_controller.php:1594
+#: controllers/addons_controller.php:1599
+#: controllers/editors_controller.php:64 controllers/pages_controller.php:138
+#: controllers/groups_controller.php:65 controllers/groups_controller.php:71
+#: controllers/groups_controller.php:89 controllers/groups_controller.php:111
+#: controllers/collections_controller.php:57
+#: controllers/collections_controller.php:107
+#: controllers/collections_controller.php:196
+#: controllers/collections_controller.php:215
+#: controllers/collections_controller.php:354
+#: controllers/collections_controller.php:442
+#: controllers/collections_controller.php:483
+#: controllers/collections_controller.php:603
+#: controllers/collections_controller.php:675
+#: controllers/collections_controller.php:967
+#: controllers/localizers_controller.php:73
 #, php-format
 msgid "Add-ons for %1$s"
 msgstr "Dodatki dla programu %1$s "
@@ -2028,11 +2086,11 @@ msgstr ""
 msgid "Admin Flag"
 msgstr "Flaga administratora"
 
-#: views/editors/performance_table.thtml:92
-#: views/editors/performance_table.thtml:103 views/editors/reviewlog.thtml:77
-#: views/editors/reviewlog.thtml:88
 #: views/elements/developers/editors_review_history_item.thtml:74
 #: views/elements/developers/editors_review_history_item.thtml:85
+#: views/editors/performance_table.thtml:96
+#: views/editors/performance_table.thtml:107 views/editors/reviewlog.thtml:77
+#: views/editors/reviewlog.thtml:88
 msgctxt "editors_review_history_nominated_adminreview"
 msgid "Admin Review"
 msgstr "Zarządzanie recenzją"
@@ -2051,8 +2109,8 @@ msgstr "Recenzja administratora"
 msgid "Admin Settings"
 msgstr "Ustawienia administratora"
 
-#: views/elements/developers/myaddons.thtml:75
 #: views/elements/developers/sidebar.thtml:68
+#: views/elements/developers/myaddons.thtml:75
 msgctxt "devcp_myaddons_admincp_link"
 msgid "Admin Tools"
 msgstr "Panel kontrolny administratora"
@@ -2080,11 +2138,11 @@ msgstr "Ustawienia zaawansowane"
 msgid "Age of Submission (days)"
 msgstr "Czas oczekiwania (dni)"
 
-#: views/developers/uploader.thtml:102
+#: views/developers/uploader.thtml:105
 msgid "Agree and continue"
 msgstr "Dalej"
 
-#: views/developers/uploader.thtml:128
+#: views/developers/uploader.thtml:132
 msgctxt "devcp_uploader_platformtype_all"
 msgid "All"
 msgstr "Wszystkie"
@@ -2097,6 +2155,11 @@ msgstr "Wszystkie"
 #: config/language.php:367
 msgid "All Locales"
 msgstr "Wszystkie lokalizacje"
+
+#: views/statistics/collections.thtml:62
+#, fuzzy
+msgid "All My Collections"
+msgstr "Moje kolekcje"
 
 #: views/addons/searchengines.thtml:76
 msgid "All Search Engines"
@@ -2124,6 +2187,12 @@ msgstr "Wszelkie prawa zastrzeżone."
 msgid "All tests passed."
 msgstr "Wszystkie testy zostały zaliczone."
 
+#: views/developers/uploader.thtml:203
+msgid ""
+"All tests passed.  Your add-on is now complete, click Continue to customize "
+"details."
+msgstr ""
+
 #: views/developers/addon_edit_properties.thtml:162
 msgid "Allow online source viewing"
 msgstr "Zezwalaj na przeglądanie źródła w trybie online"
@@ -2133,7 +2202,7 @@ msgid "Alpha Versions"
 msgstr "Wersje alfa"
 
 # %1$s is a URL
-#: views/pages/js_constants.js.thtml:70
+#: views/pages/js_constants.js.thtml:82
 #, php-format
 msgid "An <a href=\"%1$s\">older version</a> may work"
 msgstr "<a href=\"%1$s\">Starsza wersja</a> może zadziałać"
@@ -2165,11 +2234,11 @@ msgstr ""
 
 # %s is the name of a file
 #: controllers/components/developers.php:684
-#: controllers/components/developers.php:696
-#: controllers/components/developers.php:701
-#: controllers/components/developers.php:761
-#: controllers/components/developers.php:772
-#: controllers/components/developers.php:777
+#: controllers/components/developers.php:697
+#: controllers/components/developers.php:702
+#: controllers/components/developers.php:762
+#: controllers/components/developers.php:773
+#: controllers/components/developers.php:778
 #, php-format
 msgid "An error occurred moving %s."
 msgstr "Podczas przenoszenia pliku %s wystąpił błąd."
@@ -2238,18 +2307,13 @@ msgstr ""
 "Dodaj {.symbol_składni} za otwierającymi blok kodu znakami ~ tyldy, gdzie "
 "„symbol_składni” jest jednym z symboli: html, css, javascript, diff, lub sql."
 
-#: views/editors/performance_table.thtml:70
-msgctxt "editorcp_performance_column_application"
-msgid "Application"
-msgstr "Program"
-
 #: views/elements/amo2009/search.thtml:224 views/elements/search.thtml:212
 msgctxt "advanced_search_form_application"
 msgid "Application"
 msgstr "Program"
 
-#: controllers/statistics_controller.php:309
-msgctxt "statistics_js_plotselection_selector_application"
+#: views/editors/performance_table.thtml:70
+msgctxt "editorcp_performance_column_application"
 msgid "Application"
 msgstr "Program"
 
@@ -2260,6 +2324,11 @@ msgstr "Program"
 
 #: controllers/components/stats.php:427
 msgctxt "statistics_longnames_application"
+msgid "Application"
+msgstr "Program"
+
+#: controllers/statistics_controller.php:309
+msgctxt "statistics_js_plotselection_selector_application"
 msgid "Application"
 msgstr "Program"
 
@@ -2283,8 +2352,8 @@ msgstr "Uwagi dla edytora"
 msgid "Approved reviews"
 msgstr "Zaakceptowane recenzje"
 
-#: views/editors/performance_table.thtml:97 views/editors/reviewlog.thtml:82
 #: views/elements/developers/editors_review_history_item.thtml:79
+#: views/editors/performance_table.thtml:101 views/editors/reviewlog.thtml:82
 msgid "Approved/Public"
 msgstr "Zatwierdzony/Upubliczniony"
 
@@ -2297,7 +2366,7 @@ msgid ""
 "Are you <b>sure</b> you wish to remove compatibility with this application?"
 msgstr "Czy <b>na pewno</b> chcesz usunąć kompatybilność z tym programem?"
 
-#: views/pages/js_constants.js.thtml:88
+#: views/pages/js_constants.js.thtml:102
 msgid "Are you <strong>sure</strong> you wish to remove this author?"
 msgstr "Czy <strong>na pewno</strong> chcesz usunąć tego autora?"
 
@@ -2398,7 +2467,7 @@ msgid "Authors:"
 msgstr "Autorzy:"
 
 # A collection of add-ons that is automatically built for a user.  They are "automatically published" to this collection.
-#: controllers/collections_controller.php:598
+#: controllers/collections_controller.php:718
 msgid "Auto-publisher"
 msgstr "Autokolekcja"
 
@@ -2407,15 +2476,15 @@ msgstr "Autokolekcja"
 msgid "Available Actions"
 msgstr "Dostępne czynności"
 
-#: views/statistics/addon.thtml:199 views/statistics/rss/summary.thtml:60
+#: views/statistics/rss/summary.thtml:60 views/statistics/addon.thtml:199
 msgid "Average Daily Active Users"
 msgstr "Średnia dzienna liczba aktywnych użytkowników"
 
-#: views/statistics/addon.thtml:196 views/statistics/rss/summary.thtml:42
+#: views/statistics/rss/summary.thtml:42 views/statistics/addon.thtml:196
 msgid "Average Daily Downloads"
 msgstr "Średnia dzienna liczba pobrań"
 
-#: views/statistics/addon.thtml:207 views/statistics/rss/summary.thtml:61
+#: views/statistics/rss/summary.thtml:61 views/statistics/addon.thtml:207
 msgid "Average Daily Users this Week"
 msgstr "Średnia dzienna liczba użytkowników w tym tygodniu"
 
@@ -2429,22 +2498,22 @@ msgstr "Licencja BSD"
 
 # %1 is the add-on name
 #: views/addons/policy.thtml:106 views/addons/versions.thtml:130
-#: views/reviews/add.thtml:114 views/reviews/display.thtml:214
-#: views/reviews/flag.thtml:61 views/reviews/review_added.thtml:57
+#: views/reviews/flag.thtml:61 views/reviews/add.thtml:114
+#: views/reviews/display.thtml:214 views/reviews/review_added.thtml:57
 #, php-format
 msgid "Back to %1$s..."
 msgstr "Wróć do %1$s…"
-
-#: views/elements/developers/myaddons.thtml:77
-#: views/elements/developers/sidebar.thtml:70
-msgctxt "devcp_myaddons_mainpage_link"
-msgid "Back to Main"
-msgstr "Strona główna"
 
 #: views/elements/developers/editorsmenu.thtml:63
 msgctxt "editorcp_menu_mainpage_link"
 msgid "Back to Main"
 msgstr "Wróć do strony głównej"
+
+#: views/elements/developers/sidebar.thtml:70
+#: views/elements/developers/myaddons.thtml:77
+msgctxt "devcp_myaddons_mainpage_link"
+msgid "Back to Main"
+msgstr "Strona główna"
 
 #: views/compatibility/dashboard.thtml:45
 msgctxt "compatibility_dashboard_main_link"
@@ -2469,10 +2538,15 @@ msgid "Back to review"
 msgstr "Wróć do recenzji"
 
 # %1 is the add-on name
-#: views/reviews/add.thtml:113 views/reviews/flag.thtml:60
+#: views/reviews/flag.thtml:60 views/reviews/add.thtml:113
 #: views/reviews/review_added.thtml:56
 msgid "Back to the reviews..."
 msgstr "Wróć do recenzji…"
+
+#: views/pages/js_constants.js.thtml:90
+msgctxt "devcp_js_upload_badfilename"
+msgid "Bad filename received. Files must be of type .xpi, .xml, or .jar"
+msgstr ""
 
 #: views/addons/versions.thtml:62
 msgid "Be Careful With Old Versions"
@@ -2524,13 +2598,13 @@ msgstr "Opisz krótko kolekcję i typ znajdujących się w niej dodatków"
 
 # %1 is the name of the theme category (eg. Modern)
 # %2 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:824
+#: controllers/addons_controller.php:778
 #, php-format
 msgid "Browse %1$s Themes :: %2$s Add-ons"
 msgstr "Przeglądaj motywy z kategorii %1$s :: %2$s – dodatki"
 
 # %s is the name of the category
-#: controllers/addons_controller.php:1181
+#: controllers/addons_controller.php:1135
 #, php-format
 msgid "Browse %s"
 msgstr "Przeglądasz %s"
@@ -2543,13 +2617,13 @@ msgstr "Przejrzyj dodatki"
 msgid "Browse Search Engines"
 msgstr "Przeglądaj wyszukiwarki"
 
-#: views/addons/browse_thumbs.thtml:87 views/addons/themes_landing.thtml:67
+#: views/addons/themes_landing.thtml:67 views/addons/browse_thumbs.thtml:87
 msgid "Browse Themes"
 msgstr "Przeglądaj motywy"
 
 # %1 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:822
-#: controllers/addons_controller.php:1452
+#: controllers/addons_controller.php:776
+#: controllers/addons_controller.php:1406
 #, php-format
 msgid "Browse all Themes :: %1$s Add-ons"
 msgstr "Przeglądaj wszystkie motywy :: %1$s – dodatki"
@@ -2604,13 +2678,14 @@ msgstr ""
 msgid "CSS"
 msgstr "CSS"
 
-#: controllers/statistics_controller.php:347
+#: controllers/statistics_controller.php:522
 #, fuzzy
 msgid "CSV data not found"
 msgstr "CSV data not found"
 
-#: views/pages/js_constants.js.thtml:90
-msgctxt "devcp_js_a_cancel"
+#: views/elements/translationbox.thtml:124
+#: views/elements/translationbox.thtml:135
+msgctxt "devcp_transbox_input_cancel"
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -2619,13 +2694,13 @@ msgctxt "collections_edit_icon_cancel"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: views/developers/versions.thtml:77
-msgctxt "devcp_versions_a_cancel"
+#: views/editors/review.thtml:395
+msgctxt "editors_review_input_cancel"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: views/editors/review.thtml:395
-msgctxt "editors_review_input_cancel"
+#: views/pages/js_constants.js.thtml:104
+msgctxt "devcp_js_a_cancel"
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -2640,9 +2715,8 @@ msgctxt "devcp_versions_edit_a_cancel"
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: views/elements/translationbox.thtml:124
-#: views/elements/translationbox.thtml:135
-msgctxt "devcp_transbox_input_cancel"
+#: views/developers/versions.thtml:77
+msgctxt "devcp_versions_a_cancel"
 msgid "Cancel"
 msgstr "Anuluj"
 
@@ -2654,8 +2728,8 @@ msgstr "Anuluj proces instalacji"
 msgid "Cancel and return"
 msgstr "Wróć do poprzedniej strony"
 
-#: views/elements/amo2009/categories.thtml:42
 #: views/elements/categories.thtml:50
+#: views/elements/amo2009/categories.thtml:42
 msgctxt "categories_header"
 msgid "Categories"
 msgstr "Kategorie"
@@ -2710,7 +2784,7 @@ msgctxt "devcp_dashboard_change_status"
 msgid "Change Status"
 msgstr "Zmień status"
 
-#: views/statistics/addon.thtml:181 views/statistics/rss/summary.thtml:52
+#: views/statistics/rss/summary.thtml:52 views/statistics/addon.thtml:181
 msgid "Change from previous count"
 msgstr "Zmiana od poprzedniego wyniku"
 
@@ -2756,8 +2830,8 @@ msgstr ""
 msgid "Checking account email..."
 msgstr "Sprawdzanie konta e-mail…"
 
-#: views/elements/amo2009/categories.thtml:41
 #: views/elements/categories.thtml:50
+#: views/elements/amo2009/categories.thtml:41
 msgid "Choose a category"
 msgstr "Wybierz kategorię"
 
@@ -2773,8 +2847,8 @@ msgstr "Wyczyść"
 msgid "Click Update Previews below to upload."
 msgstr "Aby wysłać obrazek, naciśnij przycisk „Aktualizuj”."
 
-#: views/reviews/flag.thtml:54 views/users/delete.thtml:53
-#: views/users/delete.thtml:119 views/users/emailchange.thtml:51
+#: views/users/emailchange.thtml:51 views/users/delete.thtml:53
+#: views/users/delete.thtml:119 views/reviews/flag.thtml:54
 msgid "Click here to return to the front page."
 msgstr "Kliknij tutaj, by wrócić na stronę główną."
 
@@ -2832,50 +2906,69 @@ msgstr "Nazwa kolekcji"
 msgid "Collection Nickname"
 msgstr "Nick kolekcji"
 
+#: controllers/statistics_controller.php:394
+#: controllers/statistics_controller.php:484
+#: controllers/statistics_controller.php:567
+#, fuzzy
+msgid "Collection Not Found!"
+msgstr "Nie znaleziono kolekcji!"
+
 #: views/search/collections.thtml:51
 msgctxt "search_collections_header"
 msgid "Collection Search Results"
 msgstr "Wyniki szukania kolekcji"
 
-#: controllers/search_controller.php:298
+#: controllers/search_controller.php:299
 msgctxt "search_collections_pagetitle"
 msgid "Collection Search Results"
 msgstr "Wyniki szukania kolekcji"
+
+#: views/statistics/collections.thtml:77
+#, fuzzy
+msgid "Collection Subscribers"
+msgstr "Opis kolekcji"
 
 #: views/collections/edit.thtml:288
 msgid "Collection Type"
 msgstr "Typ kolekcji"
 
-#: controllers/collections_controller.php:368
-#: controllers/collections_controller.php:504
+#: controllers/collections_controller.php:329
+#: controllers/collections_controller.php:339
+#: controllers/collections_controller.php:426
+#: controllers/collections_controller.php:501
+#: controllers/collections_controller.php:624
 msgid "Collection not found!"
 msgstr "Nie znaleziono kolekcji!"
+
+#: views/elements/amo2009/categories.thtml:65 views/addons/home.thtml:142
+msgctxt "addons_home_collections"
+msgid "Collections"
+msgstr "Kolekcje"
 
 #: views/collections/listing.thtml:52
 msgctxt "collections_index_header_collections"
 msgid "Collections"
 msgstr "Kolekcje"
 
-#: views/pages/collector.thtml:47 views/pages/collector_faq.thtml:50
-#: views/pages/collector_features.thtml:55
-#: views/pages/collector_firstrun.thtml:43
-#: controllers/collections_controller.php:189
-#: controllers/collections_controller.php:208
-#: controllers/collections_controller.php:422
+#: views/users/edit.thtml:87 views/users/edit.thtml:157
+msgctxt "user_tab_collections"
+msgid "Collections"
+msgstr "Kolekcje"
+
+#: views/pages/collector_faq.thtml:50 views/pages/collector_firstrun.thtml:43
+#: views/pages/collector.thtml:47 views/pages/collector_features.thtml:55
+#: controllers/search_controller.php:304
+#: controllers/collections_controller.php:197
+#: controllers/collections_controller.php:216
 #: controllers/collections_controller.php:484
-#: controllers/collections_controller.php:556
-#: controllers/search_controller.php:303
+#: controllers/collections_controller.php:604
+#: controllers/collections_controller.php:676
 msgctxt "collections_breadcrumb"
 msgid "Collections"
 msgstr "Kolekcje"
 
-#: views/addons/home.thtml:142 views/elements/amo2009/categories.thtml:65
-msgctxt "addons_home_collections"
-msgid "Collections"
-msgstr "Kolekcje"
-
-#: views/users/edit.thtml:87 views/users/edit.thtml:157
-msgctxt "user_tab_collections"
+#: controllers/statistics_controller.php:462
+#, fuzzy
 msgid "Collections"
 msgstr "Kolekcje"
 
@@ -2900,14 +2993,14 @@ msgstr ""
 "udostępnianie."
 
 # %1$s is an add-on's name
-#: controllers/collections_controller.php:185
+#: controllers/collections_controller.php:193
 #, php-format
 msgid "Collections containing %1$s"
 msgstr "Kolekcje zawierające %1$s"
 
 # This just shows an example of tags.  The important thing in the example is to show
 # that tags can be separated with commas and have spaces in them
-#: views/addons/display.thtml:492 views/developers/addon_edit_tags.thtml:69
+#: views/developers/addon_edit_tags.thtml:69 views/addons/display.thtml:494
 msgid ""
 "Comma-separated, minimum of 2 characters.  Example: <span class=\"example"
 "\">ocean, sail boat, water</span>"
@@ -2956,7 +3049,7 @@ msgid "Common Library Checksum Tests"
 msgstr "Test sum kontrolnych biblioteki"
 
 # %1$s is the application name.  Example: Firefox, Thunderbird, Sunbird
-#: controllers/addons_controller.php:1281
+#: controllers/addons_controller.php:1235
 #, php-format
 msgid "Common Plugins for %1$s"
 msgstr "Często używane wtyczki dla programu %1$s"
@@ -2990,6 +3083,11 @@ msgstr "Zakończ"
 msgid "Complete your add-on and move to the Sandbox"
 msgstr "Kończy proces dodawania dodatku i przenosi go do piaskownicy"
 
+#: views/developers/uploader.thtml:215
+#, fuzzy
+msgid "Completing your add-on..."
+msgstr "Zakończ"
+
 #: models/test_case.php:77 models/test_case.php:105
 msgid "Conduit Toolbar Check"
 msgstr "Sprawdzenie paska kanałowego"
@@ -3002,14 +3100,19 @@ msgstr "Potwierdź hasło"
 msgid "Confirm account deletion"
 msgstr "Potwierdź usunięcie konta"
 
-#: views/users/edit.thtml:224 views/users/pwreset.thtml:77
-#: views/users/register.thtml:73
+#: views/users/pwreset.thtml:77 views/users/register.thtml:73
+#: views/users/edit.thtml:224
 msgid "Confirm password"
 msgstr "Potwierdź hasło"
 
 #: views/users/register_complete.thtml:47
 msgid "Congratulations! Your user account was successfully created."
 msgstr "Gratulujemy! Twoje konto zostało utworzone."
+
+#: views/developers/uploader.thtml:212
+#, fuzzy
+msgid "Continue"
+msgstr "Dotacja"
 
 #: views/elements/amo2009/contribution.thtml:64
 msgid "Contribute"
@@ -3030,7 +3133,7 @@ msgid "Contribution Account"
 msgstr "Konto dotacji"
 
 # %1 is an add-on name.
-#: controllers/addons_controller.php:163
+#: controllers/addons_controller.php:114
 #, php-format
 msgid "Contribution for %1$s"
 msgstr "Dotacja dla %1$s"
@@ -3055,15 +3158,15 @@ msgstr "Utwórz kolekcję"
 msgid "Create Developer Profile"
 msgstr "Utwórz profil autora"
 
-#: views/collections/add.thtml:48
-msgctxt "collections_add_header"
-msgid "Create a Collection"
-msgstr "Tworzenie kolekcji"
-
 #: views/elements/amo2009/collections/collector_info_secondary.thtml:52
 msgctxt "collections_index_a_create"
 msgid "Create a Collection"
 msgstr "Utwórz kolekcję"
+
+#: views/collections/add.thtml:48
+msgctxt "collections_add_header"
+msgid "Create a Collection"
+msgstr "Tworzenie kolekcji"
 
 #: views/developers/addon_edit_profile.thtml:77
 #: views/developers/addon_edit_profile.thtml:80
@@ -3089,15 +3192,15 @@ msgstr "Data utworzenia"
 msgid "Created by Me"
 msgstr "Utworzone przeze mnie"
 
-#: controllers/pages_controller.php:92
-msgctxt "page_title_credits"
-msgid "Credits"
-msgstr "Podziękowania"
-
 #: views/elements/footer.thtml:71 views/layouts/amo2009.thtml:352
 msgctxt "footer_credits"
 msgid "Credits"
 msgstr "Twórcy"
+
+#: controllers/pages_controller.php:92
+msgctxt "page_title_credits"
+msgid "Credits"
+msgstr "Podziękowania"
 
 #: views/editors/review.thtml:424
 msgid "Ctrl + Click"
@@ -3133,7 +3236,7 @@ msgstr "Własna licencja"
 
 # %1$s is an addon id, like 32.
 # %2$s is a version number, like 3.5.
-#: controllers/components/developers.php:1250
+#: controllers/components/developers.php:1251
 #, php-format
 msgid "Custom license for add-on %1$s v%2$s"
 msgstr "Licencja autora dodatku %1$s %2$s"
@@ -3141,6 +3244,10 @@ msgstr "Licencja autora dodatku %1$s %2$s"
 #: views/statistics/addon.thtml:99
 msgid "Daily Downloads"
 msgstr "Dzienna liczba pobrań"
+
+#: views/statistics/collections.thtml:126
+msgid "Daily downloads over collection timeframe"
+msgstr ""
 
 #: controllers/statistics_controller.php:336
 #, php-format
@@ -3159,24 +3266,23 @@ msgstr "Dostęp do panelu"
 msgid "Dashboard Home"
 msgstr "Strona główna panelu"
 
-#: views/editors/review.thtml:320
-msgctxt "editors_review_th_date"
+#: views/elements/amo2009/addons/list_options.thtml:46
+#: views/elements/addon_list_options.thtml:46 views/statistics/index.thtml:90
+msgctxt "list_sortby_date"
 msgid "Date"
-msgstr "Data"
+msgstr "Daty"
 
 #: views/editors/performance_table.thtml:68 views/editors/reviewlog.thtml:55
 msgctxt "editorcp_reviewlog_column_date"
 msgid "Date"
 msgstr "Data"
 
-#: views/elements/addon_list_options.thtml:46
-#: views/elements/amo2009/addons/list_options.thtml:46
-#: views/statistics/index.thtml:90
-msgctxt "list_sortby_date"
+#: views/editors/review.thtml:320
+msgctxt "editors_review_th_date"
 msgid "Date"
-msgstr "Daty"
+msgstr "Data"
 
-#: controllers/collections_controller.php:311
+#: controllers/collections_controller.php:369
 msgid "Date Added"
 msgstr "daty dodania"
 
@@ -3198,7 +3304,7 @@ msgctxt "collections_edit_formfield_deletecollection"
 msgid "Delete Collection"
 msgstr "Usuwanie kolekcji"
 
-#: views/pages/js_constants.js.thtml:98
+#: views/pages/js_constants.js.thtml:112
 msgctxt "collections_edit_submit_deletecollection"
 msgid "Delete Collection"
 msgstr "Usuń kolekcję"
@@ -3289,8 +3395,8 @@ msgstr "Usunięte recenzje"
 msgid "Deleting your collection will permanently erase it."
 msgstr "Usunięcie kolekcji spowoduje jej trwałe skasowanie."
 
-#: views/editors/performance_table.thtml:100 views/editors/reviewlog.thtml:85
 #: views/elements/developers/editors_review_history_item.thtml:82
+#: views/editors/performance_table.thtml:104 views/editors/reviewlog.thtml:85
 msgid "Denied/Sandbox"
 msgstr "Odmowa/Piaskownica"
 
@@ -3321,7 +3427,7 @@ msgid "Details"
 msgstr "Details"
 
 # <option> text in a <select> for Author role in an add-on.
-#: views/pages/js_constants.js.thtml:85
+#: views/pages/js_constants.js.thtml:99
 msgctxt "devcp_js_option_developer"
 msgid "Developer"
 msgstr "Autor"
@@ -3338,6 +3444,11 @@ msgstr[1] "Autorzy"
 msgid "Developer Agreement"
 msgstr "Umowa autora"
 
+#: views/editors/review.thtml:291
+msgctxt "editors_review_header_devcomments"
+msgid "Developer Comments"
+msgstr "Komentarze autora"
+
 #: views/developers/addon_edit_descriptions.thtml:93
 msgctxt "devcp_edit_descriptions_transbox_comments_name"
 msgid "Developer Comments"
@@ -3348,11 +3459,6 @@ msgstr "Komentarze autora"
 msgctxt "addons_display_developer_comments"
 msgid "Developer Comments"
 msgstr "Developer Comments"
-
-#: views/editors/review.thtml:291
-msgctxt "editors_review_header_devcomments"
-msgid "Developer Comments"
-msgstr "Komentarze autora"
 
 #: views/developers/dashboard.thtml:43
 msgid "Developer Dashboard"
@@ -3374,8 +3480,19 @@ msgstr "Profil autora"
 msgid "Developer Reply:"
 msgstr "Odpowiedź autora:"
 
+#: views/elements/developers/sidebar.thtml:48
+#: views/elements/developers/myaddons.thtml:67
+msgctxt "devcp_myaddons_title"
+msgid "Developer Tools"
+msgstr "Narzędzia autora"
+
 #: views/elements/header.thtml:146 views/layouts/amo2009.thtml:286
 msgctxt "sidebar_navlink_developer_tools"
+msgid "Developer Tools"
+msgstr "Narzędzia autora"
+
+#: views/statistics/addon.thtml:58
+msgctxt "statistics_addon_developertools_link"
 msgid "Developer Tools"
 msgstr "Narzędzia autora"
 
@@ -3388,17 +3505,6 @@ msgstr "Narzędzia autora"
 msgctxt "devcp_pagetitle"
 msgid "Developer Tools"
 msgstr "Panel kontrolny autora"
-
-#: views/statistics/addon.thtml:58
-msgctxt "statistics_addon_developertools_link"
-msgid "Developer Tools"
-msgstr "Narzędzia autora"
-
-#: views/elements/developers/myaddons.thtml:67
-#: views/elements/developers/sidebar.thtml:48
-msgctxt "devcp_myaddons_title"
-msgid "Developer Tools"
-msgstr "Narzędzia autora"
 
 #: views/reviews/add.thtml:57
 msgid "Developer reply to:"
@@ -3413,19 +3519,19 @@ msgstr "Autorzy"
 msgid "Dictionaries"
 msgstr "Słowniki"
 
-#: views/addons/dictionaries.thtml:63 controllers/addons_controller.php:1402
-#: controllers/components/amo.php:721
-msgctxt "langtools_header_dicts_and_langpacks"
-msgid "Dictionaries & Language Packs"
-msgstr "Słowniki i pakiety językowe"
-
 #: views/elements/addon_categories.thtml:52
 msgctxt "nav_category_dicts_langpacks"
 msgid "Dictionaries & Language Packs"
 msgstr "Słowniki i pakiety językowe"
 
-#: views/addons/dictionaries.thtml:69
-msgctxt "langtools_tableheader_dictionary"
+#: views/addons/dictionaries.thtml:63 controllers/components/amo.php:768
+#: controllers/addons_controller.php:1356
+msgctxt "langtools_header_dicts_and_langpacks"
+msgid "Dictionaries & Language Packs"
+msgstr "Słowniki i pakiety językowe"
+
+#: models/addontype.php:79
+msgctxt "general_addontype_dict"
 msgid "Dictionary"
 msgstr "Słownik"
 
@@ -3434,8 +3540,8 @@ msgctxt "sidebar_pitch_dictionary"
 msgid "Dictionary"
 msgstr "słownika"
 
-#: models/addontype.php:79
-msgctxt "general_addontype_dict"
+#: views/addons/dictionaries.thtml:69
+msgctxt "langtools_tableheader_dictionary"
 msgid "Dictionary"
 msgstr "Słownik"
 
@@ -3453,11 +3559,11 @@ msgstr "Bezpieczeństwo elementów specyficznych dla słowników"
 msgid "Diff / Patch"
 msgstr "Diff / Patch"
 
-#: controllers/addons_controller.php:79
+#: controllers/components/amo.php:63
 msgid "Digg this!"
 msgstr "Opublikuj na Digg!"
 
-#: controllers/components/amo.php:201 controllers/components/amo.php:229
+#: controllers/components/amo.php:248 controllers/components/amo.php:276
 msgid "Disabled"
 msgstr "wyłączony"
 
@@ -3499,9 +3605,7 @@ msgstr "Pobierz pakiet językowy"
 # %$1s is an optional string that only appears if the add-on is only available for
 # a certain platform.  Examples:  (Windows)  or  (Linux)
 # Note that the parentheses are included in the string. :(
-#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
-#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
-#: views/addons/plugins.thtml:119 views/elements/amo2009/install.thtml:137
+#: views/elements/amo2009/install.thtml:137
 #: views/elements/amo2009/install.thtml:233
 #: views/elements/amo2009/install.thtml:246
 #: views/elements/amo2009/install.thtml:284
@@ -3509,6 +3613,9 @@ msgstr "Pobierz pakiet językowy"
 #: views/elements/amo2009/install.thtml:339 views/elements/install.thtml:73
 #: views/elements/install.thtml:181 views/elements/install.thtml:205
 #: views/elements/install.thtml:248 views/elements/install.thtml:260
+#: views/addons/plugins.thtml:66 views/addons/plugins.thtml:76
+#: views/addons/plugins.thtml:86 views/addons/plugins.thtml:96
+#: views/addons/plugins.thtml:119
 #, php-format
 msgid "Download Now %s"
 msgstr "Pobierz %s"
@@ -3517,25 +3624,29 @@ msgstr "Pobierz %s"
 msgid "Download the Add-on Collector:"
 msgstr "Zainstaluj Kolekcjonera dodatków:"
 
-#: controllers/statistics_controller.php:306
-msgctxt "statistics_js_plotselection_selector_downloads"
+#: views/elements/amo2009/addons/list_options.thtml:47
+#: views/elements/addon_list_options.thtml:47 views/addons/display.thtml:185
+msgctxt "list_sortby_downloads"
 msgid "Downloads"
-msgstr "Liczba pobrań"
+msgstr "Pobrań"
 
 #: views/statistics/rss/summary.thtml:39
 msgctxt "statistics_summary_downloads_heading"
 msgid "Downloads"
 msgstr "Pobrania"
 
-#: views/addons/display.thtml:185 views/elements/addon_list_options.thtml:47
-#: views/elements/amo2009/addons/list_options.thtml:47
-msgctxt "list_sortby_downloads"
+#: controllers/statistics_controller.php:306
+msgctxt "statistics_js_plotselection_selector_downloads"
 msgid "Downloads"
-msgstr "Pobrań"
+msgstr "Liczba pobrań"
 
-#: views/statistics/addon.thtml:203 views/statistics/rss/summary.thtml:43
+#: views/statistics/rss/summary.thtml:43 views/statistics/addon.thtml:203
 msgid "Downloads in the last 7 days"
 msgstr "Pobrania w ciągu ostatnich 7 dni"
+
+#: views/statistics/collections.thtml:127
+msgid "Downloads relative to most downloaded add-on in collection"
+msgstr ""
 
 #: views/editors/review.thtml:279
 msgid "EULA"
@@ -3544,28 +3655,28 @@ msgstr "EULA"
 # %s is the add-on name.
 #: views/developers/addon_edit.thtml:43
 #: views/developers/addon_edit_authors.thtml:44
-#: views/developers/addon_edit_categories.thtml:43
+#: views/developers/addon_edit_tags.thtml:43
 #: views/developers/addon_edit_contributions.thtml:46
-#: views/developers/addon_edit_descriptions.thtml:44
+#: views/developers/versions_delete.thtml:43
 #: views/developers/addon_edit_profile.thtml:69
 #: views/developers/addon_edit_properties.thtml:44
-#: views/developers/addon_edit_tags.thtml:43
-#: views/developers/versions.thtml:43
-#: views/developers/versions_delete.thtml:43
+#: views/developers/addon_edit_descriptions.thtml:44
 #: views/developers/versions_edit.thtml:44
+#: views/developers/addon_edit_categories.thtml:43
+#: views/developers/versions.thtml:43
 #, php-format
 msgid "Edit %s"
 msgstr "Edycja %s"
 
-#: views/elements/developers/editbox.thtml:43
-msgctxt "devcp_editbox_edit_addon"
+#: views/elements/developers/actionbar.thtml:42
+#: views/elements/developers/actionbar.thtml:50
+#: views/developers/dashboard.thtml:64
+msgctxt "devcp_actionbar_link_edit"
 msgid "Edit Add-on"
 msgstr "Edytuj dodatek"
 
-#: views/developers/dashboard.thtml:64
-#: views/elements/developers/actionbar.thtml:42
-#: views/elements/developers/actionbar.thtml:50
-msgctxt "devcp_actionbar_link_edit"
+#: views/elements/developers/editbox.thtml:43
+msgctxt "devcp_editbox_edit_addon"
 msgid "Edit Add-on"
 msgstr "Edytuj dodatek"
 
@@ -3585,20 +3696,20 @@ msgstr "Edytuj grupę"
 msgid "Edit Item"
 msgstr "Edytuj dodatek"
 
-#: views/developers/uploader.thtml:160
+#: views/developers/uploader.thtml:164
 msgid "Edit My Add-on"
 msgstr "Edytuj dodatek"
+
+#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
+msgctxt "devcp_previews_header_edit"
+msgid "Edit Preview"
+msgstr "Edytuj obrazek"
 
 #: controllers/previews_controller.php:194
 #: controllers/previews_controller.php:195
 msgctxt "devcp_preview_edit_pagetitle"
 msgid "Edit Preview"
 msgstr "Edycja obrazka"
-
-#: views/previews/edit.thtml:43 views/previews/edit.thtml:54
-msgctxt "devcp_previews_header_edit"
-msgid "Edit Preview"
-msgstr "Edytuj obrazek"
 
 # %s is the name of the add-on
 #: views/reviews/add.thtml:51
@@ -3647,14 +3758,8 @@ msgctxt "editorcp_menu_title"
 msgid "Editor Tools"
 msgstr "Narzędzia edytora"
 
-#: controllers/editors_controller.php:64 controllers/editors_controller.php:77
-#: controllers/editors_controller.php:81
-msgctxt "editors_pagetitle"
-msgid "Editor Tools"
-msgstr "Panel kontrolny edytora"
-
-#: views/elements/developers/myaddons.thtml:72
 #: views/elements/developers/sidebar.thtml:65
+#: views/elements/developers/myaddons.thtml:72
 msgctxt "devcp_myaddons_editorcp_link"
 msgid "Editor Tools"
 msgstr "Panel kontrolny edytora"
@@ -3664,12 +3769,18 @@ msgctxt "sidebar_navlink_editor_tools"
 msgid "Editor Tools"
 msgstr "Narzędzia edytora"
 
+#: controllers/editors_controller.php:64 controllers/editors_controller.php:77
+#: controllers/editors_controller.php:81
+msgctxt "editors_pagetitle"
+msgid "Editor Tools"
+msgstr "Panel kontrolny edytora"
+
 # A collection that has been chosen by an Editor as notable or exceptional
-#: controllers/collections_controller.php:599
+#: controllers/collections_controller.php:719
 msgid "Editor's Pick"
 msgstr "Kolekcja AMO"
 
-#: controllers/collections_controller.php:109
+#: controllers/collections_controller.php:117
 msgid "Editor's Picks"
 msgstr "Kolekcje AMO"
 
@@ -3681,25 +3792,14 @@ msgstr "Edytorzy"
 msgid "Editors' Guide"
 msgstr "Poradnik edytora"
 
-#: controllers/developers_controller.php:557
-msgid ""
-"Either the XML is invalid or required fields are missing.  Please <a href="
-"\"https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox"
-"\">read the documentation</a>, verify your add-on, and try again."
-msgstr ""
-"Kod XML ma nieprawidłową strukturę lub nie wypełniono wymaganych pól. Proszę "
-"zapoznać się z <a href=\"https://developer.mozilla.org/en/"
-"Creating_OpenSearch_plugins_for_Firefox\">dokumentacją</a>, zweryfikować "
-"dodatek i spróbować ponownie."
-
-#: views/users/edit.thtml:230 views/users/login.thtml:84
-#: views/users/pwreset.thtml:52 views/users/register.thtml:63
-msgctxt "user_form_email"
+#: views/elements/amo2009/users/vcard.thtml:86
+msgctxt "addon_developer_th_email"
 msgid "Email address"
 msgstr "Adres e-mail"
 
-#: views/elements/amo2009/users/vcard.thtml:86
-msgctxt "addon_developer_th_email"
+#: views/users/pwreset.thtml:52 views/users/login.thtml:84
+#: views/users/register.thtml:63 views/users/edit.thtml:230
+msgctxt "user_form_email"
 msgid "Email address"
 msgstr "Adres e-mail"
 
@@ -3733,7 +3833,7 @@ msgstr ""
 msgid "Enter your answer here:"
 msgstr "Wprowadź tutaj swoją odpowiedź:"
 
-#: controllers/collections_controller.php:1088
+#: controllers/collections_controller.php:1208
 msgid "Error deleting add-on!"
 msgstr "Wystąpił błąd podczas usuwania dodatku!"
 
@@ -3741,11 +3841,11 @@ msgstr "Wystąpił błąd podczas usuwania dodatku!"
 msgid "Error flagging this review!"
 msgstr "Podczas oznaczania recenzji etykietą wystąpił błąd!"
 
-#: controllers/collections_controller.php:1074
+#: controllers/collections_controller.php:1194
 msgid "Error saving add-on!"
 msgstr "Wystąpił błąd podczas zapisywania dodatku!"
 
-#: controllers/collections_controller.php:1103
+#: controllers/collections_controller.php:1223
 msgid "Error saving comment!"
 msgstr "Wystąpił błąd podczas zapisywania komentarza!"
 
@@ -3758,7 +3858,7 @@ msgctxt "editorcp_menu_eventlog_link"
 msgid "Event Log"
 msgstr "Dziennik zdarzeń"
 
-#: views/admin/logs.thtml:43 views/editors/logs.thtml:42
+#: views/editors/logs.thtml:42 views/admin/logs.thtml:43
 #: controllers/editors_controller.php:1751
 msgctxt "editorcp_logs_page_heading"
 msgid "Event Log"
@@ -3844,13 +3944,18 @@ msgstr "Dostosuj swojego Firefoksa – FAQ"
 msgid "Favorites"
 msgstr "Ulubione"
 
-#: controllers/addons_controller.php:542
-msgctxt "rss_featuredaddons"
+#: views/elements/pitch.thtml:72
+msgctxt "sidebar_pitch_featured_addons"
 msgid "Featured Add-ons"
-msgstr "Polecane dodatki"
+msgstr "Polecane"
 
 #: views/elements/developers/editorsmenu.thtml:59
 msgctxt "devcp_editorsqueue_featured"
+msgid "Featured Add-ons"
+msgstr "Polecane dodatki"
+
+#: controllers/addons_controller.php:496
+msgctxt "rss_featuredaddons"
 msgid "Featured Add-ons"
 msgstr "Polecane dodatki"
 
@@ -3859,11 +3964,6 @@ msgstr "Polecane dodatki"
 msgctxt "editors_featured_addons_pagetitle"
 msgid "Featured Add-ons"
 msgstr "Polecane dodatki"
-
-#: views/elements/pitch.thtml:72
-msgctxt "sidebar_pitch_featured_addons"
-msgid "Featured Add-ons"
-msgstr "Polecane"
 
 #: config/bootstrap.php:262
 msgid "Fennec"
@@ -3888,25 +3988,25 @@ msgstr ""
 # %1$s is a filename, e.g. "foo.txt"
 # %2$s is the extension, e.g. ".txt"
 # %3$s is a list of valid extensions, like ".png, .jpg, .gif"
-#: controllers/developers_controller.php:1696
+#: controllers/developers_controller.php:1784
 #, php-format
 msgid "File %1$s has an invalid extension (%2$s). Allowed extensions: %3$s"
 msgstr ""
 "Plik %1$s ma nieprawidłowe rozszerzenie (%2$s). Dozwolone rozszerzenia: %3$s"
 
 # %s is the filename.
-#: controllers/developers_controller.php:1729
+#: controllers/developers_controller.php:1817
 #, php-format
 msgid "File %s could not be saved to the database. Please try again."
 msgstr "Plik %s nie został zapisany w bazie danych. Proszę spróbować ponownie."
 
 # %s is the filename.
-#: controllers/developers_controller.php:1726
+#: controllers/developers_controller.php:1814
 #, php-format
 msgid "File %s was uploaded successfully. You can add a caption below."
 msgstr "Plik %s został wysłany. Poniżej możesz dodać opis."
 
-#: views/developers/uploader.thtml:176
+#: views/developers/uploader.thtml:180
 msgid "File Added!"
 msgstr "Plik został dodany!"
 
@@ -3932,10 +4032,10 @@ msgstr "Weryfikacja typu plików"
 msgid "File error: %s does not exist."
 msgstr "Błąd pliku: %s nie istnieje."
 
-#: controllers/editors_controller.php:535 controllers/files_controller.php:75
-#: controllers/files_controller.php:106 controllers/files_controller.php:109
-#: controllers/files_controller.php:240 controllers/files_controller.php:253
-#: controllers/files_controller.php:262 controllers/files_controller.php:281
+#: controllers/files_controller.php:75 controllers/files_controller.php:106
+#: controllers/files_controller.php:109 controllers/files_controller.php:240
+#: controllers/files_controller.php:253 controllers/files_controller.php:262
+#: controllers/files_controller.php:281 controllers/editors_controller.php:535
 msgid "File not found!"
 msgstr "Nie znaleziono pliku!"
 
@@ -3943,13 +4043,13 @@ msgstr "Nie znaleziono pliku!"
 msgid "Files:"
 msgstr "Pliki:"
 
-#: views/editors/performance_charts.thtml:65
-#: views/editors/performance_table.thtml:52 views/editors/reviewlog.thtml:49
+#: views/editors/performance_table.thtml:52
+#: views/editors/performance_charts.thtml:65 views/editors/reviewlog.thtml:49
 msgctxt "editorcp_reviewlog_button_filter"
 msgid "Filter"
 msgstr "Filtruj"
 
-#: views/admin/logs.thtml:91 views/editors/logs.thtml:56
+#: views/editors/logs.thtml:56 views/admin/logs.thtml:91
 msgctxt "editorcp_logs_button_filter"
 msgid "Filter"
 msgstr "Filtruj"
@@ -3963,7 +4063,7 @@ msgstr "Filtruj"
 msgid "Filter Queue"
 msgstr "Filtrowanie kolejki"
 
-#: views/admin/logs.thtml:50 views/editors/logs.thtml:50
+#: views/editors/logs.thtml:50 views/admin/logs.thtml:50
 msgid "Filter by type/action"
 msgstr "Filtruj wg typu/czynności"
 
@@ -3975,8 +4075,8 @@ msgstr "Znajdź dodatki dla innych programów"
 msgid "Firefox"
 msgstr "Firefox"
 
-#: views/admin/users_edit.thtml:76 views/users/edit.thtml:96
-#: views/users/register.thtml:78
+#: views/users/register.thtml:78 views/users/edit.thtml:96
+#: views/admin/users_edit.thtml:76
 msgid "First name"
 msgstr "Imię"
 
@@ -3994,15 +4094,15 @@ msgstr "Flagi:"
 msgid "For information on contributing, please see our %s."
 msgstr "Informacje na temat współpracy można znaleźć na %s."
 
-#: controllers/pages_controller.php:111
-msgctxt "page_title_faq"
+# Full text for the FAQ abbreviation.
+#: views/elements/footer.thtml:73 views/pages/collector_features.thtml:72
+#: views/layouts/amo2009.thtml:354
+msgctxt "footer_abbr_faq"
 msgid "Frequently Asked Questions"
 msgstr "Często zadawane pytania"
 
-# Full text for the FAQ abbreviation.
-#: views/elements/footer.thtml:73 views/layouts/amo2009.thtml:354
-#: views/pages/collector_features.thtml:72
-msgctxt "footer_abbr_faq"
+#: controllers/pages_controller.php:111
+msgctxt "page_title_faq"
 msgid "Frequently Asked Questions"
 msgstr "Często zadawane pytania"
 
@@ -4048,13 +4148,13 @@ msgstr "Ogólne testy weryfikacyjne"
 msgid "Geolocation Check"
 msgstr "Sprawdzenie geolokalizacji"
 
-#: views/developers/uploader.thtml:68
-msgctxt "devcp_uploader_a_start"
+#: views/developers/dashboard.thtml:113
+msgctxt "devcp_dashboard_start"
 msgid "Get Started"
 msgstr "Zaczynamy!"
 
-#: views/developers/dashboard.thtml:113
-msgctxt "devcp_dashboard_start"
+#: views/developers/uploader.thtml:71
+msgctxt "devcp_uploader_a_start"
 msgid "Get Started"
 msgstr "Zaczynamy!"
 
@@ -4069,26 +4169,26 @@ msgid ""
 msgstr ""
 "Nadaj kolekcji opisową nazwę np.: „Ulubione dodatki webmasterskie Leszka”"
 
-#: views/addons/display.thtml:459 views/tags/display.thtml:83
-msgctxt "addons_author_addons_submit"
-msgid "Go"
-msgstr "Przejdź"
-
-#: views/collections/detail.thtml:139
 #: views/elements/amo2009/collections/sort_form.thtml:55
+#: views/collections/detail.thtml:162 views/statistics/collections.thtml:67
 #: views/search/index.thtml:129
 msgctxt "collections_index_button_go"
 msgid "Go"
 msgstr "Wykonaj"
 
-#: views/elements/addon_list_options.thtml:109
 #: views/elements/amo2009/addons/list_options.thtml:113
+#: views/elements/addon_list_options.thtml:109
 msgctxt "addons_options_submit"
 msgid "Go"
 msgstr "Przejdź"
 
 #: views/elements/footer.thtml:61 views/layouts/amo2009.thtml:343
 msgctxt "footer_lang_form_lang_submit_go"
+msgid "Go"
+msgstr "Przejdź"
+
+#: views/tags/display.thtml:83 views/addons/display.thtml:461
+msgctxt "addons_author_addons_submit"
 msgid "Go"
 msgstr "Przejdź"
 
@@ -4124,13 +4224,13 @@ msgstr "HTML"
 msgid "Hate it"
 msgstr "Nie cierpię go"
 
-#: views/statistics/addon.thtml:60
-msgctxt "statistics_help_link"
+#: views/elements/translationbox.thtml:68
+msgctxt "devcp_transbox_alt_help"
 msgid "Help"
 msgstr "Pomoc"
 
-#: views/elements/translationbox.thtml:68
-msgctxt "devcp_transbox_alt_help"
+#: views/statistics/addon.thtml:60
+msgctxt "statistics_help_link"
 msgid "Help"
 msgstr "Pomoc"
 
@@ -4164,18 +4264,18 @@ msgstr "Ukryj pomoc"
 msgid "Hide Total Count"
 msgstr "Ukryj sumaryczny wykres"
 
-#: views/admin/users_edit.thtml:91 views/users/edit.thtml:125
-#: views/users/register.thtml:94
+#: views/users/register.thtml:94 views/users/edit.thtml:125
+#: views/admin/users_edit.thtml:91
 msgid "Hide email address"
 msgstr "Ukryj adres e-mail"
 
-#: views/addons/display.thtml:174
-msgctxt "addons_display_header_homepage"
+#: views/elements/amo2009/users/vcard.thtml:80
+msgctxt "addon_developer_th_homepage"
 msgid "Homepage"
 msgstr "Strona domowa"
 
-#: views/elements/amo2009/users/vcard.thtml:80
-msgctxt "addon_developer_th_homepage"
+#: views/addons/display.thtml:174
+msgctxt "addons_display_header_homepage"
 msgid "Homepage"
 msgstr "Strona domowa"
 
@@ -4183,7 +4283,7 @@ msgstr "Strona domowa"
 msgid "Hover over a category to see its description."
 msgstr "Aby zobaczyć opis kategorii, umieść kursor myszy nad jej nazwą."
 
-#: views/developers/uploader.thtml:66
+#: views/developers/uploader.thtml:69
 msgid "How does it all work?"
 msgstr "Jak to wszystko funkcjonuje?"
 
@@ -4211,7 +4311,7 @@ msgstr "Nie pamiętam hasła"
 msgid "I understand that this step cannot be undone."
 msgstr "Zdaję sobie sprawę, że ten krok nie może być cofnięty."
 
-#: views/developers/uploader.thtml:161
+#: views/developers/uploader.thtml:165
 msgid "I'll complete my add-on later."
 msgstr "Skompletuję dodatek później."
 
@@ -4395,7 +4495,7 @@ msgstr ""
 "Nawet jeśli program, w którym ma pracować dany dodatek, nie wymaga pliku "
 "install.rdf, należy utworzyć go wg opisu na %s i dołączyć do dodatku."
 
-#: views/pages/js_constants.js.thtml:74
+#: views/pages/js_constants.js.thtml:86
 msgid "Ignore version check"
 msgstr "Pomijaj sprawdzanie wersji"
 
@@ -4403,17 +4503,17 @@ msgstr "Pomijaj sprawdzanie wersji"
 msgid "Image Gallery"
 msgstr "Galeria obrazków"
 
-#: views/pages/js_constants.js.thtml:80 controllers/components/amo.php:193
-#: controllers/components/amo.php:225
+#: views/pages/js_constants.js.thtml:94 controllers/components/amo.php:240
+#: controllers/components/amo.php:272
 msgid "In Sandbox"
 msgstr "w piaskownicy"
 
-#: views/pages/js_constants.js.thtml:81 controllers/components/amo.php:195
-#: controllers/components/amo.php:226
+#: views/pages/js_constants.js.thtml:95 controllers/components/amo.php:242
+#: controllers/components/amo.php:273
 msgid "In Sandbox; Pending Review"
 msgstr "w piaskownicy – w trakcie recenzowania"
 
-#: controllers/components/amo.php:197 controllers/components/amo.php:227
+#: controllers/components/amo.php:244 controllers/components/amo.php:274
 msgid "In Sandbox; Public Nomination"
 msgstr "w piaskownicy – nominowany do upublicznienia"
 
@@ -4434,7 +4534,7 @@ msgstr "Nieaktywny"
 msgid "Inappropriate language/dialog"
 msgstr "Niewłaściwy język/dialog"
 
-#: controllers/components/amo.php:191 controllers/components/amo.php:224
+#: controllers/components/amo.php:238 controllers/components/amo.php:271
 msgid "Incomplete Version"
 msgstr "wersja niekompletna"
 
@@ -4502,12 +4602,12 @@ msgid "Install Language Pack"
 msgstr "Zainstaluj pakiet językowy"
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:691
+#: controllers/components/validation.php:738
 #, fuzzy, php-format
 msgid "Install.js contains a function missing from the whitelist: %s"
 msgstr "Install.js contains a function missing from the whitelist: %s"
 
-#: views/admin/users_edit.thtml:132 views/users/edit.thtml:150
+#: views/users/edit.thtml:150 views/admin/users_edit.thtml:132
 msgid ""
 "Introduce yourself to the community, if you like! This text will appear "
 "publicly on your user info page. Line breaks will be preserved, but no HTML "
@@ -4521,7 +4621,7 @@ msgstr ""
 msgid "Introduction"
 msgstr "Wstęp"
 
-#: controllers/developers_controller.php:1798
+#: controllers/developers_controller.php:1886
 msgid "Invalid add-on type"
 msgstr "Nieprawidłowy typ dodatku"
 
@@ -4620,7 +4720,7 @@ msgid "L10n Completeness Check"
 msgstr "Sprawdzenie kompletności lokalizacji"
 
 # %s is an English string from an external validation program.  (An error)
-#: controllers/components/validation.php:601
+#: controllers/components/validation.php:648
 #, php-format
 msgid "L10n test returned an error: %s"
 msgstr "Test lokalizacji zwrócił błąd: %s"
@@ -4661,7 +4761,7 @@ msgstr "Pakiety językowe (dodatek)"
 msgid "Language Packs (Application)"
 msgstr "Pakiety językowe (program)"
 
-#: views/statistics/addon.thtml:175 views/statistics/rss/summary.thtml:41
+#: views/statistics/rss/summary.thtml:41 views/statistics/addon.thtml:175
 msgid "Last Day Count"
 msgstr "Suma z ostatniego dnia"
 
@@ -4675,8 +4775,8 @@ msgstr "Uaktualniono"
 msgid "Last edited on %s"
 msgstr "Ostatnio edytowany %s"
 
-#: views/admin/users_edit.thtml:81 views/users/edit.thtml:102
-#: views/users/register.thtml:84
+#: views/users/register.thtml:84 views/users/edit.thtml:102
+#: views/admin/users_edit.thtml:81
 msgid "Last name"
 msgstr "Nazwisko"
 
@@ -4699,26 +4799,24 @@ msgid ""
 "\">Mozilla Developer Center</a>."
 msgstr ""
 
-#: views/elements/amo2009/homepage_addon.thtml:124
-#: views/elements/amo2009/results_addon.thtml:126
+#: views/elements/amo2009/homepage_addon.thtml:126
 #: views/elements/feature.thtml:122
 msgid "Learn more"
 msgstr "Dowiedz się więcej"
 
 # %1 is the add-on name
-#: views/elements/amo2009/homepage_addon.thtml:125
-#: views/elements/amo2009/results_addon.thtml:127
+#: views/elements/amo2009/homepage_addon.thtml:127
 #: views/elements/feature.thtml:123
 #, php-format
 msgid "Learn more about %1$s"
 msgstr "Więcej o dodatku %1$s"
 
-#: views/elements/amo2009/homepage_addon.thtml:99
-#: views/elements/amo2009/homepage_addon.thtml:102
-#: views/elements/amo2009/results_addon.thtml:90
-#: views/elements/amo2009/results_addon.thtml:92
 #: views/elements/amo2009/teaser_collections.thtml:86
 #: views/elements/amo2009/teaser_collections.thtml:92
+#: views/elements/amo2009/results_addon.thtml:90
+#: views/elements/amo2009/results_addon.thtml:92
+#: views/elements/amo2009/homepage_addon.thtml:99
+#: views/elements/amo2009/homepage_addon.thtml:102
 #: views/elements/feature.thtml:94
 msgid "Learn more about this add-on"
 msgstr "Dowiedz się więcej o tym dodatku"
@@ -4778,7 +4876,7 @@ msgstr "Zakańczanie wiersza:"
 msgid "List as author in public display pages"
 msgstr "Wyświetlaj jako autora na ogólnodostępnych stronach"
 
-#: views/pages/js_constants.js.thtml:87
+#: views/pages/js_constants.js.thtml:101
 msgid "List as author in public listings"
 msgstr "Wyświetlaj jako autora na ogólnodostępnych wykazach"
 
@@ -4813,7 +4911,7 @@ msgctxt "addon_developer_th_location"
 msgid "Location"
 msgstr "Lokalizacja"
 
-#: views/admin/users_edit.thtml:99 views/users/edit.thtml:112
+#: views/users/edit.thtml:112 views/admin/users_edit.thtml:99
 msgctxt "user_form_location"
 msgid "Location"
 msgstr "Lokalizacja"
@@ -4826,8 +4924,8 @@ msgstr "Zablokowany"
 msgid "Log In"
 msgstr "Logowanie"
 
-#: views/elements/developers/myaddons.thtml:50
-#: views/elements/developers/sidebar.thtml:72 views/elements/header.thtml:159
+#: views/elements/developers/sidebar.thtml:72
+#: views/elements/developers/myaddons.thtml:50 views/elements/header.thtml:159
 msgctxt "header_navlink_login"
 msgid "Log in"
 msgstr "Zaloguj się"
@@ -4950,7 +5048,7 @@ msgstr "Zarządzanie właściwościami dodatku"
 msgid "Manage Add-on Tags"
 msgstr "Zarządzanie etykietami dodatku"
 
-#: views/collections/detail.thtml:104
+#: views/collections/detail.thtml:110
 msgid "Manage Collection"
 msgstr "Zarządzaj kolekcją"
 
@@ -5012,7 +5110,7 @@ msgstr ""
 "będzie można ponownie go włączyć."
 
 # %s is a string.  Example: /test.*pattern/
-#: controllers/components/validation.php:1054
+#: controllers/components/validation.php:1101
 #, php-format
 msgid "Matched Pattern: \"%s\""
 msgstr "Zgodny wzorzec: „%s”"
@@ -5028,7 +5126,7 @@ msgid "Meet %1$s"
 msgstr "Poznaj %1$s"
 
 # %1 is an add-on name.
-#: controllers/addons_controller.php:223
+#: controllers/addons_controller.php:174
 #, php-format
 msgid "Meet the %1$s Developer"
 msgid_plural "Meet the %1$s Developers"
@@ -5047,43 +5145,45 @@ msgid "Misplaced bug report or support request"
 msgstr "Niewłaściwie umieszczona prośba o pomoc lub raport o błędzie"
 
 # %s is a string representing what's missing.  Example:  file_id
-#: controllers/addons_controller.php:175 controllers/addons_controller.php:301
-#: controllers/addons_controller.php:1540
-#: controllers/addons_controller.php:1683
-#: controllers/collections_controller.php:177
-#: controllers/collections_controller.php:279
-#: controllers/collections_controller.php:298
-#: controllers/collections_controller.php:362
-#: controllers/collections_controller.php:460
-#: controllers/collections_controller.php:499
-#: controllers/collections_controller.php:956
-#: controllers/collections_controller.php:979
-#: controllers/collections_controller.php:980
-#: controllers/collections_controller.php:995
-#: controllers/collections_controller.php:997
-#: controllers/collections_controller.php:1014
-#: controllers/collections_controller.php:1023
-#: controllers/collections_controller.php:1038
-#: controllers/collections_controller.php:1039
-#: controllers/collections_controller.php:1046
-#: controllers/collections_controller.php:1093
-#: controllers/collections_controller.php:1113
 #: controllers/downloads_controller.php:65
-#: controllers/editors_controller.php:1235
-#: controllers/reviews_controller.php:71
+#: controllers/users_controller.php:191 controllers/users_controller.php:270
+#: controllers/users_controller.php:641 controllers/users_controller.php:739
+#: controllers/users_controller.php:909 controllers/reviews_controller.php:71
 #: controllers/reviews_controller.php:235
 #: controllers/reviews_controller.php:326
 #: controllers/reviews_controller.php:474
-#: controllers/reviews_controller.php:476 controllers/users_controller.php:191
-#: controllers/users_controller.php:270 controllers/users_controller.php:641
-#: controllers/users_controller.php:739 controllers/users_controller.php:909
+#: controllers/reviews_controller.php:476
+#: controllers/addons_controller.php:126 controllers/addons_controller.php:252
+#: controllers/addons_controller.php:1494
+#: controllers/addons_controller.php:1637
+#: controllers/editors_controller.php:1235
+#: controllers/collections_controller.php:185
+#: controllers/collections_controller.php:287
+#: controllers/collections_controller.php:306
+#: controllers/collections_controller.php:322
+#: controllers/collections_controller.php:420
+#: controllers/collections_controller.php:495
+#: controllers/collections_controller.php:580
+#: controllers/collections_controller.php:619
+#: controllers/collections_controller.php:1076
+#: controllers/collections_controller.php:1099
+#: controllers/collections_controller.php:1100
+#: controllers/collections_controller.php:1115
+#: controllers/collections_controller.php:1117
+#: controllers/collections_controller.php:1134
+#: controllers/collections_controller.php:1143
+#: controllers/collections_controller.php:1158
+#: controllers/collections_controller.php:1159
+#: controllers/collections_controller.php:1166
+#: controllers/collections_controller.php:1213
+#: controllers/collections_controller.php:1233
 #, php-format
 msgid "Missing argument: %s"
 msgstr "Brakujący argument: %s"
 
 # %1 is the review count
-#: views/elements/developers/editorsmenu.thtml:56
 #: views/elements/developers/editorsqueue.thtml:42
+#: views/elements/developers/editorsmenu.thtml:56
 #, php-format
 msgid "Moderated Reviews (%s)"
 msgid_plural "Moderated Reviews (%s)"
@@ -5097,7 +5197,7 @@ msgstr "Oceny miesięczne"
 
 # %1$s is the number of reviews the person has done
 # %2$s is the average number of reviews the team has done
-#: views/editors/performance_table.thtml:132
+#: views/editors/performance_table.thtml:136
 #, php-format
 msgid "Month To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
 msgstr "Miesiąc do dzisiaj: %1$s &nbsp;&nbsp;Średnia zespołu: %2$s"
@@ -5119,12 +5219,12 @@ msgid "Most popular this week"
 msgstr "Najpopularniejsze w tym tygodniu"
 
 # alt text for a down-arrow image.
-#: views/pages/js_constants.js.thtml:82
+#: views/pages/js_constants.js.thtml:96
 msgid "Move Down"
 msgstr "Przenieś w dół"
 
 # alt text for an up-arrow image.
-#: views/pages/js_constants.js.thtml:83
+#: views/pages/js_constants.js.thtml:97
 msgid "Move Up"
 msgstr "Przenieś w górę"
 
@@ -5212,12 +5312,12 @@ msgstr "Moje konto"
 msgid "My Add-ons"
 msgstr "Moje dodatki"
 
-#: views/users/info.thtml:119 controllers/collections_controller.php:117
+#: views/users/info.thtml:119 controllers/collections_controller.php:125
 msgid "My Collections"
 msgstr "Moje kolekcje"
 
 #: views/collections/subscribe.thtml:64
-#: controllers/collections_controller.php:119
+#: controllers/collections_controller.php:127
 msgid "My Favorites"
 msgstr "Moje ulubione"
 
@@ -5238,18 +5338,18 @@ msgstr "Ja i następujący użytkownicy:"
 msgid "NEW!"
 msgstr "Nowość!"
 
-#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
-#: views/search/index.thtml:117 views/tags/display.thtml:77
-msgctxt "advanced_search_form_name"
-msgid "Name"
-msgstr "Nazwy"
-
 #: views/elements/amo2009/users/vcard.thtml:63
 msgctxt "addon_developer_th_name"
 msgid "Name"
 msgstr "Imię i nazwisko"
 
-#: controllers/collections_controller.php:312
+#: views/elements/amo2009/search.thtml:146 views/elements/search.thtml:144
+#: views/tags/display.thtml:77 views/search/index.thtml:117
+msgctxt "advanced_search_form_name"
+msgid "Name"
+msgstr "Nazwy"
+
+#: controllers/collections_controller.php:370
 msgctxt "collections_detail_sort_name"
 msgid "Name"
 msgstr "nazwy"
@@ -5258,7 +5358,7 @@ msgstr "nazwy"
 msgid "Name &amp; Details"
 msgstr "Nazwa i szczegóły"
 
-#: views/addons/display.thtml:538
+#: views/addons/display.thtml:540
 msgid "New Collection..."
 msgstr "Nowa kolekcja…"
 
@@ -5284,12 +5384,12 @@ msgstr "Nowa wersja"
 msgid "New image:"
 msgstr "Nowy obrazek:"
 
-#: views/users/edit.thtml:219 views/users/pwreset.thtml:72
+#: views/users/pwreset.thtml:72 views/users/edit.thtml:219
 msgid "New password"
 msgstr "Nowe hasło"
 
 #: views/elements/amo2009/search.thtml:145 views/elements/search.thtml:143
-#: views/search/index.thtml:116 views/tags/display.thtml:76
+#: views/tags/display.thtml:76 views/search/index.thtml:116
 msgctxt "advanced_search_form_newest"
 msgid "Newest"
 msgstr "Daty dodania"
@@ -5299,23 +5399,23 @@ msgctxt "collections_index_option_newest"
 msgid "Newest"
 msgstr "Najnowsze"
 
-#: controllers/addons_controller.php:539
-#: controllers/addons_controller.php:1175
-msgctxt "browse_addons_newest"
-msgid "Newest Add-ons"
-msgstr "Najnowsze dodatki"
-
 #: views/elements/pitch.thtml:70
 msgctxt "sidebar_pitch_newest_addons"
 msgid "Newest Add-ons"
 msgstr "Najnowsze"
 
+#: controllers/addons_controller.php:493
+#: controllers/addons_controller.php:1129
+msgctxt "browse_addons_newest"
+msgid "Newest Add-ons"
+msgstr "Najnowsze dodatki"
+
 #: views/elements/amo2009/pagination.thtml:42
 msgid "Next"
 msgstr "Następne"
 
-#: views/admin/users_edit.thtml:86 views/users/edit.thtml:107
-#: views/users/register.thtml:89
+#: views/users/register.thtml:89 views/users/edit.thtml:107
+#: views/admin/users_edit.thtml:86
 msgid "Nickname"
 msgstr "Nick"
 
@@ -5335,24 +5435,24 @@ msgstr "Nie"
 msgid "No Data"
 msgstr "Brak danych"
 
-#: controllers/components/amo.php:507 controllers/components/amo.php:532
+#: controllers/components/amo.php:554 controllers/components/amo.php:579
 msgid "No Files"
 msgstr "Brak plików"
 
+#: controllers/components/validation.php:313
 #: controllers/components/developers.php:545
-#: controllers/components/validation.php:266
 msgid "No ID could be found for this add-on in install.rdf."
 msgstr "W pliku install.rdf nie znaleziono identyfikatora (ID) tego dodatku."
 
-#: controllers/components/amo.php:566 controllers/components/amo.php:577
+#: controllers/components/amo.php:613 controllers/components/amo.php:624
 msgid "No Test Results"
 msgstr "Brak wyników testu"
 
-#: controllers/developers_controller.php:585
+#: controllers/developers_controller.php:660
 msgid "No account found for that email address."
 msgstr "Nie znaleziono konta skojarzonego z tym adresem e-mail."
 
-#: controllers/addons_controller.php:1135
+#: controllers/addons_controller.php:1089
 msgid "No add-ons in this category!"
 msgstr "W tej kategorii nie ma żadnych dodatków!"
 
@@ -5361,8 +5461,13 @@ msgstr "W tej kategorii nie ma żadnych dodatków!"
 msgid "No categories are available for this add-on type and application."
 msgstr "Dla tego typu dodatku i programu nie są dostępne żadne kategorie."
 
-#: views/statistics/addon.thtml:167 views/statistics/addon.thtml:187
+#: views/statistics/collections.thtml:73
+#, fuzzy
+msgid "No collections found."
+msgstr "Nie znaleziono plików."
+
 #: views/statistics/rss/summary.thtml:50 views/statistics/rss/summary.thtml:56
+#: views/statistics/addon.thtml:167 views/statistics/addon.thtml:187
 msgid "No data yet"
 msgstr "Brak danych jak dotąd"
 
@@ -5370,17 +5475,16 @@ msgstr "Brak danych jak dotąd"
 msgid "No file uploaded"
 msgstr "Nie wysłano żadnego pliku"
 
+#: views/developers/versions_validate.thtml:62
 #: views/developers/versions_edit.thtml:111
-#: views/developers/versions_validate.thtml:59
 msgid "No files found."
 msgstr "Nie znaleziono plików."
 
-#: controllers/components/validation.php:206
-#: controllers/developers_controller.php:505
+#: controllers/components/validation.php:253
 msgid "No install.rdf present."
 msgstr "Brak pliku install.rdf."
 
-#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
+#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
 msgid "No photo"
 msgstr "Brak obrazka"
 
@@ -5396,8 +5500,8 @@ msgstr "Nie znaleziono obrazków."
 msgid "No previous review entries could be found."
 msgstr "Brak wcześniejszych recenzji."
 
-#: views/search/collections.thtml:62 views/search/index.thtml:100
-#: views/tags/display.thtml:60
+#: views/tags/display.thtml:60 views/search/collections.thtml:62
+#: views/search/index.thtml:100
 msgid "No results found."
 msgstr "Nie znaleziono."
 
@@ -5409,9 +5513,9 @@ msgstr "Brak recenzji dla tego okresu."
 msgid "No tags for these add-ons"
 msgstr "Te dodatki nie mają etykiet"
 
-#: views/elements/developers/testresults.thtml:61
 #: views/elements/developers/testresults_group.thtml:115
 #: views/elements/developers/testresults_header.thtml:62
+#: views/elements/developers/testresults.thtml:61
 msgctxt "devcp_versions_validate_no_results"
 msgid "No test results found."
 msgstr "Nie znaleziono wyników testu."
@@ -5424,6 +5528,11 @@ msgstr "Brak wyników testu."
 #: views/developers/versions.thtml:89
 msgid "No versions."
 msgstr "Nie ma żadnej wersji"
+
+#: views/elements/amo2009/collections/barometer.thtml:65
+#, fuzzy
+msgid "No votes for this collection yet."
+msgstr "Brak recenzji dla tego okresu."
 
 #: views/developers/addon_status_confirm.thtml:74
 msgid "No, cancel"
@@ -5444,8 +5553,8 @@ msgid "Nominate your add-on to become Public"
 msgstr "Ta operacja spowoduje nominowanie dodatku do upublicznienia"
 
 # %1 is the nominated addons count
-#: views/elements/developers/editorsmenu.thtml:58
 #: views/elements/developers/editorsqueue.thtml:44
+#: views/elements/developers/editorsmenu.thtml:58
 #, php-format
 msgid "Nominated Add-ons (%s)"
 msgid_plural "Nominated Add-ons (%s)"
@@ -5453,13 +5562,13 @@ msgstr[0] "Dodatki nominowane (%s)"
 msgstr[1] "Dodatki nominowane (%s)"
 msgstr[2] "Dodatki nominowane (%s)"
 
-#: views/editors/performance_table.thtml:86 views/editors/reviewlog.thtml:71
 #: views/elements/developers/editors_review_history_item.thtml:68
+#: views/editors/performance_table.thtml:90 views/editors/reviewlog.thtml:71
 msgid "Nomination Approved/Public"
 msgstr "Nominacja zatwierdzona/Upubliczniony"
 
-#: views/editors/performance_table.thtml:89 views/editors/reviewlog.thtml:74
 #: views/elements/developers/editors_review_history_item.thtml:71
+#: views/editors/performance_table.thtml:93 views/editors/reviewlog.thtml:74
 msgid "Nomination Denied/Sandbox"
 msgstr "Odmowa nominacji/Piaskownica"
 
@@ -5467,7 +5576,7 @@ msgstr "Odmowa nominacji/Piaskownica"
 msgid "Nomination Message"
 msgstr "Informacje o nominacji"
 
-#: controllers/collections_controller.php:597
+#: controllers/collections_controller.php:717
 msgid "Normal"
 msgstr "Normalna"
 
@@ -5511,6 +5620,10 @@ msgstr ""
 "Powiadom mnie, gdy ten dodatek zostanie zaktualizowany. (Kolejne "
 "aktualizacje nie będą generowały wiadomości e-mail)"
 
+#: views/developers/uploader.thtml:198
+msgid "Now validating your add-on ..."
+msgstr ""
+
 #: views/elements/amo2009/users/vcard.thtml:96
 msgid "Number of Add-ons Developed"
 msgstr "Liczba stworzonych dodatków"
@@ -5524,7 +5637,7 @@ msgctxt "addon_developer_th_occupation"
 msgid "Occupation"
 msgstr "Zawód"
 
-#: views/admin/users_edit.thtml:103 views/users/edit.thtml:116
+#: views/users/edit.thtml:116 views/admin/users_edit.thtml:103
 msgctxt "user_form_occupation"
 msgid "Occupation"
 msgstr "Zawód"
@@ -5542,7 +5655,7 @@ msgstr ""
 "dodatków, <b>%2$s&#37;</b> uważa się za kompatybilne z najnowszymi wersjami %"
 "3$s."
 
-#: views/addons/display.thtml:548
+#: views/addons/display.thtml:550
 msgid "Often Used with&hellip;"
 msgstr ""
 
@@ -5550,7 +5663,7 @@ msgstr ""
 msgid "Old password"
 msgstr "Stare hasło"
 
-#: views/statistics/addon.thtml:165 views/statistics/rss/summary.thtml:48
+#: views/statistics/rss/summary.thtml:48 views/statistics/addon.thtml:165
 #, php-format
 msgid "On %1$s"
 msgstr "W %1$s"
@@ -5591,7 +5704,7 @@ msgstr "Tylko zaproszone przeze mnie osoby"
 msgid "Only you and Mozilla can view this add-on's statistics"
 msgstr "Tylko Ty i Mozilla możecie przeglądać statystyki tego dodatku"
 
-#: views/developers/uploader.thtml:144
+#: views/developers/uploader.thtml:148
 msgid "Oops! There seems to be a problem with this file..."
 msgstr "Uups! Wygląda na to, że wystąpił problem z tym plikiem…"
 
@@ -5603,13 +5716,13 @@ msgstr "Otwiera w nowym oknie"
 msgid "Opensearch Format Check"
 msgstr "Sprawdzenie formatu OpenSearch"
 
-#: controllers/statistics_controller.php:311
-msgctxt "statistics_js_plotselection_selector_os"
+#: controllers/components/stats.php:429
+msgctxt "statistics_longnames_os"
 msgid "Operating System"
 msgstr "System operacyjny"
 
-#: controllers/components/stats.php:429
-msgctxt "statistics_longnames_os"
+#: controllers/statistics_controller.php:311
+msgctxt "statistics_js_plotselection_selector_os"
 msgid "Operating System"
 msgstr "System operacyjny"
 
@@ -5631,7 +5744,7 @@ msgstr ""
 msgid "Ordered List"
 msgstr "Listy uporządkowane:"
 
-#: controllers/components/developers.php:1259
+#: controllers/components/developers.php:1260
 msgid "Other"
 msgstr "Inna"
 
@@ -5662,7 +5775,7 @@ msgstr "Inne wersje"
 # %1$s is either an author's name or a comma separated list of authors. Using
 # the list doesn't make sense in the English plural form so we ignore the
 # variable.
-#: views/addons/display.thtml:451
+#: views/addons/display.thtml:453
 #, fuzzy, php-format
 msgid "Other add-ons by %1$s"
 msgid_plural "Other add-ons by these authors"
@@ -5689,7 +5802,7 @@ msgid "Overlay add-on release dates on the plots"
 msgstr "Pokazuje/ukrywa na wykresach daty wydań dodatku"
 
 # <option> text in a <select> for Author role in an add-on.
-#: views/pages/js_constants.js.thtml:84
+#: views/pages/js_constants.js.thtml:98
 msgid "Owner"
 msgstr "Właściciel"
 
@@ -5726,6 +5839,21 @@ msgstr "Dzisiaj"
 msgid "Past Developers"
 msgstr "Poprzedni autorzy"
 
+#: views/statistics/collections.thtml:55
+#, fuzzy
+msgid "Past Month"
+msgstr "W ostatnim miesiącu"
+
+#: views/statistics/collections.thtml:54
+#, fuzzy
+msgid "Past Week"
+msgstr "W ostatnim tygodniu"
+
+#: views/statistics/collections.thtml:56
+#, fuzzy
+msgid "Past Year"
+msgstr "W ostatnim roku"
+
 #: views/elements/amo2009/search.thtml:129 views/elements/search.thtml:128
 msgid "Past month"
 msgstr "W ostatnim miesiącu"
@@ -5743,8 +5871,8 @@ msgid "PayPal ID"
 msgstr "ID PayPal"
 
 # %1 is the update count
-#: views/elements/developers/editorsmenu.thtml:57
 #: views/elements/developers/editorsqueue.thtml:43
+#: views/elements/developers/editorsmenu.thtml:57
 #, php-format
 msgid "Pending Updates (%s)"
 msgid_plural "Pending Updates (%s)"
@@ -5770,8 +5898,8 @@ msgstr "Raport aktywności dla %1$s"
 msgid "Performance Reports"
 msgstr "Raporty aktywności"
 
-#: views/elements/addon_version_detail.thtml:52
 #: views/elements/amo2009/addons/version_detail.thtml:52
+#: views/elements/addon_version_detail.thtml:52
 msgid "Permanent link to this version"
 msgstr "Stały odnośnik do tej wersji"
 
@@ -5779,12 +5907,12 @@ msgstr "Stały odnośnik do tej wersji"
 msgid "Permissions"
 msgstr "Uprawnienia"
 
-#: views/admin/users_edit.thtml:112 views/users/edit.thtml:129
+#: views/users/edit.thtml:129 views/admin/users_edit.thtml:112
 msgid "Picture"
 msgstr "Obrazek"
 
 # %1$s is a user's email address or name
-#: views/admin/users_edit.thtml:114 views/users/edit.thtml:131
+#: views/users/edit.thtml:131 views/admin/users_edit.thtml:114
 #, php-format
 msgid "Picture of %1$s"
 msgstr "Obrazek %1$s"
@@ -5801,13 +5929,13 @@ msgstr ""
 msgid "Plain Text"
 msgstr "Zwykły tekst"
 
-#: views/developers/versions_edit.thtml:79
-msgctxt "devcp_versions_edit_th_platform"
+#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
+msgctxt "advanced_search_form_platform"
 msgid "Platform"
 msgstr "System"
 
-#: views/elements/amo2009/search.thtml:250 views/elements/search.thtml:224
-msgctxt "advanced_search_form_platform"
+#: views/developers/versions_edit.thtml:79
+msgctxt "devcp_versions_edit_th_platform"
 msgid "Platform"
 msgstr "System"
 
@@ -5851,7 +5979,7 @@ msgstr ""
 msgid "Please correct the errors above indicated in red."
 msgstr "Napraw błędy wyszczególnione poniżej czerwonym kolorem."
 
-#: views/developers/uploader.thtml:146
+#: views/developers/uploader.thtml:150
 msgid "Please correct this problem and upload your file again."
 msgstr "Usuń ten problem i wyślij plik ponownie."
 
@@ -5878,11 +6006,11 @@ msgstr ""
 msgid "Please enter review comments."
 msgstr "Napisz komentarze recenzji."
 
-#: views/pages/js_constants.js.thtml:94
+#: views/pages/js_constants.js.thtml:108
 msgid "Please enter text for your license."
 msgstr "Wprowadź tekst swojej licencji."
 
-#: views/pages/js_constants.js.thtml:91
+#: views/pages/js_constants.js.thtml:105
 msgid "Please enter the account email of the author you wish to add."
 msgstr "Wprowadź konto e-mail autora, którego chcesz dodać."
 
@@ -5914,7 +6042,7 @@ msgstr ""
 "Aby ukończyć dodatek i przenieść go do <span class=\"status-1\">piaskownicy</"
 "span>, muszą być spełnione powyższe kryteria."
 
-#: controllers/developers_controller.php:1650
+#: controllers/developers_controller.php:1738
 msgid ""
 "Please note that some changes may take several hours to appear in all areas "
 "of the website."
@@ -5929,21 +6057,20 @@ msgid ""
 "moderated by an editor."
 msgstr "Uwaga: przed publikacją recenzja zostanie sprawdzona przez moderatora."
 
-#: views/developers/uploader.thtml:74
+#: views/developers/uploader.thtml:77
 msgid ""
 "Please review and accept the following Developer Agreement before proceeding."
 msgstr "Najpierw musisz zapoznać się i zaakceptować następującą Umowę autora."
 
 # %s is a complete URL with the text from devcp_error_appversion_reference_link_text
 # in the <a> tag.  This should be fixed.
+#: controllers/components/validation.php:393
 #: controllers/components/developers.php:625
-#: controllers/components/validation.php:346
-#: controllers/developers_controller.php:504
 #, fuzzy, php-format
 msgid "Please see <a href=\"%s\">this page</a> for reference."
 msgstr "Więcej informacji można znaleźć na %s."
 
-#: views/pages/js_constants.js.thtml:93
+#: views/pages/js_constants.js.thtml:107
 msgid "Please select a license."
 msgstr "Wybierz licencję."
 
@@ -5957,15 +6084,15 @@ msgstr "Nie określono czynności. Wybierz ją."
 msgid "Please select at least one category."
 msgstr "Należy wybrać przynajmniej jedną kategorię."
 
-#: controllers/editors_controller.php:401
-msgctxt "editors_error_review_one_file"
-msgid "Please select at least one file to review."
-msgstr "Wybierz przynajmniej jeden plik do recenzji."
-
 #: controllers/components/editors.php:161
 msgctxt "editor_review_error_no_files"
 msgid "Please select at least one file to review."
 msgstr "Wybierz co najmniej jeden plik do zrecenzowania."
+
+#: controllers/editors_controller.php:401
+msgctxt "editors_error_review_one_file"
+msgid "Please select at least one file to review."
+msgstr "Wybierz przynajmniej jeden plik do recenzji."
 
 #: controllers/components/developers.php:75
 msgid "Please select no more than five categories."
@@ -5987,8 +6114,8 @@ msgstr "Informacje te należy traktować jako poufne."
 msgid "Please type what you hear."
 msgstr "Wpisz to, co słyszysz."
 
+#: controllers/developers_controller.php:488
 #: controllers/components/developers.php:285
-#: controllers/developers_controller.php:466
 msgid "Please upload a file."
 msgstr "Proszę wysłać plik."
 
@@ -6006,7 +6133,7 @@ msgctxt "general_addontype_plugin_plural"
 msgid "Plugins"
 msgstr "Wtyczki"
 
-#: controllers/addons_controller.php:1280 controllers/components/amo.php:734
+#: controllers/components/amo.php:781 controllers/addons_controller.php:1234
 msgctxt "addons_plugins_pagetitle"
 msgid "Plugins"
 msgstr "Wtyczki"
@@ -6022,18 +6149,18 @@ msgstr ""
 "multimedialnych. Wtyczki nieco różnią się od rozszerzeń, które modyfikują "
 "lub dodają coś do istniejącej funkcjonalności."
 
-#: controllers/collections_controller.php:111
-msgctxt "collections_index_li_popular"
-msgid "Popular"
-msgstr "Popularne"
-
 #: views/addons/home.thtml:110
 msgctxt "addons_home_browse_popular"
 msgid "Popular"
 msgstr "Popularne"
 
-#: controllers/addons_controller.php:541
-#: controllers/addons_controller.php:1173
+#: controllers/collections_controller.php:119
+msgctxt "collections_index_li_popular"
+msgid "Popular"
+msgstr "Popularne"
+
+#: controllers/addons_controller.php:495
+#: controllers/addons_controller.php:1127
 msgctxt "browse_addons_popular"
 msgid "Popular Add-ons"
 msgstr "Popularne dodatki"
@@ -6043,12 +6170,12 @@ msgid "Popular Collections"
 msgstr "Popularne kolekcje"
 
 #: views/elements/amo2009/search.thtml:148 views/elements/search.thtml:146
-#: views/search/index.thtml:119 views/tags/display.thtml:79
+#: views/tags/display.thtml:79 views/search/index.thtml:119
 msgctxt "advanced_search_form_popularity"
 msgid "Popularity"
 msgstr "Liczby pobrań"
 
-#: controllers/collections_controller.php:313
+#: controllers/collections_controller.php:371
 msgctxt "collections_detail_sort_popularity"
 msgid "Popularity"
 msgstr "popularności"
@@ -6061,15 +6188,15 @@ msgstr "Wyślij"
 msgid "Post Review"
 msgstr "Wyślij"
 
-#: controllers/addons_controller.php:85
+#: controllers/components/amo.php:69
 msgid "Post to Facebook"
 msgstr "Opublikuj na Facebook"
 
-#: controllers/addons_controller.php:97
+#: controllers/components/amo.php:81
 msgid "Post to MySpace"
 msgstr "Opublikuj na MySpace"
 
-#: controllers/addons_controller.php:109
+#: controllers/components/amo.php:93
 msgid "Post to Twitter"
 msgstr "Wyślij do Twittera"
 
@@ -6086,31 +6213,31 @@ msgid "Preview"
 msgstr "Podgląd"
 
 # %1$s is the preview ID number, %2$s is the filename.
-#: controllers/developers_controller.php:1724
+#: controllers/developers_controller.php:1812
 #, php-format
 msgid "Preview %1$s was replaced with file %2$s successfully."
 msgstr "Obrazek o numerze %1$s został zamieniony plikiem %2$s."
 
 # %s is the preview ID number.
-#: controllers/developers_controller.php:1750
+#: controllers/developers_controller.php:1838
 #, php-format
 msgid "Preview %s could not be deleted from the database. Please try again."
 msgstr "Nie można usunąć z bazy danych obrazka %s. Proszę spróbować ponownie."
 
 # %s is the preview ID number.
-#: controllers/developers_controller.php:1748
+#: controllers/developers_controller.php:1836
 #, php-format
 msgid "Preview %s has been deleted successfully."
 msgstr "Obrazek o numerze %s został usunięty."
 
-#: controllers/previews_controller.php:168
-#: controllers/previews_controller.php:277
-msgctxt "devcp_addon_field_preview_caption_displaytitle"
+#: views/developers/previews.thtml:80
+msgctxt "devcp_previews_header_caption"
 msgid "Preview Caption"
 msgstr "Opis obrazka"
 
-#: views/developers/previews.thtml:80
-msgctxt "devcp_previews_header_caption"
+#: controllers/previews_controller.php:168
+#: controllers/previews_controller.php:277
+msgctxt "devcp_addon_field_preview_caption_displaytitle"
 msgid "Preview Caption"
 msgstr "Opis obrazka"
 
@@ -6119,13 +6246,12 @@ msgid "Preview File"
 msgstr "Plik obrazka"
 
 # %s is the add-on name
-#: views/addons/browse_thumbs.thtml:107 views/addons/category_landing.thtml:87
-#: views/elements/addon_discussionheader.thtml:62
-#: views/elements/addon_listitem.thtml:67
-#: views/elements/amo2009/homepage_addon.thtml:77
-#: views/elements/amo2009/results_addon.thtml:77
 #: views/elements/collections_interactive_addon.thtml:62
-#: views/elements/feature.thtml:84
+#: views/elements/amo2009/results_addon.thtml:77
+#: views/elements/amo2009/homepage_addon.thtml:77
+#: views/elements/addon_discussionheader.thtml:62
+#: views/elements/addon_listitem.thtml:67 views/elements/feature.thtml:84
+#: views/addons/category_landing.thtml:87 views/addons/browse_thumbs.thtml:109
 #, php-format
 msgid "Preview Image of %s"
 msgstr "Obrazek podglądu dodatku %s"
@@ -6160,13 +6286,13 @@ msgstr "Obrazki"
 msgid "Print"
 msgstr "Print"
 
-#: views/editors/review.thtml:285
-msgctxt "editors_review_header_privacy"
+#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
+msgctxt "footer_privacy_policy"
 msgid "Privacy Policy"
 msgstr "Polityka prywatności"
 
-#: views/elements/footer.thtml:69 views/layouts/amo2009.thtml:350
-msgctxt "footer_privacy_policy"
+#: views/editors/review.thtml:285
+msgctxt "editors_review_header_privacy"
 msgid "Privacy Policy"
 msgstr "Polityka prywatności"
 
@@ -6207,21 +6333,10 @@ msgstr ""
 "Podaj sposób, w jaki użytkownicy mogą dokonać dotacji pieniężnych na rzecz "
 "Twojego projektu."
 
-#: views/pages/js_constants.js.thtml:79 controllers/components/amo.php:199
-#: controllers/components/amo.php:228
-msgctxt "addons_status_public"
-msgid "Public"
-msgstr "upubliczniony"
-
-#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
 #: views/elements/header.thtml:76 views/elements/header.thtml:82
+#: views/api/api_addon.thtml:55 views/api/collections_feed.thtml:75
 #: views/sharing_api/addon.thtml:63
 msgctxt "a_header_public"
-msgid "Public"
-msgstr "Upubliczniony"
-
-#: views/developers/addon_status.thtml:64
-msgctxt "devcp_addon_status_public"
 msgid "Public"
 msgstr "Upubliczniony"
 
@@ -6230,11 +6345,22 @@ msgctxt "statistics_settings_access_public"
 msgid "Public"
 msgstr "Ogólnodostępny"
 
+#: views/pages/js_constants.js.thtml:93 controllers/components/amo.php:246
+#: controllers/components/amo.php:275
+msgctxt "addons_status_public"
+msgid "Public"
+msgstr "upubliczniony"
+
+#: views/developers/addon_status.thtml:64
+msgctxt "devcp_addon_status_public"
+msgid "Public"
+msgstr "Upubliczniony"
+
 #: views/developers/addon_status.thtml:117
 msgid "Public Nomination Criteria"
 msgstr "Kryteria nominacji do upublicznienia"
 
-#: views/addons/display.thtml:540
+#: views/addons/display.thtml:542
 msgid "Publish"
 msgstr "Dodaj"
 
@@ -6254,15 +6380,15 @@ msgstr "RDF Parser error: the file contained a duplicate element: %s"
 msgid "Rated %s out of 5 stars"
 msgstr "Oceniony jako  %s/5"
 
-#: views/elements/addon_list_options.thtml:48
 #: views/elements/amo2009/addons/list_options.thtml:48
+#: views/elements/addon_list_options.thtml:48
 msgctxt "list_sortby_rating"
 msgid "Rating"
 msgstr "Oceny"
 
-#: views/addons/display.thtml:181 views/addons/display.thtml:338
 #: views/elements/amo2009/search.thtml:147 views/elements/search.thtml:145
-#: views/search/index.thtml:118 views/tags/display.thtml:78
+#: views/tags/display.thtml:78 views/search/index.thtml:118
+#: views/addons/display.thtml:181 views/addons/display.thtml:338
 msgctxt "advanced_search_form_rating"
 msgid "Rating"
 msgstr "Oceny"
@@ -6279,11 +6405,11 @@ msgstr "Bardzo mi się podoba"
 msgid "Recent Editor Activity"
 msgstr "Ostatnie czynności edytorów"
 
-#: views/addons/category_landing.thtml:135
+#: views/addons/category_landing.thtml:137
 msgid "Recently Added"
 msgstr "Najnowsze"
 
-#: controllers/addons_controller.php:1174
+#: controllers/addons_controller.php:1128
 msgid "Recently Updated Add-ons"
 msgstr "Ostatnio zaktualizowane dodatki"
 
@@ -6292,14 +6418,14 @@ msgstr "Ostatnio zaktualizowane dodatki"
 msgid "Recently Viewed"
 msgstr "Najnowsze"
 
-#: views/addons/home.thtml:108 views/addons/searchengines.thtml:57
-#: views/addons/themes_landing.thtml:54
+#: views/addons/searchengines.thtml:57 views/addons/themes_landing.thtml:54
+#: views/addons/home.thtml:108
 msgid "Recommended"
 msgstr "Polecane"
 
-#: controllers/addons_controller.php:1516
-#: controllers/addons_controller.php:1519
-#: controllers/addons_controller.php:1523
+#: controllers/addons_controller.php:1470
+#: controllers/addons_controller.php:1473
+#: controllers/addons_controller.php:1477
 msgctxt "addons_recommended_pagetitle"
 msgid "Recommended Add-ons"
 msgstr "Polecane dodatki"
@@ -6308,13 +6434,13 @@ msgstr "Polecane dodatki"
 msgid "Refine Results"
 msgstr "Zawęź wyniki"
 
-#: views/users/register.thtml:113
-msgctxt "user_form_submit_register"
+#: views/elements/header.thtml:158
+msgctxt "header_navlink_register"
 msgid "Register"
 msgstr "Zarejestruj się"
 
-#: views/elements/header.thtml:158
-msgctxt "header_navlink_register"
+#: views/users/register.thtml:113
+msgctxt "user_form_submit_register"
 msgid "Register"
 msgstr "Zarejestruj się"
 
@@ -6323,17 +6449,17 @@ msgstr "Zarejestruj się"
 msgid "Registered Users"
 msgstr "Registered Users"
 
-#: views/addons/display.thtml:504
+#: views/addons/display.thtml:506
 msgid "Related Collections"
 msgstr "Jest w kolekcjach:"
 
-#: views/addons/display.thtml:369
-msgctxt "addons_display_release_notes"
+#: views/developers/versions_edit.thtml:182
+msgctxt "devcp_versions_edit_transbox_releasenotes_name"
 msgid "Release Notes"
 msgstr "Informacje o wydaniu"
 
-#: views/developers/versions_edit.thtml:182
-msgctxt "devcp_versions_edit_transbox_releasenotes_name"
+#: views/addons/display.thtml:369
+msgctxt "addons_display_release_notes"
 msgid "Release Notes"
 msgstr "Informacje o wydaniu"
 
@@ -6349,11 +6475,6 @@ msgstr "Test odnośników zawartych w kodzie JavaScript"
 msgid "Remote Loading Check"
 msgstr "Sprawdzenie odnośników"
 
-#: views/collections/edit.thtml:261
-msgctxt "collections_edit_addons_listitem_remove"
-msgid "Remove"
-msgstr "Usuń"
-
 # Alt text to remove tag (verb)
 #: views/elements/addon_tags.thtml:63
 msgctxt "tags_alt_remove_tag"
@@ -6364,17 +6485,17 @@ msgstr "Usuń"
 msgid "Remove Application"
 msgstr "Usuń"
 
+#: views/pages/js_constants.js.thtml:106
+msgctxt "devcp_js_img_remove_compat"
+msgid "Remove Application Compatibility"
+msgstr "Usuń kompatybilność z programem"
+
 #: views/developers/versions_edit.thtml:151
 msgctxt "devcp_versions_edit_remove_compat"
 msgid "Remove Application Compatibility"
 msgstr "Usuń program"
 
-#: views/pages/js_constants.js.thtml:92
-msgctxt "devcp_js_img_remove_compat"
-msgid "Remove Application Compatibility"
-msgstr "Usuń kompatybilność z programem"
-
-#: views/pages/js_constants.js.thtml:89
+#: views/pages/js_constants.js.thtml:103
 msgid "Remove Author"
 msgstr "Usuń autora"
 
@@ -6398,12 +6519,17 @@ msgstr "Usuń element"
 msgid "Remove flags; keep review"
 msgstr "Usuń etykiety, zachowaj recenzję"
 
-#: views/elements/amo2009/collections/add_form.thtml:50
 #: views/elements/amo2009/collections/js_init.thtml:71
+#: views/elements/amo2009/collections/add_form.thtml:50
 msgid "Remove from Favorites"
 msgstr "Usuń z ulubionych"
 
-#: views/admin/users_edit.thtml:116 views/users/edit.thtml:134
+#: views/collections/edit.thtml:261
+#, fuzzy
+msgid "Remove this add-on"
+msgstr "Usuń ten wykres"
+
+#: views/users/edit.thtml:134 views/admin/users_edit.thtml:116
 msgid "Remove this picture?"
 msgstr "Usunąć ten obrazek?"
 
@@ -6439,16 +6565,16 @@ msgstr "Zamień"
 msgid "Replies"
 msgstr "Odpowiedzi"
 
-#: views/reviews/display.thtml:76
-msgctxt "addon_review_author_reply_link"
-msgid "Reply"
-msgstr "Odpowiedz"
-
 # a noun: shown in an add-on's editor review history
 #: views/elements/developers/editors_review_history_item.thtml:92
 msgctxt "editors_review_history_info_reply"
 msgid "Reply"
 msgstr "Odpowiedź"
+
+#: views/reviews/display.thtml:76
+msgctxt "addon_review_author_reply_link"
+msgid "Reply"
+msgstr "Odpowiedz"
 
 # %1 is the user, %2 is the (localized) date
 #: views/reviews/display.thtml:159
@@ -6540,13 +6666,13 @@ msgstr "Komentarze do recenzji"
 msgid "Review Guidelines"
 msgstr "Informacje o recenzjach"
 
-#: views/editors/reviewlog.thtml:42
-msgctxt "editorcp_reviewlog_page_heading"
+#: views/elements/developers/editorsmenu.thtml:61
+msgctxt "editorcp_menu_reviewlog_link"
 msgid "Review Log"
 msgstr "Dziennik recenzji"
 
-#: views/elements/developers/editorsmenu.thtml:61
-msgctxt "editorcp_menu_reviewlog_link"
+#: views/editors/reviewlog.thtml:42
+msgctxt "editorcp_reviewlog_page_heading"
 msgid "Review Log"
 msgstr "Dziennik recenzji"
 
@@ -6581,7 +6707,7 @@ msgid "Reviews Created"
 msgstr "Reviews Created"
 
 # %1 is the add-on name
-#: views/reviews/display.thtml:55 views/reviews/flag.thtml:56
+#: views/reviews/flag.thtml:56 views/reviews/display.thtml:55
 #: views/reviews/review_added.thtml:50
 #, php-format
 msgctxt "reviews_header"
@@ -6617,9 +6743,9 @@ msgstr "Running test..."
 msgid "SQL"
 msgstr "SQL"
 
-#: views/api/api_addon.thtml:57 views/api/collections_feed.thtml:77
 #: views/elements/header.thtml:58 views/elements/header.thtml:75
-#: views/elements/header.thtml:80 views/sharing_api/addon.thtml:65
+#: views/elements/header.thtml:80 views/api/api_addon.thtml:57
+#: views/api/collections_feed.thtml:77 views/sharing_api/addon.thtml:65
 msgctxt "a_header_sandbox"
 msgid "Sandbox"
 msgstr "Piaskownica"
@@ -6693,8 +6819,8 @@ msgctxt "general_addontype_search_plural"
 msgid "Search Engines"
 msgstr "Wyszukiwarki"
 
-#: controllers/addons_controller.php:1259
-#: controllers/addons_controller.php:1269
+#: controllers/addons_controller.php:1213
+#: controllers/addons_controller.php:1223
 msgctxt "addons_searchengines_pagetitle"
 msgid "Search Engines"
 msgstr "Wyszukiwarki"
@@ -6746,7 +6872,7 @@ msgstr[2] ""
 msgid "See All %1$s"
 msgstr "Wszystkie z kategorii: %1$s"
 
-#: views/addons/display.thtml:444
+#: views/addons/display.thtml:445
 #, php-format
 msgid "See All %1$s Add-ons"
 msgstr "Wszystkie dodatki %1$s"
@@ -6775,7 +6901,7 @@ msgstr "Zaznacz wszystkie"
 msgid "Select None"
 msgstr "Odznacz wszystkie"
 
-#: views/addons/display.thtml:534
+#: views/addons/display.thtml:536
 msgid "Select a collection..."
 msgstr "Wybierz kolekcję…"
 
@@ -6849,13 +6975,18 @@ msgstr "Recenzowanie własnych dodatków jest zabronione."
 msgid "Send password reset link"
 msgstr "Zresetuj moje hasło"
 
-#: controllers/addons_controller.php:103
+#: controllers/components/amo.php:87
 msgid "Share on FriendFeed"
 msgstr "Udostępnij na FriendFeed"
 
 #: views/addons/display.thtml:218
 msgid "Share this Add-on"
 msgstr "Udostępnij"
+
+#: views/collections/detail.thtml:128
+#, fuzzy
+msgid "Share this Collection"
+msgstr "Utwórz kolekcję"
 
 #: views/editors/review.thtml:426
 msgid "Shift + Click"
@@ -6998,7 +7129,7 @@ msgstr ""
 # %2$s is a number
 # %3$s is a number
 # %4$s is a word (the add-on is tagged with it)
-#: views/search/index.thtml:81 views/tags/display.thtml:53
+#: views/tags/display.thtml:53 views/search/index.thtml:81
 #, php-format
 msgid "Showing %1$s - %2$s of %3$s results tagged with <strong>%4$s</strong>"
 msgstr ""
@@ -7009,7 +7140,7 @@ msgstr ""
 msgid "Sign up for PayPal"
 msgstr "Załóż konto PayPal"
 
-#: views/statistics/addon.thtml:156 views/statistics/rss/summary.thtml:40
+#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:156
 #, php-format
 msgid "Since %1$s"
 msgstr "Od %1$s"
@@ -7089,11 +7220,11 @@ msgstr ""
 "edu/license.html\">BSD</a>."
 
 #: views/developers/addon_edit_contributions.thtml:56
-#: controllers/addons_controller.php:127
+#: controllers/addons_controller.php:78
 msgid "Sorry, PayPal contributions are temporarily disabled."
 msgstr "Przepraszamy. Dotacje przez PayPal są chwilowo niedostępne."
 
-#: views/pages/js_constants.js.thtml:67
+#: views/pages/js_constants.js.thtml:79
 msgid ""
 "Sorry, you need a Mozilla-based browser (such as Firefox) to install a "
 "search plugin."
@@ -7102,17 +7233,17 @@ msgstr ""
 "przeglądarka oparta o Mozillę (tak jak np. Firefox)."
 
 #: views/elements/amo2009/search.thtml:254 views/elements/search.thtml:231
-#: views/search/index.thtml:112 views/tags/display.thtml:73
+#: views/tags/display.thtml:73 views/search/index.thtml:112
 msgid "Sort By"
 msgstr "Sortuj wg"
 
-#: views/collections/detail.thtml:132
 #: views/elements/amo2009/collections/sort_form.thtml:48
+#: views/collections/detail.thtml:155
 msgid "Sort by"
 msgstr "Sortuj wg"
 
-#: views/elements/addon_list_options.thtml:98
 #: views/elements/amo2009/addons/list_options.thtml:84
+#: views/elements/addon_list_options.thtml:98
 msgid "Sort by:"
 msgstr "Sortuj wg:"
 
@@ -7139,7 +7270,7 @@ msgstr ""
 "Specjalne podziękowania dla projektu Mycroft za ich pracę nad wyszukiwarkami "
 "dla Firefoksa."
 
-#: views/developers/uploader.thtml:129
+#: views/developers/uploader.thtml:133
 msgid "Specific:"
 msgstr "Określone:"
 
@@ -7184,21 +7315,26 @@ msgstr ""
 msgid "Statistics"
 msgstr "Statystyki"
 
-#: views/developers/dashboard.thtml:73
 #: views/elements/developers/actionbar.thtml:44
 #: views/elements/developers/actionbar.thtml:49
+#: views/developers/dashboard.thtml:73
 msgctxt "devcp_actionbar_link_stats"
 msgid "Statistics Dashboard"
 msgstr "Panel statystyk"
 
-#: views/elements/developers/myaddons.thtml:70
 #: views/elements/developers/sidebar.thtml:63
+#: views/elements/developers/myaddons.thtml:70
 msgctxt "devcp_myaddons_statistics_link"
 msgid "Statistics Dashboard"
 msgstr "Panel statystyk"
 
 #: views/elements/developers/editbox.thtml:63
 msgctxt "devcp_editbox_statistics_dashboard"
+msgid "Statistics Dashboard"
+msgstr "Panel statystyk"
+
+#: views/statistics/index.thtml:39
+msgctxt "statistics_index_title"
 msgid "Statistics Dashboard"
 msgstr "Panel statystyk"
 
@@ -7210,19 +7346,26 @@ msgctxt "statistics_pagetitle"
 msgid "Statistics Dashboard"
 msgstr "Panel statystyk"
 
-#: views/statistics/index.thtml:39
-msgctxt "statistics_index_title"
-msgid "Statistics Dashboard"
-msgstr "Panel statystyk"
-
 #: views/statistics/settings.thtml:46
 #, php-format
 msgid "Statistics Dashboard Settings for %1$s"
 msgstr "Ustawienia panelu statystyk dla %1$s"
 
 #: views/statistics/rss/summary.thtml:68
+#: controllers/statistics_controller.php:414
 #, php-format
 msgid "Statistics for %1$s"
+msgstr "Statystyki dla %1$s"
+
+#: controllers/statistics_controller.php:421
+#: controllers/statistics_controller.php:504
+#, fuzzy
+msgid "Statistics for My Collections"
+msgstr "Statystyki dla %1$s"
+
+#: controllers/statistics_controller.php:496
+#, fuzzy, php-format
+msgid "Statistics for collection %1$s"
 msgstr "Statystyki dla %1$s"
 
 #: views/developers/versions_edit.thtml:81
@@ -7269,28 +7412,28 @@ msgctxt "editors_review_label_subject"
 msgid "Subject"
 msgstr "Temat"
 
-#: controllers/pages_controller.php:109
-msgctxt "page_title_submissionhelp"
-msgid "Submission Help"
-msgstr "Wysyłanie dodatków – pomoc"
-
 #: views/elements/developers/additem.thtml:76
 msgctxt "devcp_additem_submissionhelp_link"
 msgid "Submission Help"
 msgstr "Pomoc w wysłaniu"
 
-#: views/elements/developers/myaddons.thtml:69
-#: views/elements/developers/sidebar.thtml:62
-msgctxt "devcp_myaddons_submitaddon_link"
-msgid "Submit Add-on"
-msgstr "Wyślij dodatek"
+#: controllers/pages_controller.php:109
+msgctxt "page_title_submissionhelp"
+msgid "Submission Help"
+msgstr "Wysyłanie dodatków – pomoc"
 
 #: views/elements/developers/additem.thtml:41
 msgctxt "devcp_additem_sidebar_title"
 msgid "Submit Add-on"
 msgstr "Wyślij dodatek"
 
-#: views/developers/uploader.thtml:50
+#: views/elements/developers/sidebar.thtml:62
+#: views/elements/developers/myaddons.thtml:69
+msgctxt "devcp_myaddons_submitaddon_link"
+msgid "Submit Add-on"
+msgstr "Wyślij dodatek"
+
+#: views/developers/uploader.thtml:53
 msgid "Submit New Add-on"
 msgstr "Wysyłanie nowego dodatku"
 
@@ -7428,7 +7571,17 @@ msgstr ""
 "Wsparcie techniczne dla tego rozszerzenia jest świadczone przez autora pod "
 "adresem %s"
 
-#: views/developers/uploader.thtml:128
+#: views/elements/amo2009/support_addon_in_listing.thtml:54
+#, fuzzy
+msgid "Support this add-on"
+msgstr "Więcej informacji o tym dodatku"
+
+#: views/elements/amo2009/support_addon_in_listing.thtml:50
+#, php-format
+msgid "Support this add-on: <a href=\"%1$s\">Contribute $%2$s</a>"
+msgstr ""
+
+#: views/developers/uploader.thtml:132
 msgid "Supported Platforms:"
 msgstr "Obsługiwane systemy:"
 
@@ -7456,8 +7609,8 @@ msgstr "Osiągnięto dozwoloną liczbę etykiet"
 msgid "Tag removed"
 msgstr "Etykieta została usunięta"
 
-#: views/addons/display.thtml:473
-msgctxt "tags_header_tags_title"
+#: views/elements/developers/editbox.thtml:48
+msgctxt "devcp_editbox_tags"
 msgid "Tags"
 msgstr "Etykiety"
 
@@ -7466,8 +7619,8 @@ msgctxt "search_filter_tags_header"
 msgid "Tags"
 msgstr "Etykiety"
 
-#: views/elements/developers/editbox.thtml:48
-msgctxt "devcp_editbox_tags"
+#: views/addons/display.thtml:475
+msgctxt "tags_header_tags_title"
 msgid "Tags"
 msgstr "Etykiety"
 
@@ -7475,9 +7628,9 @@ msgstr "Etykiety"
 msgid "Target Locale"
 msgstr "Docelowa lokalizacja"
 
+#: views/editors/performance_table.thtml:123
 #: views/editors/performance_charts.thtml:71
 #: views/editors/performance_charts.thtml:96
-#: views/editors/performance_table.thtml:119
 msgid "Team Average"
 msgstr "Średnia zespołu"
 
@@ -7509,7 +7662,7 @@ msgstr ""
 
 # %1$s is a file extension.  Example:  .exe
 # %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:1118
+#: controllers/components/developers.php:1119
 #, php-format
 msgid ""
 "That file extension (%1$s) is not allowed for a preview. Please use one of "
@@ -7543,7 +7696,7 @@ msgstr ""
 
 # %1$s is a locale code. Example: en-US or fr
 # %2$s is an integer
-#: controllers/components/validation.php:621
+#: controllers/components/validation.php:668
 #, php-format
 msgid "The %1$s locale contains %2$s unmodified translation"
 msgid_plural "The %1$s locale contains %2$s unmodified translations"
@@ -7553,7 +7706,7 @@ msgstr[2] "Niezmodyfikowane frazy w lokalizacji %1$s: %2$s"
 
 # %1$s is a locale code. Example: en-US or fr
 # %2$s is an integer
-#: controllers/components/validation.php:624
+#: controllers/components/validation.php:671
 #, php-format
 msgid "The %1$s locale is missing %2$s translation"
 msgid_plural "The %1$s locale is missing %2$s translations"
@@ -7581,14 +7734,14 @@ msgstr "Grupa została zapisana"
 msgid "The Group with id %s was deleted"
 msgstr "Grupa o id %s została usunięta"
 
+#: controllers/components/validation.php:323
 #: controllers/components/developers.php:555
-#: controllers/components/validation.php:276
 msgid "The ID of this add-on is already used by an application."
 msgstr "Identyfikator tego dodatku (ID) jest już używany przez inny dodatek."
 
 # %s is a string
+#: controllers/components/validation.php:318
 #: controllers/components/developers.php:550
-#: controllers/components/validation.php:271
 #, php-format
 msgid "The ID of this add-on is invalid: %s"
 msgstr "Identyfikator (ID) dla tego dodatku jest nieprawidłowy: %s"
@@ -7604,7 +7757,7 @@ msgstr ""
 "Panel statystyk jest obecnie wyłączony. Prosimy spróbować ponownie później."
 
 # %1$s and %2$s are GUIDs.
-#: controllers/developers_controller.php:344
+#: controllers/developers_controller.php:597
 #, php-format
 msgid ""
 "The add-on GUID used in this file (%1$s) does not match the existing GUID "
@@ -7613,20 +7766,20 @@ msgstr ""
 "Identyfikator dodatku GUID użyty w tym pliku (%1$s) nie zgadza się z "
 "istniejącym GUID dla tego dodatku (%2$s)."
 
-#: controllers/components/validation.php:775
+#: controllers/components/validation.php:822
 msgid ""
 "The add-on appears to be a conduit toolbar due to its updateURL element."
 msgstr ""
 "Obecność elementu updateURL wskazuje, że dodatek jest paskiem kanałowym."
 
 # %s is a filename.  Example:  windows.com
-#: controllers/components/validation.php:784
+#: controllers/components/validation.php:831
 #, php-format
 msgid "The add-on appears to be a conduit toolbar due to the file '%s'"
 msgstr "Obecność pliku „%s” wskazuje, że dodatek jest paskiem kanałowym."
 
 # %s is a filename.  Example:  windows.com
-#: controllers/components/validation.php:499
+#: controllers/components/validation.php:546
 #, php-format
 msgid "The add-on contains a file '%s', which failed a library checksum"
 msgstr ""
@@ -7634,18 +7787,23 @@ msgstr ""
 "biblioteki"
 
 # %s is a filename.  Example:  windows.com
-#: controllers/components/validation.php:376
+#: controllers/components/validation.php:423
 #, php-format
 msgid "The add-on contains a file '%s', which is a flagged type."
 msgstr "Dodatek zawiera plik „%s”, który jest oflagowanym typem."
 
-#: controllers/components/validation.php:183
+#: controllers/components/validation.php:226
 msgid "The add-on could not be found on the server."
 msgstr "Na serwerze nie znaleziono tego dodatku."
 
-#: controllers/addons_controller.php:137
+#: controllers/addons_controller.php:88
 msgid "The add-on developers have not enabled contributions."
 msgstr "Autorzy dodatku nie uaktywnili funkcji dotacji."
+
+#: controllers/developers_controller.php:523
+#, php-format
+msgid "The add-on failed a validation test: %s"
+msgstr ""
 
 # %s is a comma-separated list of image extensions ".png, .jpg"
 #: views/developers/addon_edit_properties.thtml:106
@@ -7662,7 +7820,7 @@ msgstr ""
 "32 x 32 piksele. Użyj jednego z następujących typów obrazków: %s."
 
 # %1$s is a filename.  Example: windows.com
-#: controllers/components/validation.php:1019
+#: controllers/components/validation.php:1066
 #, php-format
 msgid "The add-on was missing a required file: %1$s"
 msgstr "Dodatek nie ma wymaganego pliku: %1$s"
@@ -7689,7 +7847,7 @@ msgstr ""
 "Poniższe dodatki stanowią 95% znanego Mozilli poziomu użycia dodatków i są "
 "wyświetlone w kolejności zależnej od tego poziomu."
 
-#: controllers/components/validation.php:805
+#: controllers/components/validation.php:852
 msgid ""
 "The chrome.manifest file contains a line identifying the plugin as a conduit "
 "toolbar."
@@ -7705,7 +7863,7 @@ msgstr "Kolekcja została usunięta"
 msgid "The confirmation code was resent!"
 msgstr "Kod potwierdzający został wysłany ponownie!"
 
-#: controllers/components/validation.php:795
+#: controllers/components/validation.php:842
 msgid ""
 "The contents.rdf file contains a line identifying the plugin as a conduit "
 "toolbar."
@@ -7746,48 +7904,48 @@ msgstr ""
 "mail w profilu użytkownika i kliknąć odnośnik w e-mailu potwierdzającym "
 "zaraz po otrzymaniu listu."
 
-#: controllers/components/validation.php:596
+#: controllers/components/validation.php:643
 #, fuzzy
 msgid "The extension does not appear to be localized."
 msgstr "Rozszerzenie ma niewłaściwy typ dodatku."
 
-#: controllers/components/validation.php:178
+#: controllers/components/validation.php:221
 msgid "The extension does not match the type of the add-on."
 msgstr "Rozszerzenie ma niewłaściwy typ dodatku."
 
 # %s is a filename.  Example:  windows.exe
-#: controllers/components/validation.php:1000
+#: controllers/components/validation.php:1047
 #, php-format
 msgid "The file %s does not appear to belong in this add-on"
 msgstr "Prawdopodobnie plik %s nie jest elementem tego dodatku."
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:428
+#: controllers/components/validation.php:475
 #, fuzzy, php-format
 msgid "The file contains a global constant: %s"
 msgstr "The file contains a global constant: %s"
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:429
+#: controllers/components/validation.php:476
 #, fuzzy, php-format
 msgid "The file contains a global function: %s"
 msgstr "The file contains a global function: %s"
 
 # %s is a string.  Example: testo
-#: controllers/components/validation.php:427
+#: controllers/components/validation.php:474
 #, fuzzy, php-format
 msgid "The file contains a global variable: %s"
 msgstr "The file contains a global variable: %s"
 
 # %s is an error message from the parser.
+#: controllers/components/validation.php:298
 #: controllers/components/developers.php:530
-#: controllers/components/validation.php:251
 #, php-format
 msgid "The following error occurred while parsing install.rdf: %s"
 msgstr "Podczas przetwarzania pliku install.rdf został znaleziony błąd: %s"
 
+#: controllers/components/validation.php:403
 #: controllers/components/developers.php:635
-#: controllers/components/validation.php:356
 msgid "The following errors were found in install.rdf:"
 msgstr "W pliku install.rdf zostały znalezione następujące błędy:"
 
@@ -7811,7 +7969,7 @@ msgid "The name should be less than %1$s characters."
 msgstr "Nazwa nie powinna zawierać więcej znaków niż %1$s."
 
 # %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:179
+#: views/developers/uploader.thtml:183
 #, php-format
 msgid ""
 "The new file will be available to the public as soon as an editor is able to "
@@ -7824,7 +7982,7 @@ msgstr ""
 "zrecenzowany? Zastanów się, czy nie zostać <a %2$s>edytorem</a>."
 
 # %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:169
+#: views/developers/uploader.thtml:173
 #, php-format
 msgid ""
 "The new version will be available to the public as soon as an editor is able "
@@ -7853,8 +8011,8 @@ msgstr ""
 msgid "The password reset link was sent to your email address."
 msgstr "Dane potrzebne do zresetowania hasła zostały wysłany e-mailem."
 
-#: views/users/edit.thtml:226 views/users/pwreset.thtml:79
-#: views/users/register.thtml:75
+#: views/users/pwreset.thtml:79 views/users/register.thtml:75
+#: views/users/edit.thtml:226
 msgid "The passwords did not match."
 msgstr "Podane hasła nie pasują do siebie."
 
@@ -7868,11 +8026,11 @@ msgstr ""
 "opisach lub zmienić obrazki. Domyślny obrazek to obrazek prezentujący "
 "dodatek wyświetlany w wykazach przeglądania i wyników szukania dodatków."
 
-#: controllers/components/validation.php:911
+#: controllers/components/validation.php:958
 msgid "The search engine contains an updateURL element, which is not allowed."
 msgstr "Wyszukiwarka zawiera niedozwolony element updateURL."
 
-#: controllers/components/validation.php:894
+#: controllers/components/validation.php:941
 msgid ""
 "The search engine could not be parsed according to the OpenSearch format."
 msgstr "Nie można przetworzyć wyszukiwarki zgodnie z formatem OpenSearch."
@@ -7886,7 +8044,7 @@ msgstr ""
 "trybie online przez każdego zalogowanego użytkownika."
 
 # %1$s is a version number, %2$s is an add-on ID.
-#: controllers/developers_controller.php:400
+#: controllers/developers_controller.php:616
 #, php-format
 msgid "The specified version (%1$s) does not belong to this add-on (%2$s)."
 msgstr "Podana wersja (%1$s) nie jest wersją tego dodatku (%2$s)."
@@ -7903,7 +8061,7 @@ msgstr ""
 "znaków</strong>."
 
 # %1$s and %2$s are version numbers.
-#: controllers/developers_controller.php:406
+#: controllers/developers_controller.php:621
 #, php-format
 msgid ""
 "The uploaded version number (%1$s) does not match the existing version "
@@ -7914,7 +8072,7 @@ msgstr ""
 
 # %1$s is a version number, maybe 1.1.
 # %2$s is a URL.
-#: controllers/developers_controller.php:352
+#: controllers/developers_controller.php:606
 #, php-format
 msgid ""
 "The version number uploaded (%1$s) already exists for this add-on. If you "
@@ -7924,8 +8082,8 @@ msgstr ""
 "Wersja dodatku o takim numerze (%1$s) już istnieje. Jeśli próbujesz dodać "
 "inny plik tej wersji, <a href=\"%2$s\">kliknij tutaj</a>."
 
+#: controllers/components/validation.php:338
 #: controllers/components/developers.php:570
-#: controllers/components/validation.php:291
 msgid ""
 "The version of this add-on is invalid: please see the <a href=\"http://"
 "developer.mozilla.org/en/docs/Toolkit_version_format\">specification</a>"
@@ -7934,8 +8092,8 @@ msgstr ""
 "mozilla.org/en/docs/Toolkit_version_format\">specyfikację</a> (w języku "
 "angielskim)"
 
+#: controllers/components/validation.php:333
 #: controllers/components/developers.php:565
-#: controllers/components/validation.php:286
 msgid "The version of this add-on is invalid: versions cannot contain spaces."
 msgstr ""
 "Wersja tego dodatku jest nieprawidłowa: wersje nie mogą zawierać spacji."
@@ -7972,7 +8130,7 @@ msgid "Themes"
 msgstr "Motywy"
 
 # %1 is the queue mode
-#: views/admin/flagged_queue.thtml:89 views/editors/queue.thtml:189
+#: views/editors/queue.thtml:189 views/admin/flagged_queue.thtml:89
 msgid "There are currently no add-ons of this type to review."
 msgstr "Aktualnie nie ma dodatków tego typu do recenzji."
 
@@ -7986,8 +8144,8 @@ msgid "There are currently no reviews in moderation."
 msgstr "Brak recenzji do moderacji."
 
 #: views/collections/add.thtml:55 views/collections/edit.thtml:89
-#: views/reviews/add.thtml:70 views/users/edit.thtml:74
-#: views/users/register.thtml:54 controllers/groups_controller.php:80
+#: views/users/register.thtml:54 views/users/edit.thtml:74
+#: views/reviews/add.thtml:70 controllers/groups_controller.php:80
 #: controllers/groups_controller.php:102
 msgid "There are errors in this form. Please correct them and resubmit."
 msgstr "Znaleziono błędy w formularzu. Popraw je i wyślij ponownie."
@@ -8022,6 +8180,12 @@ msgid ""
 "There were errors in the changes you made. Please correct them and resubmit."
 msgstr ""
 "Wprowadzone zmiany zawierają błędy. Należy je poprawić i wysłać ponownie."
+
+#: views/developers/uploader.thtml:205
+msgid ""
+"There were problems with your add-on that prohibit it from being added.  See "
+"below for more details."
+msgstr ""
 
 #: views/elements/amo2009/collections/collector_info_secondary.thtml:67
 msgid ""
@@ -8063,8 +8227,8 @@ msgstr ""
 "Wersje te są wyświetlane w celach informacyjnych i testowych. Używaj zawsze "
 "najnowszych wersji danego dodatku."
 
-#: views/admin/users_edit.thtml:109 views/users/edit.thtml:122
-#: views/users/register.thtml:100
+#: views/users/register.thtml:100 views/users/edit.thtml:122
+#: views/admin/users_edit.thtml:109
 msgid ""
 "This URL has an invalid format. Valid URLs look like http://example.com/"
 "my_page."
@@ -8074,7 +8238,7 @@ msgstr ""
 
 # %1$s is an add-on ID, perhaps 167.
 # %2$s is a URL.
-#: controllers/developers_controller.php:257
+#: controllers/developers_controller.php:587
 #, php-format
 msgid ""
 "This add-on ID (%1$s) already exists in the database. If this is your add-"
@@ -8095,12 +8259,12 @@ msgstr "Ten dodatek nie został jeszcze nominowany."
 msgid "This add-on is disabled"
 msgstr "Ten dodatek został wyłączony"
 
-#: views/pages/js_constants.js.thtml:71
+#: views/pages/js_constants.js.thtml:83
 msgid "This add-on is for older versions of Firefox"
 msgstr "Dodatek dla starszych wersji Firefoksa"
 
 # %1$s is an application name and version.  Example: Firefox 3.1
-#: views/pages/js_constants.js.thtml:75
+#: views/pages/js_constants.js.thtml:87
 #, fuzzy, php-format
 msgid "This add-on is incompatible with your version of %1$s"
 msgstr "Dodatki niekompatybilne z żadną wersją programu %1$s"
@@ -8113,7 +8277,7 @@ msgstr "Ten dodatek nie jest dostępny."
 msgid "This add-on is not viewable here."
 msgstr "Ten dodatek nie jest tutaj widoczny."
 
-#: views/addons/display.thtml:507
+#: views/addons/display.thtml:509
 msgid "This add-on is not yet in any collections."
 msgstr "Tego dodatku nie ma jeszcze w żadnej kolekcji."
 
@@ -8123,7 +8287,7 @@ msgstr "Dodatek wymaga zewnętrznego oprogramowania"
 
 # %1$s is a URL
 # %2$s is a version number.  Example: 3.1
-#: views/pages/js_constants.js.thtml:72
+#: views/pages/js_constants.js.thtml:84
 #, php-format
 msgid ""
 "This add-on requires the not-yet released <a href=\"%1$s\">Firefox %2$s</a>"
@@ -8139,23 +8303,29 @@ msgstr "Obecnie panel ma status:  <b>Prywatny</b>."
 msgid "This dashboard is currently <b>public</b>."
 msgstr "Obecnie panel ma status:  <b>Ogólnodostępny</b>."
 
-#: views/users/edit.thtml:233 views/users/register.thtml:65
+#: views/users/register.thtml:65 views/users/edit.thtml:233
 #: controllers/users_controller.php:699
 msgid "This email address is already taken by another user."
 msgstr "Ten adres e-mail jest już używany przez innego użytkownika."
 
-#: views/admin/users_edit.thtml:78 views/admin/users_edit.thtml:83
-#: views/reviews/add.thtml:80 views/reviews/add.thtml:104
+#: views/users/pwreset.thtml:74 views/users/register.thtml:70
+#: views/users/register.thtml:80 views/users/register.thtml:86
 #: views/users/edit.thtml:98 views/users/edit.thtml:104
-#: views/users/edit.thtml:235 views/users/pwreset.thtml:74
-#: views/users/register.thtml:70 views/users/register.thtml:80
-#: views/users/register.thtml:86
+#: views/users/edit.thtml:235 views/admin/users_edit.thtml:78
+#: views/admin/users_edit.thtml:83 views/reviews/add.thtml:80
+#: views/reviews/add.thtml:104
 msgid "This field must not be empty."
 msgstr "To pole nie może być puste."
 
 #: controllers/components/editors.php:213
 msgid "This file is not pending review."
 msgstr "Ten plik nie oczekuje na recenzję."
+
+#: views/pages/js_constants.js.thtml:91
+#, php-format
+msgctxt "devcp_js_upload_toolarge"
+msgid "This file is too large. The file must be no bigger than %1$s."
+msgstr ""
 
 #: views/elements/translationbox.thtml:144
 msgid ""
@@ -8176,12 +8346,12 @@ msgstr "To jest wydanie wstępne"
 msgid "This is a site-specific add-on"
 msgstr "Dodatek właściwy konkretnej stronie"
 
-#: views/users/edit.thtml:237 views/users/register.thtml:65
+#: views/users/register.thtml:65 views/users/edit.thtml:237
 msgid "This is not a valid email address."
 msgstr "Podany e-mail jest niepoprawny."
 
-#: views/admin/users_edit.thtml:88 views/users/edit.thtml:109
-#: views/users/register.thtml:91
+#: views/users/register.thtml:91 views/users/edit.thtml:109
+#: views/admin/users_edit.thtml:88
 msgid "This nickname is already taken."
 msgstr "Ten nick jest już używany."
 
@@ -8319,11 +8489,11 @@ msgstr "Do góry"
 msgid "Top %1$s Tags"
 msgstr "Popularne etykiety: %1$s"
 
-#: views/addons/category_landing.thtml:151
+#: views/addons/category_landing.thtml:153
 msgid "Top Downloads"
 msgstr "Najczęściej pobierane"
 
-#: views/addons/category_landing.thtml:165
+#: views/addons/category_landing.thtml:167
 msgid "Top Rated"
 msgstr "Najwyżej oceniane"
 
@@ -8335,11 +8505,11 @@ msgstr "Najwyższe kategorie zespołu"
 msgid "Top User Categories"
 msgstr "Najwyższe kategorie użytkownika"
 
-#: views/editors/performance_table.thtml:118
+#: views/editors/performance_table.thtml:122
 msgid "Total"
 msgstr "Całkowita"
 
-#: views/statistics/addon.thtml:155 views/statistics/rss/summary.thtml:40
+#: views/statistics/rss/summary.thtml:40 views/statistics/addon.thtml:155
 msgid "Total Downloads"
 msgstr "Całkowita liczba pobrań"
 
@@ -8390,7 +8560,7 @@ msgctxt "statistics_longnames_unknown"
 msgid "Unknown"
 msgstr "Nieznany"
 
-#: controllers/components/amo.php:203
+#: controllers/components/amo.php:250
 msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "nieznany"
@@ -8436,7 +8606,7 @@ msgid "Upcoming events and contests"
 msgstr "Najbliższe wydarzenia i konkursy"
 
 # %s is the add-on name.
-#: views/developers/uploader.thtml:54
+#: views/developers/uploader.thtml:57
 #, php-format
 msgid "Update %s"
 msgstr "Aktualizacja %s"
@@ -8446,7 +8616,7 @@ msgid "Update Categories"
 msgstr "Aktualizuj"
 
 #: views/collections/edit.thtml:169 views/collections/edit.thtml:300
-#: views/collections/edit.thtml:307 views/pages/js_constants.js.thtml:97
+#: views/collections/edit.thtml:307 views/pages/js_constants.js.thtml:111
 msgid "Update Collection"
 msgstr "Aktualizuj kolekcję"
 
@@ -8483,12 +8653,10 @@ msgid "Updated"
 msgstr "Uaktualnione"
 
 # %s is a date in the _('date') format
-#: views/addons/browse_thumbs.thtml:119
-#: views/elements/addon_listitem.thtml:122
-#: views/elements/amo2009/homepage_addon.thtml:117
 #: views/elements/amo2009/results_addon.thtml:100
-#: views/elements/amo2009/results_addon.thtml:119
-#: views/elements/feature.thtml:106
+#: views/elements/amo2009/homepage_addon.thtml:119
+#: views/elements/addon_listitem.thtml:122 views/elements/feature.thtml:106
+#: views/addons/browse_thumbs.thtml:126
 #, php-format
 msgid "Updated %s"
 msgstr "Zaktualizowano %s"
@@ -8498,12 +8666,12 @@ msgctxt "sidebar_pitch_updated_addons"
 msgid "Updated Add-ons"
 msgstr "Ostatnio zaktualizowane"
 
-#: controllers/addons_controller.php:540
+#: controllers/addons_controller.php:494
 msgctxt "rss_updatedaddons"
 msgid "Updated Add-ons"
 msgstr "Zaktualizowane dodatki"
 
-#: views/developers/uploader.thtml:138
+#: views/developers/uploader.thtml:142
 msgid "Upload File"
 msgstr "Wyślij plik"
 
@@ -8519,11 +8687,11 @@ msgstr "Wyślij"
 msgid "Upload Preview: "
 msgstr "Wyślij obrazek: "
 
-#: views/developers/uploader.thtml:120
+#: views/developers/uploader.thtml:123
 msgid "Upload Your File"
 msgstr "Wyślij plik"
 
-#: views/admin/users_edit.thtml:118 views/users/edit.thtml:137
+#: views/users/edit.thtml:137 views/admin/users_edit.thtml:118
 msgid "Upload a new picture?"
 msgstr "Zamieść/zmień obrazek "
 
@@ -8531,7 +8699,12 @@ msgstr "Zamieść/zmień obrazek "
 msgid "Upload a new version"
 msgstr "Wyślij nową wersję"
 
-#: views/developers/uploader.thtml:121
+#: views/developers/uploader.thtml:209
+#, fuzzy
+msgid "Upload new File"
+msgstr "Wyślij plik"
+
+#: views/developers/uploader.thtml:124
 msgid ""
 "Upload your add-on file using the form below. If you have multiple, platform-"
 "specific files to upload, choose a single file and then upload the others "
@@ -8541,7 +8714,7 @@ msgstr ""
 "kilka, właściwych dla danego systemu operacyjnego plików wybierz jeden plik "
 "i następnie wyślij pozostałe pliki, używając menedżera wersji i plików."
 
-#: views/developers/uploader.thtml:140
+#: views/developers/uploader.thtml:144
 msgid "Uploading file..."
 msgstr "Wysyłanie pliku…"
 
@@ -8606,11 +8779,11 @@ msgstr "Profil użytkownika"
 msgid "User not found"
 msgstr "Nie znaleziono użytkownika"
 
-#: views/users/pwreset.thtml:54 controllers/collections_controller.php:1008
-#: controllers/collections_controller.php:1018
-#: controllers/users_controller.php:197 controllers/users_controller.php:276
-#: controllers/users_controller.php:685 controllers/users_controller.php:744
-#: controllers/users_controller.php:914
+#: views/users/pwreset.thtml:54 controllers/users_controller.php:197
+#: controllers/users_controller.php:276 controllers/users_controller.php:685
+#: controllers/users_controller.php:744 controllers/users_controller.php:914
+#: controllers/collections_controller.php:1128
+#: controllers/collections_controller.php:1138
 msgid "User not found!"
 msgstr "Nie znaleziono użytkownika!"
 
@@ -8623,7 +8796,7 @@ msgstr "Użytkownik AMO od"
 msgid "Users Created"
 msgstr "Users Created"
 
-#: controllers/collections_controller.php:1005
+#: controllers/collections_controller.php:1125
 msgid ""
 "Users can only have one role at a time.  Please remove the user from any "
 "existing roles before continuing."
@@ -8646,13 +8819,13 @@ msgstr "Weryfikuj"
 
 # %1$s is the add-on name.
 # %2$s is the add-on version.  Example: 3.1
-#: views/developers/versions_validate.thtml:43
+#: views/developers/versions_validate.thtml:46
 #, php-format
 msgid "Validate %1$s version %2$s"
 msgstr "Weryfikuj %1$s wer. %2$s"
 
 # %s is a filename
-#: views/developers/versions_validate.thtml:52
+#: views/developers/versions_validate.thtml:55
 #, php-format
 msgid "Validate File %s"
 msgstr "Weryfikuj plik %s"
@@ -8662,7 +8835,7 @@ msgstr "Weryfikuj plik %s"
 msgid "Validation"
 msgstr "Weryfikacja"
 
-#: views/editors/review.thtml:301
+#: views/editors/review.thtml:301 views/developers/uploader.thtml:194
 #, fuzzy
 msgid "Validation Results"
 msgstr "Validation Results"
@@ -8681,9 +8854,17 @@ msgstr "Weryfikacja chwilowo nieczynna. Spróbuj ponownie później."
 msgid "Ver"
 msgstr "Wer"
 
-#: views/addons/display.thtml:144 views/developers/versions.thtml:56
+#: views/developers/versions.thtml:56 views/addons/display.thtml:144
 msgid "Version"
 msgstr "Wersja"
+
+# %s is the version of the add-on.  Example:  3.2a1
+#: views/elements/amo2009/addons/version_detail.thtml:51
+#: views/elements/addon_version_detail.thtml:51
+#, php-format
+msgctxt "addon_display_header_version"
+msgid "Version %s"
+msgstr "Wersja %s"
 
 # %s is a version number.  Example:  3.0
 #: views/developers/versions.thtml:66
@@ -8692,16 +8873,8 @@ msgctxt "devcp_details_version"
 msgid "Version %s"
 msgstr "Wersja %s"
 
-# %s is the version of the add-on.  Example:  3.2a1
-#: views/elements/addon_version_detail.thtml:51
-#: views/elements/amo2009/addons/version_detail.thtml:51
-#, php-format
-msgctxt "addon_display_header_version"
-msgid "Version %s"
-msgstr "Wersja %s"
-
 # %s is the version number, e.g. 3.2.
-#: views/developers/uploader.thtml:166
+#: views/developers/uploader.thtml:170
 #, php-format
 msgid "Version %s Created"
 msgstr "Wersja %s została utworzona"
@@ -8712,7 +8885,7 @@ msgstr "Wersja %s została utworzona"
 msgid "Version %s deleted successfully."
 msgstr "Wersja %s została usunięta."
 
-#: controllers/addons_controller.php:1651
+#: controllers/addons_controller.php:1605
 msgid "Version History with Changelogs"
 msgstr "Historia wersji z informacjami o zmianach"
 
@@ -8732,13 +8905,13 @@ msgstr "Wersja/plik"
 msgid "Versions"
 msgstr "Wersje"
 
-#: views/developers/dashboard.thtml:82
-msgctxt "devcp_dashboard_versions"
+#: views/elements/developers/editbox.thtml:64
+msgctxt "devcp_editbox_versions"
 msgid "Versions and Files"
 msgstr "Wersje i pliki"
 
-#: views/elements/developers/editbox.thtml:64
-msgctxt "devcp_editbox_versions"
+#: views/developers/dashboard.thtml:82
+msgctxt "devcp_dashboard_versions"
 msgid "Versions and Files"
 msgstr "Wersje i pliki"
 
@@ -8746,8 +8919,8 @@ msgstr "Wersje i pliki"
 msgid "View All Collections"
 msgstr "Wszystkie kolekcje"
 
-#: views/elements/amo2009/homepage_addon.thtml:100
 #: views/elements/amo2009/results_addon.thtml:91
+#: views/elements/amo2009/homepage_addon.thtml:100
 #: views/elements/feature.thtml:95
 msgid "View Author's Profile"
 msgstr "Zobacz profil autora"
@@ -8801,7 +8974,7 @@ msgstr "Wyświetl wszystkie"
 msgid "View all popular add-ons"
 msgstr "Wyświetl wszystkie"
 
-#: views/addons/category_landing.thtml:147
+#: views/addons/category_landing.thtml:149
 msgid "View all recently added"
 msgstr "Pokaż wszystkie ostatnio dodane"
 
@@ -8813,23 +8986,22 @@ msgstr "Wyświetl wszystkie"
 msgid "View all recommended add-ons"
 msgstr "Wyświetl wszystkie"
 
-#: views/addons/category_landing.thtml:161
+#: views/addons/category_landing.thtml:163
 msgid "View all top downloads"
 msgstr "Pokaż wszystkie najczęściej pobierane"
 
-#: views/addons/category_landing.thtml:175
+#: views/addons/category_landing.thtml:177
 msgid "View all top rated"
 msgstr "Pokaż wszystkie najwyżej oceniane"
 
 # %1$s and %2$s are full <input> tags for dates
-#: views/admin/logs.thtml:46 views/editors/logs.thtml:45
 #: views/editors/performance_table.thtml:48 views/editors/reviewlog.thtml:45
+#: views/editors/logs.thtml:45 views/admin/logs.thtml:46
 #, php-format
 msgid "View entries between %1$s and %2$s"
 msgstr "Wyświetl wpisy między %1$s i %2$s"
 
-#: views/elements/amo2009/homepage_addon.thtml:129
-#: views/elements/amo2009/results_addon.thtml:131
+#: views/elements/amo2009/homepage_addon.thtml:131
 #: views/elements/feature.thtml:127
 msgid "View more from"
 msgstr "Więcej z kategorii "
@@ -8849,7 +9021,7 @@ msgstr "Pokaż tę tabelę w formacie CSV"
 
 # %1$s is the 'Versions and Files' link target URL.
 # %2$s is 'current status' link target URL.
-#: views/developers/uploader.thtml:180
+#: views/developers/uploader.thtml:184
 #, php-format
 msgid ""
 "View your new file on the <a href=\"%1$s\">Versions and Files page</a>, or "
@@ -8860,7 +9032,7 @@ msgstr ""
 
 # %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
 # %2$s is href="..." and should stay in the 'current status' <a> tag.
-#: views/developers/uploader.thtml:170
+#: views/developers/uploader.thtml:174
 #, php-format
 msgid ""
 "View your new version in the <a %1$s>Versions and Files page</a>, check out "
@@ -8872,7 +9044,7 @@ msgstr ""
 "naciskając poniższy przycisk (zalecane)."
 
 # <option> text in a <select> for Author role in an add-on.
-#: views/pages/js_constants.js.thtml:86
+#: views/pages/js_constants.js.thtml:100
 msgid "Viewer"
 msgstr "Obserwator"
 
@@ -8881,16 +9053,25 @@ msgid ""
 "We don't have any data for your add-on yet. Please check back in a few days."
 msgstr "Brak danych dla tego dodatku. Prosimy spróbować ponownie za kilka dni."
 
-#: views/admin/users_edit.thtml:107 views/users/edit.thtml:120
-#: views/users/register.thtml:98
+#: views/developers/uploader.thtml:204
+#, php-format
+msgid ""
+"We've detected potential issues with your add-on.  Please review the list "
+"and upload a new version if the issues are valid.  If not, click Continue to "
+"submit your add-on for final review.  For more about our add-on validator, "
+"see our <a href=\"%s\">validation help page</a>."
+msgstr ""
+
+#: views/users/register.thtml:98 views/users/edit.thtml:120
+#: views/admin/users_edit.thtml:107
 msgid "Website URL"
 msgstr "Strona internetowa"
 
-#: views/editors/performance_table.thtml:117
+#: views/editors/performance_table.thtml:121
 msgid "Week"
 msgstr "Tydzień"
 
-#: views/editors/performance_table.thtml:114
+#: views/editors/performance_table.thtml:118
 msgid "Weekly Totals"
 msgstr "Zestawienie tygodniowe"
 
@@ -8976,8 +9157,8 @@ msgstr "Plany rozwoju dodatku"
 msgid "What's next for %1$s"
 msgstr "Co będzie nowego w %1$s"
 
-#: views/addons/display.thtml:387 views/addons/display.thtml:530
-#: views/elements/amo2009/contribution.thtml:92
+#: views/elements/amo2009/contribution.thtml:92 views/addons/display.thtml:387
+#: views/addons/display.thtml:532
 msgctxt "addons_display_a_license_what"
 msgid "What's this?"
 msgstr "Co to jest?"
@@ -8987,7 +9168,7 @@ msgctxt "recaptcha_whatsthis"
 msgid "What's this?"
 msgstr "Co to jest?"
 
-#: controllers/developers_controller.php:1860
+#: controllers/developers_controller.php:1948
 msgid ""
 "When users begin downloading this add-on they are taken to your Developer "
 "Profile, where they are asked to make a contribution."
@@ -8995,7 +9176,7 @@ msgstr ""
 "Po rozpoczęciu pobierania tego dodatku użytkownicy będą przekierowywani do "
 "profilu autora, gdzie zostaną poproszeni o dokonanie dotacji."
 
-#: controllers/developers_controller.php:1863
+#: controllers/developers_controller.php:1951
 msgid ""
 "When users try to install this add-on they are taken to your Developer "
 "Profile first, where they will be asked to make a contribution. Users must "
@@ -9047,7 +9228,7 @@ msgstr "Dlaczego ten dodatek został stworzony"
 msgid "Why was %1$s created?"
 msgstr "Dlaczego %1$s został stworzony?"
 
-#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1524
+#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1478
 msgid ""
 "With so many great add-ons available, there's something for everyone. To get "
 "you started, here's a list of some of the most popular. Enjoy!"
@@ -9092,7 +9273,7 @@ msgstr "RRRR-MM-DD"
 
 # %1$s is the number of reviews the person has done
 # %2$s is the average number of reviews the team has done
-#: views/editors/performance_table.thtml:134
+#: views/editors/performance_table.thtml:138
 #, php-format
 msgid "Year To Date Total: %1$s &nbsp;&nbsp;Team Average: %2$s"
 msgstr "Rok do dzisiaj: %1$s &nbsp;&nbsp;Średnia zespołu: %2$s"
@@ -9128,7 +9309,7 @@ msgid "You are not authorized to view this page."
 msgstr "Nie masz uprawnień do przeglądania tej strony."
 
 # %1$s and %2$s are URLs
-#: views/pages/js_constants.js.thtml:73
+#: views/pages/js_constants.js.thtml:85
 #, php-format
 msgid ""
 "You can <a href=\"%1$s\">try an older version</a> or <a href=\"#\" onclick="
@@ -9181,23 +9362,30 @@ msgstr ""
 msgid "You cannot review your own add-on."
 msgstr "Nie możesz recenzować własnego dodatku."
 
+#: controllers/statistics_controller.php:202
+#: controllers/statistics_controller.php:647
 #: controllers/previews_controller.php:108
 #: controllers/previews_controller.php:211
 #: controllers/previews_controller.php:312
-#: controllers/statistics_controller.php:202
-#: controllers/statistics_controller.php:432
 msgid "You do not have access to that add-on."
+msgstr "Nie masz dostępu do tego dodatku."
+
+#: controllers/statistics_controller.php:400
+#: controllers/statistics_controller.php:491
+#: controllers/statistics_controller.php:574
+#, fuzzy
+msgid "You do not have access to that collection."
 msgstr "Nie masz dostępu do tego dodatku."
 
 #: views/compatibility/developers.thtml:73
 msgid "You do not have any add-ons hosted on Mozilla Add-ons."
 msgstr "Nie masz dodatków utrzymywanych na witrynie Mozilla Add-ons."
 
-#: controllers/developers_controller.php:1224
+#: controllers/developers_controller.php:1299
 msgid "You do not have privileges to delete versions or files."
 msgstr "Nie masz uprawnień do usuwania wersji lub plików."
 
-#: controllers/developers_controller.php:335
+#: controllers/developers_controller.php:352
 msgid "You do not have sufficient privileges to update this add-on."
 msgstr "Nie masz odpowiednich uprawnień do aktualizacji tego dodatku."
 
@@ -9234,8 +9422,8 @@ msgstr ""
 msgid "You must give your collection a name."
 msgstr "Musisz podać nazwę kolekcji"
 
+#: controllers/components/validation.php:397
 #: controllers/components/developers.php:629
-#: controllers/components/validation.php:350
 msgid "You must have at least one valid Mozilla target application."
 msgstr "Należy określić przynajmniej jeden poprawny program docelowy Mozilli."
 
@@ -9243,7 +9431,7 @@ msgstr "Należy określić przynajmniej jeden poprawny program docelowy Mozilli.
 msgid "You must provide a description of your collection."
 msgstr "Musisz dołączyć opis kolekcji"
 
-#: views/pages/js_constants.js.thtml:78
+#: views/pages/js_constants.js.thtml:92
 msgid "You must select a file to upload."
 msgstr "Musisz wybrać plik do wysłania."
 
@@ -9340,8 +9528,8 @@ msgstr ""
 "edytora."
 
 # %1$s is a URL
+#: controllers/components/validation.php:328
 #: controllers/components/developers.php:560
-#: controllers/components/validation.php:281
 #, php-format
 msgid ""
 "Your add-on is attempting to use a GUID that has been blocked.  Please <a "
@@ -9461,7 +9649,7 @@ msgstr ""
 "Twój adres e-mail został zmieniony. Od teraz do logowania proszę używać %1$s."
 
 # %1$s is a version number, %2$s is a status, e.g Public or Incomplete.
-#: views/developers/uploader.thtml:178
+#: views/developers/uploader.thtml:182
 #, php-format
 msgid ""
 "Your new file has been added to version %1$s and is currently marked as %2$s."
@@ -9469,12 +9657,12 @@ msgstr ""
 "Nowy plik wersji %1$s został dodany i jest obecnie oznaczony jako %2$s."
 
 # %s is a status, e.g Public or Incomplete.
-#: views/developers/uploader.thtml:168
+#: views/developers/uploader.thtml:172
 #, php-format
 msgid "Your new version has been created and is currently marked as %s."
 msgstr "Nowa wersja została utworzona i jest obecnie oznaczona jako %s."
 
-#: controllers/collections_controller.php:963
+#: controllers/collections_controller.php:1083
 msgid ""
 "Your nickname contained invalid characters and was corrected. Please try "
 "again."
@@ -9548,7 +9736,7 @@ msgid "all collections"
 msgstr "wszystkich kolekcji"
 
 # %1$s is a number
-#: views/addons/display.thtml:516
+#: views/addons/display.thtml:518
 #, php-format
 msgid "and %1$s more collection"
 msgid_plural "and %1$s more collections"
@@ -9556,19 +9744,17 @@ msgstr[0] "i %1$s innej"
 msgstr[1] "i %1$s innych"
 msgstr[2] "i %1$s innych"
 
-#: views/addons/category_landing.thtml:66 views/addons/display.thtml:64
-#: views/addons/home.thtml:157 views/addons/policy.thtml:57
-#: views/elements/addon_discussionheader.thtml:83
-#: views/elements/addon_listitem.thtml:109
-#: views/elements/amo2009/homepage_addon.thtml:100
 #: views/elements/amo2009/results_addon.thtml:91
-#: views/elements/feature.thtml:95
+#: views/elements/amo2009/homepage_addon.thtml:100
+#: views/elements/addon_discussionheader.thtml:83
+#: views/elements/addon_listitem.thtml:109 views/elements/feature.thtml:95
+#: views/addons/category_landing.thtml:66 views/addons/policy.thtml:57
+#: views/addons/display.thtml:64 views/addons/home.thtml:157
 msgid "by"
 msgstr "Autor: "
 
-#: views/addons/display.thtml:305
 #: views/elements/amo2009/separated_list_items.thtml:106
-#: views/reviews/display.thtml:72
+#: views/addons/display.thtml:305 views/reviews/display.thtml:72
 #, php-format
 msgid "by %1$s on %2$s"
 msgstr "dodana przez %1$s – %2$s"
@@ -9592,14 +9778,20 @@ msgid "close"
 msgstr "zamknij"
 
 # %1$s is a comma-separated list of author names
-#: views/elements/amo2009/collection_listing_item.thtml:84
 #: views/elements/amo2009/separated_list_items.thtml:72
+#: views/elements/amo2009/collection_listing_item.thtml:91
 #, php-format
 msgid "created by %1$s"
 msgstr "autor: %1$s"
 
-#: views/elements/amo2009/install.thtml:348 views/elements/feature.thtml:89
-#: views/helpers/addons_html.php:571
+# %s is a string representing what's missing.  Example:  file_id
+#: controllers/statistics_controller.php:376
+#, fuzzy, php-format
+msgid "error_missing_argument"
+msgstr "Brakujący argument: %s"
+
+#: views/helpers/addons_html.php:571 views/elements/amo2009/install.thtml:348
+#: views/elements/feature.thtml:89
 msgid "experimental"
 msgstr "eksperymentalny"
 
@@ -9616,18 +9808,18 @@ msgstr "dla Mac OS X"
 msgid "for Windows"
 msgstr "dla Windows"
 
+# A small link following each test.  This goes to a help page specific to the test.
+#: views/elements/developers/testresults_group.thtml:58
+msgctxt "devcp_validation_help"
+msgid "help"
+msgstr "pomoc"
+
 # A link after the main header
 #: views/editors/review.thtml:301
 #, fuzzy
 msgctxt "editors_review_header_validation_help"
 msgid "help"
 msgstr "help"
-
-# A small link following each test.  This goes to a help page specific to the test.
-#: views/elements/developers/testresults_group.thtml:58
-msgctxt "devcp_validation_help"
-msgid "help"
-msgstr "pomoc"
 
 # link path to search plugins instructions, relative to devmo
 #: views/addons/searchengines.thtml:88
@@ -9665,13 +9857,13 @@ msgstr "następny &raquo;"
 msgid "no"
 msgstr "nie"
 
-#: controllers/statistics_controller.php:299
-msgctxt "statistics_js_dropdowns_none"
+#: views/editors/review.thtml:121
+msgctxt "editors_review_list_none"
 msgid "none"
 msgstr "brak"
 
-#: views/editors/review.thtml:121
-msgctxt "editors_review_list_none"
+#: controllers/statistics_controller.php:299
+msgctxt "statistics_js_dropdowns_none"
 msgid "none"
 msgstr "brak"
 
@@ -9698,9 +9890,9 @@ msgstr "albo wybierz inny dodatek"
 msgid "others"
 msgstr "inni"
 
-#: views/elements/addon_list_options.thtml:94
 #: views/elements/amo2009/addons/list_options.thtml:103
 #: views/elements/pagination.thtml:67
+#: views/elements/addon_list_options.thtml:94
 msgid "per page"
 msgstr "na stronie"
 
@@ -9708,7 +9900,7 @@ msgstr "na stronie"
 msgid "previous"
 msgstr "poprzednia"
 
-#: views/elements/amo2009/install.thtml:346 views/helpers/addons_html.php:573
+#: views/helpers/addons_html.php:573 views/elements/amo2009/install.thtml:346
 msgid "recommended"
 msgstr "polecany"
 
@@ -9729,10 +9921,14 @@ msgstr "szukaj dodatków"
 msgid "search for collections"
 msgstr "szukaj kolekcji"
 
-#: views/elements/addon_list_options.thtml:105
 #: views/elements/amo2009/addons/list_options.thtml:108
+#: views/elements/addon_list_options.thtml:105
 msgid "show experimental add-ons"
 msgstr "Wyświetlaj dodatki eksperymentalne"
+
+#: views/statistics/collections.thtml:81
+msgid "statistics_notice_data_insufficient"
+msgstr ""
 
 #: views/elements/amo2009/search.thtml:234 views/elements/search.thtml:216
 msgid "to"
@@ -9742,12 +9938,11 @@ msgstr "do"
 msgid "version"
 msgstr "wersja"
 
-#: views/addons/browse_thumbs.thtml:126
-#: views/addons/category_landing.thtml:157
-#: views/elements/addon_listitem.thtml:115
-#: views/elements/amo2009/homepage_addon.thtml:108
 #: views/elements/amo2009/results_addon.thtml:97
-#: views/elements/feature.thtml:101
+#: views/elements/amo2009/homepage_addon.thtml:108
+#: views/elements/addon_listitem.thtml:115 views/elements/feature.thtml:101
+#: views/addons/category_landing.thtml:159
+#: views/addons/browse_thumbs.thtml:133
 msgid "weekly downloads"
 msgstr "pobrań tygodniowo"
 
@@ -9817,6 +10012,16 @@ msgstr "tak"
 #~ msgid "Editor Comments"
 #~ msgstr "Komentarze edytora"
 
+#~ msgid ""
+#~ "Either the XML is invalid or required fields are missing.  Please <a href="
+#~ "\"https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox"
+#~ "\">read the documentation</a>, verify your add-on, and try again."
+#~ msgstr ""
+#~ "Kod XML ma nieprawidłową strukturę lub nie wypełniono wymaganych pól. "
+#~ "Proszę zapoznać się z <a href=\"https://developer.mozilla.org/en/"
+#~ "Creating_OpenSearch_plugins_for_Firefox\">dokumentacją</a>, zweryfikować "
+#~ "dodatek i spróbować ponownie."
+
 #~ msgctxt "test_case_name_langpack_general_verifyFileLayout"
 #~ msgid "File Layout Check"
 #~ msgstr "Sprawdzenie struktury plików"
@@ -9879,6 +10084,10 @@ msgstr "tak"
 #~ msgctxt "addons_recommended_title"
 #~ msgid "Recommended Add-ons"
 #~ msgstr "Polecane dodatki"
+
+#~ msgctxt "collections_edit_addons_listitem_remove"
+#~ msgid "Remove"
+#~ msgstr "Usuń"
 
 #~ msgctxt "devcp_edit_contrib_header_start"
 #~ msgid "Start Asking for Contributions"

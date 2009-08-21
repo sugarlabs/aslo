@@ -34,14 +34,14 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
+ * ***** END LICENSE BLOCK ***** */
 ?>
 <div class="stats">
 <?php
-    echo sprintf(___('<em>%s</em> Total Downloads'), $html->number_format($addon['totaldownloads'], 0));
+    echo sprintf(n___('<em>%s</em> Total Download', '<em>%s</em> Total Downloads', $addon['Addon']['totaldownloads']), $html->number_format($addon['Addon']['totaldownloads'], 0));
     echo '&nbsp;&middot;&nbsp;';
-    echo sprintf(___('<em>%s</em> Weekly Downloads'), $html->number_format($addon['weeklydownloads'], 0));
+    echo sprintf(n___('<em>%s</em> Weekly Download', '<em>%s</em> Weekly Downloads', $addon['Addon']['weeklydownloads']), $html->number_format($addon['Addon']['weeklydownloads'], 0));
     echo '&nbsp;&middot;&nbsp;';
-    echo sprintf(___('<em>%s</em> Active Daily Users'), $html->number_format($addon['updatepings'], 0));
+    echo sprintf(n___('<em>%s</em> Active Daily User', '<em>%s</em> Active Daily Users', $addon['Addon']['updatepings']), $html->number_format($addon['Addon']['updatepings'], 0));
 ?>
 </div>
