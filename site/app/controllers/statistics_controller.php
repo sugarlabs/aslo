@@ -412,6 +412,7 @@ class StatisticsController extends AppController
             $addon_downloads = $this->Stats->getCollectionAddonTotalDownloads($collection_id);
 
             $this->publish('subpagetitle', sprintf(_('Statistics for %1$s'), $collection['Translation']['name']['string']));
+            $this->publish('collection', $collection);
             $this->publish('addons', $addons);
             $this->publish('addon_downloads', $addon_downloads);
 
@@ -421,9 +422,9 @@ class StatisticsController extends AppController
         }
 
         // fetch users collections for dropdown menu
-        $collection_id = $this->Collection->getCollectionsByUser($session['id']);
+        $my_collections_ids = $this->Collection->getCollectionsByUser($session['id']);
         $this->Collection->unbindFully();
-        $collections = $this->Collection->findAll(array('Collection.id' => $collection_id), null, null, null, null, -1);
+        $my_collections = $this->Collection->findAll(array('Collection.id' => $my_collections_ids), null, null, null, null, -1);
 
         // initially show counts over the last week... unless specified otherwise
         $period = 'week';
@@ -431,8 +432,12 @@ class StatisticsController extends AppController
             $period = $_GET['period'];
         }
 
-        // fetch collection stat totals
-        $period_totals = $this->_getCollectionPeriodTotals($collection_id, $period);
+        // fetch collection stat totals for 'all mine' or one collection
+        if (is_null($uuid)) {
+            $period_totals = $this->_getCollectionPeriodTotals($my_collections_ids, $period);
+        } else {
+            $period_totals = $this->_getCollectionPeriodTotals($collection_id, $period);
+        }
 
         $this->jsAdd = array(
             'jquery-compressed.js',
@@ -458,7 +463,7 @@ class StatisticsController extends AppController
         ));
         $this->publish('uuid', $uuid);
         $this->publish('period', $period);
-        $this->publish('collections', $collections);
+        $this->publish('my_collections', $my_collections);
         $this->publish('period_totals', $period_totals);
 
         $this->render('collections');

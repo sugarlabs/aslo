@@ -60,7 +60,7 @@ $this->viewVars['bodyclass'] = 'inverse';
               <input type="hidden" id="plot-period" name="period" value="<?=$period?>" />
               <select id="collection-uuid" name="uuid">
                 <option value=""<?=(empty($uuid) ? ' selected="selected"' : '')?>><?=_('All My Collections')?></option>
-              <?php foreach ($collections as $c): ?>
+              <?php foreach ($my_collections as $c): ?>
                 <option value="<?=$c['Collection']['uuid']?>"<?=($uuid == $c['Collection']['uuid'] ? ' selected="selected"' : '')?>><?=$c['Translation']['name']['string']?></option>
               <?php endforeach; ?>
               </select>
@@ -68,7 +68,7 @@ $this->viewVars['bodyclass'] = 'inverse';
             </div>
           </form>
         </div> <!-- listing-header -->
-        <?php if (empty($collections)): ?>
+        <?php if (empty($my_collections) && empty($collection)): ?>
           <div class="item">
             <p class="addon-search-message"><?=_('No collections found.')?></p>
           </div>
