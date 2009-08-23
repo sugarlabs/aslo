@@ -199,11 +199,10 @@ function iframeLoaded() {
         return;
     
     $('#upload-loading').hide();
-    
-    upload.response = JSON.parse(document.getElementById('upload-frame').contentWindow.document.getElementById('json').innerHTML);
+    upload.response = JSON.parse($('#upload-frame').contents().find('#json').text());
     
     if (upload.response.error == '1') {
-        $('#upload-error-text').html(urldecode(upload.response.error_message));
+        $('#upload-error-text').html(upload.response.error_message);
         $('#upload-error').slideDown('slow');
         $('#file-upload input[type=submit]').attr('disabled', '');
     }
@@ -228,12 +227,6 @@ function iframeLoaded() {
             $('#file-id').val(upload.response.file_id);
 
     }
-}
-
-function urldecode(str) {
-    str = str.replace(/\+/g, ' ');
-    str = unescape(str);
-    return str;
 }
 
 var addon_edit_authors = {    

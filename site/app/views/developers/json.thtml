@@ -4,11 +4,11 @@ if (!defined('NO_MICROTIME'))
 
 if (!empty($encapsulate)) {
     echo '<div id="json">';
-    $listing->json($json, null, true);
+    echo json_encode($json);
     echo '</div>';
 }
 else {
     header('Content-type: text/plain');
-    $listing->json($json, null);
+    echo json_encode($json);
 }
 ?>
