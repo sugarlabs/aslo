@@ -940,7 +940,7 @@ override chrome://bad-url";
         @mkdir(CACHE_PFX . '13');
         
         $results = $this->controller->Validation->theme_general_verifyFileLayout($file);
-        $this->assertEqual(count($results), 2, 'All two missing types should be flagged: %s');
+        $this->assertEqual(count($results), 1, 'The missing type should be flagged: %s');
 
         $expected = $this->controller->Validation->_result(TEST_FAIL, 0, '', 'The add-on was missing a required file: install.rdf');
         $this->assertEqual($results[0], $expected, 'Results are failures mentioning language pack and the missing file: %s');

@@ -966,7 +966,7 @@ class ValidationComponent extends Object {
      */
     function theme_general_verifyFileLayout($file) {
 
-        $names = array('install.rdf', 'chrome.manifest');
+        $names = array('install.rdf');
 
         return $this->_passIfEmpty($this->_verifyFilesExist($file, $names, 'by_name'));
     }
