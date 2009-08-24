@@ -402,8 +402,8 @@ class ValidationTest extends UnitTestCase {
         $badJs = "nsIProcess
                   .launch();
                   eval();
-                  setInterval('with a string!');
-                  setTimeout(\"double quotes!\");
+                  setInterval(with-a-variable);
+                  setTimeout('with-a-string');
                   <browser without-type-oh-no>
                   <iframe without-type-oh-no>
                   xpcnativewrappers=
