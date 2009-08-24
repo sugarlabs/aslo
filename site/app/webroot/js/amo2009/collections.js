@@ -79,7 +79,7 @@ var unique = function(arr, keyfunc) {
 
     /* Sort by the original indexes, then return the elements. */
     var s = $.values(o).sort(function(a, b){ return a[0] - b[0]; });
-    return $.fmap(s, function(e) { return e[1]; });
+    return $.fmap(s.reverse(), function(e) { return e[1]; });
 };
 
 
@@ -111,7 +111,7 @@ RecentlyViewed.prototype = {
         /* Date.parse turns Date into an integer for better parsing. */
         arr.push([Date.parse(new Date()), obj]);
         /* Sort by Date added. */
-        arr.sort(function(a, b) { return a[0] - b[0]; });
+        arr.sort(function(a, b) { return b[0] - a[0]; });
         arr = unique(arr, this.uniqueFunc);
         return this._save(arr);
     },
@@ -145,22 +145,22 @@ collections.recently_viewed = function() {
 
     var recentlyViewed = new RecentlyViewed({
       storageKey: 'recently-viewed-collections',
-      uniqueFunc: function(e) { return e[1].url; }
+      uniqueFunc: function(e) { return e[1].uuid; }
     });
 
     var add_recent = $('#add-to-recents');
     if (add_recent.size()) {
-        var o = $.dict($.fmap(['title', 'url'], function(key){
+        var o = $.dict($.fmap(['title', 'url', 'uuid'], function(key){
             return [key, $.trim(add_recent.find('.' + key).text())];
         }));
-        var current_url = o.url;
+        var current_uuid = o.uuid;
         recentlyViewed.add(o);
     } else {
-        var current_url = '';
+        var current_uuid = '';
     }
 
     var list = $.map(recentlyViewed.list(), function(e) {
-        if (e.url != current_url) {
+        if (e.uuid != current_uuid) {
             return '<li><a class="collectionitem" href="' + e.url + '">' + e.title + '</a></li>';
         }
     });
