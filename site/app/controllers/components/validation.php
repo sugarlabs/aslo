@@ -198,7 +198,7 @@ class ValidationComponent extends Object {
                     $type = ADDON_DICT;
                 }
                 else {
-                    $type = ADDON_EXTENSION;
+                    $type = array(ADDON_EXTENSION, ADDON_THEME);
                 }
                 break;
 
@@ -217,7 +217,7 @@ class ValidationComponent extends Object {
 
         // Verify that this matches the type we store
         $addon = $this->controller->Addon->getAddon($file['Version']['addon_id'], array('list_details'));
-        if ($addon['Addon']['addontype_id'] != $type) {
+        if ((is_array($type) && !in_array($addon['Addon']['addontype_id'], $type)) || (is_numeric($type) && $addon['Addon']['addontype_id'] != $type)) {
             return $this->_resultFail(0, '', ___('The extension does not match the type of the add-on.'));
         }
 
