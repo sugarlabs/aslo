@@ -494,10 +494,18 @@ class StatisticsController extends AppController
         );
         $this->publish('cssAdd', $this->cssAdd);
 
-        $this->publish('breadcrumbs', array(
+        $breadcrumbs = array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
             ___('Collections') => '/collections',
-        ));
+        );
+        if (!is_null($uuid)) {
+            $breadcrumbs[$collection['Translation']['name']['string']] = "/collection/{$uuid}";
+        } else {
+            $breadcrumbs[___('My Collections')] = "/collections/mine";
+        }
+
+        $this->publish('breadcrumbs', $breadcrumbs);
+
         $this->publish('uuid', $uuid);
         $this->publish('period', $period);
         $this->publish('my_collections', $my_collections);
