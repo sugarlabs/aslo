@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>Verify button state for FF3.5.2-WinXp</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Verify button state for FF3.5.2-WinXp</td></tr>
+</thead><tbody>
+<!--Description:This testcase verifies the different button_states for the browser/OS combo-Firefox3.5.2/WinXP-->
+<!--Pre-conditions:(a)Tester has the add-on-"User agent switcher-Version 0.7 — June 20, 2009 — 37 KB" installed.(b)This tc is run on Selenium IDE-->
+<!--NOTE:Please install version 0.7 of the add-on.This test case will fail with tha  latest add-on version.-->
+<!--Set the user agent to Mac OSX/Ff 3.5 before running this testcase-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox</td>
+	<td></td>
+</tr>
+<!--To test the button state-"Add to firefox"-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/addon/1843</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Firebug :: Add-ons for Firefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install-button platform-ALL</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=install-button-text</td>
+	<td>exact:Add to Firefox</td>
+</tr>
+<!--Testing the second example for the same button state...-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/addon/748</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Greasemonkey :: Add-ons for Firefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install-button platform-ALL</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=install-button-text</td>
+	<td>exact:Add to Firefox</td>
+</tr>
+<!--To test the button state-Add to Firefox(Windows)-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/addon/5579</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Cooliris :: Add-ons for Firefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install-button platform-Windows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=install-button-text</td>
+	<td>exact:Add to Firefox (Windows)</td>
+</tr>
+<!--testing the second example for the same button-state-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/addon/1419</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>IE Tab :: Add-ons for Firefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install-button platform-Windows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=install-button-text</td>
+	<td>exact:Add to Firefox (Windows)</td>
+</tr>
+<!--To test the button state-"This addon is not available for Windows"-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/addon/7518</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Firefox PDF Plugin for Mac OS X :: Add-ons for Firefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install install-container unavailable</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=compatmsg</td>
+	<td>exact:Firefox PDF Plugin for Mac OS X is not available for Windows.</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/addon/4641</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Safari View :: Add-ons for Firefox</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>class=install install-container unavailable</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=compatmsg</td>
+	<td>exact:Safari View is not available for Windows.</td>
+</tr>
+<!--To test button state-"download now(Windows) for Thunderbird add-ons-->
+<tr>
+	<td>open</td>
+	<td>/en-US/thunderbird/addon/2313</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Lightning :: Add-ons for Thunderbird</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='addon-install']/div/p[@class='install-button platform-Windows']/a/span</td>
+	<td>Download Now (Windows)</td>
+</tr>
+<!--To test the second add-on example for the same button state...-->
+<tr>
+	<td>open</td>
+	<td>/en-US/thunderbird/addon/4075</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Nokia Synchronization :: Add-ons for Thunderbird</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=install-button-text</td>
+	<td>Download Now (Windows)</td>
+</tr>
+<!--To test button state -"Download Now(Windows)" for Sunbird addons-->
+<tr>
+	<td>open</td>
+	<td>/en-US/sunbird/addon/2110</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>MinimizeToTray :: Add-ons for Sunbird</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install-button platform-Windows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Download Now (Windows)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install-button platform-Windows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='addon-install']/div/p[@class='install-button platform-Windows']/a/span</td>
+	<td>exact:Download Now (Windows)</td>
+</tr>
+<!--To test button state -"Download Now(MacOSX)" for SeaMonkey addons-->
+<tr>
+	<td>open</td>
+	<td>/en-US/seamonkey/addon/249</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTitle</td>
+	<td>Html Validator :: Add-ons for SeaMonkey</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>class=install-button platform-Windows</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>class=button positive significant</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>class=install-button-text</td>
+	<td>exact:Download Now (Windows)</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>Testcase:DONE</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
