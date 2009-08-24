@@ -114,6 +114,12 @@ class ValidationTest extends UnitTestCase {
         $this->assertTrue($this->controller->Validation->validateManifestData($manifestData), 'Valid manifest data (return true)');
         $this->assertEqual($this->controller->Error->errors['main'], '', 'Valid manifest data (error string)');
         
+        // Verify that duplicate ids generates an error
+        $manifestData = $this->setupValidateManifestData();
+        $manifestData['errors'][0] = 'RDF Parser error: the file contained a duplicate element: id';
+        $return = $this->controller->Validation->validateManifestData($manifestData);
+        $this->assertEqual($return, 'RDF Parser error: the file contained a duplicate element: id', 'Duplicate elements generate errors: %s');
+
         //GUID of an application not allowed
         $manifestData = $this->setupValidateManifestData();
         $manifestData['id'] = '{ec8030f7-c20a-464f-9b0e-13a3a9e97384}';
@@ -273,31 +279,6 @@ class ValidationTest extends UnitTestCase {
         $results = $this->controller->Validation->all_general_verifyInstallRDF($file);
         $expected = $this->controller->Validation->_resultPass();
         $this->assertEqual($results, $expected, 'Default extension passes tests: %s');
-        
-        // Verify that duplicate ids generates an error
-        $data = "<?xml version=\"1.0\"?>
-<RDF xmlns=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"
-    xmlns:em=\"http://www.mozilla.org/2004/em-rdf#\">
-  <Description about=\"urn:mozilla:install-manifest\">
-            <em:id>en-AU@dictionaries.addons.mozilla.org</em:id>
-            <em:id>dup-id@dictionaries.addons.mozilla.org</em:id>
-            <em:version>2.1.1</em:version>
-  <em:targetApplication>
-      <Description>
-      <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
-      <em:minVersion>2.0a1</em:minVersion>
-      <em:maxVersion>2.0a2</em:maxVersion>
-      </Description>
-  </em:targetApplication>
-  <em:name>English (Australian) Dictionary</em:name>
-  <em:description>I'm sick of all my favoUrite coloUrful language being marked incorrect.</em:description>
-  <em:homepageURL>http://justcameron.com/incoming/en-au-dictionary/</em:homepageURL>
-  </Description>
-</RDF>";
-        file_put_contents(CACHE_PFX . '1/install.rdf', $data);
-        $results = $this->controller->Validation->all_general_verifyInstallRDF($file);
-        $expected = $this->controller->Validation->_resultFail(0, 'install.rdf', 'RDF Parser error: the file contained a duplicate element: id');
-        $this->assertEqual($results, $expected, 'Duplicate elements generate errors: %s');
         
         // Verify fail on missing install.rdf
         @unlink(CACHE_PFX . '1/install.rdf');
@@ -491,7 +472,7 @@ class ValidationTest extends UnitTestCase {
         file_put_contents(CACHE_PFX . '1/bad.js', "-moz-binding: non-chrome-url");
                 
         $results = $this->controller->Validation->all_security_filterRemoteJS($file);
-        $expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:(?!\s*(url\s*\(\s*["\']?chrome:\/\/.*\/content\/|none))/"');
+        $expected = $this->controller->Validation->_resultWarn(1, 'bad.js', 'Matched Pattern: "/-moz-binding:(?!\s*(url\s*\(\s*["\']?chrome:\/\/.*\/(content|skin)\/|none))/"');
         $this->assertEqual($results, $expected, 'Results are warnings with appropriate file and line numbers: %s');
     }
 
@@ -986,7 +967,7 @@ not so much here!";
         file_put_contents(CACHE_PFX . '13/chrome.manifest', $data);
 
         $results = $this->controller->Validation->theme_security_checkChromeManifest($file);
-        $expected = $this->controller->Validation->_resultWarn(4, 'chrome.manifest', 'Matched Pattern: "/^(?!(#|skin |style ))/"');
+        $expected = $this->controller->Validation->_resultWarn(4, 'chrome.manifest', 'Matched Pattern: "/^(?!(#|skin\s|style\s))/"');
         $this->assertEqual($results, $expected, 'Finds the bad line and generates a warning: %s');
         
     }
