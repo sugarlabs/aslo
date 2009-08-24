@@ -157,5 +157,9 @@ if (typeof SimileAjax == "undefined") {
         return to;
     };
 
+    if (typeof Simile_urlPrefix == "string") {
+        SimileAjax.urlPrefix = Simile_urlPrefix + '/ajax/';
+    }
+
     SimileAjax.loaded = true;
 }
