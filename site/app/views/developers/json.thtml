@@ -2,10 +2,15 @@
 if (!defined('NO_MICROTIME'))
     define('NO_MICROTIME', true);
 
+// This is a script so that no one on the client side is 
+// tempted to mess with this.  The previous code used a 
+// div here, but if there is any HTML in the JSON, then 
+// the browser/jQuery will mess with that, producing unwanted
+// results on a JSON.parse call.
 if (!empty($encapsulate)) {
-    echo '<div id="json">';
+    echo '<script id="json">';
     echo json_encode($json);
-    echo '</div>';
+    echo '</script>';
 }
 else {
     header('Content-type: text/plain');
