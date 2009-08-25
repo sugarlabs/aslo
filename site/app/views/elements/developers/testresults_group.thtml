@@ -78,8 +78,13 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
                 ?>
                 <li class="<?=$class?>">
                     <? if ($result['filename'] != '') : ?>
-                        <a href="<?=SITE_URL . '/files/browse/' . $file['File']['id'] . '/0/?start=' . $result['filename']?>">
-                        <?=$result['filename']?><?=($result['line'] != 0 ? " ({$result['line']})" : '')?></a> :
+                        <? if (is_numeric($file['File']['id'])) : ?>
+                            <a href="<?=SITE_URL . '/files/browse/' . $file['File']['id'] . '/0/?start=' . $result['filename']?>" target="_blank">
+                                <?=$result['filename']?><?=($result['line'] != 0 ? " ({$result['line']})" : '')?>
+                            </a> :
+                        <? else: ?>
+                            <?=$result['filename']?><?=($result['line'] != 0 ? " ({$result['line']})" : '')?> :
+                        <? endif; ?>
                     <? endif; ?>
                     <? if (!empty($result['message'])) : ?>
                         <?=$result['message']?>
