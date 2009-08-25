@@ -132,7 +132,11 @@ class PagesController extends AppController{
             }
             break;
         }
-
+        
+        if (preg_match('|\.js$|', $path_string))
+        {
+            DboAmoMysql::$disable_log = true;
+        }
         $this->publish('page', $page);
         $this->publish('subpage', $subpage);
         $this->set('title', $title .' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME));
