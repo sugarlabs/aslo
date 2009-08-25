@@ -17,6 +17,12 @@ $has_votes = $total !== 0;
 if ($has_votes) {
     $upratio = ceil(round(100 * $up / $total, 2));
     $downratio = floor(round(100 * $down / $total, 2));
+
+    /* Subtract 1 from each percentage so we
+     * can slip a little spacing in between.
+     */
+    $upwidth = max($upratio - 1, 0);
+    $downwidth = max($downratio - 1, 0);
 }
 
 $action = $html->url("/collections/vote/{$c['handle']}");
@@ -61,11 +67,10 @@ if (empty($user)) {
   </form>
   <div class="bars">
     <?php if ($has_votes): ?>
-      <?/* Subtract 1 from each percentage so we can slip a little spacing in between. */?>
-      <div class="upbar" style="width: <?=$upratio - 1?>%">
+      <div class="upbar" style="width: <?=$upwidth?>%">
         <?=sprintf(___('%1$s%% positive votes for this collection'), $upratio)?>
       </div>
-      <div class="downbar" style="width: <?=$downratio - 1?>%">
+      <div class="downbar" style="width: <?=$downwidth?>%">
         <?=sprintf(___('%1$s%% negative votes for this collection'), $downratio)?>
       </div>
     <?php else: ?>
