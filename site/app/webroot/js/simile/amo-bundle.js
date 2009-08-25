@@ -9115,6 +9115,8 @@ Timeplot.DefaultTimeGeometry = function(params) {
     this._locale = ("locale" in params) ? params.locale : "en";
     this._timeZone = ("timeZone" in params) ? params.timeZone : SimileAjax.DateTime.getTimezone();
     this._labeller = ("labeller" in params) ? params.labeller : null;
+    /* AMO change: optional control over date format */
+    this._dayIntervalFormat = ("dayIntervalFormat" in params) ? params.dayIntervalFormat : null;
     this._axisColor = ("axisColor" in params) ? ((params.axisColor == "string") ? new Timeplot.Color(params.axisColor) : params.axisColor) : new Timeplot.Color("#606060"),
     this._gridColor = ("gridColor" in params) ? ((params.gridColor == "string") ? new Timeplot.Color(params.gridColor) : params.gridColor) : null,
     this._gridLineWidth = ("gridLineWidth" in params) ? params.gridLineWidth : 0.5;
@@ -9340,6 +9342,10 @@ Timeplot.DefaultTimeGeometry.prototype = {
 	        	case time.WEEK:
                 case time.MONTH:
                   var l = t.toLocaleDateString();
+                  /* AMO change: optional control over date format */
+                  if (this._dayIntervalFormat && typeof t.strftime == 'function') {
+                    l = t.strftime(this._dayIntervalFormat);
+                  }
                   break;  
                 case time.YEAR:
                 case time.DECADE:

@@ -56,6 +56,7 @@ var Plots = {
         // customize time geometry config
         var timeGeometryConfig = {};
         $.extend(timeGeometryConfig, this.timeGeometryConfig, {
+            dayIntervalFormat: localized.date.replace(/&#37;/g,'%'),
             min: minDate.strftime('%Y-%m-%d'),
             max: today.strftime('%Y-%m-%d')
         });

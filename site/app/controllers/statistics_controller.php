@@ -511,6 +511,10 @@ class StatisticsController extends AppController
         $this->publish('my_collections', $my_collections);
         $this->publish('period_totals', $period_totals);
 
+        $this->publish('jsLocalization', array(
+            'date' => ___('%b. %e, %Y'),
+        ));
+
         $this->render('collections');
     }
 
