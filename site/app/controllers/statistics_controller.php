@@ -463,6 +463,13 @@ class StatisticsController extends AppController
         $this->Collection->unbindFully();
         $my_collections = $this->Collection->findAll(array('Collection.id' => $my_collections_ids), null, null, null, null, -1);
 
+        // include in the menu the specified collection even if not "mine"
+        if (!empty($collection) && !in_array($collection['Collection']['id'], $my_collections_ids)) {
+            $other_collections = array($collection);
+        } else {
+            $other_collections = array();
+        }
+
         // initially show counts over the last week... unless specified otherwise
         $period = 'week';
         if (isset($_GET['period']) && in_array($_GET['period'], array('month', 'year'))) {
@@ -509,6 +516,7 @@ class StatisticsController extends AppController
         $this->publish('uuid', $uuid);
         $this->publish('period', $period);
         $this->publish('my_collections', $my_collections);
+        $this->publish('other_collections', $other_collections);
         $this->publish('period_totals', $period_totals);
 
         $this->publish('jsLocalization', array(
