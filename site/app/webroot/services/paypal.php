@@ -86,7 +86,11 @@ if (strcmp ($res, "VERIFIED") == 0) {
     
     // Build the query - item_number is the uuid we created
     $post_data = mysql_real_escape_string(serialize($_POST));
-    $query = "UPDATE `stats_contributions` SET `transaction_id` = '{$txn_id}', `final_amount` = '{$payment_amount}', `post_data` = '{$post_data}' WHERE `uuid` = '{$item_number}'";
+    $query = "UPDATE `stats_contributions` " .
+        "SET `transaction_id` = '{$txn_id}', " . 
+        "`amount` = '{$payment_amount}', " . 
+        "`post_data` = '{$post_data}' " .
+        "WHERE `uuid` = '{$item_number}'";
     
     // Log the contribution
     if (!@mysql_query($query)) die('Query failed');

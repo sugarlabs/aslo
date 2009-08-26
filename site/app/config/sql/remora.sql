@@ -706,7 +706,6 @@ CREATE TABLE `stats_contributions` (
   `suggested_amount` varchar(255) default NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `transaction_id` varchar(255) default NULL,
-  `final_amount` varchar(10) default '0.00',
   `post_data` text default NULL,
   KEY `addon_id` (`addon_id`),
   CONSTRAINT `stats_contributions_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`),
