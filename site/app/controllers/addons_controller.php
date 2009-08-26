@@ -114,12 +114,12 @@ class AddonsController extends AppController
                                   sprintf(___('Contribution for %1$s'),
                                           $addon['Translation']['name']['string']),
                                   SITE_URL . $return_url,
-                                  $amount);
+                                  $amount,
+                                  $uuid);
     }
 
     /**
-     * Link target when returning from paypal.  We don't do anything but a
-     * redirection; metrics will be processing log data for this URL offline.
+     * Link target when returning from paypal.  We don't do anything with this. 
      */
     function after_contribute($addon_id, $uuid) {
         if (!$addon_id || !is_numeric($addon_id)) {

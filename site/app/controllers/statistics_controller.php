@@ -300,7 +300,7 @@ class StatisticsController extends AppController
                 $query = "
                     SELECT IFNULL(SUM(amount), 0) AS contrib_total, COUNT(*) AS contrib_count
                       FROM stats_contributions
-                     WHERE addon_id='{$addon_id}' AND uuid IS NULL AND amount > 0
+                     WHERE addon_id='{$addon_id}' AND `transaction_id` IS NOT NULL AND amount > 0
                 ";
                 if ($statsQry = $this->Addon->query($query, true)) {      
                     $stats['alltime_contribution_amount'] = $statsQry[0][0]['contrib_total'];
