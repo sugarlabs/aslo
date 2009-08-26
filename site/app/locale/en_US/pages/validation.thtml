@@ -25,7 +25,7 @@ To validate your add-on, visit the "Versions and Files" page in the developers c
 <h2>General Tests</h2>
 <p>The general tests are high level tests that verify the basic structure and stability of an add-on.  They include ensuring that the add-on is in the correct file format, that it contains any required files, and that it can be extracted and installed.</p>
 
-<dl>
+<dl class="validation">
 <dt id="help-11">General Verification Tests</dt>
 <dd>This group of tests ensures that your add-on type matches the required file extension and that the file has been successfully uploaded to the site.</dd>
 
@@ -42,7 +42,7 @@ To validate your add-on, visit the "Versions and Files" page in the developers c
 <h2>Security Tests</h2>
 <p>This group of tests scans add-ons for potential security vulnerabilities.</p>
 
-<dl>
+<dl class="validation">
 <dt id="help-21">Unsafe JavaScript Tests</dt>
 <dd>This test scans add-ons for common security mistakes that could make using your add-on unsafe.  Some example patterns are:
 
@@ -87,7 +87,7 @@ A matched pattern will generate a warning.  Note that since these tests are simp
 <h2>Extension-specific Tests</h2>
 <p>This group of tests scans add-ons for potential problems that are specific to extensions.  This includes verifying the existence of required files, checking for extra files, along with some additional tests described below.</p>
 
-<dl>
+<dl class="validation">
 <dt id="help-121">Geolocation Check</dt>
 <dd>This test scans for the use of either geolocation or wifi in an add-on.  This is allowed but it must be done in a way that the user is informed and has consented.</dd>
 
@@ -98,7 +98,7 @@ A matched pattern will generate a warning.  Note that since these tests are simp
 <h2>Dictionary Tests</h2>
 <p>This group of tests scans add-ons for potential problems that are specific to dictionaries.  This includes verifying the existence of required files, checking for extra files, along with some additional tests described below.</p>
 
-<dl>
+<dl class="validation">
 <dt id="help-211">File Layout Check</dt>
 <dd>Dictionaries, at a minimum, must contain an install.rdf file, along with a .aff and .dic file in the dictionaries folder for the given locale.  This test generates a failure for each missing file in the dictionary.</dd>
 
@@ -125,7 +125,7 @@ Any other files will generate warnings.</dd>
 <h2>Language Pack Tests</h2>
 <p>This group of tests scans add-ons for potential problems that are specific to language packs.  This includes verifying the existence of required files and checking for extra files, along with some additional tests described below.</p>
 
-<dl>
+<dl class="validation">
 <dt id="help-311">File Layout Check</dt>
 <dd>Language Packs, at a minimum, must contain an install.rdf file, a chrome.manifest file, and at least one .jar file in the chrome folder.  This test generates a failure for each missing file in the dictionary.</dd>
 
@@ -157,7 +157,7 @@ Any other files will generate warnings.</dd>
 <h2>Search Engine Tests</h2>
 <p>This group of tests scans add-ons for potential problems that are specific to search engines.  This includes parsing and verifying the format of the search engine's XML file.</p>
 
-<dl>
+<dl class="validation">
 <dt id="help-511">OpenSearch Check</dt>
 <dd>Search engines should conform to the OpenSearch format.  Search engines that cannot be parsed using OpenSearch will be rejected.</dd>
 
@@ -169,7 +169,7 @@ Any other files will generate warnings.</dd>
 <h2>Theme Tests</h2>
 <p>This group of tests scans add-ons for potential problems that are specific to themes.  This includes verifying the existence of required files, and checking for a valid chrome.manifest file.</p>
 
-<dl>
+<dl class="validation">
 <dt id="help-411">File Layout Check</dt>
 <dd>Themes, at a minimum, must contain an install.rdf file.  This test generates a failure for each missing file in the theme.</dd>
 
