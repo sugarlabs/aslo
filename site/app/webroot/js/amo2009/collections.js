@@ -269,4 +269,20 @@ collections.hijack_favorite_button = function() {
 
 $(document).ready(collections.recently_viewed);
 
+$(document).ready(function() {
+    /* Hijack the voting forms to submit over xhr.
+     *
+     * On success we get all this HTML back again, so it's replaced with a more
+     * up-to-date version of itself.
+     */
+     var callback = function(e) {
+        e.preventDefault();
+        var the_form = this;
+        $.post(this.action, $(this).serialize(), function(content) {
+           $(the_form).closest('.barometer').parent().html(content)
+               .find('form').submit(callback);
+        });
+    };
+    $('.user-login .barometer form').submit(callback);
+})
 })();

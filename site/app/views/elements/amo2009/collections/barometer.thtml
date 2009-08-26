@@ -92,19 +92,3 @@ if (empty($user)) {
            title="<?=$down_title?>" />
   </form>
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-    /* Hijack the voting forms to submit over xhr.
-     *
-     * On success we get all this HTML back again, so it's replaced with a more
-     * up-to-date version of itself.
-     */
-    $('.user-login .barometer form').submit(function(e) {
-        e.preventDefault();
-        var the_form = this;
-        $.post(this.action, $(this).serialize(), function(content) {
-           $(the_form).closest('.barometer').parent().html(content);
-        });
-    });
-})
-</script>
