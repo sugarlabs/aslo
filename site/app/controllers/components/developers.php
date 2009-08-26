@@ -38,7 +38,6 @@
  * ***** END LICENSE BLOCK ***** */
 class DevelopersComponent extends Object {
     var $controller;
-    var $components = array( "Validation" );
     var $imageExtensions = array('.png', '.jpg', '.gif');
 
     var $uploadErrors = array();
@@ -270,13 +269,13 @@ class DevelopersComponent extends Object {
         }
     }
 
-   /**
-    * Validate the uploaded files
-    * @deprecated
-    */
+    /**
+     * Validate the uploaded files
+     * @deprecated
+     */
     function validateFiles() {
 
-	/* Should be removed */
+        /* Should be removed */
 
         $errors =& $this->controller->Error;
 
@@ -518,126 +517,6 @@ class DevelopersComponent extends Object {
         return $allowed;
     }
 
-   /**
-    * Validate the install.rdf manifest data
-    * @param array $manifestData the manifest contents
-    * @return string if error
-    * @return boolean true if no error
-    */
-    function validateManifestData($manifestData) {
-        // If the data is a string, it is an error message
-        if (is_string($manifestData)) {
-            return sprintf(___('The following error occurred while parsing install.rdf: %s'), $manifestData);
-        }
-
-        // Check if install.rdf has an updateURL
-        if (isset($manifestData['updateURL'])) {
-            return ___('Add-ons cannot use an external updateURL. Please remove this from install.rdf and try again.');
-        }
-
-        // Check if install.rdf has an updateKey
-        if (isset($manifestData['updateKey'])) {
-            return ___('Add-ons cannot use an updateKey. Please remove this from install.rdf and try again.');
-        }
-
-        // Check the GUID for existence
-        if (!isset($manifestData['id'])) {
-            return ___('No ID could be found for this add-on in install.rdf.');
-        }
-
-        // Validate GUID
-        if (!preg_match('/^(\{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\}|[a-z0-9-\._]*\@[a-z0-9-\._]+)$/i', $manifestData['id'])) {
-            return sprintf(___('The ID of this add-on is invalid: %s'), $manifestData['id']);
-        }
-
-        // Make sure GUID is not an application's GUID
-        if ($this->controller->Application->findByGuid($manifestData['id'])) {
-            return ___('The ID of this add-on is already used by an application.');
-        }
-
-        // Make sure the GUID is not blacklisted
-        if ($this->controller->BlacklistedGuid->findByGuid($manifestData['id'])) {
-            return sprintf(___('Your add-on is attempting to use a GUID that has been blocked.  Please <a href="%1$s">contact the AMO staff</a>.'), '/pages/about#contact');
-        }
-
-        // Make sure version has no spaces
-        if (!isset($manifestData['version']) || preg_match('/.*\s.*/', $manifestData['version'])) {
-            return ___('The version of this add-on is invalid: versions cannot contain spaces.');
-        }
-
-        // Validate version
-        if (!preg_match('/^\d+(\+|\w+)?(\.\d+(\+|\w+)?)*$/', $manifestData['version'])) {
-            return ___('The version of this add-on is invalid: please see the <a href="http://developer.mozilla.org/en/docs/Toolkit_version_format">specification</a>');
-        }
-
-        return true;
-    }
-
-   /**
-    * Validate the target applications
-    * @param array $targetApps the targetApps from install.rdf
-    * @return string if error
-    * @return array if no errors
-    */
-    function validateTargetApplications($targetApps) {
-        $noMozApps = true;
-        $versionErrors = array();
-
-        if (count($targetApps) > 0) {
-            $i = 0;
-
-            // Iterate through each target app and find it in the DB
-            foreach ($targetApps as $appKey => $appVal) {
-                if ($matchingApp = $this->controller->Application->find(array('guid' => $appKey), null, null, -1)) {
-                    $return[$i]['application_id'] = $matchingApp['Application']['id'];
-
-                    // Mark as Moz-app if supported
-                    if ($matchingApp['Application']['supported'] == 1) {
-                        $noMozApps = false;
-                    }
-
-                    // Check if the minVersion is valid
-                    $matchingMinVers = $this->controller->Appversion->find("application_id={$matchingApp['Application']['id']} AND version='{$appVal['minVersion']}'", null, null, -1);
-
-                    if (empty($matchingMinVers)) {
-                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
-                    }
-                    elseif (strpos($appVal['minVersion'], '*') !== false) {
-                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s: minimum versions cannot contain *'), $appVal['minVersion'], $matchingApp['Translation']['name']['string']);
-                    }
-                    else {
-                        $return[$i]['min'] = $matchingMinVers['Appversion']['id'];
-                    }
-
-                    // Check if the maxVersion is valid
-                    $matchingMaxVers = $this->controller->Appversion->find("application_id={$matchingApp['Application']['id']} AND version='{$appVal['maxVersion']}'", null, null, -1);
-                    if (empty($matchingMaxVers)) {
-                        $versionErrors[] = sprintf(___('%1$s is not a valid version for %2$s'), $appVal['maxVersion'], $matchingApp['Translation']['name']['string']);
-                    }
-                    else {
-                        $return[$i]['max'] = $matchingMaxVers['Appversion']['id'];
-                    }
-                    $i++;
-                }
-            }
-        }
-
-        $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->controller->url('/pages/appversions'));
-
-        // Must have at least one Mozilla app
-        if ($noMozApps === true) {
-            return ___('You must have at least one valid Mozilla target application.').'<br />'.$validAppReference;
-        }
-
-        // Max/min version errors
-        if (count($versionErrors) > 0) {
-            $errorStr = implode($versionErrors, '<br />');
-            return ___('The following errors were found in install.rdf:').'<br />'.$errorStr.'<br />'.$validAppReference;
-        }
-
-        return $return;
-    }
-
     /**
      * Renames and moves a file out of temp repository
      * @param array $data array of data in model format
@@ -688,7 +567,6 @@ class DevelopersComponent extends Object {
         // Move file
         if (file_exists($currentPath)) {
             // Bail if the file exists. See bug 470652 for a rough explanation
-            // Unless the file is being re-uploaded due to failed validation
             if (file_exists($newPath)) {
                 return sprintf(___('A version of that add-on already exists. To replace it, you must delete the file %1$s first.'), $filename);
             }

@@ -103,7 +103,7 @@ var upload = {
            
                 $('.validation').slideUp('slow');
                 if (upload.response.error == '1') {
-                    $('#upload-error-text').html(urldecode(upload.response.error_message));
+                    $('#upload-error-text').html(upload.response.error_message);
                     $('#upload-error').slideDown('slow');
                     $('#file-upload input[type=submit]').attr('disabled', '');
                     $('#submission-area').slideDown('slow');
@@ -477,6 +477,11 @@ var versions_validate = {
             // Since the result is just a big tree, we can simply replace them.
             response = response.replace(/'/g, '"');            
             var result = JSON.parse(response);
+
+            if (result.validation_disabled) {
+                upload.completeUpload();
+                return;
+            }
         
             $('#test-details-' + fileId).append(result.result);
             $('#results-summary-' + fileId + '-' + result.test_group_id + ' .results').fadeOut('slow', function () {

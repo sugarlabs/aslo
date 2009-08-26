@@ -514,27 +514,38 @@ class DevelopersController extends AppController
                 'datestatuschanged' => $this->Amo->getNOW()
             );
         }
-        // Run validation tests here for inital group
-        $allResults = array();
-        if (!$this->Validation->runTest($validate['filename'],  1, $allResults)) {
-            // If things failed, find out why 
-            foreach ($allResults as $result) {
-                if ($result['TestResult']['result'] == TEST_FAIL) {
-                    return $this->Error->getJSONforError(sprintf(___('The add-on failed a validation test: %s'), $result['TestResult']['message']));
+
+        // Check for validation kill switch
+        if (!$this->Config->getValue('validation_disabled')) {
+            
+            // Run validation tests here for inital group
+            $allResults = array();
+            if (!$this->Validation->runTest($validate['filename'],  1, $allResults)) {
+                // If things failed, find out why 
+                foreach ($allResults as $result) {
+                    if ($result['TestResult']['result'] == TEST_FAIL) {
+                        return $this->Error->getJSONforError(sprintf(___('The add-on failed a validation test: %s'), $result['TestResult']['message']));
+                    }
                 }
             }
+
+            // Clear duplicates
+            $filename = $validate['filename'];
+            $this->Amo->clean($filename);
+            $this->Addon->execute("DELETE FROM `test_results_cache` WHERE `key` = '{$filename}'");
         }
-        
-        // Clear duplicates
-        $filename = $validate['filename'];
-        $this->Amo->clean($filename);
-        $this->Addon->execute("DELETE FROM `test_results_cache` WHERE `key` = '{$filename}'");
 
         // Parse install.rdf file if not a search plugin
         if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
             // Extract install.rdf from xpi or jar
             $zip = new Archive_Zip($addon['File']['details']['path']);
             $extraction = $zip->extract(array('extract_as_string' => true, 'by_name' => array('install.rdf')));
+
+            // Make sure install.rdf is present  
+            if (empty($extraction)) {  
+                $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->url('/pages/appversions'));  
+                return $this->Error->getJSONforError(___('No install.rdf present.').'<br />'.$validAppReference);  
+            }
 
             $fileContents = $extraction[0]['content'];
 
@@ -546,6 +557,13 @@ class DevelopersController extends AppController
 
             // Clean manifest data
             $this->Amo->clean($manifestData);
+
+            // Validate manifest data  
+            $validate = $this->Validation->validateManifestData($manifestData);  
+            if (is_string($validate)) {  
+                // If a string is returned, there was an error  
+                return $this->Error->getJSONforError($validate);  
+            }
 
             // Last minute add-on type correction
             if ($manifestData['type'] == 8) {
@@ -562,12 +580,26 @@ class DevelopersController extends AppController
             $addon['Version']['version'] = $manifestData['version'];
 
             // Validate target applications
-            $addon['appversions'] = $this->Developers->validateTargetApplications($manifestData['targetApplication']);
+            $validate = $this->Validation->validateTargetApplications($manifestData['targetApplication']);
+            if (is_string($validate)) {  
+                // If a string is returned, there was an error  
+                return $this->Error->getJSONforError($validate);  
+            }  
+            else {  
+                // If an array is returned, there were no errors  
+                $addon['appversions'] = $validate;  
+            }
+
         }
         elseif ($addon['Addon']['addontype_id'] == ADDON_SEARCH) {
             // Get search engine properties
             $search = $this->Opensearch->parse($addon['File']['details']['path']);
 
+            // There was a parse error, the name was empty, etc.  Bad things.  
+            if ($search == null) {  
+                return $this->Error->getJSONforError(___('Either the XML is invalid or required fields are missing.  Please <a href="https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox">read the documentation</a>, verify your add-on, and try again.'));  
+            }  
+             
             $addon['Addon']['name'] = $search->name;
             $addon['Addon']['summary'] = $search->description;
             $addon['Version']['version'] = date('Ymd');
@@ -1541,6 +1573,8 @@ class DevelopersController extends AppController
         // Don't show the view if validation is disabled.  OK to return
         // nothing here, since this view is just the AJAX handle
         if ($this->Config->getValue('validation_disabled')) {
+            $this->set('json', array('validation_disabled' => 1));
+            $this->render('json', 'ajax');
             return;
         }
 
