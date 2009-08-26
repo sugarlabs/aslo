@@ -9198,7 +9198,8 @@ Timeplot.DefaultTimeGeometry.prototype = {
     toScreen: function(time) {
     	if (this._canvas && this._latestDate) {
             var t = time - this._earliestDate.getTime();
-            return this._canvas.width * this._map.direct(t) / this._mappedPeriod;
+            var fraction = (this._mappedPeriod > 0) ? this._map.direct(t) / this._mappedPeriod : 0;
+            return this._canvas.width * fraction;
         } else {
             return -50;
         } 
