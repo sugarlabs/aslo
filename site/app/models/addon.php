@@ -301,7 +301,7 @@ class Addon extends AppModel
 
             case 'contrib_details':
                 $fields = array_merge($fields, array('the_reason', 'the_future',
-                    'wants_contributions', 'paypal_id', 'suggested_amount'));
+                    'annoying', 'wants_contributions', 'paypal_id', 'suggested_amount'));
                 break;
                 
             default:
