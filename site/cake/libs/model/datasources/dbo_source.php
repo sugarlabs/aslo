@@ -1386,7 +1386,14 @@ class DboSource extends DataSource {
 		$count = count($fields);
 
 		if ($count >= 1 && !in_array($fields[0], array('*', 'COUNT(*)'))) {
+            /* MOZILLA in da house! (jbalogh 8/27/09)
+             * This used to be an ...$i < 0; $i++... loop, which fails if our
+             * "array" doesn't have consecutive keys.  That can happen when you
+             * do array_unique on a set of fields.  Using foreach so $i is bound
+             * correctly, not bothering with the value part.
+             */
 			foreach ($fields as $i => $not_used) {
+            /* MOZILLA wuz here. */
 				if (!preg_match('/^.+\\(.*\\)/', $fields[$i])) {
 					$prepend = '';
 
