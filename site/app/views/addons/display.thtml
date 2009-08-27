@@ -502,6 +502,21 @@ if (!empty($coll_addon_added)) {
 </div>
 <!-- /.highlight-->
 
+    <?php if (!empty($addon['Recommendations'])): ?>
+      <div>
+        <h3 class="compact-bottom"><?=___('Often Used with&hellip;')?></h3>
+        <ul class="addon-otheraddons">
+          <?php foreach ($addon['Recommendations'] as $rec): ?>
+            <li>
+              <a href="<?=$html->url('/addon/'.$rec['Addon']['id'])?>" class="addonitem">
+                <?=$rec['Translation']['name']['string']?>
+              </a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+    <?php endif; ?>
+
     <div class="collections-add">
         <h3 class="compact-bottom"><?=___('Related Collections')?></h3>
 
@@ -544,22 +559,6 @@ if (!empty($coll_addon_added)) {
         </form>
         <?php endif; ?>
     </div>
-
-    <?php if (!empty($addon['Recommendations'])): ?>
-      <div>
-        <h3 class="compact-bottom"><?=___('Often Used with&hellip;')?></h3>
-        <ul class="addon-otheraddons">
-          <?php foreach ($addon['Recommendations'] as $rec): ?>
-            <li>
-              <a href="<?=$html->url('/addon/'.$rec['Addon']['id'])?>" class="addonitem">
-                <?=$rec['Translation']['name']['string']?>
-              </a>
-            </li>
-          <?php endforeach; ?>
-        </ul>
-      </div>
-    <?php endif; ?>
-
 
 </div>
 <script type="text/javascript" charset="utf-8">
