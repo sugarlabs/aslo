@@ -1386,7 +1386,7 @@ class DboSource extends DataSource {
 		$count = count($fields);
 
 		if ($count >= 1 && !in_array($fields[0], array('*', 'COUNT(*)'))) {
-			for ($i = 0; $i < $count; $i++) {
+			foreach ($fields as $i => $not_used) {
 				if (!preg_match('/^.+\\(.*\\)/', $fields[$i])) {
 					$prepend = '';
 

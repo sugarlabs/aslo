@@ -250,7 +250,8 @@ class Addon extends AppModel
 
             case 'default_fields':
                 //Replaces any fields with the default fields
-                $fields = $this->default_fields;
+                $fields = array_merge($fields, $this->default_fields);
+                break;
 
             case 'files':
                 // list of files for all versions returned (depends on lastversion
