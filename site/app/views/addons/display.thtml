@@ -528,8 +528,8 @@ if (!empty($coll_addon_added)) {
         <?php if ($loggedIn): ?>
         <form action="<?= $html->url('/collections/addtocollection') ?>" method="post" id="coll_publish">
             <div>
-            <h3><label for="publish_to"><?=___('Add to a collection:')?></label></h3>
             <?=$html->link(___('What\'s this?', 'addons_display_a_license_what'), '/collections/')?>
+            <h3><label for="publish_to"><?=___('Add to a collection:')?></label></h3>
             <?=$html->hiddenSession() ?>
             <input name="data[addon_id]" type="hidden" value="<?= $addon['Addon']['id'] ?>" />
             <select name="data[collection_uuid]" id="publish_to">
