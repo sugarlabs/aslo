@@ -1,5 +1,5 @@
 <?php
-define('REVISION', 48743);
-define('CSS_REVISION', 48153);
-define('JS_REVISION', 39718);
+define('REVISION', 50345);
+define('CSS_REVISION', 50250);
+define('JS_REVISION', 49745);
 ?>
