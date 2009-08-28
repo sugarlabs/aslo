@@ -78,7 +78,7 @@ class FilesController extends AppController
         $this->Addon->id = $file['Version']['addon_id'];
         $addon = $this->Addon->read();
 
-        // Compatability redirect
+        // Compatibility redirect
         $compat_apps = array();
         if (!empty($addon['Version'])) {
             foreach ($addon['Version'] as $version) {

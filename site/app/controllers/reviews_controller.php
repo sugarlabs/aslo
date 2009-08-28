@@ -79,7 +79,7 @@ class ReviewsController extends AppController
             return;
         }
 
-        // Compatability redirect
+        // Compatibility redirect
         $compat_apps = array();
         if (!empty($addon['Version'])) {
             foreach ($addon['Version'] as $version) {
@@ -256,7 +256,7 @@ class ReviewsController extends AppController
             return;
         }
         
-        // Compatability redirect
+        // Compatibility redirect
         $versions = $this->Version->findAllByAddonId($id);
         $compat_apps = array();
         if (!empty($versions)) {
