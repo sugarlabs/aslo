@@ -353,6 +353,13 @@ class StatsComponent extends Object {
                 break;
         }
 
+        // we have two varieties above: csv pre-built
+        // in which case we are done now
+        if (!empty($csv)) {
+            return $csv;
+        }
+        // otherwise post-process the dates array for csv data
+
         arsort($dynamicFields);
         
         // Loop through dates and add each field to the CSV array
