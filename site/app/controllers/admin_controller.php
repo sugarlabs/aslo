@@ -1094,6 +1094,13 @@ class AdminController extends AppController
         if (!empty($this->data)) {
             //Delete
             if (!empty($_POST['delete'])) {
+                // Check for existing files
+                $files = $this->File->findCount(array('File.platform_id' => $this->Platform->id));
+                if ($files > 0) {
+                    $this->flash(sprintf(___('Cannot delete platform: There are %s files that must be deleted.'), $files), '/admin/platforms');
+                    return;
+                }
+
                 //Retrieve platform to store name in log
                 $platform = $this->Platform->findById($this->Platform->id, null, null, -1);
                 
