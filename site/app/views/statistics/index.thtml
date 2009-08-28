@@ -34,8 +34,8 @@
  * the provisions above, a recipient may use your version of this file under
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
- * ***** END LICENSE BLOCK ***** */ 
-?> 
+ * ***** END LICENSE BLOCK ***** */
+?>
 <h1><?=___('Statistics Dashboard', 'statistics_index_title')?></h1>
 
 <div class="secondary" role="complementary">
@@ -73,7 +73,7 @@
       <div id="not-enough-data" class="warning" style="display: none;"><div>
         <?=___('There is not yet enough data to display this graph. Please check back later.')?>
       </div></div>
-        
+
       <noscript>
         <div class="warning"><div>
           <?=___('JavaScript is required to view the Statistics Dashboard graphs.')?>
@@ -127,7 +127,7 @@
 
 
 <?php
-    echo '<h3>Add-on statistics</h3>';
+    echo '<h3>'.___('Add-on statistics', 'addons_statistics_header').'</h3>';
     echo '<div class="featured prose">';
     echo '<div class="featured-inner article">';
         if (!empty($addons)) {
@@ -138,7 +138,7 @@
             }
             echo '</ul>';
         }
-        
+
         if (!empty($otherAddons)) {
             echo '<p>';
             if (!empty($addons)) {
@@ -154,7 +154,7 @@
                     echo ___('Select an add-on with public statistics').':';
             }
             echo '</p>';
-            
+
             echo $html->formTag('/statistics/', 'get');
             echo $html->selectTag('Addon/id', $otherAddons, null, array('onChange' => 'changeAddon(this);'));
             echo '<noscript><input type="submit" value="'.___('View Statistics').'"></noscript>';
