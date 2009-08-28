@@ -286,6 +286,15 @@ switch ($action) {
         $db->write($sharing_sql);
         $affected_rows += mysql_affected_rows($db->write);
 
+        debug('Cleaning up the Test Results extraction cache...');
+        $location  = escapeshellarg(NETAPP_STORAGE);
+        $result = shell_exec('find '.$location.' -maxdepth 1 -name "validate-*" -mtime +7 -type d -exec rm -rf \'{}\' \;');
+        if (!empty($result)) {
+            foreach ($result as $line) {
+                debug($line);
+            }
+        }
+
     break;
 
 
