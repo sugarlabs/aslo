@@ -140,7 +140,7 @@ class AddonsController extends AppController
         $addon = $this->Addon->getAddon($addon_id, $associations);
 
         // if the latest version is incompatible with the current app, redirect
-        $redirect = $this->_app_redirect($addon['compatible_apps']);
+        $redirect = $this->Amo->_app_redirect($addon['compatible_apps']);
         if ($redirect) {
             $redirect .= "/addon/{$addon_id}/developers";
             if (!empty($extra)) $redirect .= "/{$extra}";
@@ -297,10 +297,12 @@ class AddonsController extends AppController
         }
 
         // if the latest version is incompatible with the current app, redirect
-        $redirect = $this->_app_redirect($compat_apps);
-        if ($redirect) {
-            $this->redirect("{$redirect}/addon/{$id}", null, true, false);
-            return;
+        if (isset($compat_apps)) {
+            $redirect = $this->Amo->_app_redirect($compat_apps);
+            if ($redirect) {
+                $this->redirect("{$redirect}/addon/{$id}", null, true, false);
+                return;
+            }
         }
 
         // TODO: Look up the current share totals for this addon.
@@ -441,25 +443,6 @@ class AddonsController extends AppController
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
         ));
-    }
-
-    /**
-     * Determine what app to redirect to if add-on is incompatible with current app
-     * @param array $compat_apps app compatibility array
-     * @return mixed app shortname if redirect is necessary, null otherwise
-     */
-    function _app_redirect($compat_apps = array()) {
-        if (empty($compat_apps)) return null;
-
-        foreach ($compat_apps as $app) {
-            if ($app['Application']['application_id'] == APP_ID)
-                return null;
-        }
-
-        // if we make it here, we need to redirect
-        global $app_shortnames;
-        $targetapp = array_search($compat_apps[0]['Application']['application_id'], $app_shortnames);
-        return $targetapp;
     }
 
     /**
@@ -1511,6 +1494,15 @@ class AddonsController extends AppController
             return;
         }
 
+        $_latest_version = $this->Version->getVersionByAddonId($addon_id);
+        $compat_apps = $this->Version->getCompatibleApps($_latest_version);
+        // if the latest version is incompatible with the current app, redirect
+        $redirect = $this->Amo->_app_redirect($compat_apps);
+        if ($redirect) {
+            $this->redirect("{$redirect}/addons/policy/{$lightbox}/{$addon_id}/{$file_id}", null, true, false);
+            return;
+        }
+
         if (isset($file_id)) {
             $this->File->unbindFully();
             $this_file = $this->File->findById($file_id);
@@ -1573,11 +1565,20 @@ class AddonsController extends AppController
         //reformat the returned versions array
         $version_ids = array();
 		$comp_apps_by_id = array();
+        $all_compat_apps = array();
         foreach ($version_list as $single_id) {
             $cur_id = $single_id['Version']['id'];
             $version_ids[] = $cur_id;
             $compat_apps = $this->Version->getCompatibleApps($cur_id);
+            $all_compat_apps = array_merge($compat_apps, $all_compat_apps);
             $comp_apps_by_id[$cur_id] = array_slice($compat_apps, 0, 1);
+        }
+
+        // If we aren't compatible, redirect to a good version
+        $redirect = $this->Amo->_app_redirect($all_compat_apps);
+        if ($redirect) {
+            $this->redirect("{$redirect}/addons/versions/{$id}", null, true, false);
+            return;
         }
 
         if (!empty($version_ids)) {

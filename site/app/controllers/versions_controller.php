@@ -50,6 +50,13 @@ class VersionsController extends AppController
 
     function license($version_id) {
         $version = $this->Version->findById($version_id);
+        $compat_apps = $this->Version->getCompatibleApps($version['Version']['id']);
+        $redirect = $this->Amo->_app_redirect($compat_apps);
+        if ($redirect) {
+            $this->redirect("{$redirect}/versions/license/{$version_id}", null, true, false);
+            return;
+        }
+
         $addon = $this->Addon->getAddon($version['Version']['addon_id']);
         $license_text = $this->License->getText($version['Version']['license_id']);
         $this->set('version', $version);

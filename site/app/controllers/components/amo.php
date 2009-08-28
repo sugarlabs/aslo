@@ -831,5 +831,25 @@ class AmoComponent extends Object {
         $this->navCategories = $catlist; // cache result for subsequent calls
         return $catlist;
     }
+
+    /**
+     * Determine what app to redirect to if add-on is incompatible with current app
+     * @param array $compat_apps app compatibility array
+     * @return mixed app shortname if redirect is necessary, null otherwise
+     */
+    function _app_redirect($compat_apps = array()) {
+        if (empty($compat_apps)) return null;
+
+        foreach ($compat_apps as $app) {
+            if ($app['Application']['application_id'] == APP_ID)
+                return null;
+        }
+
+        // if we make it here, we need to redirect
+        global $app_shortnames;
+        $targetapp = array_search($compat_apps[0]['Application']['application_id'], $app_shortnames);
+        return $targetapp;
+    }
+
 }
 ?>

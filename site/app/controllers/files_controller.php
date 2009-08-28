@@ -68,7 +68,7 @@ class FilesController extends AppController
     * @param int $id the file
     */
     function browse($file_id, $review = 0) {
-	$this->Amo->clean($file_id);
+        $this->Amo->clean($file_id);
         
         $this->File->id = $file_id;
         if (!$file = $this->File->read()) {
@@ -77,6 +77,19 @@ class FilesController extends AppController
         }
         $this->Addon->id = $file['Version']['addon_id'];
         $addon = $this->Addon->read();
+
+        // Compatability redirect
+        $compat_apps = array();
+        if (!empty($addon['Version'])) {
+            foreach ($addon['Version'] as $version) {
+                $compat_apps = array_merge($this->Version->getCompatibleApps($version['id']), $compat_apps);
+            }
+        }
+        $redirect = $this->Amo->_app_redirect($compat_apps);
+        if ($redirect) {
+            $this->redirect("{$redirect}/files/browse/{$file_id}/{$review}", null, true, false);
+            return;
+        }
         
         $isDeveloper = false;
         $user = $this->Session->read('User');

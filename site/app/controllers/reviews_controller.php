@@ -78,6 +78,20 @@ class ReviewsController extends AppController
             $this->flash(___('Add-on not found!'), '/', 3);
             return;
         }
+
+        // Compatability redirect
+        $compat_apps = array();
+        if (!empty($addon['Version'])) {
+            foreach ($addon['Version'] as $version) {
+                $compat_apps = array_merge($this->Version->getCompatibleApps($version['id']), $compat_apps);
+            }
+        }
+        $redirect = $this->Amo->_app_redirect($compat_apps);
+        if ($redirect) {
+            $this->redirect("{$redirect}/reviews/display/{$id}", null, true, false);
+            return;
+        }
+
         $this->publish('addon', $addon);
 
         // user logged in?
@@ -239,6 +253,20 @@ class ReviewsController extends AppController
         $addon = $this->Addon->getAddon($id);
         if (empty($addon)) {
             $this->flash(___('Add-on not found!'), '/', 3);
+            return;
+        }
+        
+        // Compatability redirect
+        $versions = $this->Version->findAllByAddonId($id);
+        $compat_apps = array();
+        if (!empty($versions)) {
+            foreach ($versions as $version) {
+                $compat_apps = array_merge($this->Version->getCompatibleApps($version['Version']['id']), $compat_apps);
+            }
+        }
+        $redirect = $this->Amo->_app_redirect($compat_apps);
+        if ($redirect) {
+            $this->redirect("{$redirect}/reviews/add/{$id}", null, true, false);
             return;
         }
 
