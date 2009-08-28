@@ -508,7 +508,7 @@ if (!empty($coll_addon_added)) {
         <ul class="addon-otheraddons">
           <?php foreach ($addon['Recommendations'] as $rec): ?>
             <li>
-              <a href="<?=$html->url('/addon/'.$rec['Addon']['id'])?>" class="addonitem">
+              <a href="<?=$html->url('/addon/'.$rec['Addon']['id'].'?src=reco')?>" class="addonitem">
                 <?=$rec['Translation']['name']['string']?>
               </a>
             </li>
