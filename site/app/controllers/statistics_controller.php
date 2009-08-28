@@ -228,7 +228,7 @@ class StatisticsController extends AppController
         // Only show contribution stats for add-on owners (and admins). This
         // view variable is only used to hide contribution related elements.
         // The data feeds perform additional checks.
-        $show_contributions = $this->Amo->checkOwnership($addon_id, $addon);
+        $show_contributions = ($this->_checkContributionStatsEnabled() && $this->Amo->checkOwnership($addon_id, $addon));
         $this->publish('show_contributions', $show_contributions);
 
         // We only show the RSS key if the user could access if it wasn't public
@@ -606,7 +606,12 @@ class StatisticsController extends AppController
             return;
         }
 
-        $csv = $this->Stats->historicalPlot($addon_id, $plot, @$_GET['group_by']);
+        // Contribution stats might be disabled
+        if ($plot == 'contributions' && !$this->_checkContributionStatsEnabled()) {
+            $csv = array();
+        } else {
+            $csv = $this->Stats->historicalPlot($addon_id, $plot, @$_GET['group_by']);
+        }
 
         $this->set('csv', $csv);
         $this->render('csv', 'ajax');
@@ -664,8 +669,8 @@ class StatisticsController extends AppController
             return;
 
         // Only include contribution stats for add-on owners
-        $include_contributions = $this->Amo->checkOwnership($addon_id, $addon);
-        
+        $include_contributions = ($this->_checkContributionStatsEnabled() &&  $this->Amo->checkOwnership($addon_id, $addon));
+
         if ($type == 'summary')
             $json = $this->Stats->getSummary($addon_id, $include_contributions);
 
@@ -770,6 +775,13 @@ class StatisticsController extends AppController
         }
 
         return false;
+    }
+
+    /**
+     * Determines if contribution stats are enabled
+     */
+    function _checkContributionStatsEnabled() {
+        return (defined('CONTRIBUTION_STATS_ENABLED') && CONTRIBUTION_STATS_ENABLED);
     }
 
     /**
