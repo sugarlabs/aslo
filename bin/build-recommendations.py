@@ -1,8 +1,11 @@
 import json
 import subprocess
 import time
+import warnings
 
-import MySQLdb as mysql
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore')
+    import MySQLdb as mysql
 
 import recommend
 
