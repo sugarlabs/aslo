@@ -79,8 +79,8 @@ if ($multiple) {
         </div>
         <ol class="teaser-items">
           <?php foreach ($authors as $author): ?>
+            <?php $user = $this->viewVars['user'] = $author['User'];?>
             <li class="vcard" id="t-author-<?=$user['id']?>">
-              <?php $user = $this->viewVars['user'] = $author['User'];?>
               <div class="secondary">
                 <?=$this->renderElement('amo2009/users/avatar')?>
               </div>
