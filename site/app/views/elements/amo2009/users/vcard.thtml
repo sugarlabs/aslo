@@ -43,6 +43,10 @@
  * Optional:
  *   $about_addons: show add-on details, defaults to true
  *   $table_class: defaults to "person-info"
+ *
+ * Note that this element doesn't declare class=vcard anywhere; you should put
+ * that outside the renderElement.  This was done so you can include other vcard
+ * elements with the user info here.
  */
 ?>
 
@@ -56,7 +60,7 @@ if (!isset($table_class)) {
 }
 ?>
 
-<div class="vcard">
+<div>
   <table class="<?=$table_class?>" summary="<?=___('Developer Information')?>">
     <tbody>
       <tr>
