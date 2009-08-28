@@ -46,9 +46,6 @@ def main():
     inserts = []
     recs = recommend.top(recommend.rank_all(d))
     for index, (addon, scores) in enumerate(recs):
-        if index % 100 == 0:
-            print '%s: %s (%s)' % (index, addon, time.time() - start)
-
         inserts.extend((addon, other, score) for other, score in scores)
 
     with mysql.connect(**write) as cursor:
@@ -56,8 +53,6 @@ def main():
         cursor.execute(DELETE)
         cursor.execute(INSERT + ','.join('(%s,%s,%s)' % x for x in inserts))
         cursor.execute('COMMIT')
-
-    print 'Total: %s' % (time.time() - start)
 
 
 if __name__ == '__main__':
