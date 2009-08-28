@@ -352,15 +352,23 @@ class StatsComponent extends Object {
                 }
                 break;
         }
-        
+
         arsort($dynamicFields);
         
         // Loop through dates and add each field to the CSV array
-        foreach ($dates as $date => $items) {
+        // to save on memory, modify the dates array inplace rather
+        // than create yet another monster array and doubling php's
+        // memory footprint (see bug 513199)
+        $keys = array_keys($dates);
+        foreach ($keys as $date) {
+            $items = $dates[$date];
             $record = array();
 
             // skip dates with missing data
-            if (!array_key_exists('dynamic', $items)) continue;
+            if (!array_key_exists('dynamic', $items)) {
+                unset($dates[$date]);
+                continue;
+            }
 
             foreach ($items as $item => $value) {                
                 // If item is a "normal" field like date or count, add it
@@ -378,10 +386,11 @@ class StatsComponent extends Object {
                 }
             }
             
-            $csv[] = $record;
+            $dates[$date] = $record;
         }
-        
-        return $csv;
+
+        // numeric keys please for csv
+        return array_values($dates);
     }
 
     /**
