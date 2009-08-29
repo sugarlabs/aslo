@@ -394,10 +394,10 @@ Bandwagon.Controller.CollectionsPane.doManageCollection = function(event)
 
     var collection = Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem.collection;
 
-    if (collection == null || !collection.links["manage"])
+    if (collection == null || !collection.links["edit"])
         return;
 
-    Bandwagon.Controller.CollectionsPane._openURL(collection.links["manage"]);
+    Bandwagon.Controller.CollectionsPane._openURL(collection.links["edit"]);
 }
 
 Bandwagon.Controller.CollectionsPane.doUpdate = function(event)
