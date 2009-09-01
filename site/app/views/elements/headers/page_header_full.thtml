@@ -102,48 +102,9 @@
             </li>
         </ul>
 
-        <?php if (!$this->controller->Session->check('User')): ?>
-            <p class="context">
-                <?= sprintf(
-                    ___('<a href="%1$s">Register</a> or <a href="%2$s">Log in</a>'),
-                    $html->url('/users/register', false), $html->url($html->login_url())
-                ) ?>
-            </p>
         <?php
-        else:
-            $tools_links = array();
-            $user = $this->controller->Session->read('User');
-            $tools_links[] = $html->link(___('Developer Tools', 'sidebar_navlink_developer_tools'), '/developers');
-            if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User')))
-                $tools_links[] = $html->link(___('Editor Tools', 'sidebar_navlink_editor_tools'), '/editors');
-            if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User')))
-                $tools_links[] = $html->link('Localizer Tools', '/localizers');
-            if ($this->controller->SimpleAcl->actionAllowed('Admin', '%', $this->controller->Session->read('User')))
-                $tools_links[] = $html->link(___('Admin Tools', 'sidebar_navlink_admin_tools'), '/admin');
-
-            if (count($tools_links) > 1):
-            ?>
-            <ul class="tools">
-                <li>
-                <a href="#" class="controller"><?=___('Tools')?></a>
-                    <ul>
-                        <?php foreach ($tools_links as $_tl): ?>
-                        <li><?=$_tl?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                </li>
-            </ul>
-            <?php else: ?>
-            <p class="context">
-                <?=$tools_links[0]?>
-            </p>
-            <?php endif; // more than one tools link ?>
-            <p class="context">
-                <span class="greeting"><?=(!empty($welcomeName) ? sprintf(___('Welcome, %s'), $welcomeName) : ___('Welcome'))?></span>
-                <?= $html->link(___('My Account'), '/users/edit', array('class'=>'settings','title' => $user['email'])) ?>
-                <?= $html->link(___('Log out'), $html->logout_url()) ?>
-            </p>
-        <?php endif; // logged in ?>
-
+        // login/out link
+        echo $this->renderElement('headers/user_login');
+        ?>
     </div>
 </div>
