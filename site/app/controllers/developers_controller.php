@@ -85,21 +85,13 @@ class DevelopersController extends AppController
         // Clean post data
         $this->Amo->clean($this->data);
 
-        $this->layout = 'mozilla';
-        $this->pageTitle = ___('Developer Tools', 'devcp_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->layout = 'amo2009';
+        $this->pageTitle = ___('Add-on Developer Hub').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
-        $this->cssAdd = array('developers', 'validation');
+        $this->cssAdd = array('amo2009/developers', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
-
         $this->jsAdd = array('developers', 'json', 'jquery-ui/jqModal.js');
         $this->publish('jsAdd', $this->jsAdd);
-
-        $this->publish('expand_categories', true);
-
-        $this->breadcrumbs = array(___('Developer Tools', 'devcp_pagetitle') => '/developers/index');
-        $this->publish('breadcrumbs', $this->breadcrumbs);
-
-        $this->publish('subpagetitle', ___('Developer Tools', 'devcp_pagetitle'));
 
         global $native_languages;
         $this->set('nativeLanguages', $native_languages);
@@ -118,9 +110,9 @@ class DevelopersController extends AppController
     }
 
     /**
-    * Developer Dashboard
+    * Developer Hub
     */
-    function dashboard() {
+    function hub() {
         $session = $this->Session->read('User');
 
         $addon_ids = $this->Addon->getAddonsByUser($session['id']);
@@ -149,7 +141,8 @@ class DevelopersController extends AppController
         $this->publish('statuses', $this->Amo->getStatusNames());
         $this->publish('addontypes', $this->Addontype->getNames());
 
-        $this->render('dashboard');
+        $this->set('bodyclass', 'inverse');
+        $this->render('hub');
     }
 
     function json($action, $additional = '', $file = '') {
