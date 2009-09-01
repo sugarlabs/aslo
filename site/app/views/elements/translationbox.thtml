@@ -98,7 +98,7 @@ if (!isset($graybox) || $graybox === true) {
             }
 
             if (!empty($maxLength)) {
-                echo '<div class="translation-maxlength '.$locale.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'">'.$html->image('developers/exclamation.png', array('alt' => '')).sprintf(___('Characters used: %1$s / %2$s'), '<span>'.strlen($translation).'</span>', $maxLength).'</div>';
+                echo '<div class="translation-maxlength '.$locale.($this->translationBox['defaultLocale'] == $locale ? ' selected' : '').'">'.$html->image('developers/exclamation.png', array('alt' => '')).sprintf(___('Characters used: %1$s / %2$s'), '<span>'.mb_strlen($translation, 'UTF-8').'</span>', $maxLength).'</div>';
             }
         }
     ?>
