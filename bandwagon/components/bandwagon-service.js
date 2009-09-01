@@ -141,6 +141,7 @@ BandwagonService.prototype = {
         this._service.registerLogger(Bandwagon.Logger);
         this._service.registerObserver(this._getCollectionObserver);
         this._service.registerObserver(this._getServiceDocumentObserver);
+        this._service.registerObserver(this._notAuthorizedObserver);
 
         this.registerCollectionUpdateObserver(this._collectionUpdateObserver);
         // init sqlite storage (also creating tables in sqlite if needed). create factory objects.
@@ -390,13 +391,6 @@ BandwagonService.prototype = {
             if (event.isError())
             {
                 Bandwagon.Logger.error("RPC error: '" + event.getError().getMessage() + "'");
-    
-                if (event.getError().getCode() == Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_ERROR_UNAUTHORIZED)
-                {
-                    bandwagonService.deauthenticate();
-                }
-
-                // otherwise ignore for now
             }
             else
             {
@@ -413,6 +407,19 @@ BandwagonService.prototype = {
         }
     },
 
+    /* Watch all API responses for an "unauthorized" error.
+       This implies we're not authenticated, so we should log out the user from
+       the UI.
+     */
+    _notAuthorizedObserver: function(event)
+    {
+        if (event.isError() && (event.getError().getMessage() == "unauthorized" || event.getError().getCode() == Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_ERROR_UNAUTHORIZED))
+        {
+            Bandwagon.Logger.debug("in _notAuthorizedObserver(), response says this client is not authorized; deauthenticating ui");
+            bandwagonService.deauthenticate();
+        }
+    },
+ 
     _getServiceDocumentObserver: function(event)
     {
         Bandwagon.Logger.info("in _getServiceDocumentObserver()");
@@ -422,11 +429,6 @@ BandwagonService.prototype = {
             if (event.isError())
             {
                 Bandwagon.Logger.error("Could not update collections list: " + event.getError().toString());
-
-                if (event.getError().getCode() == Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_ERROR_UNAUTHORIZED)
-                {
-                    bandwagonService.deauthenticate();
-                }
             }
             else
             {

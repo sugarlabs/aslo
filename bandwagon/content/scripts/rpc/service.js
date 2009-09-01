@@ -75,7 +75,8 @@ Bandwagon.RPC.Service = function()
 
         // CALLBACK TYPE 2: if we have observers, notify them
 
-        service.notifyObservers(event);
+        if (!event.isInternalEvent)
+            service.notifyObservers(event);
     };
 
     this.rpcCompleteWithError = function(rpcnet, errorCode, type)
@@ -255,6 +256,8 @@ Bandwagon.RPC.Service.prototype.authenticate = function(login, password, callbac
 
     var internalCallback1 = function(event)
     {
+        event.isInternalEvent = true;
+
         if (event && event.authURL)
         {
             service._logger.debug("Bandwagon.RPC.Service.authenticate: using authURL = " + event.authURL);

@@ -43,6 +43,7 @@ Bandwagon.RPC.Event = function(type, result, response, bw)
     this._type = type;
     this._result = result;
     this._response = response;
+    this.isInternalEvent = false;
     this.error = null;
 }
 

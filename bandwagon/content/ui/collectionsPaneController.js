@@ -210,8 +210,11 @@ Bandwagon.Controller.CollectionsPane._invalidateExtensionsDeck = function()
 
     if (!bandwagonService.isAuthenticated() || this.loginInProcess == true)
     {
-        Bandwagon.Controller.CollectionsPane.elemBandwagonExtensionsDeck.selectedIndex = 2;
-        window.setTimeout(function() { document.getElementById("login").focus(); }, 200);
+        if (Bandwagon.Controller.CollectionsPane.elemBandwagonExtensionsDeck.selectedIndex != 2)
+        {
+            Bandwagon.Controller.CollectionsPane.elemBandwagonExtensionsDeck.selectedIndex = 2;
+            window.setTimeout(function() { document.getElementById("login").focus(); }, 200);
+        }
     }
     else if (elemsBandwagonCollection.length == 0)
     {
