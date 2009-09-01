@@ -1,0 +1,21 @@
+<?php
+/**
+ * Required arguments:
+ *   $objects
+ *   $title
+ *   $url_prefix
+ */
+?>
+
+<div class="highlight">
+  <h3><?=$title?></h3>
+  <ul class="xoxo">
+    <?php foreach ($objects as $object): ?>
+      <li>
+        <a href="<?=$html->url($url_prefix . $object->slug)?>">
+          <?=$object->title?>
+        </a>
+      </li>
+    <?php endforeach ?>
+  </ul>
+</div>

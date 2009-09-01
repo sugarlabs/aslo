@@ -1,0 +1,38 @@
+<?php
+/**
+ * Required arguments:
+ *   $title
+ *   $description
+ *   $objects
+ *   $url_prefix
+ */
+?>
+<?=$this->renderElement('amo2009/hub/navbar')?>
+
+<?=$this->renderElement('amo2009/breadcrumbs')?>
+<h2><?=$title?></h2>
+
+<div class="primary" role="main">
+  <p class="hub-category-description"><?=$description?></p>
+
+  <ul class="blocks">
+    <?php foreach ($objects as $object): ?>
+      <li class="item">
+        <h4>
+          <a href="<?=$html->url($url_prefix . $object->slug)?>">
+            <?=$object->title?>
+          </a>
+        </h4>
+        <p class="description"><?=$object->description?></p>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
+
+<div class="secondary" role="complementary">
+  <?=$this->renderElement('amo2009/hub/sidebar', array(
+      'title' => $title,
+      'objects' => $objects,
+      'url_prefix' => $url_prefix,
+  ))?>
+</div>

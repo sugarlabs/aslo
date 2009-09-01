@@ -9,7 +9,7 @@ $this->viewVars['bodyclass'] = 'inverse';
 <h2><?=$category->title?></h2>
 
 <div class="primary" role="main">
-  <p class="howto-description"><?=$category->description?></p>
+  <p class="hub-category-description"><?=$category->description?></p>
 
   <?php foreach ($category->items as $section): ?>
     <h3><?=$section->title?></h3>
@@ -34,6 +34,9 @@ $this->viewVars['bodyclass'] = 'inverse';
 </div>
 
 <div class="secondary" role="complementary">
-  <?=$this->renderElement('amo2009/howto/sidebar',
-                          array('categories' => $categories))?>
+  <?=$this->renderElement('amo2009/hub/sidebar', array(
+      'title' => ___('How-to Library'),
+      'objects' => $categories,
+      'url_prefix' => '/developers/docs/how-to/',
+  ))?>
 </div>
