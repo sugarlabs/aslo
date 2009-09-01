@@ -52,112 +52,10 @@ class HubComponent extends Object {
         $this->categories = array(
             new HubCategory('Getting Started', $lorem, 'getting-started', array(
                 new SubCategory('The Basics', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-                new SubCategory('Another Section', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-            )),
-            new HubCategory('Learning The Language', $lorem, 'learning', array(
-                new SubCategory('The Basics', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-                new SubCategory('Another Section', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-            )),
-            new HubCategory('Lorem Ipsum', $lorem, 'argh', array(
-                new SubCategory('The Basics',  array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-                new SubCategory('Another Section', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-            )),
-            new HubCategory('Dolor Sit Amet', $lorem, 'slug', array(
-                new SubCategory('The Basics', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-                new SubCategory('Another Section', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-            )),
-            new HubCategory('Consectetur', $lorem, 'slug', array(
-                new SubCategory('The Basics', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-                new SubCategory('Another Section',  array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-            )),
-            new HubCategory('OMG Latin', $lorem, 'slug', array(
-                new SubCategory('The Basics', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-                new SubCategory('Another Section', '', array(
-                    new Howto('Getting Started with Add-on Development', '#huzzah',
-                              'The synopsis goes here', $mdc),
-                    new Howto('Setting Up Your Add-on Development Environment', '#shizow',
-                              'Maybe this one should be Latin?', $flig),
-                    new Howto('The Anatomy of a Firefox Add-on', '#hiyah',
-                              $lorem, $pipes),
-                )),
-            )),
+                    new Howto(0, 'Firefox Add-ons Developer Guide', 'https://developer.mozilla.org/En/Firefox_addons_developer_guide',
+                              'In this detailed guide to extension development, you'll learn the basics of packaging extensions, building an interface with XUL, implementing advanced processes with XPCOM, and how to put it all together.', $mdc)
+                ))
+            )
         );
 
         $this->category_slugs = array();
@@ -191,7 +89,8 @@ class SubCategory extends HubCategory {
 
 class Howto extends Object {
 
-    function __construct($title, $href, $description, $site) {
+    function __construct($id, $title, $href, $description, $site) {
+        $this->id = $id;
         $this->title = $title;
         $this->href = $href;
         $this->description = $description;
