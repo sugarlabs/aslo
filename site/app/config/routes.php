@@ -128,7 +128,7 @@
         
         // Forward old DevCP links to new DevCP
         $Route->connect("/{$prefix}/developers(/|/index)?", array('controller' => 'developers', 'action' => 'hub'));
-        $Route->connect("/{$prefix}/developers/details/*", array('controller' => 'developers', 'action' => 'dashboard'));
+        $Route->connect("/{$prefix}/developers/(dashboard|addons)", array('controller' => 'developers', 'action' => 'dashboard'));
         $Route->connect("/{$prefix}/developers/edit/*", array('controller' => 'developers', 'action' => 'addon', 'edit'));
         $Route->connect("/{$prefix}/developers/add/*", array('controller' => 'developers', 'action' => 'versions' ,'add'));
         $Route->connect("/{$prefix}/developers/editversion/*", array('controller' => 'developers', 'action' => 'versions', 'edit'));

@@ -113,6 +113,14 @@ class DevelopersController extends AppController
     * Developer Hub
     */
     function hub() {
+        $this->set('bodyclass', 'inverse');
+        $this->render('hub');
+    }
+
+    /**
+    * Add-ons Dashboard
+    */
+    function dashboard() {
         $session = $this->Session->read('User');
 
         $addon_ids = $this->Addon->getAddonsByUser($session['id']);
@@ -142,7 +150,7 @@ class DevelopersController extends AppController
         $this->publish('addontypes', $this->Addontype->getNames());
 
         $this->set('bodyclass', 'inverse');
-        $this->render('hub');
+        $this->render('dashboard');
     }
 
     function json($action, $additional = '', $file = '') {
