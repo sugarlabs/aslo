@@ -180,7 +180,7 @@ class AddonsController extends AppController
     function about($addon_id, $extra=null) {
         $this->developers($addon_id, $extra, false);
         $addon = $this->Addon->getAddon($addon_id);
-        $this->pageTitle = sprintf(___('Thank-you for installing %s!'), $addon['Translation']['name']['string']);
+        $this->pageTitle = sprintf(___('Thank you for installing %s!'), $addon['Translation']['name']['string']);
     }
 
     /**
