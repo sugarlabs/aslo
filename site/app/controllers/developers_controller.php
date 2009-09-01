@@ -64,11 +64,12 @@ class DevelopersController extends AppController
     var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category',
         'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview', 'Review',
         'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
-    var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error',
+    var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error', 'Hub',
         'Image', 'Opensearch', 'Paypal', 'Rdf', 'Src', 'Validation', 'Versioncompare');
 
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Link', 'Listing', 'Localization', 'Form');
     var $addVars = array(); //variables accessible to all additem steps
+
 
    /**
     * Require login for all actions
@@ -278,7 +279,7 @@ class DevelopersController extends AppController
      * Called via AJAX to handle creation of a new add-on
      */
     function _newAddonFromFile($filename = '') {
-        
+
         // Grab the data from our cache, and then de-serialize it
         $this->Amo->clean($filename);
         $data = $this->Addon->query("SELECT value FROM `test_results_cache` WHERE `key` = '{$filename}' AND `test_case_id` = -1");
@@ -315,7 +316,7 @@ class DevelopersController extends AppController
                 $this->Version->addCompatibleApp($data['Version']['id'], $appversion['application_id'], $appversion['min'], $appversion['max']);
             }
         }
-        
+
         // Add Files
         $data['File']['db']['version_id'] = $data['Version']['id'];
         $platforms = $data['File']['db']['platform_id'];
@@ -354,7 +355,7 @@ class DevelopersController extends AppController
 
         // Grab the data from our cache, and then de-serialize it
         $this->Amo->clean($filename);
-        $data = $this->Addon->query("SELECT `value` FROM `test_results_cache` WHERE `key` = '{$filename}' AND `test_case_id` = -1");        
+        $data = $this->Addon->query("SELECT `value` FROM `test_results_cache` WHERE `key` = '{$filename}' AND `test_case_id` = -1");
         $data = $data[0]['test_results_cache']['value'];
         $this->Amo->unclean($data);
         $data = unserialize($data);
@@ -436,7 +437,7 @@ class DevelopersController extends AppController
                 return $this->Error->getJSONforError($validate);
             }
             $data['File']['db']['filename'] = $validate['filename'];
-            
+
             $this->File->save($data['File']['db']);
             $file_id = $this->File->id;
         }
@@ -478,7 +479,7 @@ class DevelopersController extends AppController
                 $this->Amo->unclean($results);
                 $results = unserialize($results);
                 $case = $info['test_case_id'];
-                
+
                 if (!empty($results)) {
                     foreach ($results as $result) {
                         $this->Amo->clean($result);
@@ -486,7 +487,7 @@ class DevelopersController extends AppController
                     }
                 }
             }
-         
+
             $query .= implode(', ', $sql);
             $this->Addon->execute($query);
         }
@@ -533,11 +534,11 @@ class DevelopersController extends AppController
 
         // Check for validation kill switch
         if (!$this->Config->getValue('validation_disabled')) {
-            
+
             // Run validation tests here for inital group
             $allResults = array();
             if (!$this->Validation->runTest($validate['filename'],  1, $allResults)) {
-                // If things failed, find out why 
+                // If things failed, find out why
                 foreach ($allResults as $result) {
                     if ($result['TestResult']['result'] == TEST_FAIL) {
                         return $this->Error->getJSONforError(sprintf(___('The add-on failed a validation test: %s'), $result['TestResult']['message']));
@@ -557,10 +558,10 @@ class DevelopersController extends AppController
             $zip = new Archive_Zip($addon['File']['details']['path']);
             $extraction = $zip->extract(array('extract_as_string' => true, 'by_name' => array('install.rdf')));
 
-            // Make sure install.rdf is present  
-            if (empty($extraction)) {  
-                $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->url('/pages/appversions'));  
-                return $this->Error->getJSONforError(___('No install.rdf present.').'<br />'.$validAppReference);  
+            // Make sure install.rdf is present
+            if (empty($extraction)) {
+                $validAppReference = sprintf(___('Please see <a href="%s">this page</a> for reference.'), $this->url('/pages/appversions'));
+                return $this->Error->getJSONforError(___('No install.rdf present.').'<br />'.$validAppReference);
             }
 
             $fileContents = $extraction[0]['content'];
@@ -574,11 +575,11 @@ class DevelopersController extends AppController
             // Clean manifest data
             $this->Amo->clean($manifestData);
 
-            // Validate manifest data  
-            $validate = $this->Validation->validateManifestData($manifestData);  
-            if (is_string($validate)) {  
-                // If a string is returned, there was an error  
-                return $this->Error->getJSONforError($validate);  
+            // Validate manifest data
+            $validate = $this->Validation->validateManifestData($manifestData);
+            if (is_string($validate)) {
+                // If a string is returned, there was an error
+                return $this->Error->getJSONforError($validate);
             }
 
             // Last minute add-on type correction
@@ -597,13 +598,13 @@ class DevelopersController extends AppController
 
             // Validate target applications
             $validate = $this->Validation->validateTargetApplications($manifestData['targetApplication']);
-            if (is_string($validate)) {  
-                // If a string is returned, there was an error  
-                return $this->Error->getJSONforError($validate);  
-            }  
-            else {  
-                // If an array is returned, there were no errors  
-                $addon['appversions'] = $validate;  
+            if (is_string($validate)) {
+                // If a string is returned, there was an error
+                return $this->Error->getJSONforError($validate);
+            }
+            else {
+                // If an array is returned, there were no errors
+                $addon['appversions'] = $validate;
             }
 
         }
@@ -611,11 +612,11 @@ class DevelopersController extends AppController
             // Get search engine properties
             $search = $this->Opensearch->parse($addon['File']['details']['path']);
 
-            // There was a parse error, the name was empty, etc.  Bad things.  
-            if ($search == null) {  
-                return $this->Error->getJSONforError(___('Either the XML is invalid or required fields are missing.  Please <a href="https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox">read the documentation</a>, verify your add-on, and try again.'));  
-            }  
-             
+            // There was a parse error, the name was empty, etc.  Bad things.
+            if ($search == null) {
+                return $this->Error->getJSONforError(___('Either the XML is invalid or required fields are missing.  Please <a href="https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox">read the documentation</a>, verify your add-on, and try again.'));
+            }
+
             $addon['Addon']['name'] = $search->name;
             $addon['Addon']['summary'] = $search->description;
             $addon['Version']['version'] = date('Ymd');
@@ -636,7 +637,7 @@ class DevelopersController extends AppController
                 }
             }
         } else {
-            
+
             $addon_id = $this->data['Addon']['id'];
             $existing = $this->Addon->getAddon($addon_id, array('default_fields'));
             if ($existing['Addon']['addontype_id'] != ADDON_SEARCH) {
@@ -653,17 +654,17 @@ class DevelopersController extends AppController
                 if (!empty($vcheck)) {
                     return $this->Error->getJSONforError(sprintf(___('The version number uploaded (%1$s) already exists for this add-on. If you are trying to add another file to this version, <a href="%2$s">click here</a>.'), $addon['Version']['version'], $this->url('/developers/versions/addfile/'.$vcheck['Version']['id'])));
                 }
-                
+
             } else if ($additional == 'file') {
-                
+
                 $version_id = $this->data['Version']['id'];
-                
+
                 // Make sure version id belongs to this add-on
                 $vcheck = $this->Version->find("Version.id={$version_id} AND Version.addon_id={$addon_id}");
                 if (empty($vcheck)) {
                     return $this->Error->getJSONforError(sprintf(___('The specified version (%1$s) does not belong to this add-on (%2$s).'), $version_id, $addon_id));
                 }
-                
+
                 // Make sure version number matches
                 if ($vcheck['Version']['version'] != $addon['Version']['version']) {
                     return $this->Error->getJSONforError(sprintf(___('The uploaded version number (%1$s) does not match the existing version number (%2$s).'), $addon['Version']['version'], $vcheck['Version']['version']));
@@ -673,7 +674,7 @@ class DevelopersController extends AppController
         }
 
         $addon['error'] = 0;
-        
+
         // Save some additional data for later
         $addon['Addon']['id'] = $this->data['Addon']['id'];
         $addon['Version']['id'] = $this->data['Version']['id'];
@@ -684,7 +685,7 @@ class DevelopersController extends AppController
         // Save this data for insertion if/when things pass
         $data = serialize($addon);
         $this->Amo->clean($data);
-        
+
         $filename = $addon['File']['db']['filename'];
         $this->Amo->clean($filename);
         $this->TestResult->execute("INSERT INTO `test_results_cache` (`date`, `key`, `test_case_id`, `value`) VALUES (NOW(), '{$filename}', -1, '{$data}')");
@@ -1603,7 +1604,7 @@ class DevelopersController extends AppController
             $file = $this->File->findById($file_id);
         } else {
             $file = array(
-                'File' => array( 
+                'File' => array(
                     'id' => '',
                     'filename' => $file_name
                 ),
@@ -1631,8 +1632,8 @@ class DevelopersController extends AppController
 
         // Load the results into the group and build the group/case/result hierarchy
         if (is_numeric($file_id)) {
-            $results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));    
-        } else { 
+            $results = $this->TestResult->findAll(array('TestCase.test_group_id' => $test_group_id, 'TestResult.file_id' => $file_id));
+        } else {
             $results = $all_results;
         }
 
@@ -1695,7 +1696,7 @@ class DevelopersController extends AppController
         $stats = $view->renderElement('developers/testresults_stats',
                  array('counts' => array($passes, $warns, $fails), 'short' => false, 'multiline' => false, 'html' => $html));
         $json = array('stats' => $stats);
-        
+
         $this->set('json', $json);
         $this->render('json', 'ajax');
     }
@@ -2006,6 +2007,16 @@ class DevelopersController extends AppController
         $this->set('text', $text);
         $this->set('image', $example);
         $this->render('contrib_example');
+    }
+
+    function howto_list() {
+        $this->layout = 'amo2009';
+        $this->pageTitle = ___('How-to Library').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
+        $this->publish('breadcrumbs', array(___('Developer Hub') => '/developers/'));
+
+        $this->publish('categories', $this->Hub->categories);
+
+        return $this->render('howto_list');
     }
 }
 ?>

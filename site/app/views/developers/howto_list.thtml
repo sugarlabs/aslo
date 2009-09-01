@@ -1,0 +1,41 @@
+<?php
+
+$lorem = ___("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras posuere malesuada congue. Etiam dignissim lectus ut dui rhoncus elementum commodo orci sodales. Donec placerat tortor non nulla viverra euismod");
+
+$this->viewVars['bodyclass'] = 'inverse';
+?>
+
+<?=$this->renderElement('amo2009/breadcrumbs')?>
+<h2><?=___("How-to Library")?></h2>
+
+<div class="primary" role="main">
+  <p class="howto-description"><?=$lorem?></p>
+
+  <ul class="blocks">
+    <?php foreach ($categories as $category): ?>
+      <li class="item">
+        <h4>
+          <a href="<?=$html->url("/developers/docs/how-to/{$category->slug}")?>">
+            <?=$category->title?>
+          </a>
+        </h4>
+        <p class="description"><?=$category->description?></p>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
+
+<div class="secondary" role="complementary">
+  <div class="highlight">
+    <h3><?=___("How-to Categories")?></h3>
+    <ul class="xoxo">
+      <?php foreach ($categories as $category): ?>
+        <li>
+          <a href="<?=$html->url("/developers/docs/how-to/{$category->slug}")?>">
+            <?=$category->title?>
+          </a>
+        </li>
+      <?php endforeach ?>
+    </ul>
+  </div>
+</div>

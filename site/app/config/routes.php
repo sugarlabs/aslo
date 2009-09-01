@@ -55,7 +55,7 @@
 
     if (defined('LANG') && defined('SITE_LAYOUT')) {
         global $other_layouts;
-        
+
         if (array_key_exists(SITE_LAYOUT, $other_layouts)) {
             $prefix = LANG;
         }
@@ -65,7 +65,7 @@
 
         // If they just go to /$lang/$app/
         $Route->connect("/{$prefix}", array('controller' => 'addons', 'action' => 'home'));
-            
+
         // connect localized, static pages
         $Route->connect("/{$prefix}/pages/*", array('controller' => 'pages', 'action' => 'display'));
 
@@ -95,9 +95,9 @@
         $Route->connect("/{$prefix}/addon/(\d+)/*", array('controller' => 'addons', 'action' => 'display'));
         $Route->connect("/{$prefix}/blog/*", array('controller' => 'blog', 'action' => 'view'));
         $Route->connect("/{$prefix}/collection/*", array('controller' => 'collections', 'action' => 'view'));
-        
+
         // API hookup
-        $Route->connect("/{$prefix}/api/addon/*", array('controller' => 'api', 'action'=>'addon')); 
+        $Route->connect("/{$prefix}/api/addon/*", array('controller' => 'api', 'action'=>'addon'));
         $Route->connect("/{$prefix}/api/list/*", array('controller' => 'api', 'action'=>'list_addons'));
 
         // Search 1.5 API to use sphinx
@@ -112,7 +112,7 @@
 
         $Route->connect("/{$prefix}/api/[\d\.]*/get_language_packs/*", array('controller' => 'api', 'action'=>'get_language_packs'));
         $Route->connect("/{$prefix}/api/[\d\.]*/stats/*", array('controller' => 'api', 'action' => 'stats'));
-        
+
         // Bandwagon sharing API
         $Route->connect("/{$prefix}/api/[\d\.]*/sharing/collections/*/addons/", array('controller' => 'sharing_api', 'action'=>'collection_addons'));
         $Route->connect("/{$prefix}/api/[\d\.]*/sharing/collections/*/addons/*", array('controller' => 'sharing_api', 'action'=>'collection_addon_detail'));
@@ -125,14 +125,19 @@
 
         // Bandwagon/collections
         $Route->connect("/{$prefix}/fashionyourfirefox/", array('controller' => 'collections', 'action' => 'interactive'));
-        
+
         // Forward old DevCP links to new DevCP
         $Route->connect("/{$prefix}/developers(/|/index)?", array('controller' => 'developers', 'action' => 'hub'));
         $Route->connect("/{$prefix}/developers/(dashboard|addons)", array('controller' => 'developers', 'action' => 'dashboard'));
         $Route->connect("/{$prefix}/developers/edit/*", array('controller' => 'developers', 'action' => 'addon', 'edit'));
         $Route->connect("/{$prefix}/developers/add/*", array('controller' => 'developers', 'action' => 'versions' ,'add'));
         $Route->connect("/{$prefix}/developers/editversion/*", array('controller' => 'developers', 'action' => 'versions', 'edit'));
-        
+
+        // Developer hub.
+        $Route->connect("/{$prefix}/developers/docs/how-to/",
+                        array('controller' => 'developers',
+                              'action' => 'howto_list'));
+
 		// Tag page
 		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));
 		// Top Tags
