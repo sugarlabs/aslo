@@ -66,7 +66,7 @@ global $rtl_languages;
  * out in your default language (set in the LANGUAGE_CONFIG class).  Also note the
  * mapping uses underscores not dashes - chances are good this is what you want.
  */
-$supported_languages = array( 
+$supported_languages = array(
     'ar'    => 'ar_EG.utf8',
     'ca'    => 'ca_ES.utf8',
     'cs'    => 'cs_CZ.utf8',
@@ -104,8 +104,10 @@ $supported_languages = array(
 
 // Languages that work, but to which we won't send a user ourselves (dropdown, lang sniffing)
 $valid_languages = array(
-    'cy'    => 'cy_GB.utf8',
-    'tr'    => 'tr_TR.utf8'
+    'cy'      => 'cy_GB.utf8',
+    'sr'      => 'sr_CS.utf8',
+    'sr-Latn' => 'sr_CS.utf8',
+    'tr'      => 'tr_TR.utf8'
 );
 
 /**
@@ -159,6 +161,8 @@ if (defined('WINDOWS')) {
 
     $valid_languages = array(
         //cy
+        //sr
+        //sr-Latn
         'tr'    => 'trk_TUR',
         //'vi'    => 'vi_VN.utf8'
     );
@@ -207,7 +211,7 @@ if (defined('WINDOWS')) {
 }
 
 // If we're not on preview or DEBUG isn't set then remove languages that aren't ready to be
-// supported on the site.  This lets localizers preview their languages but prevents them from 
+// supported on the site.  This lets localizers preview their languages but prevents them from
 // appearing on the live site.
 if (! (DEBUG || $_SERVER['HTTP_HOST'] == 'preview.addons.mozilla.org') ) {
     $valid_languages = array();
