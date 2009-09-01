@@ -78,6 +78,7 @@ Bandwagon.Controller.CollectionsPane.init = function()
     this.elemBandwagonCollectionIcon = document.getElementById("bandwagon-collection-icon");
 
     Bandwagon.Controller.CollectionsPane._repopulateCollectionsList();
+    Bandwagon.Controller.CollectionsPane._prefillLoginValues();
     Bandwagon.Controller.CollectionsPane.invalidate();
 
     this.elemBandwagonCollections.addEventListener("select", Bandwagon.Controller.CollectionsPane.doShowCollection, true);
@@ -290,6 +291,7 @@ Bandwagon.Controller.CollectionsPane.collectionUpdateObserver = function(collect
 
 Bandwagon.Controller.CollectionsPane.authenticationStatusChangeObserver = function()
 {
+    Bandwagon.Controller.CollectionsPane._prefillLoginValues();
     Bandwagon.Controller.CollectionsPane._invalidateExtensionsDeck();
 }
 
@@ -761,6 +763,20 @@ Bandwagon.Controller.CollectionsPane._selectPreferredCollection = function()
     {
         Bandwagon.Logger.debug("preferred collection is none");
         Bandwagon.Controller.CollectionsPane._selectCollection(null);
+    }
+}
+
+Bandwagon.Controller.CollectionsPane._prefillLoginValues = function()
+{
+    var creds = bandwagonService.getLoginManagerAMOAuthCreds(document.getElementById("login").value);
+
+    if (!creds)
+        return;
+
+    if (document.getElementById("login").value == "" || document.getElementById("login").value == creds.username)
+    {
+        document.getElementById("login").value = creds.username;
+        document.getElementById("password").value = creds.password;
     }
 }
 

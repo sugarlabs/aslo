@@ -50,6 +50,7 @@ const Storage = Cc["@mozilla.org/storage/service;1"];
 const DirectoryService = Cc["@mozilla.org/file/directory_service;1"];
 const ObserverService = Cc["@mozilla.org/observer-service;1"];
 const CookieManager = Cc["@mozilla.org/cookiemanager;1"];
+const LoginManager = Cc["@mozilla.org/login-manager;1"];
 
 const nsIWindowMediator = Ci.nsIWindowMediator;
 const nsITimer = Ci.nsITimer;
@@ -59,6 +60,7 @@ const nsIProperties = Ci.nsIProperties;
 const nsIFile = Ci.nsIFile;
 const nsIObserverService = Ci.nsIObserverService;
 const nsICookieManager = Ci.nsICookieManager;
+const nsILoginManager = Ci.nsILoginManager;
 
 var Bandwagon;
 var bandwagonService;
@@ -624,6 +626,38 @@ BandwagonService.prototype = {
 
         if (callback)
             callback();
+    },
+
+    getLoginManagerAMOAuthCreds: function(usernameHint)
+    {
+        var hostname = "https://" + Bandwagon.Preferences.getPreference("amo_host");
+        var formSubmitURL = "";
+        var httprealm = null;
+        var username;
+        var password;
+
+        try
+        {
+            var loginManager = LoginManager.getService(nsILoginManager);
+
+            var logins = loginManager.findLogins({}, hostname, formSubmitURL, httprealm);
+
+            for (var i=0; i < logins.length; i++)
+            {
+                if (logins[i].username == usernameHint)
+                {
+                    return {username: logins[i].username, password: logins[i].password};
+                }
+            }
+
+            if (logins[0])
+            {
+                return {username: logins[0].username, password: logins[0].password};
+            }
+
+        } catch (e) {}
+
+        return null;
     },
 
     updateCollectionsList: function(callback)
