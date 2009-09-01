@@ -16,6 +16,34 @@ var addon_statuses = {
     DISABLED: 5
 };
 
+// devhub nav bar functions
+var navbar = {
+    init: function() {
+        var qry = $('#query');
+        $('#search-submit').click(function() {
+            if (qry.val() == qry.attr('title')) qry.val('');
+            return true;
+        });
+        qry
+            .click(function() {
+                if (qry.val() == qry.attr('title')) {
+                    qry.val('');
+                }
+                qry.select();
+            })
+            .blur(function() {
+                navbar.default_query();
+            });
+        navbar.default_query();
+    },
+    default_query: function() {
+        var qry = $('#query');
+        if (qry.val() == '') {
+            qry.val(qry.attr('title'));
+        }
+    }
+}
+
 var upload = {
     'type': null,
     'response': null,

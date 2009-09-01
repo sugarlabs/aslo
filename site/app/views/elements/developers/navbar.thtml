@@ -36,15 +36,87 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
+
 <div id="navbar">
-    <ul>
-        <li><a href="#"><?=___('My Add-ons', 'devcp')?></a>
+    <ul class="top">
+        <?php
+        /* add-on list */
+        if (count($all_addons) > 0):
+        ?>
+        <li class="top"><a href="<?=$html->url('/developers/addons', null, true,
+            false)?>" class="controller"><?=___('My Add-ons', 'devhub_navbar')?></a>
             <ul>
                 <?php
-                foreach($all_addons as $_id => $_name): ?>
-                <li><a href="#<?=$_id?>"><?=$_name?></a></li>
-                <?php endforeach; ?>
+                $show_more = false;
+                if (count($all_addons) > 7) {
+                    $all_addons = array_slice($all_addons, 0, 7, true);
+                    $show_more = true;
+                }
+
+                foreach ($all_addons as $_id => $_name): ?>
+                <li><a href="<?=$html->url("/developers/addon/edit/{$_id}", null,
+                    true, false)?>"><?=$_name?></a></li>
+                <?php
+                endforeach;
+
+                if ($show_more):
+                ?>
+                <li><a href="<?=$html->url('/developers/addons', null, true,
+                    false)?>"><?=___('More Add-ons...', 'devhub_navbar')?></a></li>
+                <?php endif; ?>
+                <li><a href="<?=$html->url('/developers/addon/submit', null,
+                    true, false)?>"><?=___('Submit a New Add-on', 'devhub_navbar')?></a></li>
             </ul>
+        </li>
+        <?php endif; // is add-on author? ?>
+
+        <?php /* docs */ ?>
+        <li class="top"><a href="#TODO" class="controller"><?=___('Documentation', 'devhub_navbar')?></a>
+            <ul>
+                <li><a href="#TODO"><?=___('Getting Started', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('Add-on Policies', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('Case Studies', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('How-to Library', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('API &amp; Language Reference', 'devhub_navbar')?></a></li>
+            </ul>
+        </li>
+
+        <?php /* tools */ ?>
+        <li class="top"><a href="#TODO" class="controller"><?=___('Tools', 'devhub_navbar')?></a>
+            <ul>
+                <li><a href="#TODO"><?=___('Add-on Code Search', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('Add-on Builder', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('Add-on Validator', 'devhub_navbar')?></a></li>
+            </ul>
+        </li>
+
+        <?php /* community */ ?>
+        <li class="top"><a href="#TODO" class="controller"><?=___('Community', 'devhub_navbar')?></a>
+            <ul>
+                <li><a href="#TODO"><?=___('Developer Forums', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('Add-on Newsgroup', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('Developer Blog', 'devhub_navbar')?></a></li>
+                <li><a href="#TODO"><?=___('Add-on Newsletter', 'devhub_navbar')?></a></li>
+            </ul>
+        </li>
+
+        <?php /* search */ ?>
+        <li class="search">
+            <?php
+            // prepare query string
+            if (!isset($query) || !is_string($query))
+                $query = '';
+            ?>
+
+            <form id="" method="get" action="<?=$html->url("/developers/search", null, true, false)?>">
+                <input type="text" id="query" name="q" accesskey="f" value="<?=$query?>" title="<?=___('Search Developer Resources')?>"/>
+                <button type="submit" id="search-submit"><?=$html->image('amo2009/blank.gif', array('alt'=>___('Search')))?></button>
+            </form>
         </li>
     </ul>
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    navbar.init();
+});
+</script>

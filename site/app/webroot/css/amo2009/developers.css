@@ -1,4 +1,141 @@
+/** header and main navigation bar */
+.section {
+    max-width: 75em;
+    overflow: visible;
+}
+
 #aux-nav ul.change a.return {
     display: block;
     padding: 0.7em 1em 0.5em 1em;
+}
+
+#navbar a, #navbar a:active, #navbar a:hover, #navbar a:focus, #navbar a:visited {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+#navbar {
+    display: block;
+    background-image: url(../../img/amo2009/bg/heading-dark-blue.jpg);
+    background-repeat: repeat-x;
+    background-position: bottom left;
+    background-color: #305083;
+    border:  1px solid #021437;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin: 0 0 .5em 0;
+    color: white;
+    font-size: 1.231em;
+    white-space: nowrap;
+    overflow: hidden;
+}
+#navbar ul.top {
+    overflow: visible;
+}
+#navbar li.top,
+#navbar li.search {
+    float: left;
+    border-right: 1px solid #455c87;
+    list-style: none;
+}
+#navbar li.top a.controller {
+    display: block;
+    padding: .5em 1.3em;
+    margin: 0;
+}
+#navbar li.top a.controller {
+    border-right: 1px solid #1e2e4c;
+}
+#navbar li.search {
+    float: right;
+    border: none;
+}
+#navbar li.top:hover,
+#navbar li.top.selected {
+    background-image: url(../../img/amo2009/bg/heading-dark-blue-highlighted.png);
+}
+#navbar li.top ul {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: auto;
+    margin-left: -1px;
+}
+#navbar li.top ul,
+#navbar li.top ul li:last-child {
+    -moz-border-radius-bottomleft: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    -moz-border-radius-bottomright: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+#navbar li.top:hover ul {
+    display: block;
+}
+#navbar li ul li {
+    background-image: url(../../img/amo2009/bg/heading-dark-blue-highlighted.png);
+    background-repeat: repeat-x;
+    background-position: bottom left;
+    background-color: #305083;
+    border-bottom: 1px solid #5a7297;
+}
+#navbar li ul li:hover {
+    background-image: url(../../img/amo2009/bg/heading-dark-blue.jpg);
+}
+#navbar li ul li a {
+    display: block;
+    padding: .5em 1.3em;
+    border-bottom: 1px solid #3f4f6a;
+}
+#navbar li.top ul li:last-child,
+#navbar li.top ul li:last-child a {
+    border: none;
+}
+
+#navbar li.search form {
+    position: relative;
+    padding: .3em .5em .1em 1.3em;
+    margin: 0;
+}
+#navbar #query {
+    background-image: url(../../img/amo2009/icons/magnifying-glass.gif);
+    background-repeat: no-repeat;
+    background-position: 0.1em center;
+    background-color: white;
+    color: #888;
+    min-width: 17em;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    padding: .1em 0;
+    text-indent: 1.7em;
+    cursor: pointer;
+}
+#navbar #search-submit {
+    margin: -.1em 0 0 0;
+    padding: 0 .3em .2em .3em;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color:#6FB727;
+    background-image:url(../../img/amo2009/bg/button-green.jpg);
+    background-position:left center;
+    background-repeat:repeat-x;
+    border:1px solid #B9D999;
+}
+#navbar #search-submit img {
+    width: 9px;
+    height: 18px;
+    background-image: url(../../img/amo2009/icons/buttons/go-green.gif);
+    background-repeat: no-repeat;
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
+    display: inline;
+    border: none;
+}
+.html-rtl #navbar #search-submit img {
+    background-image: url(../../img/amo2009/icons/buttons/go-green_rtl.gif);
 }
