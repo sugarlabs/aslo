@@ -374,9 +374,20 @@ class AppModel extends Model
 
     /**
      * validation shortcut: maximum field length
+     * (counts bytes)
      */
     function maxLength($field, $input, $max, $msg) {
         if (strlen($input) > $max) {
+            $this->validationErrors[$field] = $msg;
+        }
+    }
+
+    /**
+     * validation shortcut: maximum field character count
+     * (counts characters - multi-byte characters count as 1)
+     */
+    function maxCharCount($field, $input, $max, $msg) {
+        if (mb_strlen($input, 'UTF-8') > $max) {
             $this->validationErrors[$field] = $msg;
         }
     }
