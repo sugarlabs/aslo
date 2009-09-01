@@ -33,8 +33,8 @@ SELECT
     (SELECT localized_string FROM translations WHERE id = a.description AND locale = name.locale) AS description,
     (SELECT localized_string FROM translations WHERE id = a.summary AND locale = name.locale) AS summary,
     (SELECT localized_string FROM translations WHERE id = a.developercomments AND locale = name.locale) AS developercomments,
-    (SELECT max(version_int) FROM versions v, applications_versions av, appversions max WHERE v.addon_id = a.id AND av.version_id = v.id AND av.max = max.id) AS max_ver,
-    (SELECT min(version_int) FROM versions v, applications_versions av, appversions min WHERE v.addon_id = a.id AND av.version_id = v.id AND av.min = min.id) AS min_ver,
+    (SELECT max(version_int) FROM versions v, files f, applications_versions av, appversions max WHERE f.version_id =v.id AND v.addon_id = a.id AND av.version_id = v.id AND av.max = max.id AND f.status = 4) AS max_ver,
+    (SELECT min(version_int) FROM versions v, files f, applications_versions av, appversions min WHERE f.version_id =v.id AND v.addon_id = a.id AND av.version_id = v.id AND av.min = min.id AND f.status = 4) AS min_ver,
     UNIX_TIMESTAMP(a.created) AS created,
     UNIX_TIMESTAMP(a.modified) AS modified
 FROM 
