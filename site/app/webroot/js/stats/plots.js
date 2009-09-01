@@ -369,7 +369,7 @@ var Plots = {
             Plots.currentCSV = statsURL + 'csv/' + addonID + '/' + type;
 
             this.dataSources = {
-                'count': new Timeplot.DefaultEventSource(),
+                'count': new Timeplot.DefaultEventSource()
             };
 
             PlotsTables.addListeners('week_over_week', this.dataSources);
