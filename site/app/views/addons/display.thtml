@@ -562,22 +562,33 @@ if (!empty($coll_addon_added)) {
 
 </div>
 <script type="text/javascript" charset="utf-8">
+    // <![CDATA[
     $(function(){
         addons_display.init({
             jsonURL: '<?=$html->url('/collections/json')?>',
             collViewURL: '<?=$html->url('/collection/')?>',
             loggedIn: <?=(int)$loggedIn?>
             });
-            $("a[rel=jquery-lightbox]").lightBox({
-                overlayOpacity: 0.6,
-                imageBlank: "<?= $html->urlImage('jquery-lightbox/lightbox-blank.gif') ?>",
-                imageLoading: "<?= $html->urlImage('jquery-lightbox/lightbox-ico-loading.gif')?>",
-                imageBtnClose: "<?= $html->urlImage('jquery-lightbox/close.png')?>",
-                imageBtnPrev: "<?= $html->urlImage('jquery-lightbox/goleft.png')?>",
-                imageBtnNext: "<?= $html->urlImage('jquery-lightbox/goright.png')?>",
-                containerResizeSpeed: 350
-            });
+        $("a[rel=jquery-lightbox]").lightBox({
+            overlayOpacity: 0.6,
+            imageBlank: "<?= $html->urlImage('jquery-lightbox/lightbox-blank.gif') ?>",
+            imageLoading: "<?= $html->urlImage('jquery-lightbox/lightbox-ico-loading.gif')?>",
+            imageBtnClose: "<?= $html->urlImage('jquery-lightbox/close.png')?>",
+            imageBtnPrev: "<?= $html->urlImage('jquery-lightbox/goleft.png')?>",
+            imageBtnNext: "<?= $html->urlImage('jquery-lightbox/goright.png')?>",
+            containerResizeSpeed: 350
+        });
 
+        $(document).ready(function() {
+            var etiquette_box = $("#addons-display-review-etiquette").hide();
+            $("#short-review").focus(function() { etiquette_box.show("fast"); } );
+        });
+
+        // This function toggles an element's text between two values
+        jQuery.fn.textToggle = function(text1, text2) {
+            jQuery(this).text( ( jQuery(this).text() == text1 ? text2 : text1 ) );
+        };
     });
+    // ]]>
 </script>
 <!-- /#content -->

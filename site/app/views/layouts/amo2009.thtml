@@ -157,25 +157,6 @@ if(!isset($fullPage)) {
         if (!empty($jsLocalization) && is_object($localization)) {
             echo $localization->jsLocalization($jsLocalization);
         }
-
-       if ($this->controller->name  == 'Addons' && $this->action == 'display') {
-            ?>
-                <script type="text/javascript">
-                // <![CDATA[
-                $(document).ready(function() {
-                    var etiquette_box = $("#addons-display-review-etiquette").hide();
-                    $("#short-review").focus(function() { etiquette_box.show("fast"); } );
-                });
-
-                // This function toggles an element\'s text between two values
-                jQuery.fn.textToggle = function(text1, text2) {
-                    jQuery(this).text( ( jQuery(this).text() == text1 ? text2 : text1 ) );
-                };
-
-                // ]]>
-                </script>
-            <?php
-        }
     ?>
     <script type="text/javascript">// <![CDATA[
     $(document).ready(function() {
@@ -192,7 +173,7 @@ if(!isset($fullPage)) {
     // ]]></script>
 
     <?php if (isset($head_extra)) echo $head_extra; ?>
-    <?php if(@$advancedSearch): ?>
+    <?php if (@$advancedSearch): ?>
         <style type="text/css" media="screen">
             .expanded-search-form .advanced {
                 display: block;
@@ -202,7 +183,7 @@ if(!isset($fullPage)) {
 </head>
 
 <body id="mozilla-com" class="html-<?=TEXTDIR?> <?=APP_SHORTNAME?> <?= ($this->controller->Session->check('User')) ? 'user-login' : 'user-anon' ?><?= isset($bodyclass) ? ' ' . $bodyclass : '' ?>">
-    <?php if($fullPage): ?>
+    <?php if ($fullPage): ?>
     <ul id="nav-access" role="navigation">
         <li><a href="#content"><?=___('Skip to main content')?></a></li>
         <li><a href="#search-form"><?=___('Skip to search form')?></a></li>
