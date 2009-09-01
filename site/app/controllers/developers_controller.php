@@ -118,6 +118,21 @@ class DevelopersController extends AppController
     }
 
     /**
+     * Developer documentation pages
+     */
+    function docs($subpage = '') {
+        switch ($subpage) {
+        case 'reference':
+            $this->set('bodyclass', 'docs_reference inverse');
+            $this->render('devhub_docs_reference');
+            return;
+        default:
+            $this->redirect('/developers', null, true, false);
+            return;
+        }
+    }
+
+    /**
     * Add-ons Dashboard
     */
     function dashboard() {
