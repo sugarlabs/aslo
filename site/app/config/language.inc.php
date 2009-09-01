@@ -222,4 +222,11 @@ $valid_languages = array_merge($supported_languages, $valid_languages);
 global $native_languages;
 $native_languages = $localeDetails->languages;
 
+/**
+ * Set the default internal encoding for multi-byte string functions.
+ * This way we can safely leave out the optional encoding parameter
+ * for all mb_* function calls.
+ */
+mb_internal_encoding('UTF-8');
+
 ?>
