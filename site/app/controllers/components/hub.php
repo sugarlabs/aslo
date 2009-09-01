@@ -46,16 +46,16 @@ class HubComponent extends Object {
         $lorem = ___("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras posuere malesuada congue. Etiam dignissim lectus ut dui rhoncus elementum commodo orci sodales. Donec placerat tortor non nulla viverra euismod");
 
         $mdc = new HubSite('Mozilla Developer Center', 'http://developer.mozilla.org');
-        $flig = new HubSite('Fligtar and the Bear', 'http://fligtar.com');
-        $pipes = new HubSite('I Like That', 'http://micropipes.com');
 
         $this->categories = array(
             new HubCategory('Getting Started', $lorem, 'getting-started', array(
                 new SubCategory('The Basics', array(
-                    new Howto(0, 'Firefox Add-ons Developer Guide', 'https://developer.mozilla.org/En/Firefox_addons_developer_guide',
-                              'In this detailed guide to extension development, you'll learn the basics of packaging extensions, building an interface with XUL, implementing advanced processes with XPCOM, and how to put it all together.', $mdc)
-                ))
-            )
+                    new Howto(0, 'Firefox Add-ons Developer Guide',
+                              'https://developer.mozilla.org/En/Firefox_addons_developer_guide',
+                              $mdc,
+                              "In this detailed guide to extension development, you'll learn the basics of packaging extensions, building an interface with XUL, implementing advanced processes with XPCOM, and how to put it all together."),
+                )),
+            )),
         );
 
         $this->category_slugs = array();
@@ -89,12 +89,12 @@ class SubCategory extends HubCategory {
 
 class Howto extends Object {
 
-    function __construct($id, $title, $href, $description, $site) {
+    function __construct($id, $title, $href, $site, $description) {
         $this->id = $id;
         $this->title = $title;
         $this->href = $href;
-        $this->description = $description;
         $this->site = $site;
+        $this->description = $description;
     }
 }
 
