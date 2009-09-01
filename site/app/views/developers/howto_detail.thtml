@@ -1,0 +1,39 @@
+<?php
+$this->layout = 'amo2009';
+$this->viewVars['bodyclass'] = 'inverse';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar')?>
+
+<?=$this->renderElement('amo2009/breadcrumbs')?>
+<h2><?=$category->title?></h2>
+
+<div class="primary" role="main">
+  <p class="howto-description"><?=$category->description?></p>
+
+  <?php foreach ($category->items as $section): ?>
+    <h3><?=$section->title?></h3>
+    <div class="table-listing">
+      <?php foreach ($section->items as $item): ?>
+        <div class="item">
+          <div class="main-info">
+            <h4>
+              <?/* $item->href is an absolute, external url. */?>
+              <a href="<?=$item->href?>"><?=$item->title?></a>
+            </h4>
+            <p><?=$item->description?></p>
+          </div>
+          <div class="item-info">
+            <h6><a href="<?=$item->site->href?>"><?=$item->site->title?></a></h6>
+            <p>Your mom liked this.</p>
+          </div>
+        </div>
+      <?php endforeach ?>
+    </div>
+  <?php endforeach ?>
+</div>
+
+<div class="secondary" role="complementary">
+  <?=$this->renderElement('amo2009/howto/sidebar',
+                          array('categories' => $categories))?>
+</div>

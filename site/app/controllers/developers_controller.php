@@ -2018,5 +2018,25 @@ class DevelopersController extends AppController
 
         return $this->render('howto_list');
     }
+
+    function howto_detail($page) {
+        if (!array_key_exists($page, $this->Hub->category_slugs)) {
+            $this->flash(___('Page not found'), '/developers/docs/how-to');
+        }
+
+        $category = $this->Hub->category_slugs[$page];
+
+        $this->pageTitle = $category->title.' :: '.___('How-to Library').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
+
+        $this->publish('breadcrumbs',
+                        array(___('Developer Hub') => '/developers/',
+                              ___('How-to Library') => '/developers/docs/how-to/',
+                        ));
+
+        $this->publish('category', $category);
+        $this->publish('categories', $this->Hub->categories);
+
+        return $this->render('howto_detail');
+    }
 }
 ?>

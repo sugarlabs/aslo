@@ -133,10 +133,16 @@
         $Route->connect("/{$prefix}/developers/add/*", array('controller' => 'developers', 'action' => 'versions' ,'add'));
         $Route->connect("/{$prefix}/developers/editversion/*", array('controller' => 'developers', 'action' => 'versions', 'edit'));
 
+
         // Developer hub.
         $Route->connect("/{$prefix}/developers/docs/how-to/",
                         array('controller' => 'developers',
                               'action' => 'howto_list'));
+
+        $Route->connect("/{$prefix}/developers/docs/how-to/*",
+                        array('controller' => 'developers',
+                              'action' => 'howto_detail'));
+
 
 		// Tag page
 		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));

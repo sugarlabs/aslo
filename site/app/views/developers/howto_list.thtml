@@ -26,16 +26,6 @@ $this->viewVars['bodyclass'] = 'inverse';
 </div>
 
 <div class="secondary" role="complementary">
-  <div class="highlight">
-    <h3><?=___("How-to Categories")?></h3>
-    <ul class="xoxo">
-      <?php foreach ($categories as $category): ?>
-        <li>
-          <a href="<?=$html->url("/developers/docs/how-to/{$category->slug}")?>">
-            <?=$category->title?>
-          </a>
-        </li>
-      <?php endforeach ?>
-    </ul>
-  </div>
+  <?=$this->renderElement('amo2009/howto/sidebar',
+                          array('categories', $categories))?>
 </div>
