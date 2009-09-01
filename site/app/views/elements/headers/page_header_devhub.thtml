@@ -41,14 +41,9 @@
  * (none)
  */
 
-
-$main_header = sprintf(
-    ___('Add-on <img alt="" src="%1$s" /> <strong>Developer Hub</strong>'),
-    $html->url('/img/amo2009/devhub-heading-icon.png', null, false, false)
-);
 ?>
 <div id="header" role="banner">
-    <p id="title"><a href="<?=$html->url('/developers', null, true, false)?>" title="<?=___('Return to the Add-on Developer Hub')?>"><?=$main_header?></a></p>
+    <p id="title"><a href="<?=$html->url('/developers', null, true, false)?>" title="<?=___('Return to the Add-on Developer Hub')?>"><?=___('Add-on <strong>Developer Hub</strong>')?></a></p>
     <p id="brand"><a href="http://www.mozilla.com/<?=LANG?>/" title="<?=___('Mozilla')?>" accesskey="1"><?=___('Mozilla')?></a></p>
 
     <?php if (isset($header_extra)) echo $header_extra ?>
