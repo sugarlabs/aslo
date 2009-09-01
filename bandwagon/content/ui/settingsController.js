@@ -488,16 +488,16 @@ Bandwagon.Controller.Settings._openLocalizedURL = function(url)
     }
 }
 
-Bandwagon.Controller.Settings._autoCreateToggleUIEnabledState = function(on)
+Bandwagon.Controller.Settings._autoCreateToggleUIEnabledState = function(disableUI)
 {
-    document.getElementById("auto-create-button").disabled = on;
-    document.getElementById("auto-name").disabled = on;
-    document.getElementById("auto-list").disabled = on;
-    document.getElementById("auto-type-extensions").disabled = on;
-    document.getElementById("auto-type-themes").disabled = on;
-    document.getElementById("auto-type-dicts").disabled = on;
-    document.getElementById("auto-type-langpacks").disabled = on;
-    document.getElementById("auto-spinner").collapsed = !on;
+    document.getElementById("auto-create-button").disabled = disableUI;
+    document.getElementById("auto-name").disabled = disableUI;
+    document.getElementById("auto-list").disabled = disableUI;
+    document.getElementById("auto-type-extensions").disabled = disableUI;
+    document.getElementById("auto-type-themes").disabled = disableUI;
+    document.getElementById("auto-type-dicts").disabled = disableUI;
+    document.getElementById("auto-type-langpacks").disabled = disableUI;
+    document.getElementById("auto-spinner").collapsed = !disableUI;
 }
 
 Bandwagon.Controller.Settings.doCreateAutoPublisher = function()
@@ -597,6 +597,8 @@ Bandwagon.Controller.Settings.doCreateAutoPublisher = function()
             document.getElementById("auto-delete-button").collapsed = false;
             document.getElementById("auto-update-button").collapsed = false;
             document.getElementById("auto-spinner").collapsed = true;
+
+            Bandwagon.Controller.Settings._autoCreateToggleUIEnabledState(false);
         }
     }
     
