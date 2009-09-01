@@ -2038,5 +2038,15 @@ class DevelopersController extends AppController
 
         return $this->render('howto_detail');
     }
+
+    function policy_list() {
+        $this->layout = 'amo2009';
+        $this->pageTitle = ___('Add-on Policies').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
+        $this->publish('breadcrumbs', array(___('Developer Hub') => '/developers/'));
+
+        $this->publish('policies', $this->Hub->policies);
+
+        $this->render('policy_list');
+    }
 }
 ?>

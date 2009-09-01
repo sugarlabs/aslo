@@ -143,6 +143,9 @@
                         array('controller' => 'developers',
                               'action' => 'howto_detail'));
 
+        $Route->connect("/{$prefix}/developers/docs/policies/",
+                        array('controller' => 'developers',
+                              'action' => 'policy_list'));
 
 		// Tag page
 		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));

@@ -164,6 +164,8 @@ class HubComponent extends Object {
         foreach ($this->categories as &$category) {
             $this->category_slugs[$category->slug] = $category;
         }
+
+        $this->policies = $this->categories;
     }
 }
 
