@@ -45,7 +45,6 @@ Bandwagon.Model.Addon = function(bw)
     this.collectionsAddonsStorageID = -1;
 
     this.name = "";
-    this.type = -1;
     this.guid = "";
     this.version = "";
     this.status = -1;
@@ -56,6 +55,12 @@ Bandwagon.Model.Addon = function(bw)
     this.thumbnail = "";
     this.rating = -1;
     this.learnmore = "";
+
+    // type and type2 both come from the <type id="{type}">{type2}</type>
+    // element, even though they may not be related
+
+    this.type = -1;
+    this.type2 = "";
 
     this.compatibleApplications = {};
     this.compatibleOS = {};
@@ -84,6 +89,12 @@ Bandwagon.Model.Addon.INSTALL_NO_ALREADY_INSTALLED = 7;
 
 Bandwagon.Model.Addon.STATUS_PUBLIC = 4;
 Bandwagon.Model.Addon.STATUS_SANDBOX = 1;
+
+Bandwagon.Model.Addon.prototype.isSearchProvider = function()
+{
+    //return (this.guid.match(/amoid:/i));
+    return (this.type2 == "Search Engine");
+}
 
 Bandwagon.Model.Addon.prototype.canInstall = function(env)
 {
@@ -118,15 +129,24 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
 
     if (!application)
     {
-        // this isn't the right error, but is the closest we have
-
-        var details =
+        if (this.isSearchProvider())
         {
-            type: this.Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS,
-            requiredVersion: env.appName
-        };
+            // The api doesn't return any compatible application data for
+            // search providers. We'll just assume that they can be installed.
+            // (bug 499205)
+        }
+        else
+        {
+            // this isn't the right error, but is the closest we have
 
-        return details;
+            var details =
+            {
+                type: this.Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS,
+                requiredVersion: env.appName
+            };
+
+            return details;
+        }
     }
 
     // check the version is compatible
@@ -243,6 +263,7 @@ Bandwagon.Model.Addon.prototype.unserialize = function(xaddon)
 {
     this.name = xaddon.name.text().toString();
     this.type = xaddon.type.attribute("id").toString();
+    this.type2 = xaddon.type.text().toString();
     this.guid = xaddon.guid.text().toString();
     this.status = xaddon.status.attribute("id").toString();
     this.summary = xaddon.summary.text().toString();

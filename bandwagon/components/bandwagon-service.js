@@ -1326,10 +1326,26 @@ BandwagonService.prototype = {
             this._storageConnection.schemaVersion = 103;
         }
 
-        if (this._storageConnection.schemaVersion < 104)
+        if (this._storageConnection.schemaVersion < 105)
         {
-            // XXX future 1.0.4 schema updates go here
-            // this._storageConnection.schemaVersion = 104;
+            // sql schema updates for bandwagon 1.0.5
+
+            try
+            {
+                this._storageConnection.executeSimpleSQL("ALTER TABLE addons ADD COLUMN type2 TEXT");
+            }
+            catch (e)
+            {
+                Bandwagon.Logger.warn("Error updating sqlite schema (possibly harmless): " + e);
+            }
+
+            this._storageConnection.schemaVersion = 105;
+        }
+
+        if (this._storageConnection.schemaVersion < 106)
+        {
+            // XXX future 1.0.6 schema updates go here
+            // this._storageConnection.schemaVersion = 106;
         }
 
         this._storageConnection.commitTransaction();

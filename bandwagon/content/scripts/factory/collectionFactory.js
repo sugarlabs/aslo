@@ -425,8 +425,9 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddons = function(collection)
             addon.author = statement.getUTF8String(12);
             addon.category = statement.getUTF8String(13);
             addon.dateAdded = new Date(statement.getInt32(14)*1000);
-            addon.collectionsAddonsStorageID = statement.getInt32(15);
-            addon.read = (statement.getInt32(16)==1?true:false);
+            addon.type2 = statement.getUTF8String(15);
+            addon.collectionsAddonsStorageID = statement.getInt32(16);
+            addon.read = (statement.getInt32(17)==1?true:false);
 
             addon.compatibleApplications = this._openAddonCompatibleApplications(addon);
             addon.compatibleOS = this._openAddonCompatibleOS(addon);
@@ -632,7 +633,7 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddon = function(collection
         statement.reset();
     }
 
-    var statement2 = this.connection.createStatement("REPLACE INTO addons VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15)");
+    var statement2 = this.connection.createStatement("REPLACE INTO addons VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16)");
 
     try
     {
@@ -666,6 +667,7 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddon = function(collection
         statement2.bindUTF8StringParameter(12, addon.author);
         statement2.bindUTF8StringParameter(13, addon.category);
         statement2.bindUTF8StringParameter(14, addon.dateAdded.getTime()/1000);
+        statement2.bindUTF8StringParameter(15, addon.type2);
         
         statement2.execute();
     }

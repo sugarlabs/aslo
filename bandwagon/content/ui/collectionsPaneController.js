@@ -596,46 +596,52 @@ Bandwagon.Controller.CollectionsPane.doAddToFirefox = function()
         return;
 
     var addon = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem.addon;
-
-    if (!isXPInstallEnabled())
-        return;
-
-    if (addon.eula && addon.eula != "")
-    {
-        var eula = {
-          name: addon.name,
-          text: addon.eula,
-          accepted: false
-        };
-
-        window.openDialog("chrome://mozapps/content/extensions/eula.xul", "_blank",
-                          "chrome,dialog,modal,centerscreen,resizable=no", eula);
-
-        if (!eula.accepted)
-            return;
-    }
-
     var installer = addon.getInstaller(Bandwagon.Util.getHostEnvironmentInfo().os);
 
-    if (!installer)
+    if (addon.isSearchProvider())
     {
-        Bandwagon.Logger.warn("No compatible os targets found.");
-        return;
+        window.external.AddSearchProvider(installer.URL);
     }
-
-    var params = [];
-    params[addon.name] = installer;
-
-    // TODO do some user feedback here?
-
-    var callback = function(url, status)
+    else
     {
-        Bandwagon.Logger.info("Finished installing '" + url + "'; status = " + status);
+        if (!isXPInstallEnabled())
+            return;
 
-        // TODO some user feedback here?
+        if (addon.eula && addon.eula != "")
+        {
+            var eula = {
+              name: addon.name,
+              text: addon.eula,
+              accepted: false
+            };
+
+            window.openDialog("chrome://mozapps/content/extensions/eula.xul", "_blank",
+                              "chrome,dialog,modal,centerscreen,resizable=no", eula);
+
+            if (!eula.accepted)
+                return;
+        }
+
+        if (!installer)
+        {
+            Bandwagon.Logger.warn("No compatible os targets found.");
+            return;
+        }
+
+        var params = [];
+        params[addon.name] = installer;
+
+        // TODO do some user feedback here?
+
+        var callback = function(url, status)
+        {
+            Bandwagon.Logger.info("Finished installing '" + url + "'; status = " + status);
+
+            // TODO some user feedback here?
+        }
+
+        InstallTrigger.install(params, callback);
     }
-
-    InstallTrigger.install(params, callback);
 }
 
 Bandwagon.Controller.CollectionsPane.doUpgradeToFirefoxN = function(version)
