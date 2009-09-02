@@ -79,27 +79,51 @@
 	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
 	<td>No results found.</td>
 </tr>
+<!-- nonexistant tag -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>yslow tag:kasjkjas</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+
+<!-- existing tag -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>delicious tag:yahoo</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Delicious Bookmarks</td>
+	<td>Delicious Bookmarks</td>
+</tr>
+
 <!-- old tests -->
-<tr>
-	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/yslow category:alerts</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//searchresults[@total_results=&quot;0&quot;]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/yslow category:web</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>//name</td>
-	<td>YSlow</td>
-</tr>
 <tr>
 	<td>open</td>
 	<td>/en-US/firefox/api/1.5/search/jsonview version:1.0</td>

@@ -86,7 +86,11 @@ class AddonsSearch
         if (preg_match('/\btag:(\w+)/', $term, $matches)) {
             $term = str_replace($matches[0], '',$term);
             $tag = $this->convert_tag($matches[1]);
-            $sphinx->setFilter('tag', array($tag));
+            if (is_numeric($tag)) {
+                $sphinx->setFilter('tag', array($tag));
+            } else {
+                $sphinx->setFilter('tag', array(0));
+            }
         }
         
         if (isset($options['category']) && $options['category']) {
