@@ -20,7 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   Jeff Balogh <jbalogh@mozilla.com> (Original Author)
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -36,23 +36,21 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-/**
- * Required arguments:
- *   $objects
- *   $title
- *   $url_prefix
- */
+$this->viewVars['bodyclass'] = 'inverse';
 ?>
 
-<div class="highlight">
-  <h3><?=$title?></h3>
-  <ul class="xoxo">
-    <?php foreach ($objects as $object): ?>
-      <li>
-        <a href="<?=$html->url($url_prefix . $object->slug, null, true, false)?>">
-          <?=$object->title?>
-        </a>
-      </li>
-    <?php endforeach ?>
-  </ul>
+<?=$this->renderElement('amo2009/hub/navbar')?>
+
+<?=$this->renderElement('amo2009/breadcrumbs')?>
+
+<div id="policy-detail" class="primary" role="main">
+    <?=$localization->includeLocalPage("docs/policies/{$policy->slug}")?>
+</div>
+
+<div class="secondary" role="complementary">
+    <?=$this->renderElement('amo2009/hub/sidebar', array(
+        'title' => ___('Add-on Policies'),
+        'objects' => $policies,
+        'url_prefix' => '/developers/docs/policies/',
+    ))?>
 </div>

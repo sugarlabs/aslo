@@ -2034,6 +2034,27 @@ class DevelopersController extends AppController
         $this->render('policy_list');
     }
 
+    function policy_detail($policy) {
+        if (!array_key_exists($policy, $this->Hub->category_slugs)) {
+            $this->redirect('/developers/docs/policies', null, true, false);
+            return;
+        } else {
+            $policy = $this->Hub->category_slugs[$policy];
+        }
+
+        $this->publish('policy', $policy);
+        $this->publish('policies', $this->Hub->policies);
+
+        $this->pageTitle = implode(' :: ', array($policy->title, ___('Add-on Policies'),
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME), ___('Developer Hub')));
+        $this->publish('breadcrumbs', array(
+            ___('Developer Hub') => '/developers',
+            ___('Add-on Policies') => '/developers/docs/policies'
+            ));
+
+        $this->render('policy_detail');
+    }
+
     /**
      * API & Language Reference
      */
