@@ -119,21 +119,6 @@ class DevelopersController extends AppController
     }
 
     /**
-     * Developer documentation pages
-     */
-    function docs($subpage = '') {
-        switch ($subpage) {
-        case 'reference':
-            $this->set('bodyclass', 'docs_reference inverse');
-            $this->render('devhub_docs_reference');
-            return;
-        default:
-            $this->redirect('/developers', null, true, false);
-            return;
-        }
-    }
-
-    /**
     * Add-ons Dashboard
     */
     function dashboard() {
@@ -2048,5 +2033,14 @@ class DevelopersController extends AppController
 
         $this->render('policy_list');
     }
+
+    /**
+     * API & Language Reference
+     */
+    function api_reference() {
+        $this->set('bodyclass', 'docs_reference inverse');
+        $this->render('api_reference');
+    }
+
 }
 ?>
