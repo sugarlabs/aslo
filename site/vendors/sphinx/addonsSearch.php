@@ -19,6 +19,22 @@ class AddonsSearch
     }
      
     /**
+     *  Restrict the resultset to items that work for a specific app version
+     */
+    public function restrictVersion($version)
+    {
+        $sphinx = $this->sphinx;
+        $version_int = self::convert_version($version);
+        // using 10x version number since that should cover a significantly larger number since SetFilterRange requires
+        // max and min
+        if ($version_int) {
+            $sphinx->SetFilterRange('max_ver', $version_int, 10*$version_int);
+            $sphinx->SetFilterRange('min_ver', 0, $version_int);
+        }
+        
+    }
+      
+    /**
      *  Actually preform the search
      */
     public function query($term, $options = array()) {
@@ -37,15 +53,12 @@ class AddonsSearch
         // convert version to int
         // convert into to a thing to serach for
         if (preg_match('/\bversion:([0-9\.]+)/', $term, $matches)) {
-            $term = str_replace($matches[0], '', $term);
-            $version_int = self::convert_version($matches[1]);
-            // using 10x version number since that should cover a significantly larger number since SetFilterRange requires
-            // max and min
-            if ($version_int) {
-                $sphinx->SetFilterRange('max_ver', $version_int, 10*$version_int);
-                $sphinx->SetFilterRange('min_ver', 0, $version_int);
-            }
+            $term = str_replace($matches[0], '', $term);            
+            $this->restrictVersion($matches[1]);
+        } else if (isset($options['version'])) {
+            $this->restrictVersion($options['version']);
         }
+        
         
         // type filter 
         if (preg_match('/\btype:(\w+)/', $term, $matches)) {
@@ -97,7 +110,6 @@ class AddonsSearch
             $sphinx->setFilter('category', array($options['category']));
         }
         
-
         $result        = $sphinx->Query($term);
         
         if (!$result) {

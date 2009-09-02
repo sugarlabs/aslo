@@ -182,7 +182,6 @@ if (!isset($category)) $category = array(0, 0);
                 <input type="hidden" name="advancedsearch" value="1" />
             <?php endif; ?>
                 <input type="hidden" name="as" value="1" />
-                <input type="hidden" id="vfuz" name="vfuz" value="false" />
 
                 <div class="container application">
                     <label for="appid"><?=___('Application', 'advanced_search_form_application'); ?></label>
@@ -276,8 +275,6 @@ if (!isset($category)) $category = array(0, 0);
     $("#lver-td input").remove();
 
     var verArr =  versions[<?= $appid ?>];
-
-    $("#vfuz").val(true);
 
     var lverSel = document.createElement("select");
     lverSel.id = "lver";

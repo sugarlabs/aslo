@@ -100,7 +100,6 @@
 	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
 	<td>No results found.</td>
 </tr>
-
 <!-- existing tag -->
 <tr>
 	<td>open</td>
@@ -122,7 +121,78 @@
 	<td>link=Delicious Bookmarks</td>
 	<td>Delicious Bookmarks</td>
 </tr>
-
+<!-- wrong version -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>jsonview</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lver</td>
+	<td>label=1.0</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+<!-- right version -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>jsonview</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lver</td>
+	<td>label=3.5</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=JSONView</td>
+	<td>JSONView</td>
+</tr>
 <!-- old tests -->
 <tr>
 	<td>open</td>
