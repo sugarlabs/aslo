@@ -48,7 +48,7 @@ class AddonsSearch
             $fields .= ", modified, name_ord, locale_ord";
         }
                 
-        $limit = 60;
+        $limit = 2000;
         if (isset($options['limit'])) {
             $limit = (int) $options['limit'];
         }
