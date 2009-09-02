@@ -42,7 +42,7 @@ $this->layout = 'amo2009';
 global $app_shortnames, $app_prettynames;
 
 // This is the string that I pass to 'hrefs' to Filter the results. Has to be a better way:
-// $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp)
+// $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp)
 
 // TODO(jbalogh): it turns out duplication is not good. bug 503588
 $params = array(
@@ -54,7 +54,6 @@ $params = array(
     'pid' => $pid,
     'lup' => $lup,
     'sort' => $sort,
-    'hver' => $hver,
     'lver' => $lver,
     'vfuz' => $vfuz,
     'pp' => $pp
@@ -69,7 +68,7 @@ $params = array(
     <?=$this->renderElement('amo2009/categories')?>
     <?=$this->renderElement('amo2009/search', array('query'=>$search_terms,
         'category'=>$category, 'appid'=>$appid, 'atype'=>$atype, 'lup'=>"$lup", 
-        'pid'=>$pid, 'sort'=>$sort, 'hver'=>$hver, 'lver'=>$lver, 'vfuz'=>$vfuz, 'pp'=>$pp))?>
+        'pid'=>$pid, 'sort'=>$sort, 'lver'=>$lver, 'vfuz'=>$vfuz, 'pp'=>$pp))?>
   </div>
   <div class="results-head">
       <h2><span><?=___('Search Results')?></span></h2>
@@ -104,7 +103,7 @@ $params = array(
 						foreach (array_keys($app_shortnames) as $_app) {
 						    if ($app_shortnames[$_app] == APP_FENNEC) continue;
 							$class = ($app_shortnames[$_app] == $appid) ? ' class="selected"' : '';
-							echo '<li'.$class.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$app_shortnames[$_app]."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$app_prettynames[$_app].'</a></li>';
+							echo '<li'.$class.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$app_shortnames[$_app]."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$app_prettynames[$_app].'</a></li>';
 						}
 					?>
 				</ul>
@@ -148,10 +147,10 @@ $params = array(
 			<ul class="refinements">
 				<?php
 					$selected = "";
-					if ($hver == "any") {
+					if ($lver == "any") {
 						$selected = " class='selected'";
 					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('All Versions').'</a></li>';
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('All Versions').'</a></li>';
 				?>
 				<?php
 					$min_display_version_by_app = array(
@@ -180,10 +179,10 @@ $params = array(
 					$versions = $new_versions;
 					foreach (array_reverse($versions[$appid]) as $app_version){
 						$selected = "";
-						if ($app_version == $hver) {
+						if ($app_version == $lver) {
 							$selected = " class='selected'";
 						}
-						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$app_version."&lver=".$app_version."&vfuz=".$vfuz."&pp=".$pp).'">'.$app_version.'</a></li>';
+						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$app_version."&vfuz=".$vfuz."&pp=".$pp).'">'.$app_version.'</a></li>';
 					}
 				?>
 			</ul>
@@ -197,7 +196,7 @@ $params = array(
 					} else {
 						$selected = "";
 					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
+					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
 					$results_categories = array();
 					foreach ($search_results as $addon) {
 						if (!empty($addon['Category'])) {
@@ -211,7 +210,7 @@ $params = array(
 						} else {
 							$selected = "";
 						}
-						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
+						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
 					}
 				?>
 			</ul>
@@ -230,7 +229,7 @@ $params = array(
 							} else {
 								$selected = "";
 							}
-							$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp);
+							$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&vfuz=".$vfuz."&pp=".$pp);
 							echo "<li class='usertag".$selected."'><a class='tagitem' href='".$search_query."'>".$_tag."</a></li>";
 						}
 					}

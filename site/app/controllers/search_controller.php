@@ -166,16 +166,13 @@ class SearchController extends AppController
             in_array($this->params['url']['sort'], $sort_orders) ) { $sort = $this->params['url']['sort']; }
         $this->publish('sort', $sort); //publish for element caching
 
-        //if advanced search hver and lver set (for version range), use the
-        $hver = 'any'; 
+        //if advanced search lver set (for version range), use the
         $lver = -1;
         $vfuz = false;
-        if (isset($this->params['url']['lver']) && isset( $this->params['url']['hver']) && isset( $this->params['url']['vfuz'])) { 
-            $hver = $this->params['url']['hver'];
+        if (isset($this->params['url']['lver']) && isset( $this->params['url']['vfuz'])) { 
             $lver = $this->params['url']['lver'];
             $vfuz = $this->params['url']['vfuz'];
         }
-        $this->publish('hver', $hver); //publish for element caching
         $this->publish('lver', $lver);
         $this->publish('vfuz', $vfuz); 
 
@@ -184,7 +181,7 @@ class SearchController extends AppController
         // $_result_ids = array();
         list($_result_ids, $total) = $as->query($_terms, $search_options);
 
-        //, $_tag, false, $category[0], $category[1], NULL, $lver, $hver, $vfuz, $atype, $pid, $lup, $sort);
+        //, $_tag, false, $category[0], $category[1], NULL, $lver, $vfuz, $atype, $pid, $lup, $sort);
 
         if ($this->params['action'] != 'rss') {
             $this->pageTitle = ___('Search Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
