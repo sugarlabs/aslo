@@ -77,6 +77,8 @@ class AddonsSearch
             if ($platform) {
                 $sphinx->SetFilter('platform', array($platform, PLATFORM_ALL));
             }
+        } else if (isset($options['platform'])) {
+            $sphinx->SetFilter('platform', array($options['platform'], PLATFORM_ALL));
         }
         
         // date filter
@@ -88,6 +90,8 @@ class AddonsSearch
             if ($timestamp) {
                 $sphinx->SetFilterRange('modified', $timestamp, time()*10);
             }
+        } else if (isset($options['after'])) {
+            $sphinx->SetFilterRange('modified', $options['after'], time()*10);            
         }
         
         // category filter
@@ -105,6 +109,14 @@ class AddonsSearch
             } else {
                 $sphinx->setFilter('tag', array(0));
             }
+        } elseif (isset($options['category'])) {
+            $tag = $this->convert_tag($options['category']);
+            if (is_numeric($tag)) {
+                $sphinx->setFilter('tag', array($tag));
+            } else {
+                $sphinx->setFilter('tag', array(0));
+            }
+            
         }
         
         if (isset($options['category']) && $options['category']) {

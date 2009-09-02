@@ -135,6 +135,28 @@ class SearchController extends AppController
         }
         $this->publish('atype', $atype); //publish for element caching
 
+        //if advanced search pid (platform id) set, use it.
+        $pid = -1;
+        $platforms = $this->Amo->getPlatformName();
+        if (isset( $this->params['url']['pid']) && 
+            in_array($this->params['url']['pid'], array_keys($platforms))) 
+        { 
+            $pid = $this->params['url']['pid']; 
+            $search_options['platform'] = $pid;
+        }
+        
+        $this->publish('pid', $pid); //publish for element caching
+
+        //if advanced search last update requirement set, use it
+        $lup = "";
+        $updates = array("1 day ago","1 week ago","1 month ago","3 months ago","6 months ago","1 year ago");
+        if (isset( $this->params['url']['lup']) && 
+            in_array($this->params['url']['lup'], $updates) ) 
+        {
+            $lup = $this->params['url']['lup']; 
+            $search_options['after'] = strtotime($lup);
+        }
+        $this->publish('lup', $lup); //publish for element caching
         
         // old code below
 
@@ -152,25 +174,12 @@ class SearchController extends AppController
         
         if (!empty($this->params['url']['tag'])) {
             $_tag = $this->params['url']['tag'];
+            $search_options['tag'] = $_tag;
         } else {
             $_tag = null;
         }
         $this->publish('tag', $_tag);
         
-        //if advanced search pid (platform id) set, use it.
-        $pid = -1;
-        $platforms = $this->Amo->getPlatformName();
-        if (isset( $this->params['url']['pid']) && 
-            in_array($this->params['url']['pid'], array_keys($platforms))) { $pid = $this->params['url']['pid']; }
-        $this->publish('pid', $pid); //publish for element caching
-
-        //if advanced search last update requirement set, use it
-        $lup = "";
-        $updates = array('- INTERVAL 1 DAY', '- INTERVAL 1 WEEK', '- INTERVAL 1 MONTH', '- INTERVAL 3 MONTH', '- INTERVAL 6 MONTH', '- INTERVAL 1 YEAR');
-
-        if (isset( $this->params['url']['lup']) && 
-            in_array($this->params['url']['lup'], $updates) ) { $lup = $this->params['url']['lup']; }
-        $this->publish('lup', $lup); //publish for element caching
 
         //if advanced search sort_order set, use it
         $sort = "";

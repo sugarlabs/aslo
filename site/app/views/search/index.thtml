@@ -86,47 +86,47 @@ $params = array(
 <?php endif; ?>
   </div>
 <?php if (empty($search_results)): ?>
-  <div class="primary" role="main" style="width: 100%">	
+  <div class="primary" role="main" style="width: 100%"> 
 <?php else: ?>
-  <div class="primary" role="main">	
-<?php endif; ?>		
+  <div class="primary" role="main"> 
+<?php endif; ?>     
 
     <div class="featured listing results">
       <div class="featured-inner">
         <div class="listing-header">
-	        <?php if (empty($search_results)): ?>
+            <?php if (empty($search_results)): ?>
                 <p class="addon-search-message"><?=___('No results found.')?></p>
-			<?php else : ?>
-				<ul>
-					<?php
-						foreach (array_keys($app_shortnames) as $_app) {
-						    if ($app_shortnames[$_app] == APP_FENNEC) continue;
-							$class = ($app_shortnames[$_app] == $appid) ? ' class="selected"' : '';
-							echo '<li'.$class.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$app_shortnames[$_app]."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.$app_prettynames[$_app].'</a></li>';
-						}
-					?>
-				</ul>
-				<form class="item-sort" method="get" action="">
-	            	<label><?=___('Sort By'); ?></label>
-	            	<?php 
-						$sort_orders = array( 
-						    '' => ___('Keyword Match'),
-						    'newest' => ___('Newest', 'advanced_search_form_newest'),
-						    'name' => ___('Name', 'advanced_search_form_name'),
-						    'averagerating' => ___('Rating', 'advanced_search_form_rating'),
-						    'weeklydownloads' => ___('Popularity', 'advanced_search_form_popularity')
-						);
-						$html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
-					?>
+            <?php else : ?>
+                <ul>
+                    <?php
+                        foreach (array_keys($app_shortnames) as $_app) {
+                            if ($app_shortnames[$_app] == APP_FENNEC) continue;
+                            $class = ($app_shortnames[$_app] == $appid) ? ' class="selected"' : '';
+                            echo '<li'.$class.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$app_shortnames[$_app]."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.$app_prettynames[$_app].'</a></li>';
+                        }
+                    ?>
+                </ul>
+                <form class="item-sort" method="get" action="">
+                    <label><?=___('Sort By'); ?></label>
+                    <?php 
+                        $sort_orders = array( 
+                            '' => ___('Keyword Match'),
+                            'newest' => ___('Newest', 'advanced_search_form_newest'),
+                            'name' => ___('Name', 'advanced_search_form_name'),
+                            'averagerating' => ___('Rating', 'advanced_search_form_rating'),
+                            'weeklydownloads' => ___('Popularity', 'advanced_search_form_popularity')
+                        );
+                        $html->simpleSelectTag('sort', $sort_orders, $sort, array(), array(), false);
+                    ?>
                     <?php foreach ($params as $name => $val): ?>
                         <?php /* Skip sort, we're changing that above. */ ?>
                         <?php if ($name != 'sort'): ?>
                           <input type="hidden" name="<?=$name?>" value="<?=$val?>" />
                         <?php endif; ?>
                     <?php endforeach; ?>
-					<button><?=___('Go', 'collections_index_button_go')?></button>
-		        </form>
-				<script type="text/javascript">collections.hijack_favorite_button();</script>
+                    <button><?=___('Go', 'collections_index_button_go')?></button>
+                </form>
+                <script type="text/javascript">collections.hijack_favorite_button();</script>
             <?php endif; ?>
         </div> <!-- listing-header -->
             <?php foreach ($search_results as $var => $val): ?>
@@ -139,103 +139,103 @@ $params = array(
 
 <?php if (!empty($search_results)): ?>
   <div class="secondary" role="complementary">
-	<div class="highlight">
+    <div class="highlight">
         <h2><?=___('Refine Results')?></h2>
-		<div id="refine-compatibility">
+        <div id="refine-compatibility">
             <h5><?=___('Compatible with')?></h5>
-			<ul class="refinements">
-				<?php
-					$selected = "";
-					if ($lver == "any") {
-						$selected = " class='selected'";
-					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.___('All Versions').'</a></li>';
-				?>
-				<?php
-					$min_display_version_by_app = array(
-					    APP_FIREFOX => "1.0",
-					    APP_THUNDERBIRD => "1.0",
-					    APP_SEAMONKEY => "1.0",
-					    APP_SUNBIRD => "0.2"
-					);
+            <ul class="refinements">
+                <?php
+                    $selected = "";
+                    if ($lver == "any") {
+                        $selected = " class='selected'";
+                    }
+                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.___('All Versions').'</a></li>';
+                ?>
+                <?php
+                    $min_display_version_by_app = array(
+                        APP_FIREFOX => "1.0",
+                        APP_THUNDERBIRD => "1.0",
+                        APP_SEAMONKEY => "1.0",
+                        APP_SUNBIRD => "0.2"
+                    );
 
-					$new_versions = array();
-					foreach ($app_shortnames as $n => $k) {
-					    if (!empty($AmoVersions[$k])) foreach ($AmoVersions[$k] as $version) {
-					        $versions_parts = explode(".", $version);
-					        $second_part = (isset($versions_parts[1])) ? ".".intval($versions_parts[1]) : "";
-					        if (!isset($min_display_version_by_app[$k])
-					            || $min_display_version_by_app[$k] <= $versions_parts[0].$second_part ) {
+                    $new_versions = array();
+                    foreach ($app_shortnames as $n => $k) {
+                        if (!empty($AmoVersions[$k])) foreach ($AmoVersions[$k] as $version) {
+                            $versions_parts = explode(".", $version);
+                            $second_part = (isset($versions_parts[1])) ? ".".intval($versions_parts[1]) : "";
+                            if (!isset($min_display_version_by_app[$k])
+                                || $min_display_version_by_app[$k] <= $versions_parts[0].$second_part ) {
 
-					            if ($k != APP_FIREFOX || !in_array($versions_parts[0].$second_part, array('1.4','3.1'))) {
-					                $new_versions[$k][] = $versions_parts[0].$second_part;  
-					            }
-					        }
-					    }
-					    if (!empty($new_versions[$k]))
-					        $new_versions[$k] = array_unique($new_versions[$k]);
-					}
-					$versions = $new_versions;
-					foreach (array_reverse($versions[$appid]) as $app_version){
-						$selected = "";
-						if ($app_version == $lver) {
-							$selected = " class='selected'";
-						}
-						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$app_version."&pp=".$pp).'">'.$app_version.'</a></li>';
-					}
-				?>
-			</ul>
-		</div>
-		<div id="refine-category">
+                                if ($k != APP_FIREFOX || !in_array($versions_parts[0].$second_part, array('1.4','3.1'))) {
+                                    $new_versions[$k][] = $versions_parts[0].$second_part;  
+                                }
+                            }
+                        }
+                        if (!empty($new_versions[$k]))
+                            $new_versions[$k] = array_unique($new_versions[$k]);
+                    }
+                    $versions = $new_versions;
+                    foreach (array_reverse($versions[$appid]) as $app_version){
+                        $selected = "";
+                        if ($app_version == $lver) {
+                            $selected = " class='selected'";
+                        }
+                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$app_version."&pp=".$pp).'">'.$app_version.'</a></li>';
+                    }
+                ?>
+            </ul>
+        </div>
+        <div id="refine-category">
             <h5><?=___('Categories', 'search_filter_categories_header')?></h5>
-			<ul class="refinements">
-				<?php
-					if ($category == array(0,0)) {
-						$selected = ' class="selected"';
-					} else {
-						$selected = "";
-					}
-					echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
-					$results_categories = array();
-					foreach ($search_results as $addon) {
-						if (!empty($addon['Category'])) {
-							array_push($results_categories, $addon['Category'][0]);
-						}
-					}
-					$results_categories = array_unique($results_categories);
-					foreach ($results_categories as $_categories) {
-						if ($category == array($_categories['Category']['addontype_id'], $_categories['Category']['id'])) {
-							$selected = ' class="selected"';
-						} else {
-							$selected = "";
-						}
-						echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
-					}
-				?>
-			</ul>
-		</div>
-		<div id="refine-tags">
+            <ul class="refinements">
+                <?php
+                    if ($category == array(0,0)) {
+                        $selected = ' class="selected"';
+                    } else {
+                        $selected = "";
+                    }
+                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
+                    $results_categories = array();
+                    foreach ($search_results as $addon) {
+                        if (!empty($addon['Category'])) {
+                            array_push($results_categories, $addon['Category'][0]);
+                        }
+                    }
+                    $results_categories = array_unique($results_categories);
+                    foreach ($results_categories as $_categories) {
+                        if ($category == array($_categories['Category']['addontype_id'], $_categories['Category']['id'])) {
+                            $selected = ' class="selected"';
+                        } else {
+                            $selected = "";
+                        }
+                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
+                    }
+                ?>
+            </ul>
+        </div>
+        <div id="refine-tags">
             <h5><?=___('Tags', 'search_filter_tags_header')?></h5>
-			<ul class="refinements addon-tags">
-				<?php
-					if (empty($top_tags)) {
-						echo '<li>'.___('No tags for these add-ons').'</li>';
-					} else {
-						foreach($top_tags as $top_tag ) {
-							$_tag = $top_tag['Tag']['tag_text'];
-							if ($tag == $_tag) {
-								$selected = ' selected';
-							} else {
-								$selected = "";
-							}
-							$search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp);
-							echo "<li class='usertag".$selected."'><a class='tagitem' href='".$search_query."'>".$_tag."</a></li>";
-						}
-					}
-				 ?>
-			</ul>
-		</div>
-	</div>
+            <ul class="refinements addon-tags">
+                <?php
+                    if (empty($top_tags)) {
+                        echo '<li>'.___('No tags for these add-ons').'</li>';
+                    } else {
+                        foreach($top_tags as $top_tag ) {
+                            $_tag = $top_tag['Tag']['tag_text'];
+                            if ($tag == $_tag) {
+                                $selected = ' selected';
+                            } else {
+                                $selected = "";
+                            }
+                            $search_query = $html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$_tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp);
+                            echo "<li class='usertag".$selected."'><a class='tagitem' href='".$search_query."'>".$_tag."</a></li>";
+                        }
+                    }
+                 ?>
+            </ul>
+        </div>
+    </div>
   </div>
 <?php endif; ?>
 </div><!-- /#section -->

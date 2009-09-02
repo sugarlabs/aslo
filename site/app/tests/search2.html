@@ -265,66 +265,200 @@
 	<td>link=Firebug</td>
 	<td>Firebug</td>
 </tr>
-<!-- old tests -->
+<!-- wrong platform -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/firebug type:dict</td>
+	<td>/en-US/firefox/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>grapple</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lver</td>
+	<td>label=Any</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>pid</td>
+	<td>label=Linux</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+<!-- right platform -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/firebug type:extension</td>
+	<td>/en-US/firefox/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//name</td>
-	<td>Firebug</td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple platform:linux</td>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td>type</td>
+	<td>query</td>
+	<td>grapple</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
 	<td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple platform:mac</td>
+	<td>select</td>
+	<td>lver</td>
+	<td>label=Any</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>pid</td>
+	<td>label=MacOSX</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//name</td>
+	<td>assertText</td>
+	<td>link=regexp:GrApple.*</td>
 	<td>regexp:GrApple.*</td>
 </tr>
+<!-- wrong date -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple after:2009-08-03</td>
+	<td>/en-US/firefox/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementPresent</td>
-	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>grapple</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lver</td>
+	<td>label=Any</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lup</td>
+	<td>label=Past Day</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+<!-- right date -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple after:2001-03-03</td>
+	<td>/en-US/firefox/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//name</td>
-	<td>regexp:GrApple.*</td>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>grapple</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lver</td>
+	<td>label=Any</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>lup</td>
+	<td>label=Past year</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+<!-- wrong app -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>appid</td>
+	<td>label=Sunbird</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>yslow</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
 </tr>
 
 </tbody></table>
