@@ -94,7 +94,9 @@ $params = array(
     <div class="featured listing results">
       <div class="featured-inner">
         <div class="listing-header">
-            <?php if (empty($search_results)): ?>
+            <?php if (!empty($error)): ?>
+                <p class="addon-search-message"><?=___($error)?></p>   
+            <?php elseif (empty($search_results)): ?>
                 <p class="addon-search-message"><?=___('No results found.')?></p>
             <?php else : ?>
                 <ul>

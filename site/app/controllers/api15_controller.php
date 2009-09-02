@@ -23,7 +23,7 @@ class Api15Controller extends ApiController
         try {
             list($matches, $total_results) = $as->query($term);
         }
-        catch (AddonSearchException $e) {
+        catch (AddonsSearchException $e) {
             header("HTTP/1.1 503 Service Unavailable", true, 503);
 
             if (DEBUG > 0) {

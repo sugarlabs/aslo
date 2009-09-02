@@ -2,7 +2,7 @@
 
 require_once('api/sphinxapi.php');
 
-class AddonSearchException extends Exception {}
+class AddonsSearchException extends Exception {}
 
 /**
 * AddonSearch
@@ -158,7 +158,7 @@ class AddonsSearch
         
         $result        = $sphinx->Query($term);
         if (!$result) {
-            throw new AddonSearchException("could not connect to searchd");
+            throw new AddonsSearchException("could not connect to searchd");
         }
         
         $total_results = $result['total_found'];
