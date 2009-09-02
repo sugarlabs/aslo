@@ -183,8 +183,6 @@ class ApiController extends AppController
 
         $this->_getAddons($matches);
 
-        // var_dump($matches);
-        // var_dump($this->viewVars['addonsdata']);
         $this->publish('api_version', $this->api_version);
         $this->publish('guids', array_flip($this->Application->getGUIDList()));
         $this->publish('app_names', $app_names = $this->Application->getIDList());
