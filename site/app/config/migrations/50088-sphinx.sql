@@ -34,6 +34,7 @@ SELECT
     a.totaldownloads,
     a.inactive,
     LTRIM(name.localized_string) AS name,
+    name.localized_string AS name,
     (SELECT localized_string FROM translations WHERE id = a.homepage AND locale = name.locale) AS homepage,
     (SELECT localized_string FROM translations WHERE id = a.description AND locale = name.locale) AS description,
     (SELECT localized_string FROM translations WHERE id = a.summary AND locale = name.locale) AS summary,
@@ -42,6 +43,7 @@ SELECT
     (SELECT min(version_int) FROM versions v, applications_versions av, appversions min WHERE v.addon_id = a.id AND av.version_id = v.id AND av.min = min.id) AS min_ver,
     UNIX_TIMESTAMP(a.created) AS created,
     (SELECT UNIX_TIMESTAMP(MAX(IFNULL(f.datestatuschanged, f.created))) FROM versions AS v INNER JOIN files AS f ON f.status = 4 AND f.version_id = v.id WHERE v.addon_id=a.id) AS modified
+    (SELECT MAX(IFNULL(f.datestatuschanged, f.created)) FROM versions AS v INNER JOIN files AS f ON f.status = 4 AND f.version_id = v.id WHERE v.addon_id=a.id) AS modified
 FROM 
     translations name, 
     addons a
