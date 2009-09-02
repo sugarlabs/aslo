@@ -193,27 +193,79 @@
 	<td>link=JSONView</td>
 	<td>JSONView</td>
 </tr>
+<!-- wrong type -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>firebug</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>atype</td>
+	<td>label=Dictionaries</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+<!-- right type -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//div[@id='search-query']/label[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>firebug</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Advanced</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>atype</td>
+	<td>label=Extensions</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Firebug</td>
+	<td>Firebug</td>
+</tr>
 <!-- old tests -->
-<tr>
-	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/jsonview version:1.0</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertElementPresent</td>
-	<td>//searchresults[@total_results=&quot;0&quot;]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/jsonview version:3.5</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>//name</td>
-	<td>JSONView</td>
-</tr>
 <tr>
 	<td>open</td>
 	<td>/en-US/firefox/api/1.5/search/firebug type:dict</td>

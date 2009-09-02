@@ -122,6 +122,19 @@ class SearchController extends AppController
             $search_options['version'] = $lver;
         }
         $this->publish('lver', $lver);
+
+        //if advanced search atype set, use it.
+        $atype = -1;
+        $addon_types = $this->Addontype->getNames();
+
+        if (isset($this->params['url']['atype']) && 
+            in_array($this->params['url']['atype'], array_keys($addon_types))) { 
+
+            $atype = $this->params['url']['atype']; 
+            $search_options['type'] = $atype;
+        }
+        $this->publish('atype', $atype); //publish for element caching
+
         
         // old code below
 
@@ -136,7 +149,6 @@ class SearchController extends AppController
         }
         $this->publish('appid', APP_ID); //publish for element caching
 
-
         
         if (!empty($this->params['url']['tag'])) {
             $_tag = $this->params['url']['tag'];
@@ -145,15 +157,6 @@ class SearchController extends AppController
         }
         $this->publish('tag', $_tag);
         
-        //if advanced search atype set, use it.
-        $atype = -1;
-        $addon_types = $this->Addontype->getNames();
-        if (isset($this->params['url']['atype']) && 
-            in_array($this->params['url']['atype'], array_keys($addon_types))) { 
-            $atype = $this->params['url']['atype']; 
-        }
-        $this->publish('atype', $atype); //publish for element caching
-
         //if advanced search pid (platform id) set, use it.
         $pid = -1;
         $platforms = $this->Amo->getPlatformName();

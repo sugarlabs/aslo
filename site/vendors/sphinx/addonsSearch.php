@@ -59,7 +59,6 @@ class AddonsSearch
             $this->restrictVersion($options['version']);
         }
         
-        
         // type filter 
         if (preg_match('/\btype:(\w+)/', $term, $matches)) {
             $term = str_replace($matches[0], '', $term);
@@ -67,6 +66,8 @@ class AddonsSearch
             if ($type) {
                 $sphinx->SetFilter('type', array($type));
             }
+        } else if (isset($options['type'])) {
+            $sphinx->SetFilter('type', array($options['type']));            
         }
         
         // platform
