@@ -9,6 +9,7 @@ class AddonSearchException extends Exception {}
 */
 class AddonsSearch
 {
+    public static $log = array();
     /**
      *  Search for addons using Sphinx
      */
@@ -42,10 +43,30 @@ class AddonsSearch
         $sphinx = $this->sphinx;
         $sphinx->SetSelect("addon_id, app");
         $sphinx->SetFieldWeights(array('name'=> 4));
-        $sphinx->SetSortMode ( SPH_SORT_EXPR, "@weight + IF(status=1, 0, 100)" );
         $sphinx->SetLimits(0, 60);
         $sphinx->SetFilter('inactive', array(0));
         
+        // sort
+        if (isset($options['sort'])) {
+            switch($options['sort'])
+            {
+                case 'newest':
+                $sphinx->SetSortMode(SPH_SORT_ATTR_DESC, 'modified');   
+                break;
+                case 'name':
+                $sphinx->SetSortMode(SPH_SORT_ATTR_ASC, 'name_ord');   
+                break;
+                
+                case 'averagerating':
+                $sphinx->SetSortMode(SPH_SORT_ATTR_DESC, 'averagerating');   
+                case 'weeklydownloads':
+                $sphinx->SetSortMode(SPH_SORT_ATTR_DESC, 'weeklydownloads');   
+                break;
+            }
+            $this->log('Sort', $options['sort']);
+        } else {
+            $sphinx->SetSortMode ( SPH_SORT_EXPR, "@weight + IF(status=1, 0, 100)" );
+        }
         // filter based on the app we're looking for e.g is this /firefox/ or /seamonkey/ etc
         $sphinx->SetFilter('app', array(APP_ID));
         
@@ -109,8 +130,8 @@ class AddonsSearch
             } else {
                 $sphinx->setFilter('tag', array(0));
             }
-        } elseif (isset($options['category'])) {
-            $tag = $this->convert_tag($options['category']);
+        } elseif (isset($options['tag'])) {
+            $tag = $this->convert_tag($options['tag']);
             if (is_numeric($tag)) {
                 $sphinx->setFilter('tag', array($tag));
             } else {
@@ -124,7 +145,6 @@ class AddonsSearch
         }
         
         $result        = $sphinx->Query($term);
-        
         if (!$result) {
             throw new AddonSearchException("could not connect to searchd");
         }
@@ -278,5 +298,15 @@ class AddonsSearch
 
         }
         return 0;
+    }
+    
+    public function log($key, $note)
+    {
+        self::$log[] = "$key: $note";
+    }
+    
+    public static function debugLog()
+    {
+        return self::$log;
     }
 }
