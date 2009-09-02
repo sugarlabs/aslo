@@ -130,6 +130,7 @@ class Configure extends Object {
 		if ($config == 'debug' || (is_array($config) && in_array('debug', $config))) {
 			if ($_this->debug) {
 				error_reporting(E_ALL);
+
 				if (defined('E_DEPRECATED')) {
 				    // hide 5.3 deprecation warnings, since Cake is chock-full of them. -dd
                     error_reporting(E_ALL  & ~E_DEPRECATED);

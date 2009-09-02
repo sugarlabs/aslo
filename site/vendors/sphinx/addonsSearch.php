@@ -47,10 +47,15 @@ class AddonsSearch
         if (DEBUG > 1) {
             $fields .= ", modified, name_ord, locale_ord";
         }
+                
+        $limit = 60;
+        if (isset($options['limit'])) {
+            $limit = (int) $options['limit'];
+        }
         
         $sphinx->SetSelect($fields);
         $sphinx->SetFieldWeights(array('name'=> 4));
-        $sphinx->SetLimits(0, 60);
+        $sphinx->SetLimits(0, $limit);
         $sphinx->SetFilter('inactive', array(0));
         // locale filter to en-US + LANG
         $sphinx->SetFilter('locale_ord', array(crc32(LANG), crc32('en-US')));
@@ -96,11 +101,12 @@ class AddonsSearch
         if (preg_match('/\btype:(\w+)/', $term, $matches)) {
             $term = str_replace($matches[0], '', $term);
             $type = $this->convert_type($matches[1]);
+            
             if ($type) {
                 $sphinx->SetFilter('type', array($type));
             }
         } else if (isset($options['type'])) {
-            $sphinx->SetFilter('type', array($options['type']));            
+            $sphinx->SetFilter('type', array($options['type']));
         }
         
         // platform
@@ -185,7 +191,7 @@ class AddonsSearch
                 }
             }
         }
-
+        
         return array($matches, $total_results);
     }
     
@@ -273,18 +279,26 @@ class AddonsSearch
      *  e.g. platform:linux => 2
      */
     public function convert_platform($str) {
-        switch($str) {
+        switch(strtolower($str)) {
+                        
             case 'all':
                 return PLATFORM_ALL;
             case 'linux':
                 return PLATFORM_LINUX;
             case 'mac':
+            case 'macosx':
+            case 'darwin':
                 return PLATFORM_MAC;
             case 'bsd':
+            case 'bsd_os':
                 return PLATFORM_BSD;
             case 'win':
+            case 'winnt':
+            case 'windows':
                 return PLATFORM_WIN;
             case 'sun':
+            case 'sunos':
+            case 'solaris':
                 return PLATFORM_SUN;            
         }
     }

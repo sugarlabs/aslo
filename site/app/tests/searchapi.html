@@ -11,9 +11,10 @@
 <thead>
 <tr><td rowspan="1" colspan="3">searchapi</td></tr>
 </thead><tbody>
+<!--apps-->
 <tr>
 	<td>open</td>
-	<td>/en-US/sunbird/api/1.5/search/yslow</td>
+	<td>/en-US/sunbird/api/1.2/search/yslow</td>
 	<td></td>
 </tr>
 <tr>
@@ -23,7 +24,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/yslow</td>
+	<td>/en-US/firefox/api/1.2/search/yslow</td>
 	<td></td>
 </tr>
 <tr>
@@ -31,9 +32,10 @@
 	<td>//name</td>
 	<td>YSlow</td>
 </tr>
+<!--category -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/yslow category:alerts</td>
+	<td>/en-US/firefox/api/1.2/search/yslow category:alerts</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,7 +45,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/yslow category:web</td>
+	<td>/en-US/firefox/api/1.2/search/yslow category:web</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,9 +53,10 @@
 	<td>//name</td>
 	<td>YSlow</td>
 </tr>
+<!--app version -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/jsonview version:1.0</td>
+	<td>/en-US/firefox/api/1.2/search/jsonview version:1.0</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,7 +66,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/jsonview version:3.5</td>
+	<td>/en-US/firefox/api/1.2/search/jsonview version:3.5</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,9 +74,10 @@
 	<td>//name</td>
 	<td>JSONView</td>
 </tr>
+<!--type -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/firebug type:dict</td>
+	<td>/en-US/firefox/api/1.2/search/firebug type:dict</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,7 +87,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/firebug type:extension</td>
+	<td>/en-US/firefox/api/1.2/search/firebug type:extension</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,9 +95,10 @@
 	<td>//name</td>
 	<td>Firebug</td>
 </tr>
+<!--platform -->
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple platform:linux</td>
+	<td>/en-US/firefox/api/1.2/search/grapple platform:linux</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,7 +108,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple platform:mac</td>
+	<td>/en-US/firefox/api/1.2/search/grapple platform:mac</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,7 +118,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple after:2009-08-03</td>
+	<td>/en-US/firefox/api/1.2/search/grapple after:2009-08-03</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,13 +128,93 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/en-US/firefox/api/1.5/search/grapple after:2001-03-03</td>
+	<td>/en-US/firefox/api/1.2/search/grapple after:2001-03-03</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyText</td>
 	<td>//name</td>
 	<td>regexp:GrApple.*</td>
+</tr>
+<!-- using old cruddy syntax -->
+<!--type -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.2/search/firebug/3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.2/search/firebug/1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>Firebug</td>
+</tr>
+<!--limit-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.2/search/firebug/all/1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//addon[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementNotPresent</td>
+	<td>//addon[2]</td>
+	<td></td>
+</tr>
+<!--platform-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.2/search/grapple/all/10/Linux</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.2/search/grapple/all/10/Darwin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>regexp:GrApple.*</td>
+</tr>
+<!--app version -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.2/search/jsonview/all/10/Darwin/1.0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.2/search/jsonview/all/10/Darwin/3.5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>JSONView</td>
 </tr>
 
 </tbody></table>

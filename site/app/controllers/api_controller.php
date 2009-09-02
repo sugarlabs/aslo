@@ -20,7 +20,7 @@
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *   Laura Thomson <lthomson@mozilla.com> (Original Author) 
+ *   Laura Thomson <lthomson@mozilla.com> (Original Author)
  *   l.m.orchard <lorchard@mozilla.com>
  *   Justin Scott <fligtar@mozilla.com>
  *
@@ -39,6 +39,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 uses('sanitize');
+vendor('sphinx/addonsSearch');
 
 class ApiController extends AppController
 {
@@ -48,14 +49,14 @@ class ApiController extends AppController
     // bump for new releases
     // 0 or unspecified is for Fx3b3
     // 0.9 is for Fx3b4
-    var $newest_api_version = 1.4;   
- 
+    var $newest_api_version = 1.4;
+
     // cribbed from addonscontroller
-    // some of this is excessive but will likely be needed as 
+    // some of this is excessive but will likely be needed as
     // development continues
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
-    var $uses = array('Addon', 'AddonCollection', 'Addontype', 'Application', 'Collection', 'File', 'GlobalStat', 'Platform', 'Category', 'Translation', /*'Review',*/ 'UpdateCount', 'Version');    
-    var $components = array('Amo', 'Image', 'Pagination', 'Search', 'Session', 'Versioncompare');    
+    var $uses = array('Addon', 'AddonCollection', 'Addontype', 'Application', 'Collection', 'File', 'GlobalStat', 'Platform', 'Category', 'Translation', /*'Review',*/ 'UpdateCount', 'Version');
+    var $components = array('Amo', 'Image', 'Pagination', 'Search', 'Session', 'Versioncompare');
     var $helpers = array('Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 'Pagination');
     var $namedArgs = true;
     var $exceptionCSRF = array("/feed");
@@ -74,10 +75,10 @@ class ApiController extends AppController
         $this->forceShadowDb();
 
         // Disable ACLs; API is public for now
-        // we may add keys later on 
+        // we may add keys later on
         $this->SimpleAuth->enabled = false;
         $this->SimpleAcl->enabled = false;
-       
+
         // extract API version
         $url = $_SERVER['REQUEST_URI'];
 
@@ -85,15 +86,15 @@ class ApiController extends AppController
         if (preg_match('/api\/([\d\.]*)\//', $url, $matches)) {
             $this->api_version = $matches[1];
             if (!is_numeric($this->api_version)) {
-                $this->api_version = $this->newest_api_version; 
+                $this->api_version = $this->newest_api_version;
             }
         } else {
            // nothing supplied: assume Fx3b3
-            $this->api_version = 0; 
+            $this->api_version = 0;
         }
 
         // set up translation table for os names
-        // this is hardcoded in 
+        // this is hardcoded in
         $this->os_translation = array(
                                          'ALL' => 'ALL',
                                          'bsd' => 'BSD_OS',
@@ -109,7 +110,7 @@ class ApiController extends AppController
 
     /**
     * Return details of an addon
-    * See requirement DTL-1 in 
+    * See requirement DTL-1 in
     * [http://wiki.mozilla.org/index.php?title=Update:RequirementsV33]
     *
     * @param int $id the id of the addon
@@ -127,111 +128,84 @@ class ApiController extends AppController
         }
         // get real app names
         $app_names = $this->Application->getIDList();
-        $this->publish('app_names', $app_names); 
+        $this->publish('app_names', $app_names);
         $guids = array_flip($this->Application->getGUIDList());
-        $this->publish('guids', $guids); 
-        $this->publish('api_version', $this->api_version); 
-        $this->publish('os_translation', $this->os_translation);   
+        $this->publish('guids', $guids);
+        $this->publish('api_version', $this->api_version);
+        $this->publish('os_translation', $this->os_translation);
     }
 
     /**
     * Search for matching addons
-    * See requirement SRCH-1 in 
+    * See requirement SRCH-1 in
     * [http://wiki.mozilla.org/index.php?title=Update:RequirementsV33]
     *
-    * @param string $term searchterm 
+    * @param string $term searchterm
     */
-    function search($term, $searchtype=NULL, $maxresults = 10, $search_os = null, $search_version=null) {
+    function search($term, $addontype=NULL, $maxresults = 10, $os = null, $version=null) {
 
-        $this->layout = 'rest'; 
-        $this->Sanitize = new Sanitize();    
-        $versions=null;
+        $this->layout = 'rest';
 
-        // if we're passed a version do something with it
-        if (isset($search_version)) {
-            $all_appversions = $this->Amo->getVersionIdsByApp(APP_ID);
-            foreach($all_appversions as $appversion => $appvid) {
-                if($this->Versioncompare->versionBetween($appversion, $search_version, $search_version)) {
-                    $versions[] = $appvid; // remora version ids needed
-                }            
-             }
-        } else {
-             $versions=NULL;
+        $search_opts = array();
+        if ($addontype && $addontype != 'all') {
+            $search_opts['type'] = $addontype;
         }
 
-        // if we're passed an OS, check it's valid
-        $platforms = $this->Platform->getNames();
-        $platform_id = -1; 
-        if(isset($search_os) && ($search_os != 'ALL') && ($search_os != 'all'))  {
-            $ids = array_flip($platforms);
-            $client_platforms = array_flip($this->os_translation);
-            if (@isset($ids[$client_platforms[$search_os]])) {
-              $platform_id = $ids[$client_platforms[$search_os]];   
-            }
+        $search_opts['limit'] = $maxresults;
+
+
+
+        $as = new AddonsSearch($this->Addon);
+        
+        if ($os) {
+            $search_opts['platform'] = $as->convert_platform($os);
+        }
+        if ($version) {
+            $search_opts['version'] = $version;
         }
         
-        if ($searchtype==NULL || $searchtype =='all') {
-            $searchtype = ADDON_API;
+        try {
+            list($matches, $total_results) = $as->query($term, $search_opts);
         }
+        
+        catch (AddonsSearchException $e) {
+            header("HTTP/1.1 503 Service Unavailable", true, 503);
 
-        // We're not searching tags here
-        $result_ids = $this->Search->search($term, '', false, $searchtype, 0, STATUS_PUBLIC,
-                                            $versions , -1, false, -1, $platform_id);
-        if (is_array($result_ids)) {
-            $total_results = count($result_ids);
-        } else {
-            $total_results = 0;
-        }
-
-        // get the total number of addons that would be returned
-        // if we did a regular search on AMO
-        $amo_result_ids = $this->Search->search($term); /*, NULL, 0, NULL, 
-                                                -1, -1, false, -1, -1); */
-
-        if (is_array($amo_result_ids)) {
-            $amo_total_results = count($amo_result_ids);
-        } else {
-            $amo_total_results = 0;
-        }
-
-
-        $this->_getAddons(array_slice($result_ids, 0, $maxresults));
-      
-        if ($this->api_version < 0.9) {
-            // hack to make the count work right in the API
-            //  TODO: to be fixed properly for Fx3 b4
-            $hack_array = $this->viewVars['addonsdata'];
-            $extras_needed = $total_results - $maxresults;
-            for ($count=0; $count < $extras_needed; $count++) {
-                $hack_array[] = 'dummy';
+            if (DEBUG > 0) {
+                $this->publish('error', $e->getMessage());
+            } else {
+                $this->publish('error', "The search system is temporarily unavailable.");
             }
-       
-            $this->set('addonsdata' , $hack_array);
+
+            $this->render();
+            exit;
         }
 
-        // get real app names
-        $app_names = $this->Application->getIDList();
-        $guids = array_flip($this->Application->getGUIDList());
-        $this->publish('guids', $guids); 
-        $this->publish('app_names', $app_names); 
-        $this->publish('api_version', $this->api_version); 
-        $this->publish('total_results', $amo_total_results); 
-        $this->publish('os_translation', $this->os_translation);   
+        $this->_getAddons($matches);
+
+        // var_dump($matches);
+        // var_dump($this->viewVars['addonsdata']);
+        $this->publish('api_version', $this->api_version);
+        $this->publish('guids', array_flip($this->Application->getGUIDList()));
+        $this->publish('app_names', $app_names = $this->Application->getIDList());
+        $this->publish('total_results', $total_results);
+        $this->publish('os_translation', $this->os_translation);
         $this->publish('addonsdata', $this->viewVars['addonsdata']);
+
     }
 
     /**
     * List addons
-    * See requirements LIST-1..3 in 
+    * See requirements LIST-1..3 in
     * [http://wiki.mozilla.org/index.php?title=Update:RequirementsV33]
     * routes from api/list but list is a reserved word in PHP
     *
-    * @param string $listtype (recommended, featured, new) 
-    * @param string $addontype (all, extension, theme, plugin, dictionary, searchengine) 
-    * @param int $number maximum number of results to return 
+    * @param string $listtype (recommended, featured, new)
+    * @param string $addontype (all, extension, theme, plugin, dictionary, searchengine)
+    * @param int $number maximum number of results to return
     */
-    function list_addons($listtype='recommended', $addontype='all', 
-                         $number = 3, $list_os=null, $list_version=null) {  
+    function list_addons($listtype='recommended', $addontype='all',
+                         $number = 3, $list_os=null, $list_version=null) {
 
         $this->layout = 'rest';
 
@@ -240,27 +214,27 @@ class ApiController extends AppController
             case 'new'        :
                            // new is less than ten days old
                            $select = 'distinct a.id ';
-                           $days_since_creation = 10; 
-                           $list_criteria = '(datediff(a.created, NOW()) < '.$days_since_creation.')'; 
+                           $days_since_creation = 10;
+                           $list_criteria = '(datediff(a.created, NOW()) < '.$days_since_creation.')';
                            $tables = 'addons as a';
                            break;
-            case 'recommended':      
+            case 'recommended':
             case 'featured'   :
             default     :
                            $select = ' f.addon_id ';
-                           $list_criteria = ' f.start < NOW() 
-                                             AND f.end > NOW() 
+                           $list_criteria = ' f.start < NOW()
+                                             AND f.end > NOW()
                                              AND f.application_id = \''
                                              . APP_ID . '\'
                                               AND (f.locale = \''
-                                             . LANG .'\' 
-                                             OR f.locale IS NULL) 
-                                             AND a.status = \''.STATUS_PUBLIC.'\' ';  
-                           $tables = ' features as f LEFT JOIN 
-                                       addons as a on 
+                                             . LANG .'\'
+                                             OR f.locale IS NULL)
+                                             AND a.status = \''.STATUS_PUBLIC.'\' ';
+                           $tables = ' features as f LEFT JOIN
+                                       addons as a on
                                        f.addon_id = a.id ';
                            break;
-        }   
+        }
 
         // process addon type
         switch ($addontype) {
@@ -282,40 +256,40 @@ class ApiController extends AppController
             default:
                               $addontype_sql = NULL;
 
-        } 
+        }
         $addon_criteria = '';
         if ($addontype_sql) {
-           $addon_criteria = ' AND a.addontype_id = '. $addontype_sql.' ';        
-        } 
+           $addon_criteria = ' AND a.addontype_id = '. $addontype_sql.' ';
+        }
 
        // platforms
        if ($list_os && $list_os != 'ALL' && $list_os != 'all') {
            $platforms = $this->Platform->getNames();
-           $ids = array_flip($platforms); 
+           $ids = array_flip($platforms);
            $client_platforms = array_flip($this->os_translation);
-           if (isset($client_platforms[$list_os]) 
+           if (isset($client_platforms[$list_os])
                && isset($ids[$client_platforms[$list_os]])
-               && $ids[$client_platforms[$list_os]] != NULL ) {              
-               $platform_id = $ids[$client_platforms[$list_os]];            
-               $all_id = $ids[$client_platforms['ALL']];            
+               && $ids[$client_platforms[$list_os]] != NULL ) {
+               $platform_id = $ids[$client_platforms[$list_os]];
+               $all_id = $ids[$client_platforms['ALL']];
                //echo "platform id is |$platform_id|"; exit;
                $tables .= 'JOIN versions AS v
                           ON v.addon_id = a.id
-                          INNER JOIN files 
-                          ON files.platform_id IN ('.$platform_id.', 
-                                                   '.$all_id.')  
-                          AND v.id = files.version_id'; 
-           }        
-       }  
+                          INNER JOIN files
+                          ON files.platform_id IN ('.$platform_id.',
+                                                   '.$all_id.')
+                          AND v.id = files.version_id';
+           }
+       }
 
        // versions
        if ($list_version) {
-           $all_appversions = $this->Amo->getVersionIdsByApp(APP_ID);           
+           $all_appversions = $this->Amo->getVersionIdsByApp(APP_ID);
            $versions_wanted = array();
            $below_wanted = array();
            $above_wanted = array();
-           foreach($all_appversions as $appversion => $appvid) {                
-               $compare = $this->Versioncompare->compareVersions($appversion, $list_version); 
+           foreach($all_appversions as $appversion => $appvid) {
+               $compare = $this->Versioncompare->compareVersions($appversion, $list_version);
                 if ($compare < 0) {
                     $below_wanted[] = $appvid;
                 } else if ($compare > 0) {
@@ -328,7 +302,7 @@ class ApiController extends AppController
                $tables .= ' JOIN versions_summary AS vs
                             ON f.addon_id = vs.addon_id ';
                //$addon_criteria .= ' AND vs.min IN ('.$version_list.')
-               //                     OR vs.max IN ('.$version_list.') '; 
+               //                     OR vs.max IN ('.$version_list.') ';
                $_ver_string = "('".implode("', '", $versions_wanted) ."') ";
                $versions_criteria = " AND ((vs.min IN ".$_ver_string
                                     ." OR vs.max IN ".$_ver_string. ") ";
@@ -339,7 +313,7 @@ class ApiController extends AppController
                $addon_criteria .= $versions_criteria;
            } else {
                $versions_criteria ='';
-           }        
+           }
        }
        // process number
        if (!is_numeric($number)) {
@@ -347,31 +321,31 @@ class ApiController extends AppController
          $number = 3;
        }
 
-       $sql = 'SELECT '. $select .' 
-               FROM '.$tables 
+       $sql = 'SELECT '. $select .'
+               FROM '.$tables
                .' WHERE '
-               . $list_criteria 
+               . $list_criteria
                . $addon_criteria ;
 
        if ($listtype =='recommended') {
-           $sql .= ' UNION SELECT DISTINCT(f.addon_id) 
+           $sql .= ' UNION SELECT DISTINCT(f.addon_id)
                            FROM ';
            $tables2 = ' addons_categories AS f LEFT JOIN addons AS a ON f.addon_id = a.id ';
-           $where2 = ' WHERE f.feature = 1 
+           $where2 = ' WHERE f.feature = 1
                        AND a.status =\''.STATUS_PUBLIC.'\' ';
            if ($list_os && $list_os != 'all' && $list_os != 'ALL'
                 && isset($platform_id)) {
                // omg, query++
-               $tables2 .= ' 
+               $tables2 .= '
                            JOIN versions AS v
-                           ON v.addon_id = f.addon_id              
-                           INNER JOIN files                           
+                           ON v.addon_id = f.addon_id
+                           INNER JOIN files
                            ON files.platform_id IN ('.$platform_id.' ,
                                                     '.$all_id.')
                            AND v.id = files.version_id ';
            }
            if ($list_version && count($versions_wanted)) {
-               $tables2 .= ' JOIN versions_summary AS vs          
+               $tables2 .= ' JOIN versions_summary AS vs
                              ON f.addon_id = vs.addon_id ';
            }
            $sql .= $tables2 . $where2;
@@ -380,30 +354,30 @@ class ApiController extends AppController
            }
        }
        $addons = $this->Addon->query($sql, true);
-       $addon_ids = array(); 
+       $addon_ids = array();
        foreach ($addons as $addon)  {
           if ($listtype=='new')
             $addon_ids[] = $addon['a']['id'];
           else if ($listtype == 'recommended')
             $addon_ids[] = $addon[0]['addon_id'];
-          else 
+          else
             $addon_ids[] = $addon['f']['addon_id'];
        }
- 
+
        shuffle($addon_ids);
        $addon_ids = array_slice($addon_ids, 0, $number);
- 
+
        $this->_getAddons($addon_ids);
 
        // get real app names
        $app_names = $this->Application->getIDList();
-       $this->publish('app_names', $app_names); 
+       $this->publish('app_names', $app_names);
        $guids = array_flip($this->Application->getGUIDList());
-       $this->publish('guids', $guids); 
+       $this->publish('guids', $guids);
        $this->publish('ids', $addon_ids);
        $this->publish('addonsdata', $this->viewVars['addonsdata']);
-       $this->publish('api_version', $this->api_version); 
-        $this->publish('os_translation', $this->os_translation);   
+       $this->publish('api_version', $this->api_version);
+        $this->publish('os_translation', $this->os_translation);
     }
 
     /**
@@ -436,20 +410,20 @@ class ApiController extends AppController
         }
 
         // Publish the collection details for the feed.
-        $this->publish('feed_id', 
+        $this->publish('feed_id',
             $collection['Collection']['id']);
-        $this->publish('feed_created', 
+        $this->publish('feed_created',
             $collection['Collection']['created']);
-        $this->publish('feed_modified', 
+        $this->publish('feed_modified',
             $collection['Collection']['modified']);
-        $this->publish('feed_closed', 
+        $this->publish('feed_closed',
             !!$collection['Collection']['password']);
-        $this->publish('feed_name', 
+        $this->publish('feed_name',
             $collection['Translation']['name']['string']);
-        $this->publish('feed_description', 
+        $this->publish('feed_description',
             $collection['Translation']['description']['string']);
 
-        // Now, attempt to look up all the addon references in the 
+        // Now, attempt to look up all the addon references in the
         // collection.  Collate the details by addon ID and extract
         // a list of those addon IDs.
         $collection_items = $this->AddonCollection->findAll(array(
@@ -461,7 +435,7 @@ class ApiController extends AppController
             $addon_collections[$id] = $item;
         }
 
-        // Fetch the addons for the feed, first tearing down the model bindings 
+        // Fetch the addons for the feed, first tearing down the model bindings
         // and selectively rebuilding them.
         $this->Addon->unbindFully();
         $this->Addon->bindModel(array(
@@ -486,22 +460,22 @@ class ApiController extends AppController
             'Addon.id' => $addon_ids,
             'Addon.inactive' => 0,
             'Addon.addontype_id' => array(
-                ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, 
+                ADDON_EXTENSION, ADDON_THEME, ADDON_DICT,
                 ADDON_SEARCH, ADDON_PLUGIN
             )
         ));
 
-        // Rather than trying to join categories and addon types in SQL, collect IDs 
+        // Rather than trying to join categories and addon types in SQL, collect IDs
         // and make a pair of queries to fetch them.
         $category_ids = array();
         $addon_type_ids = array();
         foreach ($addons_data as $addon) {
             $addon_type_ids[$addon['Addon']['addontype_id']] = true;
-            foreach ($addon['Category'] as $category) 
+            foreach ($addon['Category'] as $category)
                 $category_ids[$category['id']] = true;
         }
 
-        // Query for addon types found in this set of addons, assemble a map 
+        // Query for addon types found in this set of addons, assemble a map
         // for an in-code join later.
         $addon_type_rows = $this->Addontype->findAll(array(
             'Addontype.id' => array_keys($addon_type_ids)
@@ -511,7 +485,7 @@ class ApiController extends AppController
             $addon_types[$row['Addontype']['id']] = $row;
         }
 
-        // Query for addon types found in this set of categories, assemble a map 
+        // Query for addon types found in this set of categories, assemble a map
         // for an in-code join later.
         $category_rows = $this->Category->findAll(array(
             'Category.id' => array_keys($category_ids)
@@ -524,17 +498,17 @@ class ApiController extends AppController
         $app_names = $this->Application->getIDList();
         $guids = array_flip($this->Application->getGUIDList());
 
-        $this->publish('app_names', $app_names); 
-        $this->publish('guids', $guids); 
+        $this->publish('app_names', $app_names);
+        $this->publish('guids', $guids);
         $this->publish('ids', $addon_ids);
-        $this->publish('api_version', $this->api_version); 
-        $this->publish('os_translation', $this->os_translation);   
+        $this->publish('api_version', $this->api_version);
+        $this->publish('os_translation', $this->os_translation);
 
-        // Process addons list to produce a much flatter and more easily 
+        // Process addons list to produce a much flatter and more easily
         // sanitized array structure for the view, sprinkling in details
         // like categories and version information along the way.
         //
-        // TODO: Reconcile this with the _getAddons() method from which this 
+        // TODO: Reconcile this with the _getAddons() method from which this
         // was refactored but not replaced.
         $addons_out = array();
         for ($i=0; $i<count($addons_data); $i++) {
@@ -554,28 +528,28 @@ class ApiController extends AppController
                 $install_version, null, null, null, null, 0
             );
             if (!is_array($fileinfo) || count($fileinfo)==0) {
-                continue;    
+                continue;
             }
 
-            // Start constructing a flat minimal list of addon details made up of only 
+            // Start constructing a flat minimal list of addon details made up of only
             // what the view will need.
             $addon_out = array(
-                'collection_added' => 
+                'collection_added' =>
                     $addon_collections[$id]['AddonCollection']['added'],
-                'collection_comments' => 
+                'collection_comments' =>
                     $addon_collections[$id]['Translation']['comments']['string'],
                 'id' => $addon['Addon']['id'],
                 'guid' => $addon['Addon']['guid'],
                 'name' => $addon['Translation']['name']['string'],
                 'summary' => $addon['Translation']['summary']['string'],
-                'description' => 
+                'description' =>
                     $addon['Translation']['description']['string'],
                 'addontype_id' => $addontype_id,
-                'addontype_name' => 
+                'addontype_name' =>
                     $addon_types[$addontype_id]['Translation']['name']['string'],
-                'icon' => 
+                'icon' =>
                     $this->Image->getAddonIconURL($id),
-                'thumbnail' => 
+                'thumbnail' =>
                     $this->Image->getHighlightedPreviewURL($id),
                 'install_version' => $install_version,
                 'status' => $addon['Addon']['status'],
@@ -598,15 +572,15 @@ class ApiController extends AppController
             }
 
             // Add the list of compatible apps into the addon details
-            $compatible_apps = 
+            $compatible_apps =
                 $this->Version->getCompatibleApps($install_version);
             foreach ($compatible_apps as $x) {
-                $addon_out['compatible_apps'][] = array( 
-                    'id'   => $x['Application']['application_id'],   
-                    'name' => $app_names[ $x['Application']['application_id']],   
-                    'guid' => $guids[$app_names[$x['Application']['application_id']]], 
-                    'min_version' => $x['Min_Version']['version'],  
-                    'max_version' => $x['Max_Version']['version']  
+                $addon_out['compatible_apps'][] = array(
+                    'id'   => $x['Application']['application_id'],
+                    'name' => $app_names[ $x['Application']['application_id']],
+                    'guid' => $guids[$app_names[$x['Application']['application_id']]],
+                    'min_version' => $x['Min_Version']['version'],
+                    'max_version' => $x['Max_Version']['version']
                 );
             }
 
@@ -644,7 +618,7 @@ class ApiController extends AppController
                 );
             }
 
-            // Finally, add this set of addon details to the list intended for 
+            // Finally, add this set of addon details to the list intended for
             // the view.
             $addons_out[] = $addon_out;
         }
@@ -662,9 +636,9 @@ class ApiController extends AppController
         try {
 
             // Try getting content type and length from the headers.
-            $content_type = isset($_SERVER['CONTENT_TYPE']) ? 
+            $content_type = isset($_SERVER['CONTENT_TYPE']) ?
                 $_SERVER['CONTENT_TYPE'] : 'application/json';
-            $content_length = isset($_SERVER['CONTENT_LENGTH']) ? 
+            $content_length = isset($_SERVER['CONTENT_LENGTH']) ?
                 $_SERVER['CONTENT_LENGTH'] : FALSE;
 
             // If there's content waiting, try fetching it.
@@ -677,9 +651,9 @@ class ApiController extends AppController
                 if ($passwd_hash != $collection['Collection']['password'])
                     throw new Exception('Password hash mismatch');
             }
-        
-            if ($content_type == 'text/xml') { 
-                // If the request claims to be submitting XML, attempt to 
+
+            if ($content_type == 'text/xml') {
+                // If the request claims to be submitting XML, attempt to
                 // extract the details from it.
                 $doc = new SimpleXMLElement($data);
                 $req_addon = array(
@@ -690,12 +664,12 @@ class ApiController extends AppController
                 // Otherwise, assume the incoming request is JSON.
                 $req_addon = json_decode($data, TRUE);
             }
-            
+
             // If there's no addon data, or the GUID is missing, abort.
             if (!$req_addon)
                 throw new Exception('Invalid request data');
 
-            if (!isset($req_addon['guid']) || !$req_addon['guid']) 
+            if (!isset($req_addon['guid']) || !$req_addon['guid'])
                 throw new Exception('Missing addon GUID');
 
             // Try to find the requested addon, abort if not found.
@@ -707,15 +681,15 @@ class ApiController extends AppController
 
             // Check if the addon is already in the collection.
             $existing_item = $this->AddonCollection->findAll(array(
-                'AddonCollection.collection_id' => 
+                'AddonCollection.collection_id' =>
                     $collection['Collection']['id'],
-                'AddonCollection.addon_id' => 
+                'AddonCollection.addon_id' =>
                     $addon['Addon']['id']
             ));
             if ($existing_item)
                 throw new Exception('Addon already in collection');
 
-            // Finally, add the addon to the collection and bump the 
+            // Finally, add the addon to the collection and bump the
             // modification timestamp.
             $this->AddonCollection->save(array(
                 'collection_id' => $collection['Collection']['id'],
@@ -739,23 +713,23 @@ class ApiController extends AppController
     }
 
     /**
-    * Retrieve cumulative downloads for an addon 
+    * Retrieve cumulative downloads for an addon
     * See requirement DOWN-2 in
     * [http://wiki.mozilla.org/index.php?title=Update:RequirementsV33]
-    * @param int $id  id of the addon 
+    * @param int $id  id of the addon
     */
     function cumulative_downloads($id) {
-        $this->Amo->clean($id);    
+        $this->Amo->clean($id);
         $this->layout='rest';
         $_conditions = array(
             'Addon.id' => $id,
             'Addon.inactive' => 0,
-            'Addon.addontype_id' => array(ADDON_EXTENSION, ADDON_THEME, 
+            'Addon.addontype_id' => array(ADDON_EXTENSION, ADDON_THEME,
                                           ADDON_DICT, ADDON_SEARCH, ADDON_PLUGIN)
             );
 
         // get basic addon data
-        // same criteria as used by the amo display action 
+        // same criteria as used by the amo display action
         $addon_data = $this->Addon->find($_conditions, null , null , 1);
 
         if (empty($addon_data)) {
@@ -768,21 +742,21 @@ class ApiController extends AppController
         $downloads = $addon_data['Addon']['totaldownloads'];
 
         $this->publish('id', $id);
-        $this->publish('downloads', $downloads); 
-    } 
+        $this->publish('downloads', $downloads);
+    }
 
     /**
-    * Retrieve update pings for an addon 
+    * Retrieve update pings for an addon
     * See requirement USE-2 in
     * [http://wiki.mozilla.org/index.php?title=Update:RequirementsV33]
-    * @param int $id  id of the addon 
+    * @param int $id  id of the addon
     * @param string $period day, month, year: period to report on
     * @param string $querydate date on which reporting period ENDS
     */
 /*
 // update_pings off for now
     function update_pings($id, $period='day', $querydate='') {
-        $this->Amo->clean($id);    
+        $this->Amo->clean($id);
         $this->layout='rest';
 
         // date handling
@@ -792,7 +766,7 @@ class ApiController extends AppController
         } else {
             if (!($checkdate = strtotime($querydate))) {
                 // if it's not a valid date fall back to today
-                $querydate = date('Y-m-d');  // today 
+                $querydate = date('Y-m-d');  // today
             } else {
                 $querydate = date('Y-m-d', $checkdate);
             }
@@ -800,32 +774,32 @@ class ApiController extends AppController
 
         // period handling
         switch ($period)  {
-            case 'week': 
-                          $days = 7;      
+            case 'week':
+                          $days = 7;
                           break;
             case 'month':
                           $days = 30;
-                          break; 
+                          break;
             case 'day':
-            default: 
+            default:
                           $period = 'day';
                           $days = 1;
         }
 
-        $daylength = 24*60*60; 
-        $startdate = date('Y-m-d', (strtotime($querydate)-($days*$daylength)));  
+        $daylength = 24*60*60;
+        $startdate = date('Y-m-d', (strtotime($querydate)-($days*$daylength)));
         $date_sql = ' and  date <= \''
                     . $querydate
                     .'\' and  date > \''
-                    . $startdate .'\''; 
+                    . $startdate .'\'';
 
 
         $sql = 'select *
                 from update_counts
                 where addon_id = '.$id
                 . $date_sql
-                ; 
-       
+                ;
+
        // run the query
        $update_counts = $this->UpdateCount->query($sql);
 
@@ -859,7 +833,7 @@ class ApiController extends AppController
            $apps = unserialize($update_count['update_counts']['application']);
            foreach ($apps as $app => $details) {
                foreach ($details as $version => $count) {
-                   @$application_counts[$app][$version] += $count;   
+                   @$application_counts[$app][$version] += $count;
                }
            }
 
@@ -879,22 +853,22 @@ class ApiController extends AppController
        $this->publish('status_counts', $status_counts);
        $this->publish('application_counts', $application_counts);
        $this->publish('os_counts', $os_counts);
-    } 
+    }
 */
-    
+
     /**
      * Returns global stats for AMO for the specified date
      */
     function stats($date = '') {
         $this->layout = 'rest';
-        
+
         if (empty($date)) {
             $date = date('Y-m-d');
         }
         else {
             $date = date('Y-m-d', strtotime($date));
         }
-        
+
         $stats = array(
             'addon_total_downloads' => $this->GlobalStat->getNamedCount('addon_total_downloads', $date),
             'addon_total_updatepings' => $this->GlobalStat->getUpdatepingsUpToDate('addon_total_updatepings', $date),
@@ -912,13 +886,13 @@ class ApiController extends AppController
             'collector_total_downloads' => $this->GlobalStat->getNamedCount('collector_total_downloads', $date),
             'collector_updatepings' => $this->GlobalStat->getUpdatepingsUpToDate('collector_updatepings', $date)
         );
-        
+
         $this->publish('stats', $stats);
         $this->publish('date', $date);
     }
 
     /**
-    * Return a complete list of available language packs 
+    * Return a complete list of available language packs
     *
     */
     function get_language_packs() {
@@ -951,14 +925,14 @@ class ApiController extends AppController
     }
 
 /* Utility functions follow */
-    
+
     /**
-    * Given an array of addon ids, return details for those addons 
+    * Given an array of addon ids, return details for those addons
     *
     * @param array $ids ids of the addons to retrieve
     */
     function _getAddons($ids) {
-        
+
        $addonsdata = array();
        foreach ($ids as $id) {
         $_conditions = array(
@@ -968,7 +942,7 @@ class ApiController extends AppController
             );
 
         // get basic addon data
-        // same criteria as used by the amo display action 
+        // same criteria as used by the amo display action
         $this->Addon->bindOnly('User', 'Version', 'Tag', 'AddonCategory');
         $addon_data = $this->Addon->find($_conditions, null , null , 1);
 
@@ -982,11 +956,11 @@ class ApiController extends AppController
         $this_addon_type = $this->Addontype->findById($addon_data['Addon']['addontype_id']);
         $addon_data['Addon_type'] = $this_addon_type;
 
-        $install_version 
+        $install_version
             = $this->Version->getVersionByAddonId($addon_data['Addon']['id'],
                                                   STATUS_PUBLIC);
 
-        // find the addon version to report to user 
+        // find the addon version to report to user
         foreach ($addon_data['Version'] as $v) {
           if ($v['id'] == $install_version) {
             $addon_data['install_version'] = $v['version'];
@@ -1000,17 +974,17 @@ class ApiController extends AppController
 
         if (!is_array($fileinfo) || count($fileinfo)==0) {
             // don't return addons that don't have a valid
-            // file associated with them 
-            continue;    
+            // file associated with them
+            continue;
         }
 
         // get compatible apps
         $compatible_apps = $this->Version->getCompatibleApps($install_version);
         $addon_data['Compatible_apps'] = $compatible_apps;
-        
+
 
         // get compatible platforms
-         
+
         foreach($fileinfo as &$file) {
             $this->Platform->unbindFully();
             $this_plat = $this->Platform->findById($file['Platform']['id']);
@@ -1043,18 +1017,18 @@ class ApiController extends AppController
 
         // add data to array
         $addonsdata[$id] = $addon_data;
-       }  
-       
+       }
+
        $this->set('addonsdata' , $addonsdata);
     }
 
     /**
-     * API specific publish 
+     * API specific publish
      * Uses XML encoding and is UTF-8 safe
      * @param mixed the data array (or string) to be html-encoded (by reference)
      * @param bool clean the array keys as well?
      * @return void
-    */   
+    */
     function publish($viewvar, $value, $sanitizeme = true) {
         if ($sanitizeme) {
             if (is_array($value)) {
@@ -1068,32 +1042,32 @@ class ApiController extends AppController
         $this->set($viewvar, $value);
     }
 
-    /**     
+    /**
      * API specific sanitize
-     * xml-encode an array, recursively 
+     * xml-encode an array, recursively
      * UTF-8 safe
-     *          
-     * @param mixed the data array to be encoded 
+     *
+     * @param mixed the data array to be encoded
      * @param bool clean the array keys as well?
-     * @return void 
-     */ 
+     * @return void
+     */
     var $sanitize_patterns = array(
-        "/\&/u", "/</u", "/>/u", 
+        "/\&/u", "/</u", "/>/u",
         '/"/u', "/'/u",
         '/[\cA-\cL]/u',
         '/[\cN-\cZ]/u',
      );
     var $sanitize_replacements = array(
-        "&amp;", "&lt;", "&gt;", 
-        "&quot;", "&#39;", 
-        "", 
+        "&amp;", "&lt;", "&gt;",
+        "&quot;", "&#39;",
+        "",
         ""
     );
     var $sanitize_field_exceptions = array(
         'id'=>1, 'guid'=>1, 'addontype_id'=>1, 'status'=>1, 'higheststatus'=>1,
-        'icontype'=>1, 'version_id'=>1, 'platform_id'=>1, 'size'=>1, 'hash'=>1, 
-        'codereview'=>1, 'password'=>1, 'emailhidden'=>1, 'sandboxshown'=>1, 
-        'averagerating'=>1, 'textdir'=>1, 'locale'=>1, 'locale_html'=>1, 
+        'icontype'=>1, 'version_id'=>1, 'platform_id'=>1, 'size'=>1, 'hash'=>1,
+        'codereview'=>1, 'password'=>1, 'emailhidden'=>1, 'sandboxshown'=>1,
+        'averagerating'=>1, 'textdir'=>1, 'locale'=>1, 'locale_html'=>1,
         'created'=>1, 'modified'=>1, 'datestatuschanged'=>1
     );
     function _sanitizeArrayForXML(&$data, $cleankeys = false) {
@@ -1111,13 +1085,13 @@ class ApiController extends AppController
                 $this->_sanitizeArrayForXML($data[$key], $cleankeys);
             } else {
                 $data[$key] = preg_replace(
-                    $this->sanitize_patterns, 
-                    $this->sanitize_replacements, 
+                    $this->sanitize_patterns,
+                    $this->sanitize_replacements,
                     $data[$key]
                 );
             }
         }
-            
+
         // change the keys if necessary
         if ($cleankeys) {
             $keys = array_keys($data);
@@ -1135,10 +1109,10 @@ class ApiController extends AppController
      */
     function sanitizeForXML($value) {
         return preg_replace(
-            $this->sanitize_patterns, 
-            $this->sanitize_replacements, 
+            $this->sanitize_patterns,
+            $this->sanitize_replacements,
             $value
         );
     }
-        
+
 }
