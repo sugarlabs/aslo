@@ -100,9 +100,6 @@
         $Route->connect("/{$prefix}/api/addon/*", array('controller' => 'api', 'action'=>'addon'));
         $Route->connect("/{$prefix}/api/list/*", array('controller' => 'api', 'action'=>'list_addons'));
 
-        // Search 1.5 API to use sphinx
-        $Route->connect("/{$prefix}/api/1.5/search/*", array('controller' => 'api15', 'action'=>'search'));
-
         // Add API versioning support
         $Route->connect("/{$prefix}/api/[\d\.]*/addon/*", array('controller' => 'api', 'action'=>'addon'));
         $Route->connect("/{$prefix}/api/[\d\.]*/list/*", array('controller' => 'api', 'action'=>'list_addons'));
