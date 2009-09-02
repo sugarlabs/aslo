@@ -99,8 +99,8 @@ def translate(version_string):
         return int_str
     
 if __name__ == '__main__':
-    say(settings.db, "ALTER TABLE appversions ADD COLUMN version_int \
-    BIGINT UNSIGNED AFTER version;")
+    # say(settings.db, "ALTER TABLE appversions ADD COLUMN version_int \
+    # BIGINT UNSIGNED AFTER version;")
     id_versions = say(settings.db, \
     "SELECT id, version FROM appversions")
 
