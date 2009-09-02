@@ -1645,6 +1645,7 @@ SELECT
     a.totaldownloads,
     a.inactive,
     LTRIM(name.localized_string) AS name,
+    (SELECT GROUP_CONCAT(nickname) from addons_users au, users u where addon_id=a.id AND au.user_id = u.id AND listed = 1 GROUP BY addon_id) AS authors,
     (SELECT localized_string FROM translations WHERE id = a.homepage AND locale = name.locale) AS homepage,
     (SELECT localized_string FROM translations WHERE id = a.description AND locale = name.locale) AS description,
     (SELECT localized_string FROM translations WHERE id = a.summary AND locale = name.locale) AS summary,
