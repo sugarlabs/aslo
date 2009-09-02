@@ -58,11 +58,6 @@ class HubComponent extends Object {
             )),
         );
 
-        $this->category_slugs = array();
-        foreach ($this->categories as &$category) {
-            $this->category_slugs[$category->slug] = $category;
-        }
-
         $this->policies = array(
             new HubCategory('Add-on Submission', ___('Find out what is expected of add-ons we host and our policies on specific add-on practices.'), 'submission'),
             new HubCategory('Review Process', ___('What happens after your add-on is submitted? Learn about how our Editors review submissions.'), 'reviews'),
@@ -71,6 +66,26 @@ class HubComponent extends Object {
             new HubCategory('Developer Agreement', ___('Terms of Service for submitting your work to our site. Developers are required to accept this agreement before submission.'), 'agreement'),
             new HubCategory('Contacting Us', ___('How to get in touch with the AMO team regarding these policies or your add-on.'), 'contact')
         );
+
+        $this->casestudies = array(
+            new HubCaseStudy('Cooliris lorem ipsum', $lorem, 'cooliris', 5579,
+                '/img/amo2009/logo-firefox.gif', ___('Cooliris action text')),
+            new HubCaseStudy('Firebug lorem ipsum', $lorem, 'firebug', 1843,
+                '/img/amo2009/logo-seamonkey.gif', ___('Firebug action text')),
+            new HubCaseStudy('Adblock Plus dolor sit amet', $lorem, 'adblockplus',
+                1865, '/img/amo2009/logo-thunderbird.gif', ___('ABP action text'))
+            );
+
+        // generate by-slug lookup arrays
+        $objecttypes = array('categories', 'policies', 'casestudies');
+        foreach ($objecttypes as $type) {
+            $slugname = $type.'_slugs';
+            $this->$slugname = array();
+            foreach ($this->$type as &$item) {
+                $this->{$slugname}[$item->slug] = $item;
+            }
+            unset($item);
+        }
     }
 }
 
@@ -102,6 +117,17 @@ class Howto extends Object {
         $this->href = $href;
         $this->site = $site;
         $this->description = $description;
+    }
+}
+
+class HubCaseStudy extends Object {
+    function __construct($title, $description, $slug, $addonid, $logo, $actiontext) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->slug = $slug;
+        $this->addonid = $addonid;
+        $this->logo = $logo;
+        $this->actiontext = $actiontext;
     }
 }
 

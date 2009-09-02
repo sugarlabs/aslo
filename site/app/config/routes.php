@@ -135,19 +135,13 @@
 
 
         // Developer hub.
-        $Route->connect("/{$prefix}/developers/docs/how-to/",
-                        array('controller' => 'developers',
-                              'action' => 'howto_list'));
-
-        $Route->connect("/{$prefix}/developers/docs/how-to/*",
-                        array('controller' => 'developers',
-                              'action' => 'howto_detail'));
-
-        $Route->connect("/{$prefix}/developers/docs/policies/",
-                        array('controller' => 'developers',
-                              'action' => 'policy_list'));
-        $Route->connect("/{$prefix}/developers/docs/policies/*", array('controller' => 'developers', 'action' => 'policy_detail'));
         $Route->connect("/{$prefix}/developers/docs/reference/", array('controller' => 'developers', 'action' => 'api_reference'));
+        $Route->connect("/{$prefix}/developers/docs/how-to/", array('controller' => 'developers', 'action' => 'howto_list'));
+        $Route->connect("/{$prefix}/developers/docs/how-to/*", array('controller' => 'developers', 'action' => 'howto_detail'));
+        $Route->connect("/{$prefix}/developers/docs/policies/", array('controller' => 'developers', 'action' => 'policy_list'));
+        $Route->connect("/{$prefix}/developers/docs/policies/*", array('controller' => 'developers', 'action' => 'policy_detail'));
+        $Route->connect("/{$prefix}/developers/docs/case-studies/", array('controller' => 'developers', 'action' => 'case_studies_list'));
+        $Route->connect("/{$prefix}/developers/docs/case-studies/*", array('controller' => 'developers', 'action' => 'case_studies_detail'));
 
 		// Tag page
 		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));

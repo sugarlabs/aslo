@@ -2005,11 +2005,11 @@ class DevelopersController extends AppController
     }
 
     function howto_detail($page) {
-        if (!array_key_exists($page, $this->Hub->category_slugs)) {
+        if (!array_key_exists($page, $this->Hub->categories_slugs)) {
             $this->flash(___('Page not found'), '/developers/docs/how-to');
         }
 
-        $category = $this->Hub->category_slugs[$page];
+        $category = $this->Hub->categories_slugs[$page];
 
         $this->pageTitle = $category->title.' :: '.___('How-to Library').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
 
@@ -2035,11 +2035,11 @@ class DevelopersController extends AppController
     }
 
     function policy_detail($policy) {
-        if (!array_key_exists($policy, $this->Hub->category_slugs)) {
+        if (!array_key_exists($policy, $this->Hub->policies_slugs)) {
             $this->redirect('/developers/docs/policies', null, true, false);
             return;
         } else {
-            $policy = $this->Hub->category_slugs[$policy];
+            $policy = $this->Hub->policies_slugs[$policy];
         }
 
         $this->publish('policy', $policy);
@@ -2063,5 +2063,21 @@ class DevelopersController extends AppController
         $this->render('api_reference');
     }
 
+    /**
+     * Case Studies
+     */
+    function case_studies_list() {
+        $this->layout = 'amo2009';
+        $this->pageTitle = ___('Case Studies').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
+        $this->publish('breadcrumbs', array(___('Developer Hub') => '/developers/'));
+
+        foreach ($this->Hub->casestudies as &$study) {
+            $study->addon = $this->Addon->getAddon($study->addonid, array('authors'));
+        }
+        unset($study);
+        $this->publish('casestudies', $this->Hub->casestudies);
+
+        $this->render('case_studies_list');
+    }
 }
 ?>
