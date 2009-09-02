@@ -324,6 +324,7 @@ class Addon extends AppModel
                 'Version.id' => $this->Version->getVersionByAddonId($id,
                     ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $valid_status))),
                 array('Version.id', 'Version.version', 'Version.created'));
+                
             if (!empty($buf[0]['Version'])) {
                 $addon['Version'][0] = $buf[0]['Version'];
 

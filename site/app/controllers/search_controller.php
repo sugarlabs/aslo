@@ -185,20 +185,26 @@ class SearchController extends AppController
         $sort = "";
         $sort_orders = array('newest', 'name', 'averagerating', 'weeklydownloads');
         if (isset( $this->params['url']['sort']) && 
-            in_array($this->params['url']['sort'], $sort_orders) ) { $sort = $this->params['url']['sort']; }
+        in_array($this->params['url']['sort'], $sort_orders) ) { 
+            $sort = $this->params['url']['sort']; 
+            $search_options['sort'] = $sort;
+        }
         $this->publish('sort', $sort); //publish for element caching
 
         // execute this search
-        $as = new AddonsSearch($this->Addon);
-        // $_result_ids = array();
-        list($_result_ids, $total) = $as->query($_terms, $search_options);
-
+        $as          = new AddonsSearch($this->Addon);
+        $_result_ids = array();
+        $total       = 0;
+        
+        if ($_terms) {
+            list($_result_ids, $total) = $as->query($_terms, $search_options);
+        }
         //, $_tag, false, $category[0], $category[1], NULL, $lver, $atype, $pid, $lup, $sort);
 
         if ($this->params['action'] != 'rss') {
             $this->pageTitle = ___('Search Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('cssAdd', array('forms'));
-            $this->params['url']['q'] = urlencode( $this->params['url']['q']);
+            $this->params['url']['q'] = urlencode($_terms);
             $this->Pagination->total = count($_result_ids);
             $this->publish("total_count",$this->Pagination->total);
             //if advanced search pagination set, use it.

@@ -41,10 +41,19 @@ class AddonsSearch
     public function query($term, $options = array()) {
         // summon the sphinx api
         $sphinx = $this->sphinx;
-        $sphinx->SetSelect("addon_id, app");
+        
+        $fields = "addon_id, app";
+        
+        if (DEBUG > 1) {
+            $fields .= ", modified, name_ord, locale_ord";
+        }
+        
+        $sphinx->SetSelect($fields);
         $sphinx->SetFieldWeights(array('name'=> 4));
         $sphinx->SetLimits(0, 60);
         $sphinx->SetFilter('inactive', array(0));
+        // locale filter to en-US + LANG
+        $sphinx->SetFilter('locale_ord', array(crc32(LANG), crc32('en-US')));
         
         // sort
         if (isset($options['sort'])) {
@@ -53,12 +62,15 @@ class AddonsSearch
                 case 'newest':
                 $sphinx->SetSortMode(SPH_SORT_ATTR_DESC, 'modified');   
                 break;
+                
                 case 'name':
                 $sphinx->SetSortMode(SPH_SORT_ATTR_ASC, 'name_ord');   
                 break;
                 
                 case 'averagerating':
                 $sphinx->SetSortMode(SPH_SORT_ATTR_DESC, 'averagerating');   
+                break;
+                
                 case 'weeklydownloads':
                 $sphinx->SetSortMode(SPH_SORT_ATTR_DESC, 'weeklydownloads');   
                 break;
@@ -153,8 +165,24 @@ class AddonsSearch
         $matches       = array();
 
         if ($total_results) {
+            $seen = array();
+            
             foreach($result['matches'] AS $match) {
+                if (isset($seen[$match['attrs']['addon_id']])) {
+                    continue;
+                }
+                
+                $seen[$match['attrs']['addon_id']] = 1;
                 $matches[] = $match['attrs']['addon_id'];
+                if (DEBUG > 1)
+                {
+                    $mod      = $match['attrs']['modified'];
+                    $name_ord = $match['attrs']['name_ord'];
+                    $locale   = $match['attrs']['locale_ord'];
+                    
+                    $this->log('Result ', 
+                        sprintf('%s,name_ord:%s,%s,%s,locale:%s', $match['attrs']['addon_id'], $name_ord, $mod, date('c', $mod), $locale));
+                }
             }
         }
 
