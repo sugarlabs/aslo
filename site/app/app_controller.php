@@ -417,7 +417,9 @@ class AppController extends Controller
         } elseif (is_string($data)) {
             // encode the string
             if (!empty($data)) {
-                $data = iconv('UTF-8', 'UTF-8//IGNORE', $data);
+                // var_dump($data);
+                $data = rtrim(iconv('UTF-8', 'UTF-8//IGNORE', $data." "), " ");
+                // exit;
                 $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
                 $data = preg_replace($sanitize_patterns['patterns'], $sanitize_patterns['replacements'], $data);
             }

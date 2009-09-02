@@ -7,7 +7,7 @@ class AddonSearchException extends Exception {}
 /**
 * AddonSearch
 */
-class AddonSearch
+class AddonsSearch
 {
     /**
      *  Search for addons using Sphinx
@@ -21,7 +21,7 @@ class AddonSearch
     /**
      *  Actually preform the search
      */
-    public function query($term) {
+    public function query($term, $options = array()) {
         // summon the sphinx api
         $sphinx = $this->sphinx;
         $sphinx->SetSelect("addon_id, app");
@@ -87,6 +87,10 @@ class AddonSearch
             $term = str_replace($matches[0], '',$term);
             $tag = $this->convert_tag($matches[1]);
             $sphinx->setFilter('tag', array($tag));
+        }
+        
+        if (isset($options['category']) && $options['category']) {
+            $sphinx->setFilter('category', array($options['category']));
         }
         
 

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://addons.mozilla.dev/" />
+<title>search2</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">search2</td></tr>
+</thead><tbody>
+<!--Standard search: wrong application -->
+<tr>
+	<td>open</td>
+	<td>/en-US/sunbird/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>yslow</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+<!--Standard search: right application -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>yslow</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=YSlow</td>
+	<td>YSlow</td>
+</tr>
+<!--Category search: wrong category -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>yslow</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>cat</td>
+	<td>label=Alerts &amp; Updates</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>No results found.</td>
+</tr>
+<!-- old tests -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/yslow category:alerts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/yslow category:web</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>YSlow</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/jsonview version:1.0</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/jsonview version:3.5</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>JSONView</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/firebug type:dict</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/firebug type:extension</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>Firebug</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/grapple platform:linux</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/grapple platform:mac</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>regexp:GrApple.*</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/grapple after:2009-08-03</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertElementPresent</td>
+	<td>//searchresults[@total_results=&quot;0&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/api/1.5/search/grapple after:2001-03-03</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//name</td>
+	<td>regexp:GrApple.*</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

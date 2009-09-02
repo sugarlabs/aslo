@@ -19,7 +19,7 @@ class Api15Controller extends ApiController
     
     public function search($term) {
         $this->layout = 'rest'; 
-        $as = new AddonSearch($this->Addon);
+        $as = new AddonsSearch($this->Addon);
         try {
             list($matches, $total_results) = $as->query($term);
         }
