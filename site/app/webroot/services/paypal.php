@@ -59,7 +59,7 @@ foreach ($_POST as $key => $value) {
 }
 
 // post back to PayPal system to validate
-list($res, $info) = $http->post('https://www.paypal.com/cgi-bin/webscr', $data);
+list($res, $info) = $http->post(PAYPAL_CGI_URL, $data);
 
 // Grab paypal data for processing
 $item_number = $data['item_number'];
@@ -68,12 +68,12 @@ $payment_amount = $data['mc_gross'];
 $txn_id = $data['txn_id'];
 
 if (strcmp ($res, "VERIFIED") == 0) {
-    
+
     // Try to connect to the DB
     $dbh = @mysql_connect(DB_HOST.':'.DB_PORT, DB_USER, DB_PASS);
     if (!is_resource($dbh)) die('Could not connect to DB');
     if (!@mysql_select_db(DB_NAME, $dbh)) die('Could not select DB');
-    
+
     // Make sure the payment is valid and yet unprocessed
     if ($payment_status != 'Completed') die('Payment not completed');
 
@@ -83,21 +83,21 @@ if (strcmp ($res, "VERIFIED") == 0) {
 
     $result = mysql_fetch_array($resource);
     if ($result[0]['cnt'] !== '0') die('Transaction already processed');
-    
+
     // Build the query - item_number is the uuid we created
     $post_data = mysql_real_escape_string(serialize($_POST));
     $query = "UPDATE `stats_contributions` " .
-        "SET `transaction_id` = '{$txn_id}', " . 
-        "`amount` = '{$payment_amount}', " . 
+        "SET `transaction_id` = '{$txn_id}', " .
+        "`amount` = '{$payment_amount}', " .
         "`post_data` = '{$post_data}' " .
         "WHERE `uuid` = '{$item_number}'";
     
     // Log the contribution
     if (!@mysql_query($query)) die('Query failed');
-            
-    // Success! 
+
+    // Success!
     echo 'Success!';
-    
+
  } else if (strcmp ($res, "INVALID") == 0) {
     // log for manual investigation
     die('Invalid Confirmation');
