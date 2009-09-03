@@ -957,6 +957,7 @@ CREATE TABLE `stats_share_counts_totals` (
   PRIMARY KEY  (`id`),
   KEY `addon_id` (`addon_id`),
   KEY `count` (`count`),
+  UNIQUE KEY (`addon_id`,`service`),
   CONSTRAINT `stats_share_counts_totals_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
