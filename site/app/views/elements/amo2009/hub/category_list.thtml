@@ -53,18 +53,22 @@
 <div class="primary" role="main">
   <p class="hub-category-description"><?=$description?></p>
 
-  <ul class="blocks">
-    <?php foreach ($objects as $object): ?>
-      <li class="item">
-        <h4>
-          <a href="<?=$html->url($url_prefix . $object->slug)?>">
-            <?=$object->title?>
-          </a>
-        </h4>
-        <p class="description"><?=$object->description?></p>
-      </li>
-    <?php endforeach; ?>
-  </ul>
+  <div class="blocks">
+    <?php foreach (array_chunk($objects, 2) as $chunks): ?>
+    <div class="block-row">
+      <?php foreach ($chunks as $object): ?>
+        <div class="item">
+          <h4>
+            <a href="<?=$html->url($url_prefix . $object->slug)?>">
+              <?=$object->title?>
+            </a>
+          </h4>
+          <p class="description"><?=$object->description?></p>
+        </div>
+      <?php endforeach; ?>
+    </div>
+    <?php endforeach ?>
+  </div>
 </div>
 
 <div class="secondary" role="complementary">
