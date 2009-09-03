@@ -291,11 +291,13 @@ define('SPHINX_HOST', 'localhost');
 define('SPHINX_PORT', 3312);
 
 /**
- * ZXTM Load Balancer Configuration
+ * ZXTM Load Balancer Configuration.
+ * We only define this if VENDORS exists because scripts outside of cake use this config file too.
  *
  * For additional details and examples please see:
  *      /site/vendors/zxtm-api/config.php-dist
  */
+if (defined('VENDORS')) {
 global $zxtm_config;
 $zxtm_config = array(
     'login'          => '',
@@ -304,3 +306,4 @@ $zxtm_config = array(
     'location'       => '',
     'virtual_server' => ''
 );
+}
