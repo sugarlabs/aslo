@@ -54,7 +54,7 @@ $http =& new HttplibComponent();
 $data = array('cmd' => '_notify-validate');
 
 foreach ($_POST as $key => $value) {
-    $value = urlencode(stripslashes($value));
+    $value = stripslashes($value);
     $data[$key] = $value;
 }
 
@@ -90,7 +90,7 @@ if (strcmp ($res, "VERIFIED") == 0) {
         "SET `transaction_id` = '{$txn_id}', " .
         "`amount` = '{$payment_amount}', " .
         "`post_data` = '{$post_data}' " .
-        "WHERE `id` = 93";
+        "WHERE `id` = '{$item_number}'";
 
     // Log the contribution
     if (!@mysql_query($query)) die('Query failed');
