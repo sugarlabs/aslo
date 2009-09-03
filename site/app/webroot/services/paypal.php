@@ -90,8 +90,8 @@ if (strcmp ($res, "VERIFIED") == 0) {
         "SET `transaction_id` = '{$txn_id}', " .
         "`amount` = '{$payment_amount}', " .
         "`post_data` = '{$post_data}' " .
-        "WHERE `uuid` = '{$item_number}'";
-    
+        "WHERE `id` = 93";
+
     // Log the contribution
     if (!@mysql_query($query)) die('Query failed');
 
