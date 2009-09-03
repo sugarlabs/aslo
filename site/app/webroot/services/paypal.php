@@ -89,8 +89,9 @@ if (strcmp ($res, "VERIFIED") == 0) {
     $query = "UPDATE `stats_contributions` " .
         "SET `transaction_id` = '{$txn_id}', " .
         "`amount` = '{$payment_amount}', " .
+        "`uuid` = '', " .
         "`post_data` = '{$post_data}' " .
-        "WHERE `id` = '{$item_number}'";
+        "WHERE `uuid` = '{$item_number}'";
 
     // Log the contribution
     if (!@mysql_query($query)) die('Query failed');
