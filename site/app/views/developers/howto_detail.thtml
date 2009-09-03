@@ -55,7 +55,15 @@ $this->viewVars['bodyclass'] = 'inverse';
         <div class="item">
           <div class="main-info">
             <h4>
-              <?/* $item->href is an absolute, external url. */?>
+              <?php
+                if ($item->type == 'video') {
+                    echo '<span class="label">'.___('Video:').'</span>';
+                }
+                if ($item->type == 'editorspick') {
+                    echo '<span class="label">'.___('Editor\'s Pick:').'</span>';
+                }
+                /* $item->href is an absolute, external url. */
+              ?>
               <a href="<?=$item->href?>" target="_blank"><?=$item->title?></a>
             </h4>
             <p><?=$item->description?></p>

@@ -46,6 +46,7 @@ class HubComponent extends Object {
         $mdc = new HubSite('Mozilla Developer Center', 'http://developer.mozilla.org');
         $wiki = new HubSite('Mozilla Wiki', 'http://wiki.mozilla.org');
         $jetpack = new HubSite('Mozilla Labs - Jetpack', 'http://jetpack.mozillalabs.com');
+        $theatre = new HubSite('Add-on Developer Theatre', 'http://videos.mozilla.org/addons/theatre.html');
 
         $this->categories = array(
             new HubCategory('Getting Started', ___('Learn the basics of developing an extension on the Mozilla platform with this section full of beginner\'s guides.'), 'getting-started', array(
@@ -53,11 +54,17 @@ class HubComponent extends Object {
                     new Howto(0, 'Firefox Add-ons Developer Guide',
                               'https://developer.mozilla.org/En/Firefox_addons_developer_guide',
                               $mdc,
-                              'In this detailed guide to extension development, you\'ll learn the basics of packaging extensions, building an interface with XUL, implementing advanced processes with XPCOM, and how to put it all together.'),
+                              'In this detailed guide to extension development, you\'ll learn the basics of packaging extensions, building an interface with XUL, implementing advanced processes with XPCOM, and how to put it all together.',
+                              'editorspick'),
                     new Howto(0, 'Setting Up an Extension Development Environment',
                               'https://developer.mozilla.org/en/Setting_up_extension_development_environment',
                               $mdc,
                               'This article gives suggestions on how to set up your Mozilla application for extension development, including setting up a profile, changing preferences, and helpful development tools.'),
+                    new Howto(0, 'Extension Bootcamp: Zero to Hello World! in 45 Minutes',
+                              'http://videos.mozilla.org/addons/theatre.html?video=bootcamp',
+                              $theatre,
+                              'In this video tutorial, Myk Melez explains how extensions integrate into Firefox, what they can do, and shows you how to set up an environment to ease their development. He\'ll then walk you through the making of a simple "Hello World!" extension. By the end of this session, you\'ll be an extension developer.',
+                              'video'),
                     new Howto(0, 'Building an Extension',
                               'https://developer.mozilla.org/en/Building_an_Extension',
                               $mdc,
@@ -83,7 +90,19 @@ class HubComponent extends Object {
                     new Howto(0, 'Firefox Extension Development Tutorial',
                               'http://www.rietta.com/firefox/Tutorial/overview.html',
                               new HubSite('Extend Firefox!', 'http://www.rietta.com/firefox/index.html'),
-                              'A multi-page tutorial covering a variety of extension development topics.')
+                              'A multi-page tutorial covering a variety of extension development topics.'),
+                    new Howto(0, 'Creating a Status Bar Extension',
+                              'https://developer.mozilla.org/en/Creating_a_status_bar_extension',
+                              $mdc,
+                              'Learn how to create a simple status bar extension and add more advanced functionality in subsequent tutorials, linked below.'),
+                    new Howto(0, 'Creating a Dynamic Status Bar Extension',
+                              'https://developer.mozilla.org/en/Creating_a_dynamic_status_bar_extension',
+                              $mdc,
+                              'This article modifies the status bar extension created in the above tutorial by fetching content from a website at a regular interval.'),
+                    new Howto(0, 'Adding Preferences to an Extension',
+                              'https://developer.mozilla.org/en/Adding_preferences_to_an_extension',
+                              $mdc,
+                              'This article shows how to add preferences to the dynamic status bar created in the above tutorial.'),
                 )),
                 new SubCategory('Books', array(
                     new Howto(0, 'Build Your Own Firefox Extension E-book',
@@ -185,22 +204,34 @@ class HubComponent extends Object {
                 ))
             )),
             new HubCategory('Theme Development', ___('Style Mozilla applications the way you want with pixel-perfect themes.'), 'theme-development', array(
-                /*new SubCategory('Best Practices', array(
-                    new Howto(0, 'Respecting the JavaScript Global Namespace',
-                              'http://blogger.ziesemer.com/2007/10/respecting-javascript-global-namespace.html',
-                              new HubSite('Mark A. Ziesemer', 'http://blogger.ziesemer.com'),
-                              'In this blog post, Mark Ziesemer explains how to prevevent global namespace pollution by wrapping your extension\'s variables.')
+                new SubCategory('Getting Started', array(
+                    new Howto(0, 'Creating a Skin for Firefox',
+                              'https://developer.mozilla.org/en/Creating_a_Skin_for_Firefox',
+                              $mdc,
+                              'Learn how to find the right files to edit, make your changes, and package up your new theme in this tutorial.'),
+                    new Howto(0, 'How to Create a Firefox Theme',
+                              'http://www.twistermc.com/blog/2006/09/22/how-to-create-a-firefox-theme/',
+                              new HubSite('Blog on a Stick', 'http://www.twistermc.com'),
+                              'Thomas McMahon explains how to create a Firefox theme from start-to-finish in this tutorial.')
                 )),
-                new SubCategory('Advanced Topics', array(
-                    new Howto(0, 'Creating Custom Firefox Extensions with the Mozilla Build System',
-                              'https://developer.mozilla.org/en/Creating_Custom_Firefox_Extensions_with_the_Mozilla_Build_System',
+                new SubCategory('Theme Development', array(
+                    new Howto(0, 'Theme Packaging',
+                              'https://developer.mozilla.org/en/Theme_Packaging',
                               $mdc,
-                              'This article describes how to set up the development environment for a large, complex Firefox extension with a need for high-performance, use of third-party libraries in C/C++, or interfaces not exposed via XPCOM.'),
-                    new Howto(0, 'Multiple Item Packaging',
-                              'https://developer.mozilla.org/en/Multiple_Item_Packaging',
+                              'This article explains the packaging of themes.'),
+                    new Howto(0, 'First Steps in Theme Design',
+                              'http://cheeaun.com/blog/2004/12/first-steps-in-theme-design',
+                              new HubSite('cheeaun blog', 'http://www.cheeaun.com'),
+                              'This blog post by Lim Chee Aun explains the use of -moz-image-region in themes.'),
+                    new Howto(0, 'Making Sure Your Theme Works with RTL Locales',
+                              'https://developer.mozilla.org/en/Making_Sure_Your_Theme_Works_with_RTL_Locales',
                               $mdc,
-                              'This article explains how to create an extension package with multiple items (extensions).')
-                ))*/
+                              'It\'s important to make sure your theme works in all locales. This article explains how to tweak your theme to look great for users who browse in right-to-left.'),
+                    new Howto(0, 'Theme Documentation Index',
+                              'https://developer.mozilla.org/en/Themes',
+                              $mdc,
+                              'If you haven\'t found what you\'re looking for yet, try the Mozilla Developer Center\'s Themes section.'),
+                ))
             )),
             new HubCategory('Other Types of Add-ons', ___('Find information on Search Plug-ins, Jetpack, Personas, and other types of add-ons here.'), 'other-addons', array(
                 new SubCategory('Jetpack', array(
@@ -288,12 +319,13 @@ class SubCategory extends HubCategory {
 
 class Howto extends Object {
 
-    function __construct($id, $title, $href, $site, $description) {
+    function __construct($id, $title, $href, $site, $description, $type = 'article') {
         $this->id = $id;
         $this->title = $title;
         $this->href = $href;
         $this->site = $site;
         $this->description = $description;
+        $this->type = $type;
     }
 }
 
