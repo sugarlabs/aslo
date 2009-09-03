@@ -38,6 +38,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 vendor('sphinx/addonsSearch');
+vendor('zxtm-api/moz_zxtmapi.class');
 
 class AdminController extends AppController
 {
@@ -2172,6 +2173,48 @@ class AdminController extends AppController
         
         $this->set('results', $results);
         $this->render('userlookup', 'ajax');
+    }
+
+    /**
+     *  Flush URLs from a Zeus Load Balancer
+     */
+    function zeusflush() {
+        if (!empty($this->data) && !empty($this->data['Zeus']['flushlist'])) {
+            $_success = $_failure = array();
+            global $zxtm_config;
+            $zxtm_config['wsdl_module'] = 'System.Cache.wsdl';
+
+            // I'm replacing the \r and exploding on the literal \n here.  Apparently these are converted
+            // from real newlines to literal characters now?  wtf.
+            $flushlist = str_replace('\r', '', $this->data['Zeus']['flushlist']);
+            $flushlist = array_unique(explode('\n', $flushlist));
+
+            try {
+                $zeus = new moz_zxtmapi($zxtm_config);
+
+                foreach ($flushlist as $url) {
+                    $url = trim($url);
+
+                    if (strpos($url, '*') === false) {
+                        $zeus->flushObjectByUrl($url);
+                    } else {
+                        $zeus->flushObjectByPattern($url);
+                    }
+
+                }
+
+            } catch (Exception $e) {
+                $this->flash("Failed to flush.  The error was: {$e->getMessage()}", '/admin/serverstatus');
+                return;
+            }
+
+            $_message = "Guess what?  Zeus doesn't tell us if anything succeeded or failed.  So hey, it might have worked!";
+
+            $this->flash($_message, '/admin/serverstatus', 0);
+            return;
+        }
+        $this->flash("You need to enter the URLs to flush.", '/admin/serverstatus');
+        return;
     }
 }
 ?>

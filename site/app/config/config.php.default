@@ -287,6 +287,20 @@ define('PAYPAL_CGI_URL', 'https://www.paypal.com/cgi-bin/webscr');
  * Sphinx server and port - this will normally be correct, except in production we will 
  * point to a single cluser of searchd
  */
- 
 define('SPHINX_HOST', 'localhost');
 define('SPHINX_PORT', 3312);
+
+/**
+ * ZXTM Load Balancer Configuration
+ *
+ * For additional details and examples please see:
+ *      /site/vendors/zxtm-api/config.php-dist
+ */
+global $zxtm_config;
+$zxtm_config = array(
+    'login'          => '',
+    'password'       => '',
+    'wsdl_uri'       => VENDORS.'zxtm-api/wsdl/',
+    'location'       => '',
+    'virtual_server' => ''
+);

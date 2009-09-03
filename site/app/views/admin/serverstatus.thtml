@@ -41,13 +41,13 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>Memcache Status</h3> 
+        <h3>Memcache Status</h3>
 
 <?php
 if (defined('QUERY_CACHE') && QUERY_CACHE) {
     foreach ($data['memcache'] as $server=>$stats) {
         echo '<div class="corner-box">';
-        echo "<h3>{$server}</h3>";    
+        echo "<h3>{$server}</h3>";
         if (!empty($stats) && is_array($stats)) {
             echo '<ul>';
             echo '<li>Gets: '.$stats['get_hits'].'</li>';
@@ -75,16 +75,30 @@ if (defined('QUERY_CACHE') && QUERY_CACHE) {
     <h3>Memcache Flush</h3>
     <p>Use this to expire all memcache entries.  Please use this responsibly.</p>
     <form action="<?=$html->url('/admin/serverflush',false)?>" method="post">
-        <?=$html->hiddenSession() ?>       
+        <?=$html->hiddenSession() ?>
         <p><input type="submit" name="submit" value="Flush Me Baby" class="memcacheflush"/></p>
     </form>
 
     <script type="text/javascript">
     $('.memcacheflush').click(function(){
         return confirm('Are you sure you want to flush memcache?');
-    }); 
+    });
     </script>
 
+    <h3>Zeus Flush</h3>
+    <?php 
+        global $zxtm_config;
+        if (is_array($zxtm_config) && !empty($zxtm_config)): 
+    ?>
+        <p>Enter a list of <b>complete</b> URLs separated by newlines that you would like flushed from Zeus. If any of your entries contain asterisks they will be treated as wildcards.  Please know what you're doing before using this.</p>
+        <form action="<?=$html->url('/admin/zeusflush',false)?>" method="post">
+            <p><textarea name="data[Zeus][flushlist]" cols="80" rows="10"></textarea></p>
+            <?=$html->hiddenSession() ?>
+            <p><input type="submit" name="submit" value="Flush URLs. Baby." class="memcacheflush"/></p>
+        </form>
+    <?php else: ?>
+        <p>You need to configure the ZXTM credentials before you can flush URLs.</p>
+    <?php endif; ?>
 
     <h3>SVN Revision</h3>
     <p>

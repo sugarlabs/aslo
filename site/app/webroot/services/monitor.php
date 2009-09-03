@@ -48,11 +48,17 @@
 header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, private');
 header('Pragma: no-cache');
 
+// The monitor script doesn't load all of cake's defines which we are using in config.php
+if (!defined('VENDORS')) {
+    define('VENDORS', '../../../vendors/');
+}
+
 // Grab the site config
 require_once('../../config/config.php');
 require_once('../../config/constants.php');
+require_once('../../../vendors/zxtm-api/moz_zxtmapi.class.php');
 
-global $results, $shadow_databases;
+global $results, $shadow_databases, $zxtm_config;
 
 // Check Main Database
     $dbh = @mysql_connect(DB_HOST.':'.DB_PORT,DB_USER,DB_PASS);
@@ -93,6 +99,23 @@ global $results, $shadow_databases;
 
         testo("At least 2 memcache servers? ({$total})", ($total>=2));
     }
+
+// Check Zeus
+    if (is_array($zxtm_config)) {
+        testo('ZXTM connection is configured', !empty($zxtm_config['wsdl_uri']));
+
+        if (is_array($zxtm_config) && !empty($zxtm_config['wsdl_uri'])) {
+            try {
+                $zxtm_config['wsdl_module'] = 'System.Cache.wsdl';
+                $client = new moz_zxtmapi($zxtm_config);
+                testo("Connect to Zeus", true);
+                unset($client);
+            } catch (Exception $e) {
+                testo("Connect to Zeus: {$e->getMessage()}", false);
+            }
+        }
+    }
+
 
 // Print out all our results
     foreach ($results as $result) {
