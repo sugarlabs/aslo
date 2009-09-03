@@ -45,13 +45,14 @@ $this->viewVars['bodyclass'] = 'inverse casestudies';
 <h2><?=___('Case Studies')?></h2>
 
 <div class="primary" role="main">
-    <p class="hub-category-description"><?=___('TODO Explanation of case studies')?></p>
+    <p class="hub-category-description"><?=___('Start-to-finish success stories. See how other add-on developers made magic with Mozilla.')?></p>
 
     <ul class="blocks">
         <?php foreach ($casestudies as $study): ?>
         <li class="item">
             <div class="logo">
-                <img src="<?=$html->url($study->logo, null, false, false)?>" alt=""/>
+                <a href="<?=$html->url('/developers/docs/case-studies/'.$study->slug)?>">
+                    <img src="<?=$html->url($study->logo, null, false, false)?>" alt=""/></a>
                 <p><?=___('by')?> <?=str_replace(',', ',<br/>',
                     $html->linkUsersFromModel($study->addon['User']))?></p>
             </div>

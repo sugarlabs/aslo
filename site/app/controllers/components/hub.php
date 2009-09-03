@@ -245,8 +245,8 @@ class HubComponent extends Object {
         
         $lorem = 'foo';
         $this->casestudies = array(
-            new HubCaseStudy('Cooliris lorem ipsum', $lorem, 'cooliris', 5579,
-                '/img/amo2009/logo-firefox.gif', ___('Cooliris action text')),
+            new HubCaseStudy('StumbleUpon', ___('I like turtles!'), 'stumbleupon', 138,
+                '/img/amo2009/logo-firefox.gif', ___('Learn why people are tripping over StumbleUpon')),
             new HubCaseStudy('Firebug lorem ipsum', $lorem, 'firebug', 1843,
                 '/img/amo2009/logo-seamonkey.gif', ___('Firebug action text')),
             new HubCaseStudy('Adblock Plus dolor sit amet', $lorem, 'adblockplus',
