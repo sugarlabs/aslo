@@ -59,7 +59,7 @@ foreach ($_POST as $key => $value) {
 }
 
 // post back to PayPal system to validate
-list($res, $info) = $http->post('https://www.paypal.com:443', $data);
+list($res, $info) = $http->post('https://www.paypal.com/cgi-bin/webscr', $data);
 
 // Grab paypal data for processing
 $item_number = $data['item_number'];
