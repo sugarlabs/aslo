@@ -75,7 +75,7 @@
     <?php if ($showAgreement): ?>
         <div id="step-agreement" <?=($type != 'new' ? 'style="display:block"' : '')?>>
             <p><?=___('Please review and accept the following Developer Agreement before proceeding.')?></p>
-            <?=$localization->includeLocalPage('developer_agreement',array($html->url('/pages/developer_faq')))?>
+            <?=$localization->includeLocalPage('docs/policies/agreement',array($html->url('/pages/developer_faq')))?>
 
             <?php
             list($licenses, $trans) = $this->controller->Developers->getLicenses();

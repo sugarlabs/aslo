@@ -266,12 +266,25 @@ class HubComponent extends Object {
         );
 
         $this->policies = array(
-            new HubCategory('Add-on Submission', ___('Find out what is expected of add-ons we host and our policies on specific add-on practices.'), 'submission'),
-            new HubCategory('Review Process', ___('What happens after your add-on is submitted? Learn about how our Editors review submissions.'), 'reviews'),
-            new HubCategory('Maintaining Your Add-on', ___('Add-on updates, transferring ownership, user reviews, and what to expect once your add-on is approved.'), 'maintenance'),
-            new HubCategory('Recommended Add-ons', ___('How up-and-coming add-ons become recommended and what\'s involved in the process.'), 'recommended'),
-            new HubCategory('Developer Agreement', ___('Terms of Service for submitting your work to our site. Developers are required to accept this agreement before submission.'), 'agreement'),
-            new HubCategory('Contacting Us', ___('How to get in touch with the AMO team regarding these policies or your add-on.'), 'contact')
+            new HubCategory('Add-on Submission',
+                            ___('Find out what is expected of add-ons we host and our policies on specific add-on practices.'),
+                            'submission'),
+            new HubCategory('Review Process',
+                            ___('What happens after your add-on is submitted? Learn about how our Editors review submissions.'),
+                            'reviews'),
+            new HubCategory('Maintaining Your Add-on',
+                            ___('Add-on updates, transferring ownership, user reviews, and what to expect once your add-on is approved.'),
+                            'maintenance'),
+            new HubCategory('Recommended Add-ons',
+                            ___('How up-and-coming add-ons become recommended and what\'s involved in the process.'),
+                            'recommended'),
+            new HubCategory('Developer Agreement',
+                            ___('Terms of Service for submitting your work to our site. Developers are required to accept this agreement before submission.'),
+                            'agreement',
+                            array($this->controller->url('/pages/developer_faq'))),
+            new HubCategory('Contacting Us',
+                            ___('How to get in touch with the AMO team regarding these policies or your add-on.'),
+                            'contact')
         );
         
         $lorem = 'foo';

@@ -44,7 +44,8 @@ $this->viewVars['bodyclass'] = 'inverse';
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
 <div id="policy-detail" class="primary" role="main">
-    <?=$localization->includeLocalPage("docs/policies/{$policy->slug}")?>
+    <?php echo "<h1>{$policy->title}</h1>"; ?>
+    <?=$localization->includeLocalPage("docs/policies/{$policy->slug}", $policy->items)?>
 </div>
 
 <div class="secondary" role="complementary">

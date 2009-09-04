@@ -1,14 +1,56 @@
-<h1>Review Process</h1>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor, leo sit amet pretium dapibus, nibh risus egestas magna, vitae eleifend orci ipsum id eros. In eu metus libero, eu dictum leo.</p>
+=== Testing Methods  ===
 
-<h2>Lorem ipsum</h2>
-<p>Nunc congue tempus congue. Pellentesque vel risus mi. Sed rhoncus dignissim eros ut iaculis. Donec sollicitudin varius odio id lobortis.</p>
+Add-ons are reviewed by the AMO Editors, a group of talented developers that volunteer to help the Mozilla project by reviewing add-ons to ensure a stable and safe experience for Mozilla users. 
 
-<h3>dolor sit amet</h3>
-<p>Mauris luctus enim in diam pretium quis malesuada sem vestibulum. Nulla porta volutpat felis at suscipit. Pellentesque arcu justo, dapibus non imperdiet ac, hendrerit viverra eros. Etiam tristique venenatis auctor. Quisque auctor blandit euismod.</p>
+All add-on submissions must be reviewed by an editor. In order to do this, an editor will review your add-on via an online code viewer that will expand the contents of our xpi file and allow the editor to view your source code. During the review, the editor will look for common issues including:
 
-<h4>consectetur adipiscing elit</h4>
-<p>Donec dapibus tincidunt commodo. Donec commodo augue enim, at convallis lorem. Nulla facilisi.</p>
+* Javascript namespace pollution
+* Remote JavaScript execution or injection
+* Remote XUL injection
+* Obfuscated code
+* Binary components or executables
+* Inclusion of 3rd party software
+* Known [http://en.wikipedia.org/wiki/Spyware spyware] or [http://en.wikipedia.org/wiki/Malware malware]
+* Errors generated in the Firefox Error Console
+* Memory leaks
+* Possible conflicts with other add-ons
 
-<h5>Etiam tempor</h5>
-<p>Suspendisse rutrum malesuada dolor non sollicitudin. Pellentesque consectetur fermentum lorem vel rutrum. Maecenas vehicula dignissim libero, eget placerat arcu eleifend vitae.</p>
+In addition, editors will check for add-ons which are not allowed on AMO. These include:
+* [http://www.conduit.com/ Conduit]-based toolbars
+* Add-ons that embed known [http://en.wikipedia.org/wiki/Spyware spyware] or [http://en.wikipedia.org/wiki/Malware malware]
+* Illegal and criminal add-ons - e.g. [http://en.wikipedia.org/wiki/Clickfraud click fraud] generators, [http://en.wikipedia.org/wiki/Warez warez] download and directory assistants, [http://en.wikipedia.org/wiki/Child_pornography child pornography] finders, etc..
+* Add-ons that include porn spam or seem to be developed purely as a vector to inject advertisements for porn, warez, etc...
+* Add-ons that explicitly violate terms of service for websites, e.g. spam generators, flooding messages, denial of service attacks, extreme server load generators, etc.
+* Add-ons that upon installation into Firefox, auto-install or launch installers of non-Firefox software. To clarify, if the add-on simply adds a menu item to launch the external software that's fine but should be sandboxed not disabled (unless it provides added functionality).
+
+All add-ons are tested in a virtual machine to allow the editor to install the add-on and test the user experience without damaging their testing systems.
+
+It is recommended that if your add-on is site specific, that you provide a test account for use during the review process. In addition, including detailed testing instructions will allow an editor to better understand how your add-on functions and expedite the testing process.
+
+=== The Sandbox Review System  ===
+
+When you submit a new add-on or an update to an existing add-on, the submission  needs to be properly reviewed by an editor based on an extensive set of criteria. The sandbox is an area for advanced users to test these add-on submissions before they are reviewed for general use. A sandboxed add-on is labeled as "experimental" to users who are looking at the un-reviewed version to ensure that they're aware that the add-on has not been tested by an AMO editor.
+
+Caution should be used when installing sandboxed add-ons, as they have not been tested by an editor and may harm your computer.
+
+=== Submission Approval and Denial  ===
+
+When an editor has reviewed your add-on, they will make the determination of whether to set your add-on to “Public Status” or to retain it in a review mode. 
+
+Once approved, your add-on will become visible on AMO within 1 to 3 hours. This is due to the caching mechanism employed on the website. 
+
+If your add-on is denied, you will receive an email from the editor explaining the reason(s) for the denial and how to resolve any issues. 
+
+=== Binary Components or Obfuscated Code  ===
+
+Add-ons may contain binary or obfuscated source code but Mozilla must be allowed to receive and review a copy of the source code for the most recent add-on version submitted for approval. Also note that any updates will also require source code to be sent and a complete review conducted of the add-on.
+
+If your add-on contains binary or obfuscated source code, you will receive a message from an editor when they review your add-on, indicating whom you should contact at Mozilla to coordinate the review of the source code. Once Mozilla has received and reviewed your source code, approval will be given to an editor to review the non-binary aspects of your add-on to determine if it's ready for public status.
+
+Please note that any future updates to your add-on will require you to resubmit your binary code for review as well.
+
+=== What happens if my add-on is denied?  ===
+
+If your add-on is denied, you will receive an email from the editor explaining the reason(s) for the denial and how to resolve any issues. After you have resolved the issues mentioned, you can then resubmit an updated version of your add-on for review. 
+
+Should you have any questions for the reviewing editor, you can email the team at [mailto:amo-editors@mozilla.org amo-editors@mozilla.org].
