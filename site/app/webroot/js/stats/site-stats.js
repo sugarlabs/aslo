@@ -170,8 +170,8 @@ var plotSelection = {
                 'showNoneForLevel1': false
         });
 
-        menu.addItem({'value': 'date',  'name': localized['statistics_js_groupby_selector_date']}).select();
-        menu.addItem({'value': 'week',  'name': localized['statistics_js_groupby_selector_week']});
+        menu.addItem({'value': 'date',  'name': localized['statistics_js_groupby_selector_date']});
+        menu.addItem({'value': 'week',  'name': localized['statistics_js_groupby_selector_week']}).select();
         menu.addItem({'value': 'month', 'name': localized['statistics_js_groupby_selector_month']});
         
         // daily count selection
@@ -190,9 +190,11 @@ var plotSelection = {
                 'showNoneForLevel1': false
         });
 
-        menu.addItem({ value: 30, name: localized['statistics_js_last_30days'] }).select();
+        menu.addItem({ value: 30, name: localized['statistics_js_last_30days'] });
         menu.addItem({ value: 60, name: localized['statistics_js_last_60days'] });
         menu.addItem({ value: 90, name: localized['statistics_js_last_90days'] });
+
+        $('#day-count-selector').hide();
 
         // weekly count selection
         countDropdown = new Dropdown({
@@ -210,11 +212,10 @@ var plotSelection = {
                 'showNoneForLevel1': false
         });
 
-        menu.addItem({ value: 18, name: localized['statistics_js_last_18weeks'] });
+        menu.addItem({ value: 18, name: localized['statistics_js_last_18weeks'] }).select();
         menu.addItem({ value: 36, name: localized['statistics_js_last_36weeks'] });
         menu.addItem({ value: 54, name: localized['statistics_js_last_54weeks'] });
         
-        $('#week-count-selector').hide();
 
         // monthly count selection
         countDropdown = new Dropdown({

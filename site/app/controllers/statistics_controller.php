@@ -144,8 +144,8 @@ class StatisticsController extends AppController
             'date' => ___('%B %e, %Y'),
         ));
 
-        // Get initial chart data (daily) - but check cache first
-        $this->set('stats', $this->_cachedStats('getSiteStats', array('date')));
+        // Get initial chart data (weekly) - but check cache first
+        $this->set('stats', $this->_cachedStats('getSiteStats', array('week')));
 
         // Build drop-down menu for Add-ons with viewable stats
         $session = $this->Session->read('User');

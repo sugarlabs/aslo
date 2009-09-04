@@ -102,7 +102,7 @@
           $i = 0;
           foreach ($stats as $row):
               $i++;
-              if ($i > 30) break; // nonJS case: show the date-range that would initially be charted
+              if ($i > 18) break; // nonJS case: show the date-range that would initially be charted
         ?>
           <tr class="row <?=($i % 2 ? 'odd' : 'even')?>">
             <td class="col first"><?=strftime(___('%B %e, %Y'), strtotime($row['date']))?></td>
@@ -121,7 +121,7 @@
     </div>
     <div class="listing-footer">
       <ol id="stats-table-pagination" class="pagination"></ol>
-      <a href="<?=$html->url('/statistics/sitecsv/date')?>" id="stats-csv-download"><? echo ___('View this table in CSV format') ?></a>
+      <a href="<?=$html->url('/statistics/sitecsv/week')?>" id="stats-csv-download"><? echo ___('View this table in CSV format') ?></a>
     </div>
   </div>
 
