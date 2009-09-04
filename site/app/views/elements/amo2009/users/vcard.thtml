@@ -88,7 +88,7 @@ if (!isset($table_class)) {
       <?php if (!$user['emailhidden']): ?>
           <tr>
             <th><?=___('Email address', 'addon_developer_th_email')?></th>
-            <td><a class="email" href="mailto:<?=$user['email']?>"><?=$user['email']?></a></td>
+            <td><?=$link->email($user['email'])?></td>
           </tr>
       <?php endif; ?>
       <tr>
