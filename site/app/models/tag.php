@@ -154,18 +154,14 @@ class Tag extends AppModel
      *
  	 */
     function userCanModifyTagForAddonFromList($user_id, $tag_id, $tag_list) {
-
-        $_list = $tag_list['userTags'] + $tag_list['developerTags'];
+        $_list = array_merge($tag_list['userTags'], $tag_list['developerTags']);
 
         foreach ($_list as $tag) {
-
             if ($tag['Tag']['id'] != $tag_id) {
                 continue;
             }
 
-            if (@$tag['Tag']['OwnerOrDeveloper'] == 1) {
-                return true;
-            }
+            return (@$tag['Tag']['OwnerOrDeveloper'] == 1);
         }
 
         return false; 

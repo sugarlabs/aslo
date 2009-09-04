@@ -16,11 +16,12 @@
    *
    * The Initial Developer of the Original Code is
    * Mike Morgan <morgamic@mozilla.com>.
-   * Portions created by the Initial Developer are Copyright (C) 2006
+   * Portions created by the Initial Developer are Copyright (C) 2009
    * the Initial Developer. All Rights Reserved.
    *
    * Contributor(s):
    *   RJ Walsh <rwalsh@mozilla.com>
+   *   Frederic Wenzel <fwenzel@mozilla.com>
    *
    * Alternatively, the contents of this file may be used under the terms of
    * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -49,6 +50,8 @@ class TagsControllerTest extends UnitTestCase {
         $this->Addon =& new Addon();
         $this->Addon->caching = false;
         $this->Addon->cacheQueries = false;
+        // AAARGHLGHHGL.
+        $this->controller->Addon->cacheQueries = false;
 
         $this->controller->Session =& new MockSessionComponent();
     }
@@ -261,6 +264,50 @@ class TagsControllerTest extends UnitTestCase {
         $id = $this->controller->Tag->getLastInsertID();
         $this->assertTrue($this->_isTagBlacklisted($id), 'Blacklist tag successfully added');
         $this->_tearDownTag($tag);
+    }
+
+    /**
+     * existing developer tags must not keep user tags from being deleted,
+     * and vice-versa (bug 512845).
+     */
+    function testRemoveConflictingTags() {
+        $this->helper->login($this->controller);
+        $tags = array('test_dev_tag', 'test_user_tag');
+        $my_addon = 7;
+
+        // We're user id 5 and own add-on 7.
+        // Add a developer tag and a user tag, then delete either, independently.
+        foreach ($tags as $id => $tag) {
+            $this->_tearDownTag($tags[0]);
+            $this->_tearDownTag($tags[1]);
+
+            // dev tag
+            $_POST['addonid'] = $my_addon;
+            $_POST['newTag'] = $tags[0];
+            $this->controller->add();
+            $devtag_id = $this->controller->Tag->getLastInsertID();
+            $this->assertTrue($this->_doesTagExist($my_addon, $devtag_id, 5), 'Developer tag added');
+
+            // user tag
+            $_POST['addonid'] = 4; // add tag to another add-on, then...
+            $_POST['newTag'] = $tags[1];
+            $this->controller->add();
+            $usertag_id = $this->controller->Tag->getLastInsertID();
+            $this->_addTag($my_addon, $usertag_id, 4); // ... apply it to our add-on as a different user
+
+            // delete one tag
+            $thistag = $this->_getTagId($tags[$id]);
+            $thattag = $this->_getTagId($tags[!$id]);
+            $_POST['addonid'] = $my_addon;
+            $_POST['tagid'] = $thistag;
+            // assert that this tag is gone ...
+            $this->assertTrue($this->controller->remove() !== false, "tag {$tag} was deleted");
+            // ... but that the other one still exists
+            $this->assertTrue($this->_doesTagExist($my_addon, $thattag, 5)
+                || $this->_doesTagExist($my_addon, $thattag, 4), 'untouched tag still exists');
+        }
+        $this->_tearDownTag($tags[0]);
+        $this->_tearDownTag($tags[1]);
     }
 }
 ?>
