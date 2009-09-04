@@ -80,8 +80,18 @@ $this->viewVars['bodyclass'] = 'inverse';
 
 <div class="secondary" role="complementary">
   <?=$this->renderElement('amo2009/hub/sidebar', array(
-      'title' => ___('How-to Library'),
+      'title' => ___('Other How-to Categories'),
       'objects' => $categories,
       'url_prefix' => '/developers/docs/how-to/',
+      'exclude' => $category->slug
   ))?>
+  
+  <div class="highlight">
+    <h3><?=___('More Resources')?></h3>
+    <ul class="xoxo">
+      <li><?=sprintf(___('Already know what you\'re looking for? <a href="%1$s">Search for it!</a>'), $html->url('/developers/search'))?></li>
+      <li><?=sprintf(___('Browse through <a href="%1$s">API & Language References</a> to find that interface you hope exists'), $html->url('/developers/docs/reference'))?></li>
+      <li><?=sprintf(___('Need help? <a href="%1$s">Visit our forums</a>'), 'https://forums.addons.mozilla.org')?></li>
+    </ul>
+  </div>
 </div>

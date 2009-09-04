@@ -162,14 +162,23 @@
 
 <div class="secondary" role="complementary">
     <div class="highlight">
-        <h3><?=___('References')?></h3>
-        <ul>
+        <h3><?=___('Jump to Reference')?></h3>
+        <ul class="xoxo">
             <li><a href="#ref-xul"><?=___('XUL')?></a></li>
             <li><a href="#ref-js"><?=___('JavaScript')?></a></li>
             <li><a href="#ref-css"><?=___('CSS')?></a></li>
             <li><a href="#ref-fuel"><?=___('FUEL')?></a></li>
             <li><a href="#ref-xpcom"><?=___('XPCOM')?></a></li>
             <li><a href="#ref-dom"><?=___('DOM')?></a></li>
+        </ul>
+    </div>
+    
+    <div class="highlight">
+        <h3><?=___('More Resources')?></h3>
+        <ul class="xoxo">
+            <li><?=sprintf(___('Already know what you\'re looking for? <a href="%1$s">Search for it!</a>'), $html->url('/developers/search'))?></li>
+            <li><?=sprintf(___('Learn how to use these APIs and more in our <a href="%1$s">How-to Library</a>'), $html->url('/developers/docs/how-to'))?></li>
+            <li><?=sprintf(___('Need help? <a href="%1$s">Visit our forums</a>'), 'https://forums.addons.mozilla.org')?></li>
         </ul>
     </div>
 </div>

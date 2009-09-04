@@ -41,13 +41,19 @@
  *   $objects
  *   $title
  *   $url_prefix
+ *
+ * Optional:
+ *   $exclude
  */
 ?>
 
 <div class="highlight">
   <h3><?=$title?></h3>
   <ul class="xoxo">
-    <?php foreach ($objects as $object): ?>
+    <?php
+    foreach ($objects as $object):
+        if (!empty($exclude) && $exclude == $object->slug) continue;
+    ?>
       <li>
         <a href="<?=$html->url($url_prefix . $object->slug, null, true, false)?>">
           <?=$object->title?>
