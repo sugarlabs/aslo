@@ -69,6 +69,8 @@ class DevelopersController extends AppController
 
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Link', 'Listing', 'Localization', 'Form');
     var $addVars = array(); //variables accessible to all additem steps
+    var $aclExceptions = array('howto_list', 'howto_detail',
+                               'policy_list', 'api_reference');
 
 
    /**
@@ -81,8 +83,12 @@ class DevelopersController extends AppController
 
         // beforeFilter() is apparently called before components are initialized. Cake++
         $this->Amo->startup($this);
-        $this->Amo->checkLoggedIn();
-
+        
+        // @REMOVE Temporary fix for making parts of developer hub public
+        if (!in_array($this->action, $this->aclExceptions)) {
+            $this->Amo->checkLoggedIn();
+        }
+    
         // Clean post data
         $this->Amo->clean($this->data);
 
@@ -102,10 +108,15 @@ class DevelopersController extends AppController
             $this->$_model->caching = false;
         }
 
-        // Default "My Add-ons" sidebar data
-        $session = $this->Session->read('User');
-        $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
-
+        // @REMOVE Temporary fix for making parts of developer hub public
+        if (!in_array($this->action, $this->aclExceptions)) {
+            // Default "My Add-ons" sidebar data
+            $session = $this->Session->read('User');
+            $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
+        }
+        else
+        $this->publish('all_addons', array());
+        
         // Include the dev_agreement column on developer pages.
         array_push($this->Addon->default_fields, 'dev_agreement');
     }
