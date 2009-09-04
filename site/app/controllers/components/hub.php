@@ -290,12 +290,30 @@ class HubComponent extends Object {
         
         $lorem = 'foo';
         $this->casestudies = array(
-            new HubCaseStudy('StumbleUpon', ___('I like turtles!'), 'stumbleupon', 138,
-                '/img/amo2009/logo-firefox.gif', ___('Learn why people are tripping over StumbleUpon')),
-            new HubCaseStudy('Firebug lorem ipsum', $lorem, 'firebug', 1843,
-                '/img/amo2009/logo-seamonkey.gif', ___('Firebug action text')),
-            new HubCaseStudy('Adblock Plus dolor sit amet', $lorem, 'adblockplus',
-                1865, '/img/amo2009/logo-thunderbird.gif', ___('ABP action text'))
+            new HubCaseStudy('StumbleUpon',
+                             ___('I like turtles!'),
+                             'stumbleupon',
+                             138,
+                             '/img/amo2009/logo-firefox.gif',
+                             ___('Learn why people are tripping over StumbleUpon'),
+                             new HubSite('StumbleUpon, Inc.', 'http://example.com'),
+                             '2001-09-01'),
+            new HubCaseStudy('Firebug lorem ipsum',
+                             $lorem,
+                             'firebug',
+                             1843,
+                             '/img/amo2009/logo-seamonkey.gif',
+                             ___('Firebug action text'),
+                             new HubSite('The Firebuggers', 'http://fire.bug'),
+                             '2000-01-01'),
+            new HubCaseStudy('Adblock Plus dolor sit amet',
+                             $lorem,
+                             'adblockplus',
+                             1865,
+                             '/img/amo2009/logo-thunderbird.gif',
+                             ___('ABP action text'),
+                             new HubSite('Wladimir Palant', 'http://example.com'),
+                             '2009-09-01')
             );
 
         // generate by-slug lookup arrays
@@ -344,13 +362,16 @@ class Howto extends Object {
 }
 
 class HubCaseStudy extends Object {
-    function __construct($title, $description, $slug, $addonid, $logo, $actiontext) {
+    function __construct($title, $description, $slug, $addonid, $logo,
+        $actiontext, $developer, $firstreleased) {
         $this->title = $title;
         $this->description = $description;
         $this->slug = $slug;
         $this->addonid = $addonid;
         $this->logo = $logo;
         $this->actiontext = $actiontext;
+        $this->developer = $developer;
+        $this->firstreleased = $firstreleased; // will be fed to strtotime()
     }
 }
 

@@ -43,15 +43,44 @@ $this->viewVars['bodyclass'] = 'inverse';
 
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
-<div id="policy-detail" class="primary hubtext" role="main">
-    <?php echo "<h1>{$policy->title}</h1>"; ?>
-    <?=$localization->includeLocalPage("docs/policies/{$policy->slug}", $policy->items)?>
-</div>
+<h2><?=___('Case Study')?></h2>
 
-<div class="secondary" role="complementary">
-    <?=$this->renderElement('amo2009/hub/sidebar', array(
-        'title' => ___('Add-on Policies'),
-        'objects' => $policies,
-        'url_prefix' => '/developers/docs/policies/',
-    ))?>
+<div id="casestudy" class="primary full" role="main">
+    <div class="info">
+        <ul class="blocks">
+            <li class="item"><img src="<?=$html->url($study->logo,
+                null, false, false)?>" alt="<?=$study->title?>"/></li>
+            <li class="dotted"><strong><?=___('Developer')?></strong>
+                <a href="<?=$study->developer->href?>"><?=$study->developer->title?></a></li>
+            <li class="dotted"><strong><?=___('First Released')?></strong>
+                <?=strftime(___('%B %e, %Y'), strtotime($study->firstreleased))?></li>
+            <li class="dotted"><strong><?=___('Downloads')?></strong>
+                <?=$html->number_format($study->addon['Addon']['totaldownloads'])?>
+                <?php if ($study->addon['Addon']['publicstats']): ?>
+                <a class="more" href="#TODO"><?=___('Statistics')?></a>
+                <?php endif; ?>
+            </li>
+            <li class="detailspage"><strong><a href="<?=$html->url("/addon/{$study->addonid}")?>">
+                <?=sprintf(___('Visit %1$s\'s Homepage'),
+                $study->addon['Translation']['name']['string'])?></strong></a></li>
+        </ul>
+    </div>
+
+    <div class="secondary" role="complementary">
+        <?=$this->renderElement('amo2009/hub/sidebar', array(
+            'title' => ___('Case Studies'),
+            'objects' => $casestudies,
+            'url_prefix' => '/developers/docs/case-studies/',
+        ))?>
+    </div>
+
+    <div class="hubtext">
+        <p class="summary"><?=$study->description?></p>
+        <?php
+        // replacements: %1$s -> global URL prefix, %2$s -> lang
+        echo $localization->includeLocalPage("docs/case-studies/{$study->slug}",
+            array($html->url('/', null, false, false), LANG));
+        ?>
+    </div>
+
 </div>

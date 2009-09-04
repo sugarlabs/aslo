@@ -2079,5 +2079,26 @@ class DevelopersController extends AppController
 
         $this->render('case_studies_list');
     }
+
+    /**
+     * Individual case studies
+     */
+    function case_studies_detail($study) {
+        if (!array_key_exists($study, $this->Hub->casestudies_slugs)) {
+            $this->redirect('/developers/docs/case-studies', null, true, false);
+            return;
+        } else {
+            $study = $this->Hub->casestudies_slugs[$study];
+            $study->addon = $this->Addon->getAddon($study->addonid, array('authors', 'default_fields'));
+        }
+        $this->publish('breadcrumbs', array(
+            ___('Developer Hub') => '/developers',
+            ___('Case Studies') => '/developers/docs/case-studies'
+            ));
+
+        $this->publish('casestudies', $this->Hub->casestudies);
+        $this->publish('study', $study);
+        $this->render('case_studies_detail');
+    }
 }
 ?>
