@@ -126,7 +126,7 @@ class StatisticsController extends AppController
             'addons_in_use' => ___('Add-ons In Use'),
             'addons_created' => ___('Add-ons Created'),
             'addons_updated' => ___('Add-ons Updated'),
-            'users_created' => ___('Users Created'),
+            'users_created' => ___('Accounts Created'),
             'reviews_created' => ___('Reviews Created'),
             'collections_created' => ___('Collections Created'),
             'statistics_js_groupby_selector_date' => ___('Group by: Day'),
