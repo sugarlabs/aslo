@@ -67,25 +67,38 @@ var Plots = {
             return;
         }
 
-        // determine the starting date of the plot
+        // determine start and end dates of the plot
+        //
+        // Note that dates on timeplot lag 1 day behind the source data. (bug 514543)
+        // ie. hovering over January 1, 2009 will show the counts for January 2
+        // So our max dates are always two SOMETHINGS ago so that we end right on
+        // the last full point of data an avoid plotting a dropoff at the end.
         var today = new Date();
         var minDate = new Date();
+        var maxDate = new Date();
+        minDate.setHours(0); minDate.setMinutes(0);
+        maxDate.setHours(0); maxDate.setMinutes(0);
         if (groupBy == 'date') {
-            minDate.setDate(today.getDate() - (pointCount - 1));
+            minDate.setDate(today.getDate() - pointCount);
+            maxDate.setDate(today.getDate() - 2); // two days ago
 
         } else if (groupBy == 'week') {
-            minDate.setDate(today.getDate() - today.getDay() - (7 * (pointCount - 1)));
+            minDate.setDate(today.getDate() - today.getDay() - (7 * pointCount));
+            maxDate.setDate(today.getDate() - today.getDay() - 8); // two saturdays ago
 
         } else if (groupBy == 'month') {
             minDate.setDate(1);
-            minDate.setMonth(today.getMonth() - (pointCount - 1));
+            minDate.setMonth(today.getMonth() - pointCount);
+
+            maxDate.setMonth(today.getMonth() - 1);
+            maxDate.setDate(0); // two end of the months ago
         }
 
         // customize time geometry config
         var timeGeometryConfig = {};
         $.extend(timeGeometryConfig, this.timeGeometryConfig, {
             min: minDate,
-            max: today
+            max: maxDate
         });
 
         // start with a fresh eventsource 
