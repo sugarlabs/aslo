@@ -295,6 +295,20 @@ switch ($action) {
             }
         }
 
+        // Paypal only keeps retrying to verify transactions for up to 3 days.  If we still have an
+        // unverified transaction after 6 days, we might as well get rid of it.
+        debug('Cleaning up outdated contributions statistics...');
+        $stats_sql = "
+            DELETE FROM
+                `stats_contributions`
+            WHERE
+                `transaction_id` IS NULL
+            AND
+                created < DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+            ";
+        $db->write($stats_sql);
+        $affected_rows += mysql_affected_rows($db->write);
+
     break;
 
 
