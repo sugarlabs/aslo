@@ -50,8 +50,9 @@ $this->viewVars['bodyclass'] = 'inverse';
 
 <div class="secondary" role="complementary">
     <?=$this->renderElement('amo2009/hub/sidebar', array(
-        'title' => ___('Add-on Policies'),
+        'title' => ___('Other Policies'),
         'objects' => $policies,
         'url_prefix' => '/developers/docs/policies/',
+        'exclude' => $policy->slug
     ))?>
 </div>
