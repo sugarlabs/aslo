@@ -46,7 +46,7 @@ class HubComponent extends Object {
         $mdc = new HubSite('Mozilla Developer Center', 'http://developer.mozilla.org');
         $wiki = new HubSite('Mozilla Wiki', 'http://wiki.mozilla.org');
         $jetpack = new HubSite('Mozilla Labs - Jetpack', 'http://jetpack.mozillalabs.com');
-        $theatre = new HubSite('Add-on Developer Theatre', 'http://videos.mozilla.org/addons/theatre.html');
+        $designchallenge = new HubSite('Mozilla Labs Design Challenge', 'http://design-challenge.mozilla.com');
 
         $this->categories = array(
             new HubCategory('Getting Started', ___('Learn the basics of developing an extension on the Mozilla platform with this section full of beginner\'s guides.'), 'getting-started', array(
@@ -61,8 +61,8 @@ class HubComponent extends Object {
                               $mdc,
                               'This article gives suggestions on how to set up your Mozilla application for extension development, including setting up a profile, changing preferences, and helpful development tools.'),
                     new Howto(0, 'Extension Bootcamp: Zero to Hello World! in 45 Minutes',
-                              'http://videos.mozilla.org/addons/theatre.html?video=bootcamp',
-                              $theatre,
+                              'http://design-challenge.mozilla.com/resources/#extension_bootcamp',
+                              $designchallenge,
                               'In this video tutorial, Myk Melez explains how extensions integrate into Firefox, what they can do, and shows you how to set up an environment to ease their development. He\'ll then walk you through the making of a simple "Hello World!" extension. By the end of this session, you\'ll be an extension developer.',
                               'video'),
                     new Howto(0, 'Building an Extension',
@@ -155,6 +155,11 @@ class HubComponent extends Object {
                               'This article explains how to properly localize strings with plurals.')
                 )),
                 new SubCategory('Advanced Topics', array(
+                    new Howto(0, 'Stupid/Awesome Extension Development Hacks',
+                              'http://design-challenge.mozilla.com/resources/#extension_hacks',
+                              $designchallenge,
+                              'In this video, Jono Xia explains how to go further in extension development using XPCOM, overlays, XHRs, DOM manipulation, etc. in order to make Firefox do things you might have never thought possible.',
+                              'video'),
                     new Howto(0, 'Creating Custom Firefox Extensions with the Mozilla Build System',
                               'https://developer.mozilla.org/en/Creating_Custom_Firefox_Extensions_with_the_Mozilla_Build_System',
                               $mdc,
@@ -162,7 +167,11 @@ class HubComponent extends Object {
                     new Howto(0, 'Multiple Item Packaging',
                               'https://developer.mozilla.org/en/Multiple_Item_Packaging',
                               $mdc,
-                              'This article explains how to create an extension package with multiple items (extensions).')
+                              'This article explains how to create an extension package with multiple items (extensions).'),
+                    new Howto(0, 'Extension Documentation Index',
+                              'https://developer.mozilla.org/en/Extensions',
+                              $mdc,
+                              'If you can\'t find what you\'re looking for in the above articles, try the Mozilla Developer Center\'s Extensions landing page.')
                 ))
             )),
             new HubCategory('Thunderbird &amp; Mobile Add-ons', ___('Add-ons aren\'t just for Firefox. Learn how to extend other Mozilla applications, such as the Thunderbird mail client and Firefox for mobile devices.'), 'thunderbird-mobile', array(
@@ -238,11 +247,11 @@ class HubComponent extends Object {
                     new Howto(0, 'Jetpack Tutorial',
                               'https://jetpack.mozillalabs.com/tutorial.html',
                               $jetpack,
-                              'Learn how easy it is extend Firefox using Jetpack with this tutorial.'),
+                              'Learn how easy it is to extend Firefox with Jetpack in this tutorial.'),
                     new Howto(0, 'Jetpack API Documentation',
                               'https://jetpack.mozillalabs.com/api.html',
                               $jetpack,
-                              'This Jetpack API documentation will come in handy when developing your Jetpacks.')
+                              'This Jetpack API documentation is a must-have for working on your Jetpack.')
                 )),
                 new SubCategory('Personas', array(
                     new Howto(0, 'How to Create Personas',

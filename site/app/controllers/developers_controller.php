@@ -109,13 +109,13 @@ class DevelopersController extends AppController
         }
 
         // @REMOVE Temporary fix for making parts of developer hub public
-        if (!in_array($this->action, $this->aclExceptions)) {
+        $session = $this->Session->read('User');
+        if (!empty($session['id'])) {
             // Default "My Add-ons" sidebar data
-            $session = $this->Session->read('User');
             $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
         }
         else
-        $this->publish('all_addons', array());
+            $this->publish('all_addons', array());
         
         // Include the dev_agreement column on developer pages.
         array_push($this->Addon->default_fields, 'dev_agreement');
