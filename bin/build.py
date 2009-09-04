@@ -45,6 +45,7 @@ the terms of any one of the MPL, the GPL or the LGPL.
 ***** END LICENSE BLOCK *****
 """
 
+import re
 import sys, os
 from subprocess import Popen, PIPE
 import xml.parsers.expat
@@ -194,7 +195,9 @@ class Minifier(object):
         compressor = Popen([java, '-jar', os.path.join(script_dir, 'yuicompressor-2.3.4', 'build', 'yuicompressor-2.3.4.jar'),
             '--type', type, source], stdout=PIPE)
         destFile = open(destination, 'w')
-        destFile.writelines(compressor.stdout)
+        # Fix media queries to look like "(..) and (..)", NOT "(..) and(..)".
+        out = re.sub('and\(', 'and (', compressor.stdout.read())
+        destFile.writelines(out)
         destFile.close()
 
 
