@@ -268,6 +268,9 @@ p.summary {
     width: 22%;
     float: left;
 }
+.html-rtl #casestudy .info {
+    float: right;
+}
 #casestudy .hubtext {
     margin: 0 25%;
 }
@@ -278,10 +281,19 @@ p.summary {
     padding: 0 .4em .4em 0;
     margin: 1em 0;
 }
+.html-rtl #casestudy .hubtext img {
+    border-left: 2px solid #C9E8F3;
+    border-right: none;
+    padding: 0 0 .4em .4em;
+}
 #casestudy .pull {
     position: absolute;
     right: 0;
     max-width: 22%;
+}
+.html-rtl #casestudy .pull {
+    left: 0;
+    right: auto;
 }
 #casestudy img.pull {
     max-width: 22%;
@@ -290,6 +302,10 @@ p.summary {
 #casestudy blockquote {
     margin: 1em;
     padding-left: .2em;
+}
+.html-rtl #casestudy blockquote {
+    padding-left: 0;
+    padding-right: .2em;
 }
 #casestudy blockquote:before {
     display: block;
@@ -303,6 +319,9 @@ p.summary {
     font-family: georgia,sans-serif;
     font-size: 400%;
     content: '\201C';
+}
+.html-rtl #casestudy blockquote:before {
+    display: none;
 }
 #casestudy blockquote p {
     margin-bottom: .5em;
