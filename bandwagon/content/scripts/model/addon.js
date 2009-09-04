@@ -151,7 +151,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
 
     // check the version is compatible
 
-    if (this.Bandwagon.Util.compareVersions(env.appVersion, application.minVersion) < 0)
+    if (application && this.Bandwagon.Util.compareVersions(env.appVersion, application.minVersion) < 0)
     {
         // this version of firefox is less than the min version of this addon
 
@@ -179,7 +179,7 @@ Bandwagon.Model.Addon.prototype.canInstall = function(env)
         return details;
     }
 
-    if (this.Bandwagon.Util.compareVersions(env.appVersion, application.maxVersion) > 0)
+    if (application && this.Bandwagon.Util.compareVersions(env.appVersion, application.maxVersion) > 0)
     {
         // the version of firefox is higher than the max version of this addon
 
