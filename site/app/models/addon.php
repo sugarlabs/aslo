@@ -249,7 +249,7 @@ class Addon extends AppModel
                 break;
 
             case 'default_fields':
-                //Replaces any fields with the default fields
+                // Replaces any fields with the default fields
                 $fields = array_merge($fields, $this->default_fields);
                 break;
 
@@ -301,6 +301,7 @@ class Addon extends AppModel
                 break;
 
             case 'contrib_details':
+                // contribution-related fields
                 $fields = array_merge($fields, array('the_reason', 'the_future',
                     'annoying', 'wants_contributions', 'paypal_id', 'suggested_amount'));
                 break;
