@@ -44,10 +44,10 @@ Bandwagon.EMID = "sharing@addons.mozilla.org";
 Bandwagon.SQLITE_FILENAME = "bandwagon.sqlite";
 
 // This is the interval between checking if the collections need updating (in
-// seconds) (this will always be 120 seconds in debug mode).  Note, this is not
+// seconds) (this will always be 240 seconds in debug mode).  Note, this is not
 // the delay between instances of when the feeds are pulled down (this is
 // decided by "extensions.bandwagon.global.update.*" or per-collection
-// settings), but rather the minimum delay.
+// settings), but rather the time between checking do any feeds need refreshing.
 
 Bandwagon.COLLECTION_UPDATE_TIMER_DELAY = 10 * 60;
 
@@ -63,5 +63,11 @@ Bandwagon.PREF_AUTH_TOKEN = "authtoken";
 
 Bandwagon.COMMIT_NOW = 0; // 1=commit on the fly. 0=commit when browser exit.
 Bandwagon.ENABLE_PAGINATION = 0; // 1=enable "add-ons per page" settings, limit number of add-ons displayed in EM. 0=disable these settings, show all add-ons in EM.
+
+// Copied from mozIStorageStatementCallback
+
+Bandwagon.STMT_OK = 0;
+Bandwagon.STMT_CANCELED = 1;
+Bandwagon.STMT_ERR = 2;
 
 

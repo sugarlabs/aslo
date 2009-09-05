@@ -66,7 +66,7 @@ Bandwagon.Model.Addon = function(bw)
     this.compatibleOS = {};
     this.installs = {};
 
-    this.authors = {};
+    this.authors = [];
     this.categories = {};
     this.dateAdded = new Date();
     this.comments = [];

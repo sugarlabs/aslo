@@ -181,33 +181,40 @@ BandwagonService.prototype = {
 
     _initCollections: function()
     {
-        var storageCollections = this._collectionFactory.openCollections();
-
-        for (var id in storageCollections)
+        this._collectionFactory.openCollections(function(result, storageCollections)
         {
-            this.collections[id] = storageCollections[id];
-            this.collections[id].setAllNotified();
-
-            if (this.collections[id].isLocalAutoPublisher())
+            if (result == Bandwagon.STMT_OK)
             {
-                this.collections[id].autoPublishExtensions = Bandwagon.Preferences.getPreference("local.autopublisher.publish.extensions");
-                this.collections[id].autoPublishThemes = Bandwagon.Preferences.getPreference("local.autopublisher.publish.themes");
-                this.collections[id].autoPublishDicts = Bandwagon.Preferences.getPreference("local.autopublisher.publish.dictionaries");
-                this.collections[id].autoPublishLangPacks = Bandwagon.Preferences.getPreference("local.autopublisher.publish.language.packs");
-                this.collections[id].autoPublishDisabled = !Bandwagon.Preferences.getPreference("local.autopublisher.only.publish.enabled");
+                for (var id in storageCollections)
+                {
+                    bandwagonService.collections[id] = storageCollections[id];
+                    bandwagonService.collections[id].setAllNotified();
+
+                    if (bandwagonService.collections[id].isLocalAutoPublisher())
+                    {
+                        bandwagonService.collections[id].autoPublishExtensions = Bandwagon.Preferences.getPreference("local.autopublisher.publish.extensions");
+                        bandwagonService.collections[id].autoPublishThemes = Bandwagon.Preferences.getPreference("local.autopublisher.publish.themes");
+                        bandwagonService.collections[id].autoPublishDicts = Bandwagon.Preferences.getPreference("local.autopublisher.publish.dictionaries");
+                        bandwagonService.collections[id].autoPublishLangPacks = Bandwagon.Preferences.getPreference("local.autopublisher.publish.language.packs");
+                        bandwagonService.collections[id].autoPublishDisabled = !Bandwagon.Preferences.getPreference("local.autopublisher.only.publish.enabled");
+                    }
+
+                    Bandwagon.Logger.debug("opened collection from storage: " + id);
+                }
             }
+                
+            bandwagonService._collectionFactory.openServiceDocument(function(result, serviceDocument)
+            {
+                bandwagonService._service._serviceDocument = serviceDocument;
 
-            Bandwagon.Logger.debug("opened collection from storage: " + id);
-        }
-
-        this._serviceDocument = this._collectionFactory.openServiceDocument();
-        this._service._serviceDocument = this._serviceDocument;
-
-        if (!this._serviceDocument)
-        {
-            // no service document in storage, we never had it or we've lost it - go fetch it
-            this.updateCollectionsList();
-        }
+                if (result != Bandwagon.STMT_OK || serviceDocument == null)
+                {
+                    // no service document in storage, we never had it or we've lost it - go fetch it
+                    Bandwagon.Logger.info("No service document found in storage, fetching...");
+                    bandwagonService.updateCollectionsList();
+                }
+            });
+        });
     },
 
     _initUpdateTimer: function()
@@ -230,7 +237,7 @@ BandwagonService.prototype = {
         this._collectionUpdateTimer = Timer.createInstance(nsITimer);
         this._collectionUpdateTimer.init(
             this._bwObserver,
-            (Bandwagon.Preferences.getPreference("debug")?120*1000:Bandwagon.COLLECTION_UPDATE_TIMER_DELAY*1000),
+            (Bandwagon.Preferences.getPreference("debug")?240*1000:Bandwagon.COLLECTION_UPDATE_TIMER_DELAY*1000),
             nsITimer.TYPE_REPEATING_SLACK
             );
     },
@@ -839,7 +846,7 @@ BandwagonService.prototype = {
         }
 
         if (bandwagonService._serviceDocument)
-            bandwagonService._collectionFactory.commitServiceDocument(bandwagonService._serviceDocument);
+            bandwagonService._collectionFactory.commitServiceDocument(bandwagonService._serviceDocument); 
     },
 
     removeAddonFromCollection: function(guid, collection, callback)
@@ -881,19 +888,23 @@ BandwagonService.prototype = {
 
     unlinkCollection: function(collection)
     {
-        this._collectionFactory.deleteCollection(collection);
-
-        for (var id in bandwagonService.collections)
+        this._collectionFactory.deleteCollection(collection, function(aReason)
         {
-            if (collection.equals(bandwagonService.collections[id]))
+            if (aReason == Bandwagon.STMT_OK)
             {
-                delete bandwagonService.collections[id];
+                for (var id in bandwagonService.collections)
+                {
+                    if (collection.equals(bandwagonService.collections[id]))
+                    {
+                        delete bandwagonService.collections[id];
 
-                bandwagonService._notifyListChangeObservers();
+                        bandwagonService._notifyListChangeObservers();
 
-                break;
+                        break;
+                    }
+                }
             }
-        }
+        }); 
     },
 
     deleteCollection: function(collection, callback)
@@ -1196,7 +1207,7 @@ BandwagonService.prototype = {
             return;
         }
 
-        this._collectionFactory = new Bandwagon.Factory.CollectionFactory(this._storageConnection);
+        this._collectionFactory = new Bandwagon.Factory.CollectionFactory(this._storageConnection, Bandwagon);
 
         this._initStorageTables();
     },

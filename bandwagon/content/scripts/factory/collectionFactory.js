@@ -34,15 +34,15 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Bandwagon.Factory.CollectionFactory = function(connection)
+Bandwagon.Factory.CollectionFactory = function(connection, bw)
 {
-    this.Bandwagon = Bandwagon;
+    this.Bandwagon = bw;
     this.connection = connection;
 
     this.connection.executeSimpleSQL("PRAGMA locking_mode = EXCLUSIVE");
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.openServiceDocument = function()
+Bandwagon.Factory.CollectionFactory.prototype.openServiceDocument = function(callback)
 {
     if (!this.connection)
         return null;
@@ -65,10 +65,10 @@ Bandwagon.Factory.CollectionFactory.prototype.openServiceDocument = function()
         statement.reset();
     }
 
-    return serviceDocument;
+    callback(serviceDocument!=null?this.Bandwagon.STMT_OK:this.Bandwagon.STMT_ERR, serviceDocument);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.commitServiceDocument = function(serviceDocument)
+Bandwagon.Factory.CollectionFactory.prototype.commitServiceDocument = function(serviceDocument, callback)
 {
     if (!this.connection)
         return;
@@ -110,6 +110,9 @@ Bandwagon.Factory.CollectionFactory.prototype.commitServiceDocument = function(s
     }
 
     this.connection.commitTransaction();
+
+    if (callback)
+        callback(Bandwagon.STMT_OK);
 }
 
 Bandwagon.Factory.CollectionFactory.prototype.newCollection = function()
@@ -117,7 +120,7 @@ Bandwagon.Factory.CollectionFactory.prototype.newCollection = function()
     return new this.Bandwagon.Model.Collection(this.Bandwagon);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.openCollection = function(collection_id)
+Bandwagon.Factory.CollectionFactory.prototype.openCollection = function(collection_id, callback)
 {
     if (!this.connection)
         return null;
@@ -146,10 +149,10 @@ Bandwagon.Factory.CollectionFactory.prototype.openCollection = function(collecti
         statement.reset();
     }
 
-    return collection;
+    callback(Bandwagon.STMT_OK, collection);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.openCollections = function()
+Bandwagon.Factory.CollectionFactory.prototype.openCollections = function(callback)
 {
     if (!this.connection)
         return null;
@@ -178,7 +181,8 @@ Bandwagon.Factory.CollectionFactory.prototype.openCollections = function()
         statement.reset();
     }
 
-    return collections;
+    if (callback)
+        callback(Bandwagon.STMT_OK, collections);
 }
 
 Bandwagon.Factory.CollectionFactory.prototype.commitCollection = function(collection)
@@ -302,7 +306,7 @@ Bandwagon.Factory.CollectionFactory.prototype.commitCollections = function(colle
     }
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.deleteCollection = function(collection)
+Bandwagon.Factory.CollectionFactory.prototype.deleteCollection = function(collection, callback)
 {
     if (!this.connection)
         return;
@@ -333,7 +337,8 @@ Bandwagon.Factory.CollectionFactory.prototype.deleteCollection = function(collec
 
     this.connection.commitTransaction();
 
-    return (statement2.lastError>0?false:true);
+    if (callback)
+        callback(statement2.lastError>0?Bandwagon.STMT_ERR:Bandwagon.STMT_OK);
 }
 
 // private methods
