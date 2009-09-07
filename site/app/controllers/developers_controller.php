@@ -2111,5 +2111,15 @@ class DevelopersController extends AppController
         $this->publish('study', $study);
         $this->render('case_studies_detail');
     }
+
+    /**
+     * Search results
+     */
+    function search() {
+        if (isset($_GET['q'])) $this->publish('query', $_GET['q']);
+        $this->publish('breadcrumbs', array(___('Developer Hub') => '/developers'));
+        $this->pageTitle = ___('Search Results').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
+        $this->render('search');
+    }
 }
 ?>

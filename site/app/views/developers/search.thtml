@@ -1,0 +1,97 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Frederic Wenzel <fwenzel@mozilla.com> (Original Author)
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar')?>
+
+<?=$this->renderElement('amo2009/breadcrumbs')?>
+
+<h2><?=___('Search Results')?></h2>
+
+<div id="search" class="primary" role="main">
+
+<div id="resultcount" style="display:none"></div>
+<div id="cse" style="width:100%;">
+    <p><?=___('Loading Search Engine...')?></p>
+    <noscript><p><?=___('You need to have JavaScript enabled.')?></p></noscript>
+</div>
+
+<!-- Google Custom Search Element -->
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+  google.load('search', '1', {"language" : "<?=LANG?>"});
+  google.setOnLoadCallback(function(){
+    var qry = $('#query');
+
+    var opt = new google.search.DrawOptions();
+    opt.setInput(qry.get(0));
+
+    sc = new google.search.CustomSearchControl('007182852441266509516:fnsg3w7luc4');
+    sc.setNoResultsString('<?=addslashes(___('No results found.'))?>');
+    sc.setSearchCompleteCallback(null, function(sc, searcher) {
+        if (searcher.results.length > 0) {
+            var cur = searcher.cursor,
+                restext = '<?=addslashes(___('Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'))?>',
+                start = parseInt(cur.pages[cur.currentPageIndex].start) + 1,
+                end = start + searcher.results.length - 1,
+                total = cur.estimatedResultCount,
+                term = qry.val();
+            $('#resultcount').html(sprintf(restext, start, end, total, term))
+                .show();
+            $('#cse').show();
+            window.scroll(0, 0);
+        } else {
+            $('#resultcount').hide();
+        }
+    });
+    $('#cse').hide();
+    sc.draw('cse', opt);
+
+    if (qry.attr('title') != qry.val()) sc.execute();
+    $('#searchbox').submit(function(e) {
+        e.preventDefault();
+        sc.execute();
+    });
+  }, true);
+</script>
+</div>
+
+<div class="secondary" role="complementary">
+</div>
