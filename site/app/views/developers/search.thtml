@@ -47,7 +47,7 @@ $this->viewVars['bodyclass'] = 'inverse';
 
 <div id="search" class="primary" role="main">
 
-<div id="resultcount" style="display:none"></div>
+<div id="resultcount" style="display:none"><?=___('Please enter some search terms.')?></div>
 <div id="cse" style="width:100%;">
     <p><?=___('Loading Search Engine...')?></p>
     <strong><?=$this->renderElement('noscript');?></strong>
@@ -83,6 +83,7 @@ $this->viewVars['bodyclass'] = 'inverse';
         }
     });
     $('#cse').hide();
+    $('#resultcount').show();
     sc.draw('cse', opt);
 
     if (qry.attr('title') != qry.val()) sc.execute();
