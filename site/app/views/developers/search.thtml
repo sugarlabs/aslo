@@ -54,7 +54,7 @@ $this->viewVars['bodyclass'] = 'inverse';
 </div>
 
 <!-- Google Custom Search Element -->
-<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script src="https://www.google.com/jsapi" type="text/javascript"></script>
 <script type="text/javascript">
   google.load('search', '1', {"language" : "<?=LANG?>"});
   google.setOnLoadCallback(function(){
@@ -73,7 +73,8 @@ $this->viewVars['bodyclass'] = 'inverse';
                 end = start + searcher.results.length - 1,
                 total = cur.estimatedResultCount,
                 term = qry.val();
-            $('#resultcount').html(sprintf(restext, start, end, total, term))
+            $('#resultcount').html(sprintf(restext, start, end, total, ''))
+                .find('strong').text(term).end() // no html() for user input!
                 .show();
             $('#cse').show();
             window.scroll(0, 0);
