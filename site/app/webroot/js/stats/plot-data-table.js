@@ -94,6 +94,9 @@ PlotDataTable.prototype = {
                 col = row.find('td.col').remove();
             for (var j=0,value; value=values[j]; j++) {
                 if (valueRe.test(value)) {
+                    if (typeof number_format == 'function') {
+                        value = number_format(value);
+                    }
                     col.clone().text(value).addClass('value').appendTo(row);
                 } else {
                     col.clone().text(value).appendTo(row);

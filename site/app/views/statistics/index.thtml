@@ -106,13 +106,13 @@
         ?>
           <tr class="row <?=($i % 2 ? 'odd' : 'even')?>">
             <td class="col first"><?=strftime(___('%B %e, %Y'), strtotime($row['date']))?></td>
-            <td class="col value"><?=$row['addons_downloaded']?></td>
-            <td class="col value"><?=$row['addons_in_use']?></td>
-            <td class="col value"><?=$row['addons_created']?></td>
-            <td class="col value"><?=$row['addons_updated']?></td>
-            <td class="col value"><?=$row['users_created']?></td>
-            <td class="col value"><?=$row['reviews_created']?></td>
-            <td class="col value last"><?=$row['collections_created']?></td>
+            <td class="col value"><?=$html->number_format($row['addons_downloaded'])?></td>
+            <td class="col value"><?=$html->number_format($row['addons_in_use'])?></td>
+            <td class="col value"><?=$html->number_format($row['addons_created'])?></td>
+            <td class="col value"><?=$html->number_format($row['addons_updated'])?></td>
+            <td class="col value"><?=$html->number_format($row['users_created'])?></td>
+            <td class="col value"><?=$html->number_format($row['reviews_created'])?></td>
+            <td class="col value last"><?=$html->number_format($row['collections_created'])?></td>
           </tr>
         <?php endforeach; ?>
         </tbody>

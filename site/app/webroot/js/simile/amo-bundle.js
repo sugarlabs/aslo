@@ -8071,7 +8071,13 @@ Timeplot.Plot.prototype = {
 			        
 			        var v = plot._dataSource.getValue(t);
 			        if (plot._plotInfo.roundValues) v = Math.round(v);
-			        plot._valueFlag.innerHTML = new String(v);
+			        //plot._valueFlag.innerHTML = new String(v);
+			        /* AMO Change: localized number formating */
+			        if (typeof number_format == 'function') {
+			            plot._valueFlag.innerHTML = number_format(v);
+			        } else {
+			            plot._valueFlag.innerHTML = new String(v);
+			        }
 			        var d = new Date(t);
 			        var p = plot._timeGeometry.getPeriod(); 
 			        if (p < day) {
@@ -8376,7 +8382,8 @@ Timeplot.Plot.prototype = {
         }
     }
 
-}/**
+}
+/**
  * Sources
  * 
  * @fileOverview Sources

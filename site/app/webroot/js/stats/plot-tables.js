@@ -124,6 +124,7 @@ var PlotsTables = (function() {
             // flow in.
             var tmpl_row = stats_table.find('tr.row').remove();
             var is_even_row = false;
+            var valueRe = /^[0-9]*[.]?[0-9]+$/;
             (function() {
 
                 // Try getting a data row, bail out if none left.
@@ -143,7 +144,14 @@ var PlotsTables = (function() {
                 var row = tmpl_row.clone(),
                     col = row.find('td.col').remove();
                 for (var j=0,value; value=values[j]; j++) {
-                    col.clone().text(value).appendTo(row);
+                    if (valueRe.test(value)) {
+                        if (typeof number_format == 'function') {
+                            value = number_format(value);
+                        }
+                        col.clone().text(value).addClass('value').appendTo(row);
+                    } else {
+                        col.clone().text(value).appendTo(row);
+                    }
                 }
 
                 // Set the even/odd row class and mark first/last columns.

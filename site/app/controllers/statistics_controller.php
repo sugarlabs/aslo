@@ -100,6 +100,7 @@ class StatisticsController extends AppController
         $this->jsAdd = array(
             'jquery-compressed.js',
             'strftime-min-1.3.js',
+            'number-format.js',
             //'simile/amo-bundle.compressed.js',
             'simile/amo-bundle.js',
             'stats/dropdowns.js',
@@ -121,6 +122,7 @@ class StatisticsController extends AppController
         // Get site stats overview
         $this->publish('statsOverview', $this->_cachedStats('getSiteStatsOverview', array()));
 
+        $localeconv = localeconv();
         $this->publish('jsLocalization', array(
             'addons_downloaded' => ___('Add-ons Downloaded', 'statistics_addons_downloaded'),
             'addons_in_use' => ___('Add-ons In Use'),
@@ -142,6 +144,8 @@ class StatisticsController extends AppController
             'statistics_js_last_24months' => ___('Show last: 24 months'),
             'statistics_js_last_36months' => ___('Show last: 36 months'),
             'date' => ___('%B %e, %Y'),
+            'decimal_point' => $localeconv['decimal_point'],
+            'thousands_sep' => $localeconv['thousands_sep'],
         ));
 
         // Get initial chart data (weekly) - but check cache first
@@ -208,6 +212,7 @@ class StatisticsController extends AppController
             'jquery-compressed.js',
             //'simile/amo-bundle.compressed.js',
             'strftime-min-1.3.js',
+            'number-format.js',
             'simile/amo-bundle.js',
             'stats/stats.js',
             'stats/dropdowns.js',
@@ -329,6 +334,7 @@ class StatisticsController extends AppController
         $this->pageTitle = $addon['Translation']['name']['string'].' :: '.___('Statistics Dashboard', 'statistics_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         if (!$rss) {
+            $localeconv = localeconv();
             $this->publish('jsLocalization', array(
                     'date' => ___('%B %e, %Y'),
                     'statistics_js_dropdowns_removeplot' => ___('Remove this plot'),
@@ -363,7 +369,9 @@ class StatisticsController extends AppController
                     'statistics_js_plotselection_options_resize_name_unchecked' => ___('Expand Graph'),
                     'statistics_js_plotselection_options_resize_tooltip' => ___('Resize the graph'),
                     'statistics_js_plotselection_options_csv_name' => ___('View Data (CSV)'),
-                    'statistics_js_plotselection_options_csv_tooltip' => ___('Get a Comma Separated Values file of this data')
+                    'statistics_js_plotselection_options_csv_tooltip' => ___('Get a Comma Separated Values file of this data'),
+                    'decimal_point' => $localeconv['decimal_point'],
+                    'thousands_sep' => $localeconv['thousands_sep'],
                 ));
 
             $this->render('addon', 'amo2009');
@@ -487,6 +495,7 @@ class StatisticsController extends AppController
             'jquery-compressed.js',
             'jquery.sparkline.min.js',
             'strftime-min-1.3.js',
+            'number-format.js',
             //'simile/amo-bundle.compressed.js',
             'simile/amo-bundle.js',
             'stats/stats.js',
@@ -519,8 +528,11 @@ class StatisticsController extends AppController
         $this->publish('other_collections', $other_collections);
         $this->publish('period_totals', $period_totals);
 
+        $localeconv = localeconv();
         $this->publish('jsLocalization', array(
             'date' => ___('%b. %e, %Y'),
+            'decimal_point' => $localeconv['decimal_point'],
+            'thousands_sep' => $localeconv['thousands_sep'],
         ));
 
         $this->render('collections');
