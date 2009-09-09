@@ -62,8 +62,8 @@ class DevelopersController extends AppController
 {
     var $name = 'Developers';
     var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category',
-        'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview', 'Review',
-        'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
+        'EditorSubscription', 'Eventlog', 'File', 'HubPromo', 'License', 'Platform', 'Preview',
+        'Review', 'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error', 'Hub',
         'Image', 'Opensearch', 'Paypal', 'Rdf', 'Src', 'Validation', 'Versioncompare');
 
@@ -125,6 +125,20 @@ class DevelopersController extends AppController
     * Developer Hub
     */
     function hub() {
+        // The Hub recognizes two audiences:
+        //   developers => anyone logged in and who has 1 or more add-ons
+        //   visitors => everyone else (logged in or not)
+        $session = $this->Session->read('User');
+        $all_addons = (empty($session) ? array() : $this->Addon->getAddonsByUser($session['id']));
+        $is_developer = !empty($all_addons);
+
+        if ($is_developer) {
+            $promos = $this->HubPromo->getDeveloperPromos();
+        } else {
+            $promos = $this->HubPromo->getVisitorPromos();
+        }
+
+        $this->set('promos', $promos);
         $this->set('bodyclass', 'inverse');
         $this->render('hub');
     }

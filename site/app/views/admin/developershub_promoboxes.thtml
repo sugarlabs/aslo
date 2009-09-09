@@ -15,8 +15,8 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Frederic Wenzel <fwenzel@mozilla.com>.
- * Portions created by the Initial Developer are Copyright (C) 2009
+ * Scott McCammon <smccammon@mozilla.com>
+ * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
@@ -35,21 +35,28 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
 
-<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
-
-<div id="devhub" class="primary" role="main">
-    <?=$this->renderElement('amo2009/breadcrumbs', array())?>
-    <h2>Headline</h2>
-    <p>(content)</p>
-</div>
-
-<div class="secondary" role="complementary">
-    <?php foreach ($promos as $promo): ?>
-    <?=$this->renderElement('amo2009/hub/promobox', array(
-                'heading' => $promo['Translation']['heading']['string'],
-                'body'    => $promo['Translation']['body']['string'])) ?>
-    <?php endforeach ?>
-
-    (sidebars)
+    <div id="content-main">
+        <h3>Developers Hub PromoBox Manager</h3>
+        <?php 
+        if (!empty($promos)) {
+            foreach ($promos as $promo) {
+                echo '<div class="groupItem">';
+                echo $this->renderElement('amo2009/hub/promobox', array(
+                        'heading' => $promo['Translation']['heading']['string'],
+                        'body' => $promo['Translation']['body']['string'],
+                ));
+                echo "<p>";
+                echo "<em>Visibility:</em> {$visibilities[$promo['HubPromo']['visibility']]}<br />";
+                echo "<em>Modified:</em> {$promo['HubPromo']['modified']}<br />";
+                echo "</p>";
+                echo $html->link('Edit PromoBox', '/admin/developershub/promoboxes/edit/'.$promo['HubPromo']['id']);
+                echo '</div>';
+            }
+        }
+        echo $html->link('Create PromoBox', '/admin/developershub/promoboxes/create');
+        ?>
+    </div>
 </div>

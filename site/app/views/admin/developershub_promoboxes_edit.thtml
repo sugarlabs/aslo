@@ -15,11 +15,12 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Frederic Wenzel <fwenzel@mozilla.com>.
- * Portions created by the Initial Developer are Copyright (C) 2009
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ *  Scott McCammon <smccammon@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -35,21 +36,30 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
 
-<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
-
-<div id="devhub" class="primary" role="main">
-    <?=$this->renderElement('amo2009/breadcrumbs', array())?>
-    <h2>Headline</h2>
-    <p>(content)</p>
-</div>
-
-<div class="secondary" role="complementary">
-    <?php foreach ($promos as $promo): ?>
-    <?=$this->renderElement('amo2009/hub/promobox', array(
-                'heading' => $promo['Translation']['heading']['string'],
-                'body'    => $promo['Translation']['body']['string'])) ?>
-    <?php endforeach ?>
-
-    (sidebars)
+    <div id="content-main">
+        <h3>Edit PromoBox '<?=$promobox['Translation']['heading']['string']?>'</h3>
+        <?php
+        if (!empty($errors['main'])) {
+            echo '<div class="error">'.$errors['main'].'</div>';
+        }
+        echo $html->formTag('/admin/developershub/promoboxes/edit/'.$promobox['HubPromo']['id']);
+        ?>
+        <div id="developersForm">
+            <div>
+                <label for="HubPromoVisibility">Visibility</label>
+                <?=$html->selectTag('HubPromo/visibility', $visibilities, $promobox['HubPromo']['visibility'], null, null, false)?>
+            </div>
+            <?=$this->renderElement('developers/localebox')?>
+            <p>Note: HTML is allowed in Heading and Body fields.</p>
+            <div class="buttonBox">
+                <?=$html->submit('Update PromoBox')?>
+                <?=$html->submit('Delete PromoBox', array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\'Are you SURE you wish to delete this promobox?\');'))?>
+            </div>
+        </div>
+        </form>
+        <?=$html->link('Back to Developers Hub PromoBox Manager', '/admin/developershub/promoboxes')?>
+    </div>
 </div>

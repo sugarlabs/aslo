@@ -15,11 +15,12 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Frederic Wenzel <fwenzel@mozilla.com>.
+ *  Scott McCammon <smccammon@mozilla.com>
  * Portions created by the Initial Developer are Copyright (C) 2009
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
+ *
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,22 +35,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+
+/**
+ * Required arguments:
+ *   $heading
+ *   $body
+ */
 ?>
-
-<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
-
-<div id="devhub" class="primary" role="main">
-    <?=$this->renderElement('amo2009/breadcrumbs', array())?>
-    <h2>Headline</h2>
-    <p>(content)</p>
-</div>
-
-<div class="secondary" role="complementary">
-    <?php foreach ($promos as $promo): ?>
-    <?=$this->renderElement('amo2009/hub/promobox', array(
-                'heading' => $promo['Translation']['heading']['string'],
-                'body'    => $promo['Translation']['body']['string'])) ?>
-    <?php endforeach ?>
-
-    (sidebars)
+<div class="highlight">
+    <h3><?=$heading?></h3>
+    <div><?=$body?></div>
 </div>

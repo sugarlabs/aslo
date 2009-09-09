@@ -15,11 +15,10 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Frederic Wenzel <fwenzel@mozilla.com>.
- * Portions created by the Initial Developer are Copyright (C) 2009
- * the Initial Developer. All Rights Reserved.
+ * The Mozilla Foundation.
  *
  * Contributor(s):
+ *   Scott McCammon <smccammon@mozilla.com>
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -34,22 +33,34 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+class HubPromoModelTest extends UnitTestCase {
+
+    function HubPromoModelTest() {
+        loadModel('HubPromo');
+        $this->HubPromo = new HubPromo();
+    }
+
+    function testCreate() {
+    	$this->HubPromo->id = null;
+    	$retval = $this->HubPromo->save(array(
+			'heading' => 'Promo Heading!',
+			'body' => 'Promo body.',
+            'visibility' => HubPromo::DEVELOPERS,
+			'created' => date('Y-m-d h:i:s', time()),
+        ));
+			
+		$this->assertTrue($retval, 'created promo for developers');
+    }
+
+    function testFetch() {
+        $results = $this->HubPromo->getDeveloperPromos();
+
+        $this->assertTrue(!empty($results), 'fetched visible developer promos');
+    }
+
+    function testDelete() {
+        $retval = $this->HubPromo->delete($this->HubPromo->id);
+        $this->assertTrue($retval, 'deleted promo');
+    }
+}
 ?>
-
-<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
-
-<div id="devhub" class="primary" role="main">
-    <?=$this->renderElement('amo2009/breadcrumbs', array())?>
-    <h2>Headline</h2>
-    <p>(content)</p>
-</div>
-
-<div class="secondary" role="complementary">
-    <?php foreach ($promos as $promo): ?>
-    <?=$this->renderElement('amo2009/hub/promobox', array(
-                'heading' => $promo['Translation']['heading']['string'],
-                'body'    => $promo['Translation']['body']['string'])) ?>
-    <?php endforeach ?>
-
-    (sidebars)
-</div>

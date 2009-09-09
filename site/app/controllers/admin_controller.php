@@ -44,7 +44,7 @@ class AdminController extends AppController
 {
     var $name = 'Admin';
 
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'HubPromo', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
     var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Versioncompare', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Pagination');
 
@@ -768,6 +768,207 @@ class AdminController extends AppController
         $this->set('page', 'collections');
         $this->set('subpage', 'promobox');
         $this->render('collection_features_create');
+    }
+
+   /**
+    * Developers Hub Manager
+    */
+    function developershub($action='', $subaction='', $id=0) {
+        $this->breadcrumbs['Developers Hub Manager'] = '/admin/developershub';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        switch($action) {
+            case 'events':
+                $this->_developershubEvents($subaction, $id);
+                break;
+            case 'promoboxes':
+                $this->_developershubPromoBoxes($subaction, $id);
+                break;
+            default:
+                $this->set('page', 'developershub');
+                $this->set('subpage', 'developershub');
+                $this->render('developershub');
+                break;
+        }
+    }
+
+   /**
+    * Developers Hub PromoBox Manager
+    */
+    function _developershubPromoBoxes($action = '', $id = 0) {
+        $this->breadcrumbs['Promo Boxes'] = '/admin/developershub/promoboxes';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        switch ($action) {
+        case 'create':
+            $this->_developershubPromoBoxesCreate();
+            return;
+        case 'edit':
+            $this->Amo->clean($id);
+            $this->_developershubPromoBoxesEdit($id);
+            return;
+        }
+            
+        $promos = $this->HubPromo->findAll(null, null, 'HubPromo.modified DESC', null, null, -1);
+
+        $this->set('promos', $promos);
+        $this->set('visibilities', HubPromo::$visibilities);
+        $this->set('page', 'developershub');
+
+        $this->set('subpage', 'promoboxes');
+        $this->render('developershub_promoboxes');
+    }
+
+   /**
+    * Create Hub PromoBox
+    */
+    function _developershubPromoBoxesCreate() {
+        $this->breadcrumbs['Create Developers Hub PromoBox'] = '/admin/developershub/promoboxes/create';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        if (!empty($this->data)) {
+            $this->HubPromo->save($this->data['HubPromo']);
+
+            //Save translated fields (heading, body)
+            $this->Developers->saveTranslations($this->data, array('HubPromo'));
+            
+            //Log admin action
+            $this->Eventlog->log($this, 'admin', 'hubpromo_create', null, $this->HubPromo->getLastInsertID());
+            
+            $this->flash('PromoBox created!', '/admin/developershub/promoboxes');
+            return;  
+        }
+        
+        $localizedFields = array(
+                                'heading' => array(
+                                                    'type'        => 'input',
+                                                    'display'     => 'Heading',
+                                                    'model'       => 'HubPromo',
+                                                    'field'       => 'heading',
+                                                    'attributes'  => array( 'size' => 40)
+                                ),
+                                'body' => array(
+                                                    'type'        => 'textarea',
+                                                    'display'     => 'Body',
+                                                    'model'       => 'HubPromo',
+                                                    'field'       => 'body',
+                                                    'attributes'  => array('cols' => 40, 'rows' => 6)
+                                )
+                   );
+                
+        //Retrieve language arrays from bootstrap.
+        global $valid_languages, $native_languages;
+        foreach (array_keys($valid_languages) as $key) {
+            $languages[$key] = $native_languages[$key]['native'];
+
+            $this->HubPromo->setLang($key, $this);
+
+            foreach ($this->HubPromo->translated_fields as $field) {
+                $info[$key][$field] = '';
+            }
+        }
+        
+        //Set up localebox info
+        $this->set('localebox', array('info' => $info,
+                                      'defaultLocale' => 'en-US',
+                                      'languages' => $languages,
+                                      'localizedFields' => $localizedFields));
+        
+        //Options for visibility select box
+        $this->set('visibilities', HubPromo::$visibilities);
+
+        $this->set('page', 'developershub');
+        $this->set('subpage', 'promoboxes');
+        $this->render('developershub_promoboxes_create');
+    }
+
+   /**
+    * Edit or Delete Hub PromoBox
+    */
+    function _developershubPromoBoxesEdit($id) {
+        $this->breadcrumbs['Edit Developers Hub PromoBox'] = '/admin/developershub/promoboxes/edit/'.$id;
+        $this->set('breadcrumbs', $this->breadcrumbs);
+        
+        $this->HubPromo->id = $id;
+        
+        if (!empty($this->data)) {
+            //Delete
+            if (!empty($_POST['delete'])) {
+                $promo = $this->HubPromo->read();
+                $this->HubPromo->delete($id);
+                
+                //Log admin action
+                $this->Eventlog->log($this, 'admin', 'hubpromo_delete', null, $id, null, $promo['Translation']['heading']['string']);
+                
+                $this->flash('PromoBox deleted successfully.', '/admin/developershub/promoboxes');
+                return;
+            }
+            //Edit
+            else {
+                $this->HubPromo->save($this->data['HubPromo']);
+                
+                //Log admin action
+                $this->Eventlog->log($this, 'admin', 'hubpromo_edit', null, $id);
+                
+                //Save translated fields (name, description)
+                $this->Developers->saveTranslations($this->data, array('HubPromo'));
+                
+                $this->flash('PromoBox updated!', '/admin/developershub/promoboxes');
+                return;
+            }
+        }
+        
+        $promobox = $this->HubPromo->read();
+        
+        $this->set('promobox', $promobox);
+        
+        $localizedFields = array(
+                                'heading' => array(
+                                                    'type'        => 'input',
+                                                    'display'     => 'Heading',
+                                                    'model'       => 'HubPromo',
+                                                    'field'       => 'heading',
+                                                    'attributes'  => array( 'size' => 40)
+                                ),
+                                'body' => array(
+                                                    'type'        => 'textarea',
+                                                    'display'     => 'Body',
+                                                    'model'       => 'HubPromo',
+                                                    'field'       => 'body',
+                                                    'attributes'  => array('cols' => 40, 'rows' => 6)
+                                )
+                   );
+                   
+        //Retrieve language arrays from bootstrap.
+        global $valid_languages, $native_languages;
+        foreach (array_keys($valid_languages) as $key) {
+            $languages[$key] = $native_languages[$key]['native'];
+
+            $this->HubPromo->setLang($key, $this);
+            $promoL = $this->HubPromo->read();
+
+            foreach ($promoL['Translation'] as $field => $translation) {
+                if ($translation['locale'] == $key) {
+                    $info[$key][$field] = $translation['string'];
+                }
+                else {
+                    $info[$key][$field] = '';
+                }
+            }
+        }
+        
+        //Set up localebox info
+        $this->set('localebox', array('info' => $info,
+                                      'defaultLocale' => 'en-US',
+                                      'languages' => $languages,
+                                      'localizedFields' => $localizedFields));
+        
+        //Options for visibility select box
+        $this->set('visibilities', HubPromo::$visibilities);
+
+        $this->set('page', 'developershub');
+        $this->set('subpage', 'promoboxes');
+        $this->render('developershub_promoboxes_edit');    
     }
     
    /**
