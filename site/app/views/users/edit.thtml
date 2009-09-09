@@ -78,7 +78,7 @@ $this->translationBox = array(
 
 <h1><?php printf(___('Edit user profile for %s'), $this->data['User']['email']); ?></h1>
 
-<form enctype="multipart/form-data" action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
+<form enctype="multipart/form-data" action="<?=$html->entities($html->url())?>" method="post" class="amo-form" id="profile-user-form">
     <?=$html->hiddenSession() ?>
 
 <div id="tabbed-editor" class="flora">
@@ -261,5 +261,13 @@ $this->translationBox = array(
                     $('input:checkbox', $(this).closest('table')).attr('checked', $(this).is(':checked'));
                 })
             );
+        $('#profile-user-form').submit(function() {
+            var validImages = "<?= implode(', ', $this->controller->Developers->imageExtensions); ?>";
+            var regex = new RegExp('(' + validImages.split(', ').join('|') + ')$');
+            var ext = checkInputFileExtensions('#UserPictureData', regex);
+            if (ext != true)
+                alert(sprintf("<?= ___('That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s'); ?>", ext, validImages));
+            return ext == true;
+        });
     });
 </script>

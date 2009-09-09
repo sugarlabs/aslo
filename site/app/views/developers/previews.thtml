@@ -37,6 +37,18 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
+<script type="text/javascript">
+$(function() {
+    $('#previews-form').submit(function() {
+            var validImages = "<?= implode(', ', $this->controller->Developers->imageExtensions); ?>";
+            var regex = new RegExp('(' + validImages.split(', ').join('|') + ')$');
+            var ext = checkInputFileExtensions('.new-preview > input, .replace-preview input', regex);
+            if (ext != true)
+                alert(sprintf("<?= ___('That file extension (%1$s) is not allowed for a preview. Please use one of the following: %2$s'); ?>", ext, validImages));
+            return ext == true;
+    });
+});
+</script>
 <div id="content">
     <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 

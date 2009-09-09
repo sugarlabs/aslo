@@ -68,6 +68,31 @@ function checkMatchUserAgentAppId() {
 }
 
 /**
+ * checks that the file-input elements are uploading the correct filetypes (by
+ * check extension)
+ * @param inputs jQuery selector for the input element(s)
+ * @param validImages a regular expression of valid image types (includes period)
+ * @return true if the files are valid image types that remora accepts.
+ *         otherwise it returns the file extension that caused the failure
+ */
+function checkInputFileExtensions(inputs, validImages) {
+    var elements = $(inputs);
+    for (var i = 0; i < elements.length; ++i) {
+        var filename = elements.eq(i).val();
+        if (filename.length == 0)
+            continue;
+        // account for files that do not have extensions
+        var j = filename.lastIndexOf('.');
+        // Sometimes windows makes extensions UPPERCASE. Fix it.
+        var extension = filename.substr(j < 0 ? 0 : j).toLowerCase();
+        if (validImages.test(extension) == false) {
+            return extension;
+        }
+    }
+    return true;
+}
+
+/**
  * Install an add-on into the current browser-type application
  * (mostly: Firefox, SeaMonkey)
  */
