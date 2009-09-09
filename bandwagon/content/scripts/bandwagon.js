@@ -61,7 +61,7 @@ Bandwagon.AMO_AUTH_COOKIE_HOST = "%%AMO_HOST%%";
 Bandwagon.AMO_AUTH_COOKIE_NAME = "AMOv3";
 Bandwagon.PREF_AUTH_TOKEN = "authtoken";
 
-Bandwagon.COMMIT_NOW = 0; // 1=commit on the fly. 0=commit when browser exit.
+Bandwagon.COMMIT_NOW = 1; // 1=commit on the fly. 0=commit when browser exit.
 Bandwagon.ENABLE_PAGINATION = 0; // 1=enable "add-ons per page" settings, limit number of add-ons displayed in EM. 0=disable these settings, show all add-ons in EM.
 
 // Copied from mozIStorageStatementCallback

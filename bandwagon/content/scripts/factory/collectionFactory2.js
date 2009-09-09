@@ -34,20 +34,22 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-Bandwagon.Factory.CollectionFactory = function(connection, bw)
+Bandwagon.Factory.CollectionFactory2 = function(connection, bw)
 {
     this.Bandwagon = bw;
     this.connection = connection;
 
     //this.connection.executeSimpleSQL("PRAGMA locking_mode = EXCLUSIVE");
+
+    this.Bandwagon.Logger.debug("Initialized CollectionFactory (v2)");
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.handleError = function(aError)
+Bandwagon.Factory.CollectionFactory2.prototype.handleError = function(aError)
 {
     Bandwagon.Logger.warn("Storage Error: " + aError.message);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.openServiceDocument = function(callback)
+Bandwagon.Factory.CollectionFactory2.prototype.openServiceDocument = function(callback)
 {
     var cf = this;
 
@@ -77,7 +79,7 @@ Bandwagon.Factory.CollectionFactory.prototype.openServiceDocument = function(cal
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.commitServiceDocument = function(serviceDocument, callback)
+Bandwagon.Factory.CollectionFactory2.prototype.commitServiceDocument = function(serviceDocument, callback)
 {
     var cf = this;
 
@@ -104,17 +106,17 @@ Bandwagon.Factory.CollectionFactory.prototype.commitServiceDocument = function(s
         });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.newCollection = function()
+Bandwagon.Factory.CollectionFactory2.prototype.newCollection = function()
 {
     return new this.Bandwagon.Model.Collection(this.Bandwagon);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.openCollection = function(collection_id, callback)
+Bandwagon.Factory.CollectionFactory2.prototype.openCollection = function(collection_id, callback)
 {
     // NOT NEEDED FOR NOW
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.openCollections = function(callback)
+Bandwagon.Factory.CollectionFactory2.prototype.openCollections = function(callback)
 {
     var cf = this;
 
@@ -154,59 +156,112 @@ Bandwagon.Factory.CollectionFactory.prototype.openCollections = function(callbac
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.commitCollection = function(collection)
+Bandwagon.Factory.CollectionFactory2.prototype.commitCollection = function(collection)
 {
     var cf = this;
 
     if (!this.connection)
         return;
 
-    var replaceStatement = this.connection.createStatement("REPLACE INTO collections VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19)");
+    var deleteStatement = this.connection.createStatement("DELETE FROM collections WHERE id = ?1");
+    deleteStatement.bindInt32Parameter(0, collection.storageID);
 
-    (collection.storageID==-1?replaceStatement.bindNullParameter(0):replaceStatement.bindInt32Parameter(0, collection.storageID));
-cf.Bandwagon.Logger.debug("In commitCollection() with param0 = " + (collection.storageID));
-    replaceStatement.bindUTF8StringParameter(1, collection.resourceURL);
-    replaceStatement.bindUTF8StringParameter(2, collection.name);
-    replaceStatement.bindUTF8StringParameter(3, collection.description);
-    replaceStatement.bindInt32Parameter(4, collection.dateAdded.getTime()/1000);
-    (collection.dateLastCheck == null?replaceStatement.bindNullParameter(5):replaceStatement.bindInt32Parameter(5, collection.dateLastCheck.getTime()/1000));
-    replaceStatement.bindInt32Parameter(6, collection.updateInterval);
-    replaceStatement.bindInt32Parameter(7, collection.showNotifications);
-    replaceStatement.bindInt32Parameter(8, (collection.autoPublish?1:0));
-    replaceStatement.bindInt32Parameter(9, (collection.active?1:0));
-    replaceStatement.bindInt32Parameter(10, collection.addonsPerPage);
-    replaceStatement.bindUTF8StringParameter(11, collection.creator);
-    replaceStatement.bindInt32Parameter(12, collection.listed);
-    replaceStatement.bindInt32Parameter(13, collection.writable);
-    replaceStatement.bindInt32Parameter(14, collection.subscribed);
-    (collection.lastModified == null?replaceStatement.bindNullParameter(15):replaceStatement.bindInt32Parameter(15, collection.lastModified.getTime()/1000));
-    replaceStatement.bindUTF8StringParameter(16, collection.addonsResourceURL);
-    replaceStatement.bindUTF8StringParameter(17, collection.type);
-    replaceStatement.bindUTF8StringParameter(18, collection.iconURL);
+    var deleteStatement2 = this.connection.createStatement("DELETE FROM collectionsAddons WHERE collection = ?1");
+    deleteStatement2.bindInt32Parameter(0, collection.storageID);
 
-    cf.Bandwagon.Logger.debug("In commitCollection() with collection: " + collection.resourceURL)
+    var insertStatement = cf.connection.createStatement("INSERT INTO collections VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19)");
+    (collection.storageID==-1?insertStatement.bindNullParameter(0):insertStatement.bindInt32Parameter(0, collection.storageID));
+    insertStatement.bindUTF8StringParameter(1, collection.resourceURL);
+    insertStatement.bindUTF8StringParameter(2, collection.name);
+    insertStatement.bindUTF8StringParameter(3, collection.description);
+    if (collection.dateAdded && collection.dateAdded instanceof Date)
+        insertStatement.bindInt32Parameter(4, collection.dateAdded.getTime()/1000);
+    else
+        insertStatement.bindInt32Parameter(4, Date.now()/1000);
+    if (collection.dateLastCheck && collection.dateLastCheck instanceof Date)
+        insertStatement.bindInt32Parameter(5, collection.dateLastCheck.getTime()/1000);
+    else
+        insertStatement.bindNullParameter(5);
+    insertStatement.bindInt32Parameter(6, collection.updateInterval);
+    insertStatement.bindInt32Parameter(7, collection.showNotifications);
+    insertStatement.bindInt32Parameter(8, (collection.autoPublish?1:0));
+    insertStatement.bindInt32Parameter(9, (collection.active?1:0));
+    insertStatement.bindInt32Parameter(10, collection.addonsPerPage);
+    insertStatement.bindUTF8StringParameter(11, collection.creator);
+    insertStatement.bindInt32Parameter(12, collection.listed);
+    insertStatement.bindInt32Parameter(13, collection.writable);
+    insertStatement.bindInt32Parameter(14, collection.subscribed);
+    if (collection.lastModified && collection.lastModified instanceof Date)
+        insertStatement.bindInt32Parameter(15, collection.lastModified.getTime()/1000);
+    else
+        insertStatement.bindNullParameter(15);
+    insertStatement.bindUTF8StringParameter(16, collection.addonsResourceURL);
+    insertStatement.bindUTF8StringParameter(17, collection.type);
+    insertStatement.bindUTF8StringParameter(18, collection.iconURL);
 
-    return replaceStatement.executeAsync({
-        handleResult: function(aResultSet) {},
-        handleError: cf.handleError,
-        handleCompletion: function(aReason)
+    var statements = [];
+
+    if (collection.storageID != -1)
+    {
+        statements.push(deleteStatement);
+        statements.push(deleteStatement2);
+    }
+
+    statements.push(insertStatement);
+
+    return this.connection.executeAsync(
+        statements,
+        statements.length,
         {
-            if (aReason == cf.Bandwagon.STMT_OK)
+            handleResult: function(aResultSet) {},
+            handleError: function(aError) {
+                cf.Bandwagon.Logger.error("Could not commit collection '" + collection.name + "'");
+                cf.handleError(aError);
+            },
+            handleCompletion: function(aReason)
             {
-        cf.Bandwagon.Logger.debug("Finished commitCollection() with collection: " + collection.resourceURL)
-                if (collection.storageID == -1) 
+                if (aReason == cf.Bandwagon.STMT_OK)
                 {
-                    collection.storageID = cf.connection.lastInsertRowID;
-                }
+                    var commitCollectionsBits = function()
+                    {
+                        cf._commitCollectionsAddons(collection);
+                        cf._commitCollectionsLinks(collection);
+                    }
 
-                //cf._commitCollectionsAddons(collection);
-                //cf._commitCollectionsLinks(collection);
+                    if (collection.storageID == -1)
+                    {
+                        var lastInsertIDStatement = cf.connection.createStatement("SELECT id FROM collections WHERE url = ?1");
+                        lastInsertIDStatement.bindUTF8StringParameter(0, collection.resourceURL);
+
+                        lastInsertIDStatement.executeAsync(
+                        {
+                            handleResult: function(aResultSet)
+                            {
+                                while (row = aResultSet.getNextRow())
+                                {
+                                    collection.storageID = row.getResultByName("id");
+                                }
+                            },
+                            handleError: cf.handleError,
+                            handleCompletion: function(aReason)
+                            {
+                                if (aReason == cf.Bandwagon.STMT_OK)
+                                {
+                                    commitCollectionsBits();
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        commitCollectionsBits();
+                    }
+                }
             }
-        }
-    });
+        });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitCollectionsLinks = function(collection)
+Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsLinks = function(collection)
 {
     var cf = this;
 
@@ -229,6 +284,7 @@ Bandwagon.Factory.CollectionFactory.prototype._commitCollectionsLinks = function
         insertStatement.bindUTF8StringParameter(3, collection.links[id]);
 
         statements.push(insertStatement);
+
     }
 
     return this.connection.executeAsync(
@@ -241,128 +297,123 @@ Bandwagon.Factory.CollectionFactory.prototype._commitCollectionsLinks = function
         });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitCollectionsAddons = function(collection)
+Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddons = function(collection)
 {
     var cf = this;
 
     if (!this.connection)
         return;
 
-    var deleteStatement = this.connection.createStatement("DELETE FROM collectionsAddons WHERE collection = ?1");
-    deleteStatement.bindInt32Parameter(0, collection.storageID);
-    deleteStatement.executeAsync(
+    var addons2=[];
+
+    for (var id in collection.addons)
     {
-        handleResult: function(aResultSet) {},
-        handleError: cf.handleError,
-        handleCompletion: function(aReason)
+        addons2.push(collection.addons[id]);
+    }
+
+    for (var j=0; j<addons2.length; j++)
+    {
+        var callback = let (k = j) function(aReason)
         {
             if (aReason == cf.Bandwagon.STMT_OK)
             {
-                for (var id in collection.addons)
+                var addon = addons2[k];
+                var statement2 = cf.connection.createStatement("INSERT INTO addons VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16)");
+
+                statement2.bindNullParameter(0)
+                statement2.bindUTF8StringParameter(1, addon.guid);
+                statement2.bindUTF8StringParameter(2, addon.name);
+                statement2.bindInt32Parameter(3, addon.type);
+                statement2.bindUTF8StringParameter(4, addon.version);
+                statement2.bindInt32Parameter(5, addon.status);
+                statement2.bindUTF8StringParameter(6, addon.summary);
+                statement2.bindUTF8StringParameter(7, addon.description);
+                statement2.bindUTF8StringParameter(8, addon.icon);
+                statement2.bindUTF8StringParameter(9, addon.eula);
+                statement2.bindUTF8StringParameter(10, addon.thumbnail);
+                statement2.bindUTF8StringParameter(11, addon.learnmore);
+                statement2.bindUTF8StringParameter(12, addon.author);
+                statement2.bindUTF8StringParameter(13, addon.category);
+                statement2.bindUTF8StringParameter(14, addon.dateAdded.getTime()/1000);
+                statement2.bindUTF8StringParameter(15, addon.type2);
+
+                statement2.executeAsync(
                 {
-                    var addon = collection.addons[id];
-                    //let addon = collection.addons[id]; // FIXME
-                    //let addonGUID = collection.addons[id].guid;
-
-                    var statement = cf.connection.createStatement("SELECT id FROM addons where guid = ?1");
-
-                    statement.executeAsync(
+                    handleResult: function(aResultSet) {},
+                    handleError: function(aError)
                     {
-                        addonStorageID: null,
-                        handleResult: function(aResultSet)
+                        cf.Bandwagon.Logger.error("Could not commit addon '" + addon.name + "'");
+                        cf.handleError(aError);
+                    },
+                    handleCompletion: function(aReason)
+                    {
+                        if (aReason == cf.Bandwagon.STMT_OK)
                         {
-                            this.addonStorageID = aResultSet.getNextRow().getResultByName("id");
+                            var lastInsertIDStatement = cf.connection.createStatement("SELECT id FROM addons WHERE guid = ?1");
+                            lastInsertIDStatement.bindUTF8StringParameter(0, addon.guid);
 
-                        },
-                        handleError: cf.handleError,
-                        handleCompletion: function(aReason)
-                        {
-                            //let addonStorageID = this.addonStorageID;
-                            var addonStorageID = this.addonStorageID;
-
-                            if (aReason == cf.Bandwagon.STMT_OK)
+                            lastInsertIDStatement.executeAsync(
                             {
-                                var statement2 = cf.connection.createStatement("REPLACE INTO addons VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16)");
-
-                                if (addonStorageID != null)
+                                handleResult: function(aResultSet)
                                 {
-                                    // addon already exists (in another collection, or from previous commit of this collection)
-                                    statement2.bindInt32Parameter(0, addonStorageID);
-                                }
-                                else if (addon.storageID != -1)
-                                {
-                                    // addon doesn't already exist, but exists from a previous commit of this collection (?)
-                                    statement2.bindInt32Parameter(0, addon.storageID);
-                                }
-                                else
-                                {
-                                    // new addon
-                                    statement2.bindNullParameter(0)
-                                }
-
-                                statement2.bindUTF8StringParameter(1, addon.guid);
-                                statement2.bindUTF8StringParameter(2, addon.name);
-                                statement2.bindInt32Parameter(3, addon.type);
-                                statement2.bindUTF8StringParameter(4, addon.version);
-                                statement2.bindInt32Parameter(5, addon.status);
-                                statement2.bindUTF8StringParameter(6, addon.summary);
-                                statement2.bindUTF8StringParameter(7, addon.description);
-                                statement2.bindUTF8StringParameter(8, addon.icon);
-                                statement2.bindUTF8StringParameter(9, addon.eula);
-                                statement2.bindUTF8StringParameter(10, addon.thumbnail);
-                                statement2.bindUTF8StringParameter(11, addon.learnmore);
-                                statement2.bindUTF8StringParameter(12, addon.author);
-                                statement2.bindUTF8StringParameter(13, addon.category);
-                                statement2.bindUTF8StringParameter(14, addon.dateAdded.getTime()/1000);
-                                statement2.bindUTF8StringParameter(15, addon.type2);
-
-                                statement2.executeAsync(
-                                {
-                                    handleResult: function(aResultSet) {},
-                                    handleError: cf.handleError,
-                                    handleCompletion: function(aReason)
+                                    while (row = aResultSet.getNextRow())
                                     {
-                                        if (aReason == cf.Bandwagon.STMT_OK)
-                                        {
-                                            for (var id in addon.compatibleApplications)
-                                            {
-                                                cf._commitAddonCompatibleApplication(addonStorageID, addon.compatibleApplications[id]);
-                                            }
-
-                                            for (var id in addon.compatibleOS)
-                                            {
-                                                cf._commitAddonCompatibleOS(addonStorageID, addon.compatibleOS[id]);
-                                            }
-
-                                            for (var id in addon.installs)
-                                            {
-                                                cf._commitAddonInstall(addonStorageID, addon.installs[id]);
-                                            }
-
-                                            for (var i=0; i<addon.comments.length; i++)
-                                            {
-                                                cf._commitAddonComment(addonStorageID, addon.comments[i]);
-                                            }
-
-                                            for (var id in addon.authors)
-                                            {
-                                                cf._commitAddonAuthor(addonStorageID, addon.authors[id]);
-                                            }
-
-                                            cf._commitCollectionsAddonsTuple(addonStorageID, collection, addon);
-                                        }
+                                        addon.storageID = row.getResultByName("id");
                                     }
-                                });
-                            }
+                                },
+                                handleError: cf.handleError,
+                                handleCompletion: function(aReason)
+                                {
+                                    if (aReason == cf.Bandwagon.STMT_OK)
+                                    {
+                                        for (var id in addon.compatibleApplications)
+                                        {
+                                            cf._commitAddonCompatibleApplication(addon.storageID, addon.compatibleApplications[id]);
+                                        }
+
+                                        for (var id in addon.compatibleOS)
+                                        {
+                                            cf._commitAddonCompatibleOS(addon.storageID, addon.compatibleOS[id]);
+                                        }
+
+                                        for (var id in addon.installs)
+                                        {
+                                            cf._commitAddonInstall(addon.storageID, addon.installs[id]);
+                                        }
+
+                                        for (var i=0; i<addon.comments.length; i++)
+                                        {
+                                            cf._commitAddonComment(addon.storageID, addon.comments[i]);
+                                        }
+
+                                        for (var id in addon.authors)
+                                        {
+                                            cf._commitAddonAuthor(addon.storageID, addon.authors[id]);
+                                        }
+
+                                        cf._commitCollectionsAddonsTuple(addon.storageID, collection, addon);
+                                    }
+                                }
+                            });
                         }
-                    });
-                }
+                    }
+                });
             }
-        }
-    });
+        };
+
+        var statement = cf.connection.createStatement("DELETE FROM addons where guid = ?1");
+        statement.bindUTF8StringParameter(0, addons2[j].guid);
+
+        statement.executeAsync(
+        {
+            handleResult: function(aResultSet) {},
+            handleError: cf.handleError,
+            handleCompletion: callback
+        });
+    }
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.commitCollections = function(collections)
+Bandwagon.Factory.CollectionFactory2.prototype.commitCollections = function(collections)
 {
     for (var id in collections)
     {
@@ -370,7 +421,7 @@ Bandwagon.Factory.CollectionFactory.prototype.commitCollections = function(colle
     }
 }
 
-Bandwagon.Factory.CollectionFactory.prototype.deleteCollection = function(collection, callback)
+Bandwagon.Factory.CollectionFactory2.prototype.deleteCollection = function(collection, callback)
 {
     var cf = this;
 
@@ -399,7 +450,7 @@ Bandwagon.Factory.CollectionFactory.prototype.deleteCollection = function(collec
 
 // private methods
 
-Bandwagon.Factory.CollectionFactory.prototype._openCollectionFromRS = function(row)
+Bandwagon.Factory.CollectionFactory2.prototype._openCollectionFromRS = function(row)
 {
     var collection = new this.Bandwagon.Model.Collection(this.Bandwagon);
     collection.storageID = row.getResultByName("id");
@@ -431,7 +482,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openCollectionFromRS = function(r
     return collection;
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openAddons = function(collections, lastCallback)
+Bandwagon.Factory.CollectionFactory2.prototype._openAddons = function(collections, lastCallback)
 {
     var cf = this;
 
@@ -474,7 +525,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddons = function(collections
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openAddonFromRS = function(row)
+Bandwagon.Factory.CollectionFactory2.prototype._openAddonFromRS = function(row)
 {
     var addon = new this.Bandwagon.Model.Addon(Bandwagon);
     addon.Bandwagon = this.Bandwagon;
@@ -495,13 +546,12 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddonFromRS = function(row)
     addon.category = row.getResultByName("category");
     addon.dateAdded = new Date(row.getResultByName("dateAdded")*1000);
     addon.type2 = row.getResultByName("type2");
-    addon.collectionsAddonsStorageID = row.getResultByName("collectionsAddonsStorageID");
     addon.read = (row.getResultByName("read")==1?true:false);
 
     return addon;
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openCollectionsLinks = function(collections, lastCallback)
+Bandwagon.Factory.CollectionFactory2.prototype._openCollectionsLinks = function(collections, lastCallback)
 {
     var cf = this;
 
@@ -545,7 +595,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openCollectionsLinks = function(c
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openAddonCompatibleApplications = function(collections, lastCallback)
+Bandwagon.Factory.CollectionFactory2.prototype._openAddonCompatibleApplications = function(collections, lastCallback)
 {
     var cf = this;
 
@@ -598,7 +648,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddonCompatibleApplications =
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openAddonCompatibleOS = function(collections, lastCallback)
+Bandwagon.Factory.CollectionFactory2.prototype._openAddonCompatibleOS = function(collections, lastCallback)
 {
     var cf = this;
 
@@ -644,7 +694,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddonCompatibleOS = function(
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openAddonInstalls = function(collections, lastCallback)
+Bandwagon.Factory.CollectionFactory2.prototype._openAddonInstalls = function(collections, lastCallback)
 {
     var cf = this;
 
@@ -695,7 +745,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddonInstalls = function(coll
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openAddonComments = function(collections, lastCallback)
+Bandwagon.Factory.CollectionFactory2.prototype._openAddonComments = function(collections, lastCallback)
 {
     var cf = this;
 
@@ -745,7 +795,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddonComments = function(coll
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._openAddonAuthors = function(collections, lastCallback)
+Bandwagon.Factory.CollectionFactory2.prototype._openAddonAuthors = function(collections, lastCallback)
 {
     var cf = this;
 
@@ -783,7 +833,7 @@ Bandwagon.Factory.CollectionFactory.prototype._openAddonAuthors = function(colle
     });
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitAddonCompatibleApplication = function(addonStorageID, application)
+Bandwagon.Factory.CollectionFactory2.prototype._commitAddonCompatibleApplication = function(addonStorageID, application)
 {
     var deleteStatement = this.connection.createStatement("DELETE FROM addonCompatibleApplications WHERE addon = ?1 AND applicationId = ?2");
     deleteStatement.bindInt32Parameter(0, addonStorageID);
@@ -800,7 +850,7 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddonCompatibleApplication 
     this.connection.executeAsync([deleteStatement, insertStatement], 2);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitAddonCompatibleOS = function(addonStorageID, os)
+Bandwagon.Factory.CollectionFactory2.prototype._commitAddonCompatibleOS = function(addonStorageID, os)
 {
     var deleteStatement = this.connection.createStatement("DELETE FROM addonCompatibleOS WHERE addon = ?1");
     deleteStatement.bindInt32Parameter(0, addonStorageID);
@@ -812,7 +862,7 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddonCompatibleOS = functio
     this.connection.executeAsync([deleteStatement, insertStatement], 2);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitAddonInstall = function(addonStorageID, install)
+Bandwagon.Factory.CollectionFactory2.prototype._commitAddonInstall = function(addonStorageID, install)
 {
     var deleteStatement = this.connection.createStatement("DELETE FROM addonInstalls WHERE addon = ?1");
     deleteStatement.bindInt32Parameter(0, addonStorageID);
@@ -826,7 +876,7 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddonInstall = function(add
     this.connection.executeAsync([deleteStatement, insertStatement], 2);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitAddonComment = function(addonStorageID, comment)
+Bandwagon.Factory.CollectionFactory2.prototype._commitAddonComment = function(addonStorageID, comment)
 {
     var deleteStatement = this.connection.createStatement("DELETE FROM addonComments WHERE addon = ?1");
     deleteStatement.bindInt32Parameter(0, addonStorageID);
@@ -839,7 +889,7 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddonComment = function(add
     this.connection.executeAsync([deleteStatement, insertStatement], 2);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitAddonAuthor = function(addonStorageID, author)
+Bandwagon.Factory.CollectionFactory2.prototype._commitAddonAuthor = function(addonStorageID, author)
 {
     var deleteStatement = this.connection.createStatement("DELETE FROM addonAuthors WHERE addon = ?1");
     deleteStatement.bindInt32Parameter(0, addonStorageID);
@@ -851,39 +901,20 @@ Bandwagon.Factory.CollectionFactory.prototype._commitAddonAuthor = function(addo
     this.connection.executeAsync([deleteStatement, insertStatement], 2);
 }
 
-Bandwagon.Factory.CollectionFactory.prototype._commitCollectionsAddonsTuple = function(addonStorageID, collection, addon)
+Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddonsTuple = function(addonStorageID, collection, addon)
 {
     var cf = this;
 
-    var replaceStatement = this.connection.createStatement("REPLACE INTO collectionsAddons VALUES (?1, ?2, ?3, ?4)");
+    var insertStatement = this.connection.createStatement("INSERT INTO collectionsAddons VALUES (?1, ?2, ?3, ?4)");
+    insertStatement.bindInt32Parameter(1, collection.storageID);
+    insertStatement.bindInt32Parameter(2, addonStorageID);
+    insertStatement.bindInt32Parameter(3, (addon.read?1:0));
 
-    if (addon.collectionsAddonsStorageID == -1)
-    {
-        replaceStatement.bindNullParameter(0);
-    }
-    else
-    {
-        replaceStatement.bindInt32Parameter(0, addon.collectionsAddonsStorageID);
-    }
-
-    replaceStatement.bindInt32Parameter(1, collection.storageID);
-    replaceStatement.bindInt32Parameter(2, addonStorageID);
-    replaceStatement.bindInt32Parameter(3, (addon.read?1:0));
-
-    replaceStatement.executeAsync(
-    {
-        handleResult: function(aResultSet) {},
-        handleError: cf.handleError,
-        handleCompletion: function(aReason)
+    insertStatement.executeAsync(
         {
-            if (aReason == cf.Bandwagon.STMT_OK)
-            {
-                if (addon.collectionsAddonsStorageID == -1)
-                {
-                    addon.collectionsAddonsStorageID = cf.connection.lastInsertRowID;
-                }
-            }
-        }
-    });
+            handleResult: function(aResultSet) {},
+            handleError: cf.handleError,
+            handleCompletion: function(aReason) {}
+        });
 }
 

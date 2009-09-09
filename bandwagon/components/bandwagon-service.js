@@ -1207,7 +1207,10 @@ BandwagonService.prototype = {
             return;
         }
 
-        this._collectionFactory = new Bandwagon.Factory.CollectionFactory(this._storageConnection, Bandwagon);
+        if (this._storageConnection.executeAsync)
+            this._collectionFactory = new Bandwagon.Factory.CollectionFactory2(this._storageConnection, Bandwagon);
+        else
+            this._collectionFactory = new Bandwagon.Factory.CollectionFactory(this._storageConnection, Bandwagon);
 
         this._initStorageTables();
     },

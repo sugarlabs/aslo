@@ -40,6 +40,8 @@ Bandwagon.Factory.CollectionFactory = function(connection, bw)
     this.connection = connection;
 
     this.connection.executeSimpleSQL("PRAGMA locking_mode = EXCLUSIVE");
+
+    this.Bandwagon.Logger.debug("Initialized CollectionFactory (v1)");
 }
 
 Bandwagon.Factory.CollectionFactory.prototype.openServiceDocument = function(callback)
