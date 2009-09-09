@@ -16,6 +16,7 @@ PlotDataTable.prototype = {
         tableId: '',
         paginationId: '',
         downloadLinkId: '',
+        ignoreToday: '', // ignore the first row if it matches this date ('YYYY-MM-DD' format)
         rowsPerPage: 6,
         maxRows: 0  // maximum number of rows to process regardless of pagination (0 == no max)
     },
@@ -50,6 +51,12 @@ PlotDataTable.prototype = {
             var a=a[0], b=b[0];
             return (a==b) ? 0 : ( (a<b) ? -1 : 1 );
         });
+
+        // Optionally ignore data for today
+        if (data_rows.length && this.config.ignoreToday == data_rows[0][0].strftime('%Y-%m-%d')) {
+            data_rows = data_rows.slice(1);
+        }
+
         if (this.config.maxRows > 0) {
             data_rows = data_rows.slice(0, this.config.maxRows);
         }

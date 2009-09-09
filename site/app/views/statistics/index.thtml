@@ -173,7 +173,8 @@
         Plots.dataTable = new PlotDataTable({
             tableId: 'stats-table-instance',
             paginationId: 'stats-table-pagination',
-            downloadLinkId: 'stats-csv-download'
+            downloadLinkId: 'stats-csv-download',
+            ignoreToday: '<?=date('Y-m-d')?>'
         });
         Plots.initialize();
         plotSelection.initialize();

@@ -702,6 +702,11 @@ class StatsComponent extends Object {
     function getSiteStats($groupBy='date') {
         $stats = array();
 
+        // Do not include today's counts since they are almost always incomplete.
+        // This will result in a row of zeros when grouping by day or if today
+        // is the first day of a week or month. 
+        $endDate = date('Y-m-d', strtotime('-1 day'));
+
         switch ($groupBy) {
         case 'week':
             $interval = '+1 week';
@@ -714,9 +719,9 @@ class StatsComponent extends Object {
 
             foreach (array_keys($this->site_stats_field_map) as $name) {
                 if (in_array($name, $this->use_max_when_grouping)) {
-                    $stats[$name] = $this->controller->GlobalStat->getNamedWeeklyMax($name, $startDate);
+                    $stats[$name] = $this->controller->GlobalStat->getNamedWeeklyMax($name, $startDate, $endDate);
                 } else {
-                    $stats[$name] = $this->controller->GlobalStat->getNamedWeeklySum($name, $startDate);
+                    $stats[$name] = $this->controller->GlobalStat->getNamedWeeklySum($name, $startDate, $endDate);
                 }
             }
             break;
@@ -727,9 +732,9 @@ class StatsComponent extends Object {
 
             foreach (array_keys($this->site_stats_field_map) as $name) {
                 if (in_array($name, $this->use_max_when_grouping)) {
-                    $stats[$name] = $this->controller->GlobalStat->getNamedMonthlyMax($name, $startDate);
+                    $stats[$name] = $this->controller->GlobalStat->getNamedMonthlyMax($name, $startDate, $endDate);
                 } else {
-                    $stats[$name] = $this->controller->GlobalStat->getNamedMonthlySum($name, $startDate);
+                    $stats[$name] = $this->controller->GlobalStat->getNamedMonthlySum($name, $startDate, $endDate);
                 }
             }
             break;
@@ -740,7 +745,7 @@ class StatsComponent extends Object {
             $startDate = date('Y-m-d', strtotime('-89 days'));
 
             foreach (array_keys($this->site_stats_field_map) as $name) {
-                $stats[$name] = $this->controller->GlobalStat->getNamedDaily($name, $startDate);
+                $stats[$name] = $this->controller->GlobalStat->getNamedDaily($name, $startDate, $endDate);
             }
             break;
 
