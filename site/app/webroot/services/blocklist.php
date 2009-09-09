@@ -47,6 +47,20 @@ require_once(dirname(__FILE__).'/../../config/config.php');
 require_once(dirname(__FILE__).'/../../config/constants.php');
 
 
+// Issue unique tracking cookie
+// Are we behind a proxy and given the IP via an alternate enviroment variable? If so, use it.
+if (!empty($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+    list($ip) = explode(', ',$_SERVER["HTTP_X_FORWARDED_FOR"]);
+} else {
+    $ip = $_SERVER["REMOTE_ADDR"];
+}
+
+
+//We need to give the user a unique cookie and make it expire in 5 years.
+if (!array_key_exists(BLOCKLIST_COOKIE_NAME, $_COOKIE)) {
+    setcookie(BLOCKLIST_COOKIE_NAME, $ip . '.' . microtime(true), time() + 157784630, '/blocklist/');
+}
+
 
 /**
  *  VARIABLES
