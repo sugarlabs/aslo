@@ -77,6 +77,9 @@ Bandwagon.Controller.Settings.init = function()
     bandwagonService.registerCollectionListChangeObserver(Bandwagon.Controller.Settings.collectionListChangeObserver);
     bandwagonService.registerAuthenticationStatusChangeObserver(Bandwagon.Controller.Settings.authenticationStatusChangeObserver);
 
+    var apLeadinTxt = Bandwagon.Controller.Settings.stringBundle.getFormattedString("autoleadin.label", [Bandwagon.Util.getHostEnvironmentInfo().appName])
+    document.getElementById("auto-leadin").textContent = apLeadinTxt ? apLeadinTxt : " ";
+
     setTimeout(function() 
     {
         Bandwagon.Controller.Settings._delayedInit();

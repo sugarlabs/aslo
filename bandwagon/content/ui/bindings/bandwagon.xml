@@ -352,6 +352,10 @@
                 </setter>
             </property>
 
+            <property name="appName"
+                onget="return Bandwagon.Util.getHostEnvironmentInfo().appName;"
+                />
+
             <method name="setAddon">
                 <parameter name="addon"/>
                 <body>
@@ -469,7 +473,7 @@
                                 }
                                 catch (e)
                                 {
-                                    msg = this._stringBundle.getString("bandwagon.addon.olderversionsoffirefox");
+                                    msg = this._stringBundle.getFormattedString("bandwagon.addon.olderversionsof", [this.appName]);
                                 }
 
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
@@ -482,18 +486,18 @@
                             else if (type == Bandwagon.Model.Addon.INSTALL_NO_ADDON_IS_FOR_OLDER_VERSION)
                             {
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
-                                    document.createTextNode(this._stringBundle.getString("bandwagon.addon.olderversionsoffirefox")));
+                                    document.createTextNode(this._stringBundle.getFormattedString("bandwagon.addon.olderversionsof", [this.appName])));
                             }
                             else if (type == Bandwagon.Model.Addon.INSTALL_NO_UPGRADE_TO_USE_THIS_VERSION)
                             {
                                 var atffwl = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "xul:label");
                                 atffwl.className = "text-link";
-                                atffwl.setAttribute("value", this._stringBundle.getFormattedString("bandwagon.addon.upgradetofirefoxn1", [version]));
+                                atffwl.setAttribute("value", this._stringBundle.getFormattedString("bandwagon.addon.upgradetoappn1", [this.appName, version]));
                                 atffwl.addEventListener("click", function() { Bandwagon.Controller.CollectionsPane.doUpgradeToFirefoxN(version); }, true);
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(atffwl);
 
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
-                                    document.createTextNode(this._stringBundle.getString("bandwagon.addon.upgradetofirefoxn2")));
+                                    document.createTextNode(this._stringBundle.getString("bandwagon.addon.upgradetoappn2")));
                             }
                             else if (type == Bandwagon.Model.Addon.INSTALL_NO_MUST_DOWNLOAD_BETA)
                             {
@@ -635,7 +639,7 @@
                             <xul:spacer flex="1"/>
                             <xul:hbox pack="end" class="publishButton">
                                 <xul:bandwagonPublishButton anonid="publish" label="&publishto.label;"/>
-                                <xul:button anonid="addtofirefox" label="&addon.addtofirefox;" oncommand="Bandwagon.Controller.CollectionsPane.doAddToFirefox()"/>
+                                <xul:button anonid="addtofirefox" label=" " oncommand="Bandwagon.Controller.CollectionsPane.doAddToFirefox()"/>
                             </xul:hbox>
                             <xul:description anonid="addtofirefoxwarning" class="right">
                             </xul:description>
@@ -646,6 +650,13 @@
         </content>
 
         <implementation implements="nsIAccessibleProvider">
+            <constructor>
+            <![CDATA[
+                var addtoLabel = this._stringBundle.getFormattedString("bandwagon.addon.addto", [this.appName]);
+                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').label = addtoLabel ? addtoLabel : "Add";
+            ]]>
+            </constructor>
+
             <field name="_thumbnailContainer">
                 document.getAnonymousElementByAttribute(this, 'anonid', 'bandwagonThumbnailContainer');
             </field>
