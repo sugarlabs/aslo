@@ -329,4 +329,13 @@ define('PAYPAL_API_VERSION', '50');
  */
 define('ISO8601_DATE', '%Y-%m-%d');
 define('ISO8601_DATETIME', '%Y-%m-%d %H:%M');
+
+/**
+ * diff path
+ * The path to the gnu diff program (or any diff program able to create a unified diff).
+ * If commented out, it will use the xdiff package
+ */
+if (!defined('DIFF_PATH')) {
+    define('DIFF_PATH', '/usr/bin/diff'); // standard directory
+}
 ?>
