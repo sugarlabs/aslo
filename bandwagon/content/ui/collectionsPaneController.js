@@ -914,6 +914,7 @@ Bandwagon.Controller.CollectionsPane._openURL = function(url)
     Bandwagon.Logger.debug("Opening URL " + url);
 
     var appname = Bandwagon.Util.getHostEnvironmentInfo().appName
+
     if (appname == "Firefox")
     {
         var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"]
@@ -939,6 +940,11 @@ Bandwagon.Controller.CollectionsPane._openURL = function(url)
         var extps = Bandwagon.Util.Cc["@mozilla.org/uriloader/external-protocol-service;1"]
             .getService(Bandwagon.Util.Ci.nsIExternalProtocolService);
         extps.loadURI(resolvedURI, null);
+    }
+    else if (appname == "Fennec")
+    {
+        top.Browser.addTab(url, true);
+        top.BrowserUI.show(0);
     }
 }
 
