@@ -415,10 +415,25 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddons = functi
 
 Bandwagon.Factory.CollectionFactory2.prototype.commitCollections = function(collections)
 {
-    for (var id in collections)
+    var cf = this;
+
+    var deleteStatement = this.connection.createStatement("DELETE FROM collections");
+
+    return deleteStatement.executeAsync(
     {
-        this.commitCollection(collections[id]);
-    }
+        handleResult: function(aResultSet) {},
+        handleError: cf.handleError,
+        handleCompletion: function(aReason)
+        {
+            if (aReason == cf.Bandwagon.STMT_OK)
+            {
+                for (var id in collections)
+                {
+                    cf.commitCollection(collections[id]);
+                }
+            }
+        }
+    });
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype.deleteCollection = function(collection, callback)

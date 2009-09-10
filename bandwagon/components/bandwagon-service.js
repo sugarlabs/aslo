@@ -838,12 +838,7 @@ BandwagonService.prototype = {
     {
         Bandwagon.Logger.debug("In commitAll()");
 
-        for (var id in bandwagonService.collections)
-        {
-            var collection = bandwagonService.collections[id];
-
-            this.commit(collection);
-        }
+        bandwagonService._collectionFactory.commitCollections(bandwagonService.collections);
 
         if (bandwagonService._serviceDocument)
             bandwagonService._collectionFactory.commitServiceDocument(bandwagonService._serviceDocument); 
