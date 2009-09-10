@@ -307,6 +307,14 @@ Bandwagon.Controller.CollectionsPane.doSubscribe = function(event)
     Bandwagon.Controller.CollectionsPane._openLocalizedURL(Bandwagon.COLLECTIONSPANE_DO_SUBSCRIBE_URL);
 }
 
+Bandwagon.Controller.CollectionsPane.doFindCollections = function(event)
+{
+    // The following covers the case where the user has no subscribed collections and the SubscriptionRefreshEvent is not working.
+    bandwagonService.updateCollectionsList();
+
+    Bandwagon.Controller.CollectionsPane._openLocalizedURL(Bandwagon.COLLECTIONSPANE_DO_SUBSCRIBE_URL);
+}
+
 Bandwagon.Controller.CollectionsPane.doLogin = function(event)
 {
     var uname = document.getElementById("login").value;
