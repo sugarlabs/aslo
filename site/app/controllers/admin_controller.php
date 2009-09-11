@@ -2310,8 +2310,8 @@ class AdminController extends AppController
     * AJAX Add-on lookup
     */
     function addonLookup() {
-        if (!$this->SimpleAcl->actionAllowed('Admin', '%', $this->Session->read('User')) ||
-            !$this->SimpleAcl->actionAllowed('Editor', '*', $this->Session->read('User')) ) {
+        if (!($this->SimpleAcl->actionAllowed('Admin', '%', $this->Session->read('User')) ||
+                $this->SimpleAcl->actionAllowed('Editor', '*', $this->Session->read('User'))) ) {
             $this->Amo->accessDenied();
         }
 
