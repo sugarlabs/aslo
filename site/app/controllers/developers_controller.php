@@ -263,6 +263,10 @@ class DevelopersController extends AppController
             case 'submit':
                 $this->setAction('_submitAddon');
                 break;
+
+            case 'validate':
+                $this->setAction('_validateAddon', $addon_id);
+                break;
         }
     }
 
@@ -283,6 +287,20 @@ class DevelopersController extends AppController
         $this->publish('hasAgreement', false);
 
         $this->render('uploader');
+    }
+    
+    /**
+     * Displays the add-on validator for on-the fly validation
+     */
+    function _validateAddon($addon_id) {
+        if ($addon_id != 0) {
+            $addon = $this->Addon->getAddon($addon_id, array('latest_version'));
+            $version_id = $addon['Version'][0]['id'];
+            $this->setAction('versions', 'validate', $version_id);
+            return;
+        }
+                            
+        $this->render('validator');
     }
 
     /**
@@ -646,7 +664,7 @@ class DevelopersController extends AppController
                     return $this->Error->getJSONforError(sprintf(___('This add-on ID (%1$s) already exists in the database. If this is your add-on, you can <a href="%2$s">upload a new version</a>.'), $addon['Addon']['guid'], $this->url("/developers/versions/add/{$existing[0]['Addon']['id']}")));
                 }
             }
-        } else {
+        } else if ($additional != 'temp') {
 
             $addon_id = $this->data['Addon']['id'];
             $existing = $this->Addon->getAddon($addon_id, array('default_fields'));
@@ -698,7 +716,10 @@ class DevelopersController extends AppController
 
         $filename = $addon['File']['db']['filename'];
         $this->Amo->clean($filename);
-        $this->TestResult->execute("INSERT INTO `test_results_cache` (`date`, `key`, `test_case_id`, `value`) VALUES (NOW(), '{$filename}', -1, '{$data}')");
+
+        if ($additional != 'temp') {
+            $this->TestResult->execute("INSERT INTO `test_results_cache` (`date`, `key`, `test_case_id`, `value`) VALUES (NOW(), '{$filename}', -1, '{$data}')");
+        }
 
         return $addon;
     }

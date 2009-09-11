@@ -257,6 +257,17 @@ function iframeLoaded() {
     }
 }
 
+var validate = {
+    validate: function() {
+        if ($('#addon-list').val() != '') {
+            window.location.href = BASEDIR  + '/developers/addon/validate/' + $('#addon-list').val();
+            return false;
+        } else {
+            return upload.uploadFile();
+        }
+    }
+}
+
 var addon_edit_authors = {    
     showAddForm: function() {
         $('#add-author').show();

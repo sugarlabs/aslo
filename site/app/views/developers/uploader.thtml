@@ -189,36 +189,15 @@
     <?php endif; ?>
         <div class="greenbox-br"><div class="greenbox-bl"></div></div>
     </div></div><!-- /#addon-created -->
-    <div id="validation-results" class="graybox rounded spaced field validation">
-        <div id="validation-summary">
-            <h3><?=___('Validation Results')?></h3>
-            <div id="test-results-total">
-            </div>
-            <span class="tests-running loading-count">
-                <?=___('Now validating your add-on ...')?>
-            </span>       
-            <div id="test-results-action">
-                <div class="action-button-container">
-                    <span id="test-results-message">
-                        <span id="pass-message"><?=___('All tests passed.  Your add-on is now complete, click Continue to customize details.') ?></span>
-                        <span id="warn-message"><?=sprintf(___('We\'ve detected potential issues with your add-on.  Please review the list and upload a new version if the issues are valid.  If not, click Continue to submit your add-on for final review.  For more about our add-on validator, see our <a href="%s">validation help page</a>.'), $html->url('/pages/validation'))?></span>
-                        <span id="fail-message"><?=___('There were problems with your add-on that prohibit it from being added.  See below for more details.')?></span>
-                    </span>
-                    <br/><br/>
-                    <a id="new-file-button" href="#" onclick="upload.uploadNewFile(); return false;" class="action-button rounded">
-                        <?= ___('Upload new File') ?>
-                    </a>
-                    <a id="continue-button" href="#" onclick="upload.completeUpload(); return false;" class="action-button rounded">
-                        <?= ___('Continue') ?>
-                    </a>
-                    <br/><br/>
-                    <div id="complete-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('Completing your add-on...')?></div>
-                </div>
-            </div>
-        </div>
-        <div id="validation-details">    
-        </div>
-    </div> 
+
+
+    <?= $this->renderElement('developers/validation', array(
+            'pass_message' => ___('All tests passed.  Your add-on is now complete, click Continue to customize details.'),
+            'warn_message' => sprintf(___('We\'ve detected potential issues with your add-on.  Please review the list and upload a new version if the issues are valid.  If not, click Continue to submit your add-on for final review.  For more about our add-on validator, see our <a href="%s">validation help page</a>.'), $html->url('/pages/validation')),
+            'fail_message' => ___('There were problems with your add-on that prohibit it from being added.  See below for more details.'),
+            'new_file_message' => ___('Upload new File'),
+            'allow_completion' => true
+        )) ?>
 </div><!-- /#content-main -->
 </div><!-- /#content -->
 

@@ -1,0 +1,98 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *      RJ Walsh <rwalsh@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+<script type="text/javascript">
+    var verifyurl = '<?= $html->url('/developers/verify/') ?>';
+</script>
+<div id="content">
+    <?php
+    $params = array('addons' => $all_addons);
+    echo $this->renderElement('developers/sidebar', $params);
+    ?>
+<div id="content-main" class="privs">
+    <?= $this->renderElement('developers/addonheader', array('title' => ___('Add-on Validator'), 'addon_id' => 0)) ?>
+    <?=$this->renderElement('noscript')?>
+    <?=$this->renderElement('developers/rolecheck')?>
+
+    <div id="submission-area" class="rounded graybox">
+        <div id="file-upload">
+            <h3><?=___('Validate Your Add-on')?></h3>
+            <p><?=___('The Add-on Validator can check your add-on for common packaging and security problems, even if it\'s not hoseted here')?></p>
+            <br />
+            <form id="upload-form" method="post" enctype="multipart/form-data" action="<?=$html->url('/developers/json/fileupload/temp')?>" target="upload-frame" onsubmit="return validate.validate();">
+            <?=$html->hiddenSession();?>
+
+            <? if(!empty($all_addons)): ?>
+            <label><?=___('Check my hosted add-on: ')?>
+                <select id="addon-list" name="addon-list">
+                    <option value=""></option>
+                    <? pr($all_addons);foreach ($all_addons as $id => $addon): ?>
+                        <option value="<?=$id?>"><?=$addon?></option>
+                    <? endforeach; ?>
+                </select>
+            </label><br/>
+            <strong><?=___('OR')?></strong><br/>
+            <? endif; ?>
+            <label><?=___('Upload an add-on to check: ')?><input id="upload-field" type="file" name="file" /></label><br />
+            <div class="submit">
+                <input type="submit" value="<?=___('Run Tests')?>" class="require-privs" />
+            </div>
+            <div id="upload-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('Uploading file...')?></div>
+            </form>
+            <div id="upload-error" class="redbox-tr"><div class="redbox-tl">
+                <div id="upload-error-content">
+                    <h4><?=___('Oops! There seems to be a problem with this file...')?></h4>
+                    <p id="upload-error-text" class="smallmargin"></p>
+                    <p class="smallmargin"><?=___('Please correct this problem and upload your file again.')?></p>
+                </div>
+                <div class="redbox-br"><div class="redbox-bl"></div></div>
+            </div></div>
+        </div><!-- /#file-upload -->
+    </div><!-- /#submission-area -->
+
+    <?= $this->renderElement('developers/validation', array(
+            'pass_message' => ___('All tests passed, well done!'),
+            'warn_message' => sprintf(___('We\'ve detected potential issues with your add-on.  Please review the list and upload a new version if the issues are valid.  For more about our add-on validator, see our <a href="%s">validation help page</a>.'), $html->url('/pages/validation')),
+            'fail_message' => ___('There were problems with your add-on that prohibit it from being added.  See below for more details.'),
+            'new_file_message' => ___('Validate another Add-on'),
+            'allow_completion' => false
+        )) ?>
+</div><!-- /#content-main -->
+</div><!-- /#content -->
+
+<iframe id="upload-frame" name="upload-frame" src="" onload="iframeLoaded();" style="display: none;"></iframe>
