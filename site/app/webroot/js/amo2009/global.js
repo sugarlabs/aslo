@@ -120,10 +120,11 @@
 		this.preventDefault = true;
 		this.showSpeed = 200;
 		this.hideSpeed = 200;
+		this.hideOnBodyClick = true;
 	};
 	DropdownArea.prototype.bodyclick = function(e) {
 		// this will get fired on click of body, we need to close the dropdown
-		if (this.bodyWatching) {
+		if (this.bodyWatching && this.hideOnBodyClick) {
 			if (!
 				($(e.target).get(0) == $(this.targetParent).get(0) ||
 				 $(e.target).parents(this.targetParent).length)
@@ -333,6 +334,7 @@ jQuery(function($) {
 	advancedForm.trigger = ($('#advanced-link a')); // node
 	advancedForm.target = ('.advanced'); // reference
 	advancedForm.targetParent = ('.search-form'); // reference
+	advancedForm.hideOnBodyClick = false;
 	advancedForm.init();
 	
 	// tools dropdown in auxillary menu
