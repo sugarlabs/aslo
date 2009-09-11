@@ -288,7 +288,9 @@ class HubComponent extends Object {
                             'reviews'),
             new HubCategory('Maintaining Your Add-on',
                             ___('Add-on updates, transferring ownership, user reviews, and what to expect once your add-on is approved.'),
-                            'maintenance'),
+                            'maintenance',
+                            array($this->controller->url('/developers/docs/policies/contact'),
+                                  $this->controller->url('/pages/review_guide'))),
             new HubCategory('Recommended Add-ons',
                             ___('How up-and-coming add-ons become recommended and what\'s involved in the process.'),
                             'recommended',
@@ -299,7 +301,13 @@ class HubComponent extends Object {
                             array($this->controller->url('/pages/developer_faq'))),
             new HubCategory('Contacting Us',
                             ___('How to get in touch with the AMO team regarding these policies or your add-on.'),
-                            'contact')
+                            'contact',
+                            array('https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bit-23=1&bug_file_loc=http%3A%2F%2F&bug_severity=normal&bug_status=NEW&cf_status_192=---&component=Add-on%20Security&flag_type-270=X&flag_type-271=X&flag_type-369=X&flag_type-385=X&flag_type-4=X&flag_type-485=X&flag_type-506=X&flag_type-507=X&flag_type-540=X&form_name=enter_bug&op_sys=All&priority=--&product=addons.mozilla.org&qa_contact=security%40add-ons.bugs&rep_platform=All',
+                                  'https://bugzilla.mozilla.org/enter_bug.cgi?product=addons.mozilla.org',
+                                  'emails' => array(
+                                                'amo-editors@mozilla.org',
+                                                'amo-admins@mozilla.org'
+                                            )))
         );
         
         $lorem = 'foo';

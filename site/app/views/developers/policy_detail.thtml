@@ -44,8 +44,19 @@ $this->viewVars['bodyclass'] = 'inverse';
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
 <div id="policy-detail" class="primary hubtext" role="main">
-    <?php echo "<h1>{$policy->title}</h1>"; ?>
-    <?=$localization->includeLocalPage("docs/policies/{$policy->slug}", $policy->items)?>
+    <?php
+        echo "<h1>{$policy->title}</h1>";
+        
+        // Convert email addresses to spam-unfriendly
+        if (!empty($policy->items['emails'])) {
+            foreach ($policy->items['emails'] as $email) {
+                $policy->items[] = $link->email($email);
+            }
+            unset($policy->items['emails']);
+        }
+        
+        echo $localization->includeLocalPage("docs/policies/{$policy->slug}", $policy->items);
+    ?>
 </div>
 
 <div class="secondary" role="complementary">
