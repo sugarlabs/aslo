@@ -143,7 +143,10 @@ $this->viewVars['bodyclass'] = 'home';
         <?php foreach ($popular_collections as $c): ?>
             <div class="item">
                 <h5>
-                    <img class="icon" src="<?=$c['icon_url']?>" width="32" height="32" alt="<?=$c['name']?>"/>
+                    <?=$link->collection(array(
+                        'Collection'  => array('uuid'=>$c['uuid'], 'nickname'=>$c['nickname']),
+                        'Translation' => array('name'=>array('string'=>sprintf('<img class="icon" src="%1$s" width="32" height="32" alt="%2$s"/>', $c['icon_url'], $c['name'])))
+                    ))?>
                     <?=$link->collection(array(
                         'Collection'  => array('uuid'=>$c['uuid'], 'nickname'=>$c['nickname']),
                         'Translation' => array('name'=>array('string'=>$c['name']))
