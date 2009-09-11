@@ -57,6 +57,22 @@ $bare = isset($_GET['bare']) ? ( $_GET['bare'] == 1 ) : FALSE;
 <div class="other-reviews">
 <?php endif ?>
 
+<ul>
+    <li><?=$html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
+    <?
+    if (empty($isAuthor)) {
+        if (!empty($hasreview)) {
+            $add_or_edit = ___('Edit your review');
+        } else {
+            $add_or_edit = ___('Add a review');
+        }
+        echo '<li>'.$html->link($add_or_edit, '/reviews/add/'.$addon['Addon']['id']).'</li>';
+    }
+    ?>
+</ul>
+
+<div class="clearboth"> <hr /> </div>
+
 <?php
 foreach ($reviews as $review):
     $review_id = $review['Review']['id'];
