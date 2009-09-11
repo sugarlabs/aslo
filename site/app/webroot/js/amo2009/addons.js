@@ -413,6 +413,12 @@ var translation_box = {
         else {
             translationBox.find('.translation-button.remove').show();
         }
+
+        if (translationBox.find('.translation-tab').length == $('.translation-newlocale-container select option').length) {
+            translationBox.find('.translation-button.add').hide(); 
+        } else {
+            translationBox.find('.translation-button.add').show();
+        }
     },
 
     checkLength: function(field, max) {

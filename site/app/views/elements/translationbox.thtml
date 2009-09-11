@@ -82,7 +82,7 @@ if (!isset($graybox) || $graybox === true) {
             }
         ?>
         </div>
-        <div class="translation-button"><?=$html->image('developers/tab_add.png', array('onclick' => 'translation_box.addTab(this);', 'alt' => ___('Add Translation'), 'title' => ___('Add Translation')))?></div>
+        <div class="translation-button add"><?=$html->image('developers/tab_add.png', array('onclick' => 'translation_box.addTab(this);', 'alt' => ___('Add Translation'), 'title' => ___('Add Translation')))?></div>
         <div class="translation-button remove" style="display: none;"><?=$html->image('developers/tab_delete.png', array('onclick' => 'translation_box.confirmRemove(this);', 'alt' => ___('Remove Translation'), 'title' => ___('Remove Translation')))?></div>
     </div>
     <div class="translation-area" table="<?=$this->translationBox['table']?>" field="<?=$field?>" defaultLocale="<?=$this->translationBox['defaultLocale']?>"<?=(!empty($id) ? ' itemID="'.$id.'"' : '')?>>
