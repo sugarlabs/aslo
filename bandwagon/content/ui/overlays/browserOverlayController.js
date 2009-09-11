@@ -156,6 +156,17 @@ Bandwagon.Controller.BrowserOverlay.showNewAddonsAlert = function(collection)
 {
     Bandwagon.Logger.debug("in showNewAddonsAlert()");
 
+    if (Bandwagon.Util.getHostEnvironmentInfo().appName == "Fennec")
+    {
+        var localAutoInstaller = bandwagonService.getLocalAutoInstaller();
+
+        if (!localAutoInstaller.equals(collection))
+        {
+            Bandwagon.Logger.debug("[Fennec] not showing new addons alert for this collection because it is not an auto installer");
+            return;
+        }
+    }
+
     var bandwagonStrings = document.getElementById("bandwagon-strings");
 
     var alertsService;

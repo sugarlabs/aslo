@@ -179,6 +179,14 @@ Bandwagon.Model.Collection.prototype.isLocalAutoPublisher = function()
     return (this.Bandwagon.Preferences.getPreference("local.autopublisher") == this.resourceURL);
 }
 
+Bandwagon.Model.Collection.prototype.isLocalAutoInstaller = function()
+{
+    if (this.name == "")
+        return false;
+
+    return (this.Bandwagon.Preferences.getPreference("mobile_sync_collection") == this.name);
+}
+
 Bandwagon.Model.Collection.prototype.toString = function()
 {
     return this.name + " (" + this.resourceURL + ")";

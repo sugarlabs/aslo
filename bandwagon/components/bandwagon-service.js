@@ -158,10 +158,6 @@ BandwagonService.prototype = {
             this.firstrun();
         }
 
-        // storage initialized, tables created - open the collections and service document
-        
-        this._initCollections();
-
         // start the update timer
 
         this._initUpdateTimer();
@@ -170,16 +166,27 @@ BandwagonService.prototype = {
 
         ObserverService.getService(nsIObserverService).addObserver(this._bwObserver, "quit-application", false);
 
-        // kick off the auto-publish functionality
+        // storage initialized, tables created - open the collections and service document
 
-        this.autopublishExtensions();
+        var callback = function()
+        {
+            // kick off the auto-publish functionality
 
-        this._initialized = true;
+            bandwagonService.autopublishExtensions();
 
-        Bandwagon.Logger.info("Bandwagon has been initialized");
+            // kick off the auto-install functionality
+
+            bandwagonService.autoinstallExtensions();
+
+            bandwagonService._initialized = true;
+
+            Bandwagon.Logger.info("Bandwagon has been initialized");
+        }
+        
+        this._initCollections(callback);
     },
 
-    _initCollections: function()
+    _initCollections: function(callback)
     {
         this._collectionFactory.openCollections(function(result, storageCollections)
         {
@@ -214,6 +221,9 @@ BandwagonService.prototype = {
                     bandwagonService.updateCollectionsList();
                 }
             });
+
+            if (callback)
+                callback();
         });
     },
 
@@ -250,6 +260,47 @@ BandwagonService.prototype = {
         this._collectionFactory = null;
         Bandwagon = null;
         bandwagonService = null;
+    },
+    
+    getLocalAutoInstaller: function()
+    {
+        for (var id in bandwagonService.collections)
+        {
+            if (bandwagonService.collections[id].isLocalAutoInstaller())
+            {
+                return bandwagonService.collections[id];
+            }
+        }
+
+        return null;
+    },
+
+    autoinstallExtensions: function(callback)
+    {
+        Bandwagon.Logger.debug("in autoinstallExtensions()");
+
+        var localAutoInstaller = bandwagonService.getLocalAutoInstaller();
+
+        if (localAutoInstaller == null)
+            return;
+
+        var installedExtensions = Bandwagon.Util.getInstalledExtensions();
+
+        addons: for (var id in localAutoInstaller.addons)
+        {
+            var addon = localAutoInstaller.addons[id];
+
+            for (var i=0; i<installedExtensions.length; i++)
+            {
+                if (installedExtensions[i].id == addon.guid)
+                {
+                    //Bandwagon.Logger.debug("autoinstallExtensions: addon '" + addon.name + "' is already installed");
+                    break addons;
+                }
+            }
+
+            Bandwagon.Logger.info("XXX TODO. autoinstallExtensions: addon '" + addon.name + "' to be installed.");
+        }
     },
 
     getLocalAutoPublisher: function()
@@ -835,12 +886,7 @@ BandwagonService.prototype = {
 
     commit: function(collection)
     {
-        if (!bandwagonService._collectionFactory)
-            return;
-
-        Bandwagon.Logger.debug("In commit() with collection: " + collection.resourceURL);
-
-        bandwagonService._collectionFactory.commitCollection(collection);
+        this.commitAll();
     },
 
     commitAll: function()

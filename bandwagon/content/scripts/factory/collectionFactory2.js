@@ -163,12 +163,6 @@ Bandwagon.Factory.CollectionFactory2.prototype.commitCollection = function(colle
     if (!this.connection)
         return;
 
-    var deleteStatement = this.connection.createStatement("DELETE FROM collections WHERE id = ?1");
-    deleteStatement.bindInt32Parameter(0, collection.storageID);
-
-    var deleteStatement2 = this.connection.createStatement("DELETE FROM collectionsAddons WHERE collection = ?1");
-    deleteStatement2.bindInt32Parameter(0, collection.storageID);
-
     var insertStatement = cf.connection.createStatement("INSERT INTO collections VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18, ?19)");
     (collection.storageID==-1?insertStatement.bindNullParameter(0):insertStatement.bindInt32Parameter(0, collection.storageID));
     insertStatement.bindUTF8StringParameter(1, collection.resourceURL);
@@ -199,19 +193,7 @@ Bandwagon.Factory.CollectionFactory2.prototype.commitCollection = function(colle
     insertStatement.bindUTF8StringParameter(17, collection.type);
     insertStatement.bindUTF8StringParameter(18, collection.iconURL);
 
-    var statements = [];
-
-    if (collection.storageID != -1)
-    {
-        statements.push(deleteStatement);
-        statements.push(deleteStatement2);
-    }
-
-    statements.push(insertStatement);
-
-    return this.connection.executeAsync(
-        statements,
-        statements.length,
+    return insertStatement.executeAsync(
         {
             handleResult: function(aResultSet) {},
             handleError: function(aError) {
@@ -270,10 +252,6 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsLinks = functio
 
     var statements = [];
 
-    var deleteStatement = this.connection.createStatement("DELETE FROM collectionsLinks WHERE collection = ?1");
-    deleteStatement.bindInt32Parameter(0, collection.storageID);
-    statements.push(deleteStatement);
-
     for (var id in collection.links)
     {
         var insertStatement = this.connection.createStatement("INSERT INTO collectionsLinks VALUES (?1, ?2, ?3, ?4)");
@@ -313,103 +291,88 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddons = functi
 
     for (var j=0; j<addons2.length; j++)
     {
-        var callback = let (k = j) function(aReason)
+        var callback = let (k = j) function()
         {
-            if (aReason == cf.Bandwagon.STMT_OK)
+            var addon = addons2[k];
+            var statement2 = cf.connection.createStatement("INSERT INTO addons VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16)");
+
+            statement2.bindNullParameter(0)
+            statement2.bindUTF8StringParameter(1, addon.guid);
+            statement2.bindUTF8StringParameter(2, addon.name);
+            statement2.bindInt32Parameter(3, addon.type);
+            statement2.bindUTF8StringParameter(4, addon.version);
+            statement2.bindInt32Parameter(5, addon.status);
+            statement2.bindUTF8StringParameter(6, addon.summary);
+            statement2.bindUTF8StringParameter(7, addon.description);
+            statement2.bindUTF8StringParameter(8, addon.icon);
+            statement2.bindUTF8StringParameter(9, addon.eula);
+            statement2.bindUTF8StringParameter(10, addon.thumbnail);
+            statement2.bindUTF8StringParameter(11, addon.learnmore);
+            statement2.bindUTF8StringParameter(12, addon.author);
+            statement2.bindUTF8StringParameter(13, addon.category);
+            statement2.bindUTF8StringParameter(14, addon.dateAdded.getTime()/1000);
+            statement2.bindUTF8StringParameter(15, addon.type2);
+
+            statement2.executeAsync(
             {
-                var addon = addons2[k];
-                var statement2 = cf.connection.createStatement("INSERT INTO addons VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16)");
-
-                statement2.bindNullParameter(0)
-                statement2.bindUTF8StringParameter(1, addon.guid);
-                statement2.bindUTF8StringParameter(2, addon.name);
-                statement2.bindInt32Parameter(3, addon.type);
-                statement2.bindUTF8StringParameter(4, addon.version);
-                statement2.bindInt32Parameter(5, addon.status);
-                statement2.bindUTF8StringParameter(6, addon.summary);
-                statement2.bindUTF8StringParameter(7, addon.description);
-                statement2.bindUTF8StringParameter(8, addon.icon);
-                statement2.bindUTF8StringParameter(9, addon.eula);
-                statement2.bindUTF8StringParameter(10, addon.thumbnail);
-                statement2.bindUTF8StringParameter(11, addon.learnmore);
-                statement2.bindUTF8StringParameter(12, addon.author);
-                statement2.bindUTF8StringParameter(13, addon.category);
-                statement2.bindUTF8StringParameter(14, addon.dateAdded.getTime()/1000);
-                statement2.bindUTF8StringParameter(15, addon.type2);
-
-                statement2.executeAsync(
+                handleResult: function(aResultSet) {},
+                handleError: cf.handleError,
+                handleCompletion: function(aReason)
                 {
-                    handleResult: function(aResultSet) {},
-                    handleError: function(aError)
+                    var lastInsertIDStatement = cf.connection.createStatement("SELECT id FROM addons WHERE guid = ?1");
+                    lastInsertIDStatement.bindUTF8StringParameter(0, addon.guid);
+
+                    lastInsertIDStatement.executeAsync(
                     {
-                        cf.Bandwagon.Logger.error("Could not commit addon '" + addon.name + "'");
-                        cf.handleError(aError);
-                    },
-                    handleCompletion: function(aReason)
-                    {
-                        if (aReason == cf.Bandwagon.STMT_OK)
+                        handleResult: function(aResultSet)
                         {
-                            var lastInsertIDStatement = cf.connection.createStatement("SELECT id FROM addons WHERE guid = ?1");
-                            lastInsertIDStatement.bindUTF8StringParameter(0, addon.guid);
-
-                            lastInsertIDStatement.executeAsync(
+                            while (row = aResultSet.getNextRow())
                             {
-                                handleResult: function(aResultSet)
+                                addon.storageID = row.getResultByName("id");
+                            }
+                        },
+                        handleError: cf.handleError,
+                        handleCompletion: function(aReason2)
+                        {
+                            if (aReason2 == cf.Bandwagon.STMT_OK)
+                            {
+                                if (aReason == cf.Bandwagon.STMT_OK)
                                 {
-                                    while (row = aResultSet.getNextRow())
+                                    for (var id in addon.compatibleApplications)
                                     {
-                                        addon.storageID = row.getResultByName("id");
+                                        cf._commitAddonCompatibleApplication(addon.storageID, addon.compatibleApplications[id]);
                                     }
-                                },
-                                handleError: cf.handleError,
-                                handleCompletion: function(aReason)
-                                {
-                                    if (aReason == cf.Bandwagon.STMT_OK)
+
+                                    for (var id in addon.compatibleOS)
                                     {
-                                        for (var id in addon.compatibleApplications)
-                                        {
-                                            cf._commitAddonCompatibleApplication(addon.storageID, addon.compatibleApplications[id]);
-                                        }
+                                        cf._commitAddonCompatibleOS(addon.storageID, addon.compatibleOS[id]);
+                                    }
 
-                                        for (var id in addon.compatibleOS)
-                                        {
-                                            cf._commitAddonCompatibleOS(addon.storageID, addon.compatibleOS[id]);
-                                        }
+                                    for (var id in addon.installs)
+                                    {
+                                        cf._commitAddonInstall(addon.storageID, addon.installs[id]);
+                                    }
 
-                                        for (var id in addon.installs)
-                                        {
-                                            cf._commitAddonInstall(addon.storageID, addon.installs[id]);
-                                        }
+                                    for (var i=0; i<addon.comments.length; i++)
+                                    {
+                                        cf._commitAddonComment(addon.storageID, addon.comments[i]);
+                                    }
 
-                                        for (var i=0; i<addon.comments.length; i++)
-                                        {
-                                            cf._commitAddonComment(addon.storageID, addon.comments[i]);
-                                        }
-
-                                        for (var id in addon.authors)
-                                        {
-                                            cf._commitAddonAuthor(addon.storageID, addon.authors[id]);
-                                        }
-
-                                        cf._commitCollectionsAddonsTuple(addon.storageID, collection, addon);
+                                    for (var id in addon.authors)
+                                    {
+                                        cf._commitAddonAuthor(addon.storageID, addon.authors[id]);
                                     }
                                 }
-                            });
+
+                                cf._commitCollectionsAddonsTuple(addon.storageID, collection, addon);
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
+            });
         };
 
-        var statement = cf.connection.createStatement("DELETE FROM addons where guid = ?1");
-        statement.bindUTF8StringParameter(0, addons2[j].guid);
-
-        statement.executeAsync(
-        {
-            handleResult: function(aResultSet) {},
-            handleError: cf.handleError,
-            handleCompletion: callback
-        });
+        callback();
     }
 }
 
@@ -417,23 +380,34 @@ Bandwagon.Factory.CollectionFactory2.prototype.commitCollections = function(coll
 {
     var cf = this;
 
-    var deleteStatement = this.connection.createStatement("DELETE FROM collections");
+    var statements = [];
 
-    return deleteStatement.executeAsync(
-    {
-        handleResult: function(aResultSet) {},
-        handleError: cf.handleError,
-        handleCompletion: function(aReason)
+    statements.push(this.connection.createStatement("DELETE FROM collections"));
+    statements.push(this.connection.createStatement("DELETE FROM collectionsLinks"));
+    statements.push(this.connection.createStatement("DELETE FROM collectionsAddons"));
+    statements.push(this.connection.createStatement("DELETE FROM addons"));
+    statements.push(this.connection.createStatement("DELETE FROM addonCompatibleApplications"));
+    statements.push(this.connection.createStatement("DELETE FROM addonCompatibleOS"));
+    statements.push(this.connection.createStatement("DELETE FROM addonInstalls"));
+    statements.push(this.connection.createStatement("DELETE FROM addonAuthors"));
+
+    return this.connection.executeAsync(
+        statements,
+        statements.length,
         {
-            if (aReason == cf.Bandwagon.STMT_OK)
+            handleResult: function(aResultSet) {},
+            handleError: cf.handleError,
+            handleCompletion: function(aReason)
             {
-                for (var id in collections)
+                if (aReason == cf.Bandwagon.STMT_OK)
                 {
-                    cf.commitCollection(collections[id]);
+                    for (var id in collections)
+                    {
+                        cf.commitCollection(collections[id]);
+                    }
                 }
             }
-        }
-    });
+        });
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype.deleteCollection = function(collection, callback)
@@ -850,9 +824,7 @@ Bandwagon.Factory.CollectionFactory2.prototype._openAddonAuthors = function(coll
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonCompatibleApplication = function(addonStorageID, application)
 {
-    var deleteStatement = this.connection.createStatement("DELETE FROM addonCompatibleApplications WHERE addon = ?1 AND applicationId = ?2");
-    deleteStatement.bindInt32Parameter(0, addonStorageID);
-    deleteStatement.bindInt32Parameter(1, application.applicationId);
+    var cf = this;
 
     var insertStatement = this.connection.createStatement("INSERT INTO addonCompatibleApplications VALUES (?1, ?2, ?3, ?4, ?5, ?6)");
     insertStatement.bindInt32Parameter(0, addonStorageID);
@@ -862,25 +834,23 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitAddonCompatibleApplication
     insertStatement.bindUTF8StringParameter(4, application.maxVersion);
     insertStatement.bindUTF8StringParameter(5, application.guid);
 
-    this.connection.executeAsync([deleteStatement, insertStatement], 2);
+    insertStatement.executeAsync({handleResult: function(aResult) {}, handleError: cf.handleError, handleCompletion: function(aReason) {}});
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonCompatibleOS = function(addonStorageID, os)
 {
-    var deleteStatement = this.connection.createStatement("DELETE FROM addonCompatibleOS WHERE addon = ?1");
-    deleteStatement.bindInt32Parameter(0, addonStorageID);
+    var cf = this;
 
     var insertStatement = this.connection.createStatement("INSERT INTO addonCompatibleOS VALUES (?1, ?2)");
     insertStatement.bindInt32Parameter(0, addonStorageID);
     insertStatement.bindUTF8StringParameter(1, os);
 
-    this.connection.executeAsync([deleteStatement, insertStatement], 2);
+    insertStatement.executeAsync({handleResult: function(aResult) {}, handleError: cf.handleError, handleCompletion: function(aReason) {}});
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonInstall = function(addonStorageID, install)
 {
-    var deleteStatement = this.connection.createStatement("DELETE FROM addonInstalls WHERE addon = ?1");
-    deleteStatement.bindInt32Parameter(0, addonStorageID);
+    var cf = this;
 
     var insertStatement = this.connection.createStatement("INSERT INTO addonInstalls VALUES (?1, ?2, ?3, ?4)");
     insertStatement.bindInt32Parameter(0, addonStorageID);
@@ -888,32 +858,30 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitAddonInstall = function(ad
     insertStatement.bindUTF8StringParameter(2, install.hash);
     insertStatement.bindUTF8StringParameter(3, install.os);
 
-    this.connection.executeAsync([deleteStatement, insertStatement], 2);
+    insertStatement.executeAsync({handleResult: function(aResult) {}, handleError: cf.handleError, handleCompletion: function(aReason) {}});
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonComment = function(addonStorageID, comment)
 {
-    var deleteStatement = this.connection.createStatement("DELETE FROM addonComments WHERE addon = ?1");
-    deleteStatement.bindInt32Parameter(0, addonStorageID);
+    var cf = this;
 
     var insertStatement = this.connection.createStatement("INSERT INTO addonComments VALUES (?1, ?2, ?3)");
     insertStatement.bindInt32Parameter(0, addonStorageID);
     insertStatement.bindUTF8StringParameter(1, comment.comment);
     insertStatement.bindUTF8StringParameter(2, comment.author);
 
-    this.connection.executeAsync([deleteStatement, insertStatement], 2);
+    insertStatement.executeAsync({handleResult: function(aResult) {}, handleError: cf.handleError, handleCompletion: function(aReason) {}});
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonAuthor = function(addonStorageID, author)
 {
-    var deleteStatement = this.connection.createStatement("DELETE FROM addonAuthors WHERE addon = ?1");
-    deleteStatement.bindInt32Parameter(0, addonStorageID);
+    var cf = this;
 
     var insertStatement = this.connection.createStatement("INSERT INTO addonAuthors VALUES (?1, ?2)");
     insertStatement.bindInt32Parameter(0, addonStorageID);
     insertStatement.bindUTF8StringParameter(1, author);
 
-    this.connection.executeAsync([deleteStatement, insertStatement], 2);
+    insertStatement.executeAsync({handleResult: function(aResult) {}, handleError: cf.handleError, handleCompletion: function(aReason) {}});
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddonsTuple = function(addonStorageID, collection, addon)
