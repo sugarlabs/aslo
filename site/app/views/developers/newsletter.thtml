@@ -36,7 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-$this->viewVars['bodyclass'] = 'inverse';
+$this->viewVars['bodyclass'] = 'inverse newsletter';
 ?>
 
 <?=$this->renderElement('amo2009/hub/navbar')?>
@@ -48,12 +48,18 @@ $this->viewVars['bodyclass'] = 'inverse';
 <div id="newsletter" class="primary" role="main">
     <p><?=___('about:addons is our monthly newsletter highlighting noteworthy information and events in the world of add-ons. Take a look through our archives below and sign up!')?></p>
     
-    <p><a href="http://us1.campaign-archive.com/feed?u=168bf22f976f5a68fe5770d19&id=65a473e3bf">down here will be an RSS feed of about:addons articles!</a></p>
+    <h3>Recent Issues</h3>
+    <ul>
+        <li><a href="http://us1.campaign-archive.com/feed?u=168bf22f976f5a68fe5770d19&id=65a473e3bf">down here will be an RSS feed of about:addons articles!</a></li>
+        <li>June 30, 2009 - <a href="#">about:addons issue title</a></li>
+    </ul>
+    
+    <p><a href="http://us1.campaign-archive.com/home/?u=168bf22f976f5a68fe5770d19&id=65a473e3bf">See all past issues</a></p>
 </div>
 
 <div class="secondary" role="complementary">
     <div class="highlight">
-        <h3><?=___('Subscribe!')?></h3>
+        <h3><?=___('Subscribe by Email')?></h3>
         <p>Enter your email address to subscribe to our monthly newsletter.</p>
         <form action="http://mozilla.us1.list-manage.com/subscribe/post?u=168bf22f976f5a68fe5770d19&amp;id=65a473e3bf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
         <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">

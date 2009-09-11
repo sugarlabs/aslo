@@ -70,7 +70,9 @@ class DevelopersController extends AppController
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Link', 'Listing', 'Localization', 'Form');
     var $addVars = array(); //variables accessible to all additem steps
     var $aclExceptions = array('howto_list', 'howto_detail',
-                               'policy_list', 'api_reference');
+                               'policy_list', 'api_reference',
+                               'policy_detail', 'search',
+                               'newsletter');
 
 
    /**
