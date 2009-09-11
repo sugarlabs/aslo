@@ -58,3 +58,5 @@ pref("extensions.bandwagon.allow.incompatible.install", false);
 pref("extensions.bandwagon.authtoken", "");
 pref("extensions.bandwagon.login", "");
 pref("extensions.bandwagon.amo_host", "addons.mozilla.org");
+pref("extensions.bandwagon.mobile_sync_collection", "");
+pref("extensions.bandwagon.password", "");

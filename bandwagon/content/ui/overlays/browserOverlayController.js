@@ -234,5 +234,43 @@ Bandwagon.Controller.BrowserOverlay.showNewAddonsAlert = function(collection)
     }
 }
 
+Bandwagon.Controller.BrowserOverlay.doFennecLogin = function()
+{
+    var promptService = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(Components.interfaces.nsIPromptService);
+    var bandwagonStrings = document.getElementById("bandwagon-strings");
+    var title = bandwagonStrings.getString("fennec.prompt.title");
+
+    var login = Bandwagon.Preferences.getPreference("login");
+    var password = Bandwagon.Preferences.getPreference("password");
+
+    var displayLoginError = function()
+    {
+        promptService.alert(null, title, bandwagonStrings.getString("fennec.login.error"));
+    }
+
+    if (!login || login == "" || !login.match(/.*\w.*/)
+        || !password || password == "" || !password.match(/.*\w.*/))
+    {
+        displayLoginError();
+        return;
+    }
+
+    var callback = function(event)
+    {
+        if (event.isError())
+        {
+            displayLoginError();
+        }
+        else
+        {
+            promptService.alert(null, title, bandwagonStrings.getString("fennec.login.ok"));
+            Bandwagon.Preferences.setPreference("password", "");
+        }
+    }
+
+    bandwagonService.authenticate2(login, password, callback);
+
+}
+
 window.addEventListener("load", Bandwagon.Controller.BrowserOverlay.initBandwagon, true);
 

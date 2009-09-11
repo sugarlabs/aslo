@@ -624,6 +624,15 @@ BandwagonService.prototype = {
         this._service.authenticate(login, password, internalCallback);
     },
 
+    authenticate2: function(login, password, callback)
+    {
+        Bandwagon.Logger.debug("in authenticate2()");
+
+        Bandwagon.Preferences.setPreference(Bandwagon.PREF_AUTH_TOKEN, "");
+
+        this._service.authenticate(login, password, callback);
+    },
+
     deauthenticate: function(callback)
     {
         Bandwagon.Preferences.setPreference(Bandwagon.PREF_AUTH_TOKEN, "");
