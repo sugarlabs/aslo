@@ -118,6 +118,7 @@
         if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
             echo '<div class="graybox rounded spaced field">';
             echo '<h4>'.___('Compatible Applications').'</h4>';
+            echo (!empty($errors['compat_apps']) ? '<div class="error-message">'.$errors['compat_apps'].'</div>' : '');
             echo '<p>'.sprintf(___('Adjusting application information here will allow users to install your add-on even if the install.rdf in the package indicates that the add-on is incompatible. <a %s>List of supported applications</a>'), 'href="'.$html->url('/pages/appversions').'"').'</p>';
 
             echo '<table id="edit-versions-targetapps-table" class="pretty-table"><tbody>';

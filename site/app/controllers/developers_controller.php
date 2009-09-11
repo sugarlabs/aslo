@@ -1392,6 +1392,8 @@ class DevelopersController extends AppController
 
         // Save data if POST data
         if (!empty($this->data['Version']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
+            $errors = array();
+
             // Save translated fields (only releasenotes)
             list($localizedFields, $unlocalizedFields) = $this->Version->splitLocalizedFields($this->data['Version']);
             $this->Version->saveTranslations($version_id, $this->params['form']['data']['Version'], $localizedFields);
@@ -1404,7 +1406,17 @@ class DevelopersController extends AppController
 
             // Save target apps
             if (!empty($this->data['Application'])) {
+
+                // There must be at least one compatible app
+                $atLeastOne = false;
                 foreach ($this->data['Application'] as $application_id => $app) {
+                    if (empty($app['delete'])) {
+                        $atLeastOne = true;
+                    }
+                }
+
+                if ($atLeastOne) {
+                    foreach ($this->data['Application'] as $application_id => $app) {
                     if (!empty($app['delete'])) {
                         // Remove the app
                         $this->Version->removeCompatibleApp($version_id, $application_id);
@@ -1419,6 +1431,9 @@ class DevelopersController extends AppController
                         $this->Version->updateCompatibility($version_id, $application_id, $app['min'], $app['max']);
                     }
                 }
+                } else {
+                    $errors['compat_apps'] = ___('There must be at least one compatible application.');
+            }
             }
 
             // Save file fields (only platform and deletion)
@@ -1455,7 +1470,8 @@ class DevelopersController extends AppController
             // flush cached add-on objects
             if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 
-            $this->publish('success', true);
+            $this->publish('errors', $errors);
+            $this->publish('success', empty($errors));
         }
 
         // Get all version info
