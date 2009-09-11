@@ -40,8 +40,9 @@
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
 <div id="reference" class="primary" role="main">
-    <?=$this->renderElement('amo2009/breadcrumbs', array('breadcrumbs' =>
-        array(___('Add-on Developer Hub') => '/developers')))?>
+    <?=$this->renderElement('amo2009/breadcrumbs', array('breadcrumbs' => array(
+              sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+              ___('Developer Hub') => '/developers')))?>
 
     <h2><?= ___('API &amp; Language References') ?></h2>
 

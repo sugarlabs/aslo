@@ -139,6 +139,7 @@
         $Route->connect("/{$prefix}/developers/docs/case-studies/", array('controller' => 'developers', 'action' => 'case_studies_list'));
         $Route->connect("/{$prefix}/developers/docs/case-studies/*", array('controller' => 'developers', 'action' => 'case_studies_detail'));
         $Route->connect("/{$prefix}/developers/search/", array('controller' => 'developers', 'action' => 'search'));
+        $Route->connect("/{$prefix}/developers/community/newsletter/", array('controller' => 'developers', 'action' => 'newsletter'));
 
 		// Tag page
 		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));
