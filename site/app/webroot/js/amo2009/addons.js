@@ -1471,7 +1471,7 @@ var collections_add = {
         $('#selectedaddons').children('ul:first').append(
             '<li>'+
             '<input type="checkbox" name="addons[]" value="'+data.id+'" id="'+newid+'" checked="true"/>'+
-            '<label for="'+newid+'"><img src="'+data.iconpath+'"/>&nbsp;'+data.html_name+'</label><li>'
+            '<label for="'+newid+'"><img src="'+data.iconpath+'"/>&nbsp;'+data.html_name+'</label></li>'
         );
         $('#selectedaddons').show();
         return true;
