@@ -51,6 +51,7 @@ const DirectoryService = Cc["@mozilla.org/file/directory_service;1"];
 const ObserverService = Cc["@mozilla.org/observer-service;1"];
 const CookieManager = Cc["@mozilla.org/cookiemanager;1"];
 const LoginManager = Cc["@mozilla.org/login-manager;1"];
+const UpdateItem = Cc["@mozilla.org/updates/item;1"];
 
 const nsIWindowMediator = Ci.nsIWindowMediator;
 const nsITimer = Ci.nsITimer;
@@ -61,6 +62,7 @@ const nsIFile = Ci.nsIFile;
 const nsIObserverService = Ci.nsIObserverService;
 const nsICookieManager = Ci.nsICookieManager;
 const nsILoginManager = Ci.nsILoginManager;
+const nsIUpdateItem = Ci.nsIUpdateItem;
 
 var Bandwagon;
 var bandwagonService;
@@ -279,10 +281,19 @@ BandwagonService.prototype = {
     {
         Bandwagon.Logger.debug("in autoinstallExtensions()");
 
+        if (!Bandwagon.Preferences.getGlobalPreference("xpinstall.enabled", true))
+        {
+            Bandwagon.Logger.warn("Can't auto install extensions because xp installs are disabled");
+            return;
+        }
+
         var localAutoInstaller = bandwagonService.getLocalAutoInstaller();
 
         if (localAutoInstaller == null)
+        {
+            Bandwagon.Logger.debug("No auto installer collection found");
             return;
+        }
 
         var installedExtensions = Bandwagon.Util.getInstalledExtensions();
 
@@ -294,12 +305,30 @@ BandwagonService.prototype = {
             {
                 if (installedExtensions[i].id == addon.guid)
                 {
-                    //Bandwagon.Logger.debug("autoinstallExtensions: addon '" + addon.name + "' is already installed");
+                    Bandwagon.Logger.debug("autoinstallExtensions: addon '" + addon.name + "' is already installed");
                     break addons;
                 }
             }
 
-            Bandwagon.Logger.info("XXX TODO. autoinstallExtensions: addon '" + addon.name + "' to be installed.");
+            var installer = addon.getInstaller(Bandwagon.Util.getHostEnvironmentInfo().os);
+
+            if (!installer)
+            {
+                Bandwagon.Logger.warn("Can't auto install '" + addon.name + "' because it is not compatible with " + Bandwagon.Util.getHostEnvironmentInfo().os);
+                break;
+            }
+
+            // TODO accept eula here
+
+            var params = [];
+            params[addon.name] = installer;
+
+            var callback = function(url, status)
+            {
+                Bandwagon.Logger.info("Finished installing '" + url + "'; status = " + status);
+            }
+
+            Bandwagon.Util.getMainWindow().InstallTrigger.install(params, callback);
         }
     },
 

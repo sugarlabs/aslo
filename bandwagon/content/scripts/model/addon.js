@@ -96,6 +96,16 @@ Bandwagon.Model.Addon.prototype.isSearchProvider = function()
     return (this.type2 == "Search Engine");
 }
 
+Bandwagon.Model.Addon.prototype.isExtension = function()
+{
+    return (this.type == 1);
+}
+
+Bandwagon.Model.Addon.prototype.isTheme = function()
+{
+    return (this.type == 2);
+}
+
 Bandwagon.Model.Addon.prototype.canInstall = function(env)
 {
     // check is the extension already installed
