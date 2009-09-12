@@ -1427,6 +1427,15 @@ CREATE TABLE `hubpromos` (
   CONSTRAINT `hubpromos_ibfk_2` FOREIGN KEY (`body`) REFERENCES `translations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- Cache for blog posts
+DROP TABLE IF EXISTS `blogposts`;
+CREATE TABLE `blogposts` (
+    `title` varchar(255) NOT NULL default '',
+    `date_posted` datetime NOT NULL default '0000-00-00 00:00:00',
+    `permalink` text NOT NULL default ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 -- 
 -- Validation tables
