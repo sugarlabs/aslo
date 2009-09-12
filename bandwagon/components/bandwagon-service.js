@@ -297,17 +297,24 @@ BandwagonService.prototype = {
 
         var installedExtensions = Bandwagon.Util.getInstalledExtensions();
 
-        addons: for (var id in localAutoInstaller.addons)
+        var doAutoInstall = function(addon)
         {
-            var addon = localAutoInstaller.addons[id];
-
             for (var i=0; i<installedExtensions.length; i++)
             {
                 if (installedExtensions[i].id == addon.guid)
                 {
                     Bandwagon.Logger.debug("autoinstallExtensions: addon '" + addon.name + "' is already installed");
-                    break addons;
+                    return;
                 }
+            }
+
+            var canInstall = addon.canInstall(Bandwagon.Util.getHostEnvironmentInfo());
+
+            if (canInstall.type != Bandwagon.Model.Addon.INSTALL_YES && canInstall.type != Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL)
+            {
+                Bandwagon.Logger.warn("Can't auto install '" + addon.name + "' because it is not compatible with this application or os.");
+                // TODO better warning here
+                return;
             }
 
             var installer = addon.getInstaller(Bandwagon.Util.getHostEnvironmentInfo().os);
@@ -315,7 +322,7 @@ BandwagonService.prototype = {
             if (!installer)
             {
                 Bandwagon.Logger.warn("Can't auto install '" + addon.name + "' because it is not compatible with " + Bandwagon.Util.getHostEnvironmentInfo().os);
-                break;
+                return;
             }
 
             // TODO accept eula here
@@ -323,13 +330,39 @@ BandwagonService.prototype = {
             var params = [];
             params[addon.name] = installer;
 
-            var callback = function(url, status)
+            var internalCallback = function(url, status)
             {
                 Bandwagon.Logger.info("Finished installing '" + url + "'; status = " + status);
+                callback();
             }
 
-            Bandwagon.Util.getMainWindow().InstallTrigger.install(params, callback);
+            Bandwagon.Logger.info("About to auto install the add-on '" + addon.name + "'");
+            //Bandwagon.Logger.info(params[addon.name].URL);
+            //Bandwagon.Logger.info(params[addon.name].Hash);
+            //Bandwagon.Logger.info(params[addon.name].IconURL);
+
+            Bandwagon.Util.getMainWindow().InstallTrigger.install(params, internalCallback);
         }
+
+        var addons = [];
+
+        for (var id in localAutoInstaller.addons)
+        {
+            var addon = localAutoInstaller.addons[id];
+            addons.push(addon);
+        }
+
+        var callback = function()
+        { 
+            var addon = addons.pop();
+
+            if (addon)
+            {
+                doAutoInstall(addon, callback);
+            }
+        };
+
+        callback();
     },
 
     getLocalAutoPublisher: function()
