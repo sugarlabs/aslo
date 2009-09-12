@@ -434,6 +434,7 @@ DROP TABLE IF EXISTS `download_counts`;
 CREATE TABLE `download_counts` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `addon_id` int(10) unsigned NOT NULL default '0',
+  `src` text default null,
   `count` int(10) unsigned NOT NULL default '0',
   `date` date NOT NULL default '0000-00-00',
   PRIMARY KEY  (`id`),
