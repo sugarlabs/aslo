@@ -640,5 +640,54 @@ class AddonsHtmlHelper extends HtmlHelper
         }
         return '<ul class="radio">'.join('', $out).'</ul>';
     }
+    
+    /**
+     * Print a nice, formatted 'Posted yesterday/days/weeks/months ago' for a time
+     * @param $time a UNIX timestamp in the past
+     */
+    function postedTimeAgo($time) {
+        $now = time();
+        $diff = $now - $time;
+        $year = 365 * 24 * 60 * 60;
+        $month = 28 * 24 * 60 * 60;
+        $week = 7 * 24 * 60 * 60;
+        $day = 24 * 60 * 60; 
+        
+        
+        //if diff is less than 365 days
+        if($diff < $year) {
+            if($diff < $month) {
+                if(strftime('%e', $time) == strftime('%e', $now)) {
+                    return strftime(___('Posted today @ %l:%M %p'), $time);
+                } elseif($diff < $day) {
+                    return  strftime(___('Posted yesterday @ %l:%M %p'), $time);
+                } elseif($diff < $week) {
+                    $days = (int)$diff/$day;
+                    return sprintf(___("Posted %d days ago"), $days);
+                } elseif(floor($diff/$week) > 1) {
+                    $weeks = floor($diff / $week);    
+                    return sprintf(___("Posted %d weeks ago"), $weeks);
+                } else {
+                    return ___("Posted last week");
+                }
+            } else {
+                $months = floor($diff/$month);
+                return sprintf(n___("Posted a month ago", "Posted %d months ago", 
+                    $months), $months);
+            }
+        } else {
+            $years = floor($diff/$year);
+            return sprintf(n___("Posted a year ago", "Posted %d years ago",
+                $years), $years);
+        }
+
+        
+        
+        
+        
+       
+        return 'today';
+    }
+
 }
 ?>

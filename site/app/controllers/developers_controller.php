@@ -61,7 +61,8 @@ function getitem($object, $name, $default=null) {
 class DevelopersController extends AppController
 {
     var $name = 'Developers';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category',
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval',
+        'Appversion', 'BlacklistedGuid', 'BlogPost', 'Category',
         'EditorSubscription', 'Eventlog', 'File', 'HubPromo', 'License', 'Platform', 'Preview',
         'Review', 'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error', 'Hub',
@@ -133,6 +134,8 @@ class DevelopersController extends AppController
         $session = $this->Session->read('User');
         $all_addons = (empty($session) ? array() : $this->Addon->getAddonsByUser($session['id']));
         $is_developer = !empty($all_addons);
+        $blog_posts = $this->BlogPost->findAll(NULL, NULL,
+            "BlogPost.date_posted DESC");
 
         if ($is_developer) {
             $promos = $this->HubPromo->getDeveloperPromos();
@@ -140,6 +143,7 @@ class DevelopersController extends AppController
             $promos = $this->HubPromo->getVisitorPromos();
         }
 
+        $this->set('blog_posts', $blog_posts);
         $this->set('promos', $promos);
         $this->set('bodyclass', 'inverse');
         $this->render('hub');

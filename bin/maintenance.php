@@ -789,6 +789,37 @@ switch ($action) {
         $affected_rows = mysql_affected_rows();
     break;
 
+    case 'blog':
+        debug("Starting blog post cache update");
+        $feedURL = 'http://blog.mozilla.com/addons/category/developers/feed/';
+        $blogXML = simplexml_load_file($feedURL);
+
+        //Some basic error checking 
+        if(!$blogXML) {
+            debug('Could not fetch blog feed');
+            exit;
+        }
+
+        if(count($blogXML->channel->item) < 5) {
+            debug('Blog feed did not have minimum 5 posts, feed may be broken');
+            exit;
+        }
+        
+        $db->write('DELETE FROM blogposts');
+
+        for($i=0; $i<=4; $i++) {
+            $title = mysql_real_escape_string($blogXML->channel->item[$i]->title);
+            $date = strftime("%Y-%m-%d %H:%M:%S",
+                strtotime($blogXML->channel->item[$i]->pubDate));
+            $permalink = mysql_real_escape_string($blogXML->channel->item[$i]->link);
+            $db->write('INSERT INTO `blogposts` (`title`, `date_posted`,
+            `permalink`) VALUES ("'.$title.'", "'.$date.'", "'.$permalink.'")');
+        }
+        
+        $affected_rows = 5;
+    break;
+
+
     /**
      * Unknown command.
      */

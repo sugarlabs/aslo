@@ -40,8 +40,23 @@
 
 <div id="devhub" class="primary" role="main">
     <?=$this->renderElement('amo2009/breadcrumbs', array())?>
-    <h2>Headline</h2>
-    <p>(content)</p>
+    <div class="featured">
+        <div class="featured-inner hub-intro">
+            <div class="hub-intro-wrapper">
+                <h2><?php echo ___('<span>Are You Ready to</span> Make Browsing Better?')?>
+                </h2>
+                <p>
+                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus gravida pellentesque posuere. Aliquam erat volutpat. Aenean ante risus, porttitor eu lacinia blandit, euismod eget odio. Sed leo nibh, egestas in eleifend facilisis, viverra eu lorem. Maecenas ultricies placerat nisl id pretium. 
+                </p>
+                <p>
+                    <a href="<?php echo
+                    $html->url('/developers/docs/gettingstarted');?>" class="button positive significant">
+                    <?php echo ___('Start Making Add-ons');?></a>
+                </p>
+            </div>
+        </div>
+    </div> 
+    <?php echo  $this->renderElement('amo2009/hub/directory_info');?>
 </div>
 
 <div class="secondary" role="complementary">
@@ -51,5 +66,45 @@
                 'body'    => $promo['Translation']['body']['string'])) ?>
     <?php endforeach ?>
 
-    (sidebars)
+    <?php if(count($blog_posts) > 0) { ?>
+    <div class="highlight hub-blog">
+        <h3>
+            <a href="http://blog.mozilla.com/addons/category/developers/">
+                <?php echo ___('Developer Blog');?>
+            </a>
+        </h3>
+        <dl>
+            <?php foreach($blog_posts as $post) { ?>
+                <dt>
+                    <a href="<?php echo $post['BlogPost']['permalink']?>">
+                        <?php echo $post['BlogPost']['title'];?>
+                    </a>
+                </dt>
+                <dd>
+                    <?php echo $html->postedTimeAgo(strtotime($post['BlogPost']['date_posted']));?>
+                </dd>
+            <?php } ?>
+        </dl>
+    </div>
+    <?php } ?>
+    <div class="highlight hub-calendar">
+        <h3><?php echo ___('Upcoming Events');?></h3>
+        <dl>
+            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
+            <dd class="date">Jul 17</dd>
+            <dd class="location">Mountain View, CA</dd>
+            
+            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
+            <dd class="date">Jul 17</dd>
+            <dd class="location">Mountain View, CA</dd>
+            
+            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
+            <dd class="date">Jul 17</dd>
+            <dd class="location">Mountain View, CA</dd>
+          
+            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
+            <dd class="date">Jul 17</dd>
+            <dd class="location">Mountain View, CA</dd>
+        </dl>
+    </div>
 </div>
