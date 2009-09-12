@@ -1,56 +1,62 @@
-=== Testing Methods  ===
 
-Add-ons are reviewed by the AMO Editors, a group of talented developers that volunteer to help the Mozilla project by reviewing add-ons to ensure a stable and safe experience for Mozilla users. 
 
-All add-on submissions must be reviewed by an editor. In order to do this, an editor will review your add-on via an online code viewer that will expand the contents of our xpi file and allow the editor to view your source code. During the review, the editor will look for common issues including:
+<h3>Sandbox Review System</h3>
+<h4>New Add-ons</h4>
+<p>Add-ons submitted to the site are not reviewed by default and are instead marked as experimental, requiring the user to indicate their understanding of the risks involved either through a checkbox or logging into their account. After an experimental add-on is installed, no updates will be sent to the user until the add-on is reviewed and public.</p>
 
-* Javascript namespace pollution
-* Remote JavaScript execution or injection
-* Remote XUL injection
-* Obfuscated code
-* Binary components or executables
-* Inclusion of 3rd party software
-* Known [http://en.wikipedia.org/wiki/Spyware spyware] or [http://en.wikipedia.org/wiki/Malware malware]
-* Errors generated in the Firefox Error Console
-* Memory leaks
-* Possible conflicts with other add-ons
+<p>Experimental add-ons can request that their add-on be reviewed by an Editor by nominating their add-on for public status through the Developer Tools provided. The add-on will then go into a queue of other nominated add-ons, awaiting review based on the criteria listed below and in the <a href="%1$s">Add-on Submission</a> policy.</p>
 
-In addition, editors will check for add-ons which are not allowed on AMO. These include:
-* [http://www.conduit.com/ Conduit]-based toolbars
-* Add-ons that embed known [http://en.wikipedia.org/wiki/Spyware spyware] or [http://en.wikipedia.org/wiki/Malware malware]
-* Illegal and criminal add-ons - e.g. [http://en.wikipedia.org/wiki/Clickfraud click fraud] generators, [http://en.wikipedia.org/wiki/Warez warez] download and directory assistants, [http://en.wikipedia.org/wiki/Child_pornography child pornography] finders, etc..
-* Add-ons that include porn spam or seem to be developed purely as a vector to inject advertisements for porn, warez, etc...
-* Add-ons that explicitly violate terms of service for websites, e.g. spam generators, flooding messages, denial of service attacks, extreme server load generators, etc.
-* Add-ons that upon installation into Firefox, auto-install or launch installers of non-Firefox software. To clarify, if the add-on simply adds a menu item to launch the external software that's fine but should be sandboxed not disabled (unless it provides added functionality).
+<h4>Testing Methods & Common Issues</h4>
+<p>Add-ons are reviewed by the AMO Editors, a group of talented developers that volunteer to help the Mozilla project by reviewing add-ons to ensure a stable and safe experience for users.</p>
 
-All add-ons are tested in a virtual machine to allow the editor to install the add-on and test the user experience without damaging their testing systems.
+<p>All add-on submissions that wish to be public must be reviewed by an Editor. As part of this process, an Editor will review your add-on's source code and any changes that have been made since the last version, if applicable. During the review, the Editor will look for common issues, including:</p>
 
-It is recommended that if your add-on is site specific, that you provide a test account for use during the review process. In addition, including detailed testing instructions will allow an editor to better understand how your add-on functions and expedite the testing process.
+<ul>
+    <li>JavaScript namespace pollution</li>
+    <li>remote JavaScript execution or injection</li>
+    <li>obfuscated code</li>
+    <li>binary components or executables</li>
+    <li>inclusion of third-party software</li>
+    <li>errors generated in the Error Console</li>
+    <li>memory leaks</li>
+    <li>possible conflicts with other add-ons</li>
+</ul>
 
-=== The Sandbox Review System  ===
+<p>For information on how to avoid these problems, please see our <a href="%2$s">How-to Library</a>. Some of these practices are allowed under certain conditions outlined below.</p>
 
-When you submit a new add-on or an update to an existing add-on, the submission  needs to be properly reviewed by an editor based on an extensive set of criteria. The sandbox is an area for advanced users to test these add-on submissions before they are reviewed for general use. A sandboxed add-on is labeled as "experimental" to users who are looking at the un-reviewed version to ensure that they're aware that the add-on has not been tested by an AMO editor.
+<h4>Prohibited Add-ons</h4>
+<p>Editors will also check for add-ons which are not allowed on this site, even in experimental form. These include:</p>
 
-Caution should be used when installing sandboxed add-ons, as they have not been tested by an editor and may harm your computer.
+<ul>
+    <li>Conduit-based toolbars without explicit pre-approval</li>
+    <li>Add-ons that embed known <a href="http://en.wikipedia.org/wiki/Spyware">spyware</a> or <a href="http://en.wikipedia.org/wiki/Malware">malware</a></li>
+    <li>Illegal and criminal add-ons, such as <a href="http://en.wikipedia.org/wiki/Click_fraud">click fraud</a> generators, <a href="http://en.wikipedia.org/wiki/Warez">warez</a> download and directory assistants, child pornography finders, etc.</li>
+    <li>Add-ons that include pornographic material or seem to be developed purely as a vector to inject advertisements for pornography, warez, etc.</li>
+    <li>Add-ons that clearly violate terms of service for websites, e.g. spam generators, flooding messages, denial of service attacks, extreme server load generators, etc.</li>
+    <li>Add-ons that, upon installation, auto-install or launch installers of non-Firefox software</li>
+</ul>
 
-=== Submission Approval and Denial  ===
+<p>All add-ons are tested in a virtual machine to allow the editor to install the add-on and test the user experience without damaging their systems. Many of the above restrictions are tested automatically by an extension scanner that will flag suspicious add-ons for Editor review.</p>
 
-When an editor has reviewed your add-on, they will make the determination of whether to set your add-on to “Public Status” or to retain it in a review mode. 
+<p>If your add-on is site specific, it is recommended that you provide a test account for use during the review process. In addition, including detailed testing instructions will allow an editor to better understand how your add-on functions and expedite the testing process.</p>
 
-Once approved, your add-on will become visible on AMO within 1 to 3 hours. This is due to the caching mechanism employed on the website. 
+<h4>Binary Components & Obfuscated Code</h4>
+<p>Add-ons may contain binary or obfuscated source code, but Mozilla must be allowed to review a copy of the human-readable source code of each version submitted for review.</p>
 
-If your add-on is denied, you will receive an email from the editor explaining the reason(s) for the denial and how to resolve any issues. 
+<p>If your add-on contains binary or obfuscated source code, you will receive a message from an Editor when they review your add-on indicating whom you should contact at Mozilla to coordinate the review of the source code. Once Mozilla has received and reviewed your source code, approval will be given to an Editor to review the non-binary aspects of your add-on to determine if it's ready for public status.</p>
 
-=== Binary Components or Obfuscated Code  ===
+<h3>After the Review</h3>
+<p>After an Editor has reviewed your add-on, a decision will be made about your add-on's acceptance into public, non-experimental status. There are several possible outcomes of this review:</p>
 
-Add-ons may contain binary or obfuscated source code but Mozilla must be allowed to receive and review a copy of the source code for the most recent add-on version submitted for approval. Also note that any updates will also require source code to be sent and a complete review conducted of the add-on.
+<p><strong>The add-on can be pushed public.</strong> If your add-on met all of the criteria and the Editor feels it's ready for primetime, the add-on may be made public and users will be able to download the add-on without restrictions and receive updates after installation. You will receive an email informing you of this status change. Only the latest version of your add-on will be pushed public; older versions that were not reviewed will remain in the sandbox. New versions to public add-ons still require Editor review, as described below.</p>
 
-If your add-on contains binary or obfuscated source code, you will receive a message from an editor when they review your add-on, indicating whom you should contact at Mozilla to coordinate the review of the source code. Once Mozilla has received and reviewed your source code, approval will be given to an editor to review the non-binary aspects of your add-on to determine if it's ready for public status.
+<p><strong>The add-on can be retained in the sandbox.</strong> If there were some problems with your add-on, it will be held in the sandbox and you will receive an email with the Editor's comments. After addressing these concerns, you may re-nominate your add-on for review. Editors will check to see if their previous requests were addressed, so re-nominating your add-on without changes will likely hurt your add-on's chances of being public.</p>
 
-Please note that any future updates to your add-on will require you to resubmit your binary code for review as well.
+<p><strong>The Editor may request additional information from you.</strong> If the Editor needs additional information about your add-on in order to process the review, he or she will request information from the developers, which will send an email with information on how to respond with the requested details.</p>
 
-=== What happens if my add-on is denied?  ===
+<p><strong>The add-on may be escalated for super-review.</strong> If your add-on has potential copyright/trademark violations, has binary or obfuscated components, or has other issues that need special attention, the Editor may request that a Senior Editor or Administrator look into their concerns. This does not alter the status or position in the queue of your add-on, but the action the super-reviewer takes likely will.</p>
 
-If your add-on is denied, you will receive an email from the editor explaining the reason(s) for the denial and how to resolve any issues. After you have resolved the issues mentioned, you can then resubmit an updated version of your add-on for review. 
+<p>If you have any questions about your add-on's review, you may <a href="%3$s">contact the Editors</a>. For best results, please include the site email you're responding to in your message, or at least information about your add-on.</p>
 
-Should you have any questions for the reviewing editor, you can email the team at [mailto:amo-editors@mozilla.org amo-editors@mozilla.org].
+<h4>Updates to Public Add-ons</h4>
+<p>New versions of public add-ons are kept in the sandbox but automatically added to a queue for Editor review. An Editor will review your new version, focusing on the changes made since the last version. The potential outcomes of the review are the same as for new add-ons listed above.</p>
