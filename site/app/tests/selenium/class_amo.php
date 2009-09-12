@@ -1,5 +1,6 @@
 <?php
 require_once '/usr/local/PEAR/PHPUnit/Framework.php';
+require_once '/usr/local/PEAR/PEAR/Exception.php';
 require_once 'configurationAMO.php';
 
     class AMOfunctions
@@ -13,9 +14,15 @@ require_once 'configurationAMO.php';
     	
     	public function login($userType,$selenium)
     	{
-    		$user;
+    		  $user;
     		  $user = $this->configAMO->getUserInfo($userType); 
     		  $selenium->open('/en-US/firefox/users/login');
+    		  if($selenium->isElementPresent('link=Log out'))
+    		    {
+    		  	$selenium->click('link=Log out');
+    		  	$selenium->waitForPageToLoad($this->configAMO->getDefaultWaitTime());
+    		  	$selenium->open('/en-US/firefox/users/login');
+    		    }
     		  $selenium->type("LoginEmail", $user['login']);
 			  $selenium->type("LoginPassword", $user['pwd']);
 			  $selenium->click("class=prominent");
@@ -26,6 +33,18 @@ require_once 'configurationAMO.php';
 			     exit("User ".$user['nick']." ".$user['fname']." unable to log in\n");
     		
     	} // end of function login
+    	
+    	public function logout($userType,$selenium)
+    	{
+    		$user;
+    		$user = $this->configAMO->getUserInfo($userType); 
+    		$selenium->click('link=Log out');
+    		$selenium->waitForPageToLoad($this->configAMO->getDefaultWaitTime());
+    		if($selenium->isElementPresent('link=Log in'))
+    		   echo "User ".$user['nick']." logged out successfully\n";
+    		else
+    		   echo "User ".$user['nick']." unable to log out\n";
+    	}
     	
     	public function goToAddon($addOnType,$addOnName,$selenium)
     	{
