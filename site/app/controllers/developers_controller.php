@@ -62,18 +62,14 @@ class DevelopersController extends AppController
 {
     var $name = 'Developers';
     var $uses = array('Addon', 'Addontype', 'Application', 'Approval',
-        'Appversion', 'BlacklistedGuid', 'BlogPost', 'Category',
-        'EditorSubscription', 'Eventlog', 'File', 'HubPromo', 'License', 'Platform', 'Preview',
+        'Appversion', 'BlacklistedGuid', 'Category',
+        'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview',
         'Review', 'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
-    var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error', 'Hub',
+    var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error',
         'Image', 'Opensearch', 'Paypal', 'Rdf', 'Src', 'Validation', 'Versioncompare');
 
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Link', 'Listing', 'Localization', 'Form');
     var $addVars = array(); //variables accessible to all additem steps
-    var $aclExceptions = array('howto_list', 'howto_detail',
-                               'policy_list', 'api_reference',
-                               'policy_detail', 'search',
-                               'newsletter');
 
 
    /**
@@ -87,10 +83,7 @@ class DevelopersController extends AppController
         // beforeFilter() is apparently called before components are initialized. Cake++
         $this->Amo->startup($this);
 
-        // @REMOVE Temporary fix for making parts of developer hub public
-        if (!in_array($this->action, $this->aclExceptions)) {
-            $this->Amo->checkLoggedIn();
-        }
+        $this->Amo->checkLoggedIn();
 
         // Clean post data
         $this->Amo->clean($this->data);
@@ -111,42 +104,12 @@ class DevelopersController extends AppController
             $this->$_model->caching = false;
         }
 
-        // @REMOVE Temporary fix for making parts of developer hub public
         $session = $this->Session->read('User');
-        if (!empty($session['id'])) {
-            // Default "My Add-ons" sidebar data
-            $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
-        }
-        else
-            $this->publish('all_addons', array());
+        // Default "My Add-ons" sidebar data
+        $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
 
         // Include the dev_agreement column on developer pages.
         array_push($this->Addon->default_fields, 'dev_agreement');
-    }
-
-    /**
-    * Developer Hub
-    */
-    function hub() {
-        // The Hub recognizes two audiences:
-        //   developers => anyone logged in and who has 1 or more add-ons
-        //   visitors => everyone else (logged in or not)
-        $session = $this->Session->read('User');
-        $all_addons = (empty($session) ? array() : $this->Addon->getAddonsByUser($session['id']));
-        $is_developer = !empty($all_addons);
-        $blog_posts = $this->BlogPost->findAll(NULL, NULL,
-            "BlogPost.date_posted DESC");
-
-        if ($is_developer) {
-            $promos = $this->HubPromo->getDeveloperPromos();
-        } else {
-            $promos = $this->HubPromo->getVisitorPromos();
-        }
-
-        $this->set('blog_posts', $blog_posts);
-        $this->set('promos', $promos);
-        $this->set('bodyclass', 'inverse');
-        $this->render('hub');
     }
 
     /**

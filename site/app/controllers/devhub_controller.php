@@ -3,9 +3,9 @@
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
-    var $uses = array('Addon', 'User');
+    var $uses = array('Addon', 'BlogPost', 'HubPromo', 'User');
     var $components = array('Hub');
-    var $helpers = array('Html', 'Localization');
+    var $helpers = array('Html', 'Link', 'Localization');
 
     function beforeFilter() {
         /* These are public pages. */
@@ -26,6 +26,31 @@ class DevHubController extends AppController {
         } else {
             $this->publish('all_addons', array());
         }
+    }
+    
+    /**
+     * Developer Hub
+     */
+    function hub() {
+        // The Hub recognizes two audiences:
+        //   developers => anyone logged in and who has 1 or more add-ons
+        //   visitors => everyone else (logged in or not)
+        $session = $this->Session->read('User');
+        $all_addons = (empty($session) ? array() : $this->Addon->getAddonsByUser($session['id']));
+        $is_developer = !empty($all_addons);
+        $blog_posts = $this->BlogPost->findAll(NULL, NULL,
+            "BlogPost.date_posted DESC");
+
+        if ($is_developer) {
+            $promos = $this->HubPromo->getDeveloperPromos();
+        } else {
+            $promos = $this->HubPromo->getVisitorPromos();
+        }
+
+        $this->set('blog_posts', $blog_posts);
+        $this->set('promos', $promos);
+        $this->set('bodyclass', 'inverse');
+        $this->render('hub');
     }
 
     function howto_list() {
