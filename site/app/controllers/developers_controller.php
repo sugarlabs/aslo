@@ -86,12 +86,12 @@ class DevelopersController extends AppController
 
         // beforeFilter() is apparently called before components are initialized. Cake++
         $this->Amo->startup($this);
-        
+
         // @REMOVE Temporary fix for making parts of developer hub public
         if (!in_array($this->action, $this->aclExceptions)) {
             $this->Amo->checkLoggedIn();
         }
-    
+
         // Clean post data
         $this->Amo->clean($this->data);
 
@@ -119,7 +119,7 @@ class DevelopersController extends AppController
         }
         else
             $this->publish('all_addons', array());
-        
+
         // Include the dev_agreement column on developer pages.
         array_push($this->Addon->default_fields, 'dev_agreement');
     }
@@ -2062,150 +2062,5 @@ class DevelopersController extends AppController
         $this->render('contrib_example');
     }
 
-    function howto_list() {
-        $this->layout = 'amo2009';
-        $this->pageTitle = ___('How-to Library').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers'
-            ));
-
-        $this->publish('categories', $this->Hub->categories);
-
-        return $this->render('howto_list');
-    }
-
-    function howto_detail($page) {
-        if (!array_key_exists($page, $this->Hub->categories_slugs)) {
-            $this->flash(___('Page not found'), '/developers/docs/how-to');
-        }
-
-        $category = $this->Hub->categories_slugs[$page];
-
-        $this->pageTitle = $category->title.' :: '.___('How-to Library').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers',
-            ___('How-to Library') => '/developers/docs/how-to/',
-            ));
-
-        $this->publish('category', $category);
-        $this->publish('categories', $this->Hub->categories);
-
-        return $this->render('howto_detail');
-    }
-
-    function policy_list() {
-        $this->layout = 'amo2009';
-        $this->pageTitle = ___('Add-on Policies').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers'
-            ));
-
-        $this->publish('policies', $this->Hub->policies);
-
-        $this->render('policy_list');
-    }
-
-    function policy_detail($policy) {
-        if (!array_key_exists($policy, $this->Hub->policies_slugs)) {
-            $this->redirect('/developers/docs/policies', null, true, false);
-            return;
-        } else {
-            $policy = $this->Hub->policies_slugs[$policy];
-        }
-
-        $this->publish('policy', $policy);
-        $this->publish('policies', $this->Hub->policies);
-
-        $this->pageTitle = implode(' :: ', array($policy->title, ___('Add-on Policies'),
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME), ___('Developer Hub')));
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers',
-            ___('Add-on Policies') => '/developers/docs/policies'
-            ));
-
-        $this->render('policy_detail');
-    }
-
-    /**
-     * API & Language Reference
-     */
-    function api_reference() {
-        $this->pageTitle = ___('API & Language Reference').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-        $this->set('bodyclass', 'docs_reference inverse');
-        $this->render('api_reference');
-    }
-
-    /**
-     * Case Studies
-     */
-    function case_studies_list() {
-        $this->layout = 'amo2009';
-        $this->pageTitle = ___('Case Studies').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers/'
-            ));
-
-        foreach ($this->Hub->casestudies as &$study) {
-            $study->addon = $this->Addon->getAddon($study->addonid, array('authors'));
-        }
-        unset($study);
-        $this->publish('casestudies', $this->Hub->casestudies);
-
-        $this->render('case_studies_list');
-    }
-
-    /**
-     * Individual case studies
-     */
-    function case_studies_detail($study) {
-        if (!array_key_exists($study, $this->Hub->casestudies_slugs)) {
-            $this->redirect('/developers/docs/case-studies', null, true, false);
-            return;
-        } else {
-            $study = $this->Hub->casestudies_slugs[$study];
-            $study->addon = $this->Addon->getAddon($study->addonid, array('authors', 'default_fields'));
-        }
-        $this->pageTitle = ___('Case Studies').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers',
-            ___('Case Studies') => '/developers/docs/case-studies'
-            ));
-
-        $this->publish('casestudies', $this->Hub->casestudies);
-        $this->publish('study', $study);
-        $this->render('case_studies_detail');
-    }
-
-    /**
-     * Search results
-     */
-    function search() {
-        if (isset($_GET['q'])) $this->publish('query', $_GET['q']);
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers'
-            ));
-        $this->pageTitle = ___('Search Results').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-        $this->render('search');
-    }
-    
-    /**
-     * Newsletter
-     */
-    function newsletter() {
-        $this->pageTitle = ___('about:addons Newsletter').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
-        $this->publish('breadcrumbs', array(
-            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
-            ___('Developer Hub') => '/developers'
-            ));
-        $this->render('newsletter');
-    }
 }
 ?>

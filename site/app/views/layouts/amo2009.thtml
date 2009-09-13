@@ -197,7 +197,7 @@ if(!isset($fullPage)) {
 
     <div class="section">
         <?php
-        if ($this->controller->name  == 'Developers') {
+        if (in_array($this->controller->name, array('Developers', 'DevHub'))) {
             echo $this->renderElement('headers/page_header_devhub');
         } elseif ($fullPage) {
             echo $this->renderElement('headers/page_header_full');
