@@ -57,7 +57,7 @@ class DevelopersEditVersionTest extends WebTestHelper {
 
     function testDisplay() {
         // Title
-        $this->assertTitle('Developer Tools :: Firefox Add-ons', 'Title populated: %s');
+        $this->assertTitle('Developer Hub :: Firefox Add-ons', 'Title populated: %s');
 
         //Check fields
         $this->model->useLang = 'en-US';

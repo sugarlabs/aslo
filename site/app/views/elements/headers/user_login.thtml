@@ -53,7 +53,7 @@
 else:
     $tools_links = array();
     $user = $this->controller->Session->read('User');
-    $tools_links[] = $html->link(___('Developer Tools', 'sidebar_navlink_developer_tools'), '/developers');
+    $tools_links[] = $html->link(___('Developer Hub', 'sidebar_navlink_developer_tools'), '/developers');
     if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User')))
         $tools_links[] = $html->link(___('Editor Tools', 'sidebar_navlink_editor_tools'), '/editors');
     if ($this->controller->SimpleAcl->actionAllowed('Localizers', '%', $this->controller->Session->read('User')))

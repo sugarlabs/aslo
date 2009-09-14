@@ -146,7 +146,7 @@
     if ($this->controller->Session->check('User')) {
         $user = $this->controller->Session->read('User');
         echo '<li>' . $html->link(___('My Account'), '/users/edit', array('title' => $user['email'])) . '</li>' . "\n";
-        echo '<li>' . $html->link(___('Developer Tools', 'sidebar_navlink_developer_tools'), '/developers') . '</li>' . "\n";
+        echo '<li>' . $html->link(___('Developer Hub', 'sidebar_navlink_developer_tools'), '/developers') . '</li>' . "\n";
         if ($this->controller->SimpleAcl->actionAllowed('Editors', '%', $this->controller->Session->read('User'))) {
             echo '<li>' . $html->link(___('Editor Tools', 'sidebar_navlink_editor_tools'), '/editors') .'</li>' . "\n";
         }

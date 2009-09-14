@@ -64,7 +64,7 @@ class PreviewsController extends AppController
         $this->Amo->clean($this->data); 
 
         $this->layout = 'mozilla';
-        $this->pageTitle = ___('Developer Tools', 'devcp_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
+        $this->pageTitle = ___('Developer Hub', 'devcp_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
 		$this->cssAdd = array('developers');
         $this->publish('cssAdd', $this->cssAdd);
@@ -76,10 +76,10 @@ class PreviewsController extends AppController
                              ,'jquery-compressed.js');
         $this->publish('jsAdd', $this->jsAdd);
 
-        $this->breadcrumbs = array(___('Developer Tools', 'devcp_pagetitle') => '/developers/index');
+        $this->breadcrumbs = array(___('Developer Hub', 'devcp_pagetitle') => '/developers/index');
         $this->publish('breadcrumbs', $this->breadcrumbs);
         
-        $this->publish('subpagetitle', ___('Developer Tools', 'devcp_pagetitle'));
+        $this->publish('subpagetitle', ___('Developer Hub', 'devcp_pagetitle'));
 
         global $native_languages;
         $this->publish('nativeLanguages', $native_languages);

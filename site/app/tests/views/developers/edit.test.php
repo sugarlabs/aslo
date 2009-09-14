@@ -71,7 +71,7 @@ class DevelopersEditTest extends WebTestHelper {
 
     function testDisplay() {
         // Title
-        $this->assertTitle('Developer Tools :: Firefox Add-ons');
+        $this->assertTitle('Developer Hub :: Firefox Add-ons');
 
         //Check fields
         $this->assertWantedPattern('/\<option value="12" +selected="selected"\>Organizer\<\/option\>/', 'Category selected');

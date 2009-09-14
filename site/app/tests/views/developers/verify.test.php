@@ -61,7 +61,7 @@ class DevelopersValidateVersionTest extends WebTestHelper {
 
     function testDisplay() {
         // Title
-        $this->assertTitle('Developer Tools :: Add-ons for Firefox', 'Title populated: %s');
+        $this->assertTitle('Developer Hub :: Add-ons for Firefox', 'Title populated: %s');
 
         // Get some bad data
         $this->getAction('/developers/verify/' . $this->id . '/2');
