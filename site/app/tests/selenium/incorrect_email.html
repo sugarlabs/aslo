@@ -28,7 +28,33 @@
 	<td>/en-US/firefox</td>
 	<td></td>
 </tr>
+<!--Check if the tester is already logged in.If yes,then log out.-->
+<tr>
+	<td>storeElementPresent</td>
+	<td>link=Log in</td>
+	<td>value</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>Is the tester logged in: ${value}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${value}&quot;==&quot;true&quot;</td>
+	<td>target</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
 <!--Clicking "Log in" link to navigate to the Log in page-->
+<tr>
+	<td>label</td>
+	<td>target</td>
+	<td></td>
+</tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Log in</td>
@@ -71,21 +97,21 @@
 	<td>email is&nbsp;&nbsp;&quot;${email}&quot;</td>
 	<td></td>
 </tr>
+<!--Clicking the log in button-->
+<tr>
+	<td>clickAndWait</td>
+	<td>css=#login button[type=&quot;submit&quot;]</td>
+	<td></td>
+</tr>
 <tr>
 	<td>echo</td>
 	<td>when email is &quot;${email} &quot;,login fails</td>
 	<td></td>
 </tr>
-<!--Clicking the log in button-->
-<tr>
-	<td>clickAndWait</td>
-	<td>css=button[class=&quot;prominent&quot;][type=&quot;submit&quot;]</td>
-	<td></td>
-</tr>
 <!--Ensuring that there is an error message-->
 <tr>
 	<td>verifyTextPresent</td>
-	<td>exact:Wrong username or password!</td>
+	<td>exact:Wrong email address or password!</td>
 	<td></td>
 </tr>
 <!--Checking that "My Account" and "Log Out" links are not present-this ensures that user did not log in.-->

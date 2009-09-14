@@ -15,7 +15,7 @@
 <!--Storing email and password values in variables-->
 <tr>
 	<td>store</td>
-	<td>krupa.raj@gmail.com</td>
+	<td>krupa.raj82@gmail.com</td>
 	<td>email</td>
 </tr>
 <tr>
@@ -29,7 +29,33 @@
 	<td>/en-US/firefox/</td>
 	<td></td>
 </tr>
+<!--Check if the tester is already logged in.If yes,log out.-->
+<tr>
+	<td>storeElementPresent</td>
+	<td>link=Log in</td>
+	<td>value</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>Is the tester logged in: ${value}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${value}&quot;==&quot;true&quot;</td>
+	<td>target</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
 <!--Navigate to the log in page...-->
+<tr>
+	<td>label</td>
+	<td>target</td>
+	<td></td>
+</tr>
 <tr>
 	<td>clickAndWait</td>
 	<td>link=Log in</td>
@@ -53,15 +79,10 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>css=button[class=&quot;prominent&quot;][type=&quot;submit&quot;]</td>
+	<td>css=#login button[type=&quot;submit&quot;]</td>
 	<td></td>
 </tr>
 <!--Adding pause=3000 as log in takes a while in AMO-->
-<tr>
-	<td>pause</td>
-	<td>3000</td>
-	<td></td>
-</tr>
 <!--Validating whether "My Account"  and "Log out" links are present post log-in.-->
 <tr>
 	<td>verifyText</td>
