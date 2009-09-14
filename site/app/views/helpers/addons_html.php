@@ -654,7 +654,6 @@ class AddonsHtmlHelper extends HtmlHelper
         $day = 24 * 60 * 60; 
         
         
-        //if diff is less than 365 days
         if($diff < $year) {
             if($diff < $month) {
                 if(strftime('%e', $time) == strftime('%e', $now)) {
@@ -663,10 +662,10 @@ class AddonsHtmlHelper extends HtmlHelper
                     return  strftime(___('Posted yesterday @ %l:%M %p'), $time);
                 } elseif($diff < $week) {
                     $days = (int)$diff/$day;
-                    return sprintf(___("Posted %d days ago"), $days);
+                    return sprintf(n___("Posted yesterday", "Posted %d days ago"), $days);
                 } elseif(floor($diff/$week) > 1) {
                     $weeks = floor($diff / $week);    
-                    return sprintf(___("Posted %d weeks ago"), $weeks);
+                    return sprintf(n___("Posted last week", "Posted %d weeks ago"), $weeks);
                 } else {
                     return ___("Posted last week");
                 }
@@ -680,12 +679,6 @@ class AddonsHtmlHelper extends HtmlHelper
             return sprintf(n___("Posted a year ago", "Posted %d years ago",
                 $years), $years);
         }
-
-        
-        
-        
-        
-       
         return 'today';
     }
 

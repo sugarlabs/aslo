@@ -791,12 +791,11 @@ switch ($action) {
 
     case 'blog':
         debug("Starting blog post cache update");
-        $feedURL = 'http://blog.mozilla.com/addons/category/developers/feed/';
-        $blogXML = simplexml_load_file($feedURL);
+        $blogXML = simplexml_load_file(DEVELOPER_FEED_URL);
 
         //Some basic error checking 
         if(!$blogXML) {
-            debug('Could not fetch blog feed');
+            debug('Could not fetch blog feed', true);
             exit;
         }
 

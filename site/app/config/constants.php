@@ -338,4 +338,13 @@ define('ISO8601_DATETIME', '%Y-%m-%d %H:%M');
 if (!defined('DIFF_PATH')) {
     define('DIFF_PATH', '/usr/bin/diff'); // standard directory
 }
+
+
+/**
+ * Developer feed url for dev hub
+ */
+if (!defined('DEVELOPER_FEED_URL')) {
+    define('DEVELOPER_FEED_URL',
+        'http://blog.mozilla.com/addons/category/developers/feed/');
+}
 ?>
