@@ -15,13 +15,12 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Scott McCammon <smccammon@mozilla.com>
- *
- * Portions created by the Initial Developer are Copyright (C) 2007
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *
+ *   Scott McCammon <smccammon@mozilla.com> (Original Author)
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -36,15 +35,21 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/adminmenu');?>
 
-    <div id="content-main">
-        <h3>Developers Hub Manager</h3>
-            <ul>
-                <li><?=$html->link('Manage developers hub events','/admin/developershub/events')?></li>
-                <li><?=$html->link('Manage developers hub promotion boxes','/admin/developershub/promoboxes')?></li>
-            </ul>
-    </div>
+/**
+ * Required arguments:
+ *   $events
+ */
+?>
+
+<div class="highlight hub-calendar">
+  <h3><?=___('Upcoming Events')?></h3>
+  <dl>
+    <?php foreach ($events as $e): ?>
+      <dt><?=$html->link($e['HubEvent']['name'], $e['HubEvent']['url'])?></dt>
+      <dd class="date"><?=strftime(___('%b %e'), strtotime($e['HubEvent']['date']))?></dd>
+      <dd class="location"><?=$e['HubEvent']['location']?></dd>
+
+    <?php endforeach ?>
+  </dl>
 </div>

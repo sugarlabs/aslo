@@ -16,12 +16,10 @@
  *
  * The Initial Developer of the Original Code is
  * Scott McCammon <smccammon@mozilla.com>
- *
  * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -41,10 +39,36 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>Developers Hub Manager</h3>
-            <ul>
-                <li><?=$html->link('Manage developers hub events','/admin/developershub/events')?></li>
-                <li><?=$html->link('Manage developers hub promotion boxes','/admin/developershub/promoboxes')?></li>
-            </ul>
+        <h3><?=(empty($id) ? 'Create' : 'Edit')?> Developers Hub Event</h3>
+
+        <?php if (!empty($errors['main'])): ?>
+            <div class="error"><?=$errors['main']?></div>
+        <?php endif ?>
+
+        <?=$html->formTag('/admin/developershub/events/'.(empty($id) ? 'create' : 'edit/'.$id))?>
+
+        <div id="developersForm">
+            <div>
+                <label for="HubEventDate">Date (YYYY-MM-DD)</label>
+                <?=$html->input('HubEvent/date', array('size' => 10))?>
+            </div>
+            <div>
+                <label for="HubEventName">Event Name</label>
+                <?=$html->input('HubEvent/name', array('size' => 60))?>
+            </div>
+            <div>
+                <label for="HubEventLocation">Location</label>
+                <?=$html->input('HubEvent/location', array('size' => 60))?>
+            </div>
+            <div>
+                <label for="HubEventUrl">URL</label>
+                <?=$html->input('HubEvent/url', array('size' => 60))?>
+            </div>
+            <div class="buttonBox">
+                <?=$html->submit((empty($id) ? 'Create Event' : 'Save Event'))?>
+            </div>
+        </div>
+        </form>
+        <?=$html->link('Back to Developers Hub Event Manager', '/admin/developershub/events')?>
     </div>
 </div>

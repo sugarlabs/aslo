@@ -15,13 +15,11 @@
  * The Original Code is addons.mozilla.org site.
  *
  * The Initial Developer of the Original Code is
- * Scott McCammon <smccammon@mozilla.com>
- *
- * Portions created by the Initial Developer are Copyright (C) 2007
+ *   Scott McCammon <smccammon@mozilla.com>
+ * Portions created by the Initial Developer are Copyright (C) 2009
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -36,15 +34,15 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/adminmenu');?>
 
-    <div id="content-main">
-        <h3>Developers Hub Manager</h3>
-            <ul>
-                <li><?=$html->link('Manage developers hub events','/admin/developershub/events')?></li>
-                <li><?=$html->link('Manage developers hub promotion boxes','/admin/developershub/promoboxes')?></li>
-            </ul>
-    </div>
-</div>
+class HubEvent extends AppModel
+{
+    var $name = "HubEvent";
+    var $useTable = 'hubevents';
+
+    var $validate = array(
+        'name' => VALID_NOT_EMPTY,
+        'date' => VALID_DATE_REQ,
+        'url'  => VALID_URL_REQ
+    );
+}

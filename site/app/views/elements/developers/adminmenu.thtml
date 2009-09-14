@@ -51,8 +51,9 @@
             <li<?=($page == 'collections') ? ' class="selected"' : ''?>><?=$html->link('Collections Manager', '/admin/collections')?></li>
         <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'developershub', $this->controller->Session->read('User'))): ?>
-            <li<?=($page == 'developershub') ? ' class="selected"' : ''?>><?=$html->link('Developers Hub', '/admin/developershub')?></li>
+            <li<?=($page == 'developershub' && empty($subpage)) ? ' class="selected"' : ''?>><?=$html->link('Developers Hub', '/admin/developershub')?></li>
             <?php if ($page == 'developershub'): ?>
+            <li class="indented<?=($subpage == 'events') ? ' selected' : ''?>"><?=$html->link('Events', '/admin/developershub/events')?></li>
             <li class="indented<?=($subpage == 'promoboxes') ? ' selected' : ''?>"><?=$html->link('PromoBoxes', '/admin/developershub/promoboxes')?></li>
             <?php endif; ?>
 

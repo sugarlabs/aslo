@@ -3,7 +3,7 @@
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
-    var $uses = array('Addon', 'BlogPost', 'HowtoVote', 'HubPromo', 'User');
+    var $uses = array('Addon', 'BlogPost', 'HowtoVote', 'HubEvent', 'HubPromo', 'User');
     var $components = array('Hub');
     var $helpers = array('Html', 'Link', 'Localization');
 
@@ -40,6 +40,8 @@ class DevHubController extends AppController {
         $is_developer = !empty($all_addons);
         $blog_posts = $this->BlogPost->findAll(NULL, NULL,
             "BlogPost.date_posted DESC");
+        $events = $this->HubEvent->findAll('HubEvent.date >= CURDATE()', NULL,
+            "HubEvent.date ASC");
 
         if ($is_developer) {
             $promos = $this->HubPromo->getDeveloperPromos();
@@ -47,6 +49,9 @@ class DevHubController extends AppController {
             $promos = $this->HubPromo->getVisitorPromos();
         }
 
+
+        $this->dontsanitize[] = 'date';
+        $this->publish('events', $events);
         $this->set('blog_posts', $blog_posts);
         $this->set('promos', $promos);
         $this->set('bodyclass', 'inverse');

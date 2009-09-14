@@ -90,24 +90,8 @@
         </dl>
     </div>
     <?php } ?>
-    <div class="highlight hub-calendar">
-        <h3><?php echo ___('Upcoming Events');?></h3>
-        <dl>
-            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
-            <dd class="date">Jul 17</dd>
-            <dd class="location">Mountain View, CA</dd>
-            
-            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
-            <dd class="date">Jul 17</dd>
-            <dd class="location">Mountain View, CA</dd>
-            
-            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
-            <dd class="date">Jul 17</dd>
-            <dd class="location">Mountain View, CA</dd>
-          
-            <dt><a href="#">Bay Area Add-on Meetup</a></dt>
-            <dd class="date">Jul 17</dd>
-            <dd class="location">Mountain View, CA</dd>
-        </dl>
-    </div>
+
+    <?php if (!empty($events)): ?>
+    <?=$this->renderElement('amo2009/hub/calendar', array('events' => $events)) ?>
+    <?php endif ?>
 </div>

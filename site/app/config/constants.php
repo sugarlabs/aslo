@@ -286,6 +286,8 @@ define('INVALID_TAG_CHARS', "/[\/\\\#\"':&%\*<>~+-]/");
 define('INVALID_COLLECTION_NICKNAME_CHARS', INVALID_FILENAME_CHARS);
 /* Money: anything from 0.00 to 99.99.  Decimal not required. */
 define('VALID_MONEY', '/^(\d{0,2}(\.\d\d)?|\.\d\d)$/');
+// DATE required validator
+define('VALID_DATE_REQ', '/^(19|20)\d\d-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/');
 
 /**
  * entities to be sanitized by publish()

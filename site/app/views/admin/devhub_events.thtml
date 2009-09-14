@@ -16,12 +16,10 @@
  *
  * The Initial Developer of the Original Code is
  * Scott McCammon <smccammon@mozilla.com>
- *
  * Portions created by the Initial Developer are Copyright (C) 2007
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -41,10 +39,40 @@
     <?=$this->renderElement('developers/adminmenu');?>
 
     <div id="content-main">
-        <h3>Developers Hub Manager</h3>
-            <ul>
-                <li><?=$html->link('Manage developers hub events','/admin/developershub/events')?></li>
-                <li><?=$html->link('Manage developers hub promotion boxes','/admin/developershub/promoboxes')?></li>
-            </ul>
+        <h3>Developers Hub Event Manager</h3>
+    <?php if (!empty($events)): $i = 0; ?>
+        <p><?=$html->link('Create Event', '/admin/developershub/events/create')?></p>
+
+        <?=$html->formTag()?>
+        <table id="hub-events" class="pretty-table">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>Date</th>
+                <th>Event</th>
+                <th>Location</th>
+                <th>Modified</th>
+            </tr>
+        </thead>
+        <tbody><?php foreach ($events as $e): ?>
+            <tr<?=(++$i % 2 ? '' : ' class="alt"')?>>
+                <td><?=$html->checkbox("DeleteEvents/{$e['HubEvent']['id']}", null, array('value' => '1'))?></td>
+                <td><label for="DeleteEvents<?=$e['HubEvent']['id']?>"><?=strftime(___('%b. %e, %Y'), strtotime($e['HubEvent']['date']))?></label></td>
+                <td><?=$html->link($e['HubEvent']['name'], $e['HubEvent']['url'])?></td>
+                <td><?=$e['HubEvent']['location']?></td>
+                <td><?=strftime(___('%B %e, %Y, %I:%M %p'), strtotime($e['HubEvent']['modified']))?></td>
+                <td><?=$html->link('edit', '/admin/developershub/events/edit/'.$e['HubEvent']['id'])?></td>
+            </tr><?php endforeach ?>
+        </tbody>
+        </table>
+        <div class="buttonBox">
+            <?=$html->submit('Delete Selected Events', array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\'Are you SURE you wish to delete the selected events?\');'))?>
+        </div>
+        </form>
+
+    <?php else: ?>
+        <p>No events found</p>
+    <?php endif ?>
+        <p><?=$html->link('Create Event', '/admin/developershub/events/create')?></p>
     </div>
 </div>

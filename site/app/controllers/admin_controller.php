@@ -44,7 +44,7 @@ class AdminController extends AppController
 {
     var $name = 'Admin';
 
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'HubPromo', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'HubEvent', 'HubPromo', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
     var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Versioncompare', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Pagination');
 
@@ -786,7 +786,7 @@ class AdminController extends AppController
                 break;
             default:
                 $this->set('page', 'developershub');
-                $this->set('subpage', 'developershub');
+                $this->set('subpage', '');
                 $this->render('developershub');
                 break;
         }
@@ -969,6 +969,136 @@ class AdminController extends AppController
         $this->set('page', 'developershub');
         $this->set('subpage', 'promoboxes');
         $this->render('developershub_promoboxes_edit');    
+    }
+
+   /**
+    * Developers Hub Event Manager
+    */
+    function _developershubEvents($action = '', $id = 0) {
+        $this->breadcrumbs['Events'] = '/admin/developershub/events';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        switch ($action) {
+        case 'create':
+            $this->_developershubEventCreate();
+            return;
+        case 'edit':
+            $this->Amo->clean($id);
+            $this->_developershubEventEdit($id);
+            return;
+        }
+
+        // Handle mass event deletion
+        if (!empty($this->data['DeleteEvents'])) {
+            $this->_developershubDeleteEvents();
+            return;
+        }
+            
+        $events = $this->HubEvent->findAll(null, null, 'HubEvent.date DESC', null, null, -1);
+
+        $this->dontsanitize[] = 'date';
+        $this->publish('events', $events);
+        $this->set('page', 'developershub');
+        $this->set('subpage', 'events');
+        $this->render('devhub_events');
+    }
+
+   /**
+    * Delete Hub Events
+    */
+    function _developershubDeleteEvents() {
+        $event_ids = array();
+        if (!empty($this->data['DeleteEvents'])) {
+            foreach ($this->data['DeleteEvents'] as $event_id => $val) {
+                if ($val === '1') {
+                    $event_ids[] = $event_id;
+                }
+            }
+        }
+
+        if (count($event_ids) > 0) {
+            // Delete events
+            $this->Amo->clean($event_ids); 
+            $in_string = "'" . implode("','", $event_ids) . "'";
+            $this->HubEvent->execute("DELETE FROM hubevents WHERE id IN({$in_string})");
+
+            // Log admin action
+            foreach ($event_ids as $event_id) {
+                $this->Eventlog->log($this, 'admin', 'hubevent_delete', null, $event_id);
+            }
+
+            $this->flash('Events deleted!', '/admin/developershub/events');
+
+        } else {
+            $this->flash('No events selected for deletion.', '/admin/developershub/events');
+        }
+    }
+
+   /**
+    * Create Hub Event
+    */
+    function _developershubEventCreate() {
+        $this->breadcrumbs['Create Developers Hub Event'] = '/admin/developershub/events/create';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        if (!empty($this->data)) {
+            // save() does sql escaping, however data was already cleaned/escaped in beforeFilter.
+            // Unclean to prevent double-escaping (*sigh*)
+            $this->data['HubEvent'] = $this->Amo->unclean($this->data['HubEvent']);
+            if ($this->HubEvent->save($this->data['HubEvent'])) {
+                //Log admin action
+                $this->Eventlog->log($this, 'admin', 'hubevent_create', null, $this->HubEvent->getLastInsertID());
+                $this->flash('Event created!', '/admin/developershub/events');
+                return;  
+
+            } else {
+                $this->Error->addError('Error creating event. Please correct any invalid fields.');
+            }
+        }
+        
+        $this->set('errors', $this->Error->errors);
+        $this->set('page', 'developershub');
+        $this->set('subpage', 'events');
+        $this->render('devhub_events_create_edit');
+    }
+
+   /**
+    * Edit Hub Event
+    */
+    function _developershubEventEdit($id) {
+        $this->breadcrumbs['Edit Developers Hub Event'] = '/admin/developershub/events/edit/'.$id;
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        $this->HubEvent->id = $id;
+
+        if (empty($this->data)) {
+            $this->data = $this->HubEvent->read();
+            if (empty($this->data)) {
+                header('HTTP/1.1 404 Not Found');
+                $this->flash('Event not found', '/admin/developershub/events');
+                return;
+            }
+
+        } else {
+            // save() does sql escaping, however data was already cleaned/escaped in beforeFilter.
+            // Unclean to prevent double-escaping (*sigh*)
+            $this->data['HubEvent'] = $this->Amo->unclean($this->data['HubEvent']);
+            if ($this->HubEvent->save($this->data['HubEvent'])) {
+                //Log admin action
+                $this->Eventlog->log($this, 'admin', 'hubevent_edit', null, $id);
+                $this->flash('Event saved!', '/admin/developershub/events');
+                return;  
+
+            } else {
+                $this->Error->addError('Error saving event. Please correct any invalid fields.');
+            }
+        }
+
+        $this->publish('id', $id);
+        $this->set('errors', $this->Error->errors);
+        $this->set('page', 'developershub');
+        $this->set('subpage', 'events');
+        $this->render('devhub_events_create_edit');
     }
     
    /**
