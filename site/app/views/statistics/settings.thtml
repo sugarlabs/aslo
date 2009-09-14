@@ -47,6 +47,7 @@
         <?=$html->formTag('/statistics/settings/'.$addon['Addon']['id'], 'post');?>
         <h4><?=___('Dashboard Access')?></h4>
         <p><?=___('By default, only you and Mozilla can access the information in your dashboard. You can open this up to the public so that anyone can view your add-on\'s data.')?></p>
+        <p><?=___('Contribution information is only viewable by you and Mozilla even if your dashboard is public.')?></p>
         <ul class="options">
             <li><label><input type="radio" name="data[Addon][publicstats]" value="0"<?=($addon['Addon']['publicstats'] != 1 ? ' checked' : '')?>> <?='<b>'.___('Private').'</b> - '.___('Only you and Mozilla can view this add-on\'s statistics')?></label></li>
             <li><label><input type="radio" name="data[Addon][publicstats]" value="1"<?=($addon['Addon']['publicstats'] == 1 ? ' checked' : '')?>> <?='<b>'.___('Public', 'statistics_settings_access_public').'</b> - '.___('Anyone can view this add-on\'s statistics')?></label></li>

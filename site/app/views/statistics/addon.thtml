@@ -284,6 +284,12 @@ echo '<div id="content">';
         }
 
         echo '<br>';
+        if ($addon['Addon']['publicstats'] && $show_contributions) {
+            echo ___('Contribution stats are currently <b>private</b>.');
+            echo '&nbsp;'.$html->image('stats/lock.png', array('alt' => ___('Locked')));
+            echo '<br>';
+        }
+
         if ($this->controller->Amo->checkOwnership($addon_id, null, true))
             echo $html->link(___('Change Settings'), '/statistics/settings/'.$addon_id);
         elseif ($addon['Addon']['publicstats'] != 1)
