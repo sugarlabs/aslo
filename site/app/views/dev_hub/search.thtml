@@ -43,9 +43,11 @@ $this->viewVars['bodyclass'] = 'inverse';
 
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
+<p id="poweredby-cse"><?=___('powered by')?><br />
+<?=$html->image('developers/google_cse.png', array('alt' => ___('Google Custom Search')))?></p>
 <h2><?=___('Search Results')?></h2>
 
-<div id="search" class="primary" role="main">
+<div id="search" role="main">
 
 <div id="resultcount" style="display:none"><?=___('Please enter some search terms.')?></div>
 <div id="cse" style="width:100%;">
@@ -93,7 +95,4 @@ $this->viewVars['bodyclass'] = 'inverse';
     });
   }, true);
 </script>
-</div>
-
-<div class="secondary" role="complementary">
 </div>
