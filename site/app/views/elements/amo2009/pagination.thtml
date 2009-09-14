@@ -41,11 +41,12 @@
   $prev = $pagination->prevPage(___('Prev'), false);
   $next = $pagination->nextPage(___('Next'), false);
   $pages = $pagination->pageNumbers();
+
 ?>
   <ol class="pagination">
     <li><?=$prev?></li>
     <?=$pages?>
     <li><?=$next?></li>
   </ol>
-  <!-- TODO: per page -->
+  <?=$this->renderElement('amo2009/pagination_resultcount')?>
 <?php endif; ?>
