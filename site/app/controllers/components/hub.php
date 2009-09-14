@@ -364,6 +364,16 @@ class HubCategory extends Object {
         $this->slug = $slug;
         $this->items = $items;
     }
+
+    function get_ids() {
+        /* Get all the howto ids in this Category,
+         * which are held in SubCategories. */
+        $ids = array();
+        foreach ($this->items as $item) {
+            $ids = array_merge($ids, $item->get_ids());
+        }
+        return $ids;
+    }
 }
 
 
@@ -371,6 +381,12 @@ class SubCategory extends HubCategory {
 
     function __construct($title, $items) {
         parent::__construct($title, '', '', $items);
+    }
+
+    function get_ids() {
+        $ids = array();
+        foreach ($this->items as $item) $ids[] = $item->id;
+        return $ids;
     }
 }
 

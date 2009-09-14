@@ -113,7 +113,7 @@ class User extends AppModel
     var $default_fields = array('id', 'email', 'password', 'firstname',
         'lastname', 'nickname', 'bio', 'emailhidden', 'sandboxshown',
         'homepage', 'display_collections', 'display_collections_fav',
-        'confirmationcode', 'resetcode', 'resetcode_expires', 
+        'confirmationcode', 'resetcode', 'resetcode_expires',
         'created', 'modified', 'notes', 'location',
         'averagerating', 'occupation');
 
@@ -196,12 +196,22 @@ class User extends AppModel
             }
 
             if (in_array('votes', $associations)) {
+                /* Now that we have more things to vote on, this should be
+                 * something like 'CollectionVotes'.  Ah, hindsight. */
                 $user['Votes'] = array();
                 $result = $this->execute("SELECT collection_id, vote FROM collections_votes
                                           WHERE user_id={$id}");
                 foreach ($result as $r) {
                     $a = $r['collections_votes'];
                     $user['Votes'][$a['collection_id']] = $a['vote'];
+                }
+
+                $user['LinkVotes'] = array();
+                $result = $this->execute("SELECT howto_id, vote FROM howto_votes
+                                          WHERE user_id={$id}");
+                foreach ($result as $r) {
+                    $a = $r['howto_votes'];
+                    $user['LinkVotes'][$a['howto_id']] = $a['vote'];
                 }
             }
         }

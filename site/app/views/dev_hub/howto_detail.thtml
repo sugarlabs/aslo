@@ -70,7 +70,10 @@ $this->viewVars['bodyclass'] = 'inverse';
           </div>
           <div class="item-info">
             <h6><a href="<?=$item->site->href?>"><?=$item->site->title?></a></h6>
-            <p>50 people liked this.</p>
+            <?=$this->renderElement('amo2009/hub/like', array(
+                'object' => $item,
+                'likes' => $votes[$item->id]['Vote']['upvotes'],
+                'user' => $user))?>
           </div>
         </div>
       <?php endforeach ?>
@@ -85,7 +88,7 @@ $this->viewVars['bodyclass'] = 'inverse';
       'url_prefix' => '/developers/docs/how-to/',
       'exclude' => $category->slug
   ))?>
-  
+
   <div class="highlight">
     <h3><?=___('More Resources')?></h3>
     <ul class="xoxo">

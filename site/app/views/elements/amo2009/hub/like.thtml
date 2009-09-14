@@ -1,0 +1,55 @@
+<?php
+/**
+ * Required arguments
+ *   $object - the thing we're liking
+ *   $likes - number of existing votes
+ *
+ * Optional arguments:
+ *   $user - User object (if logged in)
+ */
+
+$userlikes = isset($user) && isset($user['LinkVotes'][$object->id]);
+$likes = $userlikes ? $likes - 1 : $likes;
+
+$numlikes = sprintf(n___('%s person likes this', '%s people like this', $likes), $likes);
+
+if ($likes > 0) {
+    $youlike = sprintf(n___('You and %s person like this', 'You and %s people like this', $likes),
+                       $likes);
+} else {
+    $youlike = ___('You like this');
+}
+
+?>
+<div class="like-this <?=$userlikes ? 'liked' : 'not-liked'?>">
+  <form class="likeit" method="post"
+        action="<?=$html->url("/developers/docs/how-to/vote/{$object->id}/up")?>">
+    <?=$html->hiddenSession()?>
+    <div class="numlikes">
+      <?=$numlikes?>
+      <?php if (isset($user)): ?>
+        <button class="link" type="submit">
+          <span class="like-action"><?=___('I like this!')?></span>
+        </button>
+      <?php else: ?>
+        <div>
+          <a href="<?=$html->url($html->login_url())?>">
+            <?=___('Log in to like this link')?>
+          </a>
+        </div>
+      <?php endif ?>
+      <input type="hidden" name="category" value="<?=$category->slug?>" />
+    </div>
+  </form>
+  <form class="unlike" method="post"
+        action="<?=$html->url("/developers/docs/how-to/vote/{$object->id}/cancel")?>">
+    <?=$html->hiddenSession()?>
+    <div class="numlikes">
+      <?=$youlike?>
+      <button class="link" type="submit">
+        <span class="like-action"><?=___("I don't like this")?></span>
+      </button>
+      <input type="hidden" name="category" value="<?=$category->slug?>" />
+    </div>
+  </form>
+</div>

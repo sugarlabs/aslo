@@ -90,12 +90,9 @@ a:visited {
 }
 a:hover,
 a:focus,
-button.link:hover,
-button.link:focus span {
-    color: #003595;
-    text-decoration: underline;
-}
 a:active,
+button.link:hover span,
+button.link:focus span,
 button.link:active span {
     color: #003595;
     text-decoration: underline;
@@ -407,6 +404,7 @@ textarea {
 }
 
 button.link {
+    background-image: none;
     border: 0;
     padding: 0;
     background-color: #fff;
@@ -414,6 +412,8 @@ button.link {
     cursor: pointer;
     width: auto;
     overflow: visible;
+    text-shadow: none;
+    -moz-user-select: text;
 }
 
 /* accessibility feature, resize check and radio inputs */

@@ -61,11 +61,10 @@ function getitem($object, $name, $default=null) {
 class DevelopersController extends AppController
 {
     var $name = 'Developers';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval',
-        'Appversion', 'BlacklistedGuid', 'Category',
-        'EditorSubscription', 'Eventlog', 'File', 'License', 'Platform', 'Preview',
-        'Review', 'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
-    var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error',
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category',
+        'EditorSubscription', 'Eventlog', 'File', 'HowtoVote', 'License', 'Platform', 'Preview', 'Review',
+        'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
+    var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error', 'Hub',
         'Image', 'Opensearch', 'Paypal', 'Rdf', 'Src', 'Validation', 'Versioncompare');
 
     var $helpers = array('Html', 'Javascript', 'Ajax', 'Link', 'Listing', 'Localization', 'Form');
@@ -93,7 +92,7 @@ class DevelopersController extends AppController
 
         $this->cssAdd = array('amo2009/developers', 'validation');
         $this->publish('cssAdd', $this->cssAdd);
-        $this->jsAdd = array('developers', 'json', 'jquery-ui/jqModal.js');
+        $this->jsAdd = array('developers', 'json', 'jquery-ui/jqModal.js', 'amo2009/developers');
         $this->publish('jsAdd', $this->jsAdd);
 
         global $native_languages;
@@ -257,7 +256,7 @@ class DevelopersController extends AppController
 
         $this->render('uploader');
     }
-    
+
     /**
      * Displays the add-on validator for on-the fly validation
      */
@@ -268,7 +267,7 @@ class DevelopersController extends AppController
             $this->setAction('versions', 'validate', $version_id);
             return;
         }
-                            
+
         $this->render('validator');
     }
 
@@ -2024,6 +2023,4 @@ class DevelopersController extends AppController
         $this->set('image', $example);
         $this->render('contrib_example');
     }
-
 }
-?>

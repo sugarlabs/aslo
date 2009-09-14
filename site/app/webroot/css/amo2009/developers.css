@@ -505,7 +505,7 @@ p.summary {
 }
 
 .featured-inner.hub-intro {
-    background: #fff url(../../img/amo2009/developers/hub-addon-fox.jpg) 362px bottom  
+    background: #fff url(../../img/amo2009/developers/hub-addon-fox.jpg) 362px bottom
     no-repeat;
     padding: 25px 0 0 26px;
 }
@@ -544,7 +544,7 @@ p.summary {
 .hub-directory {
     float: right;
     width:48%;
-}    
+}
 
 .hub-directory:nth-child(2n) {
     float:left;
@@ -641,3 +641,42 @@ p.summary {
     background-position: -25px 0;
     padding: 16px 16px 16px 17px;
 }
+
+/** "I like this!" boxes **/
+.like-this.not-liked .unlike,
+.like-this.liked .likeit {
+    display: none;
+}
+
+.like-this .numlikes {
+    background-image: url('../../img/amo2009/icons/thumbs.png');
+    background-repeat: no-repeat;
+    padding-left: 1.5em;
+    margin-top: 0.5em;
+}
+
+.html-rtl .like-this .numlikes {
+    padding-right: 1.5em;
+}
+
+.like-this.not-liked .numlikes {
+    background-position: left 40%;
+}
+
+.like-this.liked .numlikes {
+    background-position: left -2%;
+}
+
+.html-rtl .like-this.not-liked .numlikes {
+    background-position: right 40%;
+}
+
+.html-rtl .like-this.liked .numlikes {
+    background-position: right -2%;
+}
+
+.like-this.not-liked button.link:not(:hover) span {
+    color: #888;
+    opacity: 0.9;
+}
+/** END "I like this!" boxes **/

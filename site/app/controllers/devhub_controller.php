@@ -3,7 +3,7 @@
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
-    var $uses = array('Addon', 'BlogPost', 'HubPromo', 'User');
+    var $uses = array('Addon', 'BlogPost', 'HowtoVote', 'HubPromo', 'User');
     var $components = array('Hub');
     var $helpers = array('Html', 'Link', 'Localization');
 
@@ -17,7 +17,7 @@ class DevHubController extends AppController {
 
         $this->cssAdd = array('amo2009/developers');
         $this->publish('cssAdd', $this->cssAdd);
-        $this->jsAdd = array('developers');
+        $this->jsAdd = array('developers', 'amo2009/developers');
         $this->publish('jsAdd', $this->jsAdd);
 
         if ($this->Session->check('User')) {
@@ -27,7 +27,7 @@ class DevHubController extends AppController {
             $this->publish('all_addons', array());
         }
     }
-    
+
     /**
      * Developer Hub
      */
@@ -77,10 +77,62 @@ class DevHubController extends AppController {
                               ___('How-to Library') => '/developers/docs/how-to/',
                         ));
 
+        if ($this->Session->check('User')) {
+            $user = $this->Session->read('User');
+            $this->publish('user', $this->User->getUser($user['id'], array('votes')));
+        } else {
+            $this->publish('user', null);
+        }
+
+        $votes = $this->HowtoVote->getVotes($category->get_ids());
+
+        $this->publish('votes', $votes);
         $this->publish('category', $category);
         $this->publish('categories', $this->Hub->categories);
 
         return $this->render('howto_detail');
+    }
+
+    function howto_vote($id, $direction) {
+        $this->Amo->checkLoggedIn();
+        $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
+        $clean_id = $db->value($id);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!isset($id)) {
+                $this->flash(sprintf(___('Missing argument: %s'), 'id'), '/', 3);
+                return;
+            }
+
+            $directions = array('up' => 1, 'down' => -1, 'cancel' => 0);
+
+            if (!array_key_exists($direction, $directions)) {
+                $this->flash(___('Access Denied'), '/developers/docs/how-to/', 3);
+            }
+
+            $user = $this->Session->read('User');
+            $vote = $directions[$direction];
+            if ($vote == 0) {
+                $sql = "DELETE FROM howto_votes
+                        WHERE user_id={$user['id']}
+                          AND howto_id={$clean_id}";
+            } else {
+                $sql = "REPLACE INTO howto_votes (howto_id, user_id, vote, created)
+                        VALUE ({$clean_id}, {$user['id']}, {$vote}, NOW())";
+            }
+
+            $result = $this->HowtoVote->execute($sql);
+            $this->HowtoVote->purge($id);
+            $this->User->purge($user['id']);
+
+            if ($this->isAjax()) {
+                // Show me that shiny 200 OK.
+                $this->publish('json', array());
+                return $this->render('json', 'ajax');
+            }
+        }
+
+        return $this->redirect('/developers/docs/how-to/'.$_POST['category'], 302);
     }
 
     function policy_list() {
@@ -172,7 +224,7 @@ class DevHubController extends AppController {
         $this->pageTitle = ___('Search Results').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
         $this->render('search');
     }
-    
+
     /**
      * Newsletter
      */
