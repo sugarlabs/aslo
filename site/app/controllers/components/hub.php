@@ -179,7 +179,7 @@ class HubComponent extends Object {
                               'If you can\'t find what you\'re looking for in the above articles, try the Mozilla Developer Center\'s Extensions landing page.')
                 ))
             )),
-            new HubCategory('Thunderbird &amp; Mobile Add-ons', ___('Add-ons aren\'t just for Firefox. Learn how to extend other Mozilla applications, such as the Thunderbird mail client and Firefox for mobile devices.'), 'thunderbird-mobile', array(
+            new HubCategory('Thunderbird & Mobile Add-ons', ___('Add-ons aren\'t just for Firefox. Learn how to extend other Mozilla applications, such as the Thunderbird mail client and Firefox for mobile devices.'), 'thunderbird-mobile', array(
                 new SubCategory('Developing Add-ons for Thunderbird', array(
                     new Howto(0, 'Building a Thunderbird Extension',
                               'https://developer.mozilla.org/en/Building_a_Thunderbird_extension',
@@ -298,7 +298,8 @@ class HubComponent extends Object {
             new HubCategory('Recommended Add-ons',
                             ___('How up-and-coming add-ons become recommended and what\'s involved in the process.'),
                             'recommended',
-                            array($this->controller->url('/developers/docs/policies/contact'))),
+                            array($this->controller->url('/recommended'),
+                                  $this->controller->url('/developers/docs/policies/contact'))),
             new HubCategory('Developer Agreement',
                             ___('Terms of Service for submitting your work to our site. Developers are required to accept this agreement before submission.'),
                             'agreement',
