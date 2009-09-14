@@ -380,7 +380,10 @@ class Addon extends AppModel
         if (in_array('recommendations', $associations)) {
             $rec_ids = $this->execute("SELECT other_addon_id AS id
                                        FROM addon_recommendations as recs
-                                       WHERE addon_id={$id}
+                                       LEFT JOIN addons ON (addons.id = other_addon_id)
+                                       WHERE addon_id={$id} AND
+                                             addons.status IN (" . implode(',', $valid_status) . ") AND
+                                             addons.inactive = 0
                                        ORDER BY score DESC LIMIT 5");
             $addon['Recommendations'] = array();
             foreach ($rec_ids as $r) {
