@@ -214,7 +214,11 @@ class HubComponent extends Object {
                     new Howto(35, 'Mobile Code Snippets',
                               'https://wiki.mozilla.org/Mobile/Fennec/CodeSnippets',
                               $wiki,
-                              'Code snippets specific to mobile.')
+                              'Code snippets specific to mobile.'),
+                    new Howto(47, 'Designing User Interfaces for Mobile',
+                              'https://wiki.mozilla.org/Mobile/Fennec/Extensions/UserInterface',
+                              $wiki,
+                              'How to design an interface for your mobile extension.')
                 ))
             )),
             new HubCategory('Theme Development', ___('Style Mozilla applications the way you want with pixel-perfect themes.'), 'theme-development', array(
@@ -305,7 +309,7 @@ class HubComponent extends Object {
                             'agreement',
                             array($this->controller->url('/pages/developer_faq'))),
             new HubCategory('Contacting Us',
-                            ___('How to get in touch with the AMO team regarding these policies or your add-on.'),
+                            ___('How to get in touch with us regarding these policies or your add-on.'),
                             'contact',
                             array('https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bit-23=1&bug_file_loc=http%3A%2F%2F&bug_severity=normal&bug_status=NEW&cf_status_192=---&component=Add-on%20Security&flag_type-270=X&flag_type-271=X&flag_type-369=X&flag_type-385=X&flag_type-4=X&flag_type-485=X&flag_type-506=X&flag_type-507=X&flag_type-540=X&form_name=enter_bug&op_sys=All&priority=--&product=addons.mozilla.org&qa_contact=security%40add-ons.bugs&rep_platform=All',
                                   'https://bugzilla.mozilla.org/enter_bug.cgi?product=addons.mozilla.org',

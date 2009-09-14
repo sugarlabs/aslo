@@ -132,6 +132,7 @@
 
         // Developer hub.
         $Route->connect("/{$prefix}/developers/docs/reference/", array('controller' => 'devhub', 'action' => 'api_reference'));
+        $Route->connect("/{$prefix}/developers/docs/getting-started/", array('controller' => 'devhub', 'action' => 'gettingstarted'));
         $Route->connect("/{$prefix}/developers/docs/how-to/", array('controller' => 'devhub', 'action' => 'howto_list'));
         $Route->connect("/{$prefix}/developers/docs/how-to/vote/*", array('controller' => 'devhub', 'action' => 'howto_vote'));
         $Route->connect("/{$prefix}/developers/docs/how-to/*", array('controller' => 'devhub', 'action' => 'howto_detail'));

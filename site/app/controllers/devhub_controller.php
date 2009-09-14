@@ -241,4 +241,16 @@ class DevHubController extends AppController {
             ));
         $this->render('newsletter');
     }
+    
+    /**
+     * Getting Started
+     */
+    function gettingstarted() {
+        $this->pageTitle = ___('Getting Started').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
+        $this->publish('breadcrumbs', array(
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Developer Hub') => '/developers'
+            ));
+        $this->render('gettingstarted');
+    }
 }
