@@ -53,15 +53,19 @@ $this->viewVars['bodyclass'] = 'inverse';
             <li class="dotted"><strong><?=___('Developer')?></strong>
                 <a href="<?=$study->developer->href?>"><?=$study->developer->title?></a></li>
             <li class="dotted"><strong><?=___('First Released')?></strong>
-                <?=strftime(___('%B %e, %Y'), strtotime($study->firstreleased))?></li>
-            <li class="dotted"><strong><?=___('Downloads')?></strong>
+                <?=strftime(___('%B %Y'), strtotime($study->firstreleased))?></li>
+            <li class="dotted"><strong><?=___('Downloads from Mozilla Add-ons')?></strong>
                 <?=$html->number_format($study->addon['Addon']['totaldownloads'])?>
                 <?php if ($study->addon['Addon']['publicstats']): ?>
-                <a class="more" href="#TODO"><?=___('Statistics')?></a>
+                <a class="more" href="<?=$html->url('/statistics/addon/'.$study->addonid)?>"><?=___('Statistics')?></a>
                 <?php endif; ?>
             </li>
+            <?php foreach ($study->otherstats as $stat_name => $stat_value): ?>
+                <li class="dotted"><strong><?=$stat_name?></strong>
+                <?=$stat_value?></li>
+            <?php endforeach; ?>
             <li class="detailspage"><strong><a href="<?=$html->url("/addon/{$study->addonid}")?>">
-                <?=sprintf(___('Visit %1$s\'s Homepage'),
+                <?=sprintf(___('Visit %1$s\'s Listing'),
                 $study->addon['Translation']['name']['string'])?></strong></a></li>
         </ul>
     </div>

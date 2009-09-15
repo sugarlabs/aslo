@@ -325,26 +325,15 @@ class HubComponent extends Object {
                              ___('I like turtles!'),
                              'stumbleupon',
                              138,
-                             '/img/amo2009/logo-firefox.gif',
+                             '/img/docs/case-studies/stumbleupon-wordmark.png',
                              ___('Learn why people are tripping over StumbleUpon'),
-                             new HubSite('StumbleUpon, Inc.', 'http://example.com'),
-                             '2001-09-01'),
-            new HubCaseStudy('Firebug lorem ipsum',
-                             $lorem,
-                             'firebug',
-                             1843,
-                             '/img/amo2009/logo-seamonkey.gif',
-                             ___('Firebug action text'),
-                             new HubSite('The Firebuggers', 'http://fire.bug'),
-                             '2000-01-01'),
-            new HubCaseStudy('Adblock Plus dolor sit amet',
-                             $lorem,
-                             'adblockplus',
-                             1865,
-                             '/img/amo2009/logo-thunderbird.gif',
-                             ___('ABP action text'),
-                             new HubSite('Wladimir Palant', 'http://example.com'),
-                             '2009-09-01')
+                             new HubSite('StumbleUpon, Inc.', 'http://www.stumbleupon.com'),
+                             '2002-02',
+                             array(
+                                ___('Number of Users') => '8 million',
+                                ___('Pages Indexed') => '35 million',
+                                ___('Total Stumbles') => '10 billion'
+                             ))
             );
 
         // generate by-slug lookup arrays
@@ -410,7 +399,7 @@ class Howto extends Object {
 
 class HubCaseStudy extends Object {
     function __construct($title, $description, $slug, $addonid, $logo,
-        $actiontext, $developer, $firstreleased) {
+        $actiontext, $developer, $firstreleased, $otherstats) {
         $this->title = $title;
         $this->description = $description;
         $this->slug = $slug;
@@ -419,6 +408,7 @@ class HubCaseStudy extends Object {
         $this->actiontext = $actiontext;
         $this->developer = $developer;
         $this->firstreleased = $firstreleased; // will be fed to strtotime()
+        $this->otherstats = $otherstats;
     }
 }
 

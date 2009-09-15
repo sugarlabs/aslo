@@ -48,13 +48,19 @@ $this->viewVars['bodyclass'] = 'inverse casestudies';
     <p class="hub-category-description"><?=___('Start-to-finish success stories. See how other add-on developers made magic with Mozilla.')?></p>
 
     <ul class="blocks">
+        <?php
+        /* @TODO remove this when case studies are ready. This is here
+        temporarily until case studies are written and approved by the add-on
+        developers */
+        $casestudies = array();
+        ?>
+        
         <?php foreach ($casestudies as $study): ?>
         <li class="item">
             <div class="logo">
                 <a href="<?=$html->url('/developers/docs/case-studies/'.$study->slug)?>">
                     <img src="<?=$html->url($study->logo, null, false, false)?>" alt=""/></a>
-                <p><?=___('by')?> <?=str_replace(',', ',<br/>',
-                    $html->linkUsersFromModel($study->addon['User']))?></p>
+                <p><?=___('by')?> <a href="<?=$study->developer->href?>"><?=$study->developer->title?></a></p>
             </div>
             <div class="info">
                 <h4><a href="<?=$html->url('/developers/docs/case-studies/'.$study->slug)?>">
