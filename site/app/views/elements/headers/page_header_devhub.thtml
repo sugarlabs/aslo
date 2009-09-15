@@ -43,7 +43,12 @@
 
 ?>
 <div id="header" role="banner">
-    <p id="title"><a href="<?=$html->url('/developers', null, true, false)?>" title="<?=___('Return to the Add-on Developer Hub')?>"><?=___('Add-on <strong>Developer Hub</strong>')?></a></p>
+    <p id="title">
+        <a href="<?=$html->url('/developers', null, true, false)?>" title="<?=___('Return to the Add-on Developer Hub')?>">
+            <?=___('Add-on <strong>Developer Hub</strong>')?>
+            <?=$html->image('amo2009/developers/hub-logo.png', array('alt' => ___('Add-on Developer Hub')))?>
+        </a>
+    </p>
     <p id="brand"><a href="http://www.mozilla.com/<?=LANG?>/" title="<?=___('Mozilla')?>" accesskey="1"><?=___('Mozilla')?></a></p>
 
     <?php if (isset($header_extra)) echo $header_extra ?>
