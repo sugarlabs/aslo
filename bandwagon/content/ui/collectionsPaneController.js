@@ -108,14 +108,17 @@ Bandwagon.Controller.CollectionsPane.onViewSelect = function()
     else if (Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem != null)
     {
         // make sure the expanded collection item is scrolled into view
-        var elemsAddonExpanded = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("bandwagonAddonExpanded");
+        var elemsAddon = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("richlistitem");
 
-        if (elemsAddonExpanded && elemsAddonExpanded[0])
-        {
-            try
+        for each (var item in elemsAddon) {
+            if (item.getAttribute("type") == "bandwagonAddonExpanded")
             {
-                Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.ensureElementIsVisible(elemsAddonExpanded[0]);
-            } catch (e) {}
+                try
+                {
+                    Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.ensureElementIsVisible(item);
+                    return;
+                } catch (e) {}
+            }
         }
     }
 }
@@ -539,16 +542,18 @@ Bandwagon.Controller.CollectionsPane.doExpandAddon = function(event)
     if (event)
         event.preventDefault();
 
-    if (Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem && Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem.nodeName == "bandwagonAddonExpanded")
+    var selItem = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem;
+    if (selItem && selItem.getAttribute("type") == "bandwagonAddonExpanded")
     {
         return;
     }
 
-    var elemsAddonExpanded = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("bandwagonAddonExpanded");
+    var allAddons = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("richlistitem");
 
-    for (var i=0; i<elemsAddonExpanded.length; i++)
+    for (var i=0; i<allAddons.length; i++)
     {
-        Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.removeChild(elemsAddonExpanded[i]);
+        if (allAddons[i].getAttribute("type") == "bandwagonAddonExpanded")
+            Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.removeChild(allAddons[i]);
     }
 
     var elemsAddon = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.childNodes;
@@ -572,18 +577,19 @@ Bandwagon.Controller.CollectionsPane.doExpandAddon = function(event)
         // collapse this, show the expanded binding
 
         const XULNS = "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul";
-        var elemBandwagonAddonExpanded = document.createElementNS(XULNS, "bandwagonAddonExpanded");
+        var elemBandwagonAddonExpanded = document.createElementNS(XULNS, "richlistitem");
+        elemBandwagonAddonExpanded.setAttribute("type", "bandwagonAddonExpanded");
 
         elemBandwagonAddonExpanded.addon = addon;
 
-        try
-        {
-        Bandwagon.Controller.CollectionsPane.elemBandwagonAddonExpanded.setAddon(addon);
+        try {
+            Bandwagon.Controller.CollectionsPane.elemBandwagonAddonExpanded.setAddon(addon);
         } catch (e) {}
 
         Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.insertBefore(elemBandwagonAddonExpanded, selectedElemBandwagonAddon);
 
         selectedElemBandwagonAddon.collapsed = true;
+        Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem = elemBandwagonAddonExpanded;
     }
 }
 
@@ -701,11 +707,15 @@ Bandwagon.Controller.CollectionsPane.prefObserver =
 
             if (Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem != null)
             {
-                var elemsAddonExpanded = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("bandwagonAddonExpanded");
+                var elemsAddon = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("richlistitem");
 
-                if (elemsAddonExpanded && elemsAddonExpanded[0])
+                for each (var item in elemsAddon)
                 {
-                    elemsAddonExpanded[0].invalidateCompatibilityCheck();
+                    if (item.getAttribute("type") == "bandwagonAddonExpanded")
+                    {
+                        item.invalidateCompatibilityCheck();
+                        return;
+                    }
                 }
             }
         }
@@ -910,7 +920,8 @@ Bandwagon.Controller.CollectionsPane._repopulateAddonsList = function(collection
         if (addon == null)
             continue;
 
-        var elemBandwagonAddon = document.createElementNS(XULNS, "bandwagonAddon");
+        var elemBandwagonAddon = document.createElementNS(XULNS, "richlistitem");
+        elemBandwagonAddon.setAttribute("type", "bandwagonAddon");
         elemBandwagonAddon.addon = addon;
 
         Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.appendChild(elemBandwagonAddon);

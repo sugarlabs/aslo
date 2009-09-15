@@ -140,8 +140,8 @@ bandwagonCollection[view="settings"] label[anonid="unread"] {
   display: none;
 }
 
-bandwagonAddon,
-bandwagonAddonExpanded {
+richlistitem[type="bandwagonAddon"],
+richlistitem[type="bandwagonAddonExpanded"] {
   padding-top: 6px;
   padding-bottom: 6px;
   -moz-padding-start: 7px;
@@ -150,28 +150,18 @@ bandwagonAddonExpanded {
   border-bottom: 1px dotted #C0C0C0;
 }
 
-bandwagonAddonExpanded {
-  background-color: -moz-cellhighlight;
-  color: -moz-cellhighlighttext;
-}
-
-richlistbox:focus > bandwagonAddonExpanded {
-  background-color: Highlight;
-  color: HighlightText;
-}
-
-bandwagonAddon[read="false"] {
+richlistitem[type="bandwagonAddon"][read="false"] {
   background-color: #fdf2ab;
   color: #585620;
 }
 
-bandwagonAddon .right, 
-bandwagonAddonExpanded .right { 
+richlistitem[type="bandwagonAddon"] .right, 
+richlistitem[type="bandwagonAddonExpanded"] .right { 
   text-align: right;
 }
 
-bandwagonAddon .icon,
-bandwagonAddonExpanded .icon {
+richlistitem[type="bandwagonAddon"] .icon,
+richlistitem[type="bandwagonAddonExpanded"] .icon {
   width: 32px;
   height: 32px;
   max-width: 32px;
@@ -180,8 +170,8 @@ bandwagonAddonExpanded .icon {
   min-height: 32px;
 }
 
-bandwagonAddon .name,
-bandwagonAddonExpanded .name {
+richlistitem[type="bandwagonAddon"] .name,
+richlistitem[type="bandwagonAddonExpanded"] .name {
   font-size: 130%;
 }
 
@@ -196,11 +186,11 @@ label[anonid="addedby"]
   font-size: 90%;
 }
 
-bandwagonAddonExpanded .unindent {
+richlistitem[type="bandwagonAddonExpanded"] .unindent {
   margin-left: -1em;
 }
 
-bandwagonAddonExpanded .comments {
+richlistitem[type="bandwagonAddonExpanded"] .comments {
   margin-top: 1em;
 }
 
