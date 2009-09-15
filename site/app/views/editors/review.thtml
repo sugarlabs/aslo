@@ -38,7 +38,9 @@
  * ***** END LICENSE BLOCK ***** */
 ?>
 <div id="content">
+  <div id="reviewheader">
     <?=$this->renderElement('developers/editorsmenu');?>
+
     <?php if ($queueRank): ?>
     <div class="reviewnav">
         <?php
@@ -52,9 +54,11 @@
         <?php if ($queueRank < $count[$reviewType]) echo $html->link(___('next &raquo;'), "/editors/queue/{$reviewType}?num=".($queueRank+1)); ?>
     </div>
     <?php endif; ?>
+  </div>
 
+  <?= $this->renderElement('developers/review_motd', array('message' => $motd)) ?>
 <a name="top"></a>
-<h3 class="reviewheader"><?=sprintf(___('Review %s'), $addon['Translation']['name']['string'].' '.$version['Version']['version'])?></h3>
+<h3><?=sprintf(___('Review %s'), $addon['Translation']['name']['string'].' '.$version['Version']['version'])?></h3>
 <?php
     if (!empty($errors['main'])) {
         echo '<div class="error">'.$errors['main'].'</div>';

@@ -270,6 +270,8 @@ class EditorsController extends AppController
         $this->jsAdd[] = '../vendors/syntaxhighlighter/scripts/shBrushXml.js';
         $this->publish('jsAdd', $this->jsAdd);
 
+        $this->set('motd', $this->_get_motd());
+
         //Bind necessary models
         $this->User->bindFully();
         $this->Addontype->bindFully();
@@ -1926,6 +1928,35 @@ class EditorsController extends AppController
         }
 
         return $editors;
+    }
+
+    /**
+     * Admin page for the Message of the Day
+     */
+    function motd() {
+        // User must have the Editors:motd ACL to use this page
+        if (!$this->SimpleAcl->actionAllowed('Admin', 'EditorsMOTD', $this->Session->read('User'))) 
+            $this->Amo->accessDenied();
+
+        // If the form was submitted, set the MOTD
+        if (!empty($this->data['MOTD'])) {
+            $this->_set_motd($this->data['MOTD']['message']);
+        }
+
+        $motd = $this->_get_motd();
+        $preview = empty($motd) ? "The MOTD is currently empty, and will not be shown to editors.  This is only a preview." : $motd;
+
+        $this->set('preview', $preview);
+        $this->set('motd', $motd);
+        return $this->render('motd_admin');
+    }
+    function _set_motd($motd = '') {
+        $motd = !$motd ? '' : trim($motd);
+        return $this->Config->save(array('key' => 'editors_review_motd', 'value' => $motd));
+    }
+    function _get_motd() {
+        $motd = $this->Config->getValue('editors_review_motd');
+        return empty($motd) ? false : $motd;
     }
 }
 
