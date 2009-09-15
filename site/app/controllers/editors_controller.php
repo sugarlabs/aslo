@@ -1950,10 +1950,12 @@ class EditorsController extends AppController
         $this->set('motd', $motd);
         return $this->render('motd_admin');
     }
+
     function _set_motd($motd = '') {
         $motd = !$motd ? '' : trim($motd);
         return $this->Config->save(array('key' => 'editors_review_motd', 'value' => $motd));
     }
+
     function _get_motd() {
         $motd = $this->Config->getValue('editors_review_motd');
         return empty($motd) ? false : $motd;
