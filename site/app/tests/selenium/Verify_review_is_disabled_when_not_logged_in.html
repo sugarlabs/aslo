@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://addons.mozilla.org/" />
+<title>verify_review_is_disabled_when_not_logged_in</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">verify_review_is_disabled_when_not_logged_in</td></tr>
+</thead><tbody>
+<!--Description:This testcase verifies that review textarea and submit button are disabled when user is not logged in.It also checks that  clicking on "Detailed Review" link loads the login page.-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<!--Check if tester is already logged in.If yes,then log out.-->
+<tr>
+	<td>storeElementPresent</td>
+	<td>link=Log in</td>
+	<td>value</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>Is tester logged in:${value}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>&quot;${value}&quot;==&quot;true&quot;</td>
+	<td>target</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Log out</td>
+	<td></td>
+</tr>
+<!--Click on the first add-on listed among the recommended add-on list-->
+<tr>
+	<td>label</td>
+	<td>target</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=div.recommended a</td>
+	<td></td>
+</tr>
+<!--Verify there is a user message asking the user  to login.-->
+<tr>
+	<td>verifyText</td>
+	<td>css=#review-box p</td>
+	<td>Please log in to submit a review</td>
+</tr>
+<!--Verify review textarea is disabled-->
+<tr>
+	<td>verifyNotEditable</td>
+	<td>id=review</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAttribute</td>
+	<td>review@disabled</td>
+	<td>disabled</td>
+</tr>
+<!--Verify submit button is disbaled...-->
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.container button[disabled=&quot;disabled&quot;]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyAttribute</td>
+	<td>css=div.container button@disabled</td>
+	<td>disabled</td>
+</tr>
+<!--Verify clicking on Detailed Review link loads the login page-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Detailed Review</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyLocation</td>
+	<td>regexpi:.*en-US/firefox/users/login.*</td>
+	<td></td>
+</tr>
+<!--Back to homepage...-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
