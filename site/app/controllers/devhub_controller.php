@@ -52,7 +52,23 @@ class DevHubController extends AppController {
 
         $this->dontsanitize[] = 'date';
         $this->publish('events', $events);
+        if(isset($_GET['addon']) && isset($all_addons[$_GET['addon']])) {
+            $feed['type'] = 'addon';
+            $feed['feed'] = array();
+            $feed['addon'] = $all_addons[$_GET['addon']];
+            $active_addon_id = $_GET['addon'];
+        } else {
+            $feed['type'] = 'full';
+            $feed['feed'] = array();
+            $feed['addon'] = false;
+            $active_addon_id = false;
+        }
+
+        $this->set('active_addon_id', $active_addon_id); 
+        $this->set('feed', $feed);
+        $this->set('is_developer', $is_developer);
         $this->set('blog_posts', $blog_posts);
+        $this->set('addons', $all_addons);
         $this->set('promos', $promos);
         $this->set('bodyclass', 'inverse');
         $this->render('hub');

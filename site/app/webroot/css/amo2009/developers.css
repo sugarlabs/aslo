@@ -588,6 +588,10 @@ p.summary {
     position: relative;
 }
 
+.html-rtl .hub-directory li {
+    padding: 7px 47px 7px 0;
+}
+
 .hub-directory li.featured {
     -moz-border-radius: 0;
     margin: 0;
@@ -608,6 +612,11 @@ p.summary {
     padding: 13px 10px 15px 15px;
     position: absolute;
     background: url(../../img/amo2009/developers/hub-directory-sprite.png) top left no-repeat;
+}
+
+.html-rtl .hub-directory span {
+    left: auto;
+    right: 2px;
 }
 
 .hub-blog .icon {
@@ -652,6 +661,159 @@ p.summary {
     color: #57708C;
 }
 
+.hub-developer {
+    background: #EAF7FB;
+    width: 100%;
+    display:table;
+}
+
+.addon-list {
+    width: 200px;
+    padding: 25px 0 0 21px;
+    display: table-cell;
+    background: #EAF7FB;
+    border-right: 1px solid #AEC3CF;
+}
+
+.html-rtl .addon-list {
+    padding: 25px 21px 0 0;
+    border-right: none;
+    border-left: 1px solid #AEC3CF;
+}
+.addon-list ul {
+    margin-bottom: 0;
+}
+
+.addon-list h3 {
+    margin:0 0 0.5em 0;
+    font-size: 2.154em;
+}
+
+.addon-list li a {
+    background: url(../../img/default_icon.png) center left no-repeat;
+    padding: 10px 0 10px 45px;
+    margin-right:21px;
+    display:block;
+    border-bottom: 1px dotted #AEC3CF;
+}
+
+.html-rtl .addon-list li a {
+    margin-right: 0;
+    margin-left: 21px;
+    padding: 10px 45px 10px 0;
+    background-position: center right;
+}
+
+.addon-list li a:visited {
+    color: #0055EE;
+}
+
+.addon-list li.active {
+   background: url(../../img/amo2009/icons/addon-arrow.png) center right no-repeat; 
+   margin: 0 -1px 0 0;
+}
+
+.html-rtl .addon-list li.active {
+    background: url(../../img/amo2009/icons/addon-arrow-rtl.png) center left no-repeat;
+    margin: 0 0 0 -1px;
+}
+
+.addon-list li.active a {
+    font-weight:bold;
+}
+.addon-list li.more {
+    font-size: 0.85em;
+}
+
+.addon-list li.more a {
+    background: url(../../img/amo2009/icons/arrows.gif) 22px -107px no-repeat;
+    border-bottom: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.addon-feed-wrapper {
+    background: #fff;
+    display: table-cell;
+    width: 70%;
+}
+
+.addon-feed, .addon-feed h3 {
+    color: #444;
+}
+
+.addon-feed {
+    padding: 20px 20px 0;
+}
+
+.addon-feed h3 {
+    margin-top:0;
+}
+
+.addon-events {
+    margin: 0;
+}
+
+.addon-event {
+    padding: 0.5em 0 0.7em 25px;
+    position: relative;
+    border-bottom: 1px dotted #ccc;
+}
+
+.html-rtl .addon-event {
+    padding: 0.5em 25px 0.7em 0;
+}
+
+.addon-event .icon {
+    background: url(../../img/amo2009/icons/news-feed-sprite.png) 0 0 no-repeat;
+    padding: 8px;
+    position:absolute;
+    top: 0.75em;
+    left: 0;
+}
+
+.html-rtl .addon-event .icon {
+    right: 0;
+    left: auto;
+}
+
+
+
+.addon-event p {
+    margin: 0;
+}
+
+.addon-event .date {
+    font-size: 0.8em;
+    color: #7F7F7F;
+    line-height: 1em;
+}
+
+.older-activity {
+    font-size: 0.85em;
+    border-bottom: none;
+    padding-left: 0;
+}
+
+.older-activity a {
+    padding-left: 25px;
+    background: transparent url(../../img/amo2009/icons/arrows.gif) no-repeat scroll  4px -116px;
+}
+
+.addon-info {
+    margin: 0;
+    margin-bottom: 0;
+    background: #EAF7FB;
+    border-top: 1px solid #AEC3CF;
+    padding: 5px 0;
+}
+
+.addon-info li {
+    margin: 0 0 0 20px;
+    float:left;
+    padding:4px 0 4px;
+}
+
 .tools span {
     background-position: -57px 0;
     padding: 16px;
@@ -661,6 +823,67 @@ p.summary {
     background-position: -25px 0;
     padding: 16px 16px 16px 17px;
 }
+
+.addon-info a {
+    background: transparent url(../../img/amo2009/icons/news-feed-sprite.png) no-repeat scroll 0 0;
+    padding: 4px 0 4px 20px;
+}
+
+.addon-info .edit {
+    background-position: 0 -537px;
+}
+
+.addon-info .statistics {
+    background-position: 0 -897px;
+}
+
+.addon-info .status {
+    background-position: 0 -1040px;
+}
+
+.addon-info .versions {
+    background-position: 0 -501px;
+}
+
+/** BG positions for news feed, auto-generated **/
+.addon_active .icon{ background-position: 0 0; } 
+.addon_created .icon{ background-position: 0 -36px; } 
+.addon_inactive .icon{ background-position: 0 -72px; } 
+.approved .icon{ background-position: 0 -108px; } 
+.author_added .icon{ background-position: 0 -144px; } 
+.author_removed .icon{ background-position: 0 -180px; } 
+.categories_modified .icon{ background-position: 0 -216px; } 
+.collection .icon{ background-position: 0 -252px; } 
+.contributions_modified .icon{ background-position: 0 -288px; } 
+.custom .icon{ background-position: 0 -324px; } 
+.descriptions_edited .icon{ background-position: 0 -360px; } 
+.escalated .icon{ background-position: 0 -396px; } 
+.file_added .icon{ background-position: 0 -432px; } 
+.file_deleted .icon{ background-position: 0 -468px; } 
+.page_white_stack .icon{ background-position: 0 -504px; } 
+.pencil .icon{ background-position: 0 -540px; } 
+.preview_add .icon{ background-position: 0 -576px; } 
+.preview_delete .icon{ background-position: 0 -612px; } 
+.preview_edit .icon{ background-position: 0 -648px; } 
+.properties_edited .icon{ background-position: 0 -684px; } 
+.recommended_add .icon{ background-position: 0 -720px; } 
+.recommended_remove .icon{ background-position: 0 -756px; } 
+.request_info .icon{ background-position: 0 -792px; } 
+.retained .icon{ background-position: 0 -828px; } 
+.review_added .icon{ background-position: 0 -864px; } 
+.stats .icon{ background-position: 0 -900px; } 
+.stats_private .icon{ background-position: 0 -936px; } 
+.stats_public .icon{ background-position: 0 -972px; } 
+.status .icon{ background-position: 0 -1008px; } 
+.status_2 .icon{ background-position: 0 -1044px; } 
+.status_nominate .icon{ background-position: 0 -1080px; } 
+.tag_added .icon{ background-position: 0 -1116px; } 
+.tag_blue .icon{ background-position: 0 -1152px; } 
+.tag_removed .icon{ background-position: 0 -1188px; } 
+.version_added .icon{ background-position: 0 -1224px; } 
+.version_deleted .icon{ background-position: 0 -1260px; } 
+.version_edited .icon{ background-position: 0 -1296px; } 
+.versions_compat_add .icon{ background-position: 0 -1332px; } 
 
 /** "I like this!" boxes **/
 .like-this.not-liked .unlike,

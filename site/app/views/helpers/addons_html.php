@@ -653,7 +653,6 @@ class AddonsHtmlHelper extends HtmlHelper
         $week = 7 * 24 * 60 * 60;
         $day = 24 * 60 * 60; 
         
-        
         if($diff < $year) {
             if($diff < $month) {
                 if(strftime('%e', $time) == strftime('%e', $now)) {
@@ -662,10 +661,10 @@ class AddonsHtmlHelper extends HtmlHelper
                     return  strftime(___('Posted yesterday @ %l:%M %p'), $time);
                 } elseif($diff < $week) {
                     $days = (int)$diff/$day;
-                    return sprintf(n___("Posted yesterday", "Posted %d days ago"), $days);
+                    return sprintf(n___("Posted yesterday", "Posted %d days ago", $days), $days);
                 } elseif(floor($diff/$week) > 1) {
                     $weeks = floor($diff / $week);    
-                    return sprintf(n___("Posted last week", "Posted %d weeks ago"), $weeks);
+                    return sprintf(n___("Posted last week", "Posted %d weeks ago", $weeks), $weeks);
                 } else {
                     return ___("Posted last week");
                 }
@@ -682,5 +681,44 @@ class AddonsHtmlHelper extends HtmlHelper
         return 'today';
     }
 
+    /**
+     * Print a nice, formatted 'yesterday/days/weeks/months ago' for a time
+     * @param $time a UNIX timestamp in the past
+     */
+    function timeAgo($time) {
+        $now = time();
+        $diff = $now - $time;
+        $year = 365 * 24 * 60 * 60;
+        $month = 28 * 24 * 60 * 60;
+        $week = 7 * 24 * 60 * 60;
+        $day = 24 * 60 * 60; 
+        
+        
+        if($diff < $year) {
+            if($diff < $month) {
+                if(strftime('%e', $time) == strftime('%e', $now)) {
+                    return strftime(___('Today @ %l:%M %p'), $time);
+                } elseif($diff < $day) {
+                    return  strftime(___('Yesterday @ %l:%M %p'), $time);
+                } elseif($diff < $week) {
+                    $days = (int)$diff/$day;
+                    return sprintf(n___("Yesterday", "%d days ago", $days), $days);
+                } elseif(floor($diff/$week) > 1) {
+                    $weeks = floor($diff / $week);    
+                    return sprintf(n___("Last week", "%d weeks ago", $weeks), $weeks);
+                } else {
+                    return ___("Last week");
+                }
+            } else {
+                $months = floor($diff/$month);
+                return sprintf(n___("A month ago", "%d months ago", 
+                    $months), $months);
+            }
+        } else {
+            $years = floor($diff/$year);
+            return sprintf(n___("A year ago", "%d years ago",
+                $years), $years);
+        }
+    }
 }
 ?>

@@ -1,0 +1,106 @@
+<div class="featured hub-developer">
+    <div class="featured-inner">
+        <div class="addon-list">
+            <h3><?php echo ___('My Add-ons');?></h3>
+            <ul>
+                <li <?php if($feed['type'] == 'full') { echo 'class="active"';}?>>
+                    <a href="<?php echo $html->url('/developers');?>">
+                        <?php echo ___('All Add-ons');?>
+                    </a>
+                </li>
+                <?php
+                    $limit = 5;
+                    $length = count($addons) > $limit ? $limit : count($addons); 
+                    $visibleAddons = array_slice($addons, 0, $length, true);
+                    foreach($visibleAddons as $id => $name) { 
+                ?>
+                    <li <?php if($id == $active_addon_id) { echo 'class="active"';} ?>>
+                        <a href="<?php echo $html->url('/developers?addon='.$id);?>">
+                            <?php echo $name;?>
+                        </a>
+                    </li>
+                <?php } ?>
+                <?php if(count($addons) > $limit) { ?>
+                    <li class="more">
+                        <a href="<?php echo $html->url('/developers/feed/all');?>"><?php echo ___('More Add-ons');?></a>
+                    </li>
+                <?php } ?>
+            </ul> 
+        </div> 
+
+        <div class="addon-feed-wrapper">
+            <div class="addon-feed">
+                <h3>
+                    <?php if($feed['type'] == 'full') { ?>
+                        <?php echo sprintf(___('Recent Activity for <a href="%1$s">All Add-ons</a>'), 
+                            $html->url('/developers/feed/all'));?>
+                    <?php } else { ?>
+                        <?php echo sprintf(___('Recent Activity for <a href="%1$s">%2$s</a>'),
+                            $html->url('/developers/feed/'.$active_addon_id), $feed['addon']); ?>
+                    <?php } ?>
+                </h3>
+                <ul class="addon-events">
+                    <li class="addon-event collection">
+                        <span class="icon"></span>
+                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
+                        href="#">Lorem Ipsum</a></p>
+                        <p class="date"><?php echo
+                        $html->timeAgo(time()-(60*60*24*3));?></p>
+                    </li>
+
+                    <li class="addon-event review_added">
+                        <span class="icon"></span>
+                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
+                        href="#">Lorem Ipsum</a></p>
+                        <p class="date">Today at 5:00pm</p>
+                    </li>
+                    <li class="addon-event approved">
+                        <span class="icon"></span>
+                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
+                        href="#">Lorem Ipsum</a></p>
+                        <p class="date">Today at 5:00pm</p>
+                    </li>
+                    <li class="addon-event preview_add">
+                        <span class="icon"></span>
+                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
+                        href="#">Lorem Ipsum</a></p>
+                        <p class="date">Today at 5:00pm</p>
+                    </li>
+                    
+                    <li class="addon-event retained">
+                        <span class="icon"></span>
+                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
+                        href="#">Lorem Ipsum</a></p>
+                        <p class="date">Today at 5:00pm</p>
+                    </li>
+                    <li class="addon-event older-activity">
+                        <p>
+                            <?php if($active_addon_id) { ?>
+                                <a href="<?php echo
+                                $html->url('developers/feed/'.$active_addon_id);?>">
+                                    <?php echo sprintf( ___('Older activity for %1$s'), $feed['addon']);?>
+                                </a>
+                            <?php } else { ?>
+                                <a href="<?php echo $html->url('developers/feed/all')?>">
+                                    <?php echo ___('Older activity for all add-ons');?>
+                                </a>
+                            <?php } ?>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <?php if($active_addon_id) { ?>
+                <ul class="addon-info">
+                    <li><a href="<?php echo
+                    $html->url('/developers/addon/edit/'.$active_addon_id);?>" class="edit"><?php echo  ___('Edit Add-on');?></a></li>
+                    <li><a href="<?php echo
+                    $html->url('/statistics/addon/'.$active_addon_id);?>" class="statistics"><?php echo ___('Statistics');?></a></li>
+                    <li><a href="<?php echo
+                    $html->url('/developers/addon/status/'.$active_addon_id);?>" class="status"><?php echo  ___('Status');?></a></li>
+                    <li><a href="<?php echo
+                    $html->url('/developers/versions/'.$active_addon_id);?>" class="versions"><?php echo  ___('Versions &amp; Files');?></a></li>
+                </ul>
+            <?php } ?>
+        </div>
+    </div>
+</div> 
