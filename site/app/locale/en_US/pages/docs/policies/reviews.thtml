@@ -12,6 +12,8 @@
 <ul>
     <li>JavaScript namespace pollution</li>
     <li>remote JavaScript execution or injection</li>
+    <li>remote XUL</li>
+    <li>synchronous XMLHttpRequests</li>
     <li>obfuscated code</li>
     <li>binary components or executables</li>
     <li>inclusion of third-party software</li>
@@ -21,6 +23,10 @@
 </ul>
 
 <p>For information on how to avoid these problems, please see our <a href="%2$s">How-to Library</a>. Some of these practices are allowed under certain conditions outlined below.</p>
+
+<p>All add-ons are tested in a virtual machine to allow the editor to install the add-on and test the user experience without damaging their systems. Many of the above restrictions are tested automatically by an extension scanner that will flag suspicious add-ons for Editor review. You can read more about this scanner in the <a href="%3$s">Validation Help</a> document.</p>
+
+<p>If your add-on is site specific, it is recommended that you provide a test account for use during the review process. In addition, including detailed testing instructions will allow an editor to better understand how your add-on functions and expedite the testing process.</p>
 
 <h4>Prohibited Add-ons</h4>
 <p>Editors will also check for add-ons which are not allowed on this site, even in experimental form. These include:</p>
@@ -32,11 +38,8 @@
     <li>Add-ons that include pornographic material or seem to be developed purely as a vector to inject advertisements for pornography, warez, etc.</li>
     <li>Add-ons that clearly violate terms of service for websites, e.g. spam generators, flooding messages, denial of service attacks, extreme server load generators, etc.</li>
     <li>Add-ons that, upon installation, auto-install or launch installers of non-Firefox software</li>
+    <li>Add-ons that provide their own update mechanism for chrome-privileged resources</li>
 </ul>
-
-<p>All add-ons are tested in a virtual machine to allow the editor to install the add-on and test the user experience without damaging their systems. Many of the above restrictions are tested automatically by an extension scanner that will flag suspicious add-ons for Editor review.</p>
-
-<p>If your add-on is site specific, it is recommended that you provide a test account for use during the review process. In addition, including detailed testing instructions will allow an editor to better understand how your add-on functions and expedite the testing process.</p>
 
 <h4>Binary Components & Obfuscated Code</h4>
 <p>Add-ons may contain binary or obfuscated source code, but Mozilla must be allowed to review a copy of the human-readable source code of each version submitted for review.</p>
@@ -54,9 +57,9 @@
 
 <p><strong>The add-on may be escalated for super-review.</strong> If your add-on has potential copyright/trademark violations, has binary or obfuscated components, or has other issues that need special attention, the Editor may request that a Senior Editor or Administrator look into their concerns. This does not alter the status or position in the queue of your add-on, but the action the super-reviewer takes likely will.</p>
 
-<p>If you have any questions about your add-on's review, you may <a href="%3$s">contact the Editors</a>. For best results, please include the site email you're responding to in your message, or at least information about your add-on.</p>
+<p>If you have any questions about your add-on's review, you may <a href="%4$s">contact the Editors</a>. For best results, please include the site email you're responding to in your message, or at least information about your add-on.</p>
 
 <h4>Updates to Public Add-ons</h4>
 <p>New versions of public add-ons are kept in the sandbox but automatically added to a queue for Editor review. An Editor will review your new version, focusing on the changes made since the last version. The potential outcomes of the review are the same as for new add-ons listed above.</p>
 
-<p><em>Last updated: September 14, 2009</em></p>
+<p><em>Last updated: September 16, 2009</em></p>

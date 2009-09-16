@@ -47,7 +47,11 @@ class HubComponent extends Object {
         $wiki = new HubSite('Mozilla Wiki', 'http://wiki.mozilla.org');
         $jetpack = new HubSite('Mozilla Labs - Jetpack', 'http://jetpack.mozillalabs.com');
         $designchallenge = new HubSite('Mozilla Labs Design Challenge', 'http://design-challenge.mozilla.com');
-
+        
+        /**
+         * If you add a new how-to, increment this number!
+         *  Last used id: 48
+         */
         $this->categories = array(
             new HubCategory('Getting Started', ___('Learn the basics of developing an extension on the Mozilla platform with this section full of beginner\'s guides.'), 'getting-started', array(
                 new SubCategory('The Basics', array(
@@ -125,7 +129,11 @@ class HubComponent extends Object {
                     new Howto(16, 'Localizing an Extension',
                               'https://developer.mozilla.org/en/Localizing_an_extension',
                               $mdc,
-                              'This article explains how to localize an extension, including XUL and JavaScript strings.')
+                              'This article explains how to localize an extension, including XUL and JavaScript strings.'),
+                    new Howto(48, 'Responsible First-run Usage',
+                              'http://blog.fligtar.com/2008/10/16/responsible-first-run-usage/',
+                              new HubSite('fligtar.com', 'http://blog.fligtar.com'),
+                              'This blog post describes what a bad first-run experience means for users, and gives tips for improving that experience.')
                 )),
                 new SubCategory('Security', array(
                     new Howto(17, 'Evaluating Code with Restricted Privileges',
@@ -293,6 +301,7 @@ class HubComponent extends Object {
                             'reviews',
                             array($this->controller->url('/developers/docs/policies/submission'),
                                   $this->controller->url('/developers/docs/how-to'),
+                                  $this->controller->url('/pages/validation'),
                                   $this->controller->url('/developers/docs/policies/contact'))),
             new HubCategory('Maintaining Your Add-on',
                             ___('Add-on updates, transferring ownership, user reviews, and what to expect once your add-on is approved.'),
