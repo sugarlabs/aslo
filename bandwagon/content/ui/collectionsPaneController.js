@@ -296,6 +296,7 @@ Bandwagon.Controller.CollectionsPane.authenticationStatusChangeObserver = functi
 {
     Bandwagon.Controller.CollectionsPane._prefillLoginValues();
     Bandwagon.Controller.CollectionsPane._invalidateExtensionsDeck();
+    Bandwagon.Controller.ExtensionsOverlay._stuffPublishUI();
 }
 
 Bandwagon.Controller.CollectionsPane.doUpdateAll = function(event)

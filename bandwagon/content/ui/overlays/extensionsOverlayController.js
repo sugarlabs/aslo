@@ -285,6 +285,9 @@ Bandwagon.Controller.ExtensionsOverlay._stuffPublishUI = function()
         Bandwagon.Controller.ExtensionsOverlay._publishButton.parentNode.removeChild(Bandwagon.Controller.ExtensionsOverlay._publishButton);
     }
 
+    if (!bandwagonService.isAuthenticated())
+        return;
+
     Bandwagon.Controller.ExtensionsOverlay._invalidatePublishButton();
 
     for (var i=0; i<elemSelectedButtons.childNodes.length; i++)
