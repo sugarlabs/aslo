@@ -40,7 +40,7 @@ class CollectionsController extends AppController
 {
     var $name = 'Collections';
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
-    var $uses = array('Addon', 'AddonCollection', 'Application', 'Collection', 'File',
+    var $uses = array('Addon', 'AddonCollection', 'Addonlog', 'Application', 'Collection', 'File',
         'Platform', 'Preview', 'Translation', 'Version');
     var $components = array('Amo', 'CollectionsListing', 'Developers', 'Error', 'Helper', 'Httplib', 'Image', 'Pagination', 'Session');
     var $actionHelpers = array('Html');
@@ -265,6 +265,11 @@ class CollectionsController extends AppController
                     $this->Amo->clean($this->params['form']['addons']);
                     foreach ($this->params['form']['addons'] as &$addon) {
                         $this->Collection->addAddonToCollection($collectionid, $user['id'], $addon);
+
+                        // only log when adding to a public collection
+                        if (!empty($this->data['Collection']['listed'])) {
+                            $this->Addonlog->logAddToCollection($this, $addon, $collectionid, $this->data['Collection']['name']);
+                        }
                     }
                 }
 
@@ -308,6 +313,15 @@ class CollectionsController extends AppController
         }
         $user = $this->Session->read('User');
         $added = $this->Collection->addAddonToCollection($collection_id, $user['id'], $addon_id);
+
+        if ($added) {
+            // only log when adding to a public collection
+            $coll = $this->Collection->findById($id, array('name', 'listed'), null, -1);
+            if ($coll['Collection']['listed']) {
+                $this->Addonlog->logAddToCollection($this, $addon_id, $collection_id, $coll['Translation']['name']['string']);
+            }
+        }
+
         // go to add-on's display page and display success message
         $this->Session->write('collection_addon_added', $this->data['collection_uuid']);
         $this->redirect("/addon/{$addon_id}");
@@ -788,6 +802,9 @@ class CollectionsController extends AppController
                 '_', mb_strtolower(trim($unlocalizedFields['nickname'])));
 
         if ($success = $this->Collection->save($unlocalizedFields)) {
+            // some info about this collection for logging later on
+            $coll = $this->Collection->findById($id, array('name', 'listed'), null, -1);
+
             // save noscript data
             if ($rights['atleast_manager']) {
                 // save users
@@ -799,7 +816,12 @@ class CollectionsController extends AppController
             // remove old add-ons
             if (!empty($this->data['Addons']['delete'])) {
                 foreach ($this->data['Addons']['delete'] as &$_aid) {
-                    $this->AddonCollection->deleteByAddonIdAndCollectionId($_aid, $id, ($rights['atleast_manager'] ? null : $user['id']));
+                    $ok = $this->AddonCollection->deleteByAddonIdAndCollectionId($_aid, $id, ($rights['atleast_manager'] ? null : $user['id']));
+
+                    // only log when removing from a public collection
+                    if ($ok && $coll['Collection']['listed']) {
+                        $this->Addonlog->logRemoveFromCollection($this, $_aid, $id, $coll['Translation']['name']['string']);
+                    }
                 }
             }
             // add new add-ons
@@ -809,8 +831,14 @@ class CollectionsController extends AppController
                     $_aid = trim($_aid);
                     if (!empty($_aid)) {
                         $_addon = $this->Addon->getAddon($_aid);
-                        if (!empty($_addon) && in_array($_addon['Addon']['status'], $valid_status))
-                            $this->Collection->addAddonToCollection($id, $user['id'], $_aid);
+                        if (!empty($_addon) && in_array($_addon['Addon']['status'], $valid_status)) {
+                            $ok = $this->Collection->addAddonToCollection($id, $user['id'], $_aid);
+
+                            // only log when adding to a public collection
+                            if ($ok && $coll['Collection']['listed']) {
+                                $this->Addonlog->logAddToCollection($this, $_aid, $id, $coll['Translation']['name']['string']);
+                            }
+                        }
                     }
                 }
             }
@@ -1175,6 +1203,9 @@ class CollectionsController extends AppController
 
         if (!($rights['writable'] || $rights['isadmin'])) return $this->Error->getJSONforError(___('Access Denied'));
 
+        // collection details used for logging
+        $coll = $this->Collection->findById($collection_id, array('name', 'listed'), null, -1);
+
         switch ($action) {
         case 'add':
             if ($this->AddonCollection->isAddonInCollection($addon_id, $collection_id))
@@ -1183,6 +1214,11 @@ class CollectionsController extends AppController
             if (empty($addon) || !in_array($addon['Addon']['status'], $valid_status))
                 return $this->Error->getJSONforError(___('Add-on not found!'));
             if (false !== $this->Collection->addAddonToCollection($collection_id, $user['id'], $addon_id)) {
+                // only log when adding to a public collection
+                if ($coll['Collection']['listed']) {
+                    $this->Addonlog->logAddToCollection($this, $addon_id, $collection_id, $coll['Translation']['name']['string']);
+                }
+
                 return array(
                     'id' => $addon_id,
                     'name' => $addon['Translation']['name']['string'],
@@ -1203,6 +1239,11 @@ class CollectionsController extends AppController
                 $res = $this->AddonCollection->deleteByAddonIdAndCollectionId($addon_id, $collection_id);
             }
             if ($res) {
+                // only log when removing from a public collection
+                if ($coll['Collection']['listed']) {
+                    $this->Addonlog->logRemoveFromCollection($this, $addon_id, $collection_id, $coll['Translation']['name']['string']);
+                }
+
                 return array('id' => $addon_id);
             } else {
                 return $this->Error->getJSONforError(___('Error deleting add-on!'));

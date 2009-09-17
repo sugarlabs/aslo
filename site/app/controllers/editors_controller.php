@@ -43,7 +43,7 @@
 class EditorsController extends AppController
 {
     var $name = 'Editors';
-    var $uses = array('Addon', 'AddonCategory', 'Addontype', 'Application', 'Approval',
+    var $uses = array('Addon', 'AddonCategory', 'Addonlog', 'Addontype', 'Application', 'Approval',
         'Appversion', 'Cannedresponse', 'EditorSubscription', 'Eventlog', 'Favorite',
         'File', 'Platform', 'Review', 'ReviewsModerationFlag', 'Category', 'Translation',
         'User', 'Version', 'Versioncomment', 'TestGroup', 'TestResult');
@@ -1609,7 +1609,9 @@ class EditorsController extends AppController
                     $this->flash(___('Failed to add feature.'), '/editors/featured');
                 } else {
                     $this->Eventlog->log($this, 'editor', 'feature_add', '', $this->data['Addon']['id'], $this->data['Addon']['id']);
-                    $this->flash(___('Successfully added feature.'), '/editors/featured', 3);
+
+                    // Log addon action
+                    $this->Addonlog->logAddRecommendedCategory($this, $this->data['Addon']['id'], $this->data['Category']['id']);
                 }
 
                 return;
@@ -1657,6 +1659,11 @@ class EditorsController extends AppController
 
                     // Neither query() nor execute() return success from a DELETE call, even when the row is deleted. wtf.
                     $this->AddonCategory->execute("DELETE FROM `addons_categories` WHERE addon_id='{$this->data['Addon']['id']}' AND category_id='{$this->data['Category']['id']}' AND feature=1 LIMIT 1");
+
+                    // Log addon action
+                    if ($this->AddonCategory->getAffectedRows() > 0) {
+                        $this->Addonlog->logRemoveRecommendedCategory($this, $this->data['Addon']['id'], $this->data['Category']['id']);
+                    }
 
                     // Assume we succeeded
                     $this->flash(___('Successfully removed feature.'), '/editors/featured', 3);

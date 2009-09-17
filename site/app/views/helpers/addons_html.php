@@ -102,6 +102,17 @@ class AddonsHtmlHelper extends HtmlHelper
         return $ret;
     }
 
+    function linkNoApp($title, $url = null, $htmlAttributes = null, $confirmMessage = false, $escapeTitle = false, $return = false) {
+        // switch off adding of application for this
+        $oldAddApp = $this->addApplication;
+        $this->addApplication = false;
+        $ret = $this->link($title, $url, $htmlAttributes, $confirmMessage, $escapeTitle, $return);
+
+        // switch application handling back on
+        $this->addApplication = $oldAddApp;
+        return $ret;
+    }
+
     function linkNoLocaleNoApp($title, $url = null, $htmlAttributes = null, $confirmMessage = false, $escapeTitle = false, $return = false) {
         // switch off adding of locales for this
         $_oldAddLocale      = $this->addLocale;

@@ -1,0 +1,114 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Frederic Wenzel <fwenzel@mozilla.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+<?=$this->renderElement('amo2009/breadcrumbs', array())?>
+<h2><?=$feed_title?></h2>
+
+<div id="devhub" class="primary" role="main">
+    <div class="featured">
+        <div class="featured-inner">
+        <?php if (!empty($error)): ?>
+            <p class="addon-search-message"><?=$error?></p>
+        <?php elseif (empty($addons)): ?>
+            <p class="addon-search-message"><?=___('You do not have any add-ons hosted on Mozilla Add-ons.')?></p>
+        <?php else: ?>
+            <div class="listing-header">
+                <ul>
+                    <li><?=___('Show:')?></li>
+                    <li<?=(empty($filter) ? ' class="selected"' : '')?>><?=$html->linkNoApp(___('All'), "/developers/feed/{$addon_id}")?></li>
+                    <?php foreach ($filters as $key => $label): ?>
+                    <li<?=($key == $filter ? ' class="selected"' : '')?>><?=$html->linkNoApp($label, "/developers/feed/{$addon_id}?filter={$key}")?></li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+            <?php if (empty($feed)): ?>
+            <p class="addon-search-message"><?=___('No results found.')?></p>
+            <?php else: ?>
+            <div class="addon-feed-wrapper">
+                <ul id="addon-feed" class="addon-events">
+                <?php foreach ($feed as $event): ?>
+                    <li class="addon-event<?=(!empty($event['class']) ? " {$event['class']}" : '')?>">
+                        <?=$html->linkNoApp(
+                            '<img src="'.$this->controller->Image->getAddonIconURL($event['addon_id']).'" alt="" width="32" height="32" class="addon-icon" />',
+                            (empty($event['addon_id']) ? '#' : "/developers/feed/{$event['addon_id']}"))?>
+                        <span class="icon"></span>
+                        <p><?=$event['story']?></p>
+                        <p class="date"><?=$html->timeAgo(strtotime($event['created']))?></p>
+                    </li>
+                <?php endforeach ?>
+                </ul>
+            </div>
+            <?php endif; /* empty feed */ ?>
+        <?php endif; /* error, add-ons */ ?>
+        </div>
+        <?php if (!empty($feed) && $paging['pageCount'] > 1): ?>
+        <div class="listing-footer">
+            <?php if ($pagination->setPaging($paging)): ?>
+            <ol class="pagination">
+                <li><?=$pagination->prevPage(___('Newer'), false)?></li>
+                <?=$pagination->pageNumbers()?>
+                <li><?=$pagination->nextPage(___('Older'), false)?></li>
+            </ol>
+            <?=$this->renderElement('amo2009/pagination_resultcount')?>
+            <?php endif; ?>
+        </div>
+        <?php endif ?>
+    </div> 
+</div>
+
+<div class="secondary" role="complementary">
+    <div class="highlight addon-list">
+        <h3><?=___('My Add-ons')?></h3>
+        <ul>
+            <li<?=($addon_id == 'all' ? ' class="active"' : '')?>>
+            <?=$html->linkNoApp(
+                '<img src="'.$this->controller->Image->getAddonIconURL(0).'" alt="" width="32" height="32" class="icon" />'.___('All Add-ons'),
+                '/developers/feed/all')?>
+            </li>
+        <?php foreach ($addons as $id => $name): ?>
+            <li<?=($addon_id == $id ? ' class="active"' : '')?>>
+            <?=$html->linkNoApp(
+                '<img src="'.$this->controller->Image->getAddonIconURL($id).'" alt="" width="32" height="32" class="icon" />'.$name,
+                "/developers/feed/{$id}")?>
+            </li>
+        <?php endforeach ?>
+        </ul>
+    </div>
+</div>

@@ -39,7 +39,7 @@
 class StatisticsController extends AppController
 {
     var $name = 'Statistics';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Collection', 'User', 'Version');
+    var $uses = array('Addon', 'Addonlog', 'Addontype', 'Application', 'Collection', 'User', 'Version');
     var $components = array('Amo', 'Image', 'Pagination', 'Stats');
     var $helpers = array('Html', 'Javascript', 'Listing', 'Localization', 'Pagination', 'Statistics', 'Time');
 
@@ -732,6 +732,12 @@ class StatisticsController extends AppController
         // Save data if POSTed
         if (!empty($this->data)) {
             $this->Addon->save($this->data);
+
+            if ($this->data['Addon']['publicstats']) {
+                $this->Addonlog->logSetPulicstats($this, $addon_id);
+            } else {
+                $this->Addonlog->logUnsetPulicstats($this, $addon_id);
+            }
 
             $this->redirect('/statistics/addon/'.$addon_id.'/?settings');
             return;

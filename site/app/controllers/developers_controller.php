@@ -61,7 +61,7 @@ function getitem($object, $name, $default=null) {
 class DevelopersController extends AppController
 {
     var $name = 'Developers';
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category',
+    var $uses = array('Addon', 'Addonlog', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category',
         'EditorSubscription', 'Eventlog', 'File', 'HowtoVote', 'License', 'Platform', 'Preview', 'Review',
         'Tag', 'TestCase', 'TestGroup', 'TestResult', 'Translation', 'User', 'Version');
     var $components = array('Amo', 'Developers', 'Editors', 'Email', 'Error', 'Hub',
@@ -287,6 +287,9 @@ class DevelopersController extends AppController
         $this->Addon->id = 0;
         $this->Addon->save($data['Addon']);
         $data['Addon']['id'] = $this->Addon->getLastInsertId();
+        if ($data['Addon']['id']) {
+            $this->Addonlog->logCreateAddon($this, $data['Addon']['id']);
+        }
 
         // Add user as author
         $session = $this->Session->read('User');
@@ -393,6 +396,9 @@ class DevelopersController extends AppController
             $this->Version->save($data['Version']);
             $version_id = $this->Version->getLastInsertId();
 
+            // Log addon action
+            $this->Addonlog->logAddVersion($this, $addon_id, $version_id, $data['Version']['version']);
+
             // If add-on is public, cancel any pending files
             if ($addon['Addon']['status'] == STATUS_PUBLIC) {
                 $this->Addon->execute("UPDATE files SET status = ".STATUS_SANDBOX." WHERE files.version_id IN (SELECT id FROM versions WHERE versions.addon_id={$addon_id}) AND files.status = ".STATUS_PENDING);
@@ -436,6 +442,11 @@ class DevelopersController extends AppController
 
             $this->File->save($data['File']['db']);
             $file_id = $this->File->id;
+
+            // only log file creation if separate from version creation
+            if (!empty($data['Version']['id'])) {
+                $this->Addonlog->logAddFileToVersion($this, $addon_id, $file_id, $validate['filename'], $version_id, $data['Version']['version']);
+            }
         }
 
         // Remove temp file
@@ -801,6 +812,9 @@ class DevelopersController extends AppController
             if ($this->Addon->validates($this->data)) {
                 $this->Addon->save($this->data);
 
+                // log addon action
+                $this->Addonlog->logEditContributions($this, $addon_id);
+
                 // flush cached add-on objects
                 if (QUERY_CACHE)
                     $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
@@ -890,6 +904,9 @@ class DevelopersController extends AppController
             $this->Addon->save($unlocalizedFields);
 
             if (empty($errors)) {
+                // log addon action
+                $this->Addonlog->logEditProperties($this, $addon_id);
+
                 $this->publish('success', true);
             }
             else {
@@ -916,6 +933,10 @@ class DevelopersController extends AppController
         // Save translations if POST data
         if (!empty($this->data['Addon']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
             $this->Addon->saveTranslations($addon_id, $this->params['form']['data']['Addon'], $this->data['Addon']);
+
+            // log addon action
+            $this->Addonlog->logEditDescriptions($this, $addon_id);
+
             // flush cached add-on objects
             if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 
@@ -935,6 +956,10 @@ class DevelopersController extends AppController
         // Save categories if POST data
         if (!empty($this->data['Category']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
             $this->Category->saveCategories($addon_id, $this->data['Category']);
+
+            // log addon action
+            $this->Addonlog->logEditCategories($this, $addon_id);
+
             // flush cached add-on objects
             if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 
@@ -1057,6 +1082,13 @@ class DevelopersController extends AppController
             // Start a transaction
             $this->Addon->begin();
 
+            // Log addon action
+            // @TODO: compare old list with new list and only log the diff
+            $old_authors = $this->Addon->getAuthors($addon_id, false);
+            foreach ($old_authors as $old) {
+                $this->Addonlog->logRemoveUserWithRole($this, $addon_id, $old['User']['id'], $old['addons_users']['role']);
+            }
+
             // Clear current authors
             $this->Addon->clearAuthors($addon_id);
 
@@ -1072,6 +1104,9 @@ class DevelopersController extends AppController
 
                 $this->Addon->saveAuthor($addon_id, $user_id, $role, $listed, $position);
                 $position++;
+
+                // log addon action
+                $this->Addonlog->logAddUserWithRole($this, $addon_id, $user_id, $role);
             }
 
             // Commit the transaction
@@ -1172,17 +1207,29 @@ class DevelopersController extends AppController
             if ($action == 'inactive') {
                 $addonData = array('inactive' => 1);
                 $this->Addon->save($addonData);
+
+                // log addon action
+                $this->Addonlog->logSetInactive($this, $addon['Addon']['id']);
+
                 $this->publish('success', true);
             }
             elseif ($action == 'active') {
                 $addonData = array('inactive' => 0);
                 $this->Addon->save($addonData);
+
+                // log addon action
+                $this->Addonlog->logUnsetInactive($this, $addon['Addon']['id']);
+
                 $this->publish('success', true);
             }
             elseif ($action == 'sandbox') {
                 if ($addon['Addon']['status'] == STATUS_PUBLIC) {
                     $addonData = array('status' => STATUS_SANDBOX);
                     $this->Addon->save($addonData);
+
+                    // log addon action
+                    $this->Addonlog->logChangeStatus($this, $addon['Addon']['id'], STATUS_SANDBOX);
+
                     $this->publish('success', true);
                 }
             }
@@ -1190,6 +1237,10 @@ class DevelopersController extends AppController
                 if ($addon['Addon']['higheststatus'] == STATUS_PUBLIC && $addon['Addon']['status'] == STATUS_SANDBOX) {
                     $addonData = array('status' => STATUS_PUBLIC);
                     $this->Addon->save($addonData);
+
+                    // log addon action
+                    $this->Addonlog->logChangeStatus($this, $addon['Addon']['id'], STATUS_PUBLIC);
+
                     $this->publish('success', true);
                 }
             }
@@ -1208,6 +1259,7 @@ class DevelopersController extends AppController
                     }
                     $addonData = array('status' => STATUS_NOMINATED, 'nominationmessage' => $this->params['form']['data']['Addon']['nominationmessage'], 'nominationdate' => date('Y-m-d H:i:s'));
                     $this->Addon->save($addonData);
+                    $this->Addonlog->logChangeStatus($this, $addon['Addon']['id'], STATUS_NOMINATED);
                     $this->publish('success', true);
 
                     // notify subscribed editors of update
@@ -1356,6 +1408,9 @@ class DevelopersController extends AppController
             $this->Developers->deleteVersion($version_id);
             $this->Developers->postDelete($addon_id);
 
+            // log addon action
+            $this->Addonlog->logDeleteVersion($this, $addon_id, $version_id, $version['Version']['version']);
+
             // flush cached add-on objects
             if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 
@@ -1439,6 +1494,11 @@ class DevelopersController extends AppController
                     if (!empty($fields['delete'])) {
                         $this->Developers->deleteFile($file_id, $addon_id);
                         $this->Developers->postDelete($addon_id);
+
+                        // log addon action
+                        $file = $this->File->findById($file_id);
+                        $file_name = empty($file) ? 'unkown' : $file['File']['filename'];
+                        $this->Addonlog->logDeleteFileFromVersion($this, $addon_id, $file_id, $file_name, $version_id, $version['Version']['version']);
                     }
                     else {
                         $this->File->id = $file_id;
@@ -1458,6 +1518,9 @@ class DevelopersController extends AppController
 
             // flush cached add-on objects
             if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
+
+            // log addon action
+            $this->Addonlog->logEditVersion($this, $addon_id, $version_id, $version['Version']['version']);
 
             $this->publish('errors', $errors);
             $this->publish('success', empty($errors));
@@ -1874,10 +1937,18 @@ class DevelopersController extends AppController
 
             // Save preview to db
             if ($this->Preview->save($previewData)) {
-                if (in_array($id, $existing))
+
+                if (in_array($id, $existing)) {
+                    //Log addon action
+                    $this->Addonlog->logEditPreview($this, $addon_id);
+
                     $return['success'][] = sprintf(___('Preview %1$s was replaced with file %2$s successfully.'), $id, $name);
-                else
+                } else {
+                    //Log addon action
+                    $this->Addonlog->logAddPreview($this, $addon_id);
+
                     $return['success'][] = sprintf(___('File %s was uploaded successfully. You can add a caption below.'), $name);
+                }
             }
             else
                 $return['errors'][] = sprintf(___('File %s could not be saved to the database. Please try again.'), $name);
@@ -1898,10 +1969,14 @@ class DevelopersController extends AppController
 
             // Delete the preview
             $this->Preview->id = $id;
-            if ($this->Preview->delete())
+            if ($this->Preview->delete()) {
+                //Log addon action
+                $this->Addonlog->logDeletePreview($this, $addon_id);
                 $return['success'][] = sprintf(___('Preview %s has been deleted successfully.'), $id);
-            else
+
+            } else {
                 $return['errors'][] = sprintf(___('Preview %s could not be deleted from the database. Please try again.'), $id);
+            }
         }
 
         return $return;

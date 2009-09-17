@@ -309,6 +309,18 @@ switch ($action) {
         $db->write($stats_sql);
         $affected_rows += mysql_affected_rows($db->write);
 
+        // We log a ton of data for add-on news feeds.
+        // Anything older than 3 months is no longer very relevant.
+        debug('Removing old entries from add-on news feeds...');
+        $news_sql = "
+            DELETE FROM
+                `addonlogs`
+            WHERE
+                created < DATE_SUB(CURDATE(), INTERVAL 3 MONTH)
+            ";
+        $db->write($news_sql);
+        $affected_rows += mysql_affected_rows($db->write);
+
     break;
 
 

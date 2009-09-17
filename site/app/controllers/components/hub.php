@@ -356,6 +356,371 @@ class HubComponent extends Object {
             unset($item);
         }
     }
+
+    /**
+     * Helper for creating an HTML link.
+     */
+    function link($title, $url) {
+        $this->controller->_sanitizeArray($title);
+        return '<a href="' . $this->controller->url($url) . "\">{$title}</a>";
+    }
+
+    /**
+     * Generate a paginated news feed for one or more add-ons
+     *
+     * @param array $ids array of add-on ids
+     * @param string $filter 'collections', 'reviews', 'approvals', 'updates', or '' (none)
+     * @param array $pagination_options
+     * @return array of stories
+     */
+    function getNewsForAddons($ids, $filter='', $pagination_options=array()) {
+        $filter_groups = array(
+            'collections' => array(
+                Addonlog::ADD_TO_COLLECTION,
+                Addonlog::REMOVE_FROM_COLLECTION,
+            ),
+            'reviews' => array(
+                Addonlog::ADD_REVIEW,
+            ),
+            'approvals' => array(
+                Addonlog::APPROVE_VERSION,
+                Addonlog::RETAIN_VERSION,
+                Addonlog::ESCALATE_VERSION,
+                Addonlog::REQUEST_VERSION,
+            ),
+            'updates' => array(
+                Addonlog::CREATE_ADDON,
+                Addonlog::ADD_VERSION,
+                Addonlog::EDIT_VERSION,
+                Addonlog::DELETE_VERSION,
+                Addonlog::ADD_FILE_TO_VERSION,
+                Addonlog::DELETE_FILE_FROM_VERSION,
+            ),
+        );
+
+        // localized names we will probably need
+        $applications = $this->controller->Application->getNames();
+        $statuses = $this->controller->Amo->getStatusNames();
+        $user_roles = $this->controller->Amo->getAuthorRoleNames();
+
+        // fetch some logs
+        $this->controller->Amo->clean($ids);
+        $in_str = "'" . implode("','", $ids) . "'";
+        $criteria = "(Addonlog.addon_id IN({$in_str}) OR Addonlog.addon_id IS NULL)";
+        if (array_key_exists($filter, $filter_groups)) {
+            $criteria .= " AND Addonlog.`type` IN(".implode(',', $filter_groups[$filter]).")";
+        }
+
+        $this->controller->Pagination->modelClass = 'Addonlog';
+        $this->controller->Pagination->sortBy = 'created';
+        $this->controller->Pagination->direction = 'DESC';
+        $this->controller->Pagination->show = 10;
+        list($_order,$_limit,$_page) = $this->controller->Pagination->init($criteria, array(), $pagination_options);
+        $logs = $this->controller->Addonlog->findAll($criteria, null, $_order, $_limit, $_page, -1);
+
+        // make localized news stories
+        $newsFeed = array();
+        $addons = array(); // addon links cache
+        $users = array(); // user links cache
+        foreach ($logs as $log) {
+
+            // determine user name
+            $user = '';
+            $user_id = $log['Addonlog']['user_id'];
+            if (!empty($user_id)) {
+                if (isset($users[$user_id])) {
+                    $user = $users[$user_id];
+                } else if ($userInfo = $this->controller->User->getUser($user_id)) {
+                    $user_name = trim($userInfo['User']['display_name']);
+                    if (empty($user_name)) $user_name = $userInfo['User']['email'];
+                    $user = $this->link($user_name, "/users/info/{$user_id}");
+                    $users[$user_id] = $user;
+                } else {
+                    if (defined('DEBUG') && DEBUG) {
+                        $user = '<b>UNKNOWN USER</b>';
+                    }
+                    $users[$user_id] = $user;
+                }
+            }
+
+            // determine addon name
+            $addon = '';
+            $addon_id = $log['Addonlog']['addon_id'];
+            if (!empty($addon_id)) {
+                if (isset($addons[$addon_id])) {
+                    $addon = $addons[$addon_id];
+                } else if ($addonInfo = $this->controller->Addon->getAddon($addon_id)) {
+                    $addon = $this->link($addonInfo['Translation']['name']['string'], "/addon/{$addon_id}");
+                    $addons[$addon_id] = $addon;
+                } else {
+                    if (defined('DEBUG') && DEBUG) {
+                        $addon = '<b>UNKNOWN ADDON</b>';
+                    }
+                    $addons[$addon_id] = $addon;
+                }
+            }
+
+            if (!empty($log['Addonlog']['addon_id'])) {
+                if (empty($addonNames[$log['Addonlog']['addon_id']])) {
+                    $addonInfo = $this->controller->Addon->getAddon($log['Addonlog']['addon_id']);
+                    $addon_name = $addonInfo['Translation']['name']['string'];
+                    $addon = $this->link($addon_name, '/addon/'.$log['Addonlog']['addon_id']);
+                }
+            }
+            
+            // determine story based on log type
+            switch ($log['Addonlog']['type']) {
+            case Addonlog::CREATE_ADDON:
+                $story = sprintf(___('%1$s created %2$s.'), $user, $addon);
+                $story_class = 'addon_created';
+                break;
+
+            case Addonlog::EDIT_PROPERTIES:
+                $story = sprintf(___('%1$s edited %2$s\'s properties.'), $user, $addon);
+                $story_class = 'properties_edited';
+                break;
+
+            case Addonlog::EDIT_DESCRIPTIONS:
+                $story = sprintf(___('%1$s edited %2$s\'s descriptions.'), $user, $addon);
+                $story_class = 'descriptions_edited';
+                break;
+
+            case Addonlog::EDIT_CATEGORIES:
+                $story = sprintf(___('%1$s modified %2$s\'s category associations.'), $user, $addon);
+                $story_class = 'categories_modified';
+                break;
+
+            case Addonlog::ADD_USER_WITH_ROLE:
+            case Addonlog::REMOVE_USER_WITH_ROLE:
+                $userInfo = $this->controller->User->getUser($log['Addonlog']['object1_id']);
+                $user_name = trim($userInfo['User']['display_name']);
+                if(empty($user_name)) $user_name = $userInfo['User']['email'];
+                $user2 = $this->link($user_name, '/users/info/'.$log['Addonlog']['object1_id']);
+
+                $role = $log['Addonlog']['object2_id'];
+                $role = !empty($user_roles[$role]) ? $user_roles[$role] : $role;
+
+                if ($log['Addonlog']['type'] == Addonlog::ADD_USER_WITH_ROLE) {
+                    $story = sprintf(___('%1$s made %2$s a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
+                    $story_class = 'author_added';
+                }
+                elseif ($log['Addonlog']['type'] == Addonlog::REMOVE_USER_WITH_ROLE) {
+                    $story = sprintf(___('%1$s removed %2$s as a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
+                    $story_class = 'author_removed';
+                }
+                break;
+
+            case Addonlog::EDIT_CONTRIBUTIONS:
+                $story = sprintf(___('%1$s modified contributions settings for %2$s.'), $user, $addon);
+                $story_class = 'contributions_modified';
+                break;
+
+            case Addonlog::SET_INACTIVE:
+                $story = sprintf(___('%1$s marked %2$s as active.'), $user, $addon);
+                $story_class = 'addon_inactive';
+                break;
+
+            case Addonlog::UNSET_INACTIVE:
+                $story = sprintf(___('%1$s marked %2$s as inactive.'), $user, $addon);
+                $story_class = 'addon_active';
+                break;
+
+            case Addonlog::SET_PUBLICSTATS:
+                $story = sprintf(___('%1$s marked %2$s\'s statistics dashboard as public.'), $user, $addon);
+                $story_class = 'stats_public';
+                break;
+
+            case Addonlog::UNSET_PUBLICSTATS:
+                $story = sprintf(___('%1$s marked %2$s\'s statistics dashboard as private.'), $user, $addon);
+                $story_class = 'stats_private';
+                break;
+
+            case Addonlog::CHANGE_STATUS:
+                $status = $log['Addonlog']['object1_id'];
+                $status = !empty($statuses[$status]) ? $statuses[$status] : $status;
+
+                $story = sprintf(___('%1$s changed %2$s\'s status to %3$s.'), $user, $addon, $status);
+                $story_class = 'status';
+                break;
+
+            case Addonlog::ADD_PREVIEW:
+                $story = sprintf(___('%1$s added a new preview screenshot to %2$s.'), $user, $addon);
+                $story_class = 'preview_add';
+                break;
+
+            case Addonlog::EDIT_PREVIEW:
+                $story = sprintf(___('%1$s modified the preview screenshots for %2$s.'), $user, $addon);
+                $story_class = 'preview_edit';
+                break;
+
+            case Addonlog::DELETE_PREVIEW:
+                $story = sprintf(___('%1$s removed a preview screenshot from %2$s.'), $user, $addon);
+                $story_class = 'preview_delete';
+                break;
+
+            case Addonlog::ADD_VERSION:
+            case Addonlog::EDIT_VERSION:
+            case Addonlog::DELETE_VERSION:
+                $version = $log['Addonlog']['name1'];
+
+                if ($log['Addonlog']['type'] == Addonlog::ADD_VERSION) {
+                    $story = sprintf(___('%1$s uploaded version %2$s to %3$s.'), $user, $version, $addon);
+                    $story_class = 'version_added';
+                }
+                elseif ($log['Addonlog']['type'] == Addonlog::EDIT_VERSION) {
+                    $story = sprintf(___('%1$s edited version %2$s of %3$s.'), $user, $version, $addon);
+                    $story_class = 'version_edited';
+                }
+                elseif ($log['Addonlog']['type'] == Addonlog::DELETE_VERSION) {
+                    $story = sprintf(___('%1$s deleted version %2$s from %3$s.'), $user, $version, $addon);
+                    $story_class = 'version_deleted';
+                }
+                break;
+
+            case Addonlog::ADD_FILE_TO_VERSION:
+            case Addonlog::DELETE_FILE_FROM_VERSION:
+                $file_name = $log['Addonlog']['name1'];
+                $version = $log['Addonlog']['name2'];
+
+                if ($log['Addonlog']['type'] == Addonlog::ADD_FILE_TO_VERSION) {
+                    $story = sprintf(___('%1$s added file %2$s to %3$s %4$s.'), $user, $file_name, $addon, $version);
+                    $story_class = 'file_added';
+                }
+                else if ($log['Addonlog']['type'] == Addonlog::DELETE_FILE_FROM_VERSION) {
+                    $story = sprintf(___('%1$s deleted file %2$s from %3$s %4$s.'), $user, $file_name, $addon, $version);
+                    $story_class = 'file_deleted';
+                }
+                break;
+
+            case Addonlog::APPROVE_VERSION:
+            case Addonlog::RETAIN_VERSION:
+            case Addonlog::ESCALATE_VERSION:
+            case Addonlog::REQUEST_VERSION:
+                $version = $log['Addonlog']['name1'];
+
+                if ($log['Addonlog']['type'] == Addonlog::APPROVE_VERSION) {
+                    $story = sprintf(___('%1$s approved %2$s %3$s for public.'), $user, $addon, $version);
+                    $story_class = 'approved';
+                }
+                else if ($log['Addonlog']['type'] == Addonlog::RETAIN_VERSION) {
+                    $story = sprintf(___('%1$s retained %2$s %3$s in the sandbox.'), $user, $addon, $version);
+                    $story_class = 'retained';
+                }
+                else if ($log['Addonlog']['type'] == Addonlog::ESCALATE_VERSION) {
+                    $story = sprintf(___('%1$s escalated %2$s %3$s for super-review.'), $user, $addon, $version);
+                    $story_class = 'escalated';
+                }
+                else if ($log['Addonlog']['type'] == Addonlog::REQUEST_VERSION) {
+                    $story = sprintf(___('%1$s requested more information in order to review %2$s %3$s.'), $user, $addon, $version);
+                    $story_class = 'request_info';
+                }
+                break;
+
+            case Addonlog::ADD_TAG:
+            case Addonlog::REMOVE_TAG:
+                $tag = $log['Addonlog']['name1'];
+                $tag = $this->link($tag, "/tag/{$tag}");
+
+                if ($log['Addonlog']['type'] == Addonlog::ADD_TAG) {
+                    $story = sprintf(___('%1$s tagged %2$s as %3$s.'), $user, $addon, $tag);
+                    $story_class = 'tag_added';
+                }
+                else if ($log['Addonlog']['type'] == Addonlog::REMOVE_TAG) {
+                    $story = sprintf(___('%1$s untagged %2$s as %3$s.'), $user, $addon, $tag);
+                    $story_class = 'tag_removed';
+                }
+                break;
+
+            case Addonlog::ADD_TO_COLLECTION:
+            case Addonlog::REMOVE_FROM_COLLECTION:
+                // lookup collection and use localized name
+                $collection = $this->controller->Collection->getCollection($log['Addonlog']['object1_id']);
+                if (!empty($collection['Translation']['name']['string'])) {
+                    $name = $this->link($collection['Translation']['name']['string'], 
+                                $this->controller->Collection->getDetailUrl($collection));
+
+                // else use logged name
+                } else {
+                    $name = $log['Addonlog']['name1'];
+                }
+
+                if ($log['Addonlog']['type'] == Addonlog::ADD_TO_COLLECTION) {
+                    $story = sprintf(___('%1$s added %2$s to the %3$s collection.'), $user, $addon, $name);
+                }
+                else if ($log['Addonlog']['type'] == Addonlog::REMOVE_FROM_COLLECTION) {
+                    $story = sprintf(___('%1$s removed %2$s from the %3$s collection.'), $user, $addon, $name);
+                }
+                $story_class = 'collection';
+                break;
+
+            case Addonlog::ADD_REVIEW:
+                $story = sprintf(___('%1$s wrote a review of %2$s.'), $user, $addon);
+                $story_class = 'review_added';
+                break;
+
+            case Addonlog::ADD_RECOMMENDED_CATEGORY:
+            case Addonlog::REMOVE_RECOMMENDED_CATEGORY:
+                $cat = $this->controller->Category->findById($log['Addonlog']['object1_id'], null, null, -1);
+                $category = $this->link($cat['Translation']['name']['string'],
+                    "/browse/type:{$cat['Category']['addontype_id']}/cat:{$cat['Category']['id']}");
+
+                if ($log['Addonlog']['type'] == Addonlog::ADD_RECOMMENDED_CATEGORY) {
+                    $story = sprintf(___('%1$s was marked as recommended in the %2$s category.'), $addon, $category);
+                    $story_class = 'recommended_add';
+                }
+                else if ($log['Addonlog']['type'] == Addonlog::REMOVE_RECOMMENDED_CATEGORY) {
+                    $story = sprintf(___('%1$s was removed as recommended in the %2$s category.'), $addon, $category);
+                    $story_class = 'recommended_remove';
+                }
+                break;
+
+            case Addonlog::ADD_RECOMMENDED:
+                $story = sprintf(___('%1$s was added to the Recommended List.'), $addon);
+                $story_class = 'recommended_add';
+                break;
+
+            case Addonlog::REMOVE_RECOMMENDED:
+                $story = sprintf(___('%1$s was removed from the Recommended List.'), $addon);
+                $story_class = 'recommended_remove';
+                break;
+
+            case Addonlog::ADD_APPVERSION:
+                $app = $applications[$log['Addonlog']['object1_id']];
+                $appversion = $log['Addonlog']['name2'];
+
+                $story = sprintf(___('Add-ons can now be compatible with %1$s %2$s.'), $app, $appversion);
+                $story_class = 'versions_compat_add';
+                break;
+
+            case Addonlog::CUSTOM_TEXT:
+                $story = $log['Addonlog']['notes'];
+                $this->controller->_sanitizeArray($story);
+                $story_class = 'custom';
+                break;
+
+            case Addonlog::CUSTOM_HTML:
+                $story = $log['Addonlog']['notes'];
+                $story_class = 'custom';
+                break;
+
+            default:
+                $story = 'unrecognized add-on activity';
+                $story_class = 'custom';
+                break;
+            }
+
+            $newsFeed[] = array(
+                'id' => $log['Addonlog']['id'],
+                'addon_id' => $log['Addonlog']['addon_id'],
+                'type' => $log['Addonlog']['type'],
+                'created' => $log['Addonlog']['created'],
+                'story' => $story,
+                'class' => $story_class,
+            );
+        }
+
+        return $newsFeed;
+    }
 }
 
 

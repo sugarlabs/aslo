@@ -44,7 +44,7 @@ class ReviewsController extends AppController
 {
     var $name = 'Reviews';
     var $layout = 'mozilla';
-    var $uses = array('Addon', 'Eventlog', 'Review', 'Translation', 'Version', 'ReviewsModerationFlag');
+    var $uses = array('Addon', 'Addonlog', 'Eventlog', 'Review', 'Translation', 'Version', 'ReviewsModerationFlag');
     var $components = array('Amo', 'Pagination', 'Session');
     var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
     var $namedArgs = true;
@@ -312,6 +312,11 @@ class ReviewsController extends AppController
             }
 
             if ($this->Review->save($this->data)) {
+                //Log addon action for new reviews
+                if (empty($this->data['Review']['id'])) {
+                    $this->Addonlog->logAddReview($this, $addon['Addon']['id'], $this->Review->getLastInsertID());
+                }
+
                 $this->Review->updateBayesianRating(array($id));
                 $this->render('review_added');
                 return;

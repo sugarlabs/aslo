@@ -44,8 +44,8 @@ class AdminController extends AppController
 {
     var $name = 'Admin';
 
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'HubEvent', 'HubPromo', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
-    var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Versioncompare', 'Pagination');
+    var $uses = array('Addon', 'Addonlog', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'HubEvent', 'HubPromo', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
+    var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Hub', 'Versioncompare', 'Pagination');
     var $helpers = array('Html', 'Javascript', 'Pagination');
 
     //These defer to their own access checks
@@ -229,10 +229,17 @@ class AdminController extends AppController
     */
     function _addonStatus($id) {
         if (!empty($this->data)) {
+            //Fetch add-on to determine if we need to log a status change
+            $addon = $this->Addon->getAddon($id);
+
             $this->Addon->save($this->data['Addon']);
             
             //Log admin action
             $this->Eventlog->log($this, 'admin', 'addon_status', 'status', $id, $this->data['Addon']['status']);
+            //Log addon action if that status has changed
+            if ($this->data['Addon']['status'] != $addon['Addon']['status']) {
+                $this->Addonlog->logChangeStatus($this, $id, $this->data['Addon']['status']);
+            }
             
             if (!empty($this->data['File'])) {
                 foreach ($this->data['File']['id'] as $k => $file_id) {
@@ -339,11 +346,15 @@ class AdminController extends AppController
             if (!empty($_POST['add'])) {
                 $version = $_POST['app'.$id.'_new'];
                 if (!empty($version)) {
-                    $version_int = AddonSearch::convert_version($version);
+                    $version_int = AddonsSearch::convert_version($version);
                     $this->Appversion->execute("INSERT INTO appversions (application_id, version, version_int) VALUES('{$id}', '{$version}', '{$version_int}')");
                     
                     //Log admin action
-                    $this->Eventlog->log($this, 'admin', 'appversion_create', null, mysql_insert_id(), $version, null, $id);
+                    $appversion_id = mysql_insert_id();
+                    $this->Eventlog->log($this, 'admin', 'appversion_create', null, $appversion_id, $version, null, $id);
+
+                    //Log addon action
+                    $this->Addonlog->logAddAppversion($this, $id, $appversion_id, $version);
                     
                     $this->flash('Version successfully added!', '/admin/applications');
                     return;
@@ -781,6 +792,9 @@ class AdminController extends AppController
             case 'events':
                 $this->_developershubEvents($subaction, $id);
                 break;
+            case 'newsfeed':
+                $this->_developershubNewsfeed($subaction, $id);
+                break;
             case 'promoboxes':
                 $this->_developershubPromoBoxes($subaction, $id);
                 break;
@@ -1099,6 +1113,51 @@ class AdminController extends AppController
         $this->set('page', 'developershub');
         $this->set('subpage', 'events');
         $this->render('devhub_events_create_edit');
+    }
+
+   /**
+    * Developers Hub News Feed Manager
+    */
+    function _developershubNewsfeed() {
+        $this->breadcrumbs['News Feed'] = '/admin/developershub/newsfeed';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+
+        // Handle story creation
+        if (!empty($this->data['CreateStory'])) {
+            $this->Addonlog->logCustomHtml($this, $this->data['CreateStory']['html']);
+            $this->flash('Story created!', '/admin/developershub/newsfeed');
+            return;
+        }
+
+        // Handle mass story deletion
+        if (!empty($this->data['DeleteStories'])) {
+            $log_ids = array();
+
+            foreach ($this->data['DeleteStories'] as $log_id => $val) {
+                if ($val === '1') {
+                    $log_ids[] = $log_id;
+                }
+            }
+
+            if (count($log_ids) > 0) {
+                // Delete stories (aka Addonlogs)
+                $this->Amo->clean($log_ids); 
+                $in_string = "'" . implode("','", $log_ids) . "'";
+                $this->Addonlog->execute("DELETE FROM addonlogs WHERE id IN({$in_string})");
+                $this->flash('Stories deleted!', '/admin/developershub/newsfeed');
+                return;
+            }
+        }
+            
+        // There shouldn't be many global log entries and they get flushed after
+        // 3 months anyway. This lazy approach just shows a bunch of records instead
+        // of doing proper paging...
+        $stories = $this->Hub->getNewsForAddons(array(), 'all', array('show' => 9999));
+
+        $this->set('stories', $stories);
+        $this->set('page', 'developershub');
+        $this->set('subpage', 'newsfeed');
+        $this->render('devhub_newsfeed');
     }
     
    /**
@@ -1603,10 +1662,18 @@ class AdminController extends AppController
                         }
                     }
                     if (!empty($_POST['remove']) && is_numeric($id)) {
+                        //Fetch feature details for logging
+                        $feature = $this->Feature->findById($id, array('id', 'addon_id'), null, -1);
+
                         $this->Feature->execute("DELETE FROM features WHERE id='{$id}' LIMIT 1");
 
                         //Log admin action
                         $this->Eventlog->log($this, 'admin', 'feature_remove', null, $id, null, $id);
+
+                        //Log addon action
+                        if ($this->Feature->getAffectedRows() > 0) {
+                            $this->Addonlog->logRemoveRecommended($this, $feature['Feature']['addon_id']);
+                        }
                         
                         $this->flash("Feature successfully removed ({$id})", '/admin/features');
                         return;
@@ -1643,6 +1710,9 @@ class AdminController extends AppController
                         if ($this->Feature->save($this->data)) {
                                 //Log admin action
                                 $this->Eventlog->log($this, 'admin', 'feature_add', null, $this->Feature->getLastInsertId());
+
+                                //Log addon action
+                                $this->Addonlog->logAddRecommended($this, $_addon['Addon']['id']);
                                 
                                 $this->flash('Feature added!', '/admin/features');
                                 return;

@@ -47,7 +47,7 @@ class TagsController extends AppController
 {
     var $name = 'Tags';
     var $layout = 'mozilla';
-    var $uses = array('Addon', 'Eventlog', 'Review', 'Tag', 'Translation', 'Version', 'ReviewsModerationFlag', 'UserTagAddon', 'File', 'Platform');
+    var $uses = array('Addon', 'Addonlog', 'Eventlog', 'Review', 'Tag', 'Translation', 'Version', 'ReviewsModerationFlag', 'UserTagAddon', 'File', 'Platform');
     var $components = array('Amo', 'Pagination', 'Session', 'Search', 'Image');
     var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
     var $namedArgs = true;
@@ -183,6 +183,7 @@ class TagsController extends AppController
 					// Replace tag.
 					$this->Addon->removeUserTagFromAddon($existing['UserTagAddon']['user_id'], $tag_id, $addon_id);
 					$this->Addon->addTag($addon_id, $tag_id, $user['id']);
+					$this->Addonlog->logAddTag($this, $addon_id, $tag_id, $tag_text);
 					
 				} else {
 					// User is not owner; skip to next tag in list
@@ -191,6 +192,7 @@ class TagsController extends AppController
 			} else {
 				// Add Tag to Addon
 				$this->Addon->addTag($addon_id, $tag_id, $user['id']);
+				$this->Addonlog->logAddTag($this, $addon_id, $tag_id, $tag_text);
 				$this->publish('message', ___('Tag added'));
 			}
             $num_tags++;
@@ -258,8 +260,28 @@ class TagsController extends AppController
             return false;
         }
 
+        // Find tag_text for proper logging.
+        // sadly, a simple Tag->findById() failed and I don't want to muck
+        // with anything that will alter behavior just to do logging
+        $tag_text = '';
+        foreach ($tags['userTags'] as $tag) {
+            if ($tag['Tag']['id'] == $tag_id) {
+                $tag_text = $tag['Tag']['tag_text'];
+                break;
+            }
+        }
+        if (empty($tag_text)) {
+            foreach ($tags['developerTags'] as $tag) {
+                if ($tag['Tag']['id'] == $tag_id) {
+                    $tag_text = $tag['Tag']['tag_text'];
+                    break;
+                }
+            }
+        }
+
         $this->Addon->caching = false;    
 		$this->Addon->removeTagFromAddon($tag_id, $addon_id);
+        $this->Addonlog->logRemoveTag($this, $addon_id, $tag_id, $tag_text);
         if (QUERY_CACHE) $this->Addon->Cache->markListForFlush("addon:{$addon_id}");
 
 		// Get tag list for addon, without the extra add-on

@@ -3,9 +3,9 @@
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
-    var $uses = array('Addon', 'BlogPost', 'HowtoVote', 'HubEvent', 'HubPromo', 'User');
-    var $components = array('Hub');
-    var $helpers = array('Html', 'Link', 'Localization');
+    var $uses = array('Addon', 'Addonlog', 'Application', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'User');
+    var $components = array('Hub', 'Image', 'Pagination');
+    var $helpers = array('Html', 'Link', 'Localization', 'Pagination');
 
     function beforeFilter() {
         /* These are public pages. */
@@ -73,6 +73,85 @@ class DevHubController extends AppController {
         $this->set('bodyclass', 'inverse');
         $this->render('hub');
     }
+
+    /**
+     * Add-on news feed
+     */
+    function feed($addon_id='all') {
+        // The Hub recognizes two audiences:
+        //   developers => anyone logged in and who has 1 or more add-ons
+        //   visitors => everyone else (logged in or not)
+        $session = $this->Session->read('User');
+        $addons = (empty($session) ? array() : $this->Addon->getAddonsByUser($session['id']));
+
+        // fetch specified add-on and check permission
+        if (is_numeric($addon_id)) {
+            $addon_name = $this->Addon->getAddonName($addon_id);
+
+            // add-on not found
+            if (empty($addon_name)) {
+                header('HTTP/1.1 404 Not Found');
+                $this->set('error', ___('Add-on not found!'));
+
+            // admin can view any add-on feed
+            } else if (!isset($addons[$addon_id]) && $this->SimpleAcl->actionAllowed('Admin', 'ViewAnyAddonFeed', $session)) {
+                $addons[$addon_id] = $addon_name;
+
+            // permission denied - must be a developer of this add-on
+            } else if (!isset($addons[$addon_id])) {
+                $this->set('error', ___('You do not have access to that add-on.'));
+            }
+        }
+
+        $is_developer = !empty($addons);
+
+        $filters = array(
+            'collections' => ___('Collections'),
+            'reviews'     => ___('Reviews'),
+            'approvals'   => ___('Approvals'),
+            'updates'     => ___('Updates'),
+        );
+        $filter = isset($this->params['url']['filter']) ? $this->params['url']['filter'] : '';
+        $filter = array_key_exists($filter, $filters) ? $filter : '';
+
+        // single add-on feed
+        if (is_numeric($addon_id)) {
+            $feed_title = sprintf(___('News Feed for %1$s'), $addon_name);
+            if (isset($addons[$addon_id])) {
+                $feed = $this->Hub->getNewsForAddons(array($addon_id), $filter);
+            } else {
+                $feed = array();
+            }
+
+        // my add-on's feed
+        } else {
+            $addon_id = 'all';
+            $feed_title = ___('News Feed for My Add-ons');
+            if (!empty($addons)) {
+                $feed = $this->Hub->getNewsForAddons(array_keys($addons), $filter);
+            } else {
+                $feed = array();
+            }
+        }
+
+        $this->pageTitle = $feed_title.' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
+
+        $this->publish('breadcrumbs', array(
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Developer Hub') => '/developers/',
+            ___('News Feeds') => '/developers/feed/all',
+        ));
+
+        $this->set('feed_title', $feed_title);
+        $this->set('feed', $feed);
+        $this->set('is_developer', $is_developer);
+        $this->set('addons', $addons);
+        $this->publish('addon_id', $addon_id);
+        $this->publish('filter', $filter);
+        $this->publish('filters', $filters);
+        $this->render('feed');
+    }
+
 
     function howto_list() {
         $this->layout = 'amo2009';

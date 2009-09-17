@@ -277,6 +277,20 @@ class AmoComponent extends Object {
         );
     }
 
+    /**
+     * Returns an array of possible add-on author roles and names
+     */
+    function getAuthorRoleNames() {
+        return array(
+            AUTHOR_ROLE_ADMINOWNER => ___('Admin/Owner'),
+            AUTHOR_ROLE_ADMIN      => ___('Admin'),
+            AUTHOR_ROLE_OWNER      => ___('Owner'),
+            AUTHOR_ROLE_DEV        => ___('Developer'),
+            AUTHOR_ROLE_VIEWER     => ___('Viewer'),
+            AUTHOR_ROLE_NONE       => ___('None'),
+        );
+    }
+
    /**
     * Returns the name of a platform by Id, or an array of platforms
     * The purpose of this is to reduce unnecessary database queries

@@ -112,7 +112,12 @@ class EditorsComponent extends Object {
             }
             
             $this->controller->Approval->save($approvalData);
-            $this->controller->Addon->save($addonData);
+            $ok = $this->controller->Addon->save($addonData);
+
+            // Log addon action
+            if ($ok && empty($addonData['adminreview'])) {
+                $this->controller->Addonlog->logChangeStatus($this->controller, $addon['Addon']['id'], $addonData['status']);
+            }
         }
         else {
             return false;
@@ -227,7 +232,26 @@ class EditorsComponent extends Object {
                 if ($this->controller->Error->noErrors()) {
                     // Save approval log and new file status
                     $this->controller->Approval->save($approvalData);
-                    $this->controller->File->save($fileData);
+                    $ok = $this->controller->File->save($fileData);
+
+                    // Log addon action
+                    if ($ok) {
+                        switch ($fileData['status']) {
+                        case STATUS_PUBLIC:
+                            $this->controller->Addonlog->logApproveVersion($this->controller, $addon['Addon']['id'], $version['Version']['id'], $version['Version']['version']);
+                            break;
+
+                        case STATUS_SANDBOX:
+                            $this->controller->Addonlog->logRetainVersion($this->controller, $addon['Addon']['id'], $version['Version']['id'], $version['Version']['version']);
+                            break;
+
+                        case STATUS_PENDING:
+                            if (!empty($addonData['adminreview'])) {
+                                $this->controller->Addonlog->logEscalateVersion($this->controller, $addon['Addon']['id'], $version['Version']['id'], $version['Version']['version']);
+                            }
+                            break;
+                        }
+                    }
                     
                     // Move to public rsync repo
                     if ($fileData['status'] == STATUS_PUBLIC) {
@@ -311,6 +335,9 @@ class EditorsComponent extends Object {
         
         $versionid = $this->controller->Version->getVersionByAddonId($addon['Addon']['id'], $valid_status);
         $version = $this->controller->Version->findById($versionid, null, null, -1);
+
+        // log addon action
+        $this->controller->Addonlog->logRequestVersion($this->controller, $addon['Addon']['id'], $versionid, $version['Version']['version']);
         
         $emailInfo = array(
             'name' => $addon['Translation']['name']['string'],
