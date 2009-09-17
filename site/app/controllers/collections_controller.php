@@ -253,7 +253,7 @@ class CollectionsController extends AppController
             $this->data['Collection']['defaultlocale'] = LANG; // defaults to current lang
 
             $data = $this->data['Collection'];
-            $this->Amo->clean($data);
+            $this->Amo->clean($data, false);
             if ($this->Collection->save($data)) {
                 $collectionid = $this->Collection->id; // new collection id
                 $_coll = $this->Collection->findById($collectionid, array('Collection.uuid'));
@@ -778,7 +778,7 @@ class CollectionsController extends AppController
             }
         }
 
-        $this->Amo->clean($localizedFields);
+        $this->Amo->clean($localizedFields, false);
         $valid_translations = $this->Collection->validateTranslations($localizedFields);
         if ($valid_translations) {
             $this->Collection->saveTranslations($id, $this->params['form']['data']['Collection'], $localizedFields);
