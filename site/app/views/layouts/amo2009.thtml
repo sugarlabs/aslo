@@ -55,6 +55,11 @@ if(!isset($fullPage)) {
     $fullPage = true;
 }
 
+$developer_layout = in_array($this->controller->name, array('Developers', 'DevHub'));
+if ($developer_layout) {
+    $bodyclass = !empty($bodyclass) ? $bodyclass.' developer-hub' : 'developer-hub';
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -197,7 +202,7 @@ if(!isset($fullPage)) {
 
     <div class="section">
         <?php
-        if (in_array($this->controller->name, array('Developers', 'DevHub'))) {
+        if ($developer_layout) {
             echo $this->renderElement('headers/page_header_devhub');
         } elseif ($fullPage) {
             echo $this->renderElement('headers/page_header_full');
@@ -243,7 +248,14 @@ if(!isset($fullPage)) {
         <p class="disclaimer"><?=___('Mozilla is providing links to these applications as a courtesy, and makes no representations regarding the applications or any information related there to. Any questions, complaints or claims regarding the applications must be directed to the appropriate software vendor.')?></p>
         </div>
         <div class="secondary">
-            <img src="<?=$html->url('/img/amo2009/illustrations/logo-add-ons-half.png', null, false, false)?>" alt="" />
+            <?php
+            if ($developer_layout) {
+                echo $html->image('amo2009/developers/hub-logo-footer.png', array('alt' => ''));
+            }
+            else {
+                echo $html->image('amo2009/illustrations/logo-add-ons-half.png', array('alt' => ''));
+            }
+            ?>
         </div>
     </div> <!-- /.section -->
 </div> <!-- /#footer -->
