@@ -84,6 +84,13 @@ class PagesController extends AppController{
             $subpage = $path[1];
         }
 
+        // Adding a redirect here because putting it in routes.php would serve up the right content but
+        // not actually redirect
+        if ($page=='policy') {
+            $this->redirect('/developers/docs/policies/', 301);
+            exit;
+        }
+
         // settings titles for individual pages
         switch ($path_string) {
         case 'appversions':
@@ -97,8 +104,6 @@ class PagesController extends AppController{
             $this->publish('suppressLanguageSelector', true, false);
             $this->publish('suppressCredits', true, false);
             break;
-        case 'policy':
-            $title = ___('Add-ons Policy'); break;
         case 'privacy':
             $title = ___('Mozilla Privacy Policy'); break;
         case 'review_guide':
@@ -132,7 +137,7 @@ class PagesController extends AppController{
             }
             break;
         }
-        
+
         if (preg_match('|\.js$|', $path_string))
         {
             DboAmoMysql::$disable_log = true;
