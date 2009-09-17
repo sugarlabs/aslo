@@ -43,7 +43,7 @@ $this->viewVars['bodyclass'] = 'inverse';
 
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
-<h2><?=___('Case Study')?></h2>
+<h2><?=___('Case Study').': '.$study->title?></h2>
 
 <div id="casestudy" class="primary full" role="main">
     <div class="info">
@@ -72,9 +72,10 @@ $this->viewVars['bodyclass'] = 'inverse';
 
     <div class="secondary" role="complementary">
         <?=$this->renderElement('amo2009/hub/sidebar', array(
-            'title' => ___('Case Studies'),
+            'title' => ___('More Case Studies'),
             'objects' => $casestudies,
             'url_prefix' => '/developers/docs/case-studies/',
+            'exclude' => $study->slug
         ))?>
     </div>
 

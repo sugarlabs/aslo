@@ -330,12 +330,12 @@ class HubComponent extends Object {
         
         $lorem = 'foo';
         $this->casestudies = array(
-            new HubCaseStudy('StumbleUpon',
-                             ___('I like turtles!'),
+            new HubCaseStudy('Personalized Browsing with StumbleUpon',
+                             ___('StumbleUpon is a recommendation engine that helps users discover and share great websites. With over 8 million users, it has become one of the most popular sharing services on the Web today.'),
                              'stumbleupon',
                              138,
                              '/img/docs/case-studies/stumbleupon-wordmark.png',
-                             ___('Learn why people are tripping over StumbleUpon'),
+                             ___('Learn how StumbleUpon got its start with Firefox'),
                              new HubSite('StumbleUpon, Inc.', 'http://www.stumbleupon.com'),
                              '2002-02',
                              array(
