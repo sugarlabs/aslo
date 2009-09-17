@@ -114,7 +114,7 @@ class User extends AppModel
         'lastname', 'nickname', 'bio', 'emailhidden', 'sandboxshown',
         'homepage', 'display_collections', 'display_collections_fav',
         'confirmationcode', 'resetcode', 'resetcode_expires',
-        'created', 'modified', 'notes', 'location',
+        'deleted', 'created', 'modified', 'notes', 'location',
         'averagerating', 'occupation');
 
     var $validate = array(
@@ -152,6 +152,9 @@ class User extends AppModel
 
         if (!empty($user)) {
             // Add anything extra
+                if ($user['User']['deleted'] == 1)
+                    $user['User']['nickname'] = 'Deleted User';
+
                 // Figure out the user's display name.  Nickname if set, otherwise first+last
                 $user['User']['display_name'] = empty($user['User']['nickname']) ? $user['User']['firstname'].' '.$user['User']['lastname'] : $user['User']['nickname'];
 
@@ -262,8 +265,9 @@ class User extends AppModel
             'password' => '', // empty pw will result in login failure
             'firstname' => '',
             'lastname' => '',
-            'nickname' => 'Deleted User',
+            'nickname' => null,
             'homepage' => '',
+            'deleted'  => 1,
             'picture_data' => null,
             'picture_type' => ''
             ));

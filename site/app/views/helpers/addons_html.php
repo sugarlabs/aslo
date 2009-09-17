@@ -199,7 +199,7 @@ class AddonsHtmlHelper extends HtmlHelper
      * Link to a user's profile given a user model result array
      */
     function linkUserFromModel($userModel, $params = array('class'=>'profileLink')) {
-        if ($userModel['nickname'] == 'Deleted User') // XXX slightly ugly way of determining a deleted user
+        if ($userModel['deleted'] == 1) // If we use getUser() the nickname should already be correct, but I'll leave this for legacy code
             $nickname = ___('Deleted User');
         else
             $nickname = $userModel['nickname'];
