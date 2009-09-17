@@ -92,7 +92,11 @@ $this->viewVars['bodyclass'] = 'home';
         ))?>
     <? endif; ?>
 
-    <h2><?=___('Browse Add-ons')?></h2>
+    <? if(APP_ID == APP_MOBILE): ?>
+        <h2><?=___('Browse Mobile Add-ons')?></h2>
+    <? else: ?>
+        <h2><?=___('Browse Add-ons')?></h2>
+    <? endif; ?>
     <div class="primary">
         <div class="featured show-<?=$featured_type?> listing" id="featured">
             <div class="featured-inner">

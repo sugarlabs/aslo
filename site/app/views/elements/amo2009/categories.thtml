@@ -39,7 +39,12 @@
 ?>
 <div id="categories" class="categories">
     <h3 title="<?=___('Choose a category')?>">
-        <a href="#categoriesdropdown" aria-haspopup="true"><?=___('Categories', 'categories_header')?></a>
+        <?php if (APP_ID==APP_MOBILE): ?>
+            <a href="#categoriesdropdown" aria-haspopup="true"><?=___('Mobile Categories', 'categories_header_mobile')?></a>
+        <?php else: ?>
+            <a href="#categoriesdropdown" aria-haspopup="true"><?=___('Categories', 'categories_header')?></a>
+
+        <?php endif; ?>
     </h3>
     <ul id="categoriesdropdown">
         <li>

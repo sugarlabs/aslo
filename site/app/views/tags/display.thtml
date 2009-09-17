@@ -63,7 +63,7 @@
 						<ul>
 							<?php
 								foreach (array_keys($app_shortnames) as $_app) {
-								    if ($app_shortnames[$_app] == APP_FENNEC) continue;
+								    if ($app_shortnames[$_app] == APP_MOBILE) continue;
 									$class = ($app_shortnames[$_app] == $appid) ? ' class="selected"' : '';
 									echo '<li'.$class.'><a href="'.$html->url("display/".$tag_text."?appid=".$app_shortnames[$_app]).'">'.$app_prettynames[$_app].'</a></li>';
 								}

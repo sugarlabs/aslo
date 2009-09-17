@@ -6,6 +6,7 @@ var PLATFORM_MACOSX   = 3;
 var PLATFORM_MAC      = 4;
 var UA_PATTERN_FIREFOX = /Mozilla.*(Firefox|Minefield|Namoroka|Shiretoko|GranParadiso|BonEcho|Iceweasel)\/([^\s]*).*$/;
 var UA_PATTERN_SEAMONKEY = /Mozilla.*(SeaMonkey|Iceape)\/([^\s]*).*$/;
+var UA_PATTERN_MOBILE = /Mozilla.*(Fennec)\/([^\s]*)$/;
 
 /** Global Variables **/
 
@@ -26,6 +27,7 @@ else
 // determine browser type and version
 gIsFirefox = false;
 gIsSeaMonkey = false;
+gIsMobile = false;
 gBrowserVersion = null;
 
 var ua = navigator.userAgent;
@@ -33,7 +35,14 @@ var uamatch = UA_PATTERN_FIREFOX.exec(ua);
 if (uamatch && uamatch.length == 3) { // Firefox-like browser
     gIsFirefox = true;
     gBrowserVersion = uamatch[2];
+    var uamobilematch = UA_PATTERN_MOBILE.exec(ua);
+    if (uamobilematch && uamobilematch.length == 3) { // Mobile Firefox Browser
+        gIsMobile = true;
+        // Overwrite Firefox version with mobile browser version.  This may not be a good idea.
+        gBrowserVersion = uamobilematch[2];
+    }
 } else {
+
     var uamatch = UA_PATTERN_SEAMONKEY.exec(ua);
     if (uamatch && uamatch.length == 3) { // SeaMonkey-like browser
         gIsSeaMonkey = true;

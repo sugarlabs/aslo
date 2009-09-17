@@ -39,8 +39,7 @@
 global $app_shortnames, $app_prettynames;
 $applist = array();
 foreach (array_keys($app_shortnames) as $_app) {
-    // pulling fennec from app_chooser until it has proper support for the web site
-    if ($app_shortnames[$_app] == APP_ID || $app_shortnames[$_app] == APP_FENNEC) continue; // don't show current app or fennec
+    if ($app_shortnames[$_app] == APP_ID) continue; // don't show current app
     $applist[] = '<li id="app-'.$_app.'"><a href="'.$html->url("/$_app/",false,true,false).'">'.$app_prettynames[$_app].'</a></li>';
 }
 ?>

@@ -208,6 +208,9 @@ if (count($buf) < 2 || !array_key_exists($buf[1], $valid_layouts)) {
     if (array_key_exists('HTTP_USER_AGENT', $_SERVER) && 
         strpos($_SERVER['HTTP_USER_AGENT'], 'SeaMonkey') !== false) {
         array_splice($buf, 1, 0, "seamonkey");
+    } elseif (array_key_exists('HTTP_USER_AGENT', $_SERVER) && 
+        strpos($_SERVER['HTTP_USER_AGENT'], 'Fennec') !== false) {
+        array_splice($buf, 1, 0, "mobile");
     } else {
         array_splice($buf, 1, 0, "firefox");
     }
@@ -259,7 +262,7 @@ $app_prettynames = array(
     'thunderbird' => ___('Thunderbird'),
     'sunbird' => ___('Sunbird'),
     'seamonkey' => ___('SeaMonkey'),
-    'fennec' => ___('Fennec')
+    'mobile' => ___('Mobile')
     );
 define('APP_PRETTYNAME', $app_prettynames[APP_SHORTNAME]);
 

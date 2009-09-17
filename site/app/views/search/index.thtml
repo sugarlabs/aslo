@@ -102,7 +102,7 @@ $params = array(
                 <ul>
                     <?php
                         foreach (array_keys($app_shortnames) as $_app) {
-                            if ($app_shortnames[$_app] == APP_FENNEC) continue;
+                            if ($app_shortnames[$_app] == APP_MOBILE) continue;
                             $class = ($app_shortnames[$_app] == $appid) ? ' class="selected"' : '';
                             echo '<li'.$class.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$app_shortnames[$_app]."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.$app_prettynames[$_app].'</a></li>';
                         }

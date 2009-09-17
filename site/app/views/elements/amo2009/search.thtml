@@ -175,11 +175,19 @@ if (!isset($query) || !is_string($query))
 
 // prepare selected category, "all" if not set
 if (!isset($category)) $category = array(0, 0);
+
+if ($collectionSearch) {
+    $_search_label = ___('search for collections');
+} else if (APP_ID==APP_MOBILE) {
+    $_search_label = ___('search for mobile add-ons');
+} else {
+    $_search_label = ___('search for add-ons');
+}
 ?>
 <div class="search-form expanded-search-form">
     <form method="get" action="<?=$html->url("/search")?>" id="search-form">
         <div class="basic" id="search-query">
-            <label for="query" class="query-label" title="<?=___('Click to enter search terms')?>"><?=($collectionSearch ? ___('search for collections') : ___('search for add-ons'))?></label>
+            <label for="query" class="query-label" title="<?=___('Click to enter search terms')?>"><?=$_search_label?></label>
             <input id="query" type="text" title="search" name="q" value="<?=$query?>" />
             <label for="cat"><?=___('within')?></label>
             <select name="cat" id="cat">
@@ -286,7 +294,7 @@ if (!isset($category)) $category = array(0, 0);
 ?>
 
     var current_app_id = 0;
-    if (gIsFirefox || gIsSeaMonkey) {
+    if (gIsFirefox || gIsSeaMonkey || gIsMobile) {
         version = gBrowserVersion.split(".");
         low_appversion = version[0]+"."+parseInt(version[1]);
     }
@@ -295,6 +303,8 @@ if (!isset($category)) $category = array(0, 0);
         current_app_id = APP_FIREFOX;
     else if (gIsSeaMonkey)
         current_app_id = APP_SEAMONKEY;
+    else if (gIsMobile)
+        current_app_id = APP_MOBILE;
 
     default_low = ( ('<?=$oldver ?>' == '-1' || '<?=$oldver?>' == '')  && current_app_id == <?=APP_ID; ?>) ? low_appversion : <?=$lver ?>;
 
@@ -384,7 +394,11 @@ if (!isset($category)) $category = array(0, 0);
                 // most advanced fields do not apply to collection search
                 $('select:not(#appid,#pp),input', $('#advanced-search')).attr('disabled', 'disabled');
             } else {
-                l.text("<?=___('search for add-ons')?>");
+                if (gIsMobile) {
+                    l.text("<?=___('search for mobile add-ons')?>");
+                } else {
+                    l.text("<?=___('search for add-ons')?>");
+                }
                 $('select,input', $('#advanced-search')).attr('disabled', '');
             }
         });

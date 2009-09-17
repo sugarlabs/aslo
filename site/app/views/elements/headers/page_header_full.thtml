@@ -68,6 +68,12 @@
                 $html->url('/img/amo2009/app-icons/thunderbird.png', null, false, false)
             );
             break;
+        case 'mobile':
+            $main_header = sprintf(
+                ___('Mobile Add-ons <em>for</em> <img alt="mobile" src="%1$s" /> <strong>Firefox</strong>'),
+                $html->url('/img/amo2009/app-icons/firefox.png', null, false, false)
+            );
+            break;
         default:
             $main_header = sprintf(
                 ___('Add-ons <img alt="Add-ons" src="%1$s" />'),
@@ -89,9 +95,8 @@
                     global $app_shortnames, $app_prettynames;
                     $applist = array();
                     foreach (array_keys($app_shortnames) as $_app) {
-                        // pulling fennec from app_chooser until it has proper support for the web site
-                        if ($app_shortnames[$_app] == APP_ID || $app_shortnames[$_app] == APP_FENNEC)
-                            continue; // don't show current app or fennec
+                        if ($app_shortnames[$_app] == APP_ID)
+                            continue; // don't show current app
                         ?>
                             <li id="app-<?=$_app?>" class="<?=$_app?>">
                                 <a href="<?=$html->url("/$_app/",false,true,false)?>"><?=$app_prettynames[$_app]?></a>

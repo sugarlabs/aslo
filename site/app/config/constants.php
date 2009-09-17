@@ -147,14 +147,14 @@ define('APP_FIREFOX', 1);
 define('APP_THUNDERBIRD', 18);
 define('APP_SEAMONKEY', 59);
 define('APP_SUNBIRD', 52);
-define('APP_FENNEC', 60);
+define('APP_MOBILE', 60);
 global $app_shortnames; // shortnames are used in URLs
 $app_shortnames = array(
     'firefox'       => APP_FIREFOX,
     'thunderbird'   => APP_THUNDERBIRD,
     'seamonkey'     => APP_SEAMONKEY,
     'sunbird'       => APP_SUNBIRD,
-    'fennec'        => APP_FENNEC
+    'mobile'        => APP_MOBILE
     );
 global $app_prettynames;
 $app_prettynames = array( // Overridden with L10n in bootstrap.php
@@ -162,7 +162,7 @@ $app_prettynames = array( // Overridden with L10n in bootstrap.php
     'thunderbird' => "Thunderbird",
     'seamonkey' => "SeaMonkey",
     'sunbird' => "Sunbird",
-    'fennec' => "Fennec"
+    'mobile' => "Mobile"
     );
 global $browser_apps; // browser applications; for non-browser apps, use !in_array()
 $browser_apps = array(
@@ -233,7 +233,8 @@ $app_listedtypes = array(
     APP_FIREFOX => array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_PLUGIN),
     APP_THUNDERBIRD => array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT),
     APP_SEAMONKEY => array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_PLUGIN),
-    APP_SUNBIRD => array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT)
+    APP_SUNBIRD => array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT),
+    APP_MOBILE => array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH)
     );
 
 /**
