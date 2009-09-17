@@ -49,7 +49,11 @@
       'breadcrumbs' => array(
           sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/')
   ))?>
-
+    <?php
+      if ($this->controller->SimpleAcl->actionAllowed('Admin', 'users', $this->controller->Session->read('User'))):
+          echo $html->link('Edit User', "/admin/users/{$user['User']['id']}");
+      endif;
+    ?>
   <div class="vcard">
     <h2 class="fn n"><?=$user['User']['display_name']?></h2>
     <div class="featured">
