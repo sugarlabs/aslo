@@ -5,7 +5,7 @@ vendor('mailchimp/api');
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
-    var $uses = array('Addon', 'Addonlog', 'Application', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'HubRssKey', 'User');
+    var $uses = array('Addon', 'Addonlog', 'Application', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'HubRssKey', 'Memcaching', 'User');
     var $components = array('Httplib', 'Hub', 'Image', 'Pagination');
     var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
     var $exceptionCSRF = array('/developers/community/newsletter/');
