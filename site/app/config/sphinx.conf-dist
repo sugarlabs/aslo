@@ -1,4 +1,3 @@
-
 source addons
 {
 	type					= mysql
@@ -41,7 +40,7 @@ source addons
     WHERE av.version_id=v.id \
         AND f.version_id=v.id \
         AND a.addon_id = v.addon_id \
-        AND f.status > 1
+        AND f.status >= 1
         
     sql_attr_multi = uint category from query; \
     SELECT a.id AS id, ac.category_id AS category \

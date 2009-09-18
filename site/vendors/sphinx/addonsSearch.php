@@ -60,6 +60,7 @@ class AddonsSearch
         // locale filter to en-US + LANG
         $sphinx->SetFilter('locale_ord', array(crc32(LANG), crc32('en-US')));
         
+        
         // sort
         if (isset($options['sort'])) {
             switch($options['sort'])
@@ -86,6 +87,7 @@ class AddonsSearch
         }
         // filter based on the app we're looking for e.g is this /firefox/ or /seamonkey/ etc
         $sphinx->SetFilter('app', array(APP_ID));
+        $this->log('app', APP_ID);
         
         // version filter
         // convert version to int
