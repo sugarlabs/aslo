@@ -1511,9 +1511,9 @@ class DevelopersController extends AppController
 
             // Save license
             $license_id = $this->Developers->saveLicense(
-                 $data['License'],
-                 $data['Version.License.text'],
-                 $data['form.data.Version.License']);
+                 $this->data['License'],
+                 getitem($this->data, 'Version.License.text'),
+                 getitem($this->params, 'form.data.Version.License'));
             $this->Version->saveField('license_id', $license_id);
 
             // flush cached add-on objects
