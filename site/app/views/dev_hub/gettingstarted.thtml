@@ -45,12 +45,13 @@ $this->viewVars['bodyclass'] = 'inverse getting-started';
 
 <h2><?=___('Getting Started')?></h2>
 
-<div id="newsletter" class="primary" role="main">
+<div id="getting-started" role="main">
 
-</div>
+<?php
+echo $localization->includeLocalPage("docs/gettingstarted",
+    array($html->url('/developers'),
+          $html->image('amo2009/developers/addon-builder.png', array('alt' => '', 'class' => 'right-image')),
+          $html->image('amo2009/illustrations/logo-add-ons-half.png', array('alt' => '', 'class' => 'right-image'))));
+?>  
 
-<div class="secondary" role="complementary">
-    <div class="highlight">
-
-    </div>
 </div>
