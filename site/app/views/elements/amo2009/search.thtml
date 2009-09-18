@@ -294,17 +294,19 @@ if ($collectionSearch) {
 ?>
 
     var current_app_id = 0;
-    if (gIsFirefox || gIsSeaMonkey || gIsMobile) {
+    if (gIsFirefox || gIsSeaMonkey) {
         version = gBrowserVersion.split(".");
         low_appversion = version[0]+"."+parseInt(version[1]);
     }
 
-    if (gIsFirefox)
+    if (gIsFirefox) {
         current_app_id = APP_FIREFOX;
-    else if (gIsSeaMonkey)
+        if (gIsMobile && (<?=APP_ID?> == APP_MOBILE)) {
+            current_app_id = APP_MOBILE;
+        }
+    } else if (gIsSeaMonkey) {
         current_app_id = APP_SEAMONKEY;
-    else if (gIsMobile)
-        current_app_id = APP_MOBILE;
+    }
 
     default_low = ( ('<?=$oldver ?>' == '-1' || '<?=$oldver?>' == '')  && current_app_id == <?=APP_ID; ?>) ? low_appversion : <?=$lver ?>;
 
@@ -394,7 +396,7 @@ if ($collectionSearch) {
                 // most advanced fields do not apply to collection search
                 $('select:not(#appid,#pp),input', $('#advanced-search')).attr('disabled', 'disabled');
             } else {
-                if (gIsMobile) {
+                if (gIsMobile && (current_app_id == APP_MOBILE)) {
                     l.text("<?=___('search for mobile add-ons')?>");
                 } else {
                     l.text("<?=___('search for add-ons')?>");
