@@ -1,0 +1,104 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Scott McCammon <smccammon@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+/**
+ *  Required parameters:
+ *  
+ *  $feed array of news events
+ *  $limit integer specifying the maximim number of events to render
+ *  $addon_id integer or false if events are for multiple addons
+ *  $addon string name of add-on specified by $addon_id
+ */
+
+    $length = count($feed) > $limit ? $limit : count($feed); 
+?>
+<div class="addon-feed-loading">
+    <img src="<?=$html->urlImage('ajax_loading.gif')?>" width="15" height="15" alt="loading" >
+</div>
+<div class="addon-feed">
+    <h3>
+        <?php if ($addon_id): ?>
+            <?=sprintf(___('Recent Activity for <a href="%1$s">%2$s</a>'),
+                $html->url('/developers/feed/'.$addon_id), $addon)?>
+        <?php else: ?>
+            <?=sprintf(___('Recent Activity for <a href="%1$s">All Add-ons</a>'), 
+                $html->url('/developers/feed/all'))?>
+        <?php endif; ?>
+    </h3>
+    <ul class="addon-events">
+    <?php foreach (array_slice($feed, 0, $length, true) as $event): ?>
+        <li class="addon-event<?=(!empty($event['class']) ? " {$event['class']}" : '')?>">
+            <span class="icon"></span>
+            <p><?=$event['story']?></p>
+            <p class="date"><?=$html->timeAgo(strtotime($event['created']))?></p>
+        </li>
+    <?php endforeach; ?>
+    <?php if (count($feed) == 0): ?>
+        <li class="addon-event">
+            <p><?=___('No recent activity found.')?></p>
+        </li>
+    <?php elseif (count($feed) > $limit): ?>
+        <li class="addon-event older-activity">
+            <p><?php if ($addon_id): ?>
+                <?=$html->linkNoApp(sprintf(___('Older activity for %1$s'), $addon),
+                                    '/developers/feed/'.$addon_id)?>
+                <?php else: ?>
+                <?=$html->linkNoApp(___('Older activity for all add-ons'),
+                                    '/developers/feed/all')?>
+                <?php endif; ?>
+            </p>
+        </li>
+    <?php endif; ?>
+    </ul>
+</div>
+<?php if ($addon_id): ?>
+<ul class="addon-info">
+    <li><?=$html->linkNoApp(___('Edit Add-on'),
+                            '/developers/addon/edit/'.$addon_id,
+                            array('class' => 'edit'))?></li>
+    <li><?=$html->linkNoApp(___('Statistics'),
+                            '/statistics/addon/'.$addon_id,
+                            array('class' => 'statistics'))?></li>
+    <li><?=$html->linkNoApp(___('Status'),
+                            '/developers/addon/status/'.$addon_id,
+                            array('class' => 'status'))?></li>
+    <li><?=$html->linkNoApp(___('Versions &amp; Files'),
+                            '/developers/versions/'.$addon_id,
+                            array('class' => 'versions'))?></li>
+</ul>
+<?php endif; ?>

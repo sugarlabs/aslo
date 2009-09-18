@@ -683,15 +683,15 @@ p.summary {
 }
 .addon-list ul {
     margin-bottom: 0;
+    padding-bottom: 10px;
 }
 
 .addon-list h3 {
     margin:0 0 0.5em 0;
-    font-size: 2.154em;
+    font-size: 1.5em;
 }
 
 .addon-list li a {
-    background: url(../../img/default_icon.png) center left no-repeat;
     padding: 10px 0 10px 45px;
     margin-right:21px;
     display:block;
@@ -702,11 +702,30 @@ p.summary {
     margin-right: 0;
     margin-left: 21px;
     padding: 10px 45px 10px 0;
-    background-position: center right;
 }
 
 .addon-list li a:visited {
     color: #0055EE;
+}
+
+.addon-list li a .icon {
+    background: transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.html-rtl .addon-list li a .icon {
+    left: auto;
+    right: 0;
+}
+
+.addon-list li {
+    position: relative;
+}
+
+.addon-list li:last-child a {
+    border-bottom: none;
 }
 
 .addon-list li.active {
@@ -722,6 +741,7 @@ p.summary {
 .addon-list li.active a {
     font-weight:bold;
 }
+
 .addon-list li.more {
     font-size: 0.85em;
 }
@@ -733,6 +753,17 @@ p.summary {
     padding-bottom: 5px;
 }
 
+.addon-feed-loading {
+    float: right;
+    display: none;
+    padding: 24px 24px 10px 10px;
+}
+
+.html-rtl .addon-feed-loading {
+    float: left;
+    padding: 24px 10px 10px 24px;
+}
+
 .secondary .addon-list {
     border-right: none;
 }
@@ -741,50 +772,17 @@ p.summary {
     border-left: none;
 }
 
-.secondary .addon-list h3 {
-    margin-bottom: 0;
-}
-
-.secondary .addon-list ul {
-    padding-bottom: 20px;
-}
-
 .secondary .addon-list li.active {
    background: none;
    margin: 0;
 }
 
 .secondary .addon-list li a {
-    background: none;
     font-weight: normal;
-    padding:5px 0 14px 45px;
-}
-
-.html-rtl .secondary .addon-list li a {
-    padding:5px 45px 14px 0;
 }
 
 .secondary .addon-list li.active a {
     font-weight: bold;
-}
-
-.secondary .addon-list li a .icon {
-    background: none;
-    margin-left: -45px;
-    margin-bottom: -16px;
-    padding: 4px 10px 4px 4px;
-}
-
-.html-rtl .secondary .addon-list li a .icon {
-    background: none;
-    margin-left: 0;
-    margin-right: -45px;
-    margin-bottom: -12px;
-    padding: 4px 4px 4px 10px;
-}
-
-.secondary .addon-list li:last-child a {
-    border-bottom: none;
 }
 
 .addon-feed-wrapper {
@@ -807,6 +805,7 @@ p.summary {
 
 .addon-events {
     margin: 0;
+    min-height: 240px;
 }
 
 .addon-event {

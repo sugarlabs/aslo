@@ -1,12 +1,50 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * The Mozilla Foundation.
+ * Portions created by the Initial Developer are Copyright (C) 2009
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Ryan Doherty <rdoherty@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+?>
 <div class="featured hub-developer">
     <div class="featured-inner">
         <div class="addon-list">
             <h3><?php echo ___('My Add-ons');?></h3>
             <ul>
                 <li <?php if($feed['type'] == 'full') { echo 'class="active"';}?>>
-                    <a href="<?php echo $html->url('/developers');?>">
-                        <?php echo ___('All Add-ons');?>
-                    </a>
+                    <?=$html->linkNoApp(
+                        '<img src="'.$this->controller->Image->getAddonIconURL(0).'" alt="" width="32" height="32" class="icon" />'.___('All Add-ons'),
+                        '/developers')?>
                 </li>
                 <?php
                     $limit = 5;
@@ -15,9 +53,9 @@
                     foreach($visibleAddons as $id => $name) { 
                 ?>
                     <li <?php if($id == $active_addon_id) { echo 'class="active"';} ?>>
-                        <a href="<?php echo $html->url('/developers?addon='.$id);?>">
-                            <?php echo $name;?>
-                        </a>
+                        <?=$html->linkNoApp(
+                            '<img src="'.$this->controller->Image->getAddonIconURL($id).'" alt="" width="32" height="32" class="icon" />'.$name,
+                            '/developers?addon='.$id)?>
                     </li>
                 <?php } ?>
                 <?php if(count($addons) > $limit) { ?>
@@ -29,78 +67,32 @@
         </div> 
 
         <div class="addon-feed-wrapper">
-            <div class="addon-feed">
-                <h3>
-                    <?php if($feed['type'] == 'full') { ?>
-                        <?php echo sprintf(___('Recent Activity for <a href="%1$s">All Add-ons</a>'), 
-                            $html->url('/developers/feed/all'));?>
-                    <?php } else { ?>
-                        <?php echo sprintf(___('Recent Activity for <a href="%1$s">%2$s</a>'),
-                            $html->url('/developers/feed/'.$active_addon_id), $feed['addon']); ?>
-                    <?php } ?>
-                </h3>
-                <ul class="addon-events">
-                    <li class="addon-event collection">
-                        <span class="icon"></span>
-                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
-                        href="#">Lorem Ipsum</a></p>
-                        <p class="date"><?php echo
-                        $html->timeAgo(time()-(60*60*24*3));?></p>
-                    </li>
-
-                    <li class="addon-event review_added">
-                        <span class="icon"></span>
-                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
-                        href="#">Lorem Ipsum</a></p>
-                        <p class="date">Today at 5:00pm</p>
-                    </li>
-                    <li class="addon-event approved">
-                        <span class="icon"></span>
-                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
-                        href="#">Lorem Ipsum</a></p>
-                        <p class="date">Today at 5:00pm</p>
-                    </li>
-                    <li class="addon-event preview_add">
-                        <span class="icon"></span>
-                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
-                        href="#">Lorem Ipsum</a></p>
-                        <p class="date">Today at 5:00pm</p>
-                    </li>
-                    
-                    <li class="addon-event retained">
-                        <span class="icon"></span>
-                        <p><a href="#">Add-on Lorem Ipsum</a> was added to collection <a
-                        href="#">Lorem Ipsum</a></p>
-                        <p class="date">Today at 5:00pm</p>
-                    </li>
-                    <li class="addon-event older-activity">
-                        <p>
-                            <?php if($active_addon_id) { ?>
-                                <a href="<?php echo
-                                $html->url('developers/feed/'.$active_addon_id);?>">
-                                    <?php echo sprintf( ___('Older activity for %1$s'), $feed['addon']);?>
-                                </a>
-                            <?php } else { ?>
-                                <a href="<?php echo $html->url('developers/feed/all')?>">
-                                    <?php echo ___('Older activity for all add-ons');?>
-                                </a>
-                            <?php } ?>
-                        </p>
-                    </li>
-                </ul>
-            </div>
-            <?php if($active_addon_id) { ?>
-                <ul class="addon-info">
-                    <li><a href="<?php echo
-                    $html->url('/developers/addon/edit/'.$active_addon_id);?>" class="edit"><?php echo  ___('Edit Add-on');?></a></li>
-                    <li><a href="<?php echo
-                    $html->url('/statistics/addon/'.$active_addon_id);?>" class="statistics"><?php echo ___('Statistics');?></a></li>
-                    <li><a href="<?php echo
-                    $html->url('/developers/addon/status/'.$active_addon_id);?>" class="status"><?php echo  ___('Status');?></a></li>
-                    <li><a href="<?php echo
-                    $html->url('/developers/versions/'.$active_addon_id);?>" class="versions"><?php echo  ___('Versions &amp; Files');?></a></li>
-                </ul>
-            <?php } ?>
+            <?=$this->renderElement('amo2009/hub/promo_feed', array(
+                                        'feed'     => $feed['feed'],
+                                        'limit'    => 4,
+                                        'addon_id' => $active_addon_id,
+                                        'addon'    => $feed['addon']))?>
         </div>
     </div>
 </div> 
+
+<script type="text/javascript">
+// <![CDATA[
+    $(document).ready(function() {
+        // fetch recent activity for clicked add-on
+        $('.addon-list li:not(.more) a').click(function(){
+            $('.addon-feed-loading').show();
+            var li = $(this).parent();
+            $.get($(this).attr('href'), function(data, status){
+                if (status == 'success') {
+                    $('.addon-feed-wrapper').html(data);
+                    $('.addon-list li:not(.more)').removeClass('active');
+                    $(li).addClass('active');
+                }
+                $('.addon-feed-loading').hide();
+            }, 'html');
+            return false;
+        });
+    });
+// ]]>
+</script>

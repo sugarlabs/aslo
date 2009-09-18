@@ -38,6 +38,31 @@ class DevHubController extends AppController {
         $session = $this->Session->read('User');
         $all_addons = (empty($session) ? array() : $this->Addon->getAddonsByUser($session['id']));
         $is_developer = !empty($all_addons);
+
+        if(isset($_GET['addon']) && isset($all_addons[$_GET['addon']])) {
+            $feed['type'] = 'addon';
+            $feed['feed'] = array();
+            $feed['feed'] = $this->Hub->getNewsForAddons(array($_GET['addon']));
+            $feed['addon'] = $all_addons[$_GET['addon']];
+            $active_addon_id = $_GET['addon'];
+        } else {
+            $feed['type'] = 'full';
+            $feed['feed'] = $this->Hub->getNewsForAddons(array_keys($all_addons));
+            $feed['addon'] = false;
+            $active_addon_id = false;
+        }
+
+        // Ajax requests get add-on news only
+        if ($this->isAjax()) {
+            print $this->renderElement('amo2009/hub/promo_feed', array(
+                'feed' => $feed['feed'],
+                'limit' => 4,
+                'addon_id' => $active_addon_id,
+                'addon' => $feed['addon'],
+            ));
+            return;
+        }
+
         $blog_posts = $this->BlogPost->findAll(NULL, NULL,
             "BlogPost.date_posted DESC");
         $events = $this->HubEvent->findAll('HubEvent.date >= CURDATE()', NULL,
@@ -49,21 +74,8 @@ class DevHubController extends AppController {
             $promos = $this->HubPromo->getVisitorPromos();
         }
 
-
         $this->dontsanitize[] = 'date';
         $this->publish('events', $events);
-        if(isset($_GET['addon']) && isset($all_addons[$_GET['addon']])) {
-            $feed['type'] = 'addon';
-            $feed['feed'] = array();
-            $feed['addon'] = $all_addons[$_GET['addon']];
-            $active_addon_id = $_GET['addon'];
-        } else {
-            $feed['type'] = 'full';
-            $feed['feed'] = array();
-            $feed['addon'] = false;
-            $active_addon_id = false;
-        }
-
         $this->set('active_addon_id', $active_addon_id); 
         $this->set('feed', $feed);
         $this->set('is_developer', $is_developer);
