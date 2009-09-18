@@ -224,14 +224,12 @@ class SearchController extends AppController
         $_result_ids = array();
         $total       = 0;
         
-        if ($_terms) {
-            try {
-                list($_result_ids, $total) = $as->query($_terms, $search_options);
-            }
-            catch (AddonsSearchException $e) {
-                header("HTTP/1.1 503 Service Unavailable", true, 503);
-                $this->publish('error', "Search is temporarily unavailable.");
-            }
+        try {
+            list($_result_ids, $total) = $as->query($_terms, $search_options);
+        }
+        catch (AddonsSearchException $e) {
+            header("HTTP/1.1 503 Service Unavailable", true, 503);
+            $this->publish('error', "Search is temporarily unavailable.");
         }
         //, $_tag, false, $category[0], $category[1], NULL, $lver, $atype, $pid, $lup, $sort);
 
