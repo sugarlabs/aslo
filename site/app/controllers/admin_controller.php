@@ -823,7 +823,7 @@ class AdminController extends AppController
             return;
         }
             
-        $promos = $this->HubPromo->findAll(null, null, 'HubPromo.modified DESC', null, null, -1);
+        $promos = $this->HubPromo->findAll(null, null, 'HubPromo.visibility DESC, HubPromo.modified DESC', null, null, -1);
 
         $this->set('promos', $promos);
         $this->set('visibilities', HubPromo::$visibilities);
@@ -839,61 +839,32 @@ class AdminController extends AppController
     function _developershubPromoBoxesCreate() {
         $this->breadcrumbs['Create Developers Hub PromoBox'] = '/admin/developershub/promoboxes/create';
         $this->set('breadcrumbs', $this->breadcrumbs);
+        $this->set('suppressJQuery', 0);
 
         if (!empty($this->data)) {
-            $this->HubPromo->save($this->data['HubPromo']);
-
-            //Save translated fields (heading, body)
-            $this->Developers->saveTranslations($this->data, array('HubPromo'));
-            
-            //Log admin action
-            $this->Eventlog->log($this, 'admin', 'hubpromo_create', null, $this->HubPromo->getLastInsertID());
-            
-            $this->flash('PromoBox created!', '/admin/developershub/promoboxes');
-            return;  
-        }
-        
-        $localizedFields = array(
-                                'heading' => array(
-                                                    'type'        => 'input',
-                                                    'display'     => 'Heading',
-                                                    'model'       => 'HubPromo',
-                                                    'field'       => 'heading',
-                                                    'attributes'  => array( 'size' => 40)
-                                ),
-                                'body' => array(
-                                                    'type'        => 'textarea',
-                                                    'display'     => 'Body',
-                                                    'model'       => 'HubPromo',
-                                                    'field'       => 'body',
-                                                    'attributes'  => array('cols' => 40, 'rows' => 6)
-                                )
-                   );
+            if ($this->HubPromo->save($this->data['HubPromo'])) {
+                $id = $this->HubPromo->getLastInsertID();
+                //Log admin action
+                $this->Eventlog->log($this, 'admin', 'hubpromo_create', null, $id);
                 
-        //Retrieve language arrays from bootstrap.
-        global $valid_languages, $native_languages;
-        foreach (array_keys($valid_languages) as $key) {
-            $languages[$key] = $native_languages[$key]['native'];
+                //Save translated fields (name, description)
+                list($localizedFields, $unlocalizedFields) = $this->HubPromo->splitLocalizedFields($this->data['HubPromo']);
+                $this->HubPromo->saveTranslations($id, $this->params['form']['data']['HubPromo'], $localizedFields);
+                
+                $this->flash('PromoBox created!', '/admin/developershub/promoboxes');
+                return;
 
-            $this->HubPromo->setLang($key, $this);
-
-            foreach ($this->HubPromo->translated_fields as $field) {
-                $info[$key][$field] = '';
+            } else {
+                $this->Error->addError('Error creating promobox. Please correct any invalid fields.');
             }
         }
-        
-        //Set up localebox info
-        $this->set('localebox', array('info' => $info,
-                                      'defaultLocale' => 'en-US',
-                                      'languages' => $languages,
-                                      'localizedFields' => $localizedFields));
         
         //Options for visibility select box
         $this->set('visibilities', HubPromo::$visibilities);
 
         $this->set('page', 'developershub');
         $this->set('subpage', 'promoboxes');
-        $this->render('developershub_promoboxes_create');
+        $this->render('developershub_promoboxes_create_edit');    
     }
 
    /**
@@ -902,6 +873,7 @@ class AdminController extends AppController
     function _developershubPromoBoxesEdit($id) {
         $this->breadcrumbs['Edit Developers Hub PromoBox'] = '/admin/developershub/promoboxes/edit/'.$id;
         $this->set('breadcrumbs', $this->breadcrumbs);
+        $this->set('suppressJQuery', 0);
         
         $this->HubPromo->id = $id;
         
@@ -918,71 +890,35 @@ class AdminController extends AppController
                 return;
             }
             //Edit
-            else {
-                $this->HubPromo->save($this->data['HubPromo']);
-                
+            else if ($this->HubPromo->save($this->data['HubPromo'])) {
                 //Log admin action
                 $this->Eventlog->log($this, 'admin', 'hubpromo_edit', null, $id);
                 
                 //Save translated fields (name, description)
-                $this->Developers->saveTranslations($this->data, array('HubPromo'));
+                list($localizedFields, $unlocalizedFields) = $this->HubPromo->splitLocalizedFields($this->data['HubPromo']);
+                $this->HubPromo->saveTranslations($id, $this->params['form']['data']['HubPromo'], $localizedFields);
                 
                 $this->flash('PromoBox updated!', '/admin/developershub/promoboxes');
                 return;
+            } else {
+                $this->Error->addError('Error saving promobox. Please correct any invalid fields.');
             }
         }
         
         $promobox = $this->HubPromo->read();
-        
         $this->set('promobox', $promobox);
-        
-        $localizedFields = array(
-                                'heading' => array(
-                                                    'type'        => 'input',
-                                                    'display'     => 'Heading',
-                                                    'model'       => 'HubPromo',
-                                                    'field'       => 'heading',
-                                                    'attributes'  => array( 'size' => 40)
-                                ),
-                                'body' => array(
-                                                    'type'        => 'textarea',
-                                                    'display'     => 'Body',
-                                                    'model'       => 'HubPromo',
-                                                    'field'       => 'body',
-                                                    'attributes'  => array('cols' => 40, 'rows' => 6)
-                                )
-                   );
-                   
-        //Retrieve language arrays from bootstrap.
-        global $valid_languages, $native_languages;
-        foreach (array_keys($valid_languages) as $key) {
-            $languages[$key] = $native_languages[$key]['native'];
 
-            $this->HubPromo->setLang($key, $this);
-            $promoL = $this->HubPromo->read();
-
-            foreach ($promoL['Translation'] as $field => $translation) {
-                if ($translation['locale'] == $key) {
-                    $info[$key][$field] = $translation['string'];
-                }
-                else {
-                    $info[$key][$field] = '';
-                }
-            }
-        }
-        
-        //Set up localebox info
-        $this->set('localebox', array('info' => $info,
-                                      'defaultLocale' => 'en-US',
-                                      'languages' => $languages,
-                                      'localizedFields' => $localizedFields));
+        // grab translated fields
+        $translations = $this->HubPromo->getAllTranslations($id);
+        $this->set('translations', $translations);
         
         //Options for visibility select box
         $this->set('visibilities', HubPromo::$visibilities);
 
+        $this->publish('promo_id', $id);
         $this->set('page', 'developershub');
         $this->set('subpage', 'promoboxes');
-        $this->render('developershub_promoboxes_edit');    
+        $this->render('developershub_promoboxes_create_edit');    
     }
 
    /**

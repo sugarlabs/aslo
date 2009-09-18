@@ -1,0 +1,105 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Justin Scott <fligtar@gmail.com>.
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *  Scott McCammon <smccammon@mozilla.com>
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+/* Prepare translation box element */
+// Retrieve language arrays from bootstrap.
+global $valid_languages, $native_languages;
+foreach (array_keys($valid_languages) as $key) {
+    $languages[$key] = $native_languages[$key]['native'];
+}
+ksort($languages);
+$this->translationBox = array(
+    'defaultLocale' => LANG,
+    'languages' => $languages,
+    'table' => 'HubPromo',
+    'loaded' => false
+);
+?>
+<div id="content">
+    <?=$this->renderElement('developers/adminmenu');?>
+
+    <div id="content-main">
+        <h3><?=(empty($promo_id) ? 'Create' : 'Edit')?> Developers Hub PromoBox</h3>
+
+        <?php if (!empty($errors['main'])): ?>
+            <div class="error"><?=$errors['main']?></div>
+        <?php endif ?>
+
+        <?=$html->formTag('/admin/developershub/promoboxes/'.(empty($promo_id) ? 'create' : 'edit/'.$promo_id))?>
+
+        <div id="developersForm">
+            <div>
+                <label for="HubPromoVisibility">Visibility</label>
+                <?=$html->selectTag('HubPromo/visibility', $visibilities, (!empty($promobox) ? $promobox['HubPromo']['visibility'] : null), null, null, false)?>
+            </div>
+
+            <div class="clearboth">
+            <?=$this->renderElement('translationbox', array(
+                'field' => 'heading',
+                'translations' => isset($translations['heading']) ? $translations['heading'] : array('en-US'=>''),
+                'height' => '50',
+                'maxLength' => '200',
+                'displayName' => 'Heading',
+                'description' => 'This text will appear between &lt;H3&gt; tags. HTML is allowed.',
+                'graybox' => false,
+            ))?>
+            </div>
+
+            <div><?=$this->renderElement('translationbox', array(
+                'field' => 'body',
+                'translations' => isset($translations['body']) ? $translations['body'] : array('en-US'=>''),
+                'height' => '100',
+                'maxLength' => '1000',
+                'displayName' => 'Body',
+                'description' => 'HTML is allowed.',
+                'graybox' => false,
+            ))?>
+            </div>
+
+            <div class="buttonBox">
+                <?=$html->submit((empty($promo_id) ? 'Create PromoBox' : 'Save PromoBox'))?>
+
+                <?php if (!empty($promo_id)): ?>
+                    <?=$html->submit('Delete PromoBox', array('name' => 'delete', 'class' => 'cancel', 'onClick' => 'return confirm(\'Are you SURE you wish to delete this promobox?\');'))?>
+                <?php endif; ?>
+            </div>
+        </div>
+        </form>
+        <?=$html->link('Back to Developers Hub PromoBox Manager', '/admin/developershub/promoboxes')?>
+    </div>
+</div>

@@ -42,6 +42,8 @@
         <h3>Developers Hub PromoBox Manager</h3>
         <?php 
         if (!empty($promos)) {
+            echo "<p>" . $html->link('Create PromoBox', '/admin/developershub/promoboxes/create') . "</p>";
+
             foreach ($promos as $promo) {
                 echo '<div class="groupItem">';
                 echo $this->renderElement('amo2009/hub/promobox', array(
@@ -49,14 +51,14 @@
                         'body' => $promo['Translation']['body']['string'],
                 ));
                 echo "<p>";
-                echo "<em>Visibility:</em> {$visibilities[$promo['HubPromo']['visibility']]}<br />";
-                echo "<em>Modified:</em> {$promo['HubPromo']['modified']}<br />";
-                echo "</p>";
+                echo "<em>Visibility:</em> {$visibilities[$promo['HubPromo']['visibility']]} | ";
+                echo "<em>Modified:</em> {$promo['HubPromo']['modified']} | ";
                 echo $html->link('Edit PromoBox', '/admin/developershub/promoboxes/edit/'.$promo['HubPromo']['id']);
+                echo "</p>";
                 echo '</div>';
             }
         }
-        echo $html->link('Create PromoBox', '/admin/developershub/promoboxes/create');
+        echo "<p>" . $html->link('Create PromoBox', '/admin/developershub/promoboxes/create') . "</p>";
         ?>
     </div>
 </div>
