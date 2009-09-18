@@ -43,7 +43,7 @@ class DevHubController extends AppController {
             $feed['type'] = 'addon';
             $feed['feed'] = array();
             $feed['feed'] = $this->Hub->getNewsForAddons(array($_GET['addon']));
-            $feed['addon'] = $all_addons[$_GET['addon']];
+            $feed['addon'] = htmlspecialchars($all_addons[$_GET['addon']]);
             $active_addon_id = $_GET['addon'];
         } else {
             $feed['type'] = 'full';
@@ -77,11 +77,11 @@ class DevHubController extends AppController {
 
         $this->dontsanitize[] = 'date';
         $this->publish('events', $events);
-        $this->set('active_addon_id', $active_addon_id); 
+        $this->publish('active_addon_id', $active_addon_id); 
         $this->set('feed', $feed);
-        $this->set('is_developer', $is_developer);
+        $this->publish('is_developer', $is_developer);
         $this->set('blog_posts', $blog_posts);
-        $this->set('addons', $all_addons);
+        $this->publish('addons', $all_addons);
         $this->set('promos', $promos);
         $this->set('bodyclass', 'inverse');
         $this->render('hub');
@@ -166,10 +166,10 @@ class DevHubController extends AppController {
             $this->_publishFeedRss($addons, $session['id'], $addon_id, $filter);
         }
 
-        $this->set('feed_title', $feed_title);
+        $this->publish('feed_title', $feed_title);
         $this->set('feed', $feed);
-        $this->set('is_developer', $is_developer);
-        $this->set('addons', $addons);
+        $this->publish('is_developer', $is_developer);
+        $this->publish('addons', $addons);
         $this->publish('addon_id', $addon_id);
         $this->publish('filter', $filter);
         $this->publish('filters', $filters);

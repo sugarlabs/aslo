@@ -460,6 +460,7 @@ class HubComponent extends Object {
                 } else if ($addonInfo = $this->controller->Addon->getAddon($addon_id)) {
                     $addon_name = $addonInfo['Translation']['name']['string'];
                     $addon = $this->link($addon_name, "/addon/{$addon_id}", $absolute_links);
+                    $this->controller->_sanitizeArray($addon_name);
                     $addons[$addon_id] = array('text' => $addon_name, 'html' => $addon);
                 } else {
                     if (defined('DEBUG') && DEBUG) {
@@ -513,6 +514,7 @@ class HubComponent extends Object {
 
                 $role = $log['Addonlog']['object2_id'];
                 $role = !empty($user_roles[$role]) ? $user_roles[$role] : $role;
+                $this->controller->_sanitizeArray($role);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_USER_WITH_ROLE) {
                     $story = sprintf(___('%1$s made %2$s a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
@@ -558,6 +560,7 @@ class HubComponent extends Object {
             case Addonlog::CHANGE_STATUS:
                 $status = $log['Addonlog']['object1_id'];
                 $status = !empty($statuses[$status]) ? $statuses[$status] : $status;
+                $this->controller->_sanitizeArray($status);
 
                 $story = sprintf(___('%1$s changed %2$s\'s status to %3$s.'), $user, $addon, $status);
                 $story_class = 'status';
@@ -586,6 +589,7 @@ class HubComponent extends Object {
             case Addonlog::EDIT_VERSION:
             case Addonlog::DELETE_VERSION:
                 $version = $log['Addonlog']['name1'];
+                $this->controller->_sanitizeArray($version);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_VERSION) {
                     $story = sprintf(___('%1$s uploaded version %2$s to %3$s.'), $user, $version, $addon);
@@ -606,6 +610,8 @@ class HubComponent extends Object {
             case Addonlog::DELETE_FILE_FROM_VERSION:
                 $file_name = $log['Addonlog']['name1'];
                 $version = $log['Addonlog']['name2'];
+                $this->controller->_sanitizeArray($file_name);
+                $this->controller->_sanitizeArray($version);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_FILE_TO_VERSION) {
                     $story = sprintf(___('%1$s added file %2$s to %3$s %4$s.'), $user, $file_name, $addon, $version);
@@ -623,6 +629,7 @@ class HubComponent extends Object {
             case Addonlog::ESCALATE_VERSION:
             case Addonlog::REQUEST_VERSION:
                 $version = $log['Addonlog']['name1'];
+                $this->controller->_sanitizeArray($version);
 
                 if ($log['Addonlog']['type'] == Addonlog::APPROVE_VERSION) {
                     $story = sprintf(___('%1$s approved %2$s %3$s for public.'), $user, $addon, $version);
@@ -671,6 +678,7 @@ class HubComponent extends Object {
                 // else use logged name
                 } else {
                     $name = $log['Addonlog']['name1'];
+                    $this->controller->_sanitizeArray($name);
                 }
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_TO_COLLECTION) {
@@ -722,6 +730,8 @@ class HubComponent extends Object {
             case Addonlog::ADD_APPVERSION:
                 $app = $applications[$log['Addonlog']['object1_id']];
                 $appversion = $log['Addonlog']['name2'];
+                $this->controller->_sanitizeArray($app);
+                $this->controller->_sanitizeArray($appversion);
 
                 $story = sprintf(___('Add-ons can now be compatible with %1$s %2$s.'), $app, $appversion);
                 $story_class = 'versions_compat_add';
