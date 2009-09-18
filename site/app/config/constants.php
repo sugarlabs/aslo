@@ -126,7 +126,7 @@ if (!defined('FILES_URL'))
 
 // This is the table to use in the downloads controller.  We put this in to
 // temporarily redirect downloads in the event where we have to alter the
-// downloads table.  The table defined in config is a tmp table so we don't 
+// downloads table.  The table defined in config is a tmp table so we don't
 // lose data.  If it's not there, we set the default here.
 if (!defined('DOWNLOADS_TABLE'))
     define('DOWNLOADS_TABLE','downloads');
@@ -254,7 +254,7 @@ $valid_status = array(STATUS_SANDBOX, STATUS_PENDING, STATUS_NOMINATED, STATUS_P
  * Platforms
  * This was placed here for use mainly in the update service.
  */
-define('PLATFORM_ANY', '-1'); //used by advanced search	
+define('PLATFORM_ANY', '-1'); //used by advanced search
 define('PLATFORM_ALL', '1');
 define('PLATFORM_LINUX', '2');
 define('PLATFORM_MAC', '3');
@@ -350,4 +350,12 @@ if (!defined('DEVELOPER_FEED_URL')) {
     define('DEVELOPER_FEED_URL',
         'http://blog.mozilla.com/addons/category/developers/feed/');
 }
+
+/**
+ * about:addons newsletter
+ */
+define('ABOUT_ADDONS_FEED_URL', 'http://us1.campaign-archive.com/feed?u=168bf22f976f5a68fe5770d19&id=65a473e3bf');
+define('ABOUT_ADDONS_FEED_HOME', 'http://us1.campaign-archive.com/home/?u=168bf22f976f5a68fe5770d19&id=65a473e3bf');
+define('ABOUT_ADDONS_SUBSCRIBE_URL', 'http://mozilla.us1.list-manage.com/subscribe/post?u=168bf22f976f5a68fe5770d19&amp;id=65a473e3bf');
+define('ABOUT_ADDONS_LIST_ID', '65a473e3bf');
 ?>

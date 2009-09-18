@@ -1,11 +1,14 @@
 <?php
 
+vendor('mailchimp/api');
+
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
     var $uses = array('Addon', 'Addonlog', 'Application', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'HubRssKey', 'User');
-    var $components = array('Hub', 'Image', 'Pagination');
+    var $components = array('Httplib', 'Hub', 'Image', 'Pagination');
     var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
+    var $exceptionCSRF = array('/developers/community/newsletter/');
 
     function beforeFilter() {
         /* These are public pages. */
@@ -77,7 +80,7 @@ class DevHubController extends AppController {
 
         $this->dontsanitize[] = 'date';
         $this->publish('events', $events);
-        $this->publish('active_addon_id', $active_addon_id); 
+        $this->publish('active_addon_id', $active_addon_id);
         $this->set('feed', $feed);
         $this->publish('is_developer', $is_developer);
         $this->set('blog_posts', $blog_posts);
@@ -189,7 +192,7 @@ class DevHubController extends AppController {
         $rssAdd = array();
 
         if ($rss_key = $this->HubRssKey->getKeyForUser($user_id)) {
-            $rssAdd[] = array("/developers/feed/all?privaterss={$rss_key}", 
+            $rssAdd[] = array("/developers/feed/all?privaterss={$rss_key}",
                                 ___('News Feed for My Add-ons'));
 
             if ($addon_id == 'all') {
@@ -201,7 +204,7 @@ class DevHubController extends AppController {
 
         foreach ($addons as $id => $name) {
             if ($rss_key = $this->HubRssKey->getKeyForAddon($id)) {
-                $rssAdd[] = array("/developers/feed/{$id}?privaterss={$rss_key}", 
+                $rssAdd[] = array("/developers/feed/{$id}?privaterss={$rss_key}",
                                     sprintf(___('News Feed for %1$s'), $name));
 
                 if ($addon_id == $id) {
@@ -470,9 +473,49 @@ class DevHubController extends AppController {
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
             ___('Developer Hub') => '/developers'
             ));
-        $this->render('newsletter');
+
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $address = $_POST['address'];
+            $mailchimp = new MCAPI(MAILCHIMP_API_KEY);
+            /* The last param is some stupid thing required by mailchimp. */
+            $result = $mailchimp->listSubscribe(ABOUT_ADDONS_LIST_ID,
+                                                $address, array(''));
+            if ($mailchimp->errorCode) {
+                $this->publish('mailchimp_error', $mailchimp->errorMessage);
+            } else {
+                $this->Session->write('newsletter_subscribed', True);
+                return $this->redirect('/developers/community/newsletter/');
+            }
+        }
+
+        $this->publish('newsletter_subscribed', $this->Session->delete('newsletter_subscribed'));
+
+        $feeds = array();
+        $feed = $this->_getFeed(ABOUT_ADDONS_FEED_URL);
+        $feedCount = min(5, count($feed->channel->item));
+        for ($i = 0; $i < $feedCount; $i++) {
+            $item = $feed->channel->item[$i];
+            $feeds[] = array('title' => $item->title,
+                             'link' => $item->link,
+                             'date' => $item->pubDate);
+        }
+
+        $this->publish('feeds', $feeds);
+        return $this->render('newsletter');
     }
-    
+
+    /* Fetch and parse the feed at $url, caching the result for $expires seconds. */
+    function _getFeed($url, $expires=3600 /* seconds */) {
+        $key = 'feed:' . $url;
+        $feed = $this->Memcaching->get($key);
+        if (!$feed) {
+            list($feed, $info) = $this->Httplib->get($url);
+            $this->Memcaching->set($key, $feed, null, $expires);
+        }
+        return simplexml_load_string($feed);
+    }
+
     /**
      * Getting Started
      */

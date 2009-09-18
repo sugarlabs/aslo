@@ -43,27 +43,43 @@ $this->viewVars['bodyclass'] = 'inverse newsletter';
 
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
+<?php if ($newsletter_subscribed): ?>
+  <?=$this->renderElement('notification', array(
+    'type' => 'success',
+    'msg' => ___("Thanks for subscribing to about:addons!")))?>
+<?php endif ?>
+
 <h2><?=___('about:addons Newsletter')?></h2>
 
 <div id="newsletter" class="primary" role="main">
-    <p><?=___('about:addons is our monthly newsletter highlighting noteworthy information and events in the world of add-ons. Take a look through our archives below and sign up!')?></p>
-    
-    <h3>Recent Issues</h3>
-    <ul>
-        <li><a href="http://us1.campaign-archive.com/feed?u=168bf22f976f5a68fe5770d19&id=65a473e3bf">down here will be an RSS feed of about:addons articles!</a></li>
-        <li>June 30, 2009 - <a href="#">about:addons issue title</a></li>
-    </ul>
-    
-    <p><a href="http://us1.campaign-archive.com/home/?u=168bf22f976f5a68fe5770d19&id=65a473e3bf">See all past issues</a></p>
+  <p><?=___('about:addons is our monthly newsletter highlighting noteworthy information and events in the world of add-ons. Take a look through our archives below and sign up!')?></p>
+
+  <h3><?=___('Recent Issues')?></h3>
+  <ul class="xoxo">
+  <?php foreach ($feeds as $feed): ?>
+    <li>
+      <span><?=strftime(___('%B %e, %Y'), strtotime($feed['date']))?></span>
+      &mdash;
+      <a href="<?=$feed['link']?>"><?=$feed['title']?></a>
+    </li>
+  <?php endforeach ?>
+  </ul>
+
+  <p><a href="<?=ABOUT_ADDONS_FEED_HOME?>"><?=___('See all past issues')?></a></p>
 </div>
 
 <div class="secondary" role="complementary">
-    <div class="highlight">
-        <h3><?=___('Subscribe by Email')?></h3>
-        <p>Enter your email address to subscribe to our monthly newsletter.</p>
-        <form action="http://mozilla.us1.list-manage.com/subscribe/post?u=168bf22f976f5a68fe5770d19&amp;id=65a473e3bf" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-        <input type="text" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-	<input type="submit" value="<?=___('Subscribe')?>" name="subscribe" id="mc-embedded-subscribe" class="btn">
-        </form>
-    </div>
+  <div class="highlight">
+    <h3><?=___('Subscribe by Email')?></h3>
+    <p><?=___('Enter your email address to subscribe to our monthly newsletter.')?></p>
+    <form action="<?=$html->url('/developers/community/newsletter/')?>"
+          method="post">
+      <?=$html->hiddenSession()?>
+      <?php if (isset($mailchimp_error)): ?>
+        <div class="error-message"><?=$mailchimp_error?></div>
+      <?php endif ?>
+      <input type="text" value="" name="address" />
+	  <input type="submit" value="<?=___('Subscribe')?>" />
+    </form>
+  </div>
 </div>
