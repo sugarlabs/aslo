@@ -50,6 +50,14 @@
             <p class="addon-search-message"><?=___('You do not have any add-ons hosted on Mozilla Add-ons.')?></p>
         <?php else: ?>
             <div class="listing-header">
+            <?php if (!empty($rss_url)): ?>
+                <div class="addon-feed-rss">
+                    <?=$html->linkNoApp($html->image('amo2009/icons/rss.png', array(
+                        'alt'=> sprintf(___('Subscribe to %1$s'), $feed_title),
+                        'width' => 16,
+                        'height' => 16)), $rss_url)?>
+                </div>
+            <?php endif; ?>
                 <ul>
                     <li><?=___('Show:')?></li>
                     <li<?=(empty($filter) ? ' class="selected"' : '')?>><?=$html->linkNoApp(___('All'), "/developers/feed/{$addon_id}")?></li>

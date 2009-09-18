@@ -360,9 +360,16 @@ class HubComponent extends Object {
     /**
      * Helper for creating an HTML link.
      */
-    function link($title, $url) {
+    function link($title, $url, $absolute=false) {
         $this->controller->_sanitizeArray($title);
-        return '<a href="' . $this->controller->url($url) . "\">{$title}</a>";
+        return '<a href="' . ($absolute ? SITE_URL : '') . $this->controller->url($url) . "\">{$title}</a>";
+    }
+
+    /**
+     * Helper for creating a localized and optionally absolute URL
+     */
+    function url($url, $absolute=false) {
+        return ($absolute ? SITE_URL : '') . $this->controller->url($url);
     }
 
     /**
@@ -371,9 +378,10 @@ class HubComponent extends Object {
      * @param array $ids array of add-on ids
      * @param string $filter 'collections', 'reviews', 'approvals', 'updates', or '' (none)
      * @param array $pagination_options
+     * @param bool $absolute_links if true, makes all links absolute rather than relative
      * @return array of stories
      */
-    function getNewsForAddons($ids, $filter='', $pagination_options=array()) {
+    function getNewsForAddons($ids, $filter='', $pagination_options=array(), $absolute_links=false) {
         $filter_groups = array(
             'collections' => array(
                 Addonlog::ADD_TO_COLLECTION,
@@ -433,7 +441,7 @@ class HubComponent extends Object {
                 } else if ($userInfo = $this->controller->User->getUser($user_id)) {
                     $user_name = trim($userInfo['User']['display_name']);
                     if (empty($user_name)) $user_name = $userInfo['User']['email'];
-                    $user = $this->link($user_name, "/users/info/{$user_id}");
+                    $user = $this->link($user_name, "/users/info/{$user_id}", $absolute_links);
                     $users[$user_id] = $user;
                 } else {
                     if (defined('DEBUG') && DEBUG) {
@@ -448,46 +456,50 @@ class HubComponent extends Object {
             $addon_id = $log['Addonlog']['addon_id'];
             if (!empty($addon_id)) {
                 if (isset($addons[$addon_id])) {
-                    $addon = $addons[$addon_id];
+                    $addon = $addons[$addon_id]['html'];
                 } else if ($addonInfo = $this->controller->Addon->getAddon($addon_id)) {
-                    $addon = $this->link($addonInfo['Translation']['name']['string'], "/addon/{$addon_id}");
-                    $addons[$addon_id] = $addon;
+                    $addon_name = $addonInfo['Translation']['name']['string'];
+                    $addon = $this->link($addon_name, "/addon/{$addon_id}", $absolute_links);
+                    $addons[$addon_id] = array('text' => $addon_name, 'html' => $addon);
                 } else {
                     if (defined('DEBUG') && DEBUG) {
                         $addon = '<b>UNKNOWN ADDON</b>';
                     }
-                    $addons[$addon_id] = $addon;
+                    $addons[$addon_id] = array('text' => $addon, 'html' => $addon);
                 }
             }
 
-            if (!empty($log['Addonlog']['addon_id'])) {
-                if (empty($addonNames[$log['Addonlog']['addon_id']])) {
-                    $addonInfo = $this->controller->Addon->getAddon($log['Addonlog']['addon_id']);
-                    $addon_name = $addonInfo['Translation']['name']['string'];
-                    $addon = $this->link($addon_name, '/addon/'.$log['Addonlog']['addon_id']);
-                }
+            // default title (for rss) is the add-on's name
+            if (!empty($addons[$addon_id]['text'])) {
+                $story_title = $addons[$addon_id]['text'];
+            } else {
+                $story_title = '';
             }
-            
+
             // determine story based on log type
             switch ($log['Addonlog']['type']) {
             case Addonlog::CREATE_ADDON:
                 $story = sprintf(___('%1$s created %2$s.'), $user, $addon);
                 $story_class = 'addon_created';
+                $story_link = $this->url("/developers/dashboard#addon-{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::EDIT_PROPERTIES:
                 $story = sprintf(___('%1$s edited %2$s\'s properties.'), $user, $addon);
                 $story_class = 'properties_edited';
+                $story_link = $this->url("/developers/addon/edit/{$addon_id}/properties", $absolute_links);
                 break;
 
             case Addonlog::EDIT_DESCRIPTIONS:
                 $story = sprintf(___('%1$s edited %2$s\'s descriptions.'), $user, $addon);
                 $story_class = 'descriptions_edited';
+                $story_link = $this->url("/developers/addon/edit/{$addon_id}/descriptions", $absolute_links);
                 break;
 
             case Addonlog::EDIT_CATEGORIES:
                 $story = sprintf(___('%1$s modified %2$s\'s category associations.'), $user, $addon);
                 $story_class = 'categories_modified';
+                $story_link = $this->url("/developers/addon/edit/{$addon_id}/categories", $absolute_links);
                 break;
 
             case Addonlog::ADD_USER_WITH_ROLE:
@@ -495,7 +507,9 @@ class HubComponent extends Object {
                 $userInfo = $this->controller->User->getUser($log['Addonlog']['object1_id']);
                 $user_name = trim($userInfo['User']['display_name']);
                 if(empty($user_name)) $user_name = $userInfo['User']['email'];
-                $user2 = $this->link($user_name, '/users/info/'.$log['Addonlog']['object1_id']);
+                $user2 = $this->link($user_name,
+                                        '/users/info/'.$log['Addonlog']['object1_id'],
+                                        $absolute_links);
 
                 $role = $log['Addonlog']['object2_id'];
                 $role = !empty($user_roles[$role]) ? $user_roles[$role] : $role;
@@ -508,31 +522,37 @@ class HubComponent extends Object {
                     $story = sprintf(___('%1$s removed %2$s as a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
                     $story_class = 'author_removed';
                 }
+                $story_link = $this->url("/developers/addon/edit/{$addon_id}/authors", $absolute_links);
                 break;
 
             case Addonlog::EDIT_CONTRIBUTIONS:
                 $story = sprintf(___('%1$s modified contributions settings for %2$s.'), $user, $addon);
                 $story_class = 'contributions_modified';
+                $story_link = $this->url("/developers/addon/edit/{$addon_id}/contributions", $absolute_links);
                 break;
 
             case Addonlog::SET_INACTIVE:
                 $story = sprintf(___('%1$s marked %2$s as active.'), $user, $addon);
                 $story_class = 'addon_inactive';
+                $story_link = $this->url("/developers/addon/status/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::UNSET_INACTIVE:
                 $story = sprintf(___('%1$s marked %2$s as inactive.'), $user, $addon);
                 $story_class = 'addon_active';
+                $story_link = $this->url("/developers/addon/status/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::SET_PUBLICSTATS:
                 $story = sprintf(___('%1$s marked %2$s\'s statistics dashboard as public.'), $user, $addon);
                 $story_class = 'stats_public';
+                $story_link = $this->url("/statistics/settings/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::UNSET_PUBLICSTATS:
                 $story = sprintf(___('%1$s marked %2$s\'s statistics dashboard as private.'), $user, $addon);
                 $story_class = 'stats_private';
+                $story_link = $this->url("/statistics/settings/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::CHANGE_STATUS:
@@ -541,21 +561,25 @@ class HubComponent extends Object {
 
                 $story = sprintf(___('%1$s changed %2$s\'s status to %3$s.'), $user, $addon, $status);
                 $story_class = 'status';
+                $story_link = $this->url("/developers/addon/status/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::ADD_PREVIEW:
                 $story = sprintf(___('%1$s added a new preview screenshot to %2$s.'), $user, $addon);
                 $story_class = 'preview_add';
+                $story_link = $this->url("/developers/previews/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::EDIT_PREVIEW:
                 $story = sprintf(___('%1$s modified the preview screenshots for %2$s.'), $user, $addon);
                 $story_class = 'preview_edit';
+                $story_link = $this->url("/developers/previews/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::DELETE_PREVIEW:
                 $story = sprintf(___('%1$s removed a preview screenshot from %2$s.'), $user, $addon);
                 $story_class = 'preview_delete';
+                $story_link = $this->url("/developers/previews/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::ADD_VERSION:
@@ -575,6 +599,7 @@ class HubComponent extends Object {
                     $story = sprintf(___('%1$s deleted version %2$s from %3$s.'), $user, $version, $addon);
                     $story_class = 'version_deleted';
                 }
+                $story_link = $this->url("/developers/versions/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::ADD_FILE_TO_VERSION:
@@ -590,6 +615,7 @@ class HubComponent extends Object {
                     $story = sprintf(___('%1$s deleted file %2$s from %3$s %4$s.'), $user, $file_name, $addon, $version);
                     $story_class = 'file_deleted';
                 }
+                $story_link = $this->url("/developers/versions/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::APPROVE_VERSION:
@@ -614,12 +640,13 @@ class HubComponent extends Object {
                     $story = sprintf(___('%1$s requested more information in order to review %2$s %3$s.'), $user, $addon, $version);
                     $story_class = 'request_info';
                 }
+                $story_link = $this->url("/developers/versions/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::ADD_TAG:
             case Addonlog::REMOVE_TAG:
                 $tag = $log['Addonlog']['name1'];
-                $tag = $this->link($tag, "/tag/{$tag}");
+                $tag = $this->link($tag, "/tag/{$tag}", $absolute_links);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_TAG) {
                     $story = sprintf(___('%1$s tagged %2$s as %3$s.'), $user, $addon, $tag);
@@ -629,6 +656,7 @@ class HubComponent extends Object {
                     $story = sprintf(___('%1$s untagged %2$s as %3$s.'), $user, $addon, $tag);
                     $story_class = 'tag_removed';
                 }
+                $story_link = $this->url("/developers/addon/edit/{$addon_id}/tags", $absolute_links);
                 break;
 
             case Addonlog::ADD_TO_COLLECTION:
@@ -637,7 +665,8 @@ class HubComponent extends Object {
                 $collection = $this->controller->Collection->getCollection($log['Addonlog']['object1_id']);
                 if (!empty($collection['Translation']['name']['string'])) {
                     $name = $this->link($collection['Translation']['name']['string'], 
-                                $this->controller->Collection->getDetailUrl($collection));
+                                $this->controller->Collection->getDetailUrl($collection),
+                                $absolute_links);
 
                 // else use logged name
                 } else {
@@ -651,18 +680,21 @@ class HubComponent extends Object {
                     $story = sprintf(___('%1$s removed %2$s from the %3$s collection.'), $user, $addon, $name);
                 }
                 $story_class = 'collection';
+                $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::ADD_REVIEW:
                 $story = sprintf(___('%1$s wrote a review of %2$s.'), $user, $addon);
                 $story_class = 'review_added';
+                $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::ADD_RECOMMENDED_CATEGORY:
             case Addonlog::REMOVE_RECOMMENDED_CATEGORY:
                 $cat = $this->controller->Category->findById($log['Addonlog']['object1_id'], null, null, -1);
                 $category = $this->link($cat['Translation']['name']['string'],
-                    "/browse/type:{$cat['Category']['addontype_id']}/cat:{$cat['Category']['id']}");
+                    "/browse/type:{$cat['Category']['addontype_id']}/cat:{$cat['Category']['id']}",
+                    $absolute_links);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_RECOMMENDED_CATEGORY) {
                     $story = sprintf(___('%1$s was marked as recommended in the %2$s category.'), $addon, $category);
@@ -672,16 +704,19 @@ class HubComponent extends Object {
                     $story = sprintf(___('%1$s was removed as recommended in the %2$s category.'), $addon, $category);
                     $story_class = 'recommended_remove';
                 }
+                $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::ADD_RECOMMENDED:
                 $story = sprintf(___('%1$s was added to the Recommended List.'), $addon);
                 $story_class = 'recommended_add';
+                $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::REMOVE_RECOMMENDED:
                 $story = sprintf(___('%1$s was removed from the Recommended List.'), $addon);
                 $story_class = 'recommended_remove';
+                $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::ADD_APPVERSION:
@@ -690,22 +725,30 @@ class HubComponent extends Object {
 
                 $story = sprintf(___('Add-ons can now be compatible with %1$s %2$s.'), $app, $appversion);
                 $story_class = 'versions_compat_add';
+                $story_link = $this->url("/", $absolute_links);
+                $story_title = $app;
                 break;
 
             case Addonlog::CUSTOM_TEXT:
                 $story = $log['Addonlog']['notes'];
                 $this->controller->_sanitizeArray($story);
                 $story_class = 'custom';
+                $story_link = $this->url("/", $absolute_links);
+                $story_title = $story;
                 break;
 
             case Addonlog::CUSTOM_HTML:
                 $story = $log['Addonlog']['notes'];
                 $story_class = 'custom';
+                $story_link = $this->url("/", $absolute_links);
+                $story_title = $story;
                 break;
 
             default:
                 $story = 'unrecognized add-on activity';
                 $story_class = 'custom';
+                $story_link = $this->url("/", $absolute_links);
+                $story_title = $story;
                 break;
             }
 
@@ -716,6 +759,8 @@ class HubComponent extends Object {
                 'created' => $log['Addonlog']['created'],
                 'story' => $story,
                 'class' => $story_class,
+                'link' => $story_link,
+                'title' => $story_title,
             );
         }
 

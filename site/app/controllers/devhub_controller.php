@@ -3,9 +3,9 @@
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
-    var $uses = array('Addon', 'Addonlog', 'Application', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'User');
+    var $uses = array('Addon', 'Addonlog', 'Application', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'HubRssKey', 'User');
     var $components = array('Hub', 'Image', 'Pagination');
-    var $helpers = array('Html', 'Link', 'Localization', 'Pagination');
+    var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
 
     function beforeFilter() {
         /* These are public pages. */
@@ -70,6 +70,7 @@ class DevHubController extends AppController {
 
         if ($is_developer) {
             $promos = $this->HubPromo->getDeveloperPromos();
+            $this->_publishFeedRss($all_addons, $session['id']);
         } else {
             $promos = $this->HubPromo->getVisitorPromos();
         }
@@ -86,6 +87,7 @@ class DevHubController extends AppController {
         $this->render('hub');
     }
 
+
     /**
      * Add-on news feed
      */
@@ -93,6 +95,12 @@ class DevHubController extends AppController {
         // The Hub recognizes two audiences:
         //   developers => anyone logged in and who has 1 or more add-ons
         //   visitors => everyone else (logged in or not)
+
+        // Any feed url can be turned into RSS by appending a secret key
+        if (!empty($this->params['url']['privaterss'])) {
+            return $this->_feedRss($addon_id, $this->params['url']['privaterss']);
+        }
+
         $session = $this->Session->read('User');
         $addons = (empty($session) ? array() : $this->Addon->getAddonsByUser($session['id']));
 
@@ -154,6 +162,10 @@ class DevHubController extends AppController {
             ___('News Feeds') => '/developers/feed/all',
         ));
 
+        if (!empty($session)) {
+            $this->_publishFeedRss($addons, $session['id'], $addon_id, $filter);
+        }
+
         $this->set('feed_title', $feed_title);
         $this->set('feed', $feed);
         $this->set('is_developer', $is_developer);
@@ -162,6 +174,109 @@ class DevHubController extends AppController {
         $this->publish('filter', $filter);
         $this->publish('filters', $filters);
         $this->render('feed');
+    }
+
+
+    /**
+     * Publish rss_url and rssAdd auto-discovery for a user
+     *
+     * @param array $addons array(addon_id => addon_name, ...)
+     * @param int $user_id
+     * @param mixed $addon_id or 'all'
+     * @param string $filter
+     */
+    function _publishFeedRss($addons, $user_id, $addon_id='all', $filter='') {
+        $rssAdd = array();
+
+        if ($rss_key = $this->HubRssKey->getKeyForUser($user_id)) {
+            $rssAdd[] = array("/developers/feed/all?privaterss={$rss_key}", 
+                                ___('News Feed for My Add-ons'));
+
+            if ($addon_id == 'all') {
+                $rss_url = "/developers/feed/{$addon_id}?";
+                $rss_url .= ($filter ? "filter={$filter}&" : '') . "privaterss={$rss_key}";
+                $this->publish('rss_url', $rss_url);
+            }
+        }
+
+        foreach ($addons as $id => $name) {
+            if ($rss_key = $this->HubRssKey->getKeyForAddon($id)) {
+                $rssAdd[] = array("/developers/feed/{$id}?privaterss={$rss_key}", 
+                                    sprintf(___('News Feed for %1$s'), $name));
+
+                if ($addon_id == $id) {
+                    $rss_url = "/developers/feed/{$addon_id}?";
+                    $rss_url .= ($filter ? "filter={$filter}&" : '') . "privaterss={$rss_key}";
+                    $this->publish('rss_url', $rss_url);
+                }
+            }
+        }
+
+        $this->publish('rssAdd', $rssAdd);
+    }
+
+
+    /**
+     * Add-on news feed RSS
+     *
+     * @param mixed $addon_id or 'all' for user addon feed
+     * @param string $rss_key 'privaterss' parameter
+     */
+    function _feedRss($addon_id, $rss_key) {
+        $this->layout = 'rss';
+
+        $key_ok = false;
+        $user_id = false;
+
+        if (is_numeric($addon_id)) {
+            if ($addon_id && ($addon_id == $this->HubRssKey->getAddonForKey($rss_key))) {
+                $key_ok = true;
+                $addons[$addon_id] = $this->Addon->getAddonName($addon_id);
+            }
+        } else if ($addon_id == 'all') {
+            if ($user_id = $this->HubRssKey->getUserForKey($rss_key)) {
+                $key_ok = true;
+                $addons = $this->Addon->getAddonsByUser($user_id);
+            }
+        }
+
+        $filters = array(
+            'collections' => ___('Collections'),
+            'reviews'     => ___('Reviews'),
+            'approvals'   => ___('Approvals'),
+            'updates'     => ___('Updates'),
+        );
+        $filter = isset($this->params['url']['filter']) ? $this->params['url']['filter'] : '';
+        $filter = array_key_exists($filter, $filters) ? $filter : '';
+
+        // RSS feed always gets the 20 newest items
+        $page_options = array(
+            'page' => 1,
+            'show' => 20,
+            'privateParameters' => array('page', 'show', 'sortBy', 'direction'),
+        );
+
+        // Start the presses
+        if ($key_ok) {
+            $feed = $this->Hub->getNewsForAddons(array_keys($addons), $filter, $page_options, true);
+            if ($user_id) {
+                $rss_title = ___('News Feed for My Add-ons');
+            } else {
+                $rss_title = sprintf(___('News Feed for %1$s'), $addons[$addon_id]);
+            }
+            $rss_description = $filter ? $filters[$filter] : '';
+
+        // Invalid key gets an empty feed
+        } else {
+            $feed = array();
+            $rss_title = '';
+            $rss_description = '';
+        }
+
+        $this->set('feed', $feed);
+        $this->publish('rss_title', $rss_title);
+        $this->publish('rss_description', $rss_description);
+        $this->render('feed_rss');
     }
 
 
