@@ -64,20 +64,11 @@ $this->viewVars['bodyclass'] = 'home';
 <div class="secondary" role="complementary">
     <?=$this->renderElement('amo2009/categories')?>
 
-    <?php /*
-        TODO: Enable this when there's content for developer center, leaving it for
-        the markup example
-    */ ?>
-    <?php if (false): ?>
     <div class="highlight">
-        <h3>Create a Firefox Add-on</h3>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-        <p><strong><a href="#">Visit the Developer Center</a></strong></p>
+        <h3><?php echo sprintf(___('Build a %1$s Add-on'), APP_PRETTYNAME); ?></h3>
+        <p><?php echo ___('Find all the tools and resources you need to make your first add-on.'); ?></p>
+        <p><strong><a href="<?php echo $html->url('/developers'); ?>"><?php echo ___('Visit the Developer Hub'); ?></a></strong><?=$this->renderElement('amo2009/new_indicator')?></p>
     </div>
-    <?php endif ?>
 
 </div>
 
