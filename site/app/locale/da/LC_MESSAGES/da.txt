@@ -6,6 +6,14 @@
 msgid ""
 msgstr "Project-Id-Version: addons\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2009-01-16 11:45-0800\nPO-Revision-Date: 2009-02-26 15:08-0800\nLast-Translator: Jesper Kristensen <www.mozilladanmark.dk>\nLanguage-Team: Danish\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# %1$s is the count of files, a number
+# %2$s is a status string like _('Public') or _('Incomplete')
+#, php-format
+msgid "%1$s %2$s file"
+msgid_plural "%1$s %2$s files"
+msgstr[0] "%1$s %2$s fil"
+msgstr[1] "%1$s %2$s filer"
+
 # %1$s is a number
 # %2$s is an application name  
 # %3$s is a number.
@@ -75,12 +83,38 @@ msgstr "%1$s er tilføjet som favoritsamling."
 msgid "%1$s has been removed from your favorite collections."
 msgstr "%1$s er fjernet fra din liste over favoritsamlinger."
 
+# %1 is the add-on name, %2 is the platform
+#, php-format
+msgid "%1$s is not available for %2$s."
+msgstr "%1$s er ikke tilgængelig til %2$s."
+
 # %1$s is a number
 #, php-format
 msgid "%1$s review"
 msgid_plural "%1$s reviews"
 msgstr[0] "%1$s anmeldelse"
 msgstr[1] "%1$s anmeldelser"
+
+# %1$s is a number.
+#, php-format
+msgid "%1$s%% negative votes for this collection"
+msgstr "%1$s%% negative stemmer til denne samling"
+
+# %1$s is a number.
+#, php-format
+msgid "%1$s%% positive votes for this collection"
+msgstr "%1$s%% positive stemmer til denne samling"
+
+# This is the password reset email
+# %1 is the pw reset URL, %2 is the application
+#, php-format
+msgid "%2$s Add-ons Password Reset\\n\\nA request was received to reset the password for this account on addons.mozilla.org. To change this password please click on the following link, or paste it into your browser's location bar:\\n\\n%1$s\\n\\nIf you did not request this email there is no need for further action.\\n\\nThanks,\\n-- %2$s Add-ons Staff"
+msgstr "Nulstilling af adgangskode til %2$s Add-ons\n\nVi modtog en anmodning om at nulstille adgangskoden for denne konto på addons.mozilla.org. For at ændre din adgangskode bedes du klikke på følgende link eller kopiere det ind i din browsers adresselinje:\n\n%1$s\n\nHar du ikke anmodet om denne e-mail, skal du ikke foretage dig noget yderligere.\n\nTak,\n-- %2$s Add-ons"
+
+# date format string used in PHP's strftime():
+# http://php.net/strftime
+msgid "%b %e"
+msgstr "%b %e"
 
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
@@ -147,6 +181,9 @@ msgstr "<a href=\"%1$s\">Registrer</a> eller <a href=\"%2$s\">log ind</a> for at
 msgid "<a href=\"%s\">Review Guidelines</a>"
 msgstr "<a href=\"%s\">Retningslinjer for anmeldelser</a>"
 
+msgid "<a href=\"http://getfirefox.com\">Upgrade Firefox</a> to use this add-on"
+msgstr "<a href=\"http://getfirefox.com\">Opdater Firefox</a> for at bruge denne tilføjelse"
+
 msgid "<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, and locate/select the file you downloaded and click \"OK\".</li></ol>"
 msgstr "<ol><li>Hent og gem filen på din harddisk.</li><li>Åbn Mozilla Sunbird, og åbn Tilføjelser fra menuen Funktioner.</li><li>Klik på knappen Installer, find/marker filen, som du downloadede, og klik \"OK\".</li></ol>"
 
@@ -166,6 +203,12 @@ msgstr "<p>Bemærk disse råd:</p><ul><li>Skriv som hvis du fortalte en ven om d
 #, php-format
 msgid "<p>Registration on AMO is <strong>not required</strong> if you simply want to download and install public add-ons.</p><p>You only need to register if:</p><ul><li>You want to submit reviews for add-ons</li><li>You want to keep track of your favorite add-on collections or create one yourself</li><li>You are an add-on developer and want to upload your add-on for hosting on AMO</li></ul><p>Upon successful registration, you will be sent a confirmation email to the address you provided. Please follow the instructions there to confirm your account.</p><p>If you like, you can read our <a href='%1$s' title='Legal Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy Policy'>Privacy Policy</a>.</p>"
 msgstr "<p>Registrering på AMO er <strong>ikke påkrævet</strong> hvis du bare vil hente og installere offentlige tilføjelser.</p><p>Du behøver kun at registrere, hvis:</p><ul><li>Du vil indsende anmeldelser af tilføjelser</li><li>Du vil holde styr på dine favoritsamlinger af tilføjelser eller lave en samling selv</li><li>Du er udvikler af en tilføjelse og ønsker at uploade den til hosting på AMO</li></ul><p>Ved succesfuld registrering vil du få tilsendt en bekræftelsesmail til den adresse du opgav. Følg instruktionerne i mailen for at bekræfte din konto.</p><p>Hvis du vil, kan du læse vores <a href='%1$s' title='Juridiske betingelser'>juridiske betingelser</a> og <a href='%2$s' title='Privatlivspolitik'>privatlivspolitik</a>.</p>"
+
+# %1$s is a URL.
+# %2$s is a full <a href>.
+#, php-format
+msgid "<p>You can view your new collection below. If you'd like to set a collection nickname, upload an icon, or change additional settings, please visit the <a href=\"%1$s\">Manage Collections</a> page.</p><p>Your collection can be accessed at this location: %2$s</p>"
+msgstr "<p>Du kan se din samling herunder. Hvis du vil give samlingen et kaldenavn eller et ikon, eller hvis du vil rette andre indstillinger, så besøg siden <a href=\"%1$s\">Administrer samlinger</a>.</p><p>Din samling kan findes på adressen: %2$s</p>"
 
 # %1$s is a URL.
 #, php-format
@@ -259,6 +302,12 @@ msgstr "Tilføj %1$s til %2$s"
 
 msgid "Add Group"
 msgstr "Tilføj gruppe"
+
+msgid "Add a negative vote for this collection"
+msgstr "Tilføj en negativ stemme til denne samling"
+
+msgid "Add a positive vote for this collection"
+msgstr "Tilføj en positiv stemme til denne samling"
 
 msgid "Add a review"
 msgstr "Tilføj en anmeldelse"
@@ -422,9 +471,6 @@ msgstr "Tilføjelser til Firefox"
 msgid "Add-ons not compatible with any version of %1$s"
 msgstr "Tilføjelser som ikke er kompatible med nogen versioner af %1$s"
 
-msgid "Add-ons submitted to Mozilla Add-ons must have an install.rdf file with at least one of the below applications supported. Only the versions listed below are allowed for these applications."
-msgstr "Add-ons submitted to Mozilla Add-ons must have an install.rdf file with at least one of the below applications supported. Only the versions listed below are allowed for these applications."
-
 # %1$s is an application name and version.  Example: Firefox 3.1
 #, php-format
 msgid "Add-ons up-to-date with the latest builds of %1$s"
@@ -486,6 +532,11 @@ msgstr "Alle rettigheder forbeholdes."
 
 msgid "Alpha Versions"
 msgstr "Alfaversioner"
+
+# %1$s is a URL
+#, php-format
+msgid "An <a href=\"%1$s\">older version</a> may work"
+msgstr "En <a href=\"%1$s\">ældre version</a> vil måske virke"
 
 # %1 is the new email address
 #, php-format
@@ -857,11 +908,20 @@ msgstr "Slettet bruger"
 msgid "Deleting your collection will permanently erase it."
 msgstr "Ved sletning fjernes din samling permanent."
 
-# <option> text in a <select> for Author role in an add-on.
-msgctxt "devcp_js_option_developer"
+msgid "Detailed Review"
+msgstr "Detaljeret anmeldelse"
+
 msgid "Developer"
+msgid_plural "Developers"
 msgstr[0] "Udvikler"
 msgstr[1] "Udviklere"
+
+msgid "Developer Agreement"
+msgstr "Udvikleraftale"
+
+msgctxt "addons_display_developer_comments"
+msgid "Developer Comments"
+msgstr "Udviklerkommentarer"
 
 msgid "Developer FAQ"
 msgstr "Developer FAQ"
@@ -1099,9 +1159,6 @@ msgstr "GNU Lesser General Public License, version 2.1"
 msgid "GNU Lesser General Public License, version 3.0"
 msgstr "GNU Lesser General Public License, version 3.0"
 
-msgid "GUID"
-msgstr "GUID"
-
 msgid "Give your collection a descriptive name, such as \"Dave's Favorite Travel Add-ons\""
 msgstr "Giv din samling et beskrivende navn, fx \"Anders' foretrukne rejsetilføjelser\""
 
@@ -1129,6 +1186,9 @@ msgstr "Hader den"
 
 msgid "Hide email address"
 msgstr "Skjul e-mail-adresse"
+
+msgid "Highest Rated"
+msgstr "Bedste bedømmelser"
 
 msgctxt "addon_developer_th_homepage"
 msgid "Homepage"
@@ -1170,6 +1230,12 @@ msgstr "Ikonet fjernes, når du klikker på \"%1$s\" herunder"
 msgid "If this is hard to read, you can <a href=\"%1$s\">try different words</a> or <a href=\"%2$s\">listen to something</a> instead."
 msgstr "Hvis ordene er svære at læse, kan du <a href=\"%1$s\">prøve med andre ord</a> eller <a href=\"%2$s\">lytte til noget</a> i stedet."
 
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to a text captcha
+#, php-format
+msgid "If this is hard to understand, you can <a href=\"%1$s\">listen to something else</a> or <a href=\"%2$s\"> switch back to text</a>."
+msgstr "Hvis det er svære at høre, kan du <a href=\"%1$s\">lytte til noget andet</a> eller <a href=\"%2$s\">bruge tekst i stedet</a>."
+
 # %1$s is the text on the "create collection" button
 #, php-format
 msgid "If you already know which add-ons you want to add to your collection, just start typing their names below. If you'd rather wait and do this later, just click %1$s now."
@@ -1198,6 +1264,9 @@ msgstr "Hvis du har tilføjelser hostet på Mozilla Add-ons, kan du <a href=\"%1
 #, php-format
 msgid "If you have additional questions, please contact %1$s for assistance."
 msgstr "Har du yderligere spørgsmål, kan du kontakte %1$s for mere information."
+
+msgid "Ignore version check"
+msgstr "Ignorer versionskontrol"
 
 msgid "Image Gallery"
 msgstr "Billedgalleri"
@@ -1295,6 +1364,10 @@ msgstr "Seneste version"
 msgid "Learn More"
 msgstr "Lær mere"
 
+#, php-format
+msgid "Learn how to <a href=\"%1$s\">make your own</a> at the <a href=\"%2$s\">Mozilla Developer Center</a>."
+msgstr ""
+
 msgid "Learn more"
 msgstr "Lær mere"
 
@@ -1321,6 +1394,11 @@ msgstr "Lad mig installere denne eksperimentelle tilføjelse. <a href=\"%1$s\">H
 
 msgid "Like it"
 msgstr "Synes om den"
+
+# %1$s is the HTML collection name link.
+#, php-format
+msgid "Like these? Find more add-ons in the %1$s collection."
+msgstr "Kan du lide disse? Find flere tilføjelser i samlingen %1$s."
 
 msgid "List of language packs and dictionaries."
 msgstr "Liste over sprogpakker og ordbøger."
@@ -1349,6 +1427,9 @@ msgstr "Log ind"
 msgctxt "user_form_submit_login"
 msgid "Log in"
 msgstr "Log ind"
+
+msgid "Log in to vote for this collection"
+msgstr "Log ind for at stemme på denne samling"
 
 msgid "Log out"
 msgstr "Log ud"
@@ -1534,6 +1615,9 @@ msgstr "Ingen resultater fundet."
 msgid "No tags for these add-ons"
 msgstr "Ingen mærkater til disse tilføjelser"
 
+msgid "No votes for this collection yet."
+msgstr "Endnu ingen stemmer på denne samling."
+
 msgid "Normal"
 msgstr "Normal"
 
@@ -1562,6 +1646,9 @@ msgstr "Beskæftigelse"
 #, php-format
 msgid "Of the %1$s add-ons that make up 95&#37; of add-on usage known to Mozilla, <b>%2$s&#37;</b> are currently considered compatible with the latest builds of %3$s."
 msgstr "Af de %1$s tilføjelser, som udgør 95&#37; af den del af tilføjelsesbrugen som Mozilla kender til, er <b>%2$s&#37;</b> i øjeblikket kompatible med de seneste udgaver af %3$s."
+
+msgid "Often Used with&hellip;"
+msgstr "Bruges ofte sammen med&hellip;"
 
 msgid "Old password"
 msgstr "Gammel adgangskode"
@@ -1792,6 +1879,9 @@ msgstr "Tilføjet fornyligt"
 msgid "Recently Updated Add-ons"
 msgstr "Nyligt opdaterede tilføjelser"
 
+msgid "Recently Viewed"
+msgstr "Vist for nyligt"
+
 msgid "Recommended"
 msgstr "Anbefalede"
 
@@ -1827,6 +1917,12 @@ msgstr "Fjern"
 
 msgid "Remove from Favorites"
 msgstr "Fjern fra favoritter"
+
+msgid "Remove my vote for this collection"
+msgstr "Fjern min stemme fra denne samling"
+
+msgid "Remove this add-on"
+msgstr "Fjern denne tilføjelse"
 
 msgid "Remove this picture?"
 msgstr "Fjern dette billede?"
@@ -1998,6 +2094,12 @@ msgstr "Send link til ændring af adgangskode"
 msgid "Share on FriendFeed"
 msgstr "Del på FriendFeed"
 
+msgid "Share this Add-on"
+msgstr "Del denne tilføjelse"
+
+msgid "Share this Collection"
+msgstr "Del denne samling"
+
 # %1$s is a number
 # %2$s is a number
 # %3$s is a number
@@ -2053,6 +2155,9 @@ msgstr "Nogle sider bruger elementer fra <a href=\"http://www.simile-widgets.org
 
 msgid "Sorry, PayPal contributions are temporarily disabled."
 msgstr "Desværre er PayPal-donationer midlertidigt ude af drift."
+
+msgid "Sorry, you need a Mozilla-based browser (such as Firefox) to install a search plugin."
+msgstr "Desværre, du skal bruge en Mozillabaseret browser (eksempelvis Firefox) for at installere et søgeplugin."
 
 msgid "Sort By"
 msgstr "Sorter efter"
@@ -2144,6 +2249,16 @@ msgctxt "addons_display_paragraph_supportinfoemail"
 msgid "Support for this add-on is provided by the developer at %s"
 msgstr "Support af denne tilføjelse tilbydes af udvikleren ved at kontakte %s"
 
+msgid "Support the developer of this add-on by making a small contribution."
+msgstr "Støt udvikleren af denne tilføjelse ved at give et mindre beløb."
+
+msgid "Support this add-on"
+msgstr "Støt denne tilføjelse"
+
+#, php-format
+msgid "Support this add-on: <a href=\"%1$s\">Contribute $%2$s</a>"
+msgstr ""
+
 msgid "Tag added"
 msgstr "Mærkat tilføjet"
 
@@ -2160,6 +2275,10 @@ msgstr "Mærkater"
 msgctxt "tags_header_tags_title"
 msgid "Tags"
 msgstr "Mærkater"
+
+#, php-format
+msgid "Thank you for installing %s!"
+msgstr "Tak, fordi du installerede %s!"
 
 #, php-format
 msgid "Thanks for joining %s Add-ons"
@@ -2284,6 +2403,14 @@ msgstr "Denne URL har et ugyldigt format. Gyldige URLs ligner http://example.com
 msgid "This add-on is disabled"
 msgstr "Denne tilføjelse er deaktiveret"
 
+msgid "This add-on is for older versions of Firefox"
+msgstr "Denne tilføjelse er til ældre versioner af Firefox"
+
+# %1$s is an application name and version.  Example: Firefox 3.1
+#, php-format
+msgid "This add-on is incompatible with your version of %1$s"
+msgstr "Denne tilføjelse er ikke kompatibel med din version af %1$s"
+
 msgid "This add-on is not available."
 msgstr "Denne tilføjelse er ikke tilgængelig."
 
@@ -2292,6 +2419,12 @@ msgstr "Tilføjelsen kan ikke vises her."
 
 msgid "This add-on is not yet in any collections."
 msgstr "Denne tilføjelse er endnu ikke i nogen samlinger."
+
+# %1$s is a URL
+# %2$s is a version number.  Example: 3.1
+#, php-format
+msgid "This add-on requires the not-yet released <a href=\"%1$s\">Firefox %2$s</a>"
+msgstr "Denne tilføjelse kræver <a href=\"%1$s\">Firefox %2$s</a>, som endnu ikke er udgivet"
 
 msgid "This email address is already taken by another user."
 msgstr "Denne e-mail-adresse anvendes allerede af en anden bruger."
@@ -2356,6 +2489,9 @@ msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "Ukendt"
 
+msgid "Upcoming Events"
+msgstr "Kommende begivenheder"
+
 msgid "Upcoming events and contests"
 msgstr "Kommende begivenheder og konkurrencer"
 
@@ -2387,6 +2523,9 @@ msgstr "Upload et nyt billede?"
 msgid "Upon clicking \"%1$s\" below, your collection will be deleted. If you do not want to delete your collection, uncheck the confirmation box in the \"%2$s\" tab and continue editing your collection. If you leave this page without saving, your collection will also not be deleted."
 msgstr "Når du klikker på \"%1$s\" herunder, vil din samling blive slettet. Hvis du ikke ønsker at slette din samling, så fjern markeringen i bekræftelsesboksen under fanebladet \"%2$s\" og fortsæt med at redigere din samling. Hvis du forlader denne side uden at gemme, vil din samling heller ikke blive slettet."
 
+msgid "Usage Statistics"
+msgstr "Statistik over brug"
+
 msgid "User Account Editing"
 msgstr "Redigering af brugerkonto"
 
@@ -2413,8 +2552,8 @@ msgstr "Bruger siden"
 msgid "Users can only have one role at a time.  Please remove the user from any existing roles before continuing."
 msgstr "En bruger kan kun have en rolle ad gangen.  Fjern brugeren fra enhver eksisterende rolle før du fortsætter."
 
-msgid "Valid Application Versions"
-msgstr "Valid Application Versions"
+msgid "Version"
+msgstr "Version"
 
 # %s is the version of the add-on.  Example:  3.2a1
 #, php-format
@@ -2424,9 +2563,6 @@ msgstr "Version %s"
 
 msgid "Version History with Changelogs"
 msgstr "Versionshistorik med beskrivelse af ændringer"
-
-msgid "Versions"
-msgstr "Versions"
 
 msgid "View All Collections"
 msgstr "Vis alle samlinger"
@@ -2478,6 +2614,13 @@ msgstr "Website URL"
 
 msgid "Welcome"
 msgstr "Velkommen"
+
+# This contains the email sent to users when they signed up for a new
+# account:
+# %1 is the confirmation URL, %2 is the current app
+#, php-format
+msgid "Welcome to %2$s Add-ons.\\n\\nBefore you can use your new account you must activate it - this ensures the e-mail address you used is valid and belongs to you.\\nTo activate your account, click the link below or copy and paste the whole thing into your browser's location bar:\\n\\n%1$s\\n\\nOnce you've successfully activated your account, you can throw away this e-mail.\\n\\nThanks for joining %2$s Add-ons\\n-- %2$s Add-ons Staff"
+msgstr "Velkommen til %2$s Add-ons.\n\nFør du kan bruge din nye konto, skal du aktivere den - det sikrer, at den anvendte e-mail-adresse er gyldig og tilhører dig.\nFor at aktivere din konto skal du klikke på linket herunder eller kopiere hele linket ind i din browsers adresselinje:\n\n%1$s\n\nNår du har aktiveret din konto, kan du smide denne e-mail væk.\n\nTak fordi du tilmeldte dig %2$s Add-ons\n-- %2$s Add-ons"
 
 msgid "Welcome to addons.mozilla.org (AMO)!"
 msgstr "Velkommen til addons.mozilla.org (AMO)!"
@@ -2555,6 +2698,11 @@ msgstr "Ja, jeg vil gerne slette denne samling."
 msgid "You are not authorized to view this page."
 msgstr "Du har ikke adgang til at se denne side."
 
+# %1$s and %2$s are URLs
+#, php-format
+msgid "You can <a href=\"%1$s\">try an older version</a> or <a href=\"#\" onclick=\"%2$s\">ignore this check</a>"
+msgstr "Du kan <a href=\"%1$s\">prøve en ældre version</a> eller <a href=\"#\" onclick=\"%2$s\">ignorere denne test</a>"
+
 msgid "You can also publish an add-on from its normal listing page."
 msgstr "Du kan også tilføje en tilføjelse til samlingen fra tilføjelsens normale side."
 
@@ -2567,6 +2715,11 @@ msgstr "Du kan nu hurtigt finde denne samling i fanebladet <a href=\"%1$s\">%2$s
 
 msgid "You can upload a JPG, GIF or PNG icon that will be resized to 32x32 pixels."
 msgstr "Du kan uploade et JPG-, GIF- eller PNG-ikon, som vil blive formindsket til 32x32 pixels."
+
+# %1 is the URL of the user's info page
+#, php-format
+msgid "You cannot delete your account if you are listed as an <a href=\"%1$s\"> author of any add-ons</a>. To delete your account, please have another person in your development group delete you from the list of authors for your add-ons. Afterwards you will be able to delete your account here."
+msgstr "Du kan ikke slette din konto, hvis du står listet som en <a href=\"%1$s\">forfatter af en eller flere tilføjelser</a>. For at slette din konto er du nødt til at få en anden person i din udviklergruppe til at slette dig fra listen over forfattere til dine tilføjelser. Derefter kan du slette din konto her."
 
 msgid "You cannot review your own add-on."
 msgstr "Du kan ikke anmelde din egen tilføjelse."
@@ -2585,6 +2738,11 @@ msgstr "Du skal give en bedømmelse."
 
 msgid "You need to check the box \"I understand...\" before we can delete your account."
 msgstr "Du skal sætte markering i boksen \"Jeg forstår...\" før vi kan slette din konto."
+
+# %1 is the confirmation url, %2 is the application name
+#, php-format
+msgid "You requested a change to your email address at %2$s Add-ons.\\n\\nIn order to confirm the new address, please click the link below or copy and paste the whole thing into your browser's location bar:\\n\\n%1$s\\n\\nYou have 48 hours to confirm the new address. If you do not want to change the address anymore, you can just ignore this email.\\n\\nThanks!\\n-- %2$s Add-ons Staff"
+msgstr "Du anmodede om at ændre din e-mail-adresse hos %2$s Add-ons.\n\nFor at bekræfte din nye adresse, bedes du klikke på linket herunder eller kopiere det hele ind i din browsers adresselinje:\n\n%1$s\n\nDu har to døgn til at bekræfte din nye adresse. Hvis du alligevel ikke ønsker at ændre din adresse, kan du bare ignorere denne e-mail.\n\nTak!\n-- %2$s Add-ons"
 
 msgid "You will be notified when there is activity in any of the following discussions. Please uncheck those you wish to unsubscribe from."
 msgstr "Du vil få besked, når der er aktivitet i en af følgende diskussioner. Fjern markeringen ud for de diskussioner, du ikke længere ønsker at følge med i."
@@ -2670,6 +2828,10 @@ msgstr "til Mac OS X"
 
 msgid "for Windows"
 msgstr "til Windows"
+
+# link path to search plugins instructions, relative to devmo
+msgid "http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox"
+msgstr "http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox"
 
 # link text to mycroft.mozdev.org
 msgid "mycroft.mozdev.org"

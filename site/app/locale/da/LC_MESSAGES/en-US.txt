@@ -6,6 +6,14 @@
 msgid ""
 msgstr "Project-Id-Version: addons\nReport-Msgid-Bugs-To: \nPOT-Creation-Date: 2009-01-16 11:45-0800\nPO-Revision-Date: 2009-02-26 15:08-0800\nLast-Translator: Automatically generated\nLanguage-Team: none\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=2; plural=(n != 1);\n"
 
+# %1$s is the count of files, a number
+# %2$s is a status string like _('Public') or _('Incomplete')
+#, php-format
+msgid "%1$s %2$s file"
+msgid_plural "%1$s %2$s files"
+msgstr[0] "%1$s %2$s file"
+msgstr[1] "%1$s %2$s files"
+
 # %1$s is a number
 # %2$s is an application name  
 # %3$s is a number.
@@ -75,12 +83,38 @@ msgstr "%1$s has been added to your favorite collections."
 msgid "%1$s has been removed from your favorite collections."
 msgstr "%1$s has been removed from your favorite collections."
 
+# %1 is the add-on name, %2 is the platform
+#, php-format
+msgid "%1$s is not available for %2$s."
+msgstr "%1$s is not available for %2$s."
+
 # %1$s is a number
 #, php-format
 msgid "%1$s review"
 msgid_plural "%1$s reviews"
 msgstr[0] "%1$s review"
 msgstr[1] "%1$s reviews"
+
+# %1$s is a number.
+#, php-format
+msgid "%1$s%% negative votes for this collection"
+msgstr "%1$s%% negative votes for this collection"
+
+# %1$s is a number.
+#, php-format
+msgid "%1$s%% positive votes for this collection"
+msgstr "%1$s%% positive votes for this collection"
+
+# This is the password reset email
+# %1 is the pw reset URL, %2 is the application
+#, php-format
+msgid "%2$s Add-ons Password Reset\\n\\nA request was received to reset the password for this account on addons.mozilla.org. To change this password please click on the following link, or paste it into your browser's location bar:\\n\\n%1$s\\n\\nIf you did not request this email there is no need for further action.\\n\\nThanks,\\n-- %2$s Add-ons Staff"
+msgstr "%2$s Add-ons Password Reset\n\nA request was received to reset the password for this account on addons.mozilla.org. To change this password please click on the following link, or paste it into your browser's location bar:\n\n%1$s\n\nIf you did not request this email there is no need for further action.\n\nThanks,\n-- %2$s Add-ons Staff"
+
+# date format string used in PHP's strftime():
+# http://php.net/strftime
+msgid "%b %e"
+msgstr "%b %e"
 
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
@@ -147,6 +181,9 @@ msgstr "<a href=\"%1$s\">Register</a> or <a href=\"%2$s\">Log in</a> to add tags
 msgid "<a href=\"%s\">Review Guidelines</a>"
 msgstr "<a href=\"%s\">Review Guidelines</a>"
 
+msgid "<a href=\"http://getfirefox.com\">Upgrade Firefox</a> to use this add-on"
+msgstr "<a href=\"http://getfirefox.com\">Upgrade Firefox</a> to use this add-on"
+
 msgid "<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, and locate/select the file you downloaded and click \"OK\".</li></ol>"
 msgstr "<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, and locate/select the file you downloaded and click \"OK\".</li></ol>"
 
@@ -166,6 +203,12 @@ msgstr "<p>Keep these tips in mind:</p><ul><li>Write like you're telling a frien
 #, php-format
 msgid "<p>Registration on AMO is <strong>not required</strong> if you simply want to download and install public add-ons.</p><p>You only need to register if:</p><ul><li>You want to submit reviews for add-ons</li><li>You want to keep track of your favorite add-on collections or create one yourself</li><li>You are an add-on developer and want to upload your add-on for hosting on AMO</li></ul><p>Upon successful registration, you will be sent a confirmation email to the address you provided. Please follow the instructions there to confirm your account.</p><p>If you like, you can read our <a href='%1$s' title='Legal Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy Policy'>Privacy Policy</a>.</p>"
 msgstr "<p>Registration on AMO is <strong>not required</strong> if you simply want to download and install public add-ons.</p><p>You only need to register if:</p><ul><li>You want to submit reviews for add-ons</li><li>You want to keep track of your favorite add-on collections or create one yourself</li><li>You are an add-on developer and want to upload your add-on for hosting on AMO</li></ul><p>Upon successful registration, you will be sent a confirmation email to the address you provided. Please follow the instructions there to confirm your account.</p><p>If you like, you can read our <a href='%1$s' title='Legal Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy Policy'>Privacy Policy</a>.</p>"
+
+# %1$s is a URL.
+# %2$s is a full <a href>.
+#, php-format
+msgid "<p>You can view your new collection below. If you'd like to set a collection nickname, upload an icon, or change additional settings, please visit the <a href=\"%1$s\">Manage Collections</a> page.</p><p>Your collection can be accessed at this location: %2$s</p>"
+msgstr "<p>You can view your new collection below. If you'd like to set a collection nickname, upload an icon, or change additional settings, please visit the <a href=\"%1$s\">Manage Collections</a> page.</p><p>Your collection can be accessed at this location: %2$s</p>"
 
 # %1$s is a URL.
 #, php-format
@@ -259,6 +302,12 @@ msgstr "Add %1$s to %2$s"
 
 msgid "Add Group"
 msgstr "Add Group"
+
+msgid "Add a negative vote for this collection"
+msgstr "Add a negative vote for this collection"
+
+msgid "Add a positive vote for this collection"
+msgstr "Add a positive vote for this collection"
 
 msgid "Add a review"
 msgstr "Add a review"
@@ -422,9 +471,6 @@ msgstr "Add-ons for Firefox"
 msgid "Add-ons not compatible with any version of %1$s"
 msgstr "Add-ons not compatible with any version of %1$s"
 
-msgid "Add-ons submitted to Mozilla Add-ons must have an install.rdf file with at least one of the below applications supported. Only the versions listed below are allowed for these applications."
-msgstr "Add-ons submitted to Mozilla Add-ons must have an install.rdf file with at least one of the below applications supported. Only the versions listed below are allowed for these applications."
-
 # %1$s is an application name and version.  Example: Firefox 3.1
 #, php-format
 msgid "Add-ons up-to-date with the latest builds of %1$s"
@@ -486,6 +532,11 @@ msgstr "All rights reserved."
 
 msgid "Alpha Versions"
 msgstr "Alpha Versions"
+
+# %1$s is a URL
+#, php-format
+msgid "An <a href=\"%1$s\">older version</a> may work"
+msgstr "An <a href=\"%1$s\">older version</a> may work"
 
 # %1 is the new email address
 #, php-format
@@ -857,10 +908,20 @@ msgstr "Deleted User"
 msgid "Deleting your collection will permanently erase it."
 msgstr "Deleting your collection will permanently erase it."
 
-# <option> text in a <select> for Author role in an add-on.
-msgctxt "devcp_js_option_developer"
+msgid "Detailed Review"
+msgstr "Detailed Review"
+
 msgid "Developer"
-msgstr "Developer"
+msgid_plural "Developers"
+msgstr[0] "Developer"
+msgstr[1] "Developers"
+
+msgid "Developer Agreement"
+msgstr "Developer Agreement"
+
+msgctxt "addons_display_developer_comments"
+msgid "Developer Comments"
+msgstr "Developer Comments"
 
 msgid "Developer FAQ"
 msgstr "Developer FAQ"
@@ -1098,9 +1159,6 @@ msgstr "GNU Lesser General Public License, version 2.1"
 msgid "GNU Lesser General Public License, version 3.0"
 msgstr "GNU Lesser General Public License, version 3.0"
 
-msgid "GUID"
-msgstr "GUID"
-
 msgid "Give your collection a descriptive name, such as \"Dave's Favorite Travel Add-ons\""
 msgstr "Give your collection a descriptive name, such as \"Dave's Favorite Travel Add-ons\""
 
@@ -1128,6 +1186,9 @@ msgstr "Hate it"
 
 msgid "Hide email address"
 msgstr "Hide email address"
+
+msgid "Highest Rated"
+msgstr "Highest Rated"
 
 msgctxt "addon_developer_th_homepage"
 msgid "Homepage"
@@ -1169,6 +1230,12 @@ msgstr "Icon will be removed when \"%1$s\" is clicked below"
 msgid "If this is hard to read, you can <a href=\"%1$s\">try different words</a> or <a href=\"%2$s\">listen to something</a> instead."
 msgstr "If this is hard to read, you can <a href=\"%1$s\">try different words</a> or <a href=\"%2$s\">listen to something</a> instead."
 
+# %1 is the link switching refreshing the captcha
+# %2 is the link switching to a text captcha
+#, php-format
+msgid "If this is hard to understand, you can <a href=\"%1$s\">listen to something else</a> or <a href=\"%2$s\"> switch back to text</a>."
+msgstr "If this is hard to understand, you can <a href=\"%1$s\">listen to something else</a> or <a href=\"%2$s\"> switch back to text</a>."
+
 # %1$s is the text on the "create collection" button
 #, php-format
 msgid "If you already know which add-ons you want to add to your collection, just start typing their names below. If you'd rather wait and do this later, just click %1$s now."
@@ -1197,6 +1264,9 @@ msgstr "If you have add-ons hosted on Mozilla Add-ons, <a href=\"%1$s\">please l
 #, php-format
 msgid "If you have additional questions, please contact %1$s for assistance."
 msgstr "If you have additional questions, please contact %1$s for assistance."
+
+msgid "Ignore version check"
+msgstr "Ignore version check"
 
 msgid "Image Gallery"
 msgstr "Image Gallery"
@@ -1294,6 +1364,10 @@ msgstr "Latest Version"
 msgid "Learn More"
 msgstr "Learn More"
 
+#, php-format
+msgid "Learn how to <a href=\"%1$s\">make your own</a> at the <a href=\"%2$s\">Mozilla Developer Center</a>."
+msgstr ""
+
 msgid "Learn more"
 msgstr "Learn more"
 
@@ -1320,6 +1394,11 @@ msgstr "Let me install this experimental add-on. <a href=\"%1$s\">What's this?</
 
 msgid "Like it"
 msgstr "Like it"
+
+# %1$s is the HTML collection name link.
+#, php-format
+msgid "Like these? Find more add-ons in the %1$s collection."
+msgstr "Like these? Find more add-ons in the %1$s collection."
 
 msgid "List of language packs and dictionaries."
 msgstr "List of language packs and dictionaries."
@@ -1348,6 +1427,9 @@ msgstr "Log in"
 msgctxt "user_form_submit_login"
 msgid "Log in"
 msgstr "Log in"
+
+msgid "Log in to vote for this collection"
+msgstr "Log in to vote for this collection"
 
 msgid "Log out"
 msgstr "Log out"
@@ -1533,6 +1615,9 @@ msgstr "No results found."
 msgid "No tags for these add-ons"
 msgstr "No tags for these add-ons"
 
+msgid "No votes for this collection yet."
+msgstr "No votes for this collection yet."
+
 msgid "Normal"
 msgstr "Normal"
 
@@ -1561,6 +1646,9 @@ msgstr "Occupation"
 #, php-format
 msgid "Of the %1$s add-ons that make up 95&#37; of add-on usage known to Mozilla, <b>%2$s&#37;</b> are currently considered compatible with the latest builds of %3$s."
 msgstr "Of the %1$s add-ons that make up 95&#37; of add-on usage known to Mozilla, <b>%2$s&#37;</b> are currently considered compatible with the latest builds of %3$s."
+
+msgid "Often Used with&hellip;"
+msgstr "Often used with&hellip;"
 
 msgid "Old password"
 msgstr "Old password"
@@ -1791,6 +1879,9 @@ msgstr "Recently Added"
 msgid "Recently Updated Add-ons"
 msgstr "Recently Updated Add-ons"
 
+msgid "Recently Viewed"
+msgstr "Recently Viewed"
+
 msgid "Recommended"
 msgstr "Recommended"
 
@@ -1826,6 +1917,12 @@ msgstr "Remove"
 
 msgid "Remove from Favorites"
 msgstr "Remove from Favorites"
+
+msgid "Remove my vote for this collection"
+msgstr "Remove my vote for this collection"
+
+msgid "Remove this add-on"
+msgstr "Remove this add-on"
 
 msgid "Remove this picture?"
 msgstr "Remove this picture?"
@@ -1997,6 +2094,12 @@ msgstr "Send password reset link"
 msgid "Share on FriendFeed"
 msgstr "Share on FriendFeed"
 
+msgid "Share this Add-on"
+msgstr "Share this Add-on"
+
+msgid "Share this Collection"
+msgstr "Share this Collection"
+
 # %1$s is a number
 # %2$s is a number
 # %3$s is a number
@@ -2052,6 +2155,9 @@ msgstr "Some pages use elements of <a href=\"http://www.simile-widgets.org/timep
 
 msgid "Sorry, PayPal contributions are temporarily disabled."
 msgstr "Sorry, PayPal contributions are temporarily disabled."
+
+msgid "Sorry, you need a Mozilla-based browser (such as Firefox) to install a search plugin."
+msgstr "Sorry, you need a Mozilla-based browser (such as Firefox) to install a search plugin."
 
 msgid "Sort By"
 msgstr "Sort By"
@@ -2143,6 +2249,16 @@ msgctxt "addons_display_paragraph_supportinfoemail"
 msgid "Support for this add-on is provided by the developer at %s"
 msgstr "Support for this add-on is provided by the developer at %s"
 
+msgid "Support the developer of this add-on by making a small contribution."
+msgstr "Support the developer of this add-on by making a small contribution."
+
+msgid "Support this add-on"
+msgstr "Support this add-on"
+
+#, php-format
+msgid "Support this add-on: <a href=\"%1$s\">Contribute $%2$s</a>"
+msgstr ""
+
 msgid "Tag added"
 msgstr "Tag added"
 
@@ -2159,6 +2275,10 @@ msgstr "Tags"
 msgctxt "tags_header_tags_title"
 msgid "Tags"
 msgstr "Tags"
+
+#, php-format
+msgid "Thank you for installing %s!"
+msgstr "Thank you for installing %s!"
 
 #, php-format
 msgid "Thanks for joining %s Add-ons"
@@ -2283,6 +2403,14 @@ msgstr "This URL has an invalid format. Valid URLs look like http://example.com/
 msgid "This add-on is disabled"
 msgstr "This add-on is disabled"
 
+msgid "This add-on is for older versions of Firefox"
+msgstr "This add-on is for older versions of Firefox"
+
+# %1$s is an application name and version.  Example: Firefox 3.1
+#, php-format
+msgid "This add-on is incompatible with your version of %1$s"
+msgstr "This add-on is incompatible with your version of %1$s"
+
 msgid "This add-on is not available."
 msgstr "This add-on is not available."
 
@@ -2291,6 +2419,12 @@ msgstr "This add-on is not viewable here."
 
 msgid "This add-on is not yet in any collections."
 msgstr "This add-on is not yet in any collections."
+
+# %1$s is a URL
+# %2$s is a version number.  Example: 3.1
+#, php-format
+msgid "This add-on requires the not-yet released <a href=\"%1$s\">Firefox %2$s</a>"
+msgstr "This add-on requires the not-yet released <a href=\"%1$s\">Firefox %2$s</a>"
 
 msgid "This email address is already taken by another user."
 msgstr "This email address is already taken by another user."
@@ -2355,6 +2489,9 @@ msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "Unknown"
 
+msgid "Upcoming Events"
+msgstr "Upcoming Events"
+
 msgid "Upcoming events and contests"
 msgstr "Upcoming events and contests"
 
@@ -2386,6 +2523,9 @@ msgstr "Upload a new picture?"
 msgid "Upon clicking \"%1$s\" below, your collection will be deleted. If you do not want to delete your collection, uncheck the confirmation box in the \"%2$s\" tab and continue editing your collection. If you leave this page without saving, your collection will also not be deleted."
 msgstr "Upon clicking \"%1$s\" below, your collection will be deleted. If you do not want to delete your collection, uncheck the confirmation box in the \"%2$s\" tab and continue editing your collection. If you leave this page without saving, your collection will also not be deleted."
 
+msgid "Usage Statistics"
+msgstr "Usage Statistics"
+
 msgid "User Account Editing"
 msgstr "User Account Editing"
 
@@ -2412,8 +2552,8 @@ msgstr "User since"
 msgid "Users can only have one role at a time.  Please remove the user from any existing roles before continuing."
 msgstr "Users can only have one role at a time.  Please remove the user from any existing roles before continuing."
 
-msgid "Valid Application Versions"
-msgstr "Valid Application Versions"
+msgid "Version"
+msgstr "Version"
 
 # %s is the version of the add-on.  Example:  3.2a1
 #, php-format
@@ -2423,9 +2563,6 @@ msgstr "Version %s"
 
 msgid "Version History with Changelogs"
 msgstr "Version History with Changelogs"
-
-msgid "Versions"
-msgstr "Versions"
 
 msgid "View All Collections"
 msgstr "View All Collections"
@@ -2477,6 +2614,13 @@ msgstr "Website URL"
 
 msgid "Welcome"
 msgstr "Welcome"
+
+# This contains the email sent to users when they signed up for a new
+# account:
+# %1 is the confirmation URL, %2 is the current app
+#, php-format
+msgid "Welcome to %2$s Add-ons.\\n\\nBefore you can use your new account you must activate it - this ensures the e-mail address you used is valid and belongs to you.\\nTo activate your account, click the link below or copy and paste the whole thing into your browser's location bar:\\n\\n%1$s\\n\\nOnce you've successfully activated your account, you can throw away this e-mail.\\n\\nThanks for joining %2$s Add-ons\\n-- %2$s Add-ons Staff"
+msgstr "Welcome to %2$s Add-ons.\n\nBefore you can use your new account you must activate it - this ensures the e-mail address you used is valid and belongs to you.\nTo activate your account, click the link below or copy and paste the whole thing into your browser's location bar:\n\n%1$s\n\nOnce you've successfully activated your account, you can throw away this e-mail.\n\nThanks for joining %2$s Add-ons\n-- %2$s Add-ons Staff"
 
 msgid "Welcome to addons.mozilla.org (AMO)!"
 msgstr "Welcome to addons.mozilla.org (AMO)!"
@@ -2554,6 +2698,11 @@ msgstr "Yes, I would like to delete this collection."
 msgid "You are not authorized to view this page."
 msgstr "You are not authorized to view this page."
 
+# %1$s and %2$s are URLs
+#, php-format
+msgid "You can <a href=\"%1$s\">try an older version</a> or <a href=\"#\" onclick=\"%2$s\">ignore this check</a>"
+msgstr "You can <a href=\"%1$s\">try an older version</a> or <a href=\"#\" onclick=\"%2$s\">ignore this check</a>"
+
 msgid "You can also publish an add-on from its normal listing page."
 msgstr "You can also publish an add-on from its normal listing page."
 
@@ -2566,6 +2715,11 @@ msgstr "You can now quickly find this collection from the <a href=\"%1$s\">%2$s<
 
 msgid "You can upload a JPG, GIF or PNG icon that will be resized to 32x32 pixels."
 msgstr "You can upload a JPG, GIF or PNG icon that will be resized to 32x32 pixels."
+
+# %1 is the URL of the user's info page
+#, php-format
+msgid "You cannot delete your account if you are listed as an <a href=\"%1$s\"> author of any add-ons</a>. To delete your account, please have another person in your development group delete you from the list of authors for your add-ons. Afterwards you will be able to delete your account here."
+msgstr "You cannot delete your account if you are listed as an <a href=\"%1$s\">author of any add-ons</a>. To delete your account, please have another person in your development group delete you from the list of authors for your add-ons. Afterwards you will be able to delete your account here."
 
 msgid "You cannot review your own add-on."
 msgstr "You cannot review your own add-on."
@@ -2584,6 +2738,11 @@ msgstr "You must select a rating."
 
 msgid "You need to check the box \"I understand...\" before we can delete your account."
 msgstr "You need to check the box \"I understand...\" before we can delete your account."
+
+# %1 is the confirmation url, %2 is the application name
+#, php-format
+msgid "You requested a change to your email address at %2$s Add-ons.\\n\\nIn order to confirm the new address, please click the link below or copy and paste the whole thing into your browser's location bar:\\n\\n%1$s\\n\\nYou have 48 hours to confirm the new address. If you do not want to change the address anymore, you can just ignore this email.\\n\\nThanks!\\n-- %2$s Add-ons Staff"
+msgstr "You requested a change to your email address at %2$s Add-ons.\n\nIn order to confirm the new address, please click the link below or copy and paste the whole thing into your browser's location bar:\n\n%1$s\n\nYou have 48 hours to confirm the new address. If you do not want to change the address anymore, you can just ignore this email.\n\nThanks!\n-- %2$s Add-ons Staff"
 
 msgid "You will be notified when there is activity in any of the following discussions. Please uncheck those you wish to unsubscribe from."
 msgstr "You will be notified when there is activity in any of the following discussions. Please uncheck those you wish to unsubscribe from."
@@ -2669,6 +2828,10 @@ msgstr "for Mac OS X"
 
 msgid "for Windows"
 msgstr "for Windows"
+
+# link path to search plugins instructions, relative to devmo
+msgid "http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox"
+msgstr "http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox"
 
 # link text to mycroft.mozdev.org
 msgid "mycroft.mozdev.org"
