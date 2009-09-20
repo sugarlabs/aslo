@@ -10,7 +10,7 @@
 <p>All add-on submissions that wish to be public must be reviewed by an Editor. As part of this process, an Editor will review your add-on's source code and any changes that have been made since the last version, if applicable. During the review, the Editor will look for common issues, including:</p>
 
 <ul>
-    <li>JavaScript namespace pollution</li>
+    <li><strong>JavaScript namespace pollution</strong> - the most common reason for being retained in the sandbox. Be sure to <a href="http://blogger.ziesemer.com/2007/10/respecting-javascript-global-namespace.html">wrap your loose variables</a>.</li>
     <li>remote JavaScript execution or injection</li>
     <li>remote XUL</li>
     <li>synchronous XMLHttpRequests</li>
@@ -22,7 +22,7 @@
     <li>possible conflicts with other add-ons</li>
 </ul>
 
-<p>For information on how to avoid these problems, please see our <a href="%2$s">How-to Library</a>. Some of these practices are allowed under certain conditions outlined below.</p>
+<p>For information on how to avoid these problems, please see our <a href="%2$s">How-to Library</a>. Some of these practices, such as binary or obfuscated code, are allowed under certain conditions outlined below.</p>
 
 <p>All add-ons are tested in a virtual machine to allow the editor to install the add-on and test the user experience without damaging their systems. Many of the above restrictions are tested automatically by an extension scanner that will flag suspicious add-ons for Editor review. You can read more about this scanner in the <a href="%3$s">Validation Help</a> document.</p>
 
