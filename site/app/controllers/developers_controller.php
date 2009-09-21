@@ -72,7 +72,7 @@ class DevelopersController extends AppController
 
 
    /**
-    * Require login for all actions
+    * Require login for all actions except for validate view
     */
     function beforeFilter() {
         // Disable ACLs because this controller is entirely public.
@@ -82,7 +82,11 @@ class DevelopersController extends AppController
         // beforeFilter() is apparently called before components are initialized. Cake++
         $this->Amo->startup($this);
 
-        $this->Amo->checkLoggedIn();
+        if ($this->action == 'addon' && !empty($this->params['pass']) && $this->params['pass'][0] == 'validate') {
+            // only validate can be viewed by anonymous
+        } else {
+            $this->Amo->checkLoggedIn();
+        }
 
         // Clean post data
         $this->Amo->clean($this->data);
@@ -103,9 +107,13 @@ class DevelopersController extends AppController
             $this->$_model->caching = false;
         }
 
-        $session = $this->Session->read('User');
         // Default "My Add-ons" sidebar data
-        $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
+        if ($this->Session->check('User')) {
+            $session = $this->Session->read('User');
+            $this->publish('all_addons', $this->Addon->getAddonsByUser($session['id']));
+        } else {
+            $this->publish('all_addons', array());
+        }
 
         // Include the dev_agreement column on developer pages.
         array_push($this->Addon->default_fields, 'dev_agreement');
