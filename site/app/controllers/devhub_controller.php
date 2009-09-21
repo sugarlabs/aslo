@@ -682,15 +682,14 @@ class BuilderForm extends Phorm {
         $this->applications = new OptionsField(___('Applications'), $app_prettynames);
         $this->appversions = $this->_appversions();
 
-        $_help = 'This is some freaking awesome help text where we tell lots of interesting crap.';
         $this->ui = new OptionsWithHelpField(___('Features'), array(
-            'about' => array(___('About Dialog'), $_help),
-            'options' => array(___('Preferences Dialog'), $_help),
-            'toolbar' => array(___('Toolbar'), $_help),
-            'toolbarbutton' => array(___('Toolbar Button'), $_help),
-            'mainmenu' => array(___('Main Menu Command'), $_help),
-            'contextmenu' => array(___('Context Menu Command'), $_help),
-            'sidebar' => array(___('Sidebar Support'), $_help),
+            'about' => array(___('About Dialog'), ___('Creates a standard About dialog for your extension')),
+            'options' => array(___('Preferences Dialog'), ___('Creates an example Preferences window')),
+            'toolbar' => array(___('Toolbar'), ___('Creates an example toolbar for your extension')),
+            'toolbarbutton' => array(___('Toolbar Button'), ___('Creates an example button on the browser toolbar')),
+            'mainmenu' => array(___('Main Menu Command'), ___('Creates an item on the Tools menu')),
+            'contextmenu' => array(___('Context Menu Command'), ___('Creates a context menu item for images')),
+            'sidebar' => array(___('Sidebar Support'), ___('Creates an example sidebar panel')),
         ));
 
         $required = array('name', 'version', 'id', 'package', 'author', 'applications');
