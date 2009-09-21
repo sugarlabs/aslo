@@ -25,7 +25,13 @@ echo "Merging & compiling all locales..."
 for i in `find locale -type f -name "messages.po"`; do
     dir=`dirname $i`
     stem=`basename $i .po`
-    msgmerge --sort-output --no-fuzzy-matching -U "$i" ./locale/keys.pot
+
+    # msgen will copy the msgid -> msgstr for English.  All other locales will get a blank msgstr
+    if [[ "$i" =~ "en_US" ]]; then
+        msgen ./locale/keys.pot | msgmerge --sort-output --no-fuzzy-matching -U "$i" -
+    else
+        msgmerge --sort-output --no-fuzzy-matching -U "$i" ./locale/keys.pot
+    fi
     msgfmt -o ${dir}/${stem}.mo $i
 done
 rm ./locale/keys.pot
