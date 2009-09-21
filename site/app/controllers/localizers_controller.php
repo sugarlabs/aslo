@@ -408,8 +408,8 @@ class LocalizersController extends AppController
                        4 => array('page' => 'collector.thtml',
                                   'url' => '/pages/collector'
                                  ),
-                       5 => array('page' => 'developer_agreement.thtml',
-                                  'url' => '/developers/add'
+                       5 => array('page' => 'faq.thtml',
+                                  'url' => '/pages/faq'
                                  ),
                        6 => array('page' => 'developer_faq.thtml',
                                   'url' => '/pages/developer_faq'
@@ -431,6 +431,27 @@ class LocalizersController extends AppController
                                  ),
                        12=> array('page' => 'submission_help.thtml',
                                   'url' => '/pages/submissionhelp'
+                                 ),
+                       13=> array('page' => 'validation.thtml',
+                                  'url' => '/pages/validation'
+                                 ),
+                       14=> array('page' => 'docs/gettingstarted.thtml',
+                                  'url' => '/developers/docs/how-to/getting-started'
+                                 ),
+                       15=> array('page' => 'docs/policies/contact.thtml',
+                                  'url' => '/developers/docs/policies/contact'
+                                 ),
+                       16=> array('page' => 'docs/policies/maintenance.thtml',
+                                  'url' => '/developers/docs/policies/maintenance'
+                                 ),
+                       17=> array('page' => 'docs/policies/recommended.thtml',
+                                  'url' => '/developers/docs/policies/recommended'
+                                 ),
+                       18=> array('page' => 'docs/policies/reviews.thtml',
+                                  'url' => '/developers/docs/policies/reviews'
+                                 ),
+                       19=> array('page' => 'docs/policies/submission.thtml',
+                                  'url' => '/developers/docs/policies/submission'
                                  )
                       );
         
