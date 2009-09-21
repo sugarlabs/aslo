@@ -3,11 +3,11 @@
 # syntax:
 # stats-po.sh
 
-echo "Printing number of fuzzy flags found in locales:"
+echo "Printing number of untranslated strings found in locales:"
 
 for lang in `find $1 -type f -name "messages.po"`; do
     dir=`dirname $lang`
     stem=`basename $lang .po`
-    count=$(grep -c "fuzzy" $lang)
+    count=$(msgattrib --untranslated $lang | grep -c "msgid")
     echo -e "$(dirname $dir)\t$count"
 done
