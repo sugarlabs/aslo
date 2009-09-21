@@ -2,8 +2,8 @@
 
 vendor('mailchimp/api');
 vendor('phorms/phorms');
-//vendor('fizzypop/inc/Project/Extension');
-//vendor('fizzypop/inc/ProjectZip/Extension');
+vendor('fizzypop/inc/Project/Extension');
+vendor('fizzypop/inc/ProjectZip/Extension');
 
 class DevHubController extends AppController {
 
@@ -534,6 +534,11 @@ class DevHubController extends AppController {
     function builder($hash=null) {
         $this->pageTitle = implode(' :: ', array(___('Add-on Builder'),
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME), ___('Developer Hub')));
+
+        $this->publish('breadcrumbs', array(
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
+            ___('Developer Hub') => '/developers'
+            ));
 
         $form = new BuilderForm(Phorm::GET, false, $this->_builder_data($hash));
 
