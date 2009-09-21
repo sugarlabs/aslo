@@ -1060,7 +1060,9 @@ class AdminController extends AppController
 
         // Handle story creation
         if (!empty($this->data['CreateStory'])) {
-            $this->Addonlog->logCustomHtml($this, $this->data['CreateStory']['html']);
+            // Data was cleaned/escaped in beforeFilter. Since logCustomHtml also escapes,
+            // unclean to prevent double-escaping.
+            $this->Addonlog->logCustomHtml($this, $this->Amo->unclean($this->data['CreateStory']['html']));
             $this->flash('Story created!', '/admin/developershub/newsfeed');
             return;
         }
