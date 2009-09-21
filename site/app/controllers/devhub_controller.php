@@ -626,6 +626,31 @@ class DevHubController extends AppController {
     }
 }
 
+class OptionsWithHelpField extends OptionsField {
+
+    function get_widget() {
+        return new OptionGroupWithHelpWidget($this->choices);
+    }
+}
+
+class OptionGroupWithHelpWidget extends OptionGroupWidget {
+
+    var $template = '<li><label class="checkbox-label">%s %s</label>
+                         <p class="help checkbox-help">%s</p></li>';
+
+    function serialize($value, $attributes=array()) {
+        $html = array();
+
+        foreach ($this->options as $actual => $details) {
+            list($display, $help) = $details;
+            $option = new CheckBoxWidget(in_array($actual, $value));
+            $html[] = sprintf($this->template, htmlentities($display),
+                              $option->html($actual, $attributes), $help);
+        }
+        return '<ul>'.join('', $html).'</ul>';
+    }
+}
+
 class BuilderForm extends Phorm {
 
     function define_fields() {
@@ -657,14 +682,15 @@ class BuilderForm extends Phorm {
         $this->applications = new OptionsField(___('Applications'), $app_prettynames);
         $this->appversions = $this->_appversions();
 
-        $this->ui = new OptionsField(___('Features'), array(
-            'about' => ___('About Dialog'),
-            'options' => ___('Preferences Dialog'),
-            'toolbar' => ___('Toolbar'),
-            'toolbarbutton' => ___('Toolbar Button'),
-            'mainmenu' => ___('Main Menu Command'),
-            'contextmenu' => ___('Context Menu Command'),
-            'sidebar' => ___('Sidebar Support'),
+        $_help = 'This is some freaking awesome help text where we tell lots of interesting crap.';
+        $this->ui = new OptionsWithHelpField(___('Features'), array(
+            'about' => array(___('About Dialog'), $_help),
+            'options' => array(___('Preferences Dialog'), $_help),
+            'toolbar' => array(___('Toolbar'), $_help),
+            'toolbarbutton' => array(___('Toolbar Button'), $_help),
+            'mainmenu' => array(___('Main Menu Command'), $_help),
+            'contextmenu' => array(___('Context Menu Command'), $_help),
+            'sidebar' => array(___('Sidebar Support'), $_help),
         ));
 
         $required = array('name', 'version', 'id', 'package', 'author', 'applications');
