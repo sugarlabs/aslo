@@ -2,19 +2,25 @@
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
 <div class="primary" role="main">
-  <h2><?=___('Add-on Ready for Download')?></h2>
-  <h4><?=___('Your add-on has been built and is ready for download.')?></h4>
+  <h2><?=___('Add-on Builder')?></h2>
+  <h3><?=___('Your add-on has been created and is ready for download.')?></h3>
+  <p class="summary"><?=___("Use the download link below to save a copy of your extension's compressed source. To install as an extension in Firefox or another compatible application, simply rename the .zip extension to .xpi.")?></p>
   <p>
-    <?/* Puzzle icon */?>
+    <?/* Puzzle icon (hint: there is a constant for this file name) */?>
     <a href="<?=$html->url("/developers/tools/builder/downloads/{$hash}")?>">
         built.zip
     </a>
   </p>
   <p>
     <?=sprintf(
-        ___('Want to make some changes? <a href="%1$s">Return to the Add-on Builder.</a>'),
+        ___('Want to make some changes? <a href="%1$s">Return to the Add-on Builder</a>.'),
         $html->url("/developers/tools/builder/{$hash}"))?>
   </p>
+  
+  <h3><?=___("What do I do next?")?></h3>
+  <p><?=sprintf(___('Now that you\'ve got an extension skeleton, the fun part begins: hacking on the extension to make it do what you want. If you need some help, check out our <a href="%1$s">Getting Started</a> page for the basics, or visit the <a href="%2$s">How-to Library</a> for tutorials and documentation.'),
+        $html->url('developers/docs/getting-started'),
+        $html->url('developers/docs/how-to'))?></p>
 </div>
 
 <div class="secondary" role="complementary">
