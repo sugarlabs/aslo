@@ -207,8 +207,8 @@
                 />
 
             <property name="description"
-                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'description')?document.getAnonymousElementByAttribute(this, 'anonid', 'description').firstChild.nodeValue:'')"
-                onset="if (document.getAnonymousElementByAttribute(this, 'anonid', 'description')) document.getAnonymousElementByAttribute(this, 'anonid', 'description').firstChild.nodeValue = val"
+                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'description')?document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent:'')"
+                onset="if (document.getAnonymousElementByAttribute(this, 'anonid', 'description')) document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent = val"
                 />
 
             <property name="thumbnailURL"
@@ -316,9 +316,14 @@
 
                     if (sbString != "bandwagon.addon.added.justnow")
                     {
-                        Components.utils.import("resource://gre/modules/PluralForm.jsm");
-                        let [get, numForms] = PluralForm.makeGetter(this._stringBundle.getString("bandwagon.addon.pluralRule"));
-                        datestr = get(sbVal, this._stringBundle.getFormattedString(sbString, [sbVal]));
+                        if (Bandwagon.Util.getHostEnvironmentInfo().appVersion.substring(0, 1) != "2") {
+                            Components.utils.import("resource://gre/modules/PluralForm.jsm");
+                            let [get, numForms] = PluralForm.makeGetter(this._stringBundle.getString("bandwagon.addon.pluralRule"));
+                            datestr = get(sbVal, this._stringBundle.getFormattedString(sbString, [sbVal]));
+                        }
+                        else {
+                            datestr = "Added";
+                        }
                     }
                     else
                     {
@@ -361,6 +366,7 @@
                 <parameter name="addon"/>
                 <body>
                 <![CDATA[
+                    Bandwagon.Logger.debug("setAddon in binding");
                     this.addon = addon;
                     this.name = addon.name;
                     this.guid = addon.guid;
@@ -372,6 +378,7 @@
                     this.dateAdded = addon.dateAdded;
                     this.read = addon.read;
 
+                    try {
                     if (addon.comments.length > 0)
                     {
                         if (addon.comments[0].comment.match(/\w/))
@@ -392,6 +399,10 @@
                         document.getAnonymousElementByAttribute(this, 'anonid', 'commenticon').setAttribute("collapsed", true);
                         if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox')) // expanded only
                             document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox').setAttribute("collapsed", true);
+                    }
+                    }
+                    catch(e) {
+                        Bandwagon.Logger.debug("setAddon - error handling comment : "+e);
                     }
 
                     this.invalidateCompatibilityCheck();
@@ -544,7 +555,7 @@
                 <parameter name="image"/>
                 <body>
                 <![CDATA[
-                    //Bandwagon.Logger.debug("Thumbnail image loaded, dimensions are " + image.width + "x" + image.height);
+                    Bandwagon.Logger.debug("Thumbnail image loaded, dimensions are " + image.width + "x" + image.height);
 
                     var thumbnail = this._thumbnail;
 
@@ -573,7 +584,7 @@
                             width = (maxWidth / image.height) * image.width;
                         }
 
-                        //Bandwagon.Logger.debug("Setting thumbnail dimensions to " + width + "x" + height);
+                        Bandwagon.Logger.debug("Setting thumbnail dimensions to " + width + "x" + height);
 
                         thumbnail.style.width = width + "px";
                         thumbnail.style.height = height + "px";

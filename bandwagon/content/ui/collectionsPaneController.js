@@ -163,6 +163,7 @@ Bandwagon.Controller.CollectionsPane.invalidate = function()
 {
     if (Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem == null)
     {
+        Bandwagon.Logger.debug("invalidate 1");
         Bandwagon.Controller.CollectionsPane.elemBandwagonButtonViewSite.disabled = true;
         //Bandwagon.Controller.CollectionsPane.elemBandwagonButtonUpdate.disabled = true;
         Bandwagon.Controller.CollectionsPane.elemBandwagonButtonRemove.disabled = true;
@@ -178,6 +179,7 @@ Bandwagon.Controller.CollectionsPane.invalidate = function()
     }
     else
     {
+        Bandwagon.Logger.debug("invalidate 2");
         Bandwagon.Controller.CollectionsPane.elemBandwagonButtonViewSite.disabled = false;
         //Bandwagon.Controller.CollectionsPane.elemBandwagonButtonUpdate.disabled = false;
         Bandwagon.Controller.CollectionsPane.elemBandwagonButtonRemove.disabled = false;
@@ -529,11 +531,15 @@ Bandwagon.Controller.CollectionsPane.doShowCollection = function()
 
     if (collection)
     {
+        Bandwagon.Logger.warn("doShowCollection : we have a collecton");
         collection.setAllRead();
 
         if (Bandwagon.Controller.CollectionsPane.initialized)
         {
-            Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem.unread = 0;
+            if (Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem) {
+                Bandwagon.Logger.warn("doShowCollection : setting collection unread property to 0");
+                Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem.unread = 0;
+            }
         }
     }
 }
@@ -543,6 +549,7 @@ Bandwagon.Controller.CollectionsPane.doExpandAddon = function(event)
     if (event)
         event.preventDefault();
 
+    Bandwagon.Logger.warn("doExpandAddon : expanding...");
     var selItem = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem;
     if (selItem && selItem.getAttribute("type") == "bandwagonAddonExpanded")
     {
@@ -585,7 +592,9 @@ Bandwagon.Controller.CollectionsPane.doExpandAddon = function(event)
 
         try {
             Bandwagon.Controller.CollectionsPane.elemBandwagonAddonExpanded.setAddon(addon);
-        } catch (e) {}
+        } catch (e) {
+            Bandwagon.Logger.warn("doExpandAddon : setAddon failed : "+e);
+        }
 
         Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.insertBefore(elemBandwagonAddonExpanded, selectedElemBandwagonAddon);
 
@@ -761,10 +770,13 @@ Bandwagon.Controller.CollectionsPane._selectCollection = function(collection)
 
     try
     {
-        Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectItem(elemBandwagonCollection);
+        Bandwagon.Logger.debug("about to select collection");
+        Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem = elemBandwagonCollection;
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.ensureElementIsVisible(elemBandwagonCollection);
         Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.focus();
-    } catch (e) {}
+    } catch (e) {
+        Bandwagon.Logger.debug("Collection selection failed : "+e);
+    }
 
     return true;
 }

@@ -106,7 +106,7 @@ Bandwagon.Controller.Settings.bindingsReady = function()
 
     if (elemBandwagonCollection)
     {
-        Bandwagon.Controller.Settings.elemBandwagonCollections.selectItem(elemBandwagonCollection);
+        Bandwagon.Controller.Settings.elemBandwagonCollections.selectedItem = elemBandwagonCollection;
         Bandwagon.Controller.Settings.elemBandwagonCollections.focus();
     }
 }
@@ -265,7 +265,7 @@ Bandwagon.Controller.Settings.doShowCollection = function()
     if (selectedItem && Bandwagon.Controller.Settings.elemBandwagonCollections.selectedItem.collection)
         collection = Bandwagon.Controller.Settings.collections[Bandwagon.Controller.Settings.elemBandwagonCollections.selectedItem.collection.resourceURL];
 
-    Bandwagon.Logger.debug("showing collection: " + (collection?collection.name:"<none>"));
+    Bandwagon.Logger.debug("showing collection: " + (collection ? collection.name : "<none>"));
 
     Bandwagon.Controller.Settings.invalidateCustomizeCollectionUI();
 

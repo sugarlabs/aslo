@@ -67,15 +67,18 @@ Bandwagon.Controller.ExtensionsOverlay.init = function()
     }
 
     // Move Get Add-ons/Search to after Themes
-    Bandwagon.Controller.ExtensionsOverlay._moveSearchTab();
- 
-    try
+    if (Bandwagon.Util.getHostEnvironmentInfo().appVersion.substring(0, 1) != "2")
     {
-        // If we don't do the next call, the Search tab still thinks it is at the start and it causes some display glitches
-        // dmcnamara - this is failing on linux
-        updateVisibilityFlags();
-    } catch (e) {}
-
+        Bandwagon.Controller.ExtensionsOverlay._moveSearchTab();
+ 
+        try
+        {
+            // If we don't do the next call, the Search tab still thinks it is at the start and it causes some display glitches
+            // dmcnamara - this is failing on linux
+            updateVisibilityFlags();
+        } catch (e) {}
+    }
+    
     // Add publish button to extension binding when selected
 
     document.getElementById("extensionsView").addEventListener("select", Bandwagon.Controller.ExtensionsOverlay._stuffPublishUI, true);
@@ -379,11 +382,13 @@ Bandwagon.Controller.ExtensionsOverlay._showCollectionsPaneView = function()
     document.getElementById("continueDialogButton").hidden = true;
     document.getElementById("themePreviewArea").hidden = true;
     document.getElementById("themeSplitter").hidden = true;
-    document.getElementById("showUpdateInfoButton").hidden = true;
-    document.getElementById("hideUpdateInfoButton").hidden = true;
-    document.getElementById("searchPanel").hidden = true;
-    document.getElementById("extensionsView").hidden = true;
-    document.getElementById("extensionsView").parentNode.hidden = true;
+    if (document.getElementById("showUpdateInfoButton")) { // FF3/TB3+
+        document.getElementById("showUpdateInfoButton").hidden = true;
+        document.getElementById("hideUpdateInfoButton").hidden = true;
+        document.getElementById("searchPanel").hidden = true;
+        document.getElementById("extensionsView").hidden = true;
+        document.getElementById("extensionsView").parentNode.hidden = true;
+    }
 
     document.getElementById("continueDialogButton").removeAttribute("default");
     document.getElementById("installUpdatesAllButton").removeAttribute("default");

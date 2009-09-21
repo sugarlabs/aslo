@@ -37,13 +37,15 @@ overlay chrome://mozapps/content/extensions/extensions.xul chrome://bandwagon/co
 
 #Thunderbird
 overlay chrome://messenger/content/messenger.xul    chrome://bandwagon/content/ui/overlays/browserOverlay.xul
-overlay chrome://mozapps/content/extensions/extensions.xul chrome://bandwagon/content/ui/overlays/extensionsOverlay.xul application={3550f703-e582-4d05-9a08-453d09bdfdc6}
+overlay chrome://mozapps/content/extensions/extensions.xul chrome://bandwagon/content/ui/overlays/extensionsOverlay.xul application={3550f703-e582-4d05-9a08-453d09bdfdc6} appversion>=3
+overlay chrome://mozapps/content/extensions/extensions.xul chrome://bandwagon/content/ui/overlays/extensionsOverlay2.xul application={3550f703-e582-4d05-9a08-453d09bdfdc6} appversion<3
 
 #Fennec
 override chrome://bandwagon/content/ui/settings.xul chrome://bandwagon/content/ui/settings-fennec.xul application={a23983c0-fd0e-11dc-95ff-0800200c9a66}
 
 style   chrome://global/content/customizeToolbar.xul   chrome://bandwagon/skin/browserOverlay.css
 
+#override does not work on 1.8 (TB2)
 override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/linux/browserOverlay.css os=Linux
 override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/mac/browserOverlay.css os=Darwin
 override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/xp/browserOverlay.css os=WINNT osversion<=5.1

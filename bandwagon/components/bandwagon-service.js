@@ -1311,7 +1311,12 @@ BandwagonService.prototype = {
 
         try
         {
-            this._storageConnection = storageService.openUnsharedDatabase(file);
+            if (storageService. openUnsharedDatabase) {
+                this._storageConnection = storageService.openUnsharedDatabase(file);
+            }
+            else {
+                this._storageConnection = storageService.openDatabase(file);
+            }
         }
         catch (e)
         {
