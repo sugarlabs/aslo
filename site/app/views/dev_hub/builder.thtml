@@ -6,13 +6,13 @@ $this->layout = 'amo2009';
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
 <div class="primary" role="main">
-  <h2><?=___('Add-on Builder')?></h2>
-  <p class="summary"><?=___('Simply enter some basic information about your add-on below and select which interface components to start with, and your custom-built add-on will be ready for download.')?></p>
+  <h2><?=en_US('Add-on Builder')?></h2>
+  <p class="summary"><?=en_US('Simply enter some basic information about your add-on below and select which interface components to start with, and your custom-built add-on will be ready for download.')?></p>
 
   <form class="primary" id="builder" method="post">
 
-    <h3><?=___('Describe your add-on')?></h3>
-    <p><?=___("First, we'll need some basic information about your add-on. This will be displayed in the Add-ons Manager when your extension is installed.")?></p>
+    <h3><?=en_US('Describe your add-on')?></h3>
+    <p><?=en_US("First, we'll need some basic information about your add-on. This will be displayed in the Add-ons Manager when your extension is installed.")?></p>
     <ul>
       <?=$form->name->as_li()?>
       <?=$form->description->as_li()?>
@@ -21,15 +21,15 @@ $this->layout = 'amo2009';
       <?=$form->package->as_li()?>
     </ul>
 
-    <h3><?=___('Who is working on this add-on?')?></h3>
-    <p><?=___("Tell us about the people or companies behind this add-on. This information appears in the add-on's About dialog.")?></p>
+    <h3><?=en_US('Who is working on this add-on?')?></h3>
+    <p><?=en_US("Tell us about the people or companies behind this add-on. This information appears in the add-on's About dialog.")?></p>
     <ul>
       <?=$form->author->as_li()?>
       <?=$form->contributors->as_li()?>
     </ul>
 
-    <h3><?=___('What applications will this support?')?></h3>
-    <p><?=___("Select the applications and versions that your add-on will support below. For example, if your add-on is compatible with Firefox 3.5, the verions should be 3.5 - 3.5.*. Make sure you only select applications you intend to test with.")?></p>
+    <h3><?=en_US('What applications will this support?')?></h3>
+    <p><?=en_US("Select the applications and versions that your add-on will support below. For example, if your add-on is compatible with Firefox 3.5, the verions should be 3.5 - 3.5.*. Make sure you only select applications you intend to test with.")?></p>
     <ul class="applications">
       <li>
         <?=$form->applications->label()?>
@@ -38,7 +38,7 @@ $this->layout = 'amo2009';
         </div>
       </li>
       <li>
-        <label><?=___('Versions')?></label>
+        <label><?=en_US('Versions')?></label>
         <ul class="builder-input app-versions">
           <?php foreach ($form->appversions as $name => $appversion): ?>
             <li name="<?=$name?>">
@@ -52,8 +52,8 @@ $this->layout = 'amo2009';
       </li>
     </ul>
 
-    <h3><?=___('Choose pre-built features')?></h3>
-    <p><?=___("Get started quickly by selecting user interface components to include in your add-on package. We'll include documented code for each item you select so your extension will work out of the box.")?></p>
+    <h3><?=en_US('Choose pre-built features')?></h3>
+    <p><?=en_US("Get started quickly by selecting user interface components to include in your add-on package. We'll include documented code for each item you select so your extension will work out of the box.")?></p>
     <ul>
       <li>
         <?=$form->ui->label()?>
@@ -69,8 +69,8 @@ $this->layout = 'amo2009';
   
   <div class="highlight">
     <!-- this goes in the highlight box at the top -->
-    <h3><?=___('Advanced Building')?></h3>
-    <p><?=___('Want to create XULRunner applications, XPCOM components, and other advanced skeletons? Visit the <a href="http://www.mozdev.org/projects/wizard/">MozDev Project Wizard</a>.')?></p>
+    <h3><?=en_US('Advanced Building')?></h3>
+    <p><?=en_US('Want to create XULRunner applications, XPCOM components, and other advanced skeletons? Visit the <a href="http://www.mozdev.org/projects/wizard/">MozDev Project Wizard</a>.')?></p>
   </div>
 </div>
 

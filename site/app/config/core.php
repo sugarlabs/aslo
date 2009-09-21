@@ -219,4 +219,26 @@ function n___($message, $message_plural, $num, $context ="") {
         return ngettext($message, $message_plural, $num);
     }
 }
+
+/**
+ * For strings that should be localized at some point but not yet.
+ * s/en_US/___/ to make localizable
+ */
+function en_US($message) {
+    //return '';
+    return $message;
+}
+
+/**
+ * For plural strings that should be localized at some point but not yet.
+ * s/en_US/___/ to make localizable
+ */
+function nen_US($singular, $plural, $number) {
+    //return '';
+    if ($number == 1)
+        return $singular;
+    else
+        return $plural;
+}
+
 ?>

@@ -53,8 +53,8 @@ class HubComponent extends Object {
          *  Last used id: 48
          */
         $this->categories = array(
-            new HubCategory('Getting Started', ___('Learn the basics of developing an extension on the Mozilla platform with this section full of beginner\'s guides.'), 'getting-started', array(
-                new SubCategory('The Basics', array(
+            new HubCategory(en_US('Getting Started'), en_US('Learn the basics of developing an extension on the Mozilla platform with this section full of beginner\'s guides.'), 'getting-started', array(
+                new SubCategory(en_US('The Basics'), array(
                     new Howto(1, 'Firefox Add-ons Developer Guide',
                               'https://developer.mozilla.org/En/Firefox_addons_developer_guide',
                               $mdc,
@@ -82,7 +82,7 @@ class HubComponent extends Object {
                               $mdc,
                               'This document explains install manifests (install.rdf) and all of properties available for use in your add-on.')
                 )),
-                new SubCategory('Other Tutorials', array(
+                new SubCategory(en_US('Other Tutorials'), array(
                     new Howto(7, 'How to Develop a Firefox Extension',
                               'http://robertnyman.com/2009/01/24/how-to-develop-a-firefox-extension/',
                               new HubSite('Robert\'s talk', 'http://www.robertnyman.com'),
@@ -108,14 +108,14 @@ class HubComponent extends Object {
                               $mdc,
                               'This article shows how to add preferences to the dynamic status bar created in the above tutorial.'),
                 )),
-                new SubCategory('Books', array(
+                new SubCategory(en_US('Books'), array(
                     new Howto(13, 'Build Your Own Firefox Extension E-book',
                               'http://www.sitepoint.com/books/byofirefoxpdf1/',
                               new HubSite('SitePoint', 'http://www.sitepoint.com'),
                               'With a little JavaScript know-how, author James Edwards will show you just how straightforward it is to build your own Firefox extensions.')
                 ))
             )),
-            new HubCategory('Extension Development', ___('Once you know the basics, these guides will help you with intermediate to advanced extension development topics.'), 'extension-development', array(
+            new HubCategory(en_US('Extension Development'), en_US('Once you know the basics, these guides will help you with intermediate to advanced extension development topics.'), 'extension-development', array(
                 new SubCategory('Best Practices', array(
                     new Howto(14, 'Respecting the JavaScript Global Namespace',
                               'http://blogger.ziesemer.com/2007/10/respecting-javascript-global-namespace.html',
@@ -135,7 +135,7 @@ class HubComponent extends Object {
                               new HubSite('fligtar.com', 'http://blog.fligtar.com'),
                               'This blog post describes what a bad first-run experience means for users, and gives tips for improving that experience.')
                 )),
-                new SubCategory('Security', array(
+                new SubCategory(en_US('Security'), array(
                     new Howto(17, 'Evaluating Code with Restricted Privileges',
                               'https://developer.mozilla.org/en/Components.utils.evalInSandbox',
                               $mdc,
@@ -153,7 +153,7 @@ class HubComponent extends Object {
                               new HubSite('Adblock Plus Blog', 'http://www.adblockplus.org'),
                               'In this blog post, Wladimir Palant gives five wrong ways to evaluate code in an extension.')
                 )),
-                new SubCategory('Localization', array(
+                new SubCategory(en_US('Localization'), array(
                     new Howto(21, 'Localizing Extension Descriptions',
                               'https://developer.mozilla.org/en/Localizing_extension_descriptions',
                               $mdc,
@@ -163,7 +163,7 @@ class HubComponent extends Object {
                               $mdc,
                               'This article explains how to properly localize strings with plurals.')
                 )),
-                new SubCategory('Advanced Topics', array(
+                new SubCategory(en_US('Advanced Topics'), array(
                     new Howto(23, 'Stupid/Awesome Extension Development Hacks',
                               'http://design-challenge.mozilla.com/resources/#extension_hacks',
                               $designchallenge,
@@ -187,8 +187,8 @@ class HubComponent extends Object {
                               'If you can\'t find what you\'re looking for in the above articles, try the Mozilla Developer Center\'s Extensions landing page.')
                 ))
             )),
-            new HubCategory('Thunderbird & Mobile Add-ons', ___('Add-ons aren\'t just for Firefox. Learn how to extend other Mozilla applications, such as the Thunderbird mail client and Firefox for mobile devices.'), 'thunderbird-mobile', array(
-                new SubCategory('Developing Add-ons for Thunderbird', array(
+            new HubCategory(en_US('Thunderbird & Mobile Add-ons'), en_US('Add-ons aren\'t just for Firefox. Learn how to extend other Mozilla applications, such as the Thunderbird mail client and Firefox for mobile devices.'), 'thunderbird-mobile', array(
+                new SubCategory(en_US('Developing Add-ons for Thunderbird'), array(
                     new Howto(28, 'Building a Thunderbird Extension',
                               'https://developer.mozilla.org/en/Building_a_Thunderbird_extension',
                               $mdc,
@@ -206,7 +206,7 @@ class HubComponent extends Object {
                               $mdc,
                               'If you can\'t find what you\'re looking for in the above articles, try the Mozilla Developer Center\'s Thunderbird extensions landing page.'),
                 )),
-                new SubCategory('Developing Add-ons for Mobile', array(
+                new SubCategory(en_US('Developing Add-ons for Mobile'), array(
                     new Howto(32, 'Mobile Architecture',
                               'https://wiki.mozilla.org/Mobile/Fennec/Architecture',
                               $wiki,
@@ -229,7 +229,7 @@ class HubComponent extends Object {
                               'How to design an interface for your mobile extension.')
                 ))
             )),
-            new HubCategory('Theme Development', ___('Style Mozilla applications the way you want with pixel-perfect themes.'), 'theme-development', array(
+            new HubCategory(en_US('Theme Development'), en_US('Style Mozilla applications the way you want with pixel-perfect themes.'), 'theme-development', array(
                 new SubCategory('Getting Started', array(
                     new Howto(36, 'Creating a Skin for Firefox',
                               'https://developer.mozilla.org/en/Creating_a_Skin_for_Firefox',
@@ -240,7 +240,7 @@ class HubComponent extends Object {
                               new HubSite('Blog on a Stick', 'http://www.twistermc.com'),
                               'Thomas McMahon explains how to create a Firefox theme from start-to-finish in this tutorial.')
                 )),
-                new SubCategory('Theme Development', array(
+                new SubCategory(en_US('Theme Development'), array(
                     new Howto(38, 'Theme Packaging',
                               'https://developer.mozilla.org/en/Theme_Packaging',
                               $mdc,
@@ -259,8 +259,8 @@ class HubComponent extends Object {
                               'If you haven\'t found what you\'re looking for yet, try the Mozilla Developer Center\'s Themes section.'),
                 ))
             )),
-            new HubCategory('Other Types of Add-ons', ___('Find information on Search Plug-ins, Jetpack, Personas, and other types of add-ons here.'), 'other-addons', array(
-                new SubCategory('Jetpack', array(
+            new HubCategory(en_US('Other Types of Add-ons'), en_US('Find information on Search Plug-ins, Jetpack, Personas, and other types of add-ons here.'), 'other-addons', array(
+                new SubCategory(en_US('Jetpack'), array(
                     new Howto(42, 'Jetpack Tutorial',
                               'https://jetpack.mozillalabs.com/tutorial.html',
                               $jetpack,
@@ -270,19 +270,19 @@ class HubComponent extends Object {
                               $jetpack,
                               'This Jetpack API documentation is a must-have for working on your Jetpack.')
                 )),
-                new SubCategory('Personas', array(
+                new SubCategory(en_US('Personas'), array(
                     new Howto(44, 'How to Create Personas',
                               'http://getpersonas.com/demo_create',
                               new HubSite('Personas for Firefox', 'http://www.getpersonas.com'),
                               'Learn how to create your very own Persona with this official walk-through.')
                 )),
-                new SubCategory('Search Plug-ins', array(
+                new SubCategory(en_US('Search Plug-ins'), array(
                     new Howto(45, 'Creating OpenSearch Plug-ins for Firefox',
                               'https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox',
                               $mdc,
                               'This article explains the structure and requirements of search plug-ins in Firefox.')
                 )),
-                new SubCategory('Plug-ins', array(
+                new SubCategory(en_US('Plug-ins'), array(
                     new Howto(46, 'Plug-in Documentation Index',
                               'https://developer.mozilla.org/en/Plugins',
                               $mdc,
@@ -292,33 +292,33 @@ class HubComponent extends Object {
         );
 
         $this->policies = array(
-            new HubCategory('Add-on Submission',
-                            ___('Find out what is expected of add-ons we host and our policies on specific add-on practices.'),
+            new HubCategory(en_US('Add-on Submission'),
+                            en_US('Find out what is expected of add-ons we host and our policies on specific add-on practices.'),
                             'submission',
                             array($this->controller->url('/developers/docs/policies/contact'))),
-            new HubCategory('Review Process',
-                            ___('What happens after your add-on is submitted? Learn about how our Editors review submissions.'),
+            new HubCategory(en_US('Review Process'),
+                            en_US('What happens after your add-on is submitted? Learn about how our Editors review submissions.'),
                             'reviews',
                             array($this->controller->url('/developers/docs/policies/submission'),
                                   $this->controller->url('/developers/docs/how-to'),
                                   $this->controller->url('/pages/validation'),
                                   $this->controller->url('/developers/docs/policies/contact'))),
-            new HubCategory('Maintaining Your Add-on',
-                            ___('Add-on updates, transferring ownership, user reviews, and what to expect once your add-on is approved.'),
+            new HubCategory(en_US('Maintaining Your Add-on'),
+                            en_US('Add-on updates, transferring ownership, user reviews, and what to expect once your add-on is approved.'),
                             'maintenance',
                             array($this->controller->url('/developers/docs/policies/contact'),
                                   $this->controller->url('/pages/review_guide'))),
-            new HubCategory('Recommended Add-ons',
-                            ___('How up-and-coming add-ons become recommended and what\'s involved in the process.'),
+            new HubCategory(en_US('Recommended Add-ons'),
+                            en_US('How up-and-coming add-ons become recommended and what\'s involved in the process.'),
                             'recommended',
                             array($this->controller->url('/recommended'),
                                   $this->controller->url('/developers/docs/policies/contact'))),
-            new HubCategory('Developer Agreement',
-                            ___('Terms of Service for submitting your work to our site. Developers are required to accept this agreement before submission.'),
+            new HubCategory(en_US('Developer Agreement'),
+                            en_US('Terms of Service for submitting your work to our site. Developers are required to accept this agreement before submission.'),
                             'agreement',
                             array($this->controller->url('/pages/developer_faq'))),
-            new HubCategory('Contacting Us',
-                            ___('How to get in touch with us regarding these policies or your add-on.'),
+            new HubCategory(en_US('Contacting Us'),
+                            en_US('How to get in touch with us regarding these policies or your add-on.'),
                             'contact',
                             array('https://bugzilla.mozilla.org/enter_bug.cgi?assigned_to=nobody%40mozilla.org&bit-23=1&bug_file_loc=http%3A%2F%2F&bug_severity=normal&bug_status=NEW&cf_status_192=---&component=Add-on%20Security&flag_type-270=X&flag_type-271=X&flag_type-369=X&flag_type-385=X&flag_type-4=X&flag_type-485=X&flag_type-506=X&flag_type-507=X&flag_type-540=X&form_name=enter_bug&op_sys=All&priority=--&product=addons.mozilla.org&qa_contact=security%40add-ons.bugs&rep_platform=All',
                                   'https://bugzilla.mozilla.org/enter_bug.cgi?product=addons.mozilla.org',
@@ -330,18 +330,18 @@ class HubComponent extends Object {
         
         $lorem = 'foo';
         $this->casestudies = array(
-            new HubCaseStudy('Personalized Browsing with StumbleUpon',
-                             ___('StumbleUpon is a recommendation engine that helps users discover and share great websites. With over 8 million users, it has become one of the most popular sharing services on the Web today.'),
+            new HubCaseStudy(en_US('Personalized Browsing with StumbleUpon'),
+                             en_US('StumbleUpon is a recommendation engine that helps users discover and share great websites. With over 8 million users, it has become one of the most popular sharing services on the Web today.'),
                              'stumbleupon',
                              138,
                              '/img/docs/case-studies/stumbleupon-wordmark.png',
-                             ___('Learn how StumbleUpon got its start with Firefox'),
+                             en_US('Learn how StumbleUpon got its start with Firefox'),
                              new HubSite('StumbleUpon, Inc.', 'http://www.stumbleupon.com'),
                              '2002-02',
                              array(
-                                ___('Number of Users') => '8 million',
-                                ___('Pages Indexed') => '35 million',
-                                ___('Total Stumbles') => '10 billion'
+                                en_US('Number of Users') => '8 million',
+                                en_US('Pages Indexed') => '35 million',
+                                en_US('Total Stumbles') => '10 billion'
                              ))
             );
 
@@ -480,25 +480,25 @@ class HubComponent extends Object {
             // determine story based on log type
             switch ($log['Addonlog']['type']) {
             case Addonlog::CREATE_ADDON:
-                $story = sprintf(___('%1$s created %2$s.'), $user, $addon);
+                $story = sprintf(en_US('%1$s created %2$s.'), $user, $addon);
                 $story_class = 'addon_created';
                 $story_link = $this->url("/developers/dashboard#addon-{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::EDIT_PROPERTIES:
-                $story = sprintf(___('%1$s edited %2$s\'s properties.'), $user, $addon);
+                $story = sprintf(en_US('%1$s edited %2$s\'s properties.'), $user, $addon);
                 $story_class = 'properties_edited';
                 $story_link = $this->url("/developers/addon/edit/{$addon_id}/properties", $absolute_links);
                 break;
 
             case Addonlog::EDIT_DESCRIPTIONS:
-                $story = sprintf(___('%1$s edited %2$s\'s descriptions.'), $user, $addon);
+                $story = sprintf(en_US('%1$s edited %2$s\'s descriptions.'), $user, $addon);
                 $story_class = 'descriptions_edited';
                 $story_link = $this->url("/developers/addon/edit/{$addon_id}/descriptions", $absolute_links);
                 break;
 
             case Addonlog::EDIT_CATEGORIES:
-                $story = sprintf(___('%1$s modified %2$s\'s category associations.'), $user, $addon);
+                $story = sprintf(en_US('%1$s modified %2$s\'s category associations.'), $user, $addon);
                 $story_class = 'categories_modified';
                 $story_link = $this->url("/developers/addon/edit/{$addon_id}/categories", $absolute_links);
                 break;
@@ -517,42 +517,42 @@ class HubComponent extends Object {
                 $this->controller->_sanitizeArray($role);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_USER_WITH_ROLE) {
-                    $story = sprintf(___('%1$s made %2$s a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
+                    $story = sprintf(en_US('%1$s made %2$s a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
                     $story_class = 'author_added';
                 }
                 elseif ($log['Addonlog']['type'] == Addonlog::REMOVE_USER_WITH_ROLE) {
-                    $story = sprintf(___('%1$s removed %2$s as a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
+                    $story = sprintf(en_US('%1$s removed %2$s as a/an %3$s of %4$s.'), $user, $user2, $role, $addon);
                     $story_class = 'author_removed';
                 }
                 $story_link = $this->url("/developers/addon/edit/{$addon_id}/authors", $absolute_links);
                 break;
 
             case Addonlog::EDIT_CONTRIBUTIONS:
-                $story = sprintf(___('%1$s modified contributions settings for %2$s.'), $user, $addon);
+                $story = sprintf(en_US('%1$s modified contributions settings for %2$s.'), $user, $addon);
                 $story_class = 'contributions_modified';
                 $story_link = $this->url("/developers/addon/edit/{$addon_id}/contributions", $absolute_links);
                 break;
 
             case Addonlog::SET_INACTIVE:
-                $story = sprintf(___('%1$s marked %2$s as active.'), $user, $addon);
+                $story = sprintf(en_US('%1$s marked %2$s as active.'), $user, $addon);
                 $story_class = 'addon_inactive';
                 $story_link = $this->url("/developers/addon/status/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::UNSET_INACTIVE:
-                $story = sprintf(___('%1$s marked %2$s as inactive.'), $user, $addon);
+                $story = sprintf(en_US('%1$s marked %2$s as inactive.'), $user, $addon);
                 $story_class = 'addon_active';
                 $story_link = $this->url("/developers/addon/status/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::SET_PUBLICSTATS:
-                $story = sprintf(___('%1$s marked %2$s\'s statistics dashboard as public.'), $user, $addon);
+                $story = sprintf(en_US('%1$s marked %2$s\'s statistics dashboard as public.'), $user, $addon);
                 $story_class = 'stats_public';
                 $story_link = $this->url("/statistics/settings/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::UNSET_PUBLICSTATS:
-                $story = sprintf(___('%1$s marked %2$s\'s statistics dashboard as private.'), $user, $addon);
+                $story = sprintf(en_US('%1$s marked %2$s\'s statistics dashboard as private.'), $user, $addon);
                 $story_class = 'stats_private';
                 $story_link = $this->url("/statistics/settings/{$addon_id}", $absolute_links);
                 break;
@@ -562,25 +562,25 @@ class HubComponent extends Object {
                 $status = !empty($statuses[$status]) ? $statuses[$status] : $status;
                 $this->controller->_sanitizeArray($status);
 
-                $story = sprintf(___('%1$s changed %2$s\'s status to %3$s.'), $user, $addon, $status);
+                $story = sprintf(en_US('%1$s changed %2$s\'s status to %3$s.'), $user, $addon, $status);
                 $story_class = 'status';
                 $story_link = $this->url("/developers/addon/status/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::ADD_PREVIEW:
-                $story = sprintf(___('%1$s added a new preview screenshot to %2$s.'), $user, $addon);
+                $story = sprintf(en_US('%1$s added a new preview screenshot to %2$s.'), $user, $addon);
                 $story_class = 'preview_add';
                 $story_link = $this->url("/developers/previews/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::EDIT_PREVIEW:
-                $story = sprintf(___('%1$s modified the preview screenshots for %2$s.'), $user, $addon);
+                $story = sprintf(en_US('%1$s modified the preview screenshots for %2$s.'), $user, $addon);
                 $story_class = 'preview_edit';
                 $story_link = $this->url("/developers/previews/{$addon_id}/", $absolute_links);
                 break;
 
             case Addonlog::DELETE_PREVIEW:
-                $story = sprintf(___('%1$s removed a preview screenshot from %2$s.'), $user, $addon);
+                $story = sprintf(en_US('%1$s removed a preview screenshot from %2$s.'), $user, $addon);
                 $story_class = 'preview_delete';
                 $story_link = $this->url("/developers/previews/{$addon_id}/", $absolute_links);
                 break;
@@ -592,15 +592,15 @@ class HubComponent extends Object {
                 $this->controller->_sanitizeArray($version);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_VERSION) {
-                    $story = sprintf(___('%1$s uploaded version %2$s to %3$s.'), $user, $version, $addon);
+                    $story = sprintf(en_US('%1$s uploaded version %2$s to %3$s.'), $user, $version, $addon);
                     $story_class = 'version_added';
                 }
                 elseif ($log['Addonlog']['type'] == Addonlog::EDIT_VERSION) {
-                    $story = sprintf(___('%1$s edited version %2$s of %3$s.'), $user, $version, $addon);
+                    $story = sprintf(en_US('%1$s edited version %2$s of %3$s.'), $user, $version, $addon);
                     $story_class = 'version_edited';
                 }
                 elseif ($log['Addonlog']['type'] == Addonlog::DELETE_VERSION) {
-                    $story = sprintf(___('%1$s deleted version %2$s from %3$s.'), $user, $version, $addon);
+                    $story = sprintf(en_US('%1$s deleted version %2$s from %3$s.'), $user, $version, $addon);
                     $story_class = 'version_deleted';
                 }
                 $story_link = $this->url("/developers/versions/{$addon_id}/", $absolute_links);
@@ -614,11 +614,11 @@ class HubComponent extends Object {
                 $this->controller->_sanitizeArray($version);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_FILE_TO_VERSION) {
-                    $story = sprintf(___('%1$s added file %2$s to %3$s %4$s.'), $user, $file_name, $addon, $version);
+                    $story = sprintf(en_US('%1$s added file %2$s to %3$s %4$s.'), $user, $file_name, $addon, $version);
                     $story_class = 'file_added';
                 }
                 else if ($log['Addonlog']['type'] == Addonlog::DELETE_FILE_FROM_VERSION) {
-                    $story = sprintf(___('%1$s deleted file %2$s from %3$s %4$s.'), $user, $file_name, $addon, $version);
+                    $story = sprintf(en_US('%1$s deleted file %2$s from %3$s %4$s.'), $user, $file_name, $addon, $version);
                     $story_class = 'file_deleted';
                 }
                 $story_link = $this->url("/developers/versions/{$addon_id}/", $absolute_links);
@@ -632,19 +632,19 @@ class HubComponent extends Object {
                 $this->controller->_sanitizeArray($version);
 
                 if ($log['Addonlog']['type'] == Addonlog::APPROVE_VERSION) {
-                    $story = sprintf(___('%1$s approved %2$s %3$s for public.'), $user, $addon, $version);
+                    $story = sprintf(en_US('%1$s approved %2$s %3$s for public.'), $user, $addon, $version);
                     $story_class = 'approved';
                 }
                 else if ($log['Addonlog']['type'] == Addonlog::RETAIN_VERSION) {
-                    $story = sprintf(___('%1$s retained %2$s %3$s in the sandbox.'), $user, $addon, $version);
+                    $story = sprintf(en_US('%1$s retained %2$s %3$s in the sandbox.'), $user, $addon, $version);
                     $story_class = 'retained';
                 }
                 else if ($log['Addonlog']['type'] == Addonlog::ESCALATE_VERSION) {
-                    $story = sprintf(___('%1$s escalated %2$s %3$s for super-review.'), $user, $addon, $version);
+                    $story = sprintf(en_US('%1$s escalated %2$s %3$s for super-review.'), $user, $addon, $version);
                     $story_class = 'escalated';
                 }
                 else if ($log['Addonlog']['type'] == Addonlog::REQUEST_VERSION) {
-                    $story = sprintf(___('%1$s requested more information in order to review %2$s %3$s.'), $user, $addon, $version);
+                    $story = sprintf(en_US('%1$s requested more information in order to review %2$s %3$s.'), $user, $addon, $version);
                     $story_class = 'request_info';
                 }
                 $story_link = $this->url("/developers/versions/{$addon_id}/", $absolute_links);
@@ -656,11 +656,11 @@ class HubComponent extends Object {
                 $tag = $this->link($tag, "/tag/{$tag}", $absolute_links);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_TAG) {
-                    $story = sprintf(___('%1$s tagged %2$s as %3$s.'), $user, $addon, $tag);
+                    $story = sprintf(en_US('%1$s tagged %2$s as %3$s.'), $user, $addon, $tag);
                     $story_class = 'tag_added';
                 }
                 else if ($log['Addonlog']['type'] == Addonlog::REMOVE_TAG) {
-                    $story = sprintf(___('%1$s untagged %2$s as %3$s.'), $user, $addon, $tag);
+                    $story = sprintf(en_US('%1$s untagged %2$s as %3$s.'), $user, $addon, $tag);
                     $story_class = 'tag_removed';
                 }
                 $story_link = $this->url("/developers/addon/edit/{$addon_id}/tags", $absolute_links);
@@ -682,17 +682,17 @@ class HubComponent extends Object {
                 }
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_TO_COLLECTION) {
-                    $story = sprintf(___('%1$s added %2$s to the %3$s collection.'), $user, $addon, $name);
+                    $story = sprintf(en_US('%1$s added %2$s to the %3$s collection.'), $user, $addon, $name);
                 }
                 else if ($log['Addonlog']['type'] == Addonlog::REMOVE_FROM_COLLECTION) {
-                    $story = sprintf(___('%1$s removed %2$s from the %3$s collection.'), $user, $addon, $name);
+                    $story = sprintf(en_US('%1$s removed %2$s from the %3$s collection.'), $user, $addon, $name);
                 }
                 $story_class = 'collection';
                 $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::ADD_REVIEW:
-                $story = sprintf(___('%1$s wrote a review of %2$s.'), $user, $addon);
+                $story = sprintf(en_US('%1$s wrote a review of %2$s.'), $user, $addon);
                 $story_class = 'review_added';
                 $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
@@ -705,24 +705,24 @@ class HubComponent extends Object {
                     $absolute_links);
 
                 if ($log['Addonlog']['type'] == Addonlog::ADD_RECOMMENDED_CATEGORY) {
-                    $story = sprintf(___('%1$s was marked as recommended in the %2$s category.'), $addon, $category);
+                    $story = sprintf(en_US('%1$s was marked as recommended in the %2$s category.'), $addon, $category);
                     $story_class = 'recommended_add';
                 }
                 else if ($log['Addonlog']['type'] == Addonlog::REMOVE_RECOMMENDED_CATEGORY) {
-                    $story = sprintf(___('%1$s was removed as recommended in the %2$s category.'), $addon, $category);
+                    $story = sprintf(en_US('%1$s was removed as recommended in the %2$s category.'), $addon, $category);
                     $story_class = 'recommended_remove';
                 }
                 $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::ADD_RECOMMENDED:
-                $story = sprintf(___('%1$s was added to the Recommended List.'), $addon);
+                $story = sprintf(en_US('%1$s was added to the Recommended List.'), $addon);
                 $story_class = 'recommended_add';
                 $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
 
             case Addonlog::REMOVE_RECOMMENDED:
-                $story = sprintf(___('%1$s was removed from the Recommended List.'), $addon);
+                $story = sprintf(en_US('%1$s was removed from the Recommended List.'), $addon);
                 $story_class = 'recommended_remove';
                 $story_link = $this->url("/addon/{$addon_id}", $absolute_links);
                 break;
@@ -733,7 +733,7 @@ class HubComponent extends Object {
                 $this->controller->_sanitizeArray($app);
                 $this->controller->_sanitizeArray($appversion);
 
-                $story = sprintf(___('Add-ons can now be compatible with %1$s %2$s.'), $app, $appversion);
+                $story = sprintf(en_US('Add-ons can now be compatible with %1$s %2$s.'), $app, $appversion);
                 $story_class = 'versions_compat_add';
                 $story_link = $this->url("/", $absolute_links);
                 $story_title = $app;
