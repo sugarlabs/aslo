@@ -56,6 +56,11 @@ class AddonsHtmlHelper extends HtmlHelper
     var $doctype = 'html4-trans'; 
 
     /**
+     * Regular expression for magical urlifyHrefs() method
+     */
+    const URLIFY_HREF_REGEX = '/(?<=href=")%([^\s"]*)%(?=")/u';
+
+    /**
      * Overrides the HTMLHelper's formTag to handle AMO CSRF stuff in a way not involving cookies Bug427974
      */
     function formTag($target = null, $type = 'post', $htmlAttributes = array()) {
@@ -288,6 +293,26 @@ class AddonsHtmlHelper extends HtmlHelper
         $this->base = $oldbase;
         return $ret;
     }
+
+    /**
+     * Replaces: href="%ANYTHING%" with: href="/<locale>/<app>/ANYTHING"
+     *  example: '<a href="%/developers%">developers</a>'
+     *  turns into:  '<a href="/en-US/developers">developers</a>'
+     */
+    function urlifyHrefs($html) {
+        return  preg_replace_callback(
+            self::URLIFY_HREF_REGEX,
+            array(&$this, '_urlifyHrefs_callback'),
+            $html);
+    }
+
+    /**
+     * Callback function for preg_replace_callback()
+     */
+    function _urlifyHrefs_callback($matches) {
+        return $this->url($matches[1]);
+    }
+
     
     /**
      * (Cake-relative) URL to login page, including return-to parameter
