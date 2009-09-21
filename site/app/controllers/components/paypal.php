@@ -96,6 +96,7 @@ class PaypalComponent extends Object {
             'bn' => PAYPAL_BN . '-AddonID' . $addon_id,
             'no_shipping' => '1',
             'return' => $return_url,
+            'charset' => 'utf-8',
             'notify_url' => SERVICE_URL . '/paypal.php'
         );
 
