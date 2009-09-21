@@ -11,13 +11,13 @@
 $userlikes = isset($user) && isset($user['LinkVotes'][$object->id]);
 $likes = $userlikes ? $likes - 1 : $likes;
 
-$numlikes = sprintf(nen_US('%s person likes this', '%s people like this', $likes), $likes);
+$numlikes = sprintf(n___('%s person likes this', '%s people like this', $likes), $likes);
 
 if ($likes > 0) {
-    $youlike = sprintf(nen_US('You and %s person like this', 'You and %s people like this', $likes),
+    $youlike = sprintf(n___('You and %s person like this', 'You and %s people like this', $likes),
                        $likes);
 } else {
-    $youlike = en_US('You like this');
+    $youlike = ___('You like this');
 }
 
 ?>
@@ -29,12 +29,12 @@ if ($likes > 0) {
       <?=$numlikes?>
       <?php if (isset($user)): ?>
         <button class="link" type="submit">
-          <span class="like-action"><?=en_US('I like this!')?></span>
+          <span class="like-action"><?=___('I like this!')?></span>
         </button>
       <?php else: ?>
         <div>
           <a href="<?=$html->url($html->login_url())?>">
-            <?=en_US('Log in to like this link')?>
+            <?=___('Log in to like this link')?>
           </a>
         </div>
       <?php endif ?>
@@ -47,7 +47,7 @@ if ($likes > 0) {
     <div class="numlikes">
       <?=$youlike?>
       <button class="link" type="submit">
-        <span class="like-action"><?=en_US("I don't like this")?></span>
+        <span class="like-action"><?=___("I don't like this")?></span>
       </button>
       <input type="hidden" name="category" value="<?=$category->slug?>" />
     </div>

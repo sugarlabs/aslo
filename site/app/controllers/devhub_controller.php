@@ -661,35 +661,35 @@ class BuilderForm extends Phorm {
         $rows = 4;
 
 
-        $this->name = new TextField(en_US('Add-on Name'), $size, $max_length);
-        $this->name->help_text = en_US('Give your add-on a name. The most successful add-ons give some indication of their function in their name.');
-        $this->description = new LargeTextField(en_US('Description'), $rows, $cols);
-        $this->description->help_text = en_US('Briefly describe your add-on in one sentence. This appears in the Add-ons Manager.');
-        $this->version = new TextField(en_US('Add-on Version'), 8, $max_length);
-        $this->version->help_text = en_US('Enter your initial version number. Depending on the number of releases and your preferences, this is usually 0.1 or 1.0');
-        $this->id = new TextField(en_US('Unique ID'), $size, $max_length);
-        $this->id->help_text = en_US('Each add-on requires a unique ID in the form of a UUID or an email address, such as addon-name@developer.com. The email address does not have to be valid.');
-        $this->package = new TextField(en_US('Package Name'), $size, $max_length);
-        $this->package->help_text = en_US('The package name of your add-on used within the browser. This should be a short form of its name, for example, Test Extension might be testextension.');
+        $this->name = new TextField(___('Add-on Name'), $size, $max_length);
+        $this->name->help_text = ___('Give your add-on a name. The most successful add-ons give some indication of their function in their name.');
+        $this->description = new LargeTextField(___('Description'), $rows, $cols);
+        $this->description->help_text = ___('Briefly describe your add-on in one sentence. This appears in the Add-ons Manager.');
+        $this->version = new TextField(___('Add-on Version'), 8, $max_length);
+        $this->version->help_text = ___('Enter your initial version number. Depending on the number of releases and your preferences, this is usually 0.1 or 1.0');
+        $this->id = new TextField(___('Unique ID'), $size, $max_length);
+        $this->id->help_text = ___('Each add-on requires a unique ID in the form of a UUID or an email address, such as addon-name@developer.com. The email address does not have to be valid.');
+        $this->package = new TextField(___('Package Name'), $size, $max_length);
+        $this->package->help_text = ___('The package name of your add-on used within the browser. This should be a short form of its name, for example, Test Extension might be testextension.');
 
-        $this->author = new TextField(en_US("Author's Name"), $size, $max_length);
-        $this->author->help_text = en_US('Enter the name of the person or entity to be listed as the author of this add-on.');
+        $this->author = new TextField(___("Author's Name"), $size, $max_length);
+        $this->author->help_text = ___('Enter the name of the person or entity to be listed as the author of this add-on.');
         
-        $this->contributors = new LargeTextField(en_US('Other Contributors'), $rows, $cols);
-        $this->contributors->help_text = en_US('Enter the names of any other contributors to this extension, one per line.');
+        $this->contributors = new LargeTextField(___('Other Contributors'), $rows, $cols);
+        $this->contributors->help_text = ___('Enter the names of any other contributors to this extension, one per line.');
 
         global $app_prettynames;
-        $this->applications = new OptionsField(en_US('Applications'), $app_prettynames);
+        $this->applications = new OptionsField(___('Applications'), $app_prettynames);
         $this->appversions = $this->_appversions();
 
-        $this->ui = new OptionsWithHelpField(en_US('Features'), array(
-            'about' => array(en_US('About Dialog'), en_US('Creates a standard About dialog for your extension')),
-            'options' => array(en_US('Preferences Dialog'), en_US('Creates an example Preferences window')),
-            'toolbar' => array(en_US('Toolbar'), en_US('Creates an example toolbar for your extension')),
-            'toolbarbutton' => array(en_US('Toolbar Button'), en_US('Creates an example button on the browser toolbar')),
-            'mainmenu' => array(en_US('Main Menu Command'), en_US('Creates an item on the Tools menu')),
-            'contextmenu' => array(en_US('Context Menu Command'), en_US('Creates a context menu item for images')),
-            'sidebar' => array(en_US('Sidebar Support'), en_US('Creates an example sidebar panel')),
+        $this->ui = new OptionsWithHelpField(___('Features'), array(
+            'about' => array(___('About Dialog'), ___('Creates a standard About dialog for your extension')),
+            'options' => array(___('Preferences Dialog'), ___('Creates an example Preferences window')),
+            'toolbar' => array(___('Toolbar'), ___('Creates an example toolbar for your extension')),
+            'toolbarbutton' => array(___('Toolbar Button'), ___('Creates an example button on the browser toolbar')),
+            'mainmenu' => array(___('Main Menu Command'), ___('Creates an item on the Tools menu')),
+            'contextmenu' => array(___('Context Menu Command'), ___('Creates a context menu item for images')),
+            'sidebar' => array(___('Sidebar Support'), ___('Creates an example sidebar panel')),
         ));
 
         $required = array('name', 'version', 'id', 'package', 'author', 'applications');

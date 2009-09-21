@@ -42,10 +42,10 @@ $this->viewVars['bodyclass'] = 'inverse casestudies';
 <?=$this->renderElement('amo2009/hub/navbar')?>
 
 <?=$this->renderElement('amo2009/breadcrumbs')?>
-<h2><?=en_US('Case Studies')?></h2>
+<h2><?=___('Case Studies')?></h2>
 
 <div class="primary" role="main">
-    <p class="hub-category-description"><?=en_US('Start-to-finish success stories. See how other add-on developers made magic with Mozilla.')?></p>
+    <p class="hub-category-description"><?=___('Start-to-finish success stories. See how other add-on developers made magic with Mozilla.')?></p>
 
     <ul class="blocks">
         <?php foreach ($casestudies as $study): ?>
@@ -53,7 +53,7 @@ $this->viewVars['bodyclass'] = 'inverse casestudies';
             <div class="logo">
                 <a href="<?=$html->url('/developers/docs/case-studies/'.$study->slug)?>">
                     <img src="<?=$html->url($study->logo, null, false, false)?>" alt=""/></a>
-                <p><?=en_US('by')?> <a href="<?=$study->developer->href?>"><?=$study->developer->title?></a></p>
+                <p><?=___('by')?> <a href="<?=$study->developer->href?>"><?=$study->developer->title?></a></p>
             </div>
             <div class="info">
                 <h4><a href="<?=$html->url('/developers/docs/case-studies/'.$study->slug)?>">
@@ -69,7 +69,7 @@ $this->viewVars['bodyclass'] = 'inverse casestudies';
 
 <div class="secondary" role="complementary">
     <?=$this->renderElement('amo2009/hub/sidebar', array(
-        'title' => en_US('Case Studies'),
+        'title' => ___('Case Studies'),
         'objects' => $casestudies,
         'url_prefix' => '/developers/docs/case-studies/',
     ))?>
