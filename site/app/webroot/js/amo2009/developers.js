@@ -12,4 +12,10 @@ jQuery(document).ready(function($){
         /* We should care more about the return, oh well. */
         $.post(this.action, the_form.serialize());
     });
+
+    /* Show/hide versions if the application is checked. */
+    $('input[name^=applications]').change(function(e){
+        $(this).closest('.applications')
+            .find('li[name=' + this.value + ']').toggle(this.checked);
+    }).change();
 });

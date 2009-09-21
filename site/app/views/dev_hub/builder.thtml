@@ -1,0 +1,75 @@
+<?php
+$this->layout = 'amo2009';
+
+$lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at lectus magna, a tincidunt augue.';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar')?>
+<?=$this->renderElement('amo2009/breadcrumbs')?>
+
+<div class="primary" role="main">
+  <h2><?=___('Add-on Builder')?></h2>
+  <p>A webpage to make you sad.</p>
+
+  <form class="primary" id="builder" method="post">
+
+    <h3><?=___('Describe Your Add-on')?></h3>
+    <p><?=$lorem?></p>
+    <ul>
+      <?=$form->name->as_li()?>
+      <?=$form->description->as_li()?>
+      <?=$form->version->as_li()?>
+      <?=$form->id->as_li()?>
+      <?=$form->package->as_li()?>
+    </ul>
+
+    <h3><?=___('Tell Us Who You Are')?></h3>
+    <p><?=$lorem?></p>
+    <ul>
+      <?=$form->author->as_li()?>
+      <?=$form->contributors->as_li()?>
+    </ul>
+
+    <h3><?=___('What Program Is This For?')?></h3>
+    <p><?=$lorem?></p>
+    <ul class="applications">
+      <li>
+        <?=$form->applications->label()?>
+        <div class="funky">
+          <?=$form->applications->html()?> <?=$form->applications->errors()?>
+        </div>
+      </li>
+      <li>
+        <label><?=___('Versions')?></label>
+        <ul class="builder-input app-versions">
+          <?php foreach ($form->appversions as $name => $appversion): ?>
+            <li name="<?=$name?>">
+              <?=$form->{$name.'_min'}->label()?>
+                <?=$form->{$name.'_min'}->html()?>
+                &mdash;
+                <?=$form->{$name.'_max'}->html()?>
+            </li>
+          <?php endforeach ?>
+        </ul>
+      </li>
+    </ul>
+
+    <h3><?=___('Add User Interface Features')?></h3>
+    <p><?=$lorem?></p>
+    <ul>
+      <li>
+        <?=$form->ui->label()?>
+        <div class="builder-input">
+          <?=$form->ui->html()?>
+        </div>
+      </li>
+    </ul>
+
+
+    <input type="submit" value="Don't push me" />
+  </form>
+</div>
+
+<div class="secondary" role="complementary">
+  <img src="<?=$html->rootUrl('/img/amo2009/developers/addon-builder.png')?>" alt="" />
+</div>

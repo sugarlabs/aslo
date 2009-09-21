@@ -1403,7 +1403,7 @@ CREATE TABLE `tags` (
     `id` int(11) unsigned NOT NULL auto_increment,
     `tag_text` varchar(128) NOT NULL,
     `blacklisted` tinyint(1) NOT NULL default 0,
-    `created` datetime NOT NULL default '0000-00-00 00:00:00',    
+    `created` datetime NOT NULL default '0000-00-00 00:00:00',
     PRIMARY KEY (`id`),
     UNIQUE KEY `tag_text` (`tag_text`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1553,6 +1553,13 @@ CREATE TABLE `test_results_cache` (
   `test_case_id` int(11) NOT NULL,
   `value` mediumtext,
   PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `fizzypop`;
+CREATE TABLE `fizzypop` (
+    `hash` varchar(255) NOT NULL,
+    `serialized` text NOT NULL,
+    PRIMARY KEY (`hash`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

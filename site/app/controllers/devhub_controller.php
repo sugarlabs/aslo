@@ -1,14 +1,17 @@
 <?php
 
 vendor('mailchimp/api');
+vendor('phorms/phorms');
+vendor('fizzypop/inc/Project/Extension');
+vendor('fizzypop/inc/ProjectZip/Extension');
 
 class DevHubController extends AppController {
 
     var $name = 'DevHub';
-    var $uses = array('Addon', 'Addonlog', 'Application', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'HubRssKey', 'Memcaching', 'User');
-    var $components = array('Httplib', 'Hub', 'Image', 'Pagination');
+    var $uses = array('Addon', 'Addonlog', 'Application', 'Appversion', 'BlogPost', 'Category', 'Collection', 'HowtoVote', 'HubEvent', 'HubPromo', 'HubRssKey', 'Memcaching', 'User');
+    var $components = array('Httplib', 'Hub', 'Image', 'Pagination', 'Versioncompare');
     var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
-    var $exceptionCSRF = array('/developers/community/newsletter/');
+    var $exceptionCSRF = array('/developers/tools/builder', '/developers/community/newsletter/');
 
     function beforeFilter() {
         /* These are public pages. */
@@ -526,5 +529,207 @@ class DevHubController extends AppController {
             ___('Developer Hub') => '/developers'
             ));
         $this->render('gettingstarted');
+    }
+
+    function builder($hash=null) {
+        $this->pageTitle = implode(' :: ', array(___('Add-on Builder'),
+            sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME), ___('Developer Hub')));
+
+        $form = new BuilderForm(Phorm::GET, false, $this->_builder_data($hash));
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $form = new BuilderForm(Phorm::POST, false);
+            if ($form->is_valid()) {
+                /* This is the data we'll be passing to fizzypop. */
+                $data = array(
+                    'id' => $form->clean['id'],
+                    'package' => $form->clean['package'],
+                    'name' => $form->clean['name'],
+                    'version' => $form->clean['version'],
+                    'description' => $form->clean['description'],
+                    'author' => $form->clean['author'],
+                    'contributors' => array_map('trim', split("\n", $form->clean['contributors'])),
+                    'targets' => $form->_targets(),
+                    'ui' => $form->clean['ui'],
+                );
+
+                $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
+                $serialized = serialize($data);
+                $hash = md5($serialized);  // Hashes are the new black!
+                $this->Addon->execute(
+                    "INSERT INTO fizzypop (hash, serialized, created)
+                     VALUE ({$db->value($hash)}, {$db->value($serialized)}, NOW())");
+                return $this->redirect("/developers/tools/builder/success/{$hash}");
+            }
+        }
+
+        foreach ($form->fields as $field) {
+            $field->addClass('builder-input');
+            $lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at lectus magna, a tincidunt augue.';
+            $field->help_text = $lorem;
+        }
+        $this->publish('form', $form);
+
+        return $this->render('builder');
+    }
+
+    function builder_success($hash) {
+        $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
+
+        $q = $this->Addon->execute("SELECT serialized FROM fizzypop
+                                    WHERE hash={$db->value($hash)}");
+        if (empty($q)) {
+            return $this->cakeError('error404');
+        }
+        $this->publish('hash', $hash);
+        return $this->render('builder_success');
+    }
+
+    function builder_download($hash) {
+        $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
+
+        $q = $this->Addon->execute("SELECT serialized FROM fizzypop
+                                    WHERE hash={$db->value($hash)}");
+        if (empty($q)) {
+            return $this->cakeError('error404');
+        }
+        $data = unserialize($q[0]['fizzypop']['serialized']);
+        $z = new ProjectZip_Extension(new Project_Extension($data));
+        $z->finish();
+    }
+
+    /* Extract the serialized fizzypop structure, undoing some transformations
+     * for fizzypop to turn it back into a form.
+     */
+    function _builder_data($hash) {
+        if (empty($hash)) {
+            return array();
+        }
+        $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
+        $q = $this->Addon->execute("SELECT serialized FROM fizzypop
+                                    WHERE hash={$db->value($hash)}");
+        if (empty($q)) {
+            return $this->cakeError('error404');
+        }
+        $data = unserialize($q[0]['fizzypop']['serialized']);
+
+        foreach ($data['targets'] as $app => $vals) {
+            $data['applications'][] = $app;
+            $data[$app.'_min'] = $vals['minVersion'];
+            $data[$app.'_max'] = $vals['maxVersion'];
+        }
+        $data['contributors'] = join("\n", $data['contributors']);
+        return $data;
+    }
+}
+
+class BuilderForm extends Phorm {
+
+    function define_fields() {
+        $size = 44;
+        // I don't know why, but inputs and textareas calculate their size differently.
+        $cols = $size - 2;
+        $max_length = 255;
+        $rows = 4;
+
+
+        $this->name = new TextField(___('Add-on Name'), $size, $max_length);
+        $this->description = new LargeTextField(___('Description'), $rows, $cols);
+        $this->version = new TextField(___('Add-on Version'), 8, $max_length);
+        $this->id = new TextField(___('Unique ID'), $size, $max_length);
+        $this->package = new TextField(___('Package Name'), $size, $max_length);
+
+        $this->author = new TextField(___("Author's Name"), $size, $max_length);
+        $this->contributors = new LargeTextField(___('Other Contributors'), $rows, $cols);
+
+        global $app_prettynames;
+        $this->applications = new OptionsField(___('Applications'), $app_prettynames);
+        $this->appversions = $this->_appversions();
+
+        $this->ui = new OptionsField(___('Features'), array(
+            'about' => ___('About Dialog'),
+            'options' => ___('Preferences Dialog'),
+            'toolbar' => ___('Toolbar'),
+            'toolbarbutton' => ___('Toolbar Button'),
+            'mainmenu' => ___('Main Menu Command'),
+            'contextmenu' => ___('Context Menu Command'),
+            'sidebar' => ___('Sidebar Support'),
+        ));
+
+        $required = array('name', 'version', 'id', 'package', 'author', 'applications');
+        foreach ($required as $r) {
+            $this->_require($this->$r);
+        }
+    }
+
+    function _require($field) {
+        $field->validators[] = '__required_field';
+        $field->addClass('required');
+    }
+
+    function _appversions() {
+        global $app_prettynames, $app_shortnames;
+        $Appversion = new Appversion();
+        $VersionCompare = new VersioncompareComponent();
+
+        $rv = array();
+
+        $versions = $Appversion->getAllVersions();
+        foreach ($app_prettynames as $app => $name) {
+            $min_choices = min_versions($versions[$app_shortnames[$app]]);
+            $max_choices = $versions[$app_shortnames[$app]];
+
+            // Hey, let's sort in place like it's 1985!
+            $VersionCompare->sortAppversionArray($min_choices);
+            $VersionCompare->sortAppversionArray($max_choices);
+
+            $min_choices = array_reverse($min_choices);
+            $max_choices = array_reverse($max_choices);
+
+            $min = $app.'_min';
+            $max = $app.'_max';
+            $this->$min = new SelectField($name, array_combine($min_choices, $min_choices),
+                                          array(), array('name' => $app.'_min'));
+            $this->$max = new SelectField($name, array_combine($max_choices, $max_choices),
+                                          array(), array('name' => $app.'_max'));
+            $rv[$app]['min'] = $this->$min;
+            $rv[$app]['max'] = $this->$max;
+        }
+
+        return $rv;
+    }
+
+    function _targets() {
+        global $app_prettynames, $app_shortnames;
+        $Application = new Application();
+        $targets = array();
+        foreach ($this->clean['applications'] as $app) {
+            $targets[$app]['enabled'] = True;
+            $targets[$app]['minVersion'] = $this->clean[$app.'_min'];
+            $targets[$app]['maxVersion'] = $this->clean[$app.'_max'];
+            $targets[$app]['name'] = $app_prettynames[$app];
+
+            $Application->unbindFully();
+            $x = $Application->findById($app_shortnames[$app], array('guid'));
+            $targets[$app]['id'] = $x['Application']['guid'];
+        }
+        return $targets;
+    }
+}
+
+/* Remove versions like 3.5.* because those shouldn't be min versions. */
+function min_versions($versions) {
+    $rv = array();
+    foreach ($versions as $v) {
+        if (!strpos($v, '*')) {
+            $rv[] = $v;
+        }
+    }
+    return $rv;
+}
+
+function __required_field($value) {
+    if (empty($value)) {
+        throw new ValidationError(___('This field is required.'));
     }
 }

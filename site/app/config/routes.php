@@ -143,6 +143,9 @@
         $Route->connect("/{$prefix}/developers/search/", array('controller' => 'devhub', 'action' => 'search'));
         $Route->connect("/{$prefix}/developers/community/newsletter/", array('controller' => 'devhub', 'action' => 'newsletter'));
         $Route->connect("/{$prefix}/developers/feed/*", array('controller' => 'devhub', 'action' => 'feed'));
+        $Route->connect("/{$prefix}/developers/tools/builder/success/*", array('controller' => 'devhub', 'action' => 'builder_success'));
+        $Route->connect("/{$prefix}/developers/tools/builder/downloads/*", array('controller' => 'devhub', 'action' => 'builder_download'));
+        $Route->connect("/{$prefix}/developers/tools/builder/*", array('controller' => 'devhub', 'action' => 'builder'));
 
 		// Tag page
 		$Route->connect("/{$prefix}/tag/*", array('controller' => 'tags', 'action' => 'display'));
