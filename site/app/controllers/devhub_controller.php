@@ -601,13 +601,13 @@ class DevHubController extends AppController {
         }
         $data = unserialize($q[0]['fizzypop']['serialized']);
 
+        // Tell Cake to keep quiet, no auto-rendering.
+        $this->autoRender = False;
         try {
             $z = new AddonZip(new Project_Extension($data));
             $z->finish();
         } catch (Exception $e) {
             echo 'There was a problem: '. $e->getMessage();
-            // Turn off rendering so we don't get a Cake error.
-            $this->autoRender = False;
             return;
         }
     }
