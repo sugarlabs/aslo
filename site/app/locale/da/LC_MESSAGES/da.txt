@@ -111,11 +111,6 @@ msgstr "%1$s%% positive stemmer til denne samling"
 msgid "%2$s Add-ons Password Reset\\n\\nA request was received to reset the password for this account on addons.mozilla.org. To change this password please click on the following link, or paste it into your browser's location bar:\\n\\n%1$s\\n\\nIf you did not request this email there is no need for further action.\\n\\nThanks,\\n-- %2$s Add-ons Staff"
 msgstr "Nulstilling af adgangskode til %2$s Add-ons\n\nVi modtog en anmodning om at nulstille adgangskoden for denne konto på addons.mozilla.org. For at ændre din adgangskode bedes du klikke på følgende link eller kopiere det ind i din browsers adresselinje:\n\n%1$s\n\nHar du ikke anmodet om denne e-mail, skal du ikke foretage dig noget yderligere.\n\nTak,\n-- %2$s Add-ons"
 
-# date format string used in PHP's strftime():
-# http://php.net/strftime
-msgid "%b %e"
-msgstr "%b %e"
-
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
 msgid "%B %e, %Y"
@@ -263,6 +258,18 @@ msgstr "Et fornavn, efternavn eller kaldenavn skal angives."
 #, php-format
 msgid "A link to activate your user account was sent by email to your address %1$s. You have to click it before you can log into %2$s Add-ons."
 msgstr "Et link til aktivering af din brugerkonto er sendt af sted via e-mail til din adresse, %1$s. Du skal klikke på linket i denne e-mail, før du kan logge ind på %2$s Add-ons."
+
+#, php-format
+msgid "A month ago"
+msgid_plural "%d months ago"
+msgstr[0] "En måned siden"
+msgstr[1] "%d måneder siden"
+
+#, php-format
+msgid "A year ago"
+msgid_plural "%d years ago"
+msgstr[0] "Et år siden"
+msgstr[1] "%d år siden"
 
 # Link text for the AMO About page.
 msgctxt "footer_a_about"
@@ -434,9 +441,6 @@ msgstr "Tilføjelser <img alt=\"Tilføjelser\" src=\"%1$s\" />"
 msgid "Add-ons Developer"
 msgstr "Udvikler af tilføjelser"
 
-msgid "Add-ons Policy"
-msgstr "Add-ons Policy"
-
 msgid "Add-ons by Name"
 msgstr "Tilføjelser efter navn"
 
@@ -495,6 +499,12 @@ msgstr "Yderligere kilder"
 
 msgid "Adjust maxVersion without uploading"
 msgstr "Juster maxVersion uden at uploade"
+
+msgid "Admin"
+msgstr "Administrator"
+
+msgid "Admin/Owner"
+msgstr "Administrator/ejer"
 
 msgctxt "sidebar_navlink_admin_tools"
 msgid "Admin Tools"
@@ -652,6 +662,9 @@ msgstr "Gennemse %s"
 msgid "Browse Add-ons"
 msgstr "Gennemse tilføjelser"
 
+msgid "Browse Mobile Add-ons"
+msgstr "Gennemse tilføjelser til mobilen"
+
 msgid "Browse Search Engines"
 msgstr "Gennemse søgemaskiner"
 
@@ -667,6 +680,10 @@ msgstr "Gennemse alle temaer :: %1$s Add-ons"
 #, php-format
 msgid "Browse through more search engines at %1$s"
 msgstr "Find flere søgetjenester hos %1$s"
+
+#, php-format
+msgid "Build a %1$s Add-on"
+msgstr "Lav en tilføjelse til %1$s"
 
 msgid "By"
 msgstr "Af"
@@ -926,15 +943,15 @@ msgstr "Udviklerkommentarer"
 msgid "Developer FAQ"
 msgstr "Developer FAQ"
 
+msgctxt "sidebar_navlink_developer_tools"
+msgid "Developer Hub"
+msgstr "Udviklercentral"
+
 msgid "Developer Information"
 msgstr "Information om udvikleren"
 
 msgid "Developer Reply:"
 msgstr "Svar fra udvikleren:"
-
-msgctxt "sidebar_navlink_developer_tools"
-msgid "Developer Tools"
-msgstr "Udviklingsværktøjer"
 
 msgid "Developer reply to:"
 msgstr "Udviklersvar til:"
@@ -1115,14 +1132,14 @@ msgctxt "rss_featuredaddons"
 msgid "Featured Add-ons"
 msgstr "Anbefalede tilføjelser"
 
-msgid "Fennec"
-msgstr "Fennec"
-
 msgid "File not found!"
 msgstr "Fil ikke fundet!"
 
 msgid "Find add-ons for other applications"
 msgstr "Find tilføjelser til andre programmer"
+
+msgid "Find all the tools and resources you need to make your first add-on."
+msgstr "Find alle de værktøjer og ressourcer du behøver, for at lave din første tilføjelse."
 
 msgid "Firefox"
 msgstr "Firefox"
@@ -1358,6 +1375,12 @@ msgstr "Sidst opdateret"
 msgid "Last name"
 msgstr "Efternavn"
 
+#, php-format
+msgid "Last week"
+msgid_plural "%d weeks ago"
+msgstr[0] "Sidste uge"
+msgstr[1] "%d uger siden"
+
 msgid "Latest Version"
 msgstr "Seneste version"
 
@@ -1366,7 +1389,7 @@ msgstr "Lær mere"
 
 #, php-format
 msgid "Learn how to <a href=\"%1$s\">make your own</a> at the <a href=\"%2$s\">Mozilla Developer Center</a>."
-msgstr ""
+msgstr "Lær hvordan du <a href=\"%1$s\">laver din egen</a> hos <a href=\"%2$s\">Mozilla Developer Center</a>."
 
 msgid "Learn more"
 msgstr "Lær mere"
@@ -1485,6 +1508,17 @@ msgstr "Fejlplaceret fejlrapport eller support-spørgsmål"
 #, php-format
 msgid "Missing argument: %s"
 msgstr "Manglende argument: %s"
+
+msgid "Mobile"
+msgstr "Mobilen"
+
+#, php-format
+msgid "Mobile Add-ons <em>for</em> <img alt=\"mobile\" src=\"%1$s\" /> <strong>Firefox</strong>"
+msgstr "Tilføjelser <em>til</em> <img alt=\"mobile\" src=\"%1$s\" /> <strong>Firefox</strong> på mobilen"
+
+msgctxt "categories_header_mobile"
+msgid "Mobile Categories"
+msgstr "Kategorier til mobilen"
 
 msgid "More about this add-on"
 msgstr "Mere om denne tilføjelse"
@@ -1618,6 +1652,9 @@ msgstr "Ingen mærkater til disse tilføjelser"
 msgid "No votes for this collection yet."
 msgstr "Endnu ingen stemmer på denne samling."
 
+msgid "None"
+msgstr "Ingen"
+
 msgid "Normal"
 msgstr "Normal"
 
@@ -1693,6 +1730,10 @@ msgstr[1] "Andre tilføjelser fra disse udviklere"
 
 msgid "Other languages:"
 msgstr "Andre sprog:"
+
+# <option> text in a <select> for Author role in an add-on.
+msgid "Owner"
+msgstr "Ejer"
 
 msgid "Password"
 msgstr "Adgangskode"
@@ -1828,6 +1869,36 @@ msgstr "Besked på MySpace"
 msgid "Post to Twitter"
 msgstr "Besked på Twitter"
 
+#, php-format
+msgid "Posted a month ago"
+msgid_plural "Posted %d months ago"
+msgstr[0] "Skrevet for en måned siden"
+msgstr[1] "Skrevet for %d måneder siden"
+
+#, php-format
+msgid "Posted a year ago"
+msgid_plural "Posted %d years ago"
+msgstr[0] "Skrevet for et år siden"
+msgstr[1] "Skrevet for %d år siden"
+
+#, php-format
+msgid "Posted last week"
+msgid_plural "Posted %d weeks ago"
+msgstr[0] "Skrevet i sidste uge"
+msgstr[1] "Skrevet for %d uger siden"
+
+msgid "Posted today @ %l:%M %p"
+msgstr "Skrevet idag kl. %R"
+
+#, php-format
+msgid "Posted yesterday"
+msgid_plural "Posted %d days ago"
+msgstr[0] "Skrevet igår"
+msgstr[1] "Skrevet for %d dage siden"
+
+msgid "Posted yesterday @ %l:%M %p"
+msgstr "Skrevet igår kl. %R"
+
 msgid "Prev"
 msgstr "Forrige"
 
@@ -1951,6 +2022,10 @@ msgstr "Rapporter denne anmeldelse (vælg en begrundelse)"
 #, php-format
 msgid "Reset your %s Add-ons password"
 msgstr "Nulstil din adgangskode til %s Add-ons"
+
+#, php-format
+msgid "Results <strong>%1$s</strong>-<strong>%2$s</strong> of <strong>%3$s</strong>"
+msgstr "Resultat <strong>%1$s</strong>-<strong>%2$s</strong> af <strong>%3$s</strong>"
 
 msgid "Retrieving status of hosted add-ons..."
 msgstr "Indlæser status for tilføjelser..."
@@ -2257,7 +2332,7 @@ msgstr "Støt denne tilføjelse"
 
 #, php-format
 msgid "Support this add-on: <a href=\"%1$s\">Contribute $%2$s</a>"
-msgstr ""
+msgstr "Støt denne tilføjelse: <a href=\"%1$s\">Doner $%2$s</a>"
 
 msgid "Tag added"
 msgstr "Mærkat tilføjet"
@@ -2291,6 +2366,12 @@ msgstr "Tak fordi du registrerede dig og velkommen til %1$s!"
 
 msgid "Thanks; this review has been flagged for editor approval."
 msgstr "Tak; denne anmeldelse er rapporteret til redaktørerne."
+
+# %1$s is a file extension.  Example:  .exe
+# %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
+#, php-format
+msgid "That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s"
+msgstr "Denne filendelse (%1$s) tillades ikke til et ikon. Brug en af følgende: %2$s"
 
 msgid "The Group has been saved"
 msgstr "Gruppen er gemt"
@@ -2461,6 +2542,9 @@ msgstr "For at tilføje flere tilføjelser til denne samling, kan du skrive en k
 msgid "To publish new add-ons to this collection, start typing their names below."
 msgstr "For at tilføje flere tilføjelser til denne samling, kan du skrive deres navne herunder."
 
+msgid "Today @ %l:%M %p"
+msgstr "Idag kl. %R"
+
 msgid "Toggle advanced search mode"
 msgstr "Skift mellem avanceret og simpel søgning"
 
@@ -2488,9 +2572,6 @@ msgstr "Type"
 msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "Ukendt"
-
-msgid "Upcoming Events"
-msgstr "Kommende begivenheder"
 
 msgid "Upcoming events and contests"
 msgstr "Kommende begivenheder og konkurrencer"
@@ -2554,6 +2635,13 @@ msgstr "En bruger kan kun have en rolle ad gangen.  Fjern brugeren fra enhver ek
 
 msgid "Version"
 msgstr "Version"
+
+# <option> text in a <select> for Author role in an add-on.
+msgid "Viewer"
+msgstr "Seer"
+
+msgid "Visit the Developer Hub"
+msgstr "Besøg udviklercentralen"
 
 # %s is the version of the add-on.  Example:  3.2a1
 #, php-format
@@ -2683,17 +2771,26 @@ msgstr "Virker med"
 msgid "Works with:"
 msgstr "Virker med:"
 
+msgid "Wrong email address or password!"
+msgstr "Forkert mailadresse eller adgangskode!"
+
 msgid "Wrong password entered!"
 msgstr "Forkert adgangskode!"
-
-msgid "Wrong username or password!"
-msgstr "Forkert brugernavn eller adgangskode!"
 
 msgid "Yes"
 msgstr "Ja"
 
 msgid "Yes, I would like to delete this collection."
 msgstr "Ja, jeg vil gerne slette denne samling."
+
+#, php-format
+msgid "Yesterday"
+msgid_plural "%d days ago"
+msgstr[0] "Igår"
+msgstr[1] "%d dage siden"
+
+msgid "Yesterday @ %l:%M %p"
+msgstr "Igår kl. %R"
 
 msgid "You are not authorized to view this page."
 msgstr "Du har ikke adgang til at se denne side."
@@ -2866,6 +2963,9 @@ msgstr "søg efter tilføjelser"
 
 msgid "search for collections"
 msgstr "søg efter samlinger"
+
+msgid "search for mobile add-ons"
+msgstr "søg efter tilføjelser til mobilen"
 
 msgid "show experimental add-ons"
 msgstr "Vis eksperimentelle tilføjelser"

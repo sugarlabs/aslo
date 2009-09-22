@@ -111,11 +111,6 @@ msgstr "%1$s%% positive votes for this collection"
 msgid "%2$s Add-ons Password Reset\\n\\nA request was received to reset the password for this account on addons.mozilla.org. To change this password please click on the following link, or paste it into your browser's location bar:\\n\\n%1$s\\n\\nIf you did not request this email there is no need for further action.\\n\\nThanks,\\n-- %2$s Add-ons Staff"
 msgstr "%2$s Add-ons Password Reset\n\nA request was received to reset the password for this account on addons.mozilla.org. To change this password please click on the following link, or paste it into your browser's location bar:\n\n%1$s\n\nIf you did not request this email there is no need for further action.\n\nThanks,\n-- %2$s Add-ons Staff"
 
-# date format string used in PHP's strftime():
-# http://php.net/strftime
-msgid "%b %e"
-msgstr "%b %e"
-
 # date format string as used in PHP's strftime():
 # http://php.net/strftime
 msgid "%B %e, %Y"
@@ -263,6 +258,18 @@ msgstr "A first name, last name or nickname is required."
 #, php-format
 msgid "A link to activate your user account was sent by email to your address %1$s. You have to click it before you can log into %2$s Add-ons."
 msgstr "A link to activate your user account was sent by email to your address %1$s. You have to click it before you can log into %2$s Add-ons."
+
+#, php-format
+msgid "A month ago"
+msgid_plural "%d months ago"
+msgstr[0] "A month ago"
+msgstr[1] "%d months ago"
+
+#, php-format
+msgid "A year ago"
+msgid_plural "%d years ago"
+msgstr[0] "A year ago"
+msgstr[1] "%d years ago"
 
 # Link text for the AMO About page.
 msgctxt "footer_a_about"
@@ -434,9 +441,6 @@ msgstr "Add-ons <img alt=\"Add-ons\" src=\"%1$s\" />"
 msgid "Add-ons Developer"
 msgstr "Add-ons Developer"
 
-msgid "Add-ons Policy"
-msgstr "Add-ons Policy"
-
 msgid "Add-ons by Name"
 msgstr "Add-ons by Name"
 
@@ -496,9 +500,15 @@ msgstr "Additional Resources"
 msgid "Adjust maxVersion without uploading"
 msgstr "Adjust maxVersion without uploading"
 
+msgid "Admin"
+msgstr "Admin"
+
 msgctxt "sidebar_navlink_admin_tools"
 msgid "Admin Tools"
 msgstr "Admin Tools"
+
+msgid "Admin/Owner"
+msgstr "Admin/Owner"
 
 msgctxt "advanced_search_form"
 msgid "Advanced"
@@ -652,6 +662,9 @@ msgstr "Browse %s"
 msgid "Browse Add-ons"
 msgstr "Browse Add-ons"
 
+msgid "Browse Mobile Add-ons"
+msgstr "Browse Mobile Add-ons"
+
 msgid "Browse Search Engines"
 msgstr "Browse Search Engines"
 
@@ -667,6 +680,10 @@ msgstr "Browse all Themes :: %1$s Add-ons"
 #, php-format
 msgid "Browse through more search engines at %1$s"
 msgstr "Browse through more search engines at %1$s"
+
+#, php-format
+msgid "Build a %1$s Add-on"
+msgstr "Build a %1$s Add-on"
 
 msgid "By"
 msgstr "By"
@@ -926,15 +943,15 @@ msgstr "Developer Comments"
 msgid "Developer FAQ"
 msgstr "Developer FAQ"
 
+msgctxt "sidebar_navlink_developer_tools"
+msgid "Developer Hub"
+msgstr "Developer Hub"
+
 msgid "Developer Information"
 msgstr "Developer Information"
 
 msgid "Developer Reply:"
 msgstr "Developer Reply:"
-
-msgctxt "sidebar_navlink_developer_tools"
-msgid "Developer Tools"
-msgstr "Developer Tools"
 
 msgid "Developer reply to:"
 msgstr "Developer reply to:"
@@ -1115,14 +1132,14 @@ msgctxt "rss_featuredaddons"
 msgid "Featured Add-ons"
 msgstr "Featured Add-ons"
 
-msgid "Fennec"
-msgstr "Fennec"
-
 msgid "File not found!"
 msgstr "File not found!"
 
 msgid "Find add-ons for other applications"
 msgstr "Find add-ons for other applications"
+
+msgid "Find all the tools and resources you need to make your first add-on."
+msgstr "Find all the tools and resources you need to make your first add-on."
 
 msgid "Firefox"
 msgstr "Firefox"
@@ -1358,6 +1375,12 @@ msgstr "Last Updated"
 msgid "Last name"
 msgstr "Last name"
 
+#, php-format
+msgid "Last week"
+msgid_plural "%d weeks ago"
+msgstr[0] "Last week"
+msgstr[1] "%d weeks ago"
+
 msgid "Latest Version"
 msgstr "Latest Version"
 
@@ -1366,7 +1389,7 @@ msgstr "Learn More"
 
 #, php-format
 msgid "Learn how to <a href=\"%1$s\">make your own</a> at the <a href=\"%2$s\">Mozilla Developer Center</a>."
-msgstr ""
+msgstr "Learn how to <a href=\"%1$s\">make your own</a> at the <a href=\"%2$s\">Mozilla Developer Center</a>."
 
 msgid "Learn more"
 msgstr "Learn more"
@@ -1485,6 +1508,17 @@ msgstr "Misplaced bug report or support request"
 #, php-format
 msgid "Missing argument: %s"
 msgstr "Missing argument: %s"
+
+msgid "Mobile"
+msgstr "Mobile"
+
+#, php-format
+msgid "Mobile Add-ons <em>for</em> <img alt=\"mobile\" src=\"%1$s\" /> <strong>Firefox</strong>"
+msgstr "Mobile Add-ons <em>for</em> <img alt=\"mobile\" src=\"%1$s\" /> <strong>Firefox</strong>"
+
+msgctxt "categories_header_mobile"
+msgid "Mobile Categories"
+msgstr "Mobile Categories"
 
 msgid "More about this add-on"
 msgstr "More about this add-on"
@@ -1618,6 +1652,9 @@ msgstr "No tags for these add-ons"
 msgid "No votes for this collection yet."
 msgstr "No votes for this collection yet."
 
+msgid "None"
+msgstr "None"
+
 msgid "Normal"
 msgstr "Normal"
 
@@ -1693,6 +1730,10 @@ msgstr[1] "Other add-ons by these developers"
 
 msgid "Other languages:"
 msgstr "Other languages:"
+
+# <option> text in a <select> for Author role in an add-on.
+msgid "Owner"
+msgstr "Owner"
 
 msgid "Password"
 msgstr "Password"
@@ -1828,6 +1869,36 @@ msgstr "Post to MySpace"
 msgid "Post to Twitter"
 msgstr "Post to Twitter"
 
+#, php-format
+msgid "Posted a month ago"
+msgid_plural "Posted %d months ago"
+msgstr[0] "Posted a month ago"
+msgstr[1] "Posted %d months ago"
+
+#, php-format
+msgid "Posted a year ago"
+msgid_plural "Posted %d years ago"
+msgstr[0] "Posted a year ago"
+msgstr[1] "Posted %d years ago"
+
+#, php-format
+msgid "Posted last week"
+msgid_plural "Posted %d weeks ago"
+msgstr[0] "Posted last week"
+msgstr[1] "Posted %d weeks ago"
+
+msgid "Posted today @ %l:%M %p"
+msgstr "Posted today @ %l:%M %p"
+
+#, php-format
+msgid "Posted yesterday"
+msgid_plural "Posted %d days ago"
+msgstr[0] "Posted yesterday"
+msgstr[1] "Posted %d days ago"
+
+msgid "Posted yesterday @ %l:%M %p"
+msgstr "Posted yesterday @ %l:%M %p"
+
 msgid "Prev"
 msgstr "Prev"
 
@@ -1951,6 +2022,10 @@ msgstr "Report this review (select a reason)"
 #, php-format
 msgid "Reset your %s Add-ons password"
 msgstr "Reset your %s Add-ons password"
+
+#, php-format
+msgid "Results <strong>%1$s</strong>-<strong>%2$s</strong> of <strong>%3$s</strong>"
+msgstr "Results <strong>%1$s</strong>-<strong>%2$s</strong> of <strong>%3$s</strong>"
 
 msgid "Retrieving status of hosted add-ons..."
 msgstr "Retrieving status of hosted add-ons..."
@@ -2257,7 +2332,7 @@ msgstr "Support this add-on"
 
 #, php-format
 msgid "Support this add-on: <a href=\"%1$s\">Contribute $%2$s</a>"
-msgstr ""
+msgstr "Support this add-on: <a href=\"%1$s\">Contribute $%2$s</a>"
 
 msgid "Tag added"
 msgstr "Tag added"
@@ -2291,6 +2366,12 @@ msgstr "Thanks for registering and welcome to %1$s!"
 
 msgid "Thanks; this review has been flagged for editor approval."
 msgstr "Thanks; this review has been flagged for editor approval."
+
+# %1$s is a file extension.  Example:  .exe
+# %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
+#, php-format
+msgid "That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s"
+msgstr "That file extension (%1$s) is not allowed for an icon. Please use one of the following: %2$s"
 
 msgid "The Group has been saved"
 msgstr "The Group has been saved"
@@ -2461,6 +2542,9 @@ msgstr "To publish new add-ons to this collection, enter a comma-separated list 
 msgid "To publish new add-ons to this collection, start typing their names below."
 msgstr "To publish new add-ons to this collection, start typing their names below."
 
+msgid "Today @ %l:%M %p"
+msgstr "Today @ %l:%M %p"
+
 msgid "Toggle advanced search mode"
 msgstr "Toggle advanced search mode"
 
@@ -2488,9 +2572,6 @@ msgstr "Type"
 msgctxt "addons_status_unknown"
 msgid "Unknown"
 msgstr "Unknown"
-
-msgid "Upcoming Events"
-msgstr "Upcoming Events"
 
 msgid "Upcoming events and contests"
 msgstr "Upcoming events and contests"
@@ -2609,6 +2690,13 @@ msgstr "View privacy policy"
 msgid "View the source"
 msgstr "View the source"
 
+# <option> text in a <select> for Author role in an add-on.
+msgid "Viewer"
+msgstr "Viewer"
+
+msgid "Visit the Developer Hub"
+msgstr "Visit the Developer Hub"
+
 msgid "Website URL"
 msgstr "Website URL"
 
@@ -2683,17 +2771,26 @@ msgstr "Works with"
 msgid "Works with:"
 msgstr "Works with:"
 
+msgid "Wrong email address or password!"
+msgstr "Wrong email address or password!"
+
 msgid "Wrong password entered!"
 msgstr "Wrong password entered!"
-
-msgid "Wrong username or password!"
-msgstr "Wrong username or password!"
 
 msgid "Yes"
 msgstr "Yes"
 
 msgid "Yes, I would like to delete this collection."
 msgstr "Yes, I would like to delete this collection."
+
+#, php-format
+msgid "Yesterday"
+msgid_plural "%d days ago"
+msgstr[0] "Yesterday"
+msgstr[1] "%d days ago"
+
+msgid "Yesterday @ %l:%M %p"
+msgstr "Yesterday @ %l:%M %p"
 
 msgid "You are not authorized to view this page."
 msgstr "You are not authorized to view this page."
@@ -2866,6 +2963,9 @@ msgstr "search for add-ons"
 
 msgid "search for collections"
 msgstr "search for collections"
+
+msgid "search for mobile add-ons"
+msgstr "search for mobile add-ons"
 
 msgid "show experimental add-ons"
 msgstr "show experimental add-ons"
