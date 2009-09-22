@@ -6,73 +6,78 @@ $this->layout = 'amo2009';
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
 <div class="primary" role="main">
-  <h2><?=___('Add-on Builder')?></h2>
-  <p class="summary"><?=___('Simply enter some basic information about your add-on below and select which interface components to start with, and your custom-built add-on will be ready for download.')?></p>
+  <div class="primary">
+    <h2><?=___('Add-on Builder')?></h2>
+    <p class="summary"><?=___('Simply enter some basic information about your add-on below and select which interface components to start with, and your custom-built add-on will be ready for download.')?></p>
 
-  <form class="primary" id="builder" method="post">
+    <form id="builder" method="post">
 
-    <h3><?=___('Describe your add-on')?></h3>
-    <p><?=___("First, we'll need some basic information about your add-on. This will be displayed in the Add-ons Manager when your extension is installed.")?></p>
-    <ul>
-      <?=$form->name->as_li()?>
-      <?=$form->description->as_li()?>
-      <?=$form->version->as_li()?>
-      <?=$form->id->as_li()?>
-      <?=$form->package->as_li()?>
-    </ul>
+      <h3><?=___('Describe your add-on')?></h3>
+      <p><?=___("First, we'll need some basic information about your add-on. This will be displayed in the Add-ons Manager when your extension is installed.")?></p>
+      <ul>
+        <?=$form->name->as_li()?>
+        <?=$form->description->as_li()?>
+        <?=$form->version->as_li()?>
+        <?=$form->id->as_li()?>
+        <?=$form->package->as_li()?>
+      </ul>
 
-    <h3><?=___('Who is working on this add-on?')?></h3>
-    <p><?=___("Tell us about the people or companies behind this add-on. This information appears in the add-on's About dialog.")?></p>
-    <ul>
-      <?=$form->author->as_li()?>
-      <?=$form->contributors->as_li()?>
-    </ul>
+      <h3><?=___('Who is working on this add-on?')?></h3>
+      <p><?=___("Tell us about the people or companies behind this add-on. This information appears in the add-on's About dialog.")?></p>
+      <ul>
+        <?=$form->author->as_li()?>
+        <?=$form->contributors->as_li()?>
+      </ul>
 
-    <h3><?=___('What applications will this support?')?></h3>
-    <p><?=___("Select the applications and versions that your add-on will support below. For example, if your add-on is compatible with Firefox 3.5, the verions should be 3.5 - 3.5.*. Make sure you only select applications you intend to test with.")?></p>
-    <ul class="applications">
-      <li>
-        <?=$form->applications->label()?>
-        <div class="funky">
-          <?=$form->applications->html()?> <?=$form->applications->errors()?>
-        </div>
-      </li>
-      <li>
-        <label><?=___('Versions')?></label>
-        <ul class="builder-input app-versions">
-          <?php foreach ($form->appversions as $name => $appversion): ?>
-            <li name="<?=$name?>">
-              <?=$form->{$name.'_min'}->label()?>
-                <?=$form->{$name.'_min'}->html()?>
-                &mdash;
-                <?=$form->{$name.'_max'}->html()?>
-            </li>
-          <?php endforeach ?>
-        </ul>
-      </li>
-    </ul>
+      <h3><?=___('What applications will this support?')?></h3>
+      <p><?=___("Select the applications and versions that your add-on will support below. For example, if your add-on is compatible with Firefox 3.5, the verions should be 3.5 - 3.5.*. Make sure you only select applications you intend to test with.")?></p>
+      <ul class="applications">
+        <li>
+          <?=$form->applications->label()?>
+          <div class="funky">
+            <?=$form->applications->html()?> <?=$form->applications->errors()?>
+          </div>
+        </li>
+        <li>
+          <label><?=___('Versions')?></label>
+          <ul class="builder-input app-versions">
+            <?php foreach ($form->appversions as $name => $appversion): ?>
+              <li name="<?=$name?>">
+                <?=$form->{$name.'_min'}->label()?>
+                  <?=$form->{$name.'_min'}->html()?>
+                  &mdash;
+                  <?=$form->{$name.'_max'}->html()?>
+              </li>
+            <?php endforeach ?>
+          </ul>
+        </li>
+      </ul>
 
-    <h3><?=___('Choose pre-built features')?></h3>
-    <p><?=___("Get started quickly by selecting user interface components to include in your add-on package. We'll include documented code for each item you select so your extension will work out of the box.")?></p>
-    <ul>
-      <li>
-        <?=$form->ui->label()?>
-        <div class="builder-input">
-          <?=$form->ui->html()?>
-        </div>
-      </li>
-    </ul>
+      <h3><?=___('Choose pre-built features')?></h3>
+      <p><?=___("Get started quickly by selecting user interface components to include in your add-on package. We'll include documented code for each item you select so your extension will work out of the box.")?></p>
+      <ul>
+        <li>
+          <?=$form->ui->label()?>
+          <div class="builder-input">
+            <?=$form->ui->html()?>
+          </div>
+        </li>
+      </ul>
 
+      <button type="submit" class="positive significant">
+        <?=___('Create My Add-on')?>
+      </button>
+    </form>
+  </div>
 
-    <input type="submit" value="Create My Add-on" />
-  </form>
-  
-  <div class="highlight">
-    <!-- this goes in the highlight box at the top -->
-    <h3><?=___('Advanced Building')?></h3>
-    <p><?=___('Want to create XULRunner applications, XPCOM components, and other advanced skeletons? Visit the <a href="http://www.mozdev.org/projects/wizard/">MozDev Project Wizard</a>.')?></p>
+  <div class="secondary">
+    <div class="highlight">
+      <h3><?=___('Advanced Building')?></h3>
+      <p><?=___('Want to create XULRunner applications, XPCOM components, and other advanced skeletons? Visit the <a href="http://www.mozdev.org/projects/wizard/">MozDev Project Wizard</a>.')?></p>
+    </div>
   </div>
 </div>
+
 
 <div class="secondary" role="complementary">
   <img src="<?=$html->rootUrl('/img/amo2009/developers/addon-builder.png')?>" alt="" />

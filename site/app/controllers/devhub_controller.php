@@ -584,6 +584,9 @@ class DevHubController extends AppController {
         if (empty($q)) {
             return $this->cakeError('error404');
         }
+        $addonData = unserialize($q[0]['fizzypop']['serialized']);
+
+        $this->publish('package', $addonData['package']);
         $this->publish('hash', $hash);
         return $this->render('builder_success');
     }
@@ -597,8 +600,16 @@ class DevHubController extends AppController {
             return $this->cakeError('error404');
         }
         $data = unserialize($q[0]['fizzypop']['serialized']);
-        $z = new ProjectZip_Extension(new Project_Extension($data));
-        $z->finish();
+
+        try {
+            $z = new AddonZip(new Project_Extension($data));
+            $z->finish();
+        } catch (Exception $e) {
+            echo 'There was a problem: '. $e->getMessage();
+            // Turn off rendering so we don't get a Cake error.
+            $this->autoRender = False;
+            return;
+        }
     }
 
     /* Extract the serialized fizzypop structure, undoing some transformations
@@ -674,7 +685,7 @@ class BuilderForm extends Phorm {
 
         $this->author = new TextField(___("Author's Name"), $size, $max_length);
         $this->author->help_text = ___('Enter the name of the person or entity to be listed as the author of this add-on.');
-        
+
         $this->contributors = new LargeTextField(___('Other Contributors'), $rows, $cols);
         $this->contributors->help_text = ___('Enter the names of any other contributors to this extension, one per line.');
 
@@ -767,5 +778,44 @@ function min_versions($versions) {
 function __required_field($value) {
     if (empty($value)) {
         throw new ValidationError(___('This field is required.'));
+    }
+}
+
+class AddonZip extends ProjectZip_Extension {
+
+    function getFilename() {
+        $name = $this->template->data['package'];
+        $safe_name = preg_replace(INVALID_FILENAME_CHARS, '_', $name);
+        return $safe_name.'.zip';
+    }
+
+    function finish($send_headers=True) {
+        // check zip status
+        if ($this->numFiles == 0) {
+            throw new Exception('No files found in zip file');
+        } // end if no files
+        if ($this->status != 0) {
+            throw new Exception('Invalid zip status: '.
+                $this->getStatusString());
+        } // end if invalid status
+        if (!is_readable($this->tempfile)) {
+            throw new Exception('Unable to read zip file');
+        } // end if invalid tempfile
+
+        $this->close();
+
+        if ($send_headers) {
+            $headers = array(
+                'Content-Type' => 'application/x-zip',
+                'Content-Disposition' => "attachment; filename=\"{$this->getFilename()}\"",
+                'Content-Transfer-Encoding' => 'binary',
+                'Content-Length' => filesize($this->tempfile),
+            );
+            foreach ($headers as $key => $value) {
+                header("{$key}: {$value}");
+            }
+            readfile($this->tempfile);
+            unlink($this->tempfile);
+        }
     }
 }
