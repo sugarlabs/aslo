@@ -346,12 +346,12 @@ class HubComponent extends Object {
                                     ___('total Stumbles') => '10 billion'
                                 )
                              )),
-            new HubCaseStudy(___('Immersive Content in 3-D with Cooliris'),
+            new HubCaseStudy(___('Immersive 3-D Experience with Cooliris'),
                              ___('Cooliris lets users browse photos and videos from the web or local computer in a scrolling three-dimensional infinite wall. From full-screen mode to sharing and discovery, Cooliris makes it easy to explore rich content.'),
-                             'cooliris-404',
+                             'cooliris',
                              5579,
                              '/img/docs/case-studies/cooliris-wordmark.png',
-                             ___('Find out how Cooliris has stayed ahead of the game'),
+                             ___('Find out how Cooliris re-invented photo browsing'),
                              new HubSite('Cooliris, Inc.', 'http://www.cooliris.com'),
                              '2007-08',
                              array(
