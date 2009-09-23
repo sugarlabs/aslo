@@ -2,7 +2,7 @@
   $per_page = $paging['show'];
   $total = $paging['total'];
   /* Page 1 starts should start counting at 0, then add 1 because we're not computers. */
-  $start = ($per_page * ($paging['page'] - 1)) + 1;
+  $start = max(0, ($per_page * ($paging['page'] - 1)) + 1);
   /* The first item is part of our per-page count, so subtract 1. */
   $end = min(($start + $per_page) - 1, $total);
 ?>
