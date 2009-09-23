@@ -110,7 +110,8 @@ Bandwagon.Controller.CollectionsPane.onViewSelect = function()
         // make sure the expanded collection item is scrolled into view
         var elemsAddon = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.getElementsByTagName("richlistitem");
 
-        for each (var item in elemsAddon) {
+        for each (var item in elemsAddon)
+        {
             if (item.getAttribute("type") == "bandwagonAddonExpanded")
             {
                 try
@@ -531,13 +532,13 @@ Bandwagon.Controller.CollectionsPane.doShowCollection = function()
 
     if (collection)
     {
-        Bandwagon.Logger.warn("doShowCollection : we have a collecton");
+        Bandwagon.Logger.debug("doShowCollection : we have a collecton");
         collection.setAllRead();
 
         if (Bandwagon.Controller.CollectionsPane.initialized)
         {
             if (Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem) {
-                Bandwagon.Logger.warn("doShowCollection : setting collection unread property to 0");
+                Bandwagon.Logger.debug("doShowCollection : setting collection unread property to 0");
                 Bandwagon.Controller.CollectionsPane.elemBandwagonCollections.selectedItem.unread = 0;
             }
         }
@@ -549,8 +550,9 @@ Bandwagon.Controller.CollectionsPane.doExpandAddon = function(event)
     if (event)
         event.preventDefault();
 
-    Bandwagon.Logger.warn("doExpandAddon : expanding...");
+    Bandwagon.Logger.debug("doExpandAddon : expanding...");
     var selItem = Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.selectedItem;
+
     if (selItem && selItem.getAttribute("type") == "bandwagonAddonExpanded")
     {
         return;
@@ -591,9 +593,9 @@ Bandwagon.Controller.CollectionsPane.doExpandAddon = function(event)
         elemBandwagonAddonExpanded.addon = addon;
 
         try {
-            Bandwagon.Controller.CollectionsPane.elemBandwagonAddonExpanded.setAddon(addon);
+            elemBandwagonAddonExpanded.setAddon(addon);
         } catch (e) {
-            Bandwagon.Logger.warn("doExpandAddon : setAddon failed : "+e);
+            //Bandwagon.Logger.debug("doExpandAddon : setAddon failed : "+e);
         }
 
         Bandwagon.Controller.CollectionsPane.elemBandwagonAddons.insertBefore(elemBandwagonAddonExpanded, selectedElemBandwagonAddon);

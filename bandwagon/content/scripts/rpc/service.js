@@ -284,7 +284,7 @@ Bandwagon.RPC.Service.prototype.getServiceDocument = function(callback)
 {
     var service = this;
 
-    this._logger.debug("Bandwagon.RPC.Service.getServiceDocument: getting service document for logged in user");
+    this._logger.debug("Bandwagon.RPC.Service.getServiceDocument: getting service document for (logged in) user");
 
     var internalCallback = function(event)
     {

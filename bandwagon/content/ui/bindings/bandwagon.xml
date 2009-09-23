@@ -370,38 +370,58 @@
                     this.addon = addon;
                     this.name = addon.name;
                     this.guid = addon.guid;
-                    this.summary = addon.summary;
-                    this.description = addon.summary; // Use summary and not description
                     this.iconURL = addon.icon;
                     this.thumbnailURL = addon.thumbnail;
                     this.authors = addon.authors;
                     this.dateAdded = addon.dateAdded;
                     this.read = addon.read;
+                    this.summary = addon.summary;
 
-                    try {
-                    if (addon.comments.length > 0)
+                    if (Bandwagon.Util.getAppName() != "Firefox")
                     {
-                        if (addon.comments[0].comment.match(/\w/))
-                        {
-                            this.comment = addon.comments[0];
-                        }
+                      // see bug 609080
 
-                        this.addedBy = addon.comments[0].author;
-                        if (addon.comments[0].comment == "")  // it seems each addon will have an empty comment if none was made
-                        {
-                            document.getAnonymousElementByAttribute(this, 'anonid', 'commenticon').setAttribute("collapsed", true);
-                            if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox')) // expanded only
-                                document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox').setAttribute("collapsed", true);
-                        }
+                      var niceDescription = addon.summary.substring(0, 300);
+
+                      while (niceDescription.length<300)
+                      {
+                        niceDescription += "\u00A0 ";
+                      }
+
+                      this.description = niceDescription;
                     }
                     else
                     {
-                        document.getAnonymousElementByAttribute(this, 'anonid', 'commenticon').setAttribute("collapsed", true);
-                        if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox')) // expanded only
-                            document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox').setAttribute("collapsed", true);
+                      this.description = addon.summary; // Use summary and not description
                     }
+                    
+                    try
+                    {
+                      if (addon.comments.length > 0)
+                      {
+                          if (addon.comments[0].comment.match(/\w/))
+                          {
+                              this.comment = addon.comments[0];
+                          }
+
+                          this.addedBy = addon.comments[0].author;
+
+                          if (addon.comments[0].comment == "")  // it seems each addon will have an empty comment if none was made
+                          {
+                              document.getAnonymousElementByAttribute(this, 'anonid', 'commenticon').setAttribute("collapsed", true);
+                              if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox')) // expanded only
+                                  document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox').setAttribute("collapsed", true);
+                          }
+                      }
+                      else
+                      {
+                          document.getAnonymousElementByAttribute(this, 'anonid', 'commenticon').setAttribute("collapsed", true);
+                          if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox')) // expanded only
+                              document.getAnonymousElementByAttribute(this, 'anonid', 'commentbox').setAttribute("collapsed", true);
+                      }
                     }
-                    catch(e) {
+                    catch(e)
+                    {
                         Bandwagon.Logger.debug("setAddon - error handling comment : "+e);
                     }
 
