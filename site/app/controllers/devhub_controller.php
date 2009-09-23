@@ -478,6 +478,7 @@ class DevHubController extends AppController {
             ___('Developer Hub') => '/developers'
             ));
 
+        $this->publish('newsletter_subscribed', $this->Session->delete('newsletter_subscribed'));
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $address = $_POST['address'];
@@ -488,12 +489,17 @@ class DevHubController extends AppController {
             if ($mailchimp->errorCode) {
                 $this->publish('mailchimp_error', $mailchimp->errorMessage);
             } else {
-                $this->Session->write('newsletter_subscribed', True);
-                return $this->redirect('/developers/community/newsletter/');
+                /* If the User isn't logged in, we can't send them messages.
+                 * Anonymous people get POST pages, logged-in users GET pages.
+                 */
+                if ($this->Session->check('User')) {
+                    $this->Session->write('newsletter_subscribed', True);
+                    return $this->redirect('/developers/community/newsletter/');
+                } else {
+                    $this->publish('newsletter_subscribed', True);
+                }
             }
         }
-
-        $this->publish('newsletter_subscribed', $this->Session->delete('newsletter_subscribed'));
 
         $feeds = array();
         $feed = $this->_getFeed(ABOUT_ADDONS_FEED_URL);
