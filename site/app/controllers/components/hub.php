@@ -330,7 +330,7 @@ class HubComponent extends Object {
         
         $lorem = 'foo';
         $this->casestudies = array(
-            new HubCaseStudy('Personalized Browsing with StumbleUpon',
+            new HubCaseStudy(___('Personalized Browsing with StumbleUpon'),
                              ___('StumbleUpon is a recommendation engine that helps users discover and share great websites. With over 8 million users, it has become one of the most popular sharing services on the Web today.'),
                              'stumbleupon',
                              138,
@@ -339,9 +339,27 @@ class HubComponent extends Object {
                              new HubSite('StumbleUpon, Inc.', 'http://www.stumbleupon.com'),
                              '2002-02',
                              array(
-                                ___('Number of Users') => '8 million',
-                                ___('Pages Indexed') => '35 million',
-                                ___('Total Stumbles') => '10 billion'
+                                '2009-08',
+                                array(
+                                    ___('total users') => '8 million',
+                                    ___('pages indexed') => '35 million',
+                                    ___('total Stumbles') => '10 billion'
+                                )
+                             )),
+            new HubCaseStudy(___('Immersive Content in 3-D with Cooliris'),
+                             ___('Cooliris lets users browse photos and videos from the web or local computer in a scrolling three-dimensional infinite wall. From full-screen mode to sharing and discovery, Cooliris makes it easy to explore rich content.'),
+                             'cooliris-404',
+                             5579,
+                             '/img/docs/case-studies/cooliris-wordmark.png',
+                             ___('Find out how Cooliris has stayed ahead of the game'),
+                             new HubSite('Cooliris, Inc.', 'http://www.cooliris.com'),
+                             '2007-08',
+                             array(
+                                '2009-08',
+                                array(
+                                    ___('weekly thumbnail views') => '1 billion',
+                                    ___('premium content partners') => 'over 30'
+                                )
                              ))
             );
 

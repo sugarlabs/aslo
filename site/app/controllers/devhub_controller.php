@@ -443,6 +443,7 @@ class DevHubController extends AppController {
             $study = $this->Hub->casestudies_slugs[$study];
             $study->addon = $this->Addon->getAddon($study->addonid, array('authors', 'default_fields'));
         }
+        $this->pageTitle = ___('Case Studies').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME).' :: '.___('Developer Hub');
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
             ___('Developer Hub') => '/developers',
