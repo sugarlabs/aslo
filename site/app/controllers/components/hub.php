@@ -346,6 +346,15 @@ class HubComponent extends Object {
                                     ___('total Stumbles') => '10 billion'
                                 )
                              )),
+            new HubCaseStudy(___('Easy Download Management with Download Statusbar'),
+                             ___('Download Statusbar shows the progress of current downloads right in the browser\'s statusbar. There\'s no need to open the Download Manager when downloads can be managed from anywhere in the browser.'),
+                             'download-statusbar',
+                             26,
+                             '/img/docs/case-studies/downloadstatusbar-wordmark.png',
+                             ___('Read about how a side project became one of the most popular add-ons'),
+                             new HubSite('Devon Jensen', 'https://addons.mozilla.org/en-US/firefox/user/9'),
+                             '2003-03',
+                             array()),
             new HubCaseStudy(___('Immersive 3-D Experience with Cooliris'),
                              ___('Cooliris lets users browse photos and videos from the web or local computer in a scrolling three-dimensional infinite wall. From full-screen mode to sharing and discovery, Cooliris makes it easy to explore rich content.'),
                              'cooliris',
