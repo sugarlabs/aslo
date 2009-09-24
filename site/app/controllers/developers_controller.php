@@ -1090,11 +1090,18 @@ class DevelopersController extends AppController
             // Start a transaction
             $this->Addon->begin();
 
-            // Log addon action
-            // @TODO: compare old list with new list and only log the diff
+            // Log addon action for author deletion
             $old_authors = $this->Addon->getAuthors($addon_id, false);
-            foreach ($old_authors as $old) {
-                $this->Addonlog->logRemoveUserWithRole($this, $addon_id, $old['User']['id'], $old['addons_users']['role']);
+            $unchanged_authors = array();
+            foreach ($old_authors as $author) {
+                $user_id = $author['User']['id'];
+                $role = $author['addons_users']['role'];
+
+                if (!array_key_exists($user_id, $this->data['addons_users'])) {
+                    $this->Addonlog->logRemoveUserWithRole($this, $addon_id, $user_id, $role);
+                } else if ($this->data['addons_users'][$user_id]['role'] == $role) {
+                    $unchanged_authors[] = $user_id;
+                }
             }
 
             // Clear current authors
@@ -1113,8 +1120,10 @@ class DevelopersController extends AppController
                 $this->Addon->saveAuthor($addon_id, $user_id, $role, $listed, $position);
                 $position++;
 
-                // log addon action
-                $this->Addonlog->logAddUserWithRole($this, $addon_id, $user_id, $role);
+                // log addon action if the user was actually changed
+                if (!in_array($user_id, $unchanged_authors)) {
+                    $this->Addonlog->logAddUserWithRole($this, $addon_id, $user_id, $role);
+                }
             }
 
             // Commit the transaction
