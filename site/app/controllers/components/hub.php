@@ -351,7 +351,7 @@ class HubComponent extends Object {
                              'download-statusbar',
                              26,
                              '/img/docs/case-studies/downloadstatusbar-wordmark.png',
-                             ___('Read about how a side project became one of the most popular add-ons'),
+                             ___('Read about how someone new to software development made one of the most popular Firefox add-ons'),
                              new HubSite('Devon Jensen', 'https://addons.mozilla.org/en-US/firefox/user/9'),
                              '2003-03',
                              array()),

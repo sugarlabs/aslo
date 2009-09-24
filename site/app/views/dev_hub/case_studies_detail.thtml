@@ -65,6 +65,7 @@ $this->viewVars['bodyclass'] = 'inverse';
                 $study->addon['Translation']['name']['string'])?></strong></a></li>
         </ul>
         
+        <?php if (!empty($study->otherstats)): ?>
         <div class="activity">
             <h3><?=sprintf(___('%1$s Activity', 'Add-on name, such as StumbleUpon Activity'), $study->addon['Translation']['name']['string'])?></h3>
             <ul class="blocks">
@@ -74,6 +75,7 @@ $this->viewVars['bodyclass'] = 'inverse';
                 <li><cite><?=sprintf(___('Source: %1$s, %2$s', 'Add-on name and date of last update, for example Source: Cooliris, Dec. 2009'), $study->addon['Translation']['name']['string'], strftime(___('%b. %Y', 'Example: Dec. 2009'), strtotime($study->otherstats[0])))?></cite></li>
             </ul>
         </div>
+        <?php endif; ?>
     </div>
 
     <div class="secondary" role="complementary">
