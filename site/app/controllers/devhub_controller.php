@@ -562,7 +562,11 @@ class DevHubController extends AppController {
                     'author' => $form->clean['author'],
                     'contributors' => array_map('trim', split("\n", $form->clean['contributors'])),
                     'targets' => $form->_targets(),
-                    'ui' => $form->clean['ui'],
+                    // close your eyes
+                    'ui' => array_combine(
+                        $form->clean['ui'],
+                        array_fill(0, count($form->clean['ui']), true)
+                    ),
                 );
 
                 $db =& ConnectionManager::getDataSource($this->Addon->useDbConfig);
@@ -633,6 +637,8 @@ class DevHubController extends AppController {
             return $this->cakeError('error404');
         }
         $data = unserialize($q[0]['fizzypop']['serialized']);
+
+        $data['ui'] = array_keys($data['ui']);
 
         foreach ($data['targets'] as $app => $vals) {
             $data['applications'][] = $app;
