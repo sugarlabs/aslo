@@ -73,8 +73,8 @@ CREATE TABLE `addons` (
   KEY `addontype_id` (`addontype_id`),
   KEY `addons_ibfk_2` (`name`),
   KEY `addons_ibfk_3` (`homepage`),
-  KEY `addons_ibfk_4` (`supportemail`),    
-  KEY `addons_ibfk_5` (`supporturl`),  
+  KEY `addons_ibfk_4` (`supportemail`),
+  KEY `addons_ibfk_5` (`supporturl`),
   KEY `addons_ibfk_6` (`description`),
   KEY `addons_ibfk_7` (`summary`),
   KEY `addons_ibfk_8` (`developercomments`),
@@ -92,7 +92,7 @@ CREATE TABLE `addons` (
   CONSTRAINT `addons_ibfk_2` FOREIGN KEY (`name`) REFERENCES `translations` (`id`),
   CONSTRAINT `addons_ibfk_3` FOREIGN KEY (`homepage`) REFERENCES `translations` (`id`),
   CONSTRAINT `addons_ibfk_4` FOREIGN KEY (`supportemail`) REFERENCES `translations` (`id`),
-  CONSTRAINT `addons_ibfk_5` FOREIGN KEY (`supporturl`) REFERENCES `translations` (`id`),  
+  CONSTRAINT `addons_ibfk_5` FOREIGN KEY (`supporturl`) REFERENCES `translations` (`id`),
   CONSTRAINT `addons_ibfk_6` FOREIGN KEY (`description`) REFERENCES `translations` (`id`),
   CONSTRAINT `addons_ibfk_7` FOREIGN KEY (`summary`) REFERENCES `translations` (`id`),
   CONSTRAINT `addons_ibfk_8` FOREIGN KEY (`developercomments`) REFERENCES `translations` (`id`),
@@ -412,7 +412,7 @@ CREATE TABLE `config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `config` ( `key` , `value` )
-VALUES ('site_notice', ''), 
+VALUES ('site_notice', ''),
 ('submissions_disabled', '0'),
 ('queues_disabled', '0'),
 ('search_disabled', '0'),
@@ -426,7 +426,7 @@ VALUES ('site_notice', ''),
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `download_counts`
 --
 
@@ -482,9 +482,9 @@ CREATE TABLE `downloads_tmp` (
   KEY `addon_id` (`addon_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Table structure for table `editor_subscriptions`
--- 
+--
 
 DROP TABLE IF EXISTS `editor_subscriptions`;
 CREATE TABLE `editor_subscriptions` (
@@ -528,7 +528,7 @@ CREATE TABLE `addonlogs` (
   `type` tinyint(2) unsigned NOT NULL default 0, -- determines how the rest of the fields are used
   `object1_id` int(11) unsigned default NULL,    -- foreign key or other numeric field
   `object2_id` int(11) unsigned default NULL,    -- foreign key or other numeric field
-  `name1` varchar(255) default NULL,             -- name of non-persistent object1 
+  `name1` varchar(255) default NULL,             -- name of non-persistent object1
   `name2` varchar(255) default NULL,             -- name of non-persistent object2
   `notes` text default NULL,                     -- notes for system-wide logging
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -995,8 +995,8 @@ CREATE TABLE `categories` (
   `application_id` int(11) unsigned default NULL,
   `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  `count` int(11) NOT NULL DEFAULT '0',  
-  `weight` int(11) NOT NULL DEFAULT '0',  
+  `count` int(11) NOT NULL DEFAULT '0',
+  `weight` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`id`),
   KEY `addontype_id` (`addontype_id`),
   KEY `application_id` (`application_id`),
@@ -1057,7 +1057,7 @@ CREATE TABLE `update_counts` (
 
 -- --------------------------------------------------------
 
--- 
+--
 -- Table structure for table `users`
 --
 
@@ -1132,10 +1132,10 @@ CREATE TABLE `text_search_summary` (
   `id` int(11) NOT NULL,
   `locale` varchar(10) NOT NULL,
   `addontype` int(11) NOT NULL,
-  `status` int(11) NOT NULL,  
-  `inactive` int(11) NOT NULL, 
-  `averagerating` varchar(255),       
-  `weeklydownloads` int(11) UNSIGNED ,       
+  `status` int(11) NOT NULL,
+  `inactive` int(11) NOT NULL,
+  `averagerating` varchar(255),
+  `weeklydownloads` int(11) UNSIGNED ,
   `name` text,
   `summary` text,
   `description` text,
@@ -1153,13 +1153,13 @@ CREATE TABLE `text_search_summary` (
 DROP TABLE IF EXISTS `versions_summary`;
 CREATE TABLE `versions_summary` (
   `addon_id` int(11) NOT NULL,
-  `version_id` int(11) NOT NULL,  
+  `version_id` int(11) NOT NULL,
   `application_id` int(11),
   `created` DATETIME NOT NULL,
-  `modified`DATETIME NOT NULL,  
-  `min` int(11) unsigned, 
-  `max` int(11) unsigned, 
-  INDEX (addon_id) 
+  `modified`DATETIME NOT NULL,
+  `min` int(11) unsigned,
+  `max` int(11) unsigned,
+  INDEX (addon_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -1176,11 +1176,11 @@ CREATE TABLE `collections_search_summary` (
   FULLTEXT KEY `name` (`name`,`description`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
--- 
+--
 -- Table structure for table `tshirt_requests`
 -- Used to store addresses of developers who claimed a T-shirt in
--- T-Shirt promotion. 
--- 
+-- T-Shirt promotion.
+--
 
 DROP TABLE IF EXISTS `tshirt_requests`;
 CREATE TABLE `tshirt_requests` (
@@ -1188,19 +1188,19 @@ CREATE TABLE `tshirt_requests` (
   `user_id` int(11) unsigned NOT NULL,
   `full_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,  
+  `country` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `address2` varchar(255) NOT NULL,
   `city` varchar(255) NOT NULL,
   `region_province` varchar(255) NOT NULL,
   `state` varchar(255) NOT NULL,
   `zip_postal_code` varchar(255) NOT NULL,
-  `telephone` varchar(255) NOT NULL,         
-  `tshirt_size` varchar(10) NOT NULL, 
-  `comment` varchar(1000) NOT NULL,  
+  `telephone` varchar(255) NOT NULL,
+  `tshirt_size` varchar(10) NOT NULL,
+  `comment` varchar(1000) NOT NULL,
   KEY `user_id` (`user_id`),
   PRIMARY KEY `id` (`id`),
-  CONSTRAINT `tshirt_requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)    
+  CONSTRAINT `tshirt_requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 
@@ -1437,7 +1437,7 @@ CREATE TABLE `users_tags_addons` (
       INDEX (`tag_id`),
     INDEX (`addon_id`),
     CONSTRAINT `users_tags_addons_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `users_tags_addons_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE, 
+    CONSTRAINT `users_tags_addons_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE,
     CONSTRAINT `users_tags_addons_ibfk_3` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1498,7 +1498,7 @@ CREATE TABLE `blogposts` (
 
 
 
--- 
+--
 -- Validation tables
 --
 
@@ -1536,9 +1536,9 @@ CREATE TABLE `test_results` (
   `line` int(11) NOT NULL default '0',
   `filename` varchar(255) NOT NULL default '',
   `message` text default NULL,
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',  
+  `created` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`), 
+  PRIMARY KEY (`id`),
   KEY `file_id` (`file_id`),
   KEY `test_case_id` (`test_case_id`),
   CONSTRAINT `test_results_ibfk_1` FOREIGN KEY (`file_id`) REFERENCES `files` (`id`),
@@ -1566,10 +1566,10 @@ CREATE TABLE `fizzypop` (
 -- Default data that doesn't change over time (or isn't supposed to anyway).
 --
 
--- 
+--
 -- Dumping data for table `addontypes`
--- 
-INSERT INTO `addontypes` (`id`, `created`, `modified`) VALUES 
+--
+INSERT INTO `addontypes` (`id`, `created`, `modified`) VALUES
 (1, '2006-08-21 23:53:19', '2006-08-21 23:53:19'),
 (2, '2006-08-21 23:53:24', '2006-08-21 23:53:24'),
 (3, '2006-08-21 23:53:30', '2006-08-21 23:53:30'),
@@ -1578,9 +1578,9 @@ INSERT INTO `addontypes` (`id`, `created`, `modified`) VALUES
 (6, '2006-08-21 23:54:09', '2006-08-21 23:54:09'),
 (7, '2007-01-19 14:00:00', '2007-01-19 14:00:00');
 
--- 
+--
 -- Dumping data for table `facebook_data`
--- 
+--
 INSERT INTO `facebook_data` (trait) VALUES
 ('age_under12'), ('age_12to15'), ('age_16to19'), ('age_20to23'),
 ('age_24to27'), ('age_28to31'), ('age_32to35'), ('age_36to39'),
@@ -1591,7 +1591,7 @@ INSERT INTO `facebook_data` (trait) VALUES
 -- Dumping data for table `test_groups`
 --
 
-INSERT INTO `test_groups` (`id`, `category`, `tier`, `critical`, `types`) VALUES 
+INSERT INTO `test_groups` (`id`, `category`, `tier`, `critical`, `types`) VALUES
 (1,'general',1,1,127),(2,'security',2,0,127),(3,'l10n',2,0,3),
 (11,'general',2,0,1),(12,'security',3,0,1),
 (21,'general',2,0,4),(22,'security',3,0,4),
@@ -1603,7 +1603,7 @@ INSERT INTO `test_groups` (`id`, `category`, `tier`, `critical`, `types`) VALUES
 -- Dumping data for table `test_cases`
 --
 
-INSERT INTO `test_cases` (`id`, `test_group_id`, `help_link`, `function`) VALUES 
+INSERT INTO `test_cases` (`id`, `test_group_id`, `help_link`, `function`) VALUES
 (11,1,NULL,'all_general_verifyExtension'),(12,1,NULL,'all_general_verifyInstallRDF'),
 (13,1,NULL,'all_general_verifyFileTypes'),(14,1,NULL,'all_general_checkJSPollution'),
 (21,2,NULL,'all_security_filterUnsafeJS'),(22,2,NULL,'all_security_filterUnsafeSettings'),
@@ -1683,7 +1683,7 @@ DELIMITER |
 drop trigger if exists trg_tag_stat_inc |
 
 CREATE TRIGGER trg_tag_stat_inc AFTER INSERT ON `users_tags_addons`
-   FOR EACH ROW 
+   FOR EACH ROW
    BEGIN
     insert ignore INTO tag_stat(tag_id, num_addons, modified) values(NEW.tag_id, 0, now());
     UPDATE `tag_stat` set num_addons = (num_addons+1) WHERE tag_id = NEW.tag_id;
@@ -1693,7 +1693,7 @@ CREATE TRIGGER trg_tag_stat_inc AFTER INSERT ON `users_tags_addons`
 drop trigger if exists trg_tag_stat_dec |
 
 CREATE TRIGGER trg_tag_stat_dec AFTER DELETE ON `users_tags_addons`
-   FOR EACH ROW 
+   FOR EACH ROW
    BEGIN
     UPDATE `tag_stat` set num_addons = (num_addons-1) WHERE tag_id = OLD.tag_id;
   END;
@@ -1730,58 +1730,102 @@ CREATE TRIGGER collection_vote_delete
 DELIMITER ;
 
 -- This is the main view that will seed our Sphinx index.
-CREATE OR REPLACE VIEW translated_addons 
+CREATE OR REPLACE VIEW translated_addons
 AS
-SELECT 
+SELECT
     name.autoid AS id,
-    a.id AS addon_id, 
-    a.addontype_id AS addontype, 
-    a.status, 
-    name.locale, 
+    a.id AS addon_id,
+    a.addontype_id AS addontype,
+    a.status,
+    name.locale,
     CRC32(name.locale) AS locale_ord,
     a.averagerating,
     a.weeklydownloads,
     a.totaldownloads,
     a.inactive,
     LTRIM(name.localized_string) AS name,
-    (SELECT GROUP_CONCAT(nickname) from addons_users au, users u where addon_id=a.id AND au.user_id = u.id AND listed = 1 GROUP BY addon_id) AS authors,
-    (SELECT localized_string FROM translations WHERE id = a.homepage AND locale = name.locale) AS homepage,
-    (SELECT localized_string FROM translations WHERE id = a.description AND locale = name.locale) AS description,
-    (SELECT localized_string FROM translations WHERE id = a.summary AND locale = name.locale) AS summary,
-    (SELECT localized_string FROM translations WHERE id = a.developercomments AND locale = name.locale) AS developercomments,
-    (SELECT max(version_int) FROM versions v, files f, applications_versions av, appversions max WHERE f.version_id =v.id AND v.addon_id = a.id AND av.version_id = v.id AND av.max = max.id AND f.status = 4) AS max_ver,
-    (SELECT min(version_int) FROM versions v, files f, applications_versions av, appversions min WHERE f.version_id =v.id AND v.addon_id = a.id AND av.version_id = v.id AND av.min = min.id AND f.status = 4) AS min_ver,
+    (
+        SELECT GROUP_CONCAT(nickname)
+        FROM addons_users au, users u
+        WHERE addon_id=a.id AND au.user_id = u.id AND listed = 1
+    ) AS authors,
+    (
+         SELECT GROUP_CONCAT(t.tag_text) 
+         FROM users_tags_addons, tags 
+         WHERE tags.id = tag_id AND addon_id = a.id
+    ) AS tags,
+    (
+        SELECT localized_string
+        FROM translations
+        WHERE id = a.homepage AND locale = name.locale
+    ) AS homepage,
+    (
+        SELECT localized_string
+        FROM translations
+        WHERE id = a.description AND locale = name.locale
+    ) AS description,
+    (
+        SELECT localized_string
+        FROM translations
+        WHERE id = a.summary AND locale = name.locale
+    ) AS summary,
+    (
+        SELECT localized_string
+        FROM translations
+        WHERE id = a.developercomments AND locale = name.locale
+    ) AS developercomments,
+    (
+        SELECT max(version_int)
+        FROM versions v, files f, applications_versions av, appversions max
+        WHERE f.version_id =v.id
+            AND v.addon_id = a.id
+            AND av.version_id = v.id AND av.max = max.id AND f.status = 4
+    ) AS max_ver,
+    (
+        SELECT min(version_int)
+        FROM versions v, files f, applications_versions av, appversions min
+        WHERE f.version_id =v.id
+            AND v.addon_id = a.id
+            AND av.version_id = v.id
+            AND av.min = min.id
+            AND f.status = 4
+    ) AS min_ver,
     UNIX_TIMESTAMP(a.created) AS created,
-    (SELECT UNIX_TIMESTAMP(MAX(IFNULL(f.datestatuschanged, f.created))) FROM versions AS v INNER JOIN files AS f ON f.status = 4 AND f.version_id = v.id WHERE v.addon_id=a.id) AS modified
-FROM 
-    translations name, 
+    (
+        SELECT UNIX_TIMESTAMP(MAX(IFNULL(f.datestatuschanged, f.created))) 
+        FROM versions AS v 
+        INNER JOIN files AS f ON f.status = 4 AND f.version_id = v.id 
+        WHERE v.addon_id=a.id
+    ) AS modified
+FROM
+    translations name,
     addons a
 WHERE a.name = name.id;
 -- This view is used to extract some version-related data
 
 CREATE OR REPLACE VIEW versions_summary_view AS
 
-SELECT DISTINCT 
-    t.autoid AS translation_id, 
-    v.addon_id, 
-    v.id, 
-    av.application_id, 
-    v.created, 
-    v.modified, 
-    min.version_int AS min, 
-    max.version_int AS max, 
+SELECT DISTINCT
+    t.autoid AS translation_id,
+    v.addon_id,
+    v.id,
+    av.application_id,
+    v.created,
+    v.modified,
+    min.version_int AS min,
+    max.version_int AS max,
     MAX(v.created)
 FROM versions v, addons a, translations t, applications_versions av, appversions max, appversions min
-WHERE 
+WHERE
     a.id = v.addon_id AND a.name = t.id AND av.version_id = v.id
     AND av.min = min.id AND av.max=max.id
-GROUP BY 
-    translation_id, 
-    v.addon_id, 
-    v.id, 
-    av.application_id, 
-    v.created, 
-    v.modified, 
-    min.version_int, 
+GROUP BY
+    translation_id,
+    v.addon_id,
+    v.id,
+    av.application_id,
+    v.created,
+    v.modified,
+    min.version_int,
     max.version_int;
 

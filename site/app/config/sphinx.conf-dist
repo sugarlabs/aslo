@@ -1,21 +1,21 @@
 source addons
 {
-	type					= mysql
-	sql_host				= localhost
-	sql_user				= root
-	sql_pass				=
-	sql_db					= remora
+    type                    = mysql
+    sql_host                = localhost
+    sql_user                = root
+    sql_pass                =
+    sql_db                    = remora
 
     sql_query_pre           = SET NAMES utf8
     sql_query_pre           = SET SESSION query_cache_type=OFF
 
-	sql_query				= \
-		SELECT \
-		    id, addon_id, authors, addontype AS type, status, locale, \
-		    locale_ord, averagerating, weeklydownloads, totaldownloads, \
-		    inactive, name, name AS name_ord, homepage, description, summary, \
-		    developercomments, max_ver, min_ver, created, modified \
-		FROM translated_addons
+    sql_query                = \
+        SELECT \
+            id, addon_id, authors, tags, addontype AS type, status, locale, \
+            locale_ord, averagerating, weeklydownloads, totaldownloads, \
+            inactive, name, name AS name_ord, homepage, description, summary, \
+            developercomments, max_ver, min_ver, created, modified \
+        FROM translated_addons
 
     sql_attr_uint        = addon_id
     sql_attr_str2ordinal = name_ord
@@ -74,9 +74,9 @@ index addons
 
 searchd
 {
-	listen    = 3312
-	listen    = localhost:3307:mysql41
-	log       = /opt/local/log/searchd/searchd.log
-	query_log = /opt/local/log/searchd/query.log
-	pid_file  = /opt/local/log/searchd/searchd.pid
+    listen    = 3312
+    listen    = localhost:3307:mysql41
+    log       = /opt/local/log/searchd/searchd.log
+    query_log = /opt/local/log/searchd/query.log
+    pid_file  = /opt/local/log/searchd/searchd.pid
 }
