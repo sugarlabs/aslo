@@ -356,7 +356,7 @@ function _auth_amo_sync_groups($user_id) {
 
             // If there is anything left in this array the user was removed from groups on AMO and should be 
             // removed from the groups here as well
-            if (count($user_groups)) {
+            if (is_array($user_groups) && count($user_groups)) {
                 foreach ($user_groups as $group) {
                     group_user_del($group['group_id'], array($user_id));
                 }
