@@ -1750,7 +1750,7 @@ SELECT
         WHERE addon_id=a.id AND au.user_id = u.id AND listed = 1
     ) AS authors,
     (
-         SELECT GROUP_CONCAT(t.tag_text) 
+         SELECT GROUP_CONCAT(tag_text) 
          FROM users_tags_addons, tags 
          WHERE tags.id = tag_id AND addon_id = a.id
     ) AS tags,
