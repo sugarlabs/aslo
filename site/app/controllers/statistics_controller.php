@@ -162,7 +162,10 @@ class StatisticsController extends AppController
 
         // If user can access all add-on stats, pull all
         if ($this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User'))) {
-            $otherAddons = $this->Addon->findAll(null, array('Addon.id', 'Addon.name'), null, null, null, -1);
+            // Commented out 2009-09-24; bug 518384.  This is pulling way too much data and is really kind of worthless.  I'm replacing it
+            // with the publicstats version, which is almost as worthless but at least won't run us out of memory (yet).
+            // $otherAddons = $this->Addon->findAll(null, array('Addon.id', 'Addon.name'), null, null, null, -1);
+            $otherAddons = $this->Addon->findAll("Addon.publicstats=1", array('Addon.id', 'Addon.name'), null, null, null, -1);
         }
         else {
             // Otherwise, pull all public stats add-ons
