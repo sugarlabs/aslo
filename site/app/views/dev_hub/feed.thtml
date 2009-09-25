@@ -72,10 +72,12 @@
             <div class="addon-feed-wrapper">
                 <ul id="addon-feed" class="addon-events">
                 <?php foreach ($feed as $event): ?>
-                    <li class="addon-event<?=(!empty($event['class']) ? " {$event['class']}" : '')?>">
+                    <li class="addon-event<?=($addon_id == 'all' ? ' with-addon-icon' : '')?><?=(!empty($event['class']) ? " {$event['class']}" : '')?>">
+                    <?php if ($addon_id == 'all'): ?>
                         <?=$html->linkNoApp(
                             '<img src="'.$this->controller->Image->getAddonIconURL($event['addon_id']).'" alt="" width="32" height="32" class="addon-icon" />',
                             (empty($event['addon_id']) ? '#' : "/developers/feed/{$event['addon_id']}"))?>
+                    <?php endif; ?>
                         <span class="icon"></span>
                         <p><?=$event['story']?></p>
                         <p class="date"><?=$html->timeAgo(strtotime($event['created']))?></p>
