@@ -334,7 +334,7 @@ function _auth_amo_sync_groups($user_id) {
                     // phpbb has no built in function to get a group id from group name. fail.
                     $_group_id = array_search(utf8_strtolower($amousergroups['name']), $phpbb_groups);
                 } else {
-                    group_create($_group_id,GROUP_CLOSED,$amousergroups['name'], '', array());
+                    group_create($_group_id,GROUP_HIDDEN,$amousergroups['name'], '', array());
                 }
 
                 if ($_group_id) {
