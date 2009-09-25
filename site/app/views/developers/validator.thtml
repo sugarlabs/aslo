@@ -56,36 +56,35 @@ $this->layout = 'amo2009';
     <div id="submission-area" class="rounded graybox">
         <div id="file-upload">
             <h3><?=___('Validate Your Add-on')?></h3>
-            <p><?=___('The Add-on Validator can check your add-on for common packaging and security problems, even if it\'s not hosted here')?></p>
-            <br />
+            <p><?=___('The Add-on Validator can check your add-on for common packaging and security problems, even if it\'s not hosted here.')?></p>
+
             <form id="upload-form" method="post" enctype="multipart/form-data" action="<?=$html->url('/developers/json/fileupload/temp')?>" target="upload-frame" onsubmit="return validate.validate();">
             <?=$html->hiddenSession();?>
 
             <? if(!empty($all_addons)): ?>
-            <label><?=___('Check my hosted add-on: ')?>
+            <p><label><?=___('Check my hosted add-on: ')?>
                 <select id="addon-list" name="addon-list">
                     <option value=""></option>
                     <? pr($all_addons);foreach ($all_addons as $id => $addon): ?>
                         <option value="<?=$id?>"><?=$addon?></option>
                     <? endforeach; ?>
                 </select>
-            </label><br/>
-            <strong><?=___('OR')?></strong><br/>
+            </label></p>
+            <p><strong><?=___('OR')?></strong></p>
             <? endif; ?>
-            <label><?=___('Upload an add-on to check: ')?><input id="upload-field" type="file" name="file" /></label><br />
+            <p><label><?=___('Upload an add-on to check: ')?><input id="upload-field" type="file" name="file" /></label></p>
             <div class="submit">
-                <input type="submit" value="<?=___('Run Tests')?>" class="require-privs" />
+                <button type="submit" class="require-privs button prominent"><?=___('Run Tests')?></button>
             </div>
             <div id="upload-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('Uploading file...')?></div>
             </form>
-            <div id="upload-error" class="redbox-tr"><div class="redbox-tl">
+            <div id="upload-error" class="redbox-tr">
                 <div id="upload-error-content">
                     <h4><?=___('Oops! There seems to be a problem with this file...')?></h4>
                     <p id="upload-error-text" class="smallmargin"></p>
                     <p class="smallmargin"><?=___('Please correct this problem and upload your file again.')?></p>
                 </div>
-                <div class="redbox-br"><div class="redbox-bl"></div></div>
-            </div></div>
+            </div>
         </div><!-- /#file-upload -->
     </div><!-- /#submission-area -->
 
