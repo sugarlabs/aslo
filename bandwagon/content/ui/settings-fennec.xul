@@ -4,8 +4,15 @@
 
 <vbox xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <setting pref="extensions.bandwagon.login" type="string" title="&username.label;"/>
-  <setting pref="extensions.bandwagon.password" type="string" title="&password.label;"/>
-  <setting pref="extensions.bandwagon.mobile_sync_collection" type="string" title="&collection.to.sync.label;"/>
+  <setting pref="extensions.bandwagon.password" type="string" inputtype="password" title="&password.label;"/>
+  <setting type="control" title="&collection.to.sync.label;">
+    <menulist id="bw-mobile-collection" onchange="Bandwagon.Controller.BrowserOverlay.doSetMobileCollection()">
+      <menupopup>
+        <menuitem value="red" label="Red"/>
+        <menuitem value="blue" label="blue"/>
+      </menupopup>
+    </menulist>
+  </setting>
   <setting type="button" title="&login.label;">
     <button label="&login.button;" oncommand="Bandwagon.Controller.BrowserOverlay.doFennecLogin()"/>
   </setting>

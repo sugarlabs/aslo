@@ -60,3 +60,4 @@ pref("extensions.bandwagon.login", "");
 pref("extensions.bandwagon.amo_host", "addons.mozilla.org");
 pref("extensions.bandwagon.mobile_sync_collection", "");
 pref("extensions.bandwagon.password", "");
+pref("extensions.bandwagon.autoinstall_blacklist", "");

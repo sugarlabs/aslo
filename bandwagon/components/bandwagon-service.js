@@ -296,15 +296,28 @@ BandwagonService.prototype = {
         }
 
         var installedExtensions = Bandwagon.Util.getInstalledExtensions();
+        var autoinstallBlacklist = Bandwagon.Preferences.getPreferenceList("autoinstall_blacklist");
+        var addons = [];
 
-        var doAutoInstall = function(addon)
+        addon: for (var id in localAutoInstaller.addons)
         {
+            var addon = localAutoInstaller.addons[id];
+
             for (var i=0; i<installedExtensions.length; i++)
             {
                 if (installedExtensions[i].id == addon.guid)
                 {
-                    Bandwagon.Logger.debug("autoinstallExtensions: addon '" + addon.name + "' is already installed");
-                    return;
+                    Bandwagon.Logger.debug("autoinstallExtensions: Won't install '" + addon.name + "': is already installed");
+                    continue addon;
+                }
+            }
+            
+            for (var i=0; i<autoinstallBlacklist.length; i++)
+            {
+                if (autoinstallBlacklist[i] == addon.guid)
+                {
+                    Bandwagon.Logger.debug("autoinstallExtensions: Won't install '" + addon.name + "': is in the autoinstall blacklist");
+                    continue addon;
                 }
             }
 
@@ -312,57 +325,30 @@ BandwagonService.prototype = {
 
             if (canInstall.type != Bandwagon.Model.Addon.INSTALL_YES && canInstall.type != Bandwagon.Model.Addon.INSTALL_YES_IS_EXPERIMENTAL)
             {
-                Bandwagon.Logger.warn("Can't auto install '" + addon.name + "' because it is not compatible with this application or os.");
-                // TODO better warning here
-                return;
+                Bandwagon.Logger.warn("autoinstallExtensions: Won't install '" + addon.name + "' because it is not compatible with this application or os.");
+                continue;
             }
 
             var installer = addon.getInstaller(Bandwagon.Util.getHostEnvironmentInfo().os);
 
             if (!installer)
             {
-                Bandwagon.Logger.warn("Can't auto install '" + addon.name + "' because it is not compatible with " + Bandwagon.Util.getHostEnvironmentInfo().os);
-                return;
+                Bandwagon.Logger.warn("autoinstallExtensions: Won't install '" + addon.name + "' because it is not compatible with " + Bandwagon.Util.getHostEnvironmentInfo().os);
+                continue;
             }
 
-            // TODO accept eula here
-
-            var params = [];
-            params[addon.name] = installer;
-
-            var internalCallback = function(url, status)
-            {
-                Bandwagon.Logger.info("Finished installing '" + url + "'; status = " + status);
-                callback();
-            }
-
-            Bandwagon.Logger.info("About to auto install the add-on '" + addon.name + "'");
-            //Bandwagon.Logger.info(params[addon.name].URL);
-            //Bandwagon.Logger.info(params[addon.name].Hash);
-            //Bandwagon.Logger.info(params[addon.name].IconURL);
-
-            Bandwagon.Util.getMainWindow().InstallTrigger.install(params, internalCallback);
-        }
-
-        var addons = [];
-
-        for (var id in localAutoInstaller.addons)
-        {
-            var addon = localAutoInstaller.addons[id];
             addons.push(addon);
         }
 
-        var callback = function()
-        { 
-            var addon = addons.pop();
+        if (addons.length)
+        {
+            Bandwagon.Controller.BrowserOverlay.doFennecInitAutoInstallDialog(addons);
+        }
+        else
+        {
+            Bandwagon.Logger.debug("autoinstallExtensions: none to install");
+        }
 
-            if (addon)
-            {
-                doAutoInstall(addon, callback);
-            }
-        };
-
-        callback();
     },
 
     getLocalAutoPublisher: function()
@@ -409,8 +395,6 @@ BandwagonService.prototype = {
 
         for (var i=0; i<installedExtensions.length; i++)
         {
-            //Bandwagon.Logger.debug("checking addon '" + installedExtensions[i].id + "' against user auto pub prefs (type=" +  installedExtensions[i].type + ")");
-
             // check if user wants to publish this extension (enabled, type)
             
             if ((

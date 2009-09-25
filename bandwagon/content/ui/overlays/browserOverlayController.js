@@ -287,5 +287,136 @@ Bandwagon.Controller.BrowserOverlay.doFennecLogin = function()
 
 }
 
+Bandwagon.Controller.BrowserOverlay.doSetMobileCollection = function(event)
+{
+    Bandwagon.Preferences.setPreference("mobile_sync_collection", document.getElementById("bw-mobile-collection").selectedItem.value);
+}
+
+Bandwagon.Controller.BrowserOverlay.doFennecInitAutoInstallDialog = function(addons)
+{
+    Bandwagon.Logger.debug("in doFennecInitAutoInstallDialog, " + addons.length + " to install");
+
+    // show the addons panel
+
+    document.getElementById("tool-addons").click();
+    top.BrowserUI.showPanel("addons-container");
+
+    setTimeout(function()
+    {
+        // show notification that we're automatically installing
+
+        var bwInstallingNotification = document.getElementById("addons-messages").appendNotification(
+            document.getElementById("bandwagon-strings").getString("fennec.autopublish.notification"),
+            "bw-installing",
+            "",
+            document.getElementById("addons-messages").PRIORITY_WARNING_LOW,
+            []);
+
+        // show the section header
+
+        var sectionHeader = document.createElement("richlistitem");
+        sectionHeader.setAttribute("class", "section-header");
+        var sectionHeaderLabel = document.createElement("label");
+        sectionHeaderLabel.setAttribute("value", document.getElementById("bandwagon-strings").getString("fennec.autopublish.section.header"));
+        sectionHeaderLabel.setAttribute("flex", "1");
+        sectionHeader.appendChild(sectionHeaderLabel);
+        document.getElementById("addons-list").appendChild(sectionHeader);
+
+        // add our prospective addons to the richlistbox
+
+        for (var i=0; i<addons.length; i++)
+        {
+            var addon = addons[i];
+
+            var item = document.createElement("richlistitem");
+            item.setAttribute("id", "bw-install-" + addon.guid);
+            item.setAttribute("addonID", addon.guid);
+            item.setAttribute("typeName", "search");
+            item.setAttribute("type", addon.getFennecType());
+            item.setAttribute("typeLabel", ExtensionsView._strings["addonType." + addon.getFennecType()]);
+            item.setAttribute("name", addon.name);
+            //item.setAttribute("version", addon.version);
+            item.setAttribute("version", "");
+            item.setAttribute("iconURL", addon.icon);
+            item.setAttribute("description", addon.summary);
+            item.setAttribute("homepageURL", addon.learnmore);
+
+            var installer = addon.getInstaller(Bandwagon.Util.getHostEnvironmentInfo().os);
+
+            if (!installer)
+                continue;
+
+            item.setAttribute("xpiURL", installer.URL);
+            item.setAttribute("xpiHash", installer.Hash);
+
+            document.getElementById("addons-list").appendChild(item);
+        }
+
+        var doAutoInstall = function(addon, aCallback)
+        {
+            var aItem = document.getElementById("bw-install-" + addon.guid);
+
+            if (!aItem)
+                return;
+
+            var details = {
+                URL: aItem.getAttribute("xpiURL"),
+                Hash: aItem.getAttribute("xpiHash"),
+                IconURL: aItem.getAttribute("iconURL"),
+                toString: function () { return this.URL; }
+            };
+
+            var params = [];
+            params[aItem.getAttribute("name")] = details;
+
+            var internalCallback = function(aURL, aStatus)
+            {
+                Bandwagon.Logger.info("Finished installing '" + aURL + "'; status = " + aStatus);
+
+                if (aStatus < 0)
+                {
+                    // installation failed, add to blacklist
+                    Bandwagon.Logger.debug("Installation failed, adding this add-on to blacklist");
+
+                    var autoinstallBlacklist = Bandwagon.Preferences.getPreferenceList("autoinstall_blacklist");
+                    autoinstallBlacklist.push(aItem.getAttribute("addonID"));
+                    Bandwagon.Preferences.setPreferenceList("autoinstall_blacklist", autoinstallBlacklist);
+                }
+
+                setTimeout(aCallback, 1000);
+            }
+
+            // TODO EULA
+
+            InstallTrigger.install(params, internalCallback);
+        }
+
+        // install
+
+        var callback = function()
+        {
+            var addon = addons.shift();
+
+            if (addon)
+            {
+                doAutoInstall(addon, callback);
+            }
+            else
+            {
+                // finished
+
+                Bandwagon.Logger.info("Finishing auto-installing");
+                
+                document.getElementById("addons-messages").removeNotification(bwInstallingNotification);
+
+                ExtensionsView.showRestart();
+            }
+        }
+
+        callback();
+
+    }, 2000);
+}
+
 window.addEventListener("load", Bandwagon.Controller.BrowserOverlay.initBandwagon, true);
 

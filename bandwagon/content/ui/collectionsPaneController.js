@@ -112,7 +112,7 @@ Bandwagon.Controller.CollectionsPane.onViewSelect = function()
 
         for each (var item in elemsAddon)
         {
-            if (item.getAttribute("type") == "bandwagonAddonExpanded")
+            if (item && item.getAttribute("type") == "bandwagonAddonExpanded")
             {
                 try
                 {
