@@ -36,11 +36,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+ 
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($success)) {
@@ -50,7 +53,7 @@
             echo '<div class="notice-error rounded">'.___('<span>One or more of your changes couldn\'t be saved.</span><br />Please look for the errors below. The rest of your changes were successfully saved.').'</div>';
         }
         ?>
-        <h2><?=___('Edit Add-on Properties')?></h2>
+        <h3><?=___('Edit Add-on Properties')?></h3>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="addon-edit-properties-form" action="" method="post" enctype="multipart/form-data">
@@ -73,6 +76,7 @@
         // Name
         echo $this->renderElement('translationbox', array(
                     'field' => 'name',
+                    'width' => 'auto',
                     'translations' => $translations['name'],
                     'type' => 'textbox',
                     'displayName' => ___('Add-on Name', 'devcp_edit_properties_transbox_name_name'),
@@ -80,7 +84,7 @@
                 ));
         ?>
 
-        <div class="field graybox rounded spaced" style="width: 600px;">
+        <div class="field graybox rounded spaced">
             <h4><?=___('Default Locale')?></h4>
             <p><?=___('Information about your add-on is displayed on this website in the default locale unless you override it with a locale-specific translation.')?></p>
             <select name="data[Addon][defaultlocale]">
@@ -100,7 +104,7 @@
 
         </div>
 
-        <div class="field graybox rounded spaced<?=(!empty($errors['icon']) ? ' errors' : '')?>" style="width: 600px;">
+        <div class="field graybox rounded spaced<?=(!empty($errors['icon']) ? ' errors' : '')?>">
             <h4><?=___('Add-on Icon')?></h4>
             <?=(!empty($errors['icon']) ? '<div class="error-message">'.$errors['icon'].'</div>' : '')?>
             <p><?=sprintf(___('The add-on icon is a small image that is displayed next to your add-on\'s name in browse and search results, display pages, and in the add-on installation dialog. The image will automatically be resized to 32 x 32 pixels.  Please use one of the following image types: %s'), implode(', ', $this->controller->Developers->imageExtensions))?></p>
@@ -132,6 +136,7 @@
                     'field' => 'homepage',
                     'translations' => $translations['homepage'],
                     'type' => 'textbox',
+                    'width' => 'auto',
                     'displayName' => ___('Add-on Homepage'),
                     'description' => ___('If your add-on has another homepage, enter its address here. Adding other translations is not necessary unless your website is localized into other languages.'),
                 ));
@@ -141,6 +146,7 @@
                     'field' => 'supportemail',
                     'translations' => $translations['supportemail'],
                     'type' => 'textbox',
+                    'width' => 'auto',
                     'displayName' => ___('Support Email Address'),
                     'description' => ___('If you have an email address for support inquiries, enter it here. Adding other translations is not necessary unless you have different email addresses for different languages.'),
                 ));
@@ -150,12 +156,13 @@
                     'field' => 'supporturl',
                     'translations' => $translations['supporturl'],
                     'type' => 'textbox',
+                    'width' => 'auto',
                     'displayName' => ___('Support Website'),
                     'description' => ___('If your add-on has a support website or forum, enter its address here. Adding other translations is not necessary unless your website is localized into other languages.'),
                 ));
         ?>
 
-        <div class="field graybox rounded spaced" style="width: 600px;">
+        <div class="field graybox rounded spaced">
             <h4><?=___('Other Settings')?></h4>
             <h5><?=___('View Source Online')?></h5>
             <p class="smallmargin"><?=___('The source of your add-on files can be viewed online by any logged in user if you wish.')?></p>
@@ -177,7 +184,7 @@
         </div>
 
         <?php if ($this->controller->SimpleAcl->actionAllowed('Admin', 'ConfigureAnyAddon', $this->controller->Session->read('User'))): ?>
-        <div class="field graybox rounded spaced" style="width: 600px;">
+        <div class="field graybox rounded spaced">
             <h4><?=___('Admin Settings')?></h4>
             <h5><?=___('Trusted Add-on?')?></h5>
             <p class="smallmargin"><?=___('Trusted add-ons can become public without Editor review.')?></p>
@@ -209,7 +216,8 @@
         </div>
         <?php endif; ?>
 
-        <div class="action-button-container centered" style="width: 600px;"><a href="#" onclick="addon_edit_properties.save(); return false;" class="action-button rounded"><?=___('Update Properties')?></a></div>
+        <div class="action-button-container centered"><button type="button" onclick="addon_edit_properties.save(); return false;" class="button prominent"><?=___('Update Properties')?></button></div>
         </form>
     </div>
-</div>
+
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

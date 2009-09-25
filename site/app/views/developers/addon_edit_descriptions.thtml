@@ -36,11 +36,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+ 
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main"  class="edit-addon <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary edit-addon <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
             if (!empty($success)) {
@@ -48,7 +51,7 @@
             }
         ?>
 
-        <h2><?=___('Edit Add-on Descriptions')?></h2>
+        <h3><?=___('Edit Add-on Descriptions')?></h3>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="addon-edit-descriptions-form" action="" method="post">
@@ -73,6 +76,7 @@
                     'field' => 'summary',
                     'translations' => $translations['summary'],
                     'height' => '60',
+                    'width' => 'auto',
                     'maxLength' => '250',
                     'displayName' => ___('Add-on Summary'),
                     'description' => ___('The summary is a short explanation of your add-on\'s basic functionality that is displayed in search and browse listings, as well as at the top of your add-on\'s display page. <strong>Limit of 250 characters.</strong>'),
@@ -81,6 +85,7 @@
         // Description
         echo $this->renderElement('translationbox', array(
                     'field' => 'description',
+                    'width' => 'auto',
                     'translations' => $translations['description'],
                     'displayName' => ___('Add-on Description'),
                     'description' => ___('The description of your add-on is a longer explanation of features, functionality, and other relevant information. It is displayed under the summary on the add-on\'s display page.'),
@@ -89,6 +94,7 @@
         // Developer Comments
         echo $this->renderElement('translationbox', array(
                     'field' => 'developercomments',
+                    'width' => 'auto',
                     'translations' => $translations['developercomments'],
                     'displayName' => ___('Developer Comments', 'devcp_edit_descriptions_transbox_comments_name'),
                     'description' => ___('Any information end users may want to know that isn\'t necessarily applicable to the add-on summary or description. Common uses include listing known major bugs, information on how to report bugs, anticipated release date of a new version, etc.'),
@@ -99,6 +105,7 @@
                     'field' => 'eula',
                     'translations' => $translations['eula'],
                     'height' => '200',
+                    'width' => 'auto',
                     'displayName' => ___('End-User License Agreement'),
                     'description' => ___('If your add-on has an End-User License Agreement (EULA), please enter its text below. If set below, users will be required to agree to this before installing your add-on. Please note that a EULA is not the same as a code license such as GPL or MPL.'),
                 ));
@@ -108,12 +115,14 @@
                     'field' => 'privacypolicy',
                     'translations' => $translations['privacypolicy'],
                     'height' => '200',
+                    'width' => 'auto',
                     'displayName' => ___('Privacy Policy', 'devcp_edit_descriptions_transbox_privacy_name'),
                     'description' => ___('If your add-on has a privacy policy, enter its text here. Your add-on\'s display page will display a link to the policy.'),
                 ));
         ?>
         <div id="edit-error" class="error" style="display: none;"><?=___('Please correct the errors above indicated in red.')?></div>
-        <div class="action-button-container centered" style="width: 600px;"><a href="#" onclick="addon_edit_descriptions.save(); return false;" class="action-button rounded"><?=___('Update Descriptions')?></a></div>
+        <div class="action-button-container centered"><button type="button" onclick="addon_edit_descriptions.save(); return false;" class="button prominent"><?=___('Update Descriptions')?></button></div>
         </form>
     </div>
-</div>
+
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

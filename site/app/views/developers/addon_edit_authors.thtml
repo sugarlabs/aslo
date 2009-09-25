@@ -36,18 +36,21 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_OWNER ? 'privs' : 'no-privs')?>">
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
+?>
+  
+  <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div role="main" class="primary <?=($author_role >= AUTHOR_ROLE_OWNER ? 'privs' : 'no-privs')?>">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
             if (!empty($success)) {
                 echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
             }
         ?>
-        <h2><?=___('Manage Add-on Authors', 'devcp_edit_authors_header_manage')?></h2>
+        <h3><?=___('Manage Add-on Authors', 'devcp_edit_authors_header_manage')?></h3>
 
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
@@ -66,40 +69,34 @@
                 </tr></thead>
                 <tbody></tbody>
             </table>
-            <div class="save-changes rounded">
+            <div class="save-changes notice rounded">
                 <strong><?=___('You have unsaved changes.')?></strong> <?=___('Click the Update Authors button below to save.')?>
             </div>
-            <div class="add-button-container"><a href="#add-author" onclick="addon_edit_authors.showAddForm();" class="add-button rounded"><?=___('Add New Author')?></a></div>
+            <div class="add-button-container"><strong><a href="#add-author" onclick="addon_edit_authors.showAddForm();" class="add-button rounded"><?=___('Add New Author')?></a></strong></div>
         </div>
         </form>
 
         <div id="empty-authors" class="notice-error rounded" style="display:none"><span><?=___('Your add-on must have at least one owner.')?></span></div>
-        <div class="action-button-container centered"><a href="#" id="submit" onclick="addon_edit_authors.save(); return false;" class="action-button rounded"><?=___('Update authors')?></a></div>
-        <br />
+        <div class="action-button-container"><button type="submit" id="submit" onclick="addon_edit_authors.save(); return false;" class="button prominent"><?=___('Update authors')?></button></div>
 
         <div id="add-author" class="graybox rounded spaced field" style="display: none;">
             <h4><?=___('Add New Author')?></h4>
-            <br />
             <p><label><?=___('Author Account Email:')?> <input id="add-email" type="text" size="40" /></label></p>
             <div id="add-error" class="rounded"></div>
-
             <p><?=___('Select a role for the author:')?></p>
             <ul>
-                <li><label><input id="add-role-owner" type="radio" name="role" checked="checked" />&nbsp;</strong><?=___('<strong>Owner</strong> - Can manage all aspects of the add-on listing, including adding and removing other authors.')?></label></li>
-                <li><label><input id="add-role-developer" type="radio" name="role" />&nbsp;</strong><?=___('<strong>Developer</strong> - Can manage all aspects of the add-on listing, except for adding and removing other authors.')?></label></li>
-                <li><label><input id="add-role-viewer" type="radio" name="role" />&nbsp;</strong><?=___('<strong>Viewer</strong> - Can view add-on developer listing and statistics, but can\'t make any changes.')?></label></li>
+                <li><label><input id="add-role-owner" type="radio" name="role" checked="checked" /> <?=___('<strong>Owner</strong> - Can manage all aspects of the add-on listing, including adding and removing other authors.')?></label></li>
+                <li><label><input id="add-role-developer" type="radio" name="role" /> <?=___('<strong>Developer</strong> - Can manage all aspects of the add-on listing, except for adding and removing other authors.')?></label></li>
+                <li><label><input id="add-role-viewer" type="radio" name="role" /> <?=___('<strong>Viewer</strong> - Can view add-on developer listing and statistics, but can\'t make any changes.')?></label></li>
             </ul>
-
-            <p><label><input id="add-listed" type="checkbox" checked="checked" />&nbsp;<?=___('List as author in public display pages')?></label></p>
-
-            <table><tr><td>
-                <div id="add-author-button" class="add-button-container"><a href="#author-table" onclick="return addon_edit_authors.checkAddForm();" class="add-button rounded bigger"><?=___('Add Author')?></a></div>
-            </td><td valign="middle">
-                <div id="add-loading"><?=$html->image('ajax_loading.gif', array('alt' => 'Loading'))?>&nbsp;<?=___('Checking account email...')?></div>
-            </td></tr></table>
+            <p><label><input id="add-listed" type="checkbox" checked="checked" /> <?=___('List as author in public display pages')?></label></p>
+            <div id="add-author-button" class="add-button-container"><button type="button" onclick="return addon_edit_authors.checkAddForm();" class="add-button"><?=___('Add Author')?></button></div>
+            <div id="add-loading"><?=$html->image('ajax_loading.gif', array('alt' => 'Loading'))?>&nbsp;<?=___('Checking account email...')?></div>
         </div>
     </div>
-</div>
+  
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
 <script type="text/javascript">
 var jsonURL = '<?=$html->url('/developers/json')?>';
 var imageURL = '<?=$html->url('/img', true, false, false)?>';

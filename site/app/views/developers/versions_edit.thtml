@@ -36,11 +36,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($success)) {
@@ -50,7 +53,7 @@
             echo '<div class="notice-error rounded">'.___('<span>One or more of your changes couldn\'t be saved.</span><br />Please look for the errors below. The rest of your changes were successfully saved.').'</div>';
         }
         ?>
-        <h2><?=sprintf(___('Manage Version %s'), $version['Version']['version'])?></h2>
+        <h3><?=sprintf(___('Manage Version %s'), $version['Version']['version'])?></h3>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <form id="versions-edit-form" action="" method="post">
@@ -67,6 +70,7 @@
                                 'defaultLocale' => $addon['Addon']['defaultlocale'],
                                 'languages' => $languages,
                                 'table' => 'Version',
+                                'width' => 'auto',
                                 'loaded' => false
                             );
 
@@ -79,7 +83,7 @@
             echo '<th>'.___('Platform', 'devcp_versions_edit_th_platform').'</th>';
             echo '<th>'.___('Size').'</th>';
             echo '<th>'.___('Status', 'devcp_versions_edit_th_status').'</th>';
-            echo '<th style="width: 25px;"></th>';
+            echo '<td style="width: 25px;"></td>';
             echo '</tr></thead><tbody>';
             $i = 0;
             foreach ($version['File'] as $file) {
@@ -97,9 +101,9 @@
                 echo '<td><div class="inline-delete-button uses-image">';
                 echo '<a href="#" onclick="versions_edit.deleteVersion(this); return false;">'.$html->image('developers/delete.png', array('alt' => ___('Delete File', 'devcp_versions_edit_a_delete'), 'title' => ___('Delete File', 'devcp_versions_edit_a_delete'))).'</a>';
                 echo '<div class="inline-delete-box">';
-                echo '<p>'.___('Are you <b>sure</b> you wish to permanently delete this file?').'</p><br />';
-                echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="remove-button rounded">'.___('Delete File', 'devcp_versions_edit_a_delete').'</a>&nbsp;&nbsp;';
-                echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button rounded">'.___('Cancel', 'devcp_versions_edit_a_cancel').'</a></p>';
+                echo '<p>'.___('Are you <strong>sure</strong> you wish to permanently delete this file?').'</p><br />';
+                echo '<p><a href="#" onclick="versions_edit.confirmDelete(this); return false;" class="button prominent">'.___('Delete File', 'devcp_versions_edit_a_delete').'</a>&nbsp;&nbsp;';
+                echo '<a href="#" onclick="versions_edit.cancelDelete(this); return false;" class="button">'.___('Cancel', 'devcp_versions_edit_a_cancel').'</a></p>';
                 echo '</div>';
                 echo '</div></td>';
                 echo '</tr>';
@@ -228,7 +232,8 @@
             });
         </script>
     </div>
-</div>
+
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
 <?php
 /**

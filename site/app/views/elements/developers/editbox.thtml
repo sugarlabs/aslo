@@ -36,8 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
-<div class="pitch">
-    <h4><?=$html->link($addon_name, '/developers/dashboard#addon-'.$addon_id)?></h4>
+<div id="dev-subnav-edit" class="highlight">
+    <h3><?=$html->link($addon_name, '/developers/dashboard#addon-'.$addon_id)?></h3>
     <ul class="actionbar">
         <li class="displaypage"><?=$html->link(___('View Listing'), "/addon/{$addon_id}/")?></li>
         <li class="edit<?=($action == 'edit' ? ' selected' : '')?>"><?=$html->link(___('Edit Add-on', 'devcp_editbox_edit_addon'), "/developers/addon/edit/{$addon_id}/")?></li>
@@ -50,12 +50,12 @@
         <li class="edit-descriptions<?=($subaction == 'descriptions' ? ' selected' : '')?>"><?=$html->link(___('Descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></li>
         <li class="edit-properties<?=($subaction == 'properties' ? ' selected' : '')?>"><?=$html->link(___('Properties'), "/developers/addon/edit/{$addon_id}/properties")?></li>
         <li class="edit-profile<?=($subaction == 'profile' ? ' selected' : '')?>">
-            <?=$this->renderElement('amo2009/new_indicator')?>
             <?=$html->link(___('Developer Profile'), "/developers/addon/edit/{$addon_id}/profile")?>
+            <?=$this->renderElement('amo2009/new_indicator')?>
         </li>
         <li class="edit-contributions<?=($subaction == 'contributions' ? ' selected' : '')?>">
-            <?=$this->renderElement('amo2009/new_indicator')?>
             <?=$html->link(___('Contributions'), "/developers/addon/edit/{$addon_id}/contributions")?>
+            <?=$this->renderElement('amo2009/new_indicator')?>
         </li>
         </ul></li>
         <?php endif; ?>

@@ -35,12 +35,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
 
-<div id="content">
-  <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons,
-                                                      'extra' => 'developers/editbox'));?>
-  <div id="content-main" class="<?=$show_intro ? 'intro' : ''?>">
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+  
+  <div class="primary <?=$show_intro ? 'intro' : ''?>" role="main">
 
     <?=$this->renderElement('developers/addonheader',
                             array('title' => sprintf(___('Edit %s'),
@@ -59,17 +61,17 @@
 
     <?php if ($show_intro): ?>
         <div id="start-asking" class="graybox field rounded spaced">
-          <h2><?=___('Start Asking for Contributions', 'devcp_edit_contrib_button_start')?></h2>
+          <h3><?=___('Start Asking for Contributions', 'devcp_edit_contrib_button_start')?></h3>
           <?=___('<p>Contributions provide a way for users to support your add-on financially. With contributions, you can:</p><ul><li>Ask users for donations on your add-on\'s listing.</li><li>Offer users the ability to contribute using a credit card or PayPal account.</li><li>Deposit contributions in a <a href=\'https://www.paypal.com/\' target=\'_blank\'>PayPal account</a> of your choice.</li></ul><p>Ready to get started? Click below to start asking for contributions.</p>')?>
           <?php if ($has_profile): ?>
               <div class="button-holder">
-                <button><?=___('Start Asking for Contributions', 'devcp_edit_contrib_button_start')?></button>
+                <button type="button" class="button prominent"><?=___('Start Asking for Contributions', 'devcp_edit_contrib_button_start')?></button>
               </div>
           <?php else: ?>
               <p><strong><?=___('Before you begin, you must create a developer profile.')?></strong></p>
-              <a href="<?=$html->url("/developers/addon/edit/{$addon_id}/profile")?>">
+              <p><a href="<?=$html->url("/developers/addon/edit/{$addon_id}/profile")?>">
                 <?=___('Create a Developer Profile First')?>
-              </a>
+              </a></p>
           <?php endif; ?>
         </div>
     <?php endif; ?>
@@ -89,7 +91,7 @@
               $text = ___('You are currently <strong>asking for contributions</strong> from users of this add-on.');
               $button = ___('Stop asking for contributions');
           } else {
-              $text = ___('You are currently <strong>not asking for contributions</strong> from users of this add-on.');
+              $text = ___('You are <strong>not currently asking for contributions</strong> from users of this add-on.');
               $button = ___('Start asking for contributions');
           }
           ?>
@@ -120,7 +122,7 @@
         <div class="graybox field rounded spaced">
           <h4><?=___('Asking for Contributions')?></h4>
           <p><?=___('Specify how much users will be asked to contribute and where they will be asked.')?></p>
-            <table>
+            <table width="100%">
               <tr>
                 <th><label for="AddonSuggestedAmount"><?=___('Suggested amount')?></label></th>
                 <td>
@@ -151,15 +153,17 @@
         <div class="button-holder">
           <?php if ($show_intro): ?>
             <?=$contribution_toggle?>
-            <button><?=___('Start Asking for Contributions', 'devcp_edit_contrib_button_start')?></button>
+            <button class="button prominent"><?=___('Start Asking for Contributions', 'devcp_edit_contrib_button_start')?></button>
           <?php else: ?>
-            <button><?=___('Update Contributions')?></button>
+            <button class="button prominent"><?=___('Update Contributions')?></button>
           <?php endif; ?>
         </div>
       </form>
     </div>
   </div>
-</div>
+
+<?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
 <script type="text/javascript">
 $(document).ready(function(){
     edit_contributions();

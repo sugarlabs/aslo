@@ -1236,3 +1236,589 @@ p.summary {
 .beta-notice p {
     margin: 0;
 }
+
+/* =Notices ***/
+.notice.no-privs-box {
+    padding-left: 30px;
+    background: #ffe url('../../img/developers/privileges.png') no-repeat 5px 1em;
+    display: none;
+}
+.html-rtl .notice.no-privs-box {
+    padding-left: auto;
+    padding-right: 30px;
+    background-position: 100% 50%;
+}
+
+.notice-success {
+    border: 1px solid #a6e4be;
+    background: #cfffe1 url('../../img/stats/tick.png') no-repeat 5px 1em;
+    margin-bottom: 5px;
+    padding: 5px 5px 5px 30px;
+}
+.html-rtl .notice-success {
+    background-position: 100% 50%;
+    padding: 5px 25px 5px 5px;
+}
+.notice-error {
+    border: 1px solid #e7bfb1;
+    background: #fff1eb url('../../img/developers/exclamation.png') no-repeat 5px 1em;
+    margin-bottom: 5px;
+    padding: 5px 5px 5px 30px;
+}
+.html-rtl .notice-error {
+    background-position: 100% 1em;
+    padding: 5px 25px 5px 5px;
+}
+.notice span, 
+.notice-error span, 
+.notice-success span {
+    font-weight: bold;
+}
+.notice-success ul,
+.notice-error ul,
+.notice-success li,
+.notice-error li {
+    margin-bottom: 0;
+}
+.notice {
+    background-color: #ffe;
+    border: 1px solid #dde;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.notice p {
+  margin-bottom: .25em;
+}
+.notice.noscript {
+    padding-left: 30px;
+    background: #ff9 url('../../img/developers/noscript.png') no-repeat 5px 50%;
+}
+.html-rtl .notice.noscript {
+    padding-left: auto;
+    padding-right: 30px;
+    background-position: 100% 50%;
+}
+
+
+.nominate.add-button {
+    background-image: url('../img/developers/status_nominate.png');
+}
+.complete.add-button {
+    background-image: url('../img/developers/tick.png');
+}
+.make-active.add-button {
+    background-image: url('../img/developers/status_active.png');
+}
+.make-inactive.add-button {
+    background-image: url('../img/developers/status_inactive.png');
+}
+
+.to-sandbox.add-button {
+    background-image: url('../img/developers/arrow_down.png');
+}
+.to-public.add-button {
+    background-image: url('../img/developers/arrow_up.png');
+}
+
+.criteria {
+    margin-left: 10px;
+}
+.html-rtl .criteria {
+    margin-left: auto;
+    margin-right: 10px;
+}
+.criteria li {
+    list-style: none;
+    padding-left: 20px;
+}
+.html-rtl .criteria li {
+    padding-left: auto;
+    padding-right: 20px;
+}
+.criteria .pass {
+    background: url('../img/developers/tick.png') no-repeat left center;
+}
+.criteria .fail {
+    background: url('../img/developers/cross.png') no-repeat left center;
+}
+.criteria .meh {
+    background: url('../img/developers/asterisk_yellow.png') no-repeat left center;
+}
+
+.save-changes {
+    display: none;
+    background: transparent url('../img/developers/exclamation.png') no-repeat 5px 50%;
+    padding: 5px 0 5px 30px;
+    border: 1px solid #5D6C8C;
+    margin: 5px;
+}
+.html-rtl .save-changes {
+    background-position: 100% 50%;
+    padding: 5px 25px 5px 0;
+}
+#add-author p {
+    margin-bottom: 5px;
+}
+#add-author #add-error {
+    background: transparent url('../img/developers/exclamation.png') no-repeat 5px 50%;
+    color: #CC3333;
+    padding: 5px 0 5px 30px;
+    display: none;
+}
+.html-rtl #add-author #add-error {
+    background-position: 100% 50%;
+    padding: 5px 25px 5px 0;
+}
+#add-author #add-loading {
+    display: none;
+}
+
+
+.inline-delete-button {
+    border: 1px solid transparent;
+    border-bottom: none;
+}
+.inline-delete-button.uses-image.open {
+    text-align: center;
+    background-color: #fff1eb;
+    border: 1px solid #e7bfb1;
+    border-bottom: none;
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    border-radius: 6px 6px 0 0;
+}
+.inline-delete-button.uses-button.open .remove-button.trigger {
+    background-color: #FFA5A5;
+    border: 1px solid #CC3333;
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-radius: 6px 6px 0 0;
+}
+.inline-delete-box {
+    position: absolute;
+    z-index: 10;
+    display: none;
+    margin-left: -378px;
+    padding: 10px;
+    width: 380px;
+    color: #2D3B58;
+    background-color: #fff1eb;
+    border: 1px solid #e7bfb1;
+    -moz-border-radius: 6px 0 6px 6px;
+    -webkit-border-radius: 6px;
+    -webkit-border-top-right-radius: 0;
+    border-radius: 6px 0 6px 6px;
+}
+.html-rtl .inline-delete-box {
+    margin-left: auto;
+    margin-right: -378px;
+    -moz-border-radius: 0 6px 6px 6px;
+    -webkit-border-radius: 6px;
+    -webkit-border-top-left-radius: 0;
+    border-radius: 0 6px 6px 6px;
+}
+.uses-button .inline-delete-box {
+    right: 0;
+    margin: 2px 22px 0 0;
+    width: 50%;
+}
+.html-rtl .uses-button .inline-delete-box {
+    right: auto;
+    left: 0;
+    margin: 2px 0 0 22px;
+}
+.inline-delete-box p {
+    margin: 0 !important;
+    padding: 0;
+    text-align: center;
+}
+.inline-delete-box .remove-button {
+    border-color: #CC3333;
+    color: #2D3B58;
+}
+.inline-delete-box .button {
+    color: #2D3B58;
+}
+
+.developer-hub h2 img {
+  vertical-align: baseline; 
+  margin-right: 8px;
+}
+
+.actionbar:after {
+  content: ".";
+  display: block;
+  clear: both;
+  height: 0;
+  visibility: hidden;
+}
+
+.actionbar .action {
+  width: 23%;
+  float: left;
+  margin-right: 1.75%;
+}
+
+.actionbar .view {
+  display: block;
+  font-weight: bold;
+  background: transparent 0 .2em no-repeat;
+  padding: .2em 0 .2em 22px;
+  border-bottom: 1px solid #d6e9f0;
+}
+
+.action .action-details {
+  font-size: 0.925em;
+}
+
+.action .action-details em {
+  font-style: normal;
+  font-weight: bold;
+}
+
+.action .action-details .ver-files {
+  display: block;
+  margin-top: -.25em;
+  font-size: 0.925em;
+  color: #666;
+}
+
+#dev-subnav-edit h3 a {
+  font-weight: normal;
+}
+
+#dev-subnav-edit .actionbar {
+  margin: 0 -5px;
+}
+
+#dev-subnav-edit li {
+  padding: 1px 5px 1px 25px;
+  background: transparent 5px 50% no-repeat;
+}
+
+#dev-subnav-edit li.selected {
+  background-color: #DEF1F8;
+}
+ 
+#dev-subnav-edit .edit, .actionbar .edit .view { background-image: url(../../img/developers/actionbar/edit.png); }
+#dev-subnav-edit .displaypage { background-image: url(../../img/developers/actionbar/displaypage.png); }
+#dev-subnav-edit .status, .actionbar .status .view { background-image: url(../../img/developers/actionbar/status.png); }
+#dev-subnav-edit .statistics, .actionbar .statistics .view { background-image: url(../../img/developers/actionbar/stats.png); }
+#dev-subnav-edit .versions, .actionbar .versions .view { background-image: url(../../img/developers/actionbar/versions.png); }
+#dev-subnav-edit .previews { background-image: url(../../img/developers/actionbar/previews.png); }
+
+#dev-subnav .indented {
+  padding-left: 20px;
+  font-size: 0.925em;
+  line-height: 1.4;
+  margin-bottom: 0.25em;
+}
+
+#dev-subnav .container li {
+  font-size: 0.925em;
+  padding: 1px 5px 1px 30px;
+  margin: 0 -5px 0 -25px;
+  background-position: 0 50%;
+}
+
+#edit-listing {
+  margin: 0;
+  padding: 10px;
+}
+
+#edit-listing dt:first-child {
+  margin-top: 0;
+}
+
+#edit-listing dt a {
+  font-size: 1.1em;
+  padding: .2em 0 .2em 22px;
+  background: transparent 0 0 no-repeat;
+}
+
+#edit-listing .edit-authors a { background-image: url(../../img/developers/actionbar/edit_authors.png); }
+#edit-listing .edit-categories a { background-image: url(../../img/developers/actionbar/edit_categories.png); }
+#edit-listing .edit-tags a { background-image: url(../../img/developers/actionbar/edit_tags.png); }
+#edit-listing .edit-descriptions a { background-image: url(../../img/developers/actionbar/edit_descriptions.png); }
+#edit-listing .edit-properties a { background-image: url(../../img/developers/actionbar/edit_properties.png); }
+#edit-listing .edit-profile a { background-image: url(../../img/developers/actionbar/edit_profile.png); }
+#edit-listing .edit-contributions a { background-image: url(../../img/developers/actionbar/edit_contributions.png); }
+
+fieldset#addon-categories {
+  padding-right: 50%;
+  position: relative;
+  border: 0;
+}
+
+#addon-categories .edit-categories-descriptions {
+  width: 45%;
+  position: absolute;
+  right: 20px;
+  top: 0;
+}
+
+#author-table, 
+#versions-table {
+  width: 100%;
+}
+
+/* Developer profile & contributions page. */
+#create-dev-profile button {
+    margin-top: 1em;
+}
+
+#create-dev-profile h3, 
+#start-asking h3, 
+#submission-area h3, 
+#step-intro h3 {
+  margin-top: 0;
+}
+
+.intro #contributions,
+.intro #dev-profile {
+    display: none;
+}
+
+#currently.asking {
+    background-color: #e6fae0;
+    border: 1px solid #d5e6ce;
+}
+
+#currently.not-asking {
+    background-color: #fbfbfb;
+    border: 1px solid #e6e6e6;
+}
+
+#currently.asking button {
+    color: #2e8d23;
+}
+
+#currently.not-asking button {
+    color: #1d587f;
+}
+
+#currently p:last-of-type {
+    float: right;
+}
+
+#currently p:first-of-type {
+    float: left;
+}
+
+button.link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 100%;
+}
+
+button.link span {
+    text-decoration: underline;
+}
+
+#contributions label {
+    font-weight: bold;
+}
+
+#contributions input[type=radio] + label {
+    font-weight: normal;
+}
+
+#contrib-account div {
+    float: left;
+}
+
+#contrib-account div:nth-of-type(3) {
+    margin: 0 2em;
+}
+
+.help,
+#contributions form input:not([type=hidden]) + p {
+    font-size: 90%;
+}
+
+#currently {
+    font-size: 90%;
+    padding: 0 1em;
+    margin: 1em 0;
+}
+
+#currently p {
+    padding: 0;
+    margin: 0.5em 0;
+}
+
+ul.radio {
+    list-style-type: none;
+    margin: 0;
+}
+
+ul.radio label {
+    display: inline;
+}
+
+ul.radio input {
+    margin-left: 0;
+}
+
+/* Change Status Page */
+div.status {
+    font-size: 115%;
+}
+h4.status span {
+    font-weight: bold;
+}
+.status-0 { color: gray; }
+.status-1,
+.status-2,
+.status-3 { color: navy; }
+.status-4 { color: green; }
+.status-5 { color: red; }
+
+.inactive-0 { color: green; }
+.inactive-1 { color: red; }
+
+.actions {
+    width: 100%;
+}
+.actions .action {
+    text-align: left;
+    vertical-align: middle;
+    min-width: 25%;
+    padding-bottom: 5px;
+}
+.html-rtl .actions .action {
+    text-align: right;
+}
+.actions .description {
+    color: #5D6C8C;
+}
+
+.add-button,
+.remove-button,
+.edit-button {
+    background: #fefefe url('../img/developers/add.png') no-repeat 10px 50%;
+    padding: 3px 15px 3px 35px;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+    -moz-border-radius: 13px;
+    -webkit-border-radius: 8px;
+    border-radius: 10px;
+}
+
+.html-rtl .add-button,
+.html-rtl .remove-button,
+.html-rtl .edit-button {
+    background-position: 100% 50%;
+    padding: 3px 20px 3px 5px;
+}
+.nominate.add-button {
+    background-image: url('../../img/developers/status_nominate.png');
+}
+.complete.add-button {
+    background-image: url('../../img/developers/tick.png');
+}
+.make-active.add-button {
+    background-image: url('../../img/developers/status_active.png');
+}
+.make-inactive.add-button {
+    background-image: url('../../img/developers/status_inactive.png');
+}
+
+.to-sandbox.add-button {
+    background-image: url('../../img/developers/arrow_down.png');
+}
+.to-public.add-button {
+    background-image: url('../../img/developers/arrow_up.png');
+}
+
+.criteria {
+    margin-left: 10px;
+}
+.html-rtl .criteria {
+    margin-left: auto;
+    margin-right: 10px;
+}
+.criteria li {
+    list-style: none;
+    padding-left: 20px;
+}
+.html-rtl .criteria li {
+    padding-left: auto;
+    padding-right: 20px;
+}
+.criteria .pass {
+    background: url('../../img/developers/tick.png') no-repeat left center;
+}
+.criteria .fail {
+    background: url('../../img/developers/cross.png') no-repeat left center;
+}
+.criteria .meh {
+    background: url('../../img/developers/asterisk_yellow.png') no-repeat left center;
+}
+.html-rtl .criteria .pass,
+.html-rtl .criteria .fail,
+.html-rtl .criteria .meh {
+    background-position: right center;
+}
+
+/* Versions and Upload ***/
+.version-delete-area {
+    text-align: right;
+}
+.html-rtl .version-delete-area {
+    text-align: left;
+}
+#targetApps select {
+    width: 100%;
+}
+#fileList,
+#targetApps {
+    margin: 0 0;
+}
+#targetApps td.separator,
+#fileList td.separator {
+    padding: 0 15px;
+}
+#license-translationbox {
+    margin-top: 1em;
+}
+#dev-agreement {
+    background-color: #EEEEEE;
+    margin: 0 5% 10px;
+    padding: 10px;
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid #AAA;
+    font-size: 85%;
+}
+#license-disclosure {
+  font-size: 95%;
+}
+
+#step-agreement,
+#upload-success,
+#upload-loading,
+#complete-loading,
+#upload-error {
+    display: none;
+}
+
+#upload-error {
+    margin-top: 10px;
+}
+#upload-error-content,
+#addon-created-content,
+#version-created-content,
+#file-created-content {
+    padding: 5px 10px;
+}
+
+#file-upload .disabled {
+    color: gray;
+}

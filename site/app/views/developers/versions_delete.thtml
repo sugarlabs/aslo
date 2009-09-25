@@ -35,11 +35,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main">
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?=$this->renderElement('noscript')?>
         <form id="versions-delete-form" action="" method="post">
@@ -53,11 +56,12 @@
                 <li><?=sprintf(n___('%s file', '%s files', count($version['File'])), count($version['File']))?></li>
             </ul>
             <div>
-                <a href="#" onclick="versions_delete.confirm(); return false;" class="remove-button rounded"><?=___('Delete Version', 'devcp_versions_delete_a_delete')?></a>
+                <a href="#" onclick="versions_delete.confirm(); return false;" class="button prominent"><?=___('Delete Version', 'devcp_versions_delete_a_delete')?></a>
                 <input type="hidden" name="confirmDelete" value="1"/>&nbsp;&nbsp;
-                <a href="<?=$html->url('/developers/versions/'.$addon_id)?>" class="button rounded"><?=___('Cancel', 'devcp_versions_delete_a_cancel')?></a>
+                <a href="<?=$html->url('/developers/versions/'.$addon_id)?>" class="button"><?=___('Cancel', 'devcp_versions_delete_a_cancel')?></a>
             </div>
         </div>
         </form>
     </div>
-</div>
+
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

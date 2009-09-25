@@ -35,18 +35,21 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($deleteSuccess)) {
             echo '<div class="notice-success rounded"><span>'.sprintf(___('Version %s deleted successfully.'), $deletedVersion).'</span></div>';
         }
         ?>
-        <h2><?=___('Manage Versions and Files')?></h2>
+        <h3><?=___('Manage Versions and Files')?></h3>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
         <div class="graybox spaced rounded">
@@ -57,7 +60,7 @@
                 echo '<th style="width: 20%;">'.___('Validation').'</th>';
                 echo '<th style="width: 20%;">'.___('Status', 'devcp_versions_th_status').'</th>';
                 echo '<th style="width: 20%;">'.___('Created').'</th>';
-                echo '<th style="width: 15%;"></th>';
+                echo '<td style="width: 15%;"></td>';
                 echo '</tr>';
                 if (!empty($versions)) {
                     $i = 0;
@@ -86,11 +89,12 @@
                     }
                 }
                 else {
-                    echo '<tr><td colspan="3" style="text-align: center;"><i>'.___('No versions.').'</i></td></tr>';
+                    echo '<tr><td colspan="5"><strong>'.___('No versions.').'</strong></td></tr>';
                 }
             ?>
             </table>
-<div class="add-button-container"><a href="<?=$html->url("/developers/versions/add/{$addon_id}")?>" class="add-button rounded"><?=___('Add New Version')?></a></div>
+            <div class="add-button-container"><a href="<?=$html->url("/developers/versions/add/{$addon_id}")?>" class="button prominent"><?=___('Add New Version')?></a></div>
         </div>
     </div>
-</div>
+
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

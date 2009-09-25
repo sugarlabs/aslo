@@ -35,16 +35,17 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
 <script type="text/javascript">
     var verifyurl = '<?= $html->url('/developers/verify/') ?>';
 </script>
-<div id="content">
-    <?php
-    $params = array('addons' => $all_addons);
-    echo $this->renderElement('developers/sidebar', $params);
-    ?>
-<div id="content-main" class="privs">
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+<div class="primary privs" role="main">
     <?= $this->renderElement('developers/addonheader', array('title' => ___('Add-on Validator'), 'addon_id' => 0)) ?>
 <?php if (!$this->controller->Session->check('User')): ?>
     <?=sprintf(___('You must <a href="%1$s">log in</a> to validate an add-on.'), $html->url($html->login_url()))?>
@@ -96,7 +97,8 @@
             'allow_completion' => false
         )) ?>
 <?php endif; ?>
-</div><!-- /#content-main -->
-</div><!-- /#content -->
+</div>
+
+<?=$this->renderElement('developers/sidebar', array('addons' => $all_addons));?>
 
 <iframe id="upload-frame" name="upload-frame" src="" onload="iframeLoaded();" style="display: none;"></iframe>

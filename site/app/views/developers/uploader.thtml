@@ -35,19 +35,22 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+ 
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
 <script type="text/javascript">
     var verifyurl = '<?= $html->url('/developers/verify/') ?>';
 </script>
-<div id="content">
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+<div class="primary <?php echo $type != 'new' && $author_role < AUTHOR_ROLE_DEV ? 'no-privs' : 'privs' ;?>" role="main">
     <?php
     $params = array('addons' => $all_addons);
     if ($type != 'new') {
         $params['extra'] = 'developers/editbox';
     }
-    echo $this->renderElement('developers/sidebar', $params);
-
-    echo '<div id="content-main" class="'.($type != 'new' && $author_role < AUTHOR_ROLE_DEV ? 'no-privs' : 'privs').'">';
 
     if ($type == 'new') {
         $title = ___('Submit New Add-on');
@@ -63,15 +66,19 @@
     ?>
     <?=$this->renderElement('noscript')?>
     <?=$this->renderElement('developers/rolecheck')?>
+
     <div id="submission-area" class="rounded graybox">
+
     <?php if ($type == 'new'): ?>
         <div id="step-intro">
             <h3><?=___('How does it all work?')?></h3>
             <?=___('<p>Thanks for your interest in submitting your add-on to Mozilla Add-ons. Hosting your add-on on Mozilla Add-ons is the easiest way to handle distribution of your add-on. Here\'s what you\'ll get:</p><ul><li>Each add-on will have a public display page with information you provide, such as a brief summary of the add-on\'s functionality, an optional longer description, and a showcase of preview screenshots of your add-on.</li><li>Your add-on will appear in search and browse listings across the site, and even in the Add-ons Manager of Firefox 3.</li><li>We\'ll take care of hosting all of your downloads and providing automatic updates to users when you upload a new version.</li><li>You\'ll have access to a statistics dashboard with detailed information about your user base.</li></ul><p>Add-ons hosted on the site must be reviewed by a Mozilla Add-ons Editor before they will have all of the features listed above. If you\'re ready to start the process and have your add-on package ready for upload, just click on Get Started below!</p>')?>
-            <div style="text-align: center;"><a href="#" onclick="upload.showAgreement(); return false;" class="action-button rounded"><?=___('Get Started', 'devcp_uploader_a_start')?></a></div>
+            <p><a href="#step-agreement" onclick="upload.showAgreement(); return false;" class="button prominent"><?=___('Get Started', 'devcp_uploader_a_start')?></a></p>
         </div> <!-- /#step-intro -->
     <?php endif; ?>
+
     <?php $showAgreement = ($type == 'new' || !$hasAgreement); ?>
+
     <?php if ($showAgreement): ?>
         <div id="step-agreement" <?=($type != 'new' ? 'style="display:block"' : '')?>>
             <p><?=___('Please review and accept the following Developer Agreement before proceeding.')?></p>
@@ -102,8 +109,7 @@
                                             'fieldname' => 'text'));
             ?>
             <div class="submit-area">
-                <input type="button" value="<?=___('Agree and continue')?>"
-                id="accept-agreement" disabled="true" onclick="upload.acceptAgreement()"/>
+                <button type="button" id="accept-agreement" disabled="true" onclick="upload.acceptAgreement();" class="button prominent"><?=___('Agree and continue')?></button>
             </div>
             <script type="text/javascript">
             $(document).ready(function($){
@@ -139,23 +145,23 @@
             }
             ?>
             <div class="submit">
-                <input type="submit" value="<?=___('Upload File')?>" class="require-privs" />
+                <button type="submit" class="require-privs button prominent"><?=___('Upload File')?></button>
             </div>
             <div id="upload-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('Uploading file...')?></div>
             </form>
-            <div id="upload-error" class="redbox-tr"><div class="redbox-tl">
+
+            <div id="upload-error" class="redbox-tr">
                 <div id="upload-error-content">
                     <h4><?=___('Oops! There seems to be a problem with this file...')?></h4>
                     <p id="upload-error-text" class="smallmargin"></p>
                     <p class="smallmargin"><?=___('Please correct this problem and upload your file again.')?></p>
                 </div>
-                <div class="redbox-br"><div class="redbox-bl"></div></div>
-            </div></div>
+            </div>
         </div><!-- /#file-upload -->
 
     </div><!-- /#submission-area -->
 
-    <div id="upload-success" class="greenbox-tr"><div class="greenbox-tl">
+    <div id="upload-success" class="greenbox-tr">
     <?php if ($type == 'new'): ?>
         <div id="addon-created-content">
             <h3><?=___('Add-on Created!')?></h3>
@@ -171,7 +177,7 @@
             <div id="created-results">
                 <p><?=sprintf(___('Your new version has been created and is currently marked as %s.'), '<span id="new-file-status"></span>')?></p>
                 <p id="pending-message"><?=sprintf(___('The new version will be available to the public as soon as an editor is able to review it. There are currently %1$s other add-ons in the queue. Want to be reviewed faster? Consider <a %2$s>becoming an editor</a>.'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
-                <p><?=sprintf(___('View your new version in the <a %1$s>Versions and Files page</a>, check out your add-on\'s <a %2$s>current status</a>, or <b>add release notes</b> by clicking the button below (highly recommended).'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
+                <p><?=sprintf(___('View your new version in the <a href="%1$s">Versions and Files page</a>, check out your add-on\'s <a href="%2$s">current status</a>, or <b>add release notes</b> by clicking the button below (highly recommended).'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
                 <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/versions/edit/')?>" class="action-button rounded"><?=___('Add Release Notes')?></a></div>
             </div>
         </div><!-- /#version-created-content -->
@@ -187,8 +193,7 @@
             </div>
         </div><!-- /#file-created-content -->
     <?php endif; ?>
-        <div class="greenbox-br"><div class="greenbox-bl"></div></div>
-    </div></div><!-- /#addon-created -->
+    </div><!-- /#upload-success -->
 
 
     <?= $this->renderElement('developers/validation', array(
@@ -198,7 +203,9 @@
             'new_file_message' => ___('Upload new File'),
             'allow_completion' => true
         )) ?>
-</div><!-- /#content-main -->
-</div><!-- /#content -->
+
 
 <iframe id="upload-frame" name="upload-frame" src="" onload="iframeLoaded();" style="display: none;"></iframe>
+</div>
+
+<?php echo $this->renderElement('developers/sidebar', $params); ?>

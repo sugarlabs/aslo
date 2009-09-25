@@ -317,8 +317,8 @@ var addon_edit_authors = {
         row += '<a href="#" onclick="addon_edit_authors.deleteAuthor(this); return false;"><img src="' + imageURL + '/developers/delete.png" alt="' + devcp_js_remove_author + '" title="' + devcp_js_remove_author + '" /></a>';
         row += '<div class="inline-delete-box">';
         row += '<p>' + devcp_js_sure_remove + '</p><br/>';
-        row += '<p><a href="#" onclick="addon_edit_authors.confirmDelete(this); return false;" class="remove-button rounded">' + devcp_js_remove_author + '</a>&nbsp;&nbsp;';
-        row += '<a href="#" onclick="addon_edit_authors.cancelDelete(this); return false;" class="button rounded">' + devcp_js_a_cancel + '</a></p>';
+        row += '<p><a href="#" onclick="addon_edit_authors.confirmDelete(this); return false;" class="button prominent">' + devcp_js_remove_author + '</a>&nbsp;&nbsp;';
+        row += '<a href="#" onclick="addon_edit_authors.cancelDelete(this); return false;" class="button">' + devcp_js_a_cancel + '</a></p>';
         row += '</div></div>';
         row += '</td></tr>';
 

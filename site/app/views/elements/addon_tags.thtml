@@ -43,13 +43,11 @@
  * - $userTags (a tag model-style result set)
  */
 ?>
-
-<ul class="addon-tags nojs" id="addonid-<?= $addon_id ?>">
-	<form id='tags' class="remove-tags" method="POST" action="<?= $html->url("/tags/remove/"); ?>">
-
-	 	<?= $html->hiddenSession(); ?>
-		<input type="hidden" name="addonid" value="<?= $addon_id; ?>" />
-		<input type="hidden" name="ajax" value="0" />
+<form id='tags' class="remove-tags" method="POST" action="<?= $html->url("/tags/remove/"); ?>">
+  <?= $html->hiddenSession(); ?>
+  <input type="hidden" name="addonid" value="<?= $addon_id; ?>" />
+  <input type="hidden" name="ajax" value="0" />
+  <ul class="addon-tags nojs" id="addonid-<?= $addon_id ?>">
         <?php
         $tags = array('developertag' => $developerTags,
                       'usertag' => $userTags);
@@ -69,5 +67,5 @@
             }
         }
         ?>
-	</form>
-</ul>
+  </ul>
+</form>

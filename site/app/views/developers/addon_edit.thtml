@@ -35,37 +35,41 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+ 
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main">
-        <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-        <dl id="edit-listing" class="actionbar">
-            <dt class="edit-authors"><?=$html->link(___('Manage Add-on Authors', 'devcp_edit_dt_manage_authors'), "/developers/addon/edit/{$addon_id}/authors")?></dt>
-            <dd><?=___('Add or remove users that can manage this add-on.')?></dd>
-            <dt class="edit-categories"><?=$html->link(___('Manage Add-on Categories', 'devcp_edit_dt_manage_categories'), "/developers/addon/edit/{$addon_id}/categories")?></dt>
-            <dd><?=___('Select the relevant categories for each application your add-on supports.')?></dd>
-            <dt class="edit-tags"><?=$html->link(___('Manage Add-on Tags'), "/developers/addon/edit/{$addon_id}/tags")?></dt>
-            <dd><?=___('Add tags to your add-on.')?></dd>
-            <dt class="edit-descriptions"><?=$html->link(___('Manage Add-on Descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></dt>
-            <dd><?=___('Add and modify translations for your add-on\'s summary, description, end-user license, and privacy policy.')?></dd>
-            <dt class="edit-properties"><?=$html->link(___('Manage Add-on Properties'), "/developers/addon/edit/{$addon_id}/properties")?></dt>
-            <dd><?=___('Change your add-on\'s name, homepage, icon, and other flags.')?></dd>
-            <dt class="edit-profile">
-                <?=$html->link(___('Manage Developer Profile'),
-                               "/developers/addon/edit/{$addon_id}/profile")?>
-                <?=$this->renderElement('amo2009/new_indicator')?>
-            </dt>
-            <dd><?=___('Create or update a profile of yourself and your work in making this add-on.')?></dd>
-            <dt class="edit-contributions">
-                <?=$html->link(___('Manage Contributions'),
-                               "/developers/addon/edit/{$addon_id}/contributions")?>
-                <?=$this->renderElement('amo2009/new_indicator')?>
-            </dt>
-            <dd><?=___('Provide a way for users to make monetary donations to your project.')?></dd>
-        </dl>
-
-    </div>
+<div class="primary" role="main">
+    <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
+  <div class="featured">
+    <dl id="edit-listing" class="featured-inner actionbar">
+        <dt class="edit-authors"><?=$html->link(___('Manage Add-on Authors', 'devcp_edit_dt_manage_authors'), "/developers/addon/edit/{$addon_id}/authors")?></dt>
+        <dd><?=___('Add or remove users that can manage this add-on.')?></dd>
+        <dt class="edit-categories"><?=$html->link(___('Manage Add-on Categories', 'devcp_edit_dt_manage_categories'), "/developers/addon/edit/{$addon_id}/categories")?></dt>
+        <dd><?=___('Select the relevant categories for each application your add-on supports.')?></dd>
+        <dt class="edit-tags"><?=$html->link(___('Manage Add-on Tags'), "/developers/addon/edit/{$addon_id}/tags")?></dt>
+        <dd><?=___('Add tags to your add-on.')?></dd>
+        <dt class="edit-descriptions"><?=$html->link(___('Manage Add-on Descriptions'), "/developers/addon/edit/{$addon_id}/descriptions")?></dt>
+        <dd><?=___('Add and modify translations for your add-on\'s summary, description, end-user license, and privacy policy.')?></dd>
+        <dt class="edit-properties"><?=$html->link(___('Manage Add-on Properties'), "/developers/addon/edit/{$addon_id}/properties")?></dt>
+        <dd><?=___('Change your add-on\'s name, homepage, icon, and other flags.')?></dd>
+        <dt class="edit-profile">
+            <?=$html->link(___('Manage Developer Profile'),
+                           "/developers/addon/edit/{$addon_id}/profile")?>
+            <?=$this->renderElement('amo2009/new_indicator')?>
+        </dt>
+        <dd><?=___('Create or update a profile of yourself and your work in making this add-on.')?></dd>
+        <dt class="edit-contributions">
+            <?=$html->link(___('Manage Contributions'),
+                           "/developers/addon/edit/{$addon_id}/contributions")?>
+            <?=$this->renderElement('amo2009/new_indicator')?>
+        </dt>
+        <dd><?=___('Provide a way for users to make monetary donations to your project.')?></dd>
+    </dl>
+  </div>
 </div>
+
+<?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

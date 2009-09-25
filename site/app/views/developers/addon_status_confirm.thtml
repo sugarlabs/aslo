@@ -35,11 +35,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('%s Status'), $addon_name), 'addon_id' => $addon_id));?>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
@@ -77,4 +80,5 @@
         </form>
 
     </div>
-</div>
+
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

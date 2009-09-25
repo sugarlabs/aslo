@@ -35,14 +35,17 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
+
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
 <script type="text/javascript">
     var verifyurl = '<?= $html->url('/developers/verify/') ?>';
 </script>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+  <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Validate %1$s version %2$s'), $addon_name, $version['Version']['version']), 'addon_id' => $addon_id));?>
         <?=$this->renderElement('noscript')?>
         <?=$this->renderElement('developers/rolecheck')?>
@@ -52,7 +55,7 @@
         <?php if (!empty($files)) {
             foreach($files as $file) {
                 echo '<div id="test-results-'.$file['File']['id'].'">';
-                echo '<h2>'.sprintf(___('Validate File %s'), $file['File']['filename']).'</h2>';
+                echo '<h3>'.sprintf(___('Validate File %s'), $file['File']['filename']).'</h3>';
                 echo $this->renderElement('developers/testresults', array('file' => $file, 'test_groups' => $file['groups'], 'all_groups' => $all_groups, 'counts' => $file['counts'], 'addon' => $addon));
                 echo '</div><br/>';
             }
@@ -63,4 +66,5 @@
         } ?>
         </form>
     </div>
-</div>
+
+  <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

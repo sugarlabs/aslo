@@ -39,61 +39,57 @@
 
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-<div id="dashboard" class="primary" role="main">
-    <?=$this->renderElement('amo2009/breadcrumbs', array('breadcrumbs' =>
-        array(___('Add-on Developer Hub') => '/developers')))?>
+<div id="dashboard" class="primary full" role="main">
 
     <h2><?= ___('Developer Dashboard') ?></h2>
 
-    <div id="summary">
+    <div id="summary" class="featured listing">
     <?php
     if (!empty($addons)) {
         foreach ($addons as $addon) {
             $addon_id = $addon['Addon']['id'];
             $addonIconPath = $this->controller->Image->getAddonIconURL($addon_id);
     ?>
-        <div id="addon-<?=$addon_id?>" class="addon sub">
-        <div class="addon-container">
+        <div id="addon-<?=$addon_id?>" class="default item">
+
         <?php
-        echo '<h4><a href="'.$html->url('/addon/'.$addon_id).'">';
-        echo '<img src="'.$addonIconPath.'" alt="'.$addon['Translation']['name']['string'].'" />';
-        echo $addon['Translation']['name']['string'].'</a></h4>';
+        echo '<h3><a href="'.$html->url('/addon/'.$addon_id).'">';
+        echo '<img class="icon" src="'.$addonIconPath.'" alt="'.$addon['Translation']['name']['string'].'" />';
+        echo $addon['Translation']['name']['string'].'</a></h3>';
 
         if ($addon['Addon']['status'] != STATUS_DISABLED) {
             $latestVersion = !empty($addon['Version'][0]) ? $addon['Version'][0] : 0;
 
             echo '<ul class="actionbar index-actions">';
                 // Edit Add-on
-                echo '<li class="edit"><a href="'.$html->url('/developers/addon/edit/'.$addon_id).'" class="view">'.___('Edit Add-on', 'devcp_actionbar_link_edit').'</a>';
+                echo '<li class="action edit"><a href="'.$html->url('/developers/addon/edit/'.$addon_id).'" class="view">'.___('Edit Add-on', 'devcp_actionbar_link_edit').'</a>';
                 echo '<span class="action-details">'.sprintf(___('Last edited on %s'), strftime(___('%B %e, %Y'), strtotime($addon['Addon']['modified']))).'</span></li>';
                 // Change Status
-                echo '<li class="status"><a href="'.$html->url('/developers/addon/status/'.$addon_id).'" class="view">'.___('Change Status', 'devcp_dashboard_change_status').'</a>';
+                echo '<li class="action status"><a href="'.$html->url('/developers/addon/status/'.$addon_id).'" class="view">'.___('Change Status', 'devcp_dashboard_change_status').'</a>';
                 $active = $addon['Addon']['inactive'] == 1 ? ___('Inactive') : ___('Active');
                 echo '<span class="action-details">'.sprintf(___('%1$s currently %2$s and %3$s'), $addontypes[$addon['Addon']['addontype_id']],
                                                              '<span class="inactive-'.$addon['Addon']['inactive'].'">'.$active.'</span>',
                                                              '<span class="status-'.$addon['Addon']['status'].'">'.$statuses[$addon['Addon']['status']].'</span>').'</span></li>';
                 // Statistics Dashboard
-                echo '<li class="statistics"><a href="'.$html->url('/statistics/addon/'.$addon_id).'" class="view">'.___('Statistics Dashboard', 'devcp_actionbar_link_stats').'</a>';
-                echo '<span class="action-details stats">';
-                echo sprintf(n___('<em>%s</em> Total Download', '<em>%s</em> Total Downloads', $addon['Addon']['totaldownloads']), $html->number_format($addon['Addon']['totaldownloads'], 0));
-                echo '&nbsp;&middot;&nbsp;';
-                echo sprintf(n___('<em>%s</em> Weekly Download', '<em>%s</em> Weekly Downloads', $addon['Addon']['weeklydownloads']), $html->number_format($addon['Addon']['weeklydownloads'], 0));
-                echo '&nbsp;&middot;&nbsp;';
-                echo sprintf(n___('<em>%s</em> Active Daily User', '<em>%s</em> Active Daily Users', $addon['Addon']['updatepings']), $html->number_format($addon['Addon']['updatepings'], 0));
-                echo '</span></li>';
+                echo '<li class="action statistics"><a href="'.$html->url('/statistics/addon/'.$addon_id).'" class="view">'.___('Statistics Dashboard', 'devcp_actionbar_link_stats').'</a>';
+                echo '<ul class="action-details">';
+                echo sprintf(n___('<li><em>%s</em> Total Download</li>', '<li><em>%s</em> Total Downloads</li>', $addon['Addon']['totaldownloads']), $html->number_format($addon['Addon']['totaldownloads'], 0));
+                echo sprintf(n___('<li><em>%s</em> Weekly Download</li>', '<li><em>%s</em> Weekly Downloads</li>', $addon['Addon']['weeklydownloads']), $html->number_format($addon['Addon']['weeklydownloads'], 0));
+                echo sprintf(n___('<li><em>%s</em> Active Daily User</li>', '<li><em>%s</em> Active Daily Users</li>', $addon['Addon']['updatepings']), $html->number_format($addon['Addon']['updatepings'], 0));
+                echo '</ul></li>';
                 // Versions and Files
-                echo '<li class="versions"><a href="'.$html->url('/developers/versions/'.$addon_id).'" class="view">'.___('Versions and Files', 'devcp_dashboard_versions').'</a>';
-                echo '<span class="action-details">';
+                echo '<li class="action versions"><a href="'.$html->url('/developers/versions/'.$addon_id).'" class="view">'.___('Versions and Files', 'devcp_dashboard_versions').'</a>';
+                echo '<ul class="action-details">';
                 if (!empty($latestVersion)) {
-                    echo ___('Latest Version:').' '.$html->link($latestVersion['version'], '/developers/versions/edit/'.$latestVersion['id']).' ('.$this->controller->Amo->describeVersionStatus($latestVersion['File']).')';
-                    if ($addon['Addon']['inactive'] != 1) {
-                        echo '&nbsp;&middot;&nbsp;';
-                    }
+                    echo ___('<li>Latest Version:').' '.$html->link($latestVersion['version'], '/developers/versions/edit/'.$latestVersion['id']).' <span class="ver-files">('.$this->controller->Amo->describeVersionStatus($latestVersion['File']).')</span></li>';
+//                    if ($addon['Addon']['inactive'] != 1) {
+//                        echo '&nbsp;&middot;&nbsp;';
+//                    }
                 }
                 if ($addon['Addon']['inactive'] != 1) {
-                    echo '<a href="'.$html->url('/developers/versions/add/'.$addon_id).'">'.___('Upload a new version').'</a>';
+                    echo '<li><a href="'.$html->url('/developers/versions/add/'.$addon_id).'">'.___('Upload a new version').'</a></li>';
                 }
-                echo '</span></li>';
+                echo '</ul></li>';
 
             echo '</ul>';
         }
@@ -103,8 +99,6 @@
             echo '<p>'.sprintf(___('Your add-on was disabled by an administrator and cannot be used.  If you have any questions, please email %s.'), 'amo-admins@mozilla.org').'</p>';
         }
         ?>
-        </div>
-            <div class="vex"><span><!-- bottom edge --></span></div>
         </div>
     <?php
         }
@@ -118,8 +112,4 @@
     }
     ?>
     </div>
-</div>
-
-<div class="secondary" role="complementary">
-    (sidebars)
 </div>

@@ -36,18 +36,17 @@
  *
  * ***** END LICENSE BLOCK ***** */
 ?>
-<div id="sidebar">
+<div id="dev-subnav" class="secondary" role="navigation">
 
     <?php
     if (!empty($extra)) {
         echo $this->renderElement($extra, array('addon_id' => $addon_id));
     }
     ?>
-
-    <div id="categories">
-        <h3><span><?=___('Developer Hub', 'devcp_myaddons_title')?></span></h3>
+      <div id="dev-subnav-hub" class="highlight">
+        <h3><?=___('Developer Hub', 'devcp_myaddons_title')?></h3>
         
-        <ul id="cat-list">
+        <ul>
     <?php if ($this->controller->Session->check('User')): ?>
             <li><?=$html->link(___('Dashboard'), '/developers/dashboard')?></li>
         <?php
@@ -73,6 +72,5 @@
             <li><?=$html->link(___('Log in', 'header_navlink_login'), $html->login_url())?></li>
     <?php endif; ?>
         </ul>
-        
     </div>
 </div>

@@ -35,11 +35,14 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-?>
-<div id="content">
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
 
-    <div id="content-main" class="<?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>">
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
+?>
+
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+    <div class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('%s Status'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($success)) {
@@ -132,19 +135,19 @@
             // Actions
             $actions = '';
             if ($addon['Addon']['status'] == STATUS_NULL && $completionEnabled === true) {
-                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/complete").'" class="complete add-button rounded">'.___('Complete Add-on').'</a></td>';
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/complete").'" class="complete add-button">'.___('Complete Add-on').'</a></td>';
                 $actions .= '<td class="description">'.___('Complete your add-on and move to the Sandbox').'</td></tr>';
             }
             if ($addon['Addon']['status'] == STATUS_SANDBOX && $nominationEnabled === true) {
-                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/nominate").'" class="nominate add-button rounded">'.___('Nominate for Public').'</a></td>';
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/nominate").'" class="nominate add-button">'.___('Nominate for Public').'</a></td>';
                 $actions .= '<td class="description">'.___('Nominate your add-on to become Public').'</td></tr>';
             }
             if ($addon['Addon']['status'] == STATUS_PUBLIC) {
-                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/sandbox").'" class="to-sandbox add-button rounded">'.___('Move to Sandbox').'</a></td>';
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/sandbox").'" class="to-sandbox add-button">'.___('Move to Sandbox').'</a></td>';
                 $actions .= '<td class="description">'.___('Move your add-on back to the Sandbox. This is reversible.').'</td></tr>';
             }
             if ($addon['Addon']['status'] == STATUS_SANDBOX && $addon['Addon']['higheststatus'] == STATUS_PUBLIC) {
-                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/public").'" class="to-public add-button rounded">'.___('Make Public').'</a></td>';
+                $actions .= '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/public").'" class="to-public add-button">'.___('Make Public').'</a></td>';
                 $actions .= '<td class="description">'.___('Make your add-on Public again.').'</td></tr>';
             }
 
@@ -158,27 +161,27 @@
         </div>
 
         <div class="field graybox rounded spaced">
-            <p>
+            
             <?php
             if ($addon['Addon']['inactive'] == 1) {
                 echo '<h4 class="status">'.___('Active Status: <span class="inactive-1">Inactive</span>').'</h4>';
-                echo ___('Your add-on is <span class="inactive-1">Inactive</span>. This means your add-on will not show up in any listing, regardless of its status above. Updates are <b>not</b> being provided to your add-on through the update check service.');
+                echo ___('<p>Your add-on is <span class="inactive-1">Inactive</span>. This means your add-on will not show up in any listing, regardless of its status above. Updates are <strong>not</strong> being provided to your add-on through the update check service.</p>');
             }
             else {
                 echo '<h4 class="status">'.___('Active Status: <span class="inactive-0">Active</span>').'</h4>';
-                echo ___('Your add-on is <span class="inactive-0">Active</span>. This means your add-on is showing up in all available listings appropriate for its status above.');
+                echo ___('<p>Your add-on is <span class="inactive-0">Active</span>. This means your add-on is showing up in all available listings appropriate for its status above.</p>');
             }
             ?>
-            </p>
+            
             <h5><?=___('Available Actions')?></h5>
             <table class="actions"><tbody>
             <?php
             if ($addon['Addon']['inactive'] == 1) {
-                echo '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/active").'" class="make-active add-button rounded">'.___('Make Active').'</a></td>';
+                echo '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/active").'" class="make-active add-button">'.___('Make Active').'</a></td>';
                 echo '<td class="description">'.___('Make your add-on active for it to show up in public listings and enable the update check service.').'</tr>';
             }
             else {
-                echo '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/inactive").'" class="make-inactive add-button rounded">'.___('Make Inactive').'</td>';
+                echo '<tr><td class="action"><a href="'.$html->url("/developers/addon/status/{$addon_id}/inactive").'" class="make-inactive add-button">'.___('Make Inactive').'</td>';
                 echo '<td class="description">'.___('Make your add-on inactive to hide it from all public listings and disable the update check service.').'</tr>';
             }
             ?>
@@ -193,4 +196,5 @@
         <?php endif; ?>
         </form>
     </div>
-</div>
+
+    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>

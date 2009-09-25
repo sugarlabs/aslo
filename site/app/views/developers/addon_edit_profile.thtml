@@ -49,12 +49,14 @@ $this->translationBox = array(
     'table' => 'Addon',
     'loaded' => false
 );
+
+$this->viewVars['bodyclass'] = 'inverse';
+$this->layout = 'amo2009';
 ?>
 
-<div id="content" class="<?=$has_profile ? '' : 'intro'?>">
-  <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons,
-                                                      'extra' => 'developers/editbox'));?>
-  <div id="content-main">
+<?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
+
+  <div class="primary <?=$has_profile ? '' : 'intro'?>" role="main">
 
     <?php if (isset($updated)) {
         echo $this->renderElement('notification', array(
@@ -74,10 +76,10 @@ $this->translationBox = array(
 
     <?php if (!$has_profile): ?>
       <div id="create-dev-profile" class="graybox field rounded spaced">
-        <h2><?=___('Create a Developer Profile', 'devcp_edit_profile_button_create')?></h2>
+        <h3><?=___('Create a Developer Profile', 'devcp_edit_profile_button_create')?></h3>
         <?=___('<p>Introduce yourself to your users with a Developer Profile.</p><ul><li>Explain why you created this add-on.</li><li>Tell your users what\'s next.</li><li>Build more awareness of your efforts.</li></ul><p>Ready to create your Developer Profile? Click the button below to begin.</p>')?>
         <div class="button-holder">
-          <button><?=___('Create a Developer Profile', 'devcp_edit_profile_button_create')?></button>
+          <button type="button" class="button prominent"><?=___('Create a Developer Profile', 'devcp_edit_profile_button_create')?></button>
         </div>
       </div>
     <?php endif; ?>
@@ -87,7 +89,6 @@ $this->translationBox = array(
     <div id="dev-profile">
         <div class="graybox field rounded spaced">
             <p><strong><a href="<?=$html->url('/addon/'.$addon_id.'/developers')?>" class="view"><?php echo ___("View Developer Profile") ?></a></strong></p>
-
 
             <h4><?php echo ___("Standalone Contributions Page") ?></h4>
 
@@ -123,7 +124,7 @@ $this->translationBox = array(
           ))?>
         </div>
 
-        <div class="button-holder"><button>
+        <div class="button-holder"><button type="submit" class="button prominent">
           <?php if ($has_profile): ?>
               <?=___('Save Changes to Developer Profile')?>
           <?php else: ?>
@@ -135,5 +136,7 @@ $this->translationBox = array(
       </form>
     </div>
   </div>
-</div>
+
+<?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+
 <script type="text/javascript">$(document).ready(edit_profile);</script>
