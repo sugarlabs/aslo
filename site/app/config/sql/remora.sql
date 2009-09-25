@@ -1048,6 +1048,7 @@ CREATE TABLE `update_counts` (
   `status` text,
   `application` text,
   `os` text,
+  `update_counts` text,
   `date` date NOT NULL default '0000-00-00',
   PRIMARY KEY  (`id`),
   KEY `addon_id` (`addon_id`),
