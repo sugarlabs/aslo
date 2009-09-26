@@ -1746,6 +1746,10 @@ SELECT
     a.inactive,
     LTRIM(name.localized_string) AS name,
     (
+        SELECT GROUP_CONCAT(version)
+        FROM versions WHERE addon_id = a.id
+    ) AS addon_versions,
+    (
         SELECT GROUP_CONCAT(nickname)
         FROM addons_users au, users u
         WHERE addon_id=a.id AND au.user_id = u.id AND listed = 1
