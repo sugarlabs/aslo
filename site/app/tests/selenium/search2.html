@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
 <title>search2</title>
 </head>
 <body>
@@ -401,7 +402,7 @@
 <tr>
 	<td>type</td>
 	<td>query</td>
-	<td>grapple</td>
+	<td>delicious</td>
 </tr>
 <tr>
 	<td>click</td>
@@ -424,9 +425,9 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertNotText</td>
-	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
+	<td>assertTextNotPresent</td>
 	<td>No results found.</td>
+	<td></td>
 </tr>
 <!-- wrong app -->
 <tr>
@@ -458,6 +459,101 @@
 	<td>assertText</td>
 	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[3]/div/div/div/p</td>
 	<td>No results found.</td>
+</tr>
+<!--Tag Search-->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>robotronical</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Delicious Bookmarks</td>
+	<td>Delicious Bookmarks</td>
+</tr>
+<!--Infix Search-->
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>Firebu</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Firebug</td>
+	<td>Firebug</td>
+</tr>
+<!--Latest version Search-->
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>ColorZilla 2.0.2</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=ColorZilla</td>
+	<td>ColorZilla</td>
+</tr>
+<!-- category shows category not all -->
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>cat</td>
+	<td>label=Appearance</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//body[@id='mozilla-com']/div[1]/div[2]/div[2]/h3</td>
+	<td>regexp:Showing 1 - 20 of \d{0,3} results</td>
+</tr>
+<!-- Search Engines Work -->
+<tr>
+	<td>open</td>
+	<td>/en-US/firefox/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>query</td>
+	<td>Yahoo Answers</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>link=Yahoo! Answers</td>
+	<td>Yahoo! Answers</td>
 </tr>
 
 </tbody></table>

@@ -45,7 +45,7 @@ class AddonsSearch
         $fields = "addon_id, app";
         
         if (DEBUG > 1) {
-            $fields .= ", modified, name_ord, locale_ord";
+            $fields .= ", modified, name_ord, locale_ord, category";
         }
                 
         $limit = 2000;
@@ -83,11 +83,14 @@ class AddonsSearch
             }
             $this->log('Sort', $options['sort']);
         } else {
-            $sphinx->SetSortMode ( SPH_SORT_EXPR, "@weight + IF(status=1, 0, 100)" );
+            $sphinx->SetSortMode ( SPH_SORT_EXPR, 
+                "@weight + IF(status=1, 0, 100)" );
         }
-        // filter based on the app we're looking for e.g is this /firefox/ or /seamonkey/ etc
-        $sphinx->SetFilter('app', array(APP_ID));
-        $this->log('app', APP_ID);
+        // filter based on the app we're looking for 
+        // e.g is this /firefox/ or /seamonkey/ etc
+        // -1 is NULL by design namely for search engines
+        $sphinx->SetFilter('app', array(APP_ID, '99'));
+        $this->log('app', join(',',array(APP_ID, '99')));
         
         // version filter
         // convert version to int
@@ -162,6 +165,7 @@ class AddonsSearch
         
         if (isset($options['category']) && $options['category']) {
             $sphinx->setFilter('category', array($options['category']));
+            $this->log('category', $options['category']);
         }
         
         $result        = $sphinx->Query($term);
@@ -187,9 +191,12 @@ class AddonsSearch
                     $mod      = $match['attrs']['modified'];
                     $name_ord = $match['attrs']['name_ord'];
                     $locale   = $match['attrs']['locale_ord'];
+                    $cat   = implode(',', $match['attrs']['category']);
                     
                     $this->log('Result ', 
-                        sprintf('%s,name_ord:%s,%s,%s,locale:%s', $match['attrs']['addon_id'], $name_ord, $mod, date('c', $mod), $locale));
+                        sprintf('%s,name_ord:%s,%s,%s,locale:%s,cat:%s', 
+                        $match['attrs']['addon_id'], $name_ord, $mod,
+                        date('c', $mod), $locale, $cat));
                 }
             }
         }

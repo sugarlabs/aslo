@@ -36,10 +36,11 @@ source addons
     
     
     sql_attr_multi = uint app from query; \
-    SELECT a.id AS id, av.application_id \
-    FROM versions v, applications_versions av, files f, translated_addons a \
-    WHERE av.version_id=v.id \
-        AND f.version_id=v.id \
+    SELECT a.id AS id, IFNULL(av.application_id, 99) \
+    FROM files f, translated_addons a, versions v \
+    LEFT JOIN applications_versions av \
+      ON av.version_id = v.id \
+    WHERE f.version_id=v.id \
         AND a.addon_id = v.addon_id \
         AND f.status >= 1
         

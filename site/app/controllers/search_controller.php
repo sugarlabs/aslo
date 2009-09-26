@@ -63,10 +63,10 @@ class SearchController extends AppController
      * @var object
      */
     var $Sanitize;
-    
+
     // helper for javascript links
     var $helpers = array('Javascript', 'Pagination', 'Time');
-    
+
     // components to be used by this controller
     var $components = array('Image', 'Pagination', 'Search', "Versioncompare", "Amo", "CollectionsListing");
 
@@ -78,7 +78,7 @@ class SearchController extends AppController
 
     /**
      * Constructor.  Declared so we can initialize Sanitize.
-     * 
+     *
      */
     function SearchController() {
 
@@ -99,7 +99,7 @@ class SearchController extends AppController
         // If search is disabled, show appropriate error
         if ($this->Config->getValue('search_disabled') == 1
             && !$this->SimpleAcl->actionAllowed('*', '*', $this->Session->read('User'))) {
-            
+
             $this->flash(___('Search is currently disabled. Please try again later.'), '/', 3);
             exit;
         }
@@ -107,9 +107,9 @@ class SearchController extends AppController
 
     public function index() {
         global $valid_status, $app_shortnames;
-        
+
         $search_options = array();
-        
+
         $associations = array(
             'all_categories', 'all_tags', 'authors', 'compatible_apps',
             'contrib_details', 'files', 'latest_version', 'list_details'
@@ -121,9 +121,9 @@ class SearchController extends AppController
             $_terms = '';
         }
         $this->publish('search_terms', $_terms);
-        
+
         // category
-        
+
         // collection search is a special case
         if (!empty($this->params['url']['cat']) && ($this->params['url']['cat'] == 'collections')) {
             $this->_collections($_terms);
@@ -140,12 +140,15 @@ class SearchController extends AppController
             $category = array(0,0);
         }
         $this->publish('category', $category);
-        
-        $search_options['category'] = $category[1];
-        
+
+        if ($category[0]) {
+            $search_options['type'] = $category[0];
+            $search_options['category'] = $category[1];
+        }
+
         //if advanced search lver set (for version range), use the
         $lver = -1;
-        if (isset($this->params['url']['lver'])) { 
+        if (isset($this->params['url']['lver'])) {
             $lver = $this->params['url']['lver'];
             $search_options['version'] = $lver;
         }
@@ -155,10 +158,10 @@ class SearchController extends AppController
         $atype = -1;
         $addon_types = $this->Addontype->getNames();
 
-        if (isset($this->params['url']['atype']) && 
-            in_array($this->params['url']['atype'], array_keys($addon_types))) { 
+        if (isset($this->params['url']['atype']) &&
+            in_array($this->params['url']['atype'], array_keys($addon_types))) {
 
-            $atype = $this->params['url']['atype']; 
+            $atype = $this->params['url']['atype'];
             $search_options['type'] = $atype;
         }
         $this->publish('atype', $atype); //publish for element caching
@@ -166,31 +169,31 @@ class SearchController extends AppController
         //if advanced search pid (platform id) set, use it.
         $pid = -1;
         $platforms = $this->Amo->getPlatformName();
-        if (isset( $this->params['url']['pid']) && 
-            in_array($this->params['url']['pid'], array_keys($platforms))) 
-        { 
-            $pid = $this->params['url']['pid']; 
+        if (isset( $this->params['url']['pid']) &&
+            in_array($this->params['url']['pid'], array_keys($platforms)))
+        {
+            $pid = $this->params['url']['pid'];
             $search_options['platform'] = $pid;
         }
-        
+
         $this->publish('pid', $pid); //publish for element caching
 
         //if advanced search last update requirement set, use it
         $lup = "";
         $updates = array("1 day ago","1 week ago","1 month ago","3 months ago","6 months ago","1 year ago");
-        if (isset( $this->params['url']['lup']) && 
-            in_array($this->params['url']['lup'], $updates) ) 
+        if (isset( $this->params['url']['lup']) &&
+            in_array($this->params['url']['lup'], $updates) )
         {
-            $lup = $this->params['url']['lup']; 
+            $lup = $this->params['url']['lup'];
             $search_options['after'] = strtotime($lup);
         }
         $this->publish('lup', $lup); //publish for element caching
-        
+
         // old code below
 
         //if advanced search appid set, use it
         $appname = "";
-        if (isset( $this->params['url']['appid']) && 
+        if (isset( $this->params['url']['appid']) &&
         in_array($this->params['url']['appid'], array_values($app_shortnames) ) ) {
             $appname = array_search($this->params['url']['appid'], $app_shortnames);
             $redirect = str_replace(APP_SHORTNAME, $appname, $_SERVER['REQUEST_URI']);
@@ -199,7 +202,7 @@ class SearchController extends AppController
         }
         $this->publish('appid', APP_ID); //publish for element caching
 
-        
+
         if (!empty($this->params['url']['tag'])) {
             $_tag = $this->params['url']['tag'];
             $search_options['tag'] = $_tag;
@@ -207,14 +210,14 @@ class SearchController extends AppController
             $_tag = null;
         }
         $this->publish('tag', $_tag);
-        
+
 
         //if advanced search sort_order set, use it
         $sort = "";
         $sort_orders = array('newest', 'name', 'averagerating', 'weeklydownloads');
-        if (isset( $this->params['url']['sort']) && 
-        in_array($this->params['url']['sort'], $sort_orders) ) { 
-            $sort = $this->params['url']['sort']; 
+        if (isset( $this->params['url']['sort']) &&
+        in_array($this->params['url']['sort'], $sort_orders) ) {
+            $sort = $this->params['url']['sort'];
             $search_options['sort'] = $sort;
         }
         $this->publish('sort', $sort); //publish for element caching
@@ -223,7 +226,7 @@ class SearchController extends AppController
         $as          = new AddonsSearch($this->Addon);
         $_result_ids = array();
         $total       = 0;
-        
+
         try {
             list($_result_ids, $total) = $as->query($_terms, $search_options);
         }
@@ -245,7 +248,7 @@ class SearchController extends AppController
                 $pp = $this->Pagination->show = $this->params['url']['pp'];
             }
             $this->publish('pp',  $pp); //publish for element caching
-         
+
             list($order,$limit,$page) = $this->Pagination->init();
 
             $this->publish("on_page", $page);
@@ -285,7 +288,7 @@ class SearchController extends AppController
             $this->forceCache();
             $this->render();
             return;
-        
+
         } else {
             if (!empty($_result_ids)) {
                 $_search_ids = array_slice($_result_ids, 0, 20);
@@ -298,7 +301,7 @@ class SearchController extends AppController
             $this->publish('rss_description', ___('Search results feed'));
             $this->render('rss/index', 'rss');
             return;
-        }   
+        }
 
     }
 
@@ -334,7 +337,7 @@ class SearchController extends AppController
 
         // Prep and render the view
         $this->pageTitle = ___('Collection Search Results', 'search_collections_pagetitle').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
-       
+
         $this->publish('jsAdd', array('amo2009/collections', 'jquery-ui/jqModal.js'));
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
