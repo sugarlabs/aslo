@@ -1259,6 +1259,7 @@ p.summary {
     background-position: 100% 50%;
     padding: 5px 25px 5px 5px;
 }
+
 .notice-error {
     border: 1px solid #e7bfb1;
     background: #fff1eb url('../../img/developers/exclamation.png') no-repeat 5px 1em;
@@ -1269,6 +1270,7 @@ p.summary {
     background-position: 100% 1em;
     padding: 5px 25px 5px 5px;
 }
+
 .notice span, 
 .notice-error span, 
 .notice-success span {
@@ -1301,24 +1303,24 @@ p.summary {
 
 
 .nominate.add-button {
-    background-image: url('../img/developers/status_nominate.png');
+    background-image: url('../../img/developers/status_nominate.png');
 }
 .complete.add-button {
-    background-image: url('../img/developers/tick.png');
+    background-image: url('../../img/developers/tick.png');
 }
 .make-active.add-button {
-    background-image: url('../img/developers/status_active.png');
+    background-image: url('../../img/developers/status_active.png');
 }
 .make-inactive.add-button {
-    background-image: url('../img/developers/status_inactive.png');
+    background-image: url('../../img/developers/status_inactive.png');
 }
-
 .to-sandbox.add-button {
-    background-image: url('../img/developers/arrow_down.png');
+    background-image: url('../../img/developers/arrow_down.png');
 }
 .to-public.add-button {
-    background-image: url('../img/developers/arrow_up.png');
+    background-image: url('../../img/developers/arrow_up.png');
 }
+
 
 .criteria {
     margin-left: 10px;
@@ -1336,18 +1338,18 @@ p.summary {
     padding-right: 20px;
 }
 .criteria .pass {
-    background: url('../img/developers/tick.png') no-repeat left center;
+    background: url('../../img/developers/tick.png') no-repeat left center;
 }
 .criteria .fail {
-    background: url('../img/developers/cross.png') no-repeat left center;
+    background: url('../../img/developers/cross.png') no-repeat left center;
 }
 .criteria .meh {
-    background: url('../img/developers/asterisk_yellow.png') no-repeat left center;
+    background: url('../../img/developers/asterisk_yellow.png') no-repeat left center;
 }
 
 .save-changes {
     display: none;
-    background: transparent url('../img/developers/exclamation.png') no-repeat 5px 50%;
+    background: transparent url('../img/../developers/exclamation.png') no-repeat 5px 50%;
     padding: 5px 0 5px 30px;
     border: 1px solid #5D6C8C;
     margin: 5px;
@@ -1382,15 +1384,16 @@ p.summary {
     text-align: center;
     background-color: #fff1eb;
     border: 1px solid #e7bfb1;
-    border-bottom: none;
+    border-bottom-color: #fff1eb;
     -moz-border-radius: 6px 6px 0 0;
     -webkit-border-top-left-radius: 6px;
     -webkit-border-top-right-radius: 6px;
     border-radius: 6px 6px 0 0;
 }
 .inline-delete-button.uses-button.open .remove-button.trigger {
-    background-color: #FFA5A5;
-    border: 1px solid #CC3333;
+    background-color: #fff1eb;
+    border: 1px solid #e7bfb1;
+    border-bottom: 0;
     -moz-border-radius: 6px 6px 0 0;
     -webkit-border-bottom-left-radius: 0;
     -webkit-border-bottom-right-radius: 0;
@@ -1401,6 +1404,7 @@ p.summary {
     z-index: 10;
     display: none;
     margin-left: -378px;
+    margin-top: -2px;
     padding: 10px;
     width: 380px;
     color: #2D3B58;
@@ -1444,10 +1448,15 @@ p.summary {
 
 .developer-hub h2 img {
   vertical-align: baseline; 
-  margin-right: 8px;
+  margin: 0 8px 0 2px;
 }
 
-.actionbar:after {
+.html-rtl .developer-hub h2 img {
+  margin: 0 2px 0 8px;
+}
+
+/* =Dashboard */
+.actionbar:after { /* clear floats */
   content: ".";
   display: block;
   clear: both;
@@ -1458,7 +1467,12 @@ p.summary {
 .actionbar .action {
   width: 23%;
   float: left;
-  margin-right: 1.75%;
+  margin-right: 1.8%;
+}
+.html-rtl .actionbar .action {
+  float: right;
+  margin-right: 0;
+  margin-left: 1.8%;
 }
 
 .actionbar .view {
@@ -1468,16 +1482,18 @@ p.summary {
   padding: .2em 0 .2em 22px;
   border-bottom: 1px solid #d6e9f0;
 }
+.html-rtl .actionbar .view {
+  padding: .2em 22px .2em 0;
+  background-position: 100% .2em;
+}
 
 .action .action-details {
   font-size: 0.925em;
 }
-
 .action .action-details em {
   font-style: normal;
   font-weight: bold;
 }
-
 .action .action-details .ver-files {
   display: block;
   margin-top: -.25em;
@@ -1485,6 +1501,36 @@ p.summary {
   color: #666;
 }
 
+/* Edit main */
+#edit-listing {
+  margin: 0;
+  padding: 10px;
+}
+
+#edit-listing dt:first-child {
+  margin-top: 0;
+}
+
+#edit-listing dt a {
+  font-size: 1.1em;
+  padding: .2em 0 .2em 22px;
+  background: transparent 0 0 no-repeat;
+}
+.html-rtl #edit-listing dt a {
+  padding: .2em 22px .2em 0;
+  background-position: 100% 0;
+}
+
+#edit-listing .edit-authors a { background-image: url(../../img/developers/actionbar/edit_authors.png); }
+#edit-listing .edit-categories a { background-image: url(../../img/developers/actionbar/edit_categories.png); }
+#edit-listing .edit-tags a { background-image: url(../../img/developers/actionbar/edit_tags.png); }
+#edit-listing .edit-descriptions a { background-image: url(../../img/developers/actionbar/edit_descriptions.png); }
+#edit-listing .edit-properties a { background-image: url(../../img/developers/actionbar/edit_properties.png); }
+#edit-listing .edit-profile a { background-image: url(../../img/developers/actionbar/edit_profile.png); }
+#edit-listing .edit-contributions a { background-image: url(../../img/developers/actionbar/edit_contributions.png); }
+
+
+/* =Subnav (sidebar) */
 #dev-subnav-edit h3 a {
   font-weight: normal;
 }
@@ -1496,6 +1542,10 @@ p.summary {
 #dev-subnav-edit li {
   padding: 1px 5px 1px 25px;
   background: transparent 5px 50% no-repeat;
+}
+.html-rtl #dev-subnav-edit li {
+  padding: 1px 25px 1px 5px;
+  background-position: 99% 50%;
 }
 
 #dev-subnav-edit li.selected {
@@ -1515,6 +1565,10 @@ p.summary {
   line-height: 1.4;
   margin-bottom: 0.25em;
 }
+.html-rtl #dev-subnav .indented { 
+  padding-left: 0;
+  padding-right: 20px;
+}
 
 #dev-subnav .container li {
   font-size: 0.925em;
@@ -1522,34 +1576,28 @@ p.summary {
   margin: 0 -5px 0 -25px;
   background-position: 0 50%;
 }
-
-#edit-listing {
-  margin: 0;
-  padding: 10px;
+.html-rtl #dev-subnav .container li {
+  padding: 1px 30px 1px 5px;
+  margin: 0 -25px 0 -5px;
 }
 
-#edit-listing dt:first-child {
-  margin-top: 0;
+/* Categories */
+.edit-categories-box h4 img {
+  vertical-align: middle;
+  margin: 0 8px 0 2px;
 }
-
-#edit-listing dt a {
-  font-size: 1.1em;
-  padding: .2em 0 .2em 22px;
-  background: transparent 0 0 no-repeat;
+.html-rtl .edit-categories-box h4 img {
+  margin: 0 2px 0 8px;
 }
-
-#edit-listing .edit-authors a { background-image: url(../../img/developers/actionbar/edit_authors.png); }
-#edit-listing .edit-categories a { background-image: url(../../img/developers/actionbar/edit_categories.png); }
-#edit-listing .edit-tags a { background-image: url(../../img/developers/actionbar/edit_tags.png); }
-#edit-listing .edit-descriptions a { background-image: url(../../img/developers/actionbar/edit_descriptions.png); }
-#edit-listing .edit-properties a { background-image: url(../../img/developers/actionbar/edit_properties.png); }
-#edit-listing .edit-profile a { background-image: url(../../img/developers/actionbar/edit_profile.png); }
-#edit-listing .edit-contributions a { background-image: url(../../img/developers/actionbar/edit_contributions.png); }
 
 fieldset#addon-categories {
   padding-right: 50%;
   position: relative;
   border: 0;
+}
+.html-rtl fieldset#addon-categories {
+  padding-right: 0;
+  padding-left: 50%;
 }
 
 #addon-categories .edit-categories-descriptions {
@@ -1557,6 +1605,10 @@ fieldset#addon-categories {
   position: absolute;
   right: 20px;
   top: 0;
+}
+.html-rtl #addon-categories .edit-categories-descriptions {
+  left: -50%;
+  right: auto;
 }
 
 #author-table, 
@@ -1699,10 +1751,11 @@ h4.status span {
     color: #5D6C8C;
 }
 
+/* Buttons */
 .add-button,
 .remove-button,
 .edit-button {
-    background: #fefefe url('../img/developers/add.png') no-repeat 10px 50%;
+    background: #fefefe url('../../img/developers/add.png') no-repeat 10px 50%;
     padding: 3px 15px 3px 35px;
     border: 1px solid #ccc;
     white-space: nowrap;
@@ -1710,12 +1763,17 @@ h4.status span {
     -webkit-border-radius: 8px;
     border-radius: 10px;
 }
-
+.remove-button {
+  background-image: url('../../img/developers/delete.png');
+}
+.edit-button {
+  background-image: url('../../img/developers/edit.png');
+}
 .html-rtl .add-button,
 .html-rtl .remove-button,
 .html-rtl .edit-button {
-    background-position: 100% 50%;
-    padding: 3px 20px 3px 5px;
+    background-position: 95% 50%;
+    padding: 3px 35px 3px 15px;
 }
 .nominate.add-button {
     background-image: url('../../img/developers/status_nominate.png');
@@ -1729,7 +1787,6 @@ h4.status span {
 .make-inactive.add-button {
     background-image: url('../../img/developers/status_inactive.png');
 }
-
 .to-sandbox.add-button {
     background-image: url('../../img/developers/arrow_down.png');
 }
@@ -1821,4 +1878,8 @@ h4.status span {
 
 #file-upload .disabled {
     color: gray;
+}
+.action-button-container, 
+.add-button-container {
+  margin: .5em 0;
 }

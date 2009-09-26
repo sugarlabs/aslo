@@ -73,7 +73,7 @@ $this->layout = 'amo2009';
                         echo '<td class="delete-area version-delete-area">';
                         if (empty($version['File'])) {
                             echo '<div class="inline-delete-button uses-button">';
-                            echo '<a href="#" onclick="versions.deleteVersion(this); return false;" class="remove-button rounded trigger">'.___('Remove?').'</a>';
+                            echo '<a href="#" onclick="versions.deleteVersion(this); return false;" class="remove-button trigger">'.___('Remove?').'</a>';
                             echo '<div class="inline-delete-box">';
                             echo '<p>'.___('This version has no files associated with it and can be removed. Would you like to remove this version?').'</p><br />';
                             echo '<p><a href="'.$html->url('/developers/versions/delete/'.$version['Version']['id']).'"  class="remove-button rounded">'.___('Remove Empty Version').'</a>&nbsp;&nbsp;';

@@ -41,7 +41,7 @@
     <?= $this->renderElement('developers/testresults_header', array('test_groups' => $test_groups, 'all_groups' => $all_groups, 'file' => $file, 'external_link' => false, 'counts' => $counts)); ?>
     <? if (!$validation_disabled) : ?>
         <div class="action-button-container">
-            <a href="#" onclick="versions_validate.runTest(<?=$file['File']['id']?>, <?=$addon['Addon']['addontype_id']?>); return false;" class="action-button rounded">
+            <a href="#" onclick="versions_validate.runTest(<?=$file['File']['id']?>, <?=$addon['Addon']['addontype_id']?>); return false;" class="button prominent">
                 <?= ___('Validate') ?>
             </a>
         <span class="tests-running loading-count">
