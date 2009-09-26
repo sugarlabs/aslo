@@ -260,7 +260,7 @@ function iframeLoaded() {
 var validate = {
     validate: function() {
         if ($('#addon-list').val() != '') {
-            window.location.href = BASEDIR  + '/developers/addon/validate/' + $('#addon-list').val();
+            window.location.href = BASEDIR  + 'developers/addon/validate/' + $('#addon-list').val();
             return false;
         } else {
             return upload.uploadFile();
