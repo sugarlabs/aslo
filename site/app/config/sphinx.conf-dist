@@ -4,7 +4,7 @@ source addons
     sql_host                = localhost
     sql_user                = root
     sql_pass                =
-    sql_db                    = remora
+    sql_db                  = remora
 
     sql_query_pre           = SET NAMES utf8
     sql_query_pre           = SET SESSION query_cache_type=OFF
@@ -67,9 +67,14 @@ index addons
 {
     source                  = addons
     path                    = /opt/local/data/sphinx/catalog
-    morphology              = stem_en
+    # morphology              = stem_en
     # symlink sphinx-wordforms.txt to this location:
     wordforms = /opt/local/etc/sphinx-wordforms.txt
+    
+    # Firebug will get indexed as Firebug, Firebu, Fireb, Fire, Fir - equally
+    # We can enable star if necessary.
+    min_infix_len = 3
+    #enable_star = 1
 }
 
 searchd
