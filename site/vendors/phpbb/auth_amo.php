@@ -358,7 +358,7 @@ function _auth_amo_sync_groups($user_id) {
             // removed from the groups here as well
             if (is_array($user_groups) && count($user_groups)) {
                 foreach ($user_groups as $group) {
-                    if ($group['group_name'] == 'REGISTERED') // Ignore phpbb built-in
+                    if (in_array($group['group_id'], array(2,3,7))) // Ignore phpbb built-ins: REGISTERED, REGISTERED_COPPA, NEWLY_REGISTERED
                         continue;
                     group_user_del($group['group_id'], array($user_id));
                 }
