@@ -174,7 +174,6 @@
 
         <implementation>
             <field name="addon"/>
-            <field name="_stringBundle">null</field>
 
             <constructor>
             <![CDATA[
@@ -182,16 +181,6 @@
                     this.setAddon(this.addon);
             ]]>
             </constructor>
-
-            <property name="stringBundle">
-                <![CDATA[
-                    if (!this._stringBundle) {
-                        this._stringBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService).
-                                           createBundle("chrome://bandwagon/locale/bandwagonAddon.properties");
-                    }
-                    return this._stringBundle;
-                ]]>
-            </property>
 
             <property name="name"
                 onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'name').value"
@@ -379,6 +368,10 @@
                 <body>
                 <![CDATA[
                     Bandwagon.Logger.debug("setAddon in binding");
+
+                    this.stringBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService).
+                                       createBundle("chrome://bandwagon/locale/bandwagonAddon.properties");
+
                     this.addon = addon;
                     this.name = addon.name;
                     this.guid = addon.guid;
@@ -692,7 +685,7 @@
         <implementation implements="nsIAccessibleProvider">
             <constructor>
             <![CDATA[
-                var addtoLabel = this.stringBundle.getFormattedString("bandwagon.addon.addto", [this.appName], 1);
+                var addtoLabel = this.stringBundle.formatStringFromName("bandwagon.addon.addto", [this.appName], 1);
                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').label = addtoLabel ? addtoLabel : "Add";
             ]]>
             </constructor>
