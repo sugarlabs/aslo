@@ -155,8 +155,6 @@
                     <xul:image anonid="icon" class="icon"/>
                 </xul:vbox>
                 <xul:vbox flex="1" class="addonTextBox">
-                    <xul:hbox flex="1">
-                        <xul:vbox flex="1">
                             <xul:hbox flex="1">
                                 <xul:label anonid="name" class="name"/>
                                 <xul:spacer flex="1"/>
@@ -167,8 +165,6 @@
                             </xul:hbox>
                             <xul:label anonid="summary" crop="end"/>
                         </xul:vbox>
-                    </xul:hbox>
-                </xul:vbox>
             </xul:hbox>
         </content>
 
@@ -203,14 +199,8 @@
                 />
 
             <property name="description"
-                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'description')?document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent:'')">
-                <setter>
-                <![CDATA[
-                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'description'))
-                        document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent = val;
-                ]]>
-                </setter>
-            </property>
+                onget="return (this.setAttribute('description') ? this.getAttribute('description'):'')"
+                onset="this.setAttribute('description', val);"/>
 
             <property name="thumbnailURL"
                 onget="return (document.getAnonymousElementByAttribute(this, 'class', 'thumbnail')?document.getAnonymousElementByAttribute(this, 'class', 'thumbnail').src:'')">
@@ -376,29 +366,10 @@
                     this.name = addon.name;
                     this.guid = addon.guid;
                     this.iconURL = addon.icon;
-                    this.thumbnailURL = addon.thumbnail;
                     this.authors = addon.authors;
                     this.dateAdded = addon.dateAdded;
                     this.read = addon.read;
                     this.summary = addon.summary;
-
-                    //if (Bandwagon.Util.getAppName() != "Firefox")
-                    //{
-                      // see bug 509080
-
-                      //var niceDescription = addon.summary.substring(0, 300);
-
-                      //while (niceDescription.length<300)
-                      //{
-                      //  niceDescription += "\u00A0 ";
-                      //}
-
-                      //this.description = niceDescription;
-                    //}
-                    //else
-                    //{
-                      this.description = addon.summary; // Use summary and not description
-                    //}
 
                     try
                     {
@@ -429,6 +400,9 @@
                     {
                         Bandwagon.Logger.debug("setAddon - error handling comment : "+e);
                     }
+
+                    this.thumbnailURL = addon.thumbnail;
+                    this.description = addon.summary; // Use summary and not description
 
                     this.invalidateCompatibilityCheck();
                     this.invalidatePublishButton();
@@ -666,7 +640,7 @@
                             </xul:hbox>
                         </xul:vbox>
                         <xul:vbox flex="1">
-                            <xul:description anonid="description">
+                            <xul:description anonid="description" class="descriptionWrap" xbl:inherits="xbl:text=description">
                                 <xul:label anonid="learnmore" class="text-link" value="&addon.moreinfo;" onclick="Bandwagon.Controller.CollectionsPane.doMoreInfo()"/>
                             </xul:description>
                             <xul:spacer flex="1"/>
