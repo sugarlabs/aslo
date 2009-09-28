@@ -7,6 +7,8 @@
 	<div class="content">
 		<h2><!-- IF LOGIN_EXPLAIN -->{LOGIN_EXPLAIN}<!-- ELSE -->{L_LOGIN}<!-- ENDIF --></h2>
 		
+		<p><strong>Welcome to the Mozilla Add-ons Forum!</strong> Log in below using your Mozilla Add-ons account nickname and password. If you don't have an account, you can <a href="https://addons.mozilla.org/users/register">register one here</a>.</p>
+	
 		<fieldset <!-- IF not S_CONFIRM_CODE -->class="fields1"<!-- ELSE -->class="fields2"<!-- ENDIF -->>
 		<!-- IF LOGIN_ERROR --><div class="error">{LOGIN_ERROR}</div><!-- ENDIF -->
 		<dl>
@@ -17,7 +19,7 @@
 			<dt><label for="{PASSWORD_CREDENTIAL}">{L_PASSWORD}:</label></dt>
 			<dd><input type="password" tabindex="2" id="{PASSWORD_CREDENTIAL}" name="{PASSWORD_CREDENTIAL}" size="25" class="inputbox autowidth" /></dd>
 			<!-- IF S_DISPLAY_FULL_LOGIN and (U_SEND_PASSWORD or U_RESEND_ACTIVATION) -->
-				<!-- IF U_SEND_PASSWORD --><dd><a href="{U_SEND_PASSWORD}">{L_FORGOT_PASS}</a></dd><!-- ENDIF -->
+				<!-- IF U_SEND_PASSWORD --><dd><a href="https://addons.mozilla.org/users/pwreset/">{L_FORGOT_PASS}</a></dd><!-- ENDIF -->
 				<!-- IF U_RESEND_ACTIVATION --><dd><a href="{U_RESEND_ACTIVATION}">{L_RESEND_ACTIVATION}</a></dd><!-- ENDIF -->
 			<!-- ENDIF -->
 		</dl>
