@@ -382,12 +382,15 @@ Bandwagon.Controller.ExtensionsOverlay._showCollectionsPaneView = function()
     document.getElementById("continueDialogButton").hidden = true;
     document.getElementById("themePreviewArea").hidden = true;
     document.getElementById("themeSplitter").hidden = true;
+    document.getElementById("extensionsView").hidden = true;
     if (document.getElementById("showUpdateInfoButton")) { // FF3/TB3+
         document.getElementById("showUpdateInfoButton").hidden = true;
         document.getElementById("hideUpdateInfoButton").hidden = true;
         document.getElementById("searchPanel").hidden = true;
-        document.getElementById("extensionsView").hidden = true;
         document.getElementById("extensionsView").parentNode.hidden = true;
+    }
+    else { // TB2
+        document.getElementById("getMore").hidden = true;
     }
 
     document.getElementById("continueDialogButton").removeAttribute("default");
