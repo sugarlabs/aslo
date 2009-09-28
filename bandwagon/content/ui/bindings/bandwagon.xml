@@ -150,9 +150,6 @@
         </resources>
 
         <content>
-            <xul:stringbundle src="chrome://bandwagon/locale/bandwagonAddon.properties"
-                anonid="stringbundle"/>
-
             <xul:hbox flex="1">
                 <xul:vbox class="addonIcon">
                     <xul:image anonid="icon" class="icon"/>
@@ -177,7 +174,7 @@
 
         <implementation>
             <field name="addon"/>
-            <field name="_stringBundle">document.getAnonymousElementByAttribute(this, "anonid", "stringbundle");</field>
+            <field name="_stringBundle">null</field>
 
             <constructor>
             <![CDATA[
@@ -185,6 +182,16 @@
                     this.setAddon(this.addon);
             ]]>
             </constructor>
+
+            <property name="stringBundle">
+                <![CDATA[
+                    if (!this._stringBundle) {
+                        this._stringBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService).
+                                           createBundle("chrome://bandwagon/locale/bandwagonAddon.properties");
+                    }
+                    return this._stringBundle;
+                ]]>
+            </property>
 
             <property name="name"
                 onget="return document.getAnonymousElementByAttribute(this, 'anonid', 'name').value"
@@ -207,9 +214,14 @@
                 />
 
             <property name="description"
-                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'description')?document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent:'')"
-                onset="if (document.getAnonymousElementByAttribute(this, 'anonid', 'description')) document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent = val"
-                />
+                onget="return (document.getAnonymousElementByAttribute(this, 'anonid', 'description')?document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent:'')">
+                <setter>
+                <![CDATA[
+                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'description'))
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'description').textContent = val;
+                ]]>
+                </setter>
+            </property>
 
             <property name="thumbnailURL"
                 onget="return (document.getAnonymousElementByAttribute(this, 'class', 'thumbnail')?document.getAnonymousElementByAttribute(this, 'class', 'thumbnail').src:'')">
@@ -254,7 +266,7 @@
                             }
                         }
 
-                        document.getAnonymousElementByAttribute(this, 'anonid', 'authors').value = this._stringBundle.getFormattedString('bandwagon.addon.author', [authors]);
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'authors').value = this.stringBundle.formatStringFromName('bandwagon.addon.author', [authors], 1);
                     }
                 ]]>
                 </setter>
@@ -318,8 +330,8 @@
                     {
                         if (Bandwagon.Util.getHostEnvironmentInfo().appVersion.substring(0, 1) != "2") {
                             Components.utils.import("resource://gre/modules/PluralForm.jsm");
-                            let [get, numForms] = PluralForm.makeGetter(this._stringBundle.getString("bandwagon.addon.pluralRule"));
-                            datestr = get(sbVal, this._stringBundle.getFormattedString(sbString, [sbVal]));
+                            let [get, numForms] = PluralForm.makeGetter(this.stringBundle.GetStringFromName("bandwagon.addon.pluralRule"));
+                            datestr = get(sbVal, this.stringBundle.formatStringFromName(sbString, [sbVal], 1));
                         }
                         else {
                             datestr = "Added";
@@ -327,7 +339,7 @@
                     }
                     else
                     {
-                        datestr = this._stringBundle.getFormattedString(sbString, [sbVal]);
+                        datestr = this.stringBundle.formatStringFromName(sbString, [sbVal], 1);
                     }
 
                     document.getAnonymousElementByAttribute(this, 'anonid', 'dateadded').value = datestr;
@@ -341,9 +353,9 @@
                 <setter>
                 <![CDATA[
                     if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentdesc'))
-                        document.getAnonymousElementByAttribute(this, 'anonid', 'commentdesc').textContent = this._stringBundle.getFormattedString('bandwagon.addon.comment.description', [val.comment]);
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'commentdesc').textContent = this.stringBundle.formatStringFromName('bandwagon.addon.comment.description', [val.comment], 1);
                     if (document.getAnonymousElementByAttribute(this, 'anonid', 'commentauthor'))
-                        document.getAnonymousElementByAttribute(this, 'anonid', 'commentauthor').value = this._stringBundle.getFormattedString('bandwagon.addon.comment.author', [val.author]);
+                        document.getAnonymousElementByAttribute(this, 'anonid', 'commentauthor').value = this.stringBundle.formatStringFromName('bandwagon.addon.comment.author', [val.author], 1);
                 ]]>
                 </setter>
             </property>
@@ -353,7 +365,7 @@
                 >
                 <setter>
                 <![CDATA[
-                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'addedby')) document.getAnonymousElementByAttribute(this, 'anonid', 'addedby').value = this._stringBundle.getFormattedString('bandwagon.addon.addedby', [val]);
+                    if (document.getAnonymousElementByAttribute(this, 'anonid', 'addedby')) document.getAnonymousElementByAttribute(this, 'anonid', 'addedby').value = this.stringBundle.formatStringFromName('bandwagon.addon.addedby', [val], 1);
                 ]]>
                 </setter>
             </property>
@@ -377,24 +389,24 @@
                     this.read = addon.read;
                     this.summary = addon.summary;
 
-                    if (Bandwagon.Util.getAppName() != "Firefox")
-                    {
-                      // see bug 609080
+                    //if (Bandwagon.Util.getAppName() != "Firefox")
+                    //{
+                      // see bug 509080
 
-                      var niceDescription = addon.summary.substring(0, 300);
+                      //var niceDescription = addon.summary.substring(0, 300);
 
-                      while (niceDescription.length<300)
-                      {
-                        niceDescription += "\u00A0 ";
-                      }
+                      //while (niceDescription.length<300)
+                      //{
+                      //  niceDescription += "\u00A0 ";
+                      //}
 
-                      this.description = niceDescription;
-                    }
-                    else
-                    {
+                      //this.description = niceDescription;
+                    //}
+                    //else
+                    //{
                       this.description = addon.summary; // Use summary and not description
-                    }
-                    
+                    //}
+
                     try
                     {
                       if (addon.comments.length > 0)
@@ -486,7 +498,7 @@
                             {
                                 try
                                 {
-                                    var msg = this._stringBundle.getString("bandwagon.addon.alreadyinstalled");
+                                    var msg = this.stringBundle.GetStringFromName("bandwagon.addon.alreadyinstalled");
                                     document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
                                         document.createTextNode(msg));
                                 }
@@ -501,11 +513,11 @@
 
                                 try
                                 {
-                                    msg = this._stringBundle.getString("bandwagon.addon.isexperimental");
+                                    msg = this.stringBundle.GetStringFromName("bandwagon.addon.isexperimental");
                                 }
                                 catch (e)
                                 {
-                                    msg = this._stringBundle.getFormattedString("bandwagon.addon.olderversionsof", [this.appName]);
+                                    msg = this.stringBundle.formatStringFromName("bandwagon.addon.olderversionsof", [this.appName], 1);
                                 }
 
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
@@ -518,27 +530,27 @@
                             else if (type == Bandwagon.Model.Addon.INSTALL_NO_ADDON_IS_FOR_OLDER_VERSION)
                             {
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
-                                    document.createTextNode(this._stringBundle.getFormattedString("bandwagon.addon.olderversionsof", [this.appName])));
+                                    document.createTextNode(this.stringBundle.formatStringFromName("bandwagon.addon.olderversionsof", [this.appName], 1)));
                             }
                             else if (type == Bandwagon.Model.Addon.INSTALL_NO_UPGRADE_TO_USE_THIS_VERSION)
                             {
                                 var atffwl = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "xul:label");
                                 atffwl.className = "text-link";
-                                atffwl.setAttribute("value", this._stringBundle.getFormattedString("bandwagon.addon.upgradetoappn1", [this.appName, version]));
+                                atffwl.setAttribute("value", this.stringBundle.formatStringFromName("bandwagon.addon.upgradetoappn1", [this.appName, version], 2));
                                 atffwl.addEventListener("click", function() { Bandwagon.Controller.CollectionsPane.doUpgradeToFirefoxN(version); }, true);
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(atffwl);
 
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
-                                    document.createTextNode(this._stringBundle.getString("bandwagon.addon.upgradetoappn2")));
+                                    document.createTextNode(this.stringBundle.GetStringFromName("bandwagon.addon.upgradetoappn2")));
                             }
                             else if (type == Bandwagon.Model.Addon.INSTALL_NO_MUST_DOWNLOAD_BETA)
                             {
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
-                                    document.createTextNode(this._stringBundle.getFormattedString("bandwagon.addon.requiresfirefoxbeta1", [version])));
+                                    document.createTextNode(this.stringBundle.formatStringFromName("bandwagon.addon.requiresfirefoxbeta1", [version], 1)));
 
                                 var atffwl = document.createElementNS("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul", "xul:label");
                                 atffwl.className = "text-link";
-                                atffwl.setAttribute("value", this._stringBundle.getFormattedString("bandwagon.addon.requiresfirefoxbeta2", [version]));
+                                atffwl.setAttribute("value", this.stringBundle.formatStringFromName("bandwagon.addon.requiresfirefoxbeta2", [version], 1));
                                 atffwl.addEventListener("click", function() { Bandwagon.Controller.CollectionsPane.doDownloadFirefoxNBeta(version); }, true);
 
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(atffwl);
@@ -546,7 +558,7 @@
                             else if (type == Bandwagon.Model.Addon.INSTALL_NO_NOT_COMPATIBLE_OS)
                             {
                                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').appendChild(
-                                    document.createTextNode(this._stringBundle.getFormattedString("bandwagon.addon.notcompatible", [version])));
+                                    document.createTextNode(this.stringBundle.formatStringFromName("bandwagon.addon.notcompatible", [version], 1)));
                             }
 
                             document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').collapsed = false;
@@ -617,11 +629,7 @@
     </binding>
 
     <binding id="bandwagon-addon-expanded" extends="chrome://bandwagon/content/ui/bindings/bandwagon.xml#bandwagon-addon">
-
         <content>
-            <xul:stringbundle src="chrome://bandwagon/locale/bandwagonAddon.properties"
-                anonid="stringbundle"/>
-
             <xul:hbox flex="1">
                 <xul:vbox class="addonIcon">
                     <xul:image anonid="icon" class="icon"/>
@@ -684,7 +692,7 @@
         <implementation implements="nsIAccessibleProvider">
             <constructor>
             <![CDATA[
-                var addtoLabel = this._stringBundle.getFormattedString("bandwagon.addon.addto", [this.appName]);
+                var addtoLabel = this.stringBundle.getFormattedString("bandwagon.addon.addto", [this.appName], 1);
                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').label = addtoLabel ? addtoLabel : "Add";
             ]]>
             </constructor>
