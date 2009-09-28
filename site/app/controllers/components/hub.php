@@ -356,7 +356,7 @@ class HubComponent extends Object {
                              '2003-03',
                              array()),
             new HubCaseStudy(___('Immersive 3-D Experience with Cooliris'),
-                             ___('Cooliris lets users browse photos and videos from the web or local computer in a scrolling three-dimensional infinite wall. From full-screen mode to sharing and discovery, Cooliris makes it easy to explore rich content.'),
+                             ___('Cooliris lets users browse photos and videos from the Web or local computer on an infinitely scrollable 3-D wall. Its award-winning design brings speed and elegance to searching, finding and enjoying rich content.'),
                              'cooliris',
                              5579,
                              '/img/docs/case-studies/cooliris-wordmark.png',
