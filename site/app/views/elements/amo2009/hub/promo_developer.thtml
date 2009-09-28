@@ -69,6 +69,8 @@
         <div class="addon-feed-wrapper">
             <?=$this->renderElement('amo2009/hub/promo_feed', array(
                                         'feed'     => $feed['feed'],
+                                        'rss_url'  => $feed['rss_url'],
+                                        'rss_title'=> $feed['rss_title'],
                                         'limit'    => 4,
                                         'addon_id' => $active_addon_id,
                                         'addon'    => $feed['addon']))?>
@@ -81,6 +83,7 @@
     $(document).ready(function() {
         // fetch recent activity for clicked add-on
         $('.addon-list li:not(.more) a').click(function(){
+            $('.rss-icon').hide();
             $('.addon-feed-loading').show();
             var li = $(this).parent();
             $.get($(this).attr('href'), function(data, status){
@@ -89,7 +92,6 @@
                     $('.addon-list li:not(.more)').removeClass('active');
                     $(li).addClass('active');
                 }
-                $('.addon-feed-loading').hide();
             }, 'html');
             return false;
         });

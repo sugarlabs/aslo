@@ -43,18 +43,29 @@
  *  $limit integer specifying the maximim number of events to render
  *  $addon_id integer or false if events are for multiple addons
  *  $addon string name of add-on specified by $addon_id
+ *  $rss_url string URL of RSS feed
+ *  $rss_title string title of RSS feed
+ *  $show_login bool (optional) if set and true, show login message instead of feed
  */
 
+    $show_login = empty($show_login) ? false : true;
     $length = count($feed) > $limit ? $limit : count($feed); 
 ?>
-<div class="addon-feed-loading">
-    <img src="<?=$html->urlImage('ajax_loading.gif')?>" width="15" height="15" alt="loading" >
-</div>
 <div class="addon-feed">
+<?php if ($show_login): ?>
+    <h3><?=sprintf(___('Please <a href="%1$s">log in</a> to view add-on news feeds.'),
+                    $html->url($html->login_url('/developers', false)))?></h3>
+<?php else: ?>
     <h3>
+        <?php if (!empty($rss_url)): ?>
+        <?=$html->linkNoApp('<img src="'.$html->urlImage('amo2009/icons/rss.png').'" class="rss-icon" '
+            .'width="16" height="16" alt="'.sprintf(___('Subscribe to %1$s'), $rss_title).'" />',
+            $rss_url)?>
+        <?php endif; ?>
+        <img src="<?=$html->urlImage('ajax_loading.gif')?>" class="addon-feed-loading" width="15" height="15" alt="<?=___('Loading data...')?>" />
         <?php if ($addon_id): ?>
             <?=sprintf(___('Recent Activity for <a href="%1$s">%2$s</a>'),
-                $html->url('/developers/feed/'.$addon_id), $addon)?>
+                $html->url('/addon/'.$addon_id), $addon)?>
         <?php else: ?>
             <?=sprintf(___('Recent Activity for <a href="%1$s">All Add-ons</a>'), 
                 $html->url('/developers/feed/all'))?>
@@ -85,8 +96,9 @@
         </li>
     <?php endif; ?>
     </ul>
+<?php endif; ?>
 </div>
-<?php if ($addon_id): ?>
+<?php if ($addon_id && !$show_login): ?>
 <ul class="addon-info">
     <li><?=$html->linkNoApp(___('Edit Add-on'),
                             '/developers/addon/edit/'.$addon_id,
