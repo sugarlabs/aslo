@@ -1295,10 +1295,12 @@ BandwagonService.prototype = {
 
         try
         {
-            if (storageService. openUnsharedDatabase) {
+            if (storageService.openUnsharedDatabase)
+            {
                 this._storageConnection = storageService.openUnsharedDatabase(file);
             }
-            else {
+            else
+            {
                 this._storageConnection = storageService.openDatabase(file);
             }
         }
@@ -1309,13 +1311,148 @@ BandwagonService.prototype = {
         }
 
         if (this._storageConnection.executeAsync)
+        {
             this._collectionFactory = new Bandwagon.Factory.CollectionFactory2(this._storageConnection, Bandwagon);
+            this._initStorageTables2();
+        }
         else
+        {
             this._collectionFactory = new Bandwagon.Factory.CollectionFactory(this._storageConnection, Bandwagon);
-
-        this._initStorageTables();
+            this._initStorageTables();
+        }
     },
 
+    /**
+     * init sql tables for v2 (async) environments
+     */
+    _initStorageTables2: function()
+    {
+        if (!this._storageConnection)
+            return;
+
+        // create tables (if they're not already created)
+
+        this._storageConnection.beginTransaction();
+
+        if (this._storageConnection.schemaVersion < 200)
+        {
+            try
+            {
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS serviceDocument");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS serviceDocument "
+                    + "(emailResourceURL TEXT NOT NULL, "
+                    + "collectionListResourceURL TEXT NOT NULL)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS collections");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS collections "
+                    + "(url TEXT PRIMARY KEY, "
+                    + "name TEXT NOT NULL, "
+                    + "description TEXT, "
+                    + "dateAdded INTEGER NOT NULL, "
+                    + "dateLastCheck INTEGER, "
+                    + "updateInterval INTEGER NOT NULL, "
+                    + "showNotifications INTEGER NOT NULL, "
+                    + "autoPublish INTEGER NOT NULL, "
+                    + "active INTEGER NOT NULL DEFAULT 1, "
+                    + "addonsPerPage INTEGER NOT NULL, "
+                    + "creator TEXT, "
+                    + "listed INTEGER NOT NULL DEFAULT 1, "
+                    + "writable INTEGER NOT NULL DEFAULT 0, "
+                    + "subscribed INTEGER NOT NULL DEFAULT 1, "
+                    + "lastModified INTEGER, "
+                    + "addonsResourceURL TEXT, "
+                    + "type TEXT, "
+                    + "iconURL TEXT)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS collectionsLinks");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS collectionsLinks "
+                    + "(collection TEXT NOT NULL, "
+                    + "name TEXT NOT NULL, "
+                    + "href TEXT NOT NULL)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS collectionsAddons");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS collectionsAddons "
+                    + "(collection TEXT NOT NULL, "
+                    + "addon TEXT NOT NULL, "
+                    + "read INTEGER NOT NULL DEFAULT 0)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS addons");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS addons "
+                    + "(guid TEXT PRIMARY KEY, "
+                    + "name TEXT NOT NULL, "
+                    + "type INTEGER NOT NULL, "
+                    + "version TEXT NOT NULL, "
+                    + "status INTEGER NOT NULL, "
+                    + "summary TEXT, "
+                    + "description TEXT, "
+                    + "icon TEXT, "
+                    + "eula TEXT, "
+                    + "thumbnail TEXT, "
+                    + "learnmore TEXT NOT NULL, "
+                    + "author TEXT, "
+                    + "category TEXT, "
+                    + "dateAdded INTEGER NOT NULL, "
+                    + "type2 TEXT)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS addonCompatibleApplications");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS addonCompatibleApplications "
+                    + "(addon TEXT NOT NULL, "
+                    + "name TEXT NOT NULL, "
+                    + "applicationId INTEGER NOT NULL, "
+                    + "minVersion TEXT NOT NULL, "
+                    + "maxVersion TEXT NOT NULL, "
+                    + "guid TEXT NOT NULL)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS addonCompatibleOS");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS addonCompatibleOS "
+                    + "(addon TEXT NOT NULL, "
+                    + "name TEXT NOT NULL)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS addonInstalls");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS addonInstalls "
+                    + "(addon TEXT NOT NULL, "
+                    + "url TEXT NOT NULL, "
+                    + "hash TEXT NOT NULL, "
+                    + "os TEXT NOT NULL)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS addonComments");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS addonComments "
+                    + "(addon TEXT NOT NULL, "
+                    + "comment TEXT NOT NULL, "
+                    + "author TEXT NOT NULL)"
+                    );
+                this._storageConnection.executeSimpleSQL("DROP TABLE IF EXISTS addonAuthors");
+                this._storageConnection.executeSimpleSQL(
+                    "CREATE TABLE IF NOT EXISTS addonAuthors "
+                    + "(addon TEXT NOT NULL, "
+                    + "author TEXT NOT NULL)"
+                    );
+
+                this._storageConnection.schemaVersion = 200;
+            }
+            catch (e)
+            {
+                Bandwagon.Logger.error("Error creating sqlite table: " + e);
+                this._storageConnection.rollbackTransaction();
+                return;
+            }
+        }
+
+        this._storageConnection.commitTransaction();
+    },
+
+    /**
+     * init sql tables for v1 (non-async) environments
+     */
     _initStorageTables: function()
     {
         if (!this._storageConnection)
@@ -1455,12 +1592,6 @@ BandwagonService.prototype = {
             }
 
             this._storageConnection.schemaVersion = 105;
-        }
-
-        if (this._storageConnection.schemaVersion < 106)
-        {
-            // XXX future 1.0.6 schema updates go here
-            // this._storageConnection.schemaVersion = 106;
         }
 
         this._storageConnection.commitTransaction();
