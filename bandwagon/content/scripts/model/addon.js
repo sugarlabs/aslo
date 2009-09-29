@@ -113,11 +113,21 @@ Bandwagon.Model.Addon.prototype.isLocale = function()
 
 Bandwagon.Model.Addon.prototype.getFennecType = function()
 {
-  if (this.isTheme()) return 4;
-  if (this.isExtension()) return 2;
-  if (this.isLocale()) return 8;
-  if (this.isSearchProvider()) return 1024;
+    if (this.isTheme()) return 4;
+    if (this.isExtension()) return 2;
+    if (this.isLocale()) return 8;
+    if (this.isSearchProvider()) return 1024;
+}
 
+Bandwagon.Model.Addon.prototype.addAuthor = function(author)
+{
+    for (var i=0; i<this.authors.length; i++)
+    {
+        if (author == this.authors[i])
+            return;
+    }
+
+    this.authors.push(author);
 }
 
 Bandwagon.Model.Addon.prototype.canInstall = function(env)

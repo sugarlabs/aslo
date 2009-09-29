@@ -88,9 +88,9 @@ Bandwagon.Factory.CollectionFactory2.prototype.commitServiceDocument = function(
 
     var deleteStatement = this.connection.createStatement("DELETE FROM serviceDocument");
 
-    var insertStatement = this.connection.createStatement("INSERT INTO serviceDocument VALUES (?1, ?2)");
-    insertStatement.bindUTF8StringParameter(0, serviceDocument.emailResourceURL);
-    insertStatement.bindUTF8StringParameter(1, serviceDocument.collectionListResourceURL);
+    var insertStatement = this.connection.createStatement("INSERT INTO serviceDocument VALUES (:emailResourceURL, :collectionListResourceURL)");
+    insertStatement.params.emailResourceURL = serviceDocument.emailResourceURL;
+    insertStatement.params.collectionListResourceURL = serviceDocument.collectionListResourceURL;
  
     return this.connection.executeAsync(
         [deleteStatement, insertStatement],
@@ -163,35 +163,35 @@ Bandwagon.Factory.CollectionFactory2.prototype.commitCollection = function(colle
     if (!this.connection)
         return;
 
-    var insertStatement = cf.connection.createStatement("INSERT INTO collections VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15, ?16, ?17, ?18)");
+    var insertStatement = cf.connection.createStatement("INSERT INTO collections VALUES (:resourceURL, :name, :description, :dateAdded, :dateLastCheck, :updateInterval, :showNotifications, :autoPublish, :active, :addonsPerPage, :creator, :listed, :writable, :subscribed, :lastModified, :addonsResourceURL, :type, :iconURL)");
 
-    insertStatement.bindUTF8StringParameter(0, collection.resourceURL);
-    insertStatement.bindUTF8StringParameter(1, collection.name);
-    insertStatement.bindUTF8StringParameter(2, collection.description);
+    insertStatement.params.resourceURL = collection.resourceURL;
+    insertStatement.params.name = collection.name;
+    insertStatement.params.description = collection.description;
     if (collection.dateAdded && collection.dateAdded instanceof Date)
-        insertStatement.bindInt32Parameter(3, collection.dateAdded.getTime()/1000);
+        insertStatement.params.dateAdded = collection.dateAdded.getTime()/1000;
     else
-        insertStatement.bindInt32Parameter(3, Date.now()/1000);
+        insertStatement.params.dateAdded = Date.now()/1000;
     if (collection.dateLastCheck && collection.dateLastCheck instanceof Date)
-        insertStatement.bindInt32Parameter(4, collection.dateLastCheck.getTime()/1000);
+        insertStatement.params.dateLastCheck = collection.dateLastCheck.getTime()/1000;
     else
-        insertStatement.bindNullParameter(4);
-    insertStatement.bindInt32Parameter(5, collection.updateInterval);
-    insertStatement.bindInt32Parameter(6, collection.showNotifications);
-    insertStatement.bindInt32Parameter(7, (collection.autoPublish?1:0));
-    insertStatement.bindInt32Parameter(8, (collection.active?1:0));
-    insertStatement.bindInt32Parameter(9, collection.addonsPerPage);
-    insertStatement.bindUTF8StringParameter(10, collection.creator);
-    insertStatement.bindInt32Parameter(11, collection.listed);
-    insertStatement.bindInt32Parameter(12, collection.writable);
-    insertStatement.bindInt32Parameter(13, collection.subscribed);
+        insertStatement.params.dateLastCheck = null;
+    insertStatement.params.updateInterval = collection.updateInterval;
+    insertStatement.params.showNotifications = collection.showNotifications;
+    insertStatement.params.autoPublish = (collection.autoPublish?1:0);
+    insertStatement.params.active = (collection.active?1:0);
+    insertStatement.params.addonsPerPage = collection.addonsPerPage;
+    insertStatement.params.creator = collection.creator;
+    insertStatement.params.listed = collection.listed;
+    insertStatement.params.writable = collection.writable;
+    insertStatement.params.subscribed = collection.subscribed;
     if (collection.lastModified && collection.lastModified instanceof Date)
-        insertStatement.bindInt32Parameter(14, collection.lastModified.getTime()/1000);
+        insertStatement.params.lastModified = collection.lastModified.getTime()/1000;
     else
-        insertStatement.bindNullParameter(14);
-    insertStatement.bindUTF8StringParameter(15, collection.addonsResourceURL);
-    insertStatement.bindUTF8StringParameter(16, collection.type);
-    insertStatement.bindUTF8StringParameter(17, collection.iconURL);
+        insertStatement.params.lastModified = null;
+    insertStatement.params.addonsResourceURL = collection.addonsResourceURL;
+    insertStatement.params.type = collection.type;
+    insertStatement.params.iconURL = collection.iconURL;
 
     var statements = [insertStatement];
     statements = statements.concat(cf._commitCollectionsAddons(collection));
@@ -211,11 +211,11 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsLinks = functio
 
     for (var id in collection.links)
     {
-        var insertStatement = this.connection.createStatement("INSERT INTO collectionsLinks VALUES (?1, ?2, ?3)");
+        var insertStatement = this.connection.createStatement("INSERT INTO collectionsLinks VALUES (:resourceURL, :id, :link)");
 
-        insertStatement.bindUTF8StringParameter(0, collection.resourceURL);
-        insertStatement.bindUTF8StringParameter(1, id);
-        insertStatement.bindUTF8StringParameter(2, collection.links[id]);
+        insertStatement.params.resourceURL = collection.resourceURL;
+        insertStatement.params.id = id;
+        insertStatement.params.link = collection.links[id];
 
         statements.push(insertStatement);
     }
@@ -236,23 +236,23 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddons = functi
     {
         var addon = collection.addons[id];
 
-        var statement = cf.connection.createStatement("INSERT OR IGNORE INTO addons VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15)");
+        var statement = cf.connection.createStatement("INSERT OR IGNORE INTO addons VALUES (:guid, :name, :type, :version, :status, :summary, :description, :icon, :eula, :thumbnail, :learnmore, :author, :category, :dateAdded, :type2)");
 
-        statement.bindUTF8StringParameter(0, addon.guid);
-        statement.bindUTF8StringParameter(1, addon.name);
-        statement.bindInt32Parameter(2, addon.type);
-        statement.bindUTF8StringParameter(3, addon.version);
-        statement.bindInt32Parameter(4, addon.status);
-        statement.bindUTF8StringParameter(5, addon.summary);
-        statement.bindUTF8StringParameter(6, addon.description);
-        statement.bindUTF8StringParameter(7, addon.icon);
-        statement.bindUTF8StringParameter(8, addon.eula);
-        statement.bindUTF8StringParameter(9, addon.thumbnail);
-        statement.bindUTF8StringParameter(10, addon.learnmore);
-        statement.bindUTF8StringParameter(11, addon.author);
-        statement.bindUTF8StringParameter(12, addon.category);
-        statement.bindUTF8StringParameter(13, addon.dateAdded.getTime()/1000);
-        statement.bindUTF8StringParameter(14, addon.type2);
+        statement.params.guid = addon.guid;
+        statement.params.name = addon.name;
+        statement.params.type = addon.type;
+        statement.params.version = addon.version;
+        statement.params.status = addon.status;
+        statement.params.summary = addon.summary;
+        statement.params.description = addon.description;
+        statement.params.icon = addon.icon;
+        statement.params.eula = addon.eula;
+        statement.params.thumbnail = addon.thumbnail;
+        statement.params.learnmore = addon.learnmore;
+        statement.params.author = addon.author;
+        statement.params.category = addon.category;
+        statement.params.dateAdded = addon.dateAdded.getTime()/1000;
+        statement.params.type2 = addon.type2;
 
         statements.push(statement);
 
@@ -331,11 +331,11 @@ Bandwagon.Factory.CollectionFactory2.prototype.deleteCollection = function(colle
     if (!this.connection)
         return;
 
-    var statement1 = this.connection.createStatement("DELETE FROM collections where id = ?1");
-    statement1.bindInt32Parameter(0, collection.storageID);
+    var statement1 = this.connection.createStatement("DELETE FROM collections where resourceURL = :resourceURL");
+    statement1.params.resourceURL = collection.resourceURL;
 
-    var statement2 = this.connection.createStatement("DELETE FROM collectionsAddons where collection = ?1");
-    statement2.bindInt32Parameter(0, collection.storageID);
+    var statement2 = this.connection.createStatement("DELETE FROM collectionsAddons where collection = :resourceURL");
+    statement2.params.resourceURL = collection.resourceURL;
  
     return this.connection.executeAsync(
         [statement1, statement2],
@@ -724,7 +724,7 @@ Bandwagon.Factory.CollectionFactory2.prototype._openAddonAuthors = function(coll
                 if (!collectionResourceURL || !collections[collectionResourceURL] || !addonGUID || !collections[collectionResourceURL].addons[addonGUID])
                     continue;
 
-                collections[collectionResourceURL].addons[addonGUID].authors.push(author);
+                collections[collectionResourceURL].addons[addonGUID].addAuthor(author);
             }
         },
         handleError: cf.handleError,
@@ -737,68 +737,68 @@ Bandwagon.Factory.CollectionFactory2.prototype._openAddonAuthors = function(coll
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonCompatibleApplication = function(addon, application)
 {
-    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonCompatibleApplications VALUES (?1, ?2, ?3, ?4, ?5, ?6)");
+    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonCompatibleApplications VALUES (:guid, :name, :applicationId, :minVersion, :maxVersion, :appguid)");
 
-    insertStatement.bindUTF8StringParameter(0, addon.guid);
-    insertStatement.bindUTF8StringParameter(1, application.name);
-    insertStatement.bindInt32Parameter(2, application.applicationId);
-    insertStatement.bindUTF8StringParameter(3, application.minVersion);
-    insertStatement.bindUTF8StringParameter(4, application.maxVersion);
-    insertStatement.bindUTF8StringParameter(5, application.guid);
+    insertStatement.params.guid = addon.guid;
+    insertStatement.params.name = application.name;
+    insertStatement.params.applicationId = application.applicationId;
+    insertStatement.params.minVersion = application.minVersion;
+    insertStatement.params.maxVersion = application.maxVersion;
+    insertStatement.params.appguid = application.guid;
 
     return insertStatement;
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonCompatibleOS = function(addon, os)
 {
-    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonCompatibleOS VALUES (?1, ?2)");
+    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonCompatibleOS VALUES (:guid, :os)");
 
-    insertStatement.bindUTF8StringParameter(0, addon.guid);
-    insertStatement.bindUTF8StringParameter(1, os);
+    insertStatement.params.guid = addon.guid;
+    insertStatement.params.os = os;
 
     return insertStatement
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonInstall = function(addon, install)
 {
-    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonInstalls VALUES (?1, ?2, ?3, ?4)");
+    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonInstalls VALUES (:guid, :url, :hash, :os)");
 
-    insertStatement.bindUTF8StringParameter(0, addon.guid);
-    insertStatement.bindUTF8StringParameter(1, install.url);
-    insertStatement.bindUTF8StringParameter(2, install.hash);
-    insertStatement.bindUTF8StringParameter(3, install.os);
+    insertStatement.params.guid = addon.guid;
+    insertStatement.params.url = install.url;
+    insertStatement.params.hash = install.hash;
+    insertStatement.params.os = install.os;
 
     return insertStatement;
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonComment = function(addon, comment)
 {
-    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonComments VALUES (?1, ?2, ?3)");
+    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonComments VALUES (:guid, :comment, :author)");
 
-    insertStatement.bindUTF8StringParameter(0, addon.guid);
-    insertStatement.bindUTF8StringParameter(1, comment.comment);
-    insertStatement.bindUTF8StringParameter(2, comment.author);
+    insertStatement.params.guid = addon.guid;
+    insertStatement.params.comment = comment.comment;
+    insertStatement.params.author = comment.author;
 
     return insertStatement;
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitAddonAuthor = function(addon, author)
 {
-    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonAuthors VALUES (?1, ?2)");
+    var insertStatement = this.connection.createStatement("INSERT OR IGNORE INTO addonAuthors VALUES (:guid, :author)");
 
-    insertStatement.bindUTF8StringParameter(0, addon.guid);
-    insertStatement.bindUTF8StringParameter(1, author);
+    insertStatement.params.guid = addon.guid;
+    insertStatement.params.author = author;
 
     return insertStatement;
 }
 
 Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddonsTuple = function(addon, collection)
 {
-    var insertStatement = this.connection.createStatement("INSERT INTO collectionsAddons VALUES (?1, ?2, ?3)");
+    var insertStatement = this.connection.createStatement("INSERT INTO collectionsAddons VALUES (:resourceURL, :guid, :read)");
 
-    insertStatement.bindUTF8StringParameter(0, collection.resourceURL);
-    insertStatement.bindUTF8StringParameter(1, addon.guid);
-    insertStatement.bindInt32Parameter(2, (addon.read?1:0));
+    insertStatement.params.resourceURL = collection.resourceURL;
+    insertStatement.params.guid = addon.guid;
+    insertStatement.params.read = (addon.read?1:0);
 
     return insertStatement;
 }
