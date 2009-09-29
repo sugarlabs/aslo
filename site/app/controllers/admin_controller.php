@@ -2229,17 +2229,18 @@ class AdminController extends AppController
         ksort($_constants);
 
         $_constants['ANON_BIND_PW']          = '--removed--';
+        $_constants['CAKE_SESSION_STRING']   = '--removed--';
         $_constants['DB_USER']               = '--removed--';
         $_constants['DB_PASS']               = '--removed--';
+        $_constants['MAILCHIMP_API_KEY']     = '--removed--';
+        $_constants['PAYPAL_PASSWORD']       = '--removed--';
+        $_constants['PAYPAL_BN']             = '--removed--';
+        $_constants['PAYPAL_SIGNATURE']      = '--removed--';
+        $_constants['RECAPTCHA_PRIVATE_KEY'] = '--removed--';
         $_constants['SHADOW_DB_USER']        = '--removed--';
         $_constants['SHADOW_DB_PASS']        = '--removed--';
         $_constants['TEST_DB_USER']          = '--removed--';
         $_constants['TEST_DB_PASS']          = '--removed--';
-        $_constants['CAKE_SESSION_STRING']   = '--removed--';
-        $_constants['RECAPTCHA_PRIVATE_KEY'] = '--removed--';
-        $_constants['PAYPAL_PASSWORD']       = '--removed--';
-        $_constants['PAYPAL_BN']             = '--removed--';
-        $_constants['PAYPAL_SIGNATURE']      = '--removed--';
 
         $this->set('constants', $_constants);
 
