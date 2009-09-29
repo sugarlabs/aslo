@@ -307,12 +307,14 @@
 
                     if (sbString != "bandwagon.addon.added.justnow")
                     {
-                        if (Bandwagon.Util.getHostEnvironmentInfo().appVersion.substring(0, 1) != "2") {
+                        if (!Bandwagon.Util.isTB2())
+                        {
                             Components.utils.import("resource://gre/modules/PluralForm.jsm");
                             let [get, numForms] = PluralForm.makeGetter(this.stringBundle.GetStringFromName("bandwagon.addon.pluralRule"));
                             datestr = get(sbVal, this.stringBundle.formatStringFromName(sbString, [sbVal], 1));
                         }
-                        else {
+                        else
+                        {
                             datestr = "Added";
                         }
                     }

@@ -148,11 +148,15 @@ Bandwagon.Controller.BrowserOverlay.openAddons = function()
     {
         const EMURL = "chrome://mozapps/content/extensions/extensions.xul";
         const EMFEATURES = "chrome,menubar,extra-chrome,toolbar,dialog=no,resizable";
-        if (Bandwagon.Util.getHostEnvironmentInfo().appVersion.substring(0, 1) == "2") {
+
+        if (Bandwagon.Util.isTB2())
+        {
             window.openDialog(EMURL, "", EMFEATURES);
         }
         else
+        {
             window.openDialog(EMURL, "", EMFEATURES, "bandwagon-collections");
+        }
     }
 }
 

@@ -1255,11 +1255,7 @@ BandwagonService.prototype = {
 
         if (showNotificationsForThisCollection && collection.getUnnotifiedAddons().length > 0)
         {
-            var app = getAppName();
-            var appWinString = "navigator:browser"; // default, Firefox
-            if (app == "Thunderbird")
-                appWinString = "mail:3pane";
-            var appWindow = WindowMediator.getService(nsIWindowMediator).getMostRecentWindow(appWinString);
+            var appWindow = Bandwagon.Util.getAnAppWindow();
 
             if (appWindow)
             {

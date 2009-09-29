@@ -127,6 +127,20 @@ Bandwagon.Util.getAppName = function()
     return envinfo.name; // Returns "Firefox" for Firefox, "Thunderbird" for TB
 }
 
+Bandwagon.Util.isTB2 = function()
+{
+    var hostEnvInfo = Bandwagon.Util.getHostEnvironmentInfo();
+
+    return (hostEnvInfo.appName == "Thunderbird" && hostEnvInfo.appVersion.charAt(0) == "2");
+}
+
+Bandwagon.Util.getAnAppWindow = function()
+{
+    var appWinString = (Bandwagon.Util.getAppName() == "Thunderbird" ? "mail:3pane" : "navigator:browser");
+
+    return this.Cc["@mozilla.org/appshell/window-mediator;1"].getService(this.Ci.nsIWindowMediator).getMostRecentWindow(appWinString);
+}
+
 Bandwagon.Util.compareVersions = function(versionA, versionB)
 {
     var versionChecker = this.Cc["@mozilla.org/xpcom/version-comparator;1"]

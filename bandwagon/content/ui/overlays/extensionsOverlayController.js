@@ -67,7 +67,7 @@ Bandwagon.Controller.ExtensionsOverlay.init = function()
     }
 
     // Move Get Add-ons/Search to after Themes
-    if (Bandwagon.Util.getHostEnvironmentInfo().appVersion.substring(0, 1) != "2")
+    if (!Bandwagon.Util.isTB2())
     {
         Bandwagon.Controller.ExtensionsOverlay._moveSearchTab();
  

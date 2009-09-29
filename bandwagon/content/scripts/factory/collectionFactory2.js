@@ -249,8 +249,8 @@ Bandwagon.Factory.CollectionFactory2.prototype._commitCollectionsAddons = functi
         statement.params.eula = addon.eula;
         statement.params.thumbnail = addon.thumbnail;
         statement.params.learnmore = addon.learnmore;
-        statement.params.author = addon.author;
-        statement.params.category = addon.category;
+        statement.params.author = null;
+        statement.params.category = null;
         statement.params.dateAdded = addon.dateAdded.getTime()/1000;
         statement.params.type2 = addon.type2;
 
