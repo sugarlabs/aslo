@@ -358,4 +358,14 @@ define('ABOUT_ADDONS_FEED_URL', 'http://us1.campaign-archive.com/feed?u=168bf22f
 define('ABOUT_ADDONS_FEED_HOME', 'http://us1.campaign-archive.com/home/?u=168bf22f976f5a68fe5770d19&id=65a473e3bf');
 define('ABOUT_ADDONS_SUBSCRIBE_URL', 'http://mozilla.us1.list-manage.com/subscribe/post?u=168bf22f976f5a68fe5770d19&amp;id=65a473e3bf');
 define('ABOUT_ADDONS_LIST_ID', '65a473e3bf');
+
+/**
+ * Blocklist unique cookie name
+ *
+ * Defines name of unique cookie for blocklist statistics.
+ */
+if (!defined('BLOCKLIST_COOKIE_NAME')) {
+    define('BLOCKLIST_COOKIE_NAME', 'BLOCKLIST_v1');
+}
+
 ?>
