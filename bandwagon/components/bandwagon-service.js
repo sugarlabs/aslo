@@ -718,7 +718,14 @@ BandwagonService.prototype = {
                 callback(event);
         }
 
-        this._service.authenticate(login, password, internalCallback);
+        if (Bandwagon.Util.isTB2())
+        {
+            this._service.authenticateTB2(login, password, internalCallback);
+        }
+        else
+        {
+            this._service.authenticate(login, password, internalCallback);
+        }
     },
 
     authenticate2: function(login, password, callback)

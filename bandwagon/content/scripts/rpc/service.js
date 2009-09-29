@@ -280,6 +280,56 @@ Bandwagon.RPC.Service.prototype.authenticate = function(login, password, callbac
     this.getServiceDocument(internalCallback1);
 }
 
+/**
+ * Hack for TB2 support (see bug 519207)
+ */
+Bandwagon.RPC.Service.prototype.authenticateTB2 = function(login, password, callback)
+{
+    var service = this;
+
+    this._logger.debug("Bandwagon.RPC.Service.authenticateTB2: getting auth token for user '" + login + "'");
+
+    var internalCallback = function(event)
+    {
+        if (event.isError())
+        {
+            service._logger.info("Bandwagon.RPC.Service.authenticateTB2: authentication failed");
+        }
+        else
+        {
+            event.authToken = event.getData().attribute("value");
+
+            if (!event.authToken.match(/.*\w.*/))
+            {
+                // invalid auth token (bug 496612)
+                service._logger.error("Bandwagon.RPC.Service.authenticateTB2: invalid auth token: '" + event.authToken + "'");
+
+                event._result = service.Bandwagon.RPC.Constants.BANDWAGON_RPC_SERVICE_ERROR_UNEXPECTED_XML;
+            }
+            else
+            {
+                service._logger.debug("Bandwagon.RPC.Service.authenticateTB2: have an auth token: " + event.authToken);
+
+                service.Bandwagon.Preferences.setPreference(service.Bandwagon.PREF_AUTH_TOKEN, event.authToken);
+            }
+        }
+
+        if (callback)
+        {
+            callback(event);
+        }
+    }
+
+    service.rpcSend(service.Bandwagon.RPC.Constants.BANDWAGON_RPC_EVENT_TYPE_BANDWAGON_RPC_GET_AUTH_DOCUMENT_COMPLETE, 
+         internalCallback, 
+         service._serviceRootURL + "/auth",
+         "POST",
+         null,
+         null,
+         {login: login, password: password}
+         );
+}
+
 Bandwagon.RPC.Service.prototype.getServiceDocument = function(callback)
 {
     var service = this;
