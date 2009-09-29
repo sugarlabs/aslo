@@ -12,6 +12,7 @@ for sourcedir in $SOURCE_DIRS; do \
         --keyword=___:1,2c \
         --keyword=n___:1,2 \
         --keyword=n___:1,2,4c \
+        --add-comments=L10n \
         --force-po \
         --omit-header \
         --join-existing \
