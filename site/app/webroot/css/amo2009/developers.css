@@ -1306,7 +1306,13 @@ p.summary {
     padding-right: 30px;
     background-position: 100% 50%;
 }
-
+.preview-box .error-message {
+    display: none;
+    background-image: url('../img/developers/preview_delete.png');
+}
+.preview-box.errors .error-message {
+    display: block;
+}
 
 .nominate.add-button {
     background-image: url('../../img/developers/status_nominate.png');
@@ -1535,6 +1541,12 @@ p.summary {
 #edit-listing .edit-profile a { background-image: url(../../img/developers/actionbar/edit_profile.png); }
 #edit-listing .edit-contributions a { background-image: url(../../img/developers/actionbar/edit_contributions.png); }
 
+p.smallmargin {
+  margin-bottom: .5em;
+}
+label.indented {
+  padding: 0 20px;
+}
 
 /* =Subnav (sidebar) */
 #dev-subnav-edit h3 a {
@@ -1888,4 +1900,30 @@ h4.status span {
 .action-button-container, 
 .add-button-container {
   margin: .5em 0;
+}
+
+/** tags styles  **/
+.addon-tags .usertag .tagitem {
+	padding-left: 20px;
+	background-image: url(../../img/amo2009/icons/icons.png);
+	background-repeat: no-repeat;
+	background-position: 0px -600px;
+}
+.addon-tags .developertag .tagitem {
+	padding-left: 20px;
+	background-repeat: no-repeat;
+	background-image: url(../../img/amo2009/icons/icons.png);
+	background-position: 0 -1400px;
+}
+
+.addon-tags li .removetag {
+	display:none;
+}
+.addon-tags li.hover .removetag,
+#tags .nojs li .removetag {
+	display:inline;
+    background: transparent url(../../img/amo2009/icons/cross.png) no-repeat left;
+    border: none;
+    margin: 0;
+    text-indent: -1000px;
 }

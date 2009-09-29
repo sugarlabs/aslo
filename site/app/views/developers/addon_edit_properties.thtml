@@ -166,20 +166,23 @@ $this->layout = 'amo2009';
             <h4><?=___('Other Settings')?></h4>
             <h5><?=___('View Source Online')?></h5>
             <p class="smallmargin"><?=___('The source of your add-on files can be viewed online by any logged in user if you wish.')?></p>
-            <label class="indented"><input type="radio" name="data[Addon][viewsource]" value="1" <?=($addon['Addon']['viewsource'] == 0 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('Allow online source viewing')?></label>
-            <label class="indented"><input type="radio" name="data[Addon][viewsource]" value="0" <?=($addon['Addon']['viewsource'] == 0 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('Do not allow online source viewing')?></label>
-
+            <ul>
+              <li><label class="indented"><input type="radio" name="data[Addon][viewsource]" value="1" <?=($addon['Addon']['viewsource'] == 0 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('Allow online source viewing')?></label></li>
+              <li><label class="indented"><input type="radio" name="data[Addon][viewsource]" value="0" <?=($addon['Addon']['viewsource'] == 0 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('Do not allow online source viewing')?></label></li>
+            </ul>
+            
             <?php if ($addon['Addon']['addontype_id'] != ADDON_SEARCH): ?>
             <h5><?=___('Add-on Flags')?></h5>
             <p class="smallmargin"><?=___('These flags are used to filter and classify add-ons.')?></p>
-            <label class="indented"><input type="checkbox" name="data[Addon][prerelease]" value="1"  <?=($addon['Addon']['prerelease'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('This is a pre-release')?></label>
-            <label class="indented"><input type="checkbox" name="data[Addon][sitespecific]" value="1"  <?=($addon['Addon']['sitespecific'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('This is a site-specific add-on')?></label>
-            <label class="indented"><input type="checkbox" name="data[Addon][externalsoftware]" value="1" <?=($addon['Addon']['externalsoftware'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=___('This add-on requires external software')?></label>
-            <label class="indented"><input type="checkbox" name="data[Addon][binary]" value="1" <?=($addon['Addon']['binary'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=___('This add-on contains binary components')?></label>
-
+            <ul>
+              <li><label class="indented"><input type="checkbox" name="data[Addon][prerelease]" value="1"  <?=($addon['Addon']['prerelease'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('This is a pre-release')?></label></li>
+              <li><label class="indented"><input type="checkbox" name="data[Addon][sitespecific]" value="1"  <?=($addon['Addon']['sitespecific'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('This is a site-specific add-on')?></label></li>
+              <li><label class="indented"><input type="checkbox" name="data[Addon][externalsoftware]" value="1" <?=($addon['Addon']['externalsoftware'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=___('This add-on requires external software')?></label></li>
+              <li><label class="indented"><input type="checkbox" name="data[Addon][binary]" value="1" <?=($addon['Addon']['binary'] == 1 ? 'checked="checked"' : '')?> />&nbsp;<?=___('This add-on contains binary components')?></label></li>
+            </ul>
             <h5><?=___('Add-on GUID')?></h5>
             <p class="smallmargin"><?=___('The GUID of your add-on is specified in its install.rdf and uniquely identifies it. You cannot change your GUID once it is listed on Mozilla Add-ons.')?></p>
-            <label class="indented"><tt><?=$addon['Addon']['guid']?></tt></label>
+            <p><strong><code><?=$addon['Addon']['guid']?></code></strong></p>
             <?php endif; ?>
         </div>
 
@@ -188,8 +191,10 @@ $this->layout = 'amo2009';
             <h4><?=___('Admin Settings')?></h4>
             <h5><?=___('Trusted Add-on?')?></h5>
             <p class="smallmargin"><?=___('Trusted add-ons can become public without Editor review.')?></p>
-            <label class="indented"><input type="radio" name="data[Addon][trusted]" value="1" <?=($addon['Addon']['trusted'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('Trusted')?></label>
-            <label class="indented"><input type="radio" name="data[Addon][trusted]" value="0" <?=($addon['Addon']['trusted'] == 1 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('Not Trusted')?></label>
+            <ul>
+            <li><label class="indented"><input type="radio" name="data[Addon][trusted]" value="1" <?=($addon['Addon']['trusted'] == 1 ? 'checked="checked"' : '')?>/>&nbsp;<?=___('Trusted')?></label></li>
+            <li><label class="indented"><input type="radio" name="data[Addon][trusted]" value="0" <?=($addon['Addon']['trusted'] == 1 ? '' : 'checked="checked"')?>/>&nbsp;<?=___('Not Trusted')?></label></li>
+            </ul>
             <h5><?=___('Add-on Type')?></h5>
             <select name="data[Addon][addontype_id]">
             <?php

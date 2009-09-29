@@ -51,9 +51,9 @@ $this->layout = 'amo2009';
         ?>
         <h3><?=___('Manage Tags')?></h3>
         <?=$this->renderElement('developers/rolecheck')?>
-        
+        <div id="tags">
         <?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags,'addon_id'=>$addon_id, 'origin'=>'developers')); ?>
-        
+        </div>
         <p><strong><a href="#newTag" id="addatag"><?=___('Add a tag');?></a></strong></p>
 
        	<script type="text/javascript">
