@@ -41,10 +41,9 @@ $this->layout = 'amo2009';
 
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-    <div class="primary" role="main">
+    <div id="content-main" class="primary" role="main">
 
         <h3><?=sprintf(___('Provide More Information For the Add-on Review of %1$s'), $addonName)?></h3>
-
 
         <p><?=sprintf(___('A Mozilla Add-ons Editor requested further information from you regarding version %2$s of your add-on %1$s.'), $addonName, $versionno)?></p>
 
@@ -85,4 +84,6 @@ $this->layout = 'amo2009';
 
     </div>
 
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons));?>
+    <div id="dev-subnav" class="secondary" role="navigation">
+    <?=$this->renderElement('developers/editbox');?>
+    </div>

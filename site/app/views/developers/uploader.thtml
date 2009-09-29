@@ -45,13 +45,8 @@ $this->layout = 'amo2009';
 
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-<div class="primary <?php echo $type != 'new' && $author_role < AUTHOR_ROLE_DEV ? 'no-privs' : 'privs' ;?>" role="main">
+<div id="content-main" class="primary <?php echo $type != 'new' && $author_role < AUTHOR_ROLE_DEV ? 'no-privs' : 'privs' ;?>" role="main">
     <?php
-    $params = array('addons' => $all_addons);
-    if ($type != 'new') {
-        $params['extra'] = 'developers/editbox';
-    }
-
     if ($type == 'new') {
         $title = ___('Submit New Add-on');
         $addon_id = 0;
@@ -208,4 +203,9 @@ $this->layout = 'amo2009';
 <iframe id="upload-frame" name="upload-frame" src="" onload="iframeLoaded();" style="display: none;"></iframe>
 </div>
 
-<?php echo $this->renderElement('developers/sidebar', $params); ?>
+<div id="dev-subnav" class="secondary" role="navigation">
+<?php if ($type != 'new') {
+  echo  $this->renderElement('developers/editbox');
+  }
+?>
+</div>

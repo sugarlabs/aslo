@@ -45,7 +45,7 @@ $this->layout = 'amo2009';
 
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-<div class="primary privs" role="main">
+<div id="content-main" class="primary privs" role="main">
     <?= $this->renderElement('developers/addonheader', array('title' => ___('Add-on Validator'), 'addon_id' => 0)) ?>
 <?php if (!$this->controller->Session->check('User')): ?>
     <?=sprintf(___('You must <a href="%1$s">log in</a> to validate an add-on.'), $html->url($html->login_url()))?>

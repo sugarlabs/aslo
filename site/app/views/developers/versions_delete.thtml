@@ -42,7 +42,7 @@ $this->layout = 'amo2009';
 
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-    <div class="primary" role="main">
+    <div id="content-main" class="primary" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?=$this->renderElement('noscript')?>
         <form id="versions-delete-form" action="" method="post">
@@ -64,4 +64,6 @@ $this->layout = 'amo2009';
         </form>
     </div>
 
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+    <div id="dev-subnav" class="secondary" role="navigation">
+    <?=$this->renderElement('developers/editbox');?>
+    </div>

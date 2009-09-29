@@ -56,7 +56,7 @@ $this->layout = 'amo2009';
 
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-  <div class="primary <?=$has_profile ? '' : 'intro'?>" role="main">
+  <div id="content-main" class="primary <?=$has_profile ? '' : 'intro'?>" role="main">
 
     <?php if (isset($updated)) {
         echo $this->renderElement('notification', array(
@@ -137,6 +137,8 @@ $this->layout = 'amo2009';
     </div>
   </div>
 
-<?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+  <div id="dev-subnav" class="secondary" role="navigation">
+  <?=$this->renderElement('developers/editbox');?>
+  </div>
 
 <script type="text/javascript">$(document).ready(edit_profile);</script>

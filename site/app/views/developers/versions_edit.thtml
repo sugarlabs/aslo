@@ -43,7 +43,7 @@ $this->layout = 'amo2009';
 
 <?=$this->renderElement('amo2009/hub/navbar', array('addons' => $all_addons));?>
 
-    <div class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
+    <div id="content-main" class="primary <?=($author_role >= AUTHOR_ROLE_DEV ? 'privs' : 'no-privs')?>" role="main">
         <?=$this->renderElement('developers/addonheader', array('title' => sprintf(___('Edit %s'), $addon_name), 'addon_id' => $addon_id));?>
         <?php
         if (!empty($success)) {
@@ -83,7 +83,7 @@ $this->layout = 'amo2009';
             echo '<th>'.___('Platform', 'devcp_versions_edit_th_platform').'</th>';
             echo '<th>'.___('Size').'</th>';
             echo '<th>'.___('Status', 'devcp_versions_edit_th_status').'</th>';
-            echo '<td style="width: 25px;"></td>';
+            echo '<th style="width: 25px;"></th>';
             echo '</tr></thead><tbody>';
             $i = 0;
             foreach ($version['File'] as $file) {
@@ -167,7 +167,7 @@ $this->layout = 'amo2009';
             }
             echo '</tbody></table>';
             echo '<div class="save-changes rounded">'.___('<strong>You have unsaved changes.</strong> Compatibility will not be deleted until you click Update Version below.').'</div>';
-            echo '<div class="add-button-container" style="width: 60%; margin: 10px auto 0;"><a href="#" onclick="versions_edit.showAppPicker(); return false;" class="add-button rounded">'.___('Add New Application').'</a>';
+            echo '<div class="add-button-container"><a href="#" onclick="versions_edit.showAppPicker(); return false;" class="add-button rounded">'.___('Add New Application').'</a> ';
             echo '<span id="new-app-picker"><select onchange="versions_edit.addApplication(this);">';
             echo '<option value="">'.___('Please Select an Application').'</option>';
             foreach ($applications as $application_id => $application_name) {
@@ -233,7 +233,9 @@ $this->layout = 'amo2009';
         </script>
     </div>
 
-    <?=$this->renderElement('developers/sidebar', array('addons' => $all_addons, 'extra' => 'developers/editbox'));?>
+    <div id="dev-subnav" class="secondary" role="navigation">
+    <?=$this->renderElement('developers/editbox');?>
+    </div>
 
 <?php
 /**
