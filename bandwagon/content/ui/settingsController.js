@@ -129,7 +129,7 @@ Bandwagon.Controller.Settings.collectionListChangeObserver = function()
 
     if (elemBandwagonCollection)
     {
-        Bandwagon.Controller.Settings.elemBandwagonCollections.selectItem(elemBandwagonCollection);
+        Bandwagon.Controller.Settings.elemBandwagonCollections.selectedItem = elemBandwagonCollection;
         Bandwagon.Controller.Settings.elemBandwagonCollections.focus();
     }
     else
