@@ -139,8 +139,9 @@ mysql_select_db(DB_NAME, $write) or die('Could not select database '.DB_NAME);
 
 foreach($sql_commands as $sql_command) {
     if(!mysql_query($sql_command)) {
+        $_error = sprintf('(%d) %s', mysql_errno(), mysql_error());
         mysql_query("ROLLBACK");
-        die("The update '$sql_command' failed: ".mysql_error());
+        die("The update '$sql_command' failed: {$_error}");
     }
 } 																																					
 
