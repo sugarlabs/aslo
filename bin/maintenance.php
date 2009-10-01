@@ -905,7 +905,8 @@ function copyFileToPublic($addon_id, $filename, $overwrite = true) {
  */
 function debug($msg, $serious=false) {
     if (CRON_DEBUG || $serious) {
-        echo "{$msg}\n";
+        $_ts = strftime('%H:%M:%S');
+        echo "{$_ts} {$msg}\n";
     }
 }
 
