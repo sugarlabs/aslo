@@ -812,7 +812,7 @@ switch ($action) {
         }
 
         if(count($blogXML->channel->item) < 5) {
-            debug('Blog feed did not have minimum 5 posts, feed may be broken');
+            debug('Blog feed did not have minimum 5 posts, feed may be broken', true);
             exit;
         }
         
