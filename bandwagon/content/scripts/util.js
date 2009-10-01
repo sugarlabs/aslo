@@ -124,7 +124,7 @@ Bandwagon.Util.getHostEnvironmentInfo = function()
 Bandwagon.Util.getAppName = function()
 {
     var envinfo = Bandwagon.Util.getHostEnvironmentInfo();
-    return envinfo.name; // Returns "Firefox" for Firefox, "Thunderbird" for TB
+    return envinfo.appName; // Returns "Firefox" for Firefox, "Thunderbird" for TB
 }
 
 Bandwagon.Util.isTB2 = function()

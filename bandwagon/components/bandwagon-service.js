@@ -1557,6 +1557,9 @@ BandwagonService.prototype = {
                 + "(addon INTEGER NOT NULL, "
                 + "author TEXT NOT NULL)"
                 );
+
+            if (this._storageConnection.schemaVersion)
+                this._storageConnection.schemaVersion = 100;
         }
         catch (e)
         {
@@ -1565,7 +1568,7 @@ BandwagonService.prototype = {
             return;
         }
 
-        if (this._storageConnection.schemaVersion < 103)
+        if (this._storageConnection.schemaVersion < 103 || !this._storageConnection.schemaVersion)
         {
             // sql schema updates for bandwagon 1.0.3
 
@@ -1575,13 +1578,14 @@ BandwagonService.prototype = {
             }
             catch (e)
             {
-                Bandwagon.Logger.warn("Error updating sqlite schema (possibly harmless): " + e);
+                Bandwagon.Logger.info("Error updating sqlite schema (possibly harmless): " + e);
             }
 
-            this._storageConnection.schemaVersion = 103;
+            if (this._storageConnection.schemaVersion)
+                this._storageConnection.schemaVersion = 103;
         }
 
-        if (this._storageConnection.schemaVersion < 105)
+        if (this._storageConnection.schemaVersion < 105 || !this._storageConnection.schemaVersion)
         {
             // sql schema updates for bandwagon 1.0.5
 
@@ -1591,10 +1595,11 @@ BandwagonService.prototype = {
             }
             catch (e)
             {
-                Bandwagon.Logger.warn("Error updating sqlite schema (possibly harmless): " + e);
+                Bandwagon.Logger.info("Error updating sqlite schema (possibly harmless): " + e);
             }
 
-            this._storageConnection.schemaVersion = 105;
+            if (this._storageConnection.schemaVersion)
+                this._storageConnection.schemaVersion = 105;
         }
 
         this._storageConnection.commitTransaction();
