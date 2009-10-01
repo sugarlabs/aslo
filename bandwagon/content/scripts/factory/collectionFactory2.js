@@ -331,7 +331,7 @@ Bandwagon.Factory.CollectionFactory2.prototype.deleteCollection = function(colle
     if (!this.connection)
         return;
 
-    var statement1 = this.connection.createStatement("DELETE FROM collections where resourceURL = :resourceURL");
+    var statement1 = this.connection.createStatement("DELETE FROM collections where url = :resourceURL");
     statement1.params.resourceURL = collection.resourceURL;
 
     var statement2 = this.connection.createStatement("DELETE FROM collectionsAddons where collection = :resourceURL");
