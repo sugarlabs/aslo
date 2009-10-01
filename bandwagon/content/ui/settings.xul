@@ -38,9 +38,14 @@
   - ***** END LICENSE BLOCK ***** -->
 
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
-<?xml-stylesheet href="chrome://bandwagon/skin/settings.css" type="text/css"?>
-<?xml-stylesheet href="chrome://bandwagon/skin/settingsIcons.css" type="text/css"?>
 <?xml-stylesheet href="chrome://bandwagon/content/ui/bindings/bandwagon.css" type="text/css"?>
+<?xml-stylesheet href="chrome://bandwagon/skin/settings.css" type="text/css"?>
+
+<!-- The stylesheets for icons are dependent on rules in chrome.manifest -->
+<!-- Thunderbird 2 -->
+<?xml-stylesheet href="chrome://bandwagon-platform/content/settingsIcons.css" type="text/css"?>
+<!-- Firefox/Thunderbird 3 and beyond -->
+<?xml-stylesheet href="chrome://bandwagon/skin/settingsIcons.css" type="text/css"?>
 
 <!DOCTYPE prefwindow SYSTEM "chrome://bandwagon/locale/settings.dtd">
 
@@ -128,7 +133,7 @@
 
     </prefpane>
 
-    <prefpane id="paneGeneral"
+    <prefpane id="paneBWGeneral"
               label="&general.label;">
         <preferences>
             <preference id="extensions.bandwagon.global.addonsperpage"

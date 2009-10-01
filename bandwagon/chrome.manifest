@@ -43,22 +43,26 @@ overlay chrome://mozapps/content/extensions/extensions.xul chrome://bandwagon/co
 #Fennec
 override chrome://bandwagon/content/ui/settings.xul chrome://bandwagon/content/ui/settings-fennec.xul application={a23983c0-fd0e-11dc-95ff-0800200c9a66}
 
+#Style Overlays
+#order is important with these next two
+style   chrome://global/content/customizeToolbar.xul   chrome://bandwagon-platform/content/browserOverlay.css
 style   chrome://global/content/customizeToolbar.xul   chrome://bandwagon/skin/browserOverlay.css
+
 style   chrome://bandwagon/content/ui/settings.xul     chrome://browser/skin/preferences/preferences.css     application={ec8030f7-c20a-464f-9b0e-13a3a9e97384}
 style   chrome://bandwagon/content/ui/settings.xul     chrome://messenger/skin/preferences/preferences.css   application={3550f703-e582-4d05-9a08-453d09bdfdc6}
 
 #override does not work on 1.8 (TB2)
-override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/linux/browserOverlay.css os=Linux
+override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/unix/browserOverlay.css os=Linux
 override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/mac/browserOverlay.css os=Darwin
 override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/xp/browserOverlay.css os=WINNT osversion<=5.1
 override  chrome://bandwagon/skin/browserOverlay.css   chrome://bandwagon/skin/platform/vista/browserOverlay.css os=WINNT osversion>=6
 
-override  chrome://bandwagon/skin/settingsIcons.css   chrome://bandwagon/skin/platform/linux/settingsIcons.css os=Linux
+override  chrome://bandwagon/skin/settingsIcons.css   chrome://bandwagon/skin/platform/unix/settingsIcons.css os=Linux
 override  chrome://bandwagon/skin/settingsIcons.css    chrome://bandwagon/skin/platform/mac/settingsIcons.css os=Darwin
 override  chrome://bandwagon/skin/settingsIcons.css   chrome://bandwagon/skin/platform/xp/settingsIcons.css os=WINNT osversion<=5.1
 override  chrome://bandwagon/skin/settingsIcons.css   chrome://bandwagon/skin/platform/vista/settingsIcons.css os=WINNT osversion>=6
 
-override  chrome://bandwagon/skin/extensionsOverlayIcons.css   chrome://bandwagon/skin/platform/linux/extensionsOverlayIcons.css os=Linux
+override  chrome://bandwagon/skin/extensionsOverlayIcons.css   chrome://bandwagon/skin/platform/unix/extensionsOverlayIcons.css os=Linux
 override  chrome://bandwagon/skin/extensionsOverlayIcons.css    chrome://bandwagon/skin/platform/mac/extensionsOverlayIcons.css os=Darwin
 override  chrome://bandwagon/skin/extensionsOverlayIcons.css   chrome://bandwagon/skin/platform/xp/extensionsOverlayIcons.css os=WINNT osversion<=5.1
 override  chrome://bandwagon/skin/extensionsOverlayIcons.css   chrome://bandwagon/skin/platform/vista/extensionsOverlayIcons.css os=WINNT osversion>=6
