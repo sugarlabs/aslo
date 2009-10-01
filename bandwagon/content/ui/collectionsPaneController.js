@@ -947,7 +947,7 @@ Bandwagon.Controller.CollectionsPane._openURL = function(url)
 {
     Bandwagon.Logger.debug("Opening URL " + url);
 
-    var appname = Bandwagon.Util.getHostEnvironmentInfo().appName
+    var appname = Bandwagon.Util.getHostEnvironmentInfo().appName;
 
     if (appname == "Firefox")
     {

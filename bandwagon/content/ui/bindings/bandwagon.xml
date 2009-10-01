@@ -371,6 +371,7 @@
                     this.authors = addon.authors;
                     this.dateAdded = addon.dateAdded;
                     this.read = addon.read;
+                    this.thumbnailURL = addon.thumbnail;
                     this.summary = addon.summary;
 
                     try
@@ -403,8 +404,30 @@
                         Bandwagon.Logger.debug("setAddon - error handling comment : "+e);
                     }
 
-                    this.thumbnailURL = addon.thumbnail;
-                    this.description = addon.summary; // Use summary and not description
+
+                    if (Bandwagon.Util.isTB2())
+                    {
+                        // see bug 519453
+                        var magic = 250;
+
+                        var desc = addon.summary.substring(0, magic);
+
+                        if (addon.summary.length > magic)
+                        {
+                            desc += "\u2026"; //ellipsis
+                        }
+
+                        while (desc.length < magic + 50)
+                        {
+                            desc += "\u00A0 ";
+                        }
+
+                        this.description = desc;
+                    }
+                    else
+                    {
+                        this.description = addon.summary;
+                    }
 
                     this.invalidateCompatibilityCheck();
                     this.invalidatePublishButton();
@@ -456,10 +479,20 @@
                             container.removeChild(container.firstChild);
                         }
 
+                        if (Bandwagon.Util.isTB2())
+                        {
+                            // see bug 519453
+                            container.appendChild(document.createTextNode("\u00A0"));
+                        }
+
                         if (type == Bandwagon.Model.Addon.INSTALL_YES)
                         {
                             document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').disabled = false;
-                            document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').collapsed = true;
+
+                            if (!Bandwagon.Util.isTB2())
+                            {
+                                document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefoxwarning').collapsed = true;
+                            }
                         }
                         else
                         {
@@ -663,6 +696,12 @@
             <![CDATA[
                 var addtoLabel = this.stringBundle.formatStringFromName("bandwagon.addon.addto", [this.appName], 1);
                 document.getAnonymousElementByAttribute(this, 'anonid', 'addtofirefox').label = addtoLabel ? addtoLabel : "Add";
+
+                if (Bandwagon.Util.isTB2())
+                {
+                    // see bug 519453
+                    this._maxThumbnailHeight = 90;
+                }
             ]]>
             </constructor>
 
