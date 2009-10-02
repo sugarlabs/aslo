@@ -50,14 +50,14 @@ class DevHubController extends AppController {
             $feed['feed'] = $this->Hub->getNewsForAddons(array($_GET['addon']));
             $feed['addon'] = htmlspecialchars($all_addons[$_GET['addon']]);
             $feed['rss_url'] = $this->_feedRssUrl($session['id'], $_GET['addon']);
-            $feed['rss_title'] = sprintf(___('News Feed for %1$s'), $feed['addon']);
+            $feed['rss_title'] = sprintf(___('Recent Activity for %1$s'), $feed['addon']);
             $active_addon_id = $_GET['addon'];
         } else {
             $feed['type'] = 'full';
             $feed['feed'] = $this->Hub->getNewsForAddons(array_keys($all_addons));
             $feed['addon'] = false;
             $feed['rss_url'] = empty($session['id']) ? false : $this->_feedRssUrl($session['id']);
-            $feed['rss_title'] = ___('News Feed for My Add-ons');
+            $feed['rss_title'] = ___('Recent Activity for My Add-ons');
             $active_addon_id = false;
         }
 
@@ -149,7 +149,7 @@ class DevHubController extends AppController {
 
         // single add-on feed
         if (is_numeric($addon_id)) {
-            $feed_title = sprintf(___('News Feed for %1$s'), $addon_name);
+            $feed_title = sprintf(___('Recent Activity for %1$s'), $addon_name);
             if (isset($addons[$addon_id])) {
                 $feed = $this->Hub->getNewsForAddons(array($addon_id), $filter);
             } else {
@@ -159,7 +159,7 @@ class DevHubController extends AppController {
         // my add-on's feed
         } else {
             $addon_id = 'all';
-            $feed_title = ___('News Feed for My Add-ons');
+            $feed_title = ___('Recent Activity for My Add-ons');
             if (!empty($addons)) {
                 $feed = $this->Hub->getNewsForAddons(array_keys($addons), $filter);
             } else {
@@ -172,7 +172,6 @@ class DevHubController extends AppController {
         $this->publish('breadcrumbs', array(
             sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',
             ___('Developer Hub') => '/developers/',
-            ___('News Feeds') => '/developers/feed/all',
         ));
 
         if (!empty($session)) {
@@ -203,7 +202,7 @@ class DevHubController extends AppController {
 
         if ($rss_key = $this->HubRssKey->getKeyForUser($user_id)) {
             $rssAdd[] = array("/developers/feed/all?privaterss={$rss_key}",
-                                ___('News Feed for My Add-ons'));
+                                ___('Recent Activity for My Add-ons'));
 
             if ($addon_id == 'all') {
                 $rss_url = "/developers/feed/{$addon_id}?";
@@ -215,7 +214,7 @@ class DevHubController extends AppController {
         foreach ($addons as $id => $name) {
             if ($rss_key = $this->HubRssKey->getKeyForAddon($id)) {
                 $rssAdd[] = array("/developers/feed/{$id}?privaterss={$rss_key}",
-                                    sprintf(___('News Feed for %1$s'), $name));
+                                    sprintf(___('Recent Activity for %1$s'), $name));
 
                 if ($addon_id == $id) {
                     $rss_url = "/developers/feed/{$addon_id}?";
@@ -296,9 +295,9 @@ class DevHubController extends AppController {
         if ($key_ok) {
             $feed = $this->Hub->getNewsForAddons(array_keys($addons), $filter, $page_options, true);
             if ($user_id) {
-                $rss_title = ___('News Feed for My Add-ons');
+                $rss_title = ___('Recent Activity for My Add-ons');
             } else {
-                $rss_title = sprintf(___('News Feed for %1$s'), $addons[$addon_id]);
+                $rss_title = sprintf(___('Recent Activity for %1$s'), $addons[$addon_id]);
             }
             $rss_description = $filter ? $filters[$filter] : '';
 

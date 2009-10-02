@@ -40,6 +40,7 @@
     <h3><?=$html->link($addon_name, '/developers/dashboard#addon-'.$addon_id)?></h3>
     <ul class="actionbar">
         <li class="displaypage"><?=$html->link(___('View Listing'), "/addon/{$addon_id}/")?></li>
+        <li class="recentactivity"><?=$html->link(___('Recent Activity'), "/developers/feed/{$addon_id}")?></li>
         <li class="edit<?=($action == 'edit' ? ' selected' : '')?>"><?=$html->link(___('Edit Add-on', 'devcp_editbox_edit_addon'), "/developers/addon/edit/{$addon_id}/")?></li>
         <?php if ($action == 'edit'): ?>
         <li class="container"><ul>

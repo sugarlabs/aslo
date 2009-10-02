@@ -63,7 +63,11 @@
             echo '<ul class="actionbar index-actions">';
                 // Edit Add-on
                 echo '<li class="action edit"><a href="'.$html->url('/developers/addon/edit/'.$addon_id).'" class="view">'.___('Edit Add-on', 'devcp_actionbar_link_edit').'</a>';
-                echo '<span class="action-details">'.sprintf(___('Last edited on %s'), strftime(___('%B %e, %Y'), strtotime($addon['Addon']['modified']))).'</span></li>';
+                echo '<ul class="action-details">';
+                echo '<li>'.sprintf(___('Last edited on %s'), strftime(___('%B %e, %Y'), strtotime($addon['Addon']['modified']))).'</li>';
+                echo '<li><a href="'.$html->url('/developers/feed/'.$addon_id).'" class="recentactivity">';
+                echo ___('Recent Activity').'</a></li>';
+                echo '</ul></li>';
                 // Change Status
                 echo '<li class="action status"><a href="'.$html->url('/developers/addon/status/'.$addon_id).'" class="view">'.___('Change Status', 'devcp_dashboard_change_status').'</a>';
                 $active = $addon['Addon']['inactive'] == 1 ? ___('Inactive') : ___('Active');
