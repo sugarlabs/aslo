@@ -778,7 +778,7 @@ class HubComponent extends Object {
                 $story = $log['Addonlog']['notes'];
                 $story_class = 'custom';
                 $story_link = $this->url("/", $absolute_links);
-                $story_title = $story;
+                $story_title = htmlspecialchars_decode(strip_tags($story));
                 break;
 
             default:
