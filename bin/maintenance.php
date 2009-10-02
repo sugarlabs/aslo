@@ -587,6 +587,7 @@ switch ($action) {
                 0)
         ");
         $affected_rows = mysql_affected_rows();
+    break;
 
 
     /**
@@ -595,14 +596,13 @@ switch ($action) {
     case 'share_count_totals':
         debug("Starting share count totals update...");
 
-        $affected_rows = 0;
-        $rows = $db->read("SELECT addon_id, SUM(count) as sum, service from stats_share_counts GROUP BY addon_id, service");
-        while ($row = mysql_fetch_array($rows)) {
-            if (in_array($row['service'], $link_sharing_services)) {
-                $db->write("REPLACE INTO stats_share_counts_totals (addon_id,service,count) VALUES ({$row['addon_id']}, '{$row['service']}',{$row['sum']})");
-                $affected_rows++;
-            }
-        }
+        $db->write(
+            "REPLACE INTO stats_share_counts_totals (addon_id, service, count)
+                (SELECT addon_id, service, SUM(count)
+                 FROM stats_share_counts
+                 WHERE service IN ('".implode("','",$link_sharing_services)."')
+                 GROUP BY addon_id, service)");
+        $affected_rows = mysql_affected_rows();
     break;
 
 
@@ -805,7 +805,7 @@ switch ($action) {
         debug("Starting blog post cache update");
         $blogXML = simplexml_load_file(DEVELOPER_FEED_URL);
 
-        //Some basic error checking 
+        //Some basic error checking
         if(!$blogXML) {
             debug('Could not fetch blog feed', true);
             exit;
@@ -815,7 +815,7 @@ switch ($action) {
             debug('Blog feed did not have minimum 5 posts, feed may be broken', true);
             exit;
         }
-        
+
         $db->write('DELETE FROM blogposts');
 
         for($i=0; $i<=4; $i++) {
@@ -826,7 +826,7 @@ switch ($action) {
             $db->write('INSERT INTO `blogposts` (`title`, `date_posted`,
             `permalink`) VALUES ("'.$title.'", "'.$date.'", "'.$permalink.'")');
         }
-        
+
         $affected_rows = 5;
     break;
 
