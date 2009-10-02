@@ -11,7 +11,7 @@ source addons
 
     sql_query                = \
         SELECT \
-            id, addon_id, authors, tags, addontype AS type, \
+            id, app_id, addon_id, authors, tags, addontype AS type, \
             addon_versions, status, locale, \
             locale_ord, averagerating, weeklydownloads, totaldownloads, \
             inactive, name, name AS name_ord, homepage, description, summary, \
@@ -19,6 +19,7 @@ source addons
         FROM translated_addons
 
     sql_attr_uint        = addon_id
+    sql_attr_uint        = app_id
     sql_attr_str2ordinal = name_ord
     sql_attr_uint        = type
     sql_attr_uint        = status

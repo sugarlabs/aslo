@@ -1576,8 +1576,9 @@ DELIMITER ;
 -- This is the main view that will seed our Sphinx index.
 CREATE OR REPLACE VIEW translated_addons
 AS
-SELECT
-    name.autoid AS id,
+SELECT DISTINCT
+    (name.autoid*100+IFNULL(av.application_id,0)) AS id,
+    av.application_id AS app_id,
     a.id AS addon_id,
     a.addontype_id AS addontype,
     a.status,
@@ -1624,58 +1625,33 @@ SELECT
     ) AS developercomments,
     (
         SELECT IF(addontype=4,9999999999999, max(version_int))
-        FROM versions v, files f, applications_versions av, appversions max
-        WHERE f.version_id =v.id
-            AND v.addon_id = a.id
-            AND av.version_id = v.id AND av.max = max.id AND f.status = 4
+        FROM versions v2, files f, applications_versions av2, appversions max
+        WHERE f.version_id = v2.id
+            AND v2.addon_id = a.id
+            AND av2.application_id = av.application_id
+            AND av2.version_id = v2.id AND av2.max = max.id AND f.status = 4
     ) AS max_ver,
     (
-        SELECT IF(addontype=4,0, max(version_int))
-        FROM versions v, files f, applications_versions av, appversions min
-        WHERE f.version_id =v.id
-            AND v.addon_id = a.id
-            AND av.version_id = v.id
-            AND av.min = min.id
+        SELECT IF(addontype=4,0, min(version_int))
+        FROM versions v2, files f, applications_versions av2, appversions min
+        WHERE f.version_id =v2.id
+            AND v2.addon_id = a.id
+            AND av2.application_id = av.application_id
+            AND av2.version_id = v2.id
+            AND av2.min = min.id
             AND f.status = 4
     ) AS min_ver,
     UNIX_TIMESTAMP(a.created) AS created,
-    (
-        SELECT UNIX_TIMESTAMP(MAX(IFNULL(f.datestatuschanged, f.created))) 
-        FROM versions AS v 
-        INNER JOIN files AS f ON f.status = 4 AND f.version_id = v.id 
-        WHERE v.addon_id=a.id
-    ) AS modified
+     (
+         SELECT UNIX_TIMESTAMP(MAX(IFNULL(f.datestatuschanged, f.created))) 
+         FROM versions AS v2
+         INNER JOIN files AS f ON f.status = 4 AND f.version_id = v2.id 
+         WHERE v2.addon_id=a.id
+     ) AS modified
+
 FROM
     translations name,
     addons a
+LEFT JOIN versions v ON v.addon_id = a.id
+LEFT JOIN applications_versions av ON av.version_id = v.id
 WHERE a.name = name.id;
-
-
--- This view is used to extract some version-related data
-
-CREATE OR REPLACE VIEW versions_summary_view AS
-
-SELECT DISTINCT
-    t.autoid AS translation_id,
-    v.addon_id,
-    v.id,
-    av.application_id,
-    v.created,
-    v.modified,
-    min.version_int AS min,
-    max.version_int AS max,
-    MAX(v.created)
-FROM versions v, addons a, translations t, applications_versions av, appversions max, appversions min
-WHERE
-    a.id = v.addon_id AND a.name = t.id AND av.version_id = v.id
-    AND av.min = min.id AND av.max=max.id
-GROUP BY
-    translation_id,
-    v.addon_id,
-    v.id,
-    av.application_id,
-    v.created,
-    v.modified,
-    min.version_int,
-    max.version_int;
-
