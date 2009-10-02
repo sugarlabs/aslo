@@ -62,8 +62,8 @@ function actionPath($action) {
 /* end copying shame */
 
 class TestsController extends AppController {
-    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Cannedresponse', 'Favorite', 'Feature', 'File',
- 'Platform', 'Preview', 'Review', 'Reviewrating', 'Category', 'Translation', 'User', 'Version');
+    var $uses = array('Addon', 'Addontype', 'Application', 'Approval', 'Appversion', 'Cannedresponse', 'Feature', 'File',
+ 'Platform', 'Preview', 'Review', 'Category', 'Translation', 'User', 'Version');
      var $helpers = array('Html', 'Ajax', 'Javascript');
      var $aclExceptions = array('bot');
     // Disable permissions if we're in a DEV sandbox.

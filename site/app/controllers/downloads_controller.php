@@ -42,7 +42,7 @@ class DownloadsController extends AppController
 {
     var $name = 'Downloads';
     var $beforeFilter = array('getNamedArgs', '_checkSandbox');
-    var $uses = array('Addon', 'Download', 'File', 'Translation');
+    var $uses = array('Addon', 'File', 'Translation');
     var $components = array('Amo', 'Session');
     var $namedArgs = true;
 

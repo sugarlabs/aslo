@@ -76,26 +76,6 @@ class User extends AppModel
                                     'exclusive'   => false,
                                     'finderSql'   => ''
                               ),
-                              'Reviewrating' =>
-                              array('className'   => 'Reviewrating',
-                                    'conditions'  => '',
-                                    'order'       => '',
-                                    'limit'       => '',
-                                    'foreignKey'  => 'user_id',
-                                    'dependent'   => true,
-                                    'exclusive'   => false,
-                                    'finderSql'   => ''
-                              ),
-                              'Favorite' =>
-                              array('className'   => 'Favorite',
-                                    'conditions'  => '',
-                                    'order'       => '',
-                                    'limit'       => '',
-                                    'foreignKey'  => 'user_id',
-                                    'dependent'   => true,
-                                    'exclusive'   => false,
-                                    'finderSql'   => ''
-                              ),
                               'Review' =>
                               array('className'   => 'Review',
                                     'conditions'  => '',

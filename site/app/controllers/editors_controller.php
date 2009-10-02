@@ -44,7 +44,7 @@ class EditorsController extends AppController
 {
     var $name = 'Editors';
     var $uses = array('Addon', 'AddonCategory', 'Addonlog', 'Addontype', 'Application', 'Approval',
-        'Appversion', 'Cannedresponse', 'EditorSubscription', 'Eventlog', 'Favorite',
+        'Appversion', 'Cannedresponse', 'EditorSubscription', 'Eventlog',
         'File', 'Platform', 'Review', 'ReviewsModerationFlag', 'Category', 'Translation',
         'User', 'Version', 'Versioncomment', 'TestGroup', 'TestResult');
     var $components = array('Amo', 'Audit', 'Developers', 'Editors', 'Email', 'Error', 'Image', 'Markdown', 'Pagination');

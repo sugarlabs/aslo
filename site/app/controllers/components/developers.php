@@ -764,7 +764,6 @@ class DevelopersComponent extends Object {
 
         if (!empty($review_ids)) {
             foreach ($review_ids as $review_id) {
-                $this->controller->Review->execute("DELETE FROM reviewratings WHERE review_id={$review_id}");
                 $this->controller->Review->execute("DELETE FROM reviews WHERE id={$review_id}");
             }
         }
@@ -815,9 +814,6 @@ class DevelopersComponent extends Object {
         //Delete addons_users rows
         $this->controller->Addon->execute("DELETE FROM addons_users WHERE addon_id='{$id}'");
 
-        //Delete favorites
-        $this->controller->Addon->execute("DELETE FROM favorites WHERE addon_id='{$id}'");
-
         //Delete features
         $this->controller->Addon->execute("DELETE FROM features WHERE addon_id='{$id}'");
 
@@ -827,9 +823,6 @@ class DevelopersComponent extends Object {
         //Loop through reviews
         if (!empty($addon['Review'])) {
             foreach ($addon['Review'] as $review) {
-                //Delete review ratings
-                $this->controller->Addon->execute("DELETE FROM reviewratings WHERE review_id='{$review['id']}'");
-
                 //Delete review
                 $this->controller->Addon->execute("DELETE FROM reviews WHERE id='{$review['id']}'");
             }

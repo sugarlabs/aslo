@@ -53,17 +53,6 @@ class Review extends AppModel
                                'foreignKey' => 'user_id'
                          )
                    );
-    var $hasMany = array('Reviewrating' =>
-                         array('className'   => 'Reviewrating',
-                               'conditions'  => '',
-                               'order'       => '',
-                               'limit'       => '',
-                               'foreignKey'  => 'review_id',
-                               'dependent'   => true,
-                               'exclusive'   => false,
-                               'finderSql'   => ''
-                         )
-                  );
     var $validate = array(
         'rating' => VALID_NUMBER,
         'title'  => VALID_NOT_EMPTY,

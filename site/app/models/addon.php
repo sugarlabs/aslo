@@ -101,16 +101,6 @@ class Addon extends AppModel
                                'exclusive'   => false,
                                'finderSql'   => ''
                          ),
-                         'Favorite' =>
-                         array('classname'   => 'Favorite',
-                               'conditions'  => '',
-                               'order'       => '',
-                               'limit'       => '',
-                               'foreignKey'  => 'addon_id',
-                               'dependent'   => true,
-                               'exclusive'   => false,
-                               'finderSql'   => ''
-                         ),                                                  
                          'UserTagAddon' =>
                          	array('className' => 'UserTagAddon'
                          		

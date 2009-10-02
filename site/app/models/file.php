@@ -52,17 +52,7 @@ class File extends AppModel
                                  'foreignKey' => 'platform_id'
                            )
                      );
-    var $hasMany_full = array('Download' =>
-                         array('className'   => 'Download',
-                               'conditions'  => '',
-                               'order'       => '',
-                               'limit'       => '',
-                               'foreignKey'  => 'file_id',
-                               'dependent'   => true,
-                               'exclusive'   => false,
-                               'finderSql'   => ''
-                         )
-                   );
+
     var $hasMany = array('Approval' =>
                          array('className'   => 'Approval',
                                'conditions'  => '',

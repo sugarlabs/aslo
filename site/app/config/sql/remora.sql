@@ -341,27 +341,6 @@ CREATE TABLE `blplugins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `blog`
---
-
-DROP TABLE IF EXISTS `blog`;
-CREATE TABLE `blog` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `user_id` int(11) unsigned NOT NULL default '0',
-  `title` int(11) unsigned NOT NULL default '0',
-  `body` int(11) unsigned NOT NULL default '0',
-  `hidden` tinyint(1) NOT NULL default '0',
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `blog_ibfk_2` (`title`),
-  KEY `blog_ibfk_3` (`body`),
-  CONSTRAINT `blog_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `blog_ibfk_2` FOREIGN KEY (`title`) REFERENCES `translations` (`id`),
-  CONSTRAINT `blog_ibfk_3` FOREIGN KEY (`body`) REFERENCES `translations` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Table structure for table `cache`
 --
 
@@ -443,44 +422,6 @@ CREATE TABLE `download_counts` (
   KEY `date` (`date`),
   CONSTRAINT `download_counts_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Table structure for table `downloads`
---
-
-DROP TABLE IF EXISTS `downloads`;
-CREATE TABLE `downloads` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `file_id` int(11) unsigned default NULL,
-  `addon_id` int(11) unsigned default NULL,
-  `userip` varchar(255) NOT NULL default '',
-  `useragent` varchar(255) NOT NULL default '',
-  `counted` tinyint(1) unsigned NOT NULL default '0',
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
-  KEY `file_id` (`file_id`),
-  KEY `addon_id` (`addon_id`),
-  KEY `date_created` (`created`,`addon_id`),
-  KEY `date_counted` (`counted`,`addon_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `downloads_tmp`
---
-
-DROP TABLE IF EXISTS `downloads_tmp`;
-CREATE TABLE `downloads_tmp` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `file_id` int(11) unsigned default NULL,
-  `addon_id` int(11) unsigned default NULL,
-  `userip` varchar(255) NOT NULL default '',
-  `useragent` varchar(255) NOT NULL default '',
-  `counted` tinyint(1) unsigned NOT NULL default '0',
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
-  KEY `file_id` (`file_id`),
-  KEY `addon_id` (`addon_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Table structure for table `editor_subscriptions`
@@ -606,24 +547,6 @@ CREATE TABLE `facebook_users` (
   `removed` datetime NOT NULL default '0000-00-00 00:00:00',
   `lastactivity` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`fb_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `favorites`
---
-
-DROP TABLE IF EXISTS `favorites`;
-CREATE TABLE `favorites` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `user_id` int(11) unsigned NOT NULL default '0',
-  `addon_id` int(11) unsigned NOT NULL default '0',
-  `favorite` tinyint(1) unsigned NOT NULL default '0',
-  `reviewfavorite` tinyint(1) unsigned NOT NULL default '0',
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  `modified` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`id`),
-  KEY `addon_id` (`addon_id`),
-  KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -778,22 +701,6 @@ CREATE TABLE `licenses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Table structure for table `logs_parsed`
---
-
-DROP TABLE IF EXISTS `logs_parsed`;
-CREATE TABLE `logs_parsed` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `name` varchar(255) NOT NULL default '',
-  `geo` varchar(10) NOT NULL default '',
-  `downloads_done` tinyint(1) unsigned NOT NULL default '0',
-  `updatepings_done` tinyint(1) unsigned NOT NULL default '0',
-  `collections_done` tinyint(1) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `name` (`name`, `geo`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
---
 -- Table structure for table `platforms`
 --
 
@@ -834,22 +741,6 @@ CREATE TABLE `previews` (
   KEY `previews_ibfk_2` (`caption`),
   CONSTRAINT `previews_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`),
   CONSTRAINT `previews_ibfk_2` FOREIGN KEY (`caption`) REFERENCES `translations` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Table structure for table `reviewratings`
---
-
-DROP TABLE IF EXISTS `reviewratings`;
-CREATE TABLE `reviewratings` (
-  `review_id` int(11) unsigned NOT NULL default '0',
-  `user_id` int(11) unsigned NOT NULL default '0',
-  `helpful` tinyint(1) unsigned NOT NULL default '0',
-  `created` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`review_id`,`user_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `reviewratings_ibfk_1` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`),
-  CONSTRAINT `reviewratings_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -1177,33 +1068,6 @@ CREATE TABLE `collections_search_summary` (
   FULLTEXT KEY `name` (`name`,`description`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Table structure for table `tshirt_requests`
--- Used to store addresses of developers who claimed a T-shirt in
--- T-Shirt promotion.
---
-
-DROP TABLE IF EXISTS `tshirt_requests`;
-CREATE TABLE `tshirt_requests` (
-  `id` int(11) unsigned NOT NULL auto_increment,
-  `user_id` int(11) unsigned NOT NULL,
-  `full_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `country` varchar(255) NOT NULL,
-  `address` varchar(255) NOT NULL,
-  `address2` varchar(255) NOT NULL,
-  `city` varchar(255) NOT NULL,
-  `region_province` varchar(255) NOT NULL,
-  `state` varchar(255) NOT NULL,
-  `zip_postal_code` varchar(255) NOT NULL,
-  `telephone` varchar(255) NOT NULL,
-  `tshirt_size` varchar(10) NOT NULL,
-  `comment` varchar(1000) NOT NULL,
-  KEY `user_id` (`user_id`),
-  PRIMARY KEY `id` (`id`),
-  CONSTRAINT `tshirt_requests_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
-
 
 DROP TABLE IF EXISTS `collections`;
 CREATE TABLE `collections` (
@@ -1418,16 +1282,6 @@ CREATE TABLE `tag_stat` (
     CONSTRAINT `tag_stat_ibfk_1` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `tag_strength`;
-CREATE TABLE `tag_strength` (
-    `tag1_id` int(11) unsigned NOT NULL,
-    `tag2_id` int(11) unsigned NOT NULL,
-    `strength` int(11) unsigned NOT NULL default '0',
-    PRIMARY KEY  (`tag1_id`, `tag2_id`),
-    CONSTRAINT `tag_strength_ibfk_1` FOREIGN KEY (`tag1_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `tag_strength_ibfk_2` FOREIGN KEY (`tag2_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `users_tags_addons`;
 CREATE TABLE `users_tags_addons` (
     `user_id` int(11) unsigned NOT NULL,
@@ -1628,17 +1482,6 @@ INSERT INTO `test_cases` (`id`, `test_group_id`, `help_link`, `function`) VALUES
 
 -- INSERT INTO `translations_seq` (id) SELECT MAX(id) from `translations`;
 INSERT INTO `translations_seq` (id) values (1000);
-
--- Old tables.  Remove these lines sometime.
-DROP TABLE IF EXISTS `acos`;
-DROP TABLE IF EXISTS `activeusers`;
-DROP TABLE IF EXISTS `addonevents`;
-DROP TABLE IF EXISTS `aros`;
-DROP TABLE IF EXISTS `aros_acos`;
-DROP TABLE IF EXISTS `downloads-tmp`;
-DROP TABLE IF EXISTS `features_tags`;
-DROP TABLE IF EXISTS `foo`;
-DROP TABLE IF EXISTS `userevents`;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

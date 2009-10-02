@@ -124,13 +124,6 @@ if (!defined('MEMCACHE_PREFIX'))
 if (!defined('FILES_URL'))
     define('FILES_URL', 'downloads/file');
 
-// This is the table to use in the downloads controller.  We put this in to
-// temporarily redirect downloads in the event where we have to alter the
-// downloads table.  The table defined in config is a tmp table so we don't
-// lose data.  If it's not there, we set the default here.
-if (!defined('DOWNLOADS_TABLE'))
-    define('DOWNLOADS_TABLE','downloads');
-
 // Amount of time in minutes that is waited until files that were just made
 // public are served from the download (mirror) location rather than straight
 // from the application. This allows for mirror propagation time.
