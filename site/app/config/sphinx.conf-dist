@@ -11,15 +11,18 @@ source addons
 
     sql_query                = \
         SELECT \
-            id, app_id, addon_id, authors, tags, addontype AS type, \
+            id, IFNULL(app_id,99) AS app, addon_id, authors, tags, type, \
             addon_versions, status, locale, \
             locale_ord, averagerating, weeklydownloads, totaldownloads, \
             inactive, name, name AS name_ord, homepage, description, summary, \
-            developercomments, max_ver, min_ver, created, modified \
-        FROM translated_addons
+            developercomments, \
+            IF (type=4,9999999999999,max_ver) AS max_ver, \
+            IF (type=4,0,min_ver) AS min_ver, \
+            created, modified \
+        FROM sphinx_index_feed
 
     sql_attr_uint        = addon_id
-    sql_attr_uint        = app_id
+    sql_attr_uint        = app
     sql_attr_str2ordinal = name_ord
     sql_attr_uint        = type
     sql_attr_uint        = status
@@ -34,35 +37,26 @@ source addons
     sql_attr_str2ordinal = homepage
     sql_attr_timestamp   = created
     sql_attr_timestamp   = modified
-    
-    
-    sql_attr_multi = uint app from query; \
-    SELECT a.id AS id, IFNULL(av.application_id, 99) \
-    FROM files f, translated_addons a, versions v \
-    LEFT JOIN applications_versions av \
-      ON av.version_id = v.id \
-    WHERE f.version_id=v.id \
-        AND a.addon_id = v.addon_id \
-        AND f.status >= 1
-        
-    sql_attr_multi = uint category from query; \
-    SELECT a.id AS id, ac.category_id AS category \
-    FROM addons_categories ac, translated_addons a WHERE a.addon_id = ac.addon_id
-    
+
+   sql_attr_multi = uint category from query; \
+   SELECT a.id AS id, ac.category_id AS category \
+   FROM addons_categories ac, sphinx_index_feed a \
+   WHERE a.addon_id = ac.addon_id
+
     sql_attr_multi = uint tag from query; \
     SELECT a.id AS id, t.tag_id AS tag \
-    FROM users_tags_addons t, translated_addons a \
+    FROM users_tags_addons t, sphinx_index_feed a \
     WHERE t.addon_id = a.addon_id
-        
+
     sql_attr_multi = uint platform from query; \
     SELECT a.id AS id, platform_id AS platform \
-    FROM versions v, applications_versions av, files f, translated_addons a \
+    FROM versions v, applications_versions av, files f, sphinx_index_feed a \
     WHERE av.version_id=v.id \
         AND f.version_id=v.id \
         AND a.addon_id = v.addon_id \
         AND f.status > 1
-        
-    sql_query_info       = SELECT * FROM translated_addons WHERE id=$id    
+
+    sql_query_info       = SELECT * FROM sphinx_index_feed WHERE id=$id
 
 }
 
@@ -73,7 +67,7 @@ index addons
     # morphology              = stem_en
     # symlink sphinx-wordforms.txt to this location:
     wordforms = /opt/local/etc/sphinx-wordforms.txt
-    
+
     # Firebug will get indexed as Firebug, Firebu, Fireb, Fire, Fir - equally
     # We can enable star if necessary.
     min_infix_len = 3

@@ -88,7 +88,7 @@ class AddonsSearch
         }
         // filter based on the app we're looking for 
         // e.g is this /firefox/ or /seamonkey/ etc
-        // -1 is NULL by design namely for search engines
+        // 99 is NULL by design namely for search engines
         $sphinx->SetFilter('app', array(APP_ID, '99'));
         $this->log('app', join(',',array(APP_ID, '99')));
         
@@ -169,6 +169,7 @@ class AddonsSearch
         }
         
         $result        = $sphinx->Query($term);
+        
         if (!$result) {
             throw new AddonsSearchException("could not connect to searchd");
         }
