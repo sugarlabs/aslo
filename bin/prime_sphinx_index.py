@@ -1,3 +1,5 @@
+#/usr/bin/env python
+
 import os
 import sys
 import re
@@ -25,7 +27,7 @@ def get_connection():
     host=MYSQL_HOST, user=MYSQL_USER)
     return db
 
-class SphinxIndexPrimer():
+class SphinxIndexPrimer:
     def __init__(self):
         self.db = get_connection()
 
@@ -157,7 +159,7 @@ class SphinxIndexPrimer():
         GROUP BY addon_id
         """
 
-        self.add_data(query=gq, msg=msg, field='tags')
+        self.add_data(query=gq, msg=msg, field='tags', max_len=255)
 
     def add_versions(self):
         msg = "Adding version info"
@@ -170,7 +172,7 @@ class SphinxIndexPrimer():
         self.add_data(query=q, msg=msg, field='addon_versions',
         max_len=255, pre_query=pq)
 
-    def add_data(self, query, field, msg, max_len=None,
+    def add_data(self, query, field, msg, max_len=255,
     pre_query=None):
         c = self.db.cursor()
         print msg
