@@ -4,6 +4,10 @@ import os
 import sys
 import re
 import mimetypes
+import atexit
+
+from time import time
+from lockfile import FileLock, AlreadyLocked
 
 SETTINGS_DIR = os.path.realpath(os.path.join(os.path.dirname(__file__), \
 os.path.pardir,  "site/app/config/migrations"))
@@ -11,7 +15,12 @@ os.path.pardir,  "site/app/config/migrations"))
 sys.path.append(SETTINGS_DIR)
 
 import settings
+
+import warnings
+
+warnings.simplefilter('ignore')
 import MySQLdb
+warnings.resetwarnings()
 
 s  = settings.params
 
@@ -34,13 +43,22 @@ class SphinxIndexPrimer:
     def prime_index(self):
         self.init_table()
         self.populate_feed()
+        self.copy_tmp()
         self.db.commit()
         self.db.close()
+    
+    def copy_tmp(self):
+        self.db.query("""DROP TABLE IF EXISTS sphinx_index_feed""")
+        self.db.query("""
+        RENAME TABLE sphinx_index_feed_tmp TO sphinx_index_feed
+        """)
+        
 
     def init_table(self):
         db = self.db
-        db.query("""DROP TABLE IF EXISTS sphinx_index_feed""")
-        db.query("""CREATE TABLE sphinx_index_feed (
+        db.query("""DROP TABLE IF EXISTS sphinx_index_feed_tmp""")
+
+        db.query("""CREATE TABLE sphinx_index_feed_tmp (
           `id` int(11) unsigned NOT NULL auto_increment,
 
           app_id int(2) unsigned,
@@ -72,14 +90,15 @@ class SphinxIndexPrimer:
           UNIQUE KEY (addon_id, app_id, locale)
         ) ENGINE=InnoDB
         """)
-        print "Index feed table initialized."
+        
+        print "Index tmp table initialized."
 
     def add_basic_data(self):
         print "Priming index with addons/addon_id/locale data"
 
         self.db.query("""
         INSERT IGNORE INTO
-            sphinx_index_feed
+            sphinx_index_feed_tmp
             (addon_id, app_id, locale, locale_ord, type, status,
             averagerating, weeklydownloads, totaldownloads, inactive, name,
             created)
@@ -95,13 +114,14 @@ class SphinxIndexPrimer:
         LEFT JOIN applications_versions av ON av.version_id = v.id
         WHERE a.name = name.id;
         """)
-        print "done"
 
     def add_translated_data(self):
         print "Adding translated data"
         fields = ['homepage', 'description', 'summary', 'developercomments']
         c      = self.db.cursor()
-        c2     = self.db.cursor()
+        # c2     = self.db.cursor()
+
+        translations = {}
 
         for field in fields:
             q = """
@@ -118,14 +138,25 @@ class SphinxIndexPrimer:
                 locale   = row[1]
                 text     = row[2]
 
-                c2.execute("""
-                UPDATE sphinx_index_feed SET
-                %s=%%s WHERE addon_id=%%s AND locale=%%s
-                """ % field, (text,addon_id,locale))
+                if not addon_id in translations:
+                    translations[addon_id]={}
+                if not locale in translations[addon_id]:
+                    translations[addon_id][locale] = {}
+                translations[addon_id][locale][field] = text
 
-        c2.close()
+        for addon_id,locales in translations.items():
+            for locale,data in locales.items():
+                q = """
+                UPDATE sphinx_index_feed_tmp
+                SET homepage=%s, description=%s, summary=%s, developercomments=%s
+                WHERE addon_id=%s AND locale=%s
+                """
+                c.execute(q, (data.get('homepage'), data.get('description'),
+                data.get('summary'), data.get('developercomments'),
+                addon_id, locale))
+
+        # c2.close()
         c.close()
-        print "done"
 
     def add_modified_date(self):
         msg = "Adding date modified"
@@ -139,7 +170,7 @@ class SphinxIndexPrimer:
         self.add_data(query=q, msg=msg, field='modified')
 
     def add_authors(self):
-        msg = "Adding author information."
+        msg = "Adding authors"
         gq = """
         SELECT
             addon_id,
@@ -172,7 +203,7 @@ class SphinxIndexPrimer:
         self.add_data(query=q, msg=msg, field='addon_versions',
         max_len=255, pre_query=pq)
 
-    def add_data(self, query, field, msg, max_len=255,
+    def add_data(self, query, field, msg, max_len=None,
     pre_query=None):
         c = self.db.cursor()
         print msg
@@ -189,10 +220,9 @@ class SphinxIndexPrimer:
                 items = items[:max_len]
 
             c2.execute("""
-            UPDATE sphinx_index_feed SET %s=%%s WHERE addon_id=%%s
+            UPDATE sphinx_index_feed_tmp SET %s=%%s WHERE addon_id=%%s
             """ % field, (items, addon_id))
 
-        print "done"
         c2.close()
         c.close()
 
@@ -233,27 +263,53 @@ class SphinxIndexPrimer:
             max_ver = row[3]
 
             c2.execute("""
-            UPDATE sphinx_index_feed SET min_ver=%s, max_ver=%s
+            UPDATE sphinx_index_feed_tmp SET min_ver=%s, max_ver=%s
             WHERE addon_id = %s AND app_id = %s
             """, (min_ver,max_ver,addon_id,app_id))
 
         c2.close()
         c.close()
-        print "done"
 
     def populate_feed(self):
         """
         Fill the feed with the data to be indexed.
         """
+        t = Timer()
         self.add_basic_data()
+        print t.elapsed(reset=True)
         self.add_authors()
+        print t.elapsed(reset=True)
         self.add_tags()
+        print t.elapsed(reset=True)
         self.add_versions()
+        print t.elapsed(reset=True)
         self.add_translated_data()
+        print t.elapsed(reset=True)
         self.add_appversions()
+        print t.elapsed(reset=True)
         self.add_modified_date()
-        # addon version numbers
+        print t.elapsed(reset=True)
+
+
+class Timer:
+    def __init__(self):
+        self.start = time()
+
+    def elapsed(self, reset=False):
+        elapsed = time()-self.start
+        if reset:
+            self.start = time()
+        return elapsed
+
 
 if __name__ == "__main__":
-    s = SphinxIndexPrimer()
-    s.prime_index()
+    # lock this
+    lock = FileLock("/tmp/sphinx-%s" % MYSQL_NAME)
+    try:
+        lock.acquire(0)
+        atexit.register(lock.release)
+        s = SphinxIndexPrimer()
+        s.prime_index()
+    except AlreadyLocked:
+        sys.stderr.write("Another indexer is running")
+        sys.exit(-1)

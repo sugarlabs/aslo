@@ -8,6 +8,7 @@ source addons
 
     sql_query_pre           = SET NAMES utf8
     sql_query_pre           = SET SESSION query_cache_type=OFF
+    sql_query_pre           = LOCK TABLE sphinx_index_feed READ
 
     sql_query                = \
         SELECT \
@@ -20,6 +21,8 @@ source addons
             IF (type=4,0,min_ver) AS min_ver, \
             created, modified \
         FROM sphinx_index_feed
+
+    sql_query_post = UNLOCK TABLES
 
     sql_attr_uint        = addon_id
     sql_attr_uint        = app
