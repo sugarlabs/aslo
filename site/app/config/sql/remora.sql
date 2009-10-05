@@ -131,7 +131,7 @@ CREATE TABLE `addons_users` (
   `listed` tinyint(1) unsigned NOT NULL default '1',
   `position` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`addon_id`,`user_id`),
-  KEY `user_id` (`user_id`),
+  KEY `listed` (`listed`),
   CONSTRAINT `addons_users_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`),
   CONSTRAINT `addons_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
