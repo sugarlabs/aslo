@@ -40,7 +40,7 @@ $addon = $this->controller->Addon->getAddon(COLLECTOR_ID, array('compatible_apps
 $params = array('addon' => $addon,
              'buttonSize' => '16x16',
              'buttonClass' => 'significant');
-$_install_button = $this->renderElement('amo2009/install', $params);
+$_install_button = $installButton->button($params);
 
 $_breadcrumbs = array(
     sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME) => '/',

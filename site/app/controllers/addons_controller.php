@@ -50,7 +50,7 @@ class AddonsController extends AppController
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
     var $uses = array('Addon', 'AddonCollection', 'AddonCategory', 'Addontype', 'Application', 'CollectionFeatures', 'Feature', 'File', 'GlobalStat', 'License', 'Platform', 'Preview', 'Category', 'Translation', 'Review', 'Version', 'Collection', 'CollectionPromo','Tag');
     var $components = array('Amo', 'Image', 'Pagination', 'Paypal', 'Session', 'Userfunc');
-    var $helpers = array('Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 'Pagination');
+    var $helpers = array('Html', 'Link', 'Time', 'Localization', 'Ajax', 'Number', 'Pagination', 'InstallButton');
     var $namedArgs = true;
 
     var $securityLevel = 'low';

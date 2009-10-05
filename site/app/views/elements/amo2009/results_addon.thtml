@@ -102,7 +102,7 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
             echo sprintf($_update_string, strftime(___('%B %e, %Y'), strtotime($_version_date)));
             ?>
         </p>
-	    <?=$this->renderElement('amo2009/install', array(
+	    <?=$installButton->button(array(
 	        'flags' => $flags,
 	        'addon' => $addon
 	    ))?>

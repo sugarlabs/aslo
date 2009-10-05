@@ -85,7 +85,7 @@ $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']
                     $flags[] = 'experimental';
                 ?>
                 <div class="item oldversion <?=implode(' ', $flags)?>" id="version-<?=$_version_data['version']?>">
-                    <?=$this->renderElement('amo2009/install', array(
+                    <?=$installButton->button(array(
                         'flags' => $flags,
                         'addon' => $addon,
                         'is_latest' => false

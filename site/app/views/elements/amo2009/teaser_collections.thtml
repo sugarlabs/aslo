@@ -93,7 +93,7 @@
                                         href="<?=$html->url("/addon/{$addon['Addon']['id']}")?>"><?=$addon['Translation']['name']['string']?></a></h3>
                                     <p><?=$html->truncateChars(80, $addon['Translation']['summary']['string'], true)?></p>
                                     <p>
-                                        <?=$this->renderElement('amo2009/install', array(
+                                        <?=$installButton->button(array(
                                             'flags' => $flags,
                                             'collection_uuid' => $promoted_collections[$id]['Collection']['uuid'],
                                             'src' => 'homepagepromo',

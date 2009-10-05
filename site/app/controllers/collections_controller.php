@@ -44,7 +44,7 @@ class CollectionsController extends AppController
         'Platform', 'Preview', 'Translation', 'Version');
     var $components = array('Amo', 'CollectionsListing', 'Developers', 'Error', 'Helper', 'Httplib', 'Image', 'Pagination', 'Session');
     var $actionHelpers = array('Html');
-    var $helpers = array('Html', 'Link', 'Listing', 'Time', 'Localization', 'Pagination', 'Number', 'Form');
+    var $helpers = array('Html', 'Link', 'Listing', 'Time', 'Localization', 'Pagination', 'Number', 'Form', 'InstallButton');
     var $exceptionCSRF = array("/collections/install");
     var $namedArgs = true;
 

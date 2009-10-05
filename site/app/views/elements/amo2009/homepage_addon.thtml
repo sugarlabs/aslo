@@ -91,7 +91,7 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
 }
 ?>
 <div class="<?=join(' ', $flags)?> item">
-    <?=$this->renderElement('amo2009/install', array(
+    <?=$installButton->button(array(
         'flags' => $flags,
         'addon' => $addon
     ))?>

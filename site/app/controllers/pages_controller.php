@@ -43,7 +43,7 @@
 class PagesController extends AppController{
 
     var $name = 'Pages';
-    var $helpers = array('Html', 'Localization');
+    var $helpers = array('Html', 'Localization', 'InstallButton');
     var $components = array('Image', 'Pagination');
     var $uses = array('Addon', 'Collection', 'File', 'Platform', 'User');
 

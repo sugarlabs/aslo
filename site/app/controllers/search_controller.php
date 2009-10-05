@@ -65,7 +65,7 @@ class SearchController extends AppController
     var $Sanitize;
 
     // helper for javascript links
-    var $helpers = array('Javascript', 'Pagination', 'Time');
+    var $helpers = array('Javascript', 'Pagination', 'Time', 'InstallButton');
 
     // components to be used by this controller
     var $components = array('Image', 'Pagination', 'Search', "Versioncompare", "Amo", "CollectionsListing");

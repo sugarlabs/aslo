@@ -99,8 +99,8 @@ if (!empty($coll_addon_added)) {
                                                              'default' => '')));
                 // Only api is valid right now
                 $src = (array_key_exists('src', $_GET) && in_array($_GET['src'], array('api'))) ? $_GET['src'] : 'addondetail';
-
-                echo $this->renderElement('amo2009/install', array(
+                
+                $options = array(
                     'flags' => $flags,
                     'buttonClass' => 'significant',
                     'buttonSize'  => '16x16',
@@ -108,8 +108,11 @@ if (!empty($coll_addon_added)) {
                     'collection_uuid' => $_collection_uuid,
                     'src' => $src,
                     'annoying' => $addon['Addon']['wants_contributions'] ? $addon['Addon']['annoying'] : 0,
-                    'addonFiles' => $addon['Version'][0]['File']
-                ));
+                    'addonFiles' => $addon['Version'][0]['File'],
+                    'loggedin' => $this->controller->Session->check('User')
+                );
+                
+                echo $installButton->button($options);
 
                 /* TODO: align View Privacy Policy w/ recommended & regular */
                 if (!empty($addon['Translation']['privacypolicy']['string'])): ?>
