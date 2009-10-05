@@ -72,7 +72,7 @@ $this->viewVars['bodyclass'] = 'inverse';
                 <?php foreach ($study->otherstats[1] as $stat_name => $stat_value): ?>
                     <li class="dotted"><strong><?=$stat_value?></strong> <?=$stat_name?></li>
                 <?php endforeach; ?>
-                <li><cite><?=sprintf(___(/* L10n: %1$s is the add-on name, %2$s is the localized date of last update.  Example: Cooliris and Dec. 2009*/ 'Source: %1$s, %2$s'), $study->addon['Translation']['name']['string'], strftime(___('%b. %Y', 'Example: Dec. 2009'), strtotime($study->otherstats[0])))?></cite></li>
+                <li><cite><?=sprintf(___(/* L10n: %1$s is the add-on name, %2$s is the localized date of last update.  Example: Cooliris and Dec. 2009*/ 'Source: %1$s, %2$s'), $study->addon['Translation']['name']['string'], strftime(___(/* L10n: This is a formatted date.  See php.net/strftime */ '%b. %Y'), strtotime($study->otherstats[0])))?></cite></li>
             </ul>
         </div>
         <?php endif; ?>
