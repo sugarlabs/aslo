@@ -44,9 +44,9 @@ class HubComponent extends Object {
         $this->controller =& $controller;
 
         $mdc = new HubSite(___('Mozilla Developer Center'), 'http://developer.mozilla.org');
-        $wiki = new HubSite(___('Mozilla Wiki'), 'http://wiki.mozilla.org');
-        $jetpack = new HubSite(___('Mozilla Labs - Jetpack'), 'http://jetpack.mozillalabs.com');
-        $designchallenge = new HubSite(___('Mozilla Labs Design Challenge'), 'http://design-challenge.mozilla.com');
+        $wiki = new HubSite(___('Mozilla Wiki'), 'http://wiki.mozilla.org', 'en');
+        $jetpack = new HubSite(___('Mozilla Labs - Jetpack'), 'http://jetpack.mozillalabs.com', 'en');
+        $designchallenge = new HubSite(___('Mozilla Labs Design Challenge'), 'http://design-challenge.mozilla.com', 'en');
         
         /**
          * If you add a new how-to, increment this number!
@@ -85,15 +85,15 @@ class HubComponent extends Object {
                 new SubCategory(___('Other Tutorials'), array(
                     new Howto(7, ___('How to Develop a Firefox Extension', 'devhub-external-english'),
                               'http://robertnyman.com/2009/01/24/how-to-develop-a-firefox-extension/',
-                              new HubSite(___('Robert\'s talk', 'devhub-external-english'), 'http://www.robertnyman.com'),
+                              new HubSite(___('Robert\'s talk', 'devhub-external-english'), 'http://www.robertnyman.com', 'en'),
                               ___('In this walk-through, Robert Nyman explains how to develop a Firefox extension from scratch.', 'devhub-external-english')),
                     new Howto(8, ___('How to Build a Firefox Extension', 'devhub-external-english'),
                               'http://lifehacker.com/264490/how-to-build-a-firefox-extension',
-                              new HubSite('Lifehacker', 'http://www.lifehacker.com'),
+                              new HubSite('Lifehacker', 'http://www.lifehacker.com', 'en'),
                               ___('Lifehacker gives tips and helpful hints on developing your first Firefox extension.', 'devhub-external-english')),
                     new Howto(9, ___('Firefox Extension Development Tutorial', 'devhub-external-english'),
                               'http://www.rietta.com/firefox/Tutorial/overview.html',
-                              new HubSite(___('Extend Firefox!', 'devhub-external-english'), 'http://www.rietta.com/firefox/index.html'),
+                              new HubSite(___('Extend Firefox!', 'devhub-external-english'), 'http://www.rietta.com/firefox/index.html', 'en'),
                               ___('A multi-page tutorial covering a variety of extension development topics.', 'devhub-external-english')),
                     new Howto(10, ___('Creating a Status Bar Extension'),
                               'https://developer.mozilla.org/en/Creating_a_status_bar_extension',
@@ -111,7 +111,7 @@ class HubComponent extends Object {
                 new SubCategory(___('Books'), array(
                     new Howto(13, ___('Build Your Own Firefox Extension E-book', 'devhub-external-english'),
                               'http://www.sitepoint.com/books/byofirefoxpdf1/',
-                              new HubSite('SitePoint', 'http://www.sitepoint.com'),
+                              new HubSite('SitePoint', 'http://www.sitepoint.com', 'en'),
                               ___('With a little JavaScript know-how, author James Edwards will show you just how straightforward it is to build your own Firefox extensions.', 'devhub-external-english'))
                 ))
             )),
@@ -119,7 +119,7 @@ class HubComponent extends Object {
                 new SubCategory(___('Best Practices'), array(
                     new Howto(14, ___('Respecting the JavaScript Global Namespace', 'devhub-external-english'),
                               'http://blogger.ziesemer.com/2007/10/respecting-javascript-global-namespace.html',
-                              new HubSite('Mark A. Ziesemer', 'http://blogger.ziesemer.com'),
+                              new HubSite('Mark A. Ziesemer', 'http://blogger.ziesemer.com', 'en'),
                               ___('In this blog post, Mark Ziesemer explains how to prevevent global namespace pollution by wrapping your extension\'s variables.', 'devhub-external-english')),
                     new Howto(15, ___('Security Best Practices in Extensions'),
                               'https://developer.mozilla.org/en/Security_best_practices_in_extensions',
@@ -132,7 +132,7 @@ class HubComponent extends Object {
                               ___('This article explains how to localize an extension, including XUL and JavaScript strings.')),
                     new Howto(48, ___('Responsible First-run Usage', 'devhub-external-english'),
                               'http://blog.fligtar.com/2008/10/16/responsible-first-run-usage/',
-                              new HubSite('fligtar.com', 'http://blog.fligtar.com'),
+                              new HubSite('fligtar.com', 'http://blog.fligtar.com', 'en'),
                               ___('This blog post describes what a bad first-run experience means for users, and gives tips for improving that experience.', 'devhub-external-english'))
                 )),
                 new SubCategory(___('Security'), array(
@@ -150,7 +150,7 @@ class HubComponent extends Object {
                               ___('Learn how to display web content in an extension without security issues.')),
                     new Howto(20, ___('Five Wrong Reasons to Use eval() in an Extension', 'devhub-external-english'),
                               'http://adblockplus.org/blog/five-wrong-reasons-to-use-eval-in-an-extension',
-                              new HubSite(___('Adblock Plus Blog', 'devhub-external-english'), 'http://www.adblockplus.org'),
+                              new HubSite(___('Adblock Plus Blog', 'devhub-external-english'), 'http://www.adblockplus.org', 'en'),
                               ___('In this blog post, Wladimir Palant gives five wrong ways to evaluate code in an extension.', 'devhub-external-english'))
                 )),
                 new SubCategory(___('Localization'), array(
@@ -237,7 +237,7 @@ class HubComponent extends Object {
                               ___('Learn how to find the right files to edit, make your changes, and package up your new theme in this tutorial.')),
                     new Howto(37, ___('How to Create a Firefox Theme', 'devhub-external-english'),
                               'http://www.twistermc.com/blog/2006/09/22/how-to-create-a-firefox-theme/',
-                              new HubSite(___('Blog on a Stick', 'devhub-external-english'), 'http://www.twistermc.com'),
+                              new HubSite(___('Blog on a Stick', 'devhub-external-english'), 'http://www.twistermc.com', 'en'),
                               ___('Thomas McMahon explains how to create a Firefox theme from start-to-finish in this tutorial.', 'devhub-external-english'))
                 )),
                 new SubCategory(___('Theme Development'), array(
@@ -247,7 +247,7 @@ class HubComponent extends Object {
                               ___('This article explains the packaging of themes.')),
                     new Howto(39, ___('First Steps in Theme Design', 'devhub-external-english'),
                               'http://cheeaun.com/blog/2004/12/first-steps-in-theme-design',
-                              new HubSite(___('cheeaun blog', 'devhub-external-english'), 'http://www.cheeaun.com'),
+                              new HubSite(___('cheeaun blog', 'devhub-external-english'), 'http://www.cheeaun.com', 'en'),
                               ___('This blog post by Lim Chee Aun explains the use of -moz-image-region in themes.', 'devhub-external-english')),
                     new Howto(40, ___('Making Sure Your Theme Works with RTL Locales'),
                               'https://developer.mozilla.org/en/Making_Sure_Your_Theme_Works_with_RTL_Locales',
@@ -273,7 +273,7 @@ class HubComponent extends Object {
                 new SubCategory(___('Personas'), array(
                     new Howto(44, ___('How to Create Personas', 'devhub-external-english'),
                               'http://getpersonas.com/demo_create',
-                              new HubSite(___('Personas for Firefox', 'devhub-external-english'), 'http://www.getpersonas.com'),
+                              new HubSite(___('Personas for Firefox', 'devhub-external-english'), 'http://www.getpersonas.com', 'en'),
                               ___('Learn how to create your very own Persona with this official walk-through.', 'devhub-external-english'))
                 )),
                 new SubCategory(___('Search Plug-ins'), array(
@@ -336,7 +336,7 @@ class HubComponent extends Object {
                              138,
                              '/img/docs/case-studies/stumbleupon-wordmark.png',
                              ___('Learn how StumbleUpon got its start with Firefox'),
-                             new HubSite('StumbleUpon, Inc.', 'http://www.stumbleupon.com'),
+                             new HubSite('StumbleUpon, Inc.', 'http://www.stumbleupon.com', 'en'),
                              '2002-02',
                              array(
                                 '2009-08',
@@ -352,7 +352,7 @@ class HubComponent extends Object {
                              26,
                              '/img/docs/case-studies/downloadstatusbar-wordmark.png',
                              ___('Read about how someone new to software development made one of the most popular Firefox add-ons'),
-                             new HubSite('Devon Jensen', 'https://addons.mozilla.org/en-US/firefox/user/9'),
+                             new HubSite('Devon Jensen', 'https://addons.mozilla.org/en-US/firefox/user/9', 'en'),
                              '2003-03',
                              array()),
             new HubCaseStudy(___('Immersive 3-D Experience with Cooliris'),
@@ -361,7 +361,7 @@ class HubComponent extends Object {
                              5579,
                              '/img/docs/case-studies/cooliris-wordmark.png',
                              ___('Find out how Cooliris re-invented photo browsing'),
-                             new HubSite('Cooliris, Inc.', 'http://www.cooliris.com'),
+                             new HubSite('Cooliris, Inc.', 'http://www.cooliris.com', 'en'),
                              '2007-08',
                              array(
                                 '2009-08',
@@ -870,8 +870,9 @@ class HubCaseStudy extends Object {
 
 class HubSite extends Object {
 
-    function __construct($title, $href) {
+    function __construct($title, $href, $hreflang='') {
         $this->title = $title;
         $this->href = $href;
+        $this->hreflang = $hreflang;
     }
 }

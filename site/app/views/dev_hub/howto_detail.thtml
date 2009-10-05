@@ -64,12 +64,12 @@ $this->viewVars['bodyclass'] = 'inverse';
                 }
                 /* $item->href is an absolute, external url. */
               ?>
-              <a href="<?=$item->href?>" target="_blank"><?=$item->title?></a>
+              <a href="<?=$item->href?>" <?=empty($item->hreflang)?'':"hreflang=\"{$item->hreflang}\""?> target="_blank"><?=$item->title?></a>
             </h4>
             <p><?=$item->description?></p>
           </div>
           <div class="item-info">
-            <h6><a href="<?=$item->site->href?>"><?=$item->site->title?></a></h6>
+            <h6><a href="<?=$item->site->href?>" <?=empty($item->site->hreflang)?'':"hreflang=\"{$item->site->hreflang}\""?>><?=$item->site->title?></a></h6>
             <?=$this->renderElement('amo2009/hub/like', array(
                 'object' => $item,
                 'likes' => $votes[$item->id]['Vote']['upvotes'],
