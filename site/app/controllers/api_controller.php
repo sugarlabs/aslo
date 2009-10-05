@@ -156,18 +156,18 @@ class ApiController extends AppController
 
 
         $as = new AddonsSearch($this->Addon);
-        
+
         if ($os) {
             $search_opts['platform'] = $as->convert_platform($os);
         }
         if ($version) {
             $search_opts['version'] = $version;
         }
-        
+
         try {
             list($matches, $total_results) = $as->query($term, $search_opts);
         }
-        
+
         catch (AddonsSearchException $e) {
             header("HTTP/1.1 503 Service Unavailable", true, 503);
 

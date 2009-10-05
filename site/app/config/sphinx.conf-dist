@@ -12,7 +12,8 @@ source addons
 
     sql_query                = \
         SELECT \
-            id, IFNULL(app_id,99) AS app, addon_id, authors, tags, type, \
+            id, IF(type=4 AND app_id IS NULL,99, app_id) AS app, \
+            addon_id, authors, tags, type, \
             addon_versions, status, locale, \
             locale_ord, averagerating, weeklydownloads, totaldownloads, \
             inactive, name, name AS name_ord, homepage, description, summary, \
