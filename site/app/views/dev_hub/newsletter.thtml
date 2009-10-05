@@ -58,7 +58,7 @@ $this->viewVars['bodyclass'] = 'inverse newsletter';
   <ul class="xoxo">
   <?php foreach ($feeds as $feed): ?>
     <li>
-      <span><?=strftime(___('%B %e, %Y'), strtotime($feed['date']))?></span>
+      <span><?=strftime(___(/* L10n: This is a date string.  See php.net/strftime */' %B %e, %Y'), strtotime($feed['date']))?></span>
       &mdash;
       <a href="<?=$feed['link']?>"><?=$feed['title']?></a>
     </li>

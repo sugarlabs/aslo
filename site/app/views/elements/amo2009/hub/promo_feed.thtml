@@ -53,7 +53,7 @@
 ?>
 <div class="addon-feed">
 <?php if ($show_login): ?>
-    <h3><?=sprintf(___('Please <a href="%1$s">log in</a> to view add-on news feeds.'),
+    <h3><?=sprintf(___(/* L10n: %1$s is a URL */ 'Please <a href="%1$s">log in</a> to view add-on news feeds.'),
                     $html->url($html->login_url('/developers', false)))?></h3>
 <?php else: ?>
     <h3>
@@ -64,10 +64,10 @@
         <?php endif; ?>
         <img src="<?=$html->urlImage('ajax_loading.gif')?>" class="addon-feed-loading" width="15" height="15" alt="<?=___('Loading data...')?>" />
         <?php if ($addon_id): ?>
-            <?=sprintf(___('Recent Activity for <a href="%1$s">%2$s</a>'),
+                <?=sprintf(___(/* L10n: %1$s is a URL, %2$s is the name of an add-on */ 'Recent Activity for <a href="%1$s">%2$s</a>'),
                 $html->url('/addon/'.$addon_id), $addon)?>
         <?php else: ?>
-            <?=sprintf(___('Recent Activity for <a href="%1$s">All Add-ons</a>'), 
+                <?=sprintf(___(/* L10n: %1$s is a URL */ 'Recent Activity for <a href="%1$s">All Add-ons</a>'), 
                 $html->url('/developers/feed/all'))?>
         <?php endif; ?>
     </h3>

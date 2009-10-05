@@ -53,14 +53,14 @@
             <?php if (!empty($rss_url)): ?>
                 <div class="addon-feed-rss">
                     <?=$html->linkNoApp($html->image('amo2009/icons/rss.png', array(
-                        'alt'=> sprintf(___('Subscribe to %1$s'), $feed_title),
+                        'alt'=> sprintf(___(/* L10n: %1$s is the localized name of the page.  Example:  Recent Activity for Adblock Plus. */ 'Subscribe to %1$s'), $feed_title),
                         'width' => 16,
                         'height' => 16)), $rss_url)?>
                 </div>
             <?php endif; ?>
                 <ul>
                     <li><?=___('Show:')?></li>
-                    <li<?=(empty($filter) ? ' class="selected"' : '')?>><?=$html->linkNoApp(___('All'), "/developers/feed/{$addon_id}")?></li>
+                    <li<?=(empty($filter) ? ' class="selected"' : '')?>><?=$html->linkNoApp(___(/* L10n: Clickable header to show all entries */ 'All'), "/developers/feed/{$addon_id}")?></li>
                     <?php foreach ($filters as $key => $label): ?>
                     <li<?=($key == $filter ? ' class="selected"' : '')?>><?=$html->linkNoApp($label, "/developers/feed/{$addon_id}?filter={$key}")?></li>
                     <?php endforeach ?>

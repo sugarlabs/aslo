@@ -50,7 +50,7 @@ class DevHubController extends AppController {
             $feed['feed'] = $this->Hub->getNewsForAddons(array($_GET['addon']));
             $feed['addon'] = htmlspecialchars($all_addons[$_GET['addon']]);
             $feed['rss_url'] = $this->_feedRssUrl($session['id'], $_GET['addon']);
-            $feed['rss_title'] = sprintf(___('Recent Activity for %1$s'), $feed['addon']);
+            $feed['rss_title'] = sprintf(___(/* L10n: %1$s is an add-on name */ 'Recent Activity for %1$s'), $feed['addon']);
             $active_addon_id = $_GET['addon'];
         } else {
             $feed['type'] = 'full';
@@ -149,7 +149,7 @@ class DevHubController extends AppController {
 
         // single add-on feed
         if (is_numeric($addon_id)) {
-            $feed_title = sprintf(___('Recent Activity for %1$s'), $addon_name);
+            $feed_title = sprintf(___(/* L10n: %1$s is an add-on name */ 'Recent Activity for %1$s'), $addon_name);
             if (isset($addons[$addon_id])) {
                 $feed = $this->Hub->getNewsForAddons(array($addon_id), $filter);
             } else {
@@ -214,7 +214,7 @@ class DevHubController extends AppController {
         foreach ($addons as $id => $name) {
             if ($rss_key = $this->HubRssKey->getKeyForAddon($id)) {
                 $rssAdd[] = array("/developers/feed/{$id}?privaterss={$rss_key}",
-                                    sprintf(___('Recent Activity for %1$s'), $name));
+                    sprintf(___(/* L10n: %1$s is an add-on name */ 'Recent Activity for %1$s'), $name));
 
                 if ($addon_id == $id) {
                     $rss_url = "/developers/feed/{$addon_id}?";
@@ -297,7 +297,7 @@ class DevHubController extends AppController {
             if ($user_id) {
                 $rss_title = ___('Recent Activity for My Add-ons');
             } else {
-                $rss_title = sprintf(___('Recent Activity for %1$s'), $addons[$addon_id]);
+                $rss_title = sprintf(___(/* L10n: %1$s is an add-on name */ 'Recent Activity for %1$s'), $addons[$addon_id]);
             }
             $rss_description = $filter ? $filters[$filter] : '';
 

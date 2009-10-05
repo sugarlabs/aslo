@@ -43,7 +43,7 @@ $this->viewVars['bodyclass'] = 'inverse';
 
 <?=$this->renderElement('amo2009/breadcrumbs')?>
 
-<h2><?=___('Case Study').': '.$study->title?></h2>
+<h2><?=sprintf(___(/* L10n: %1$s is the full localized name of a case study. Example: Personalized Browsing with StumbleUpon. */ 'Case Study: %1$s'), $study->title)?></h2>
 
 <div id="casestudy" class="primary full" role="main">
     <div class="info">
@@ -52,7 +52,7 @@ $this->viewVars['bodyclass'] = 'inverse';
                 null, false, false)?>" alt="<?=$study->title?>"/></li>
             <li class="dotted"><strong><?=___('Developer')?></strong>
                 <a href="<?=$study->developer->href?>"><?=$study->developer->title?></a></li>
-            <li class="dotted"><strong><?=___('First Released')?></strong>
+            <li class="dotted"><strong><?=___(/* L10n: Referring to a date */ 'First Released')?></strong>
                 <?=strftime(___('%B %Y'), strtotime($study->firstreleased))?></li>
             <li class="dotted"><strong><?=___('Downloads from Mozilla Add-ons')?></strong>
                 <?=$html->number_format($study->addon['Addon']['totaldownloads'])?>
@@ -61,18 +61,18 @@ $this->viewVars['bodyclass'] = 'inverse';
                 <?php endif; ?>
             </li>
             <li class="detailspage"><strong><a href="<?=$html->url("/addon/{$study->addonid}")?>">
-                <?=sprintf(___('Visit %1$s\'s Listing'),
+                <?=sprintf(___(/* L10n: %1$s is the name of an add-on. */ 'Visit %1$s\'s Listing'),
                 $study->addon['Translation']['name']['string'])?></strong></a></li>
         </ul>
         
         <?php if (!empty($study->otherstats)): ?>
         <div class="activity">
-            <h3><?=sprintf(___('%1$s Activity', 'Add-on name, such as StumbleUpon Activity'), $study->addon['Translation']['name']['string'])?></h3>
+            <h3><?=sprintf(___(/* L10n: %1$s is the name of an add-on.  Example: StumbleUpon */ '%1$s Activity'), $study->addon['Translation']['name']['string'])?></h3>
             <ul class="blocks">
                 <?php foreach ($study->otherstats[1] as $stat_name => $stat_value): ?>
                     <li class="dotted"><strong><?=$stat_value?></strong> <?=$stat_name?></li>
                 <?php endforeach; ?>
-                <li><cite><?=sprintf(___('Source: %1$s, %2$s', 'Add-on name and date of last update, for example Source: Cooliris, Dec. 2009'), $study->addon['Translation']['name']['string'], strftime(___('%b. %Y', 'Example: Dec. 2009'), strtotime($study->otherstats[0])))?></cite></li>
+                <li><cite><?=sprintf(___(/* L10n: %1$s is the add-on name, %2$s is the localized date of last update.  Example: Cooliris and Dec. 2009*/ 'Source: %1$s, %2$s'), $study->addon['Translation']['name']['string'], strftime(___('%b. %Y', 'Example: Dec. 2009'), strtotime($study->otherstats[0])))?></cite></li>
             </ul>
         </div>
         <?php endif; ?>
