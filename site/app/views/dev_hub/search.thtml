@@ -67,19 +67,25 @@ $this->viewVars['bodyclass'] = 'inverse';
 
     sc = new google.search.CustomSearchControl('007182852441266509516:fnsg3w7luc4');
     sc.setNoResultsString('<?=addslashes(___('No results found.'))?>');
+    sc.setSearchStartingCallback(null, function(sc, searcher, qry) {
+        sc.maxResultCount = 0;
+    });
     sc.setSearchCompleteCallback(null, function(sc, searcher) {
         if (searcher.results.length > 0) {
             var cur = searcher.cursor,
-                restext = '<?=addslashes(___('Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'))?>',
-                start = parseInt(cur.pages[cur.currentPageIndex].start) + 1,
-                end = start + searcher.results.length - 1,
-                total = cur.estimatedResultCount,
-                term = qry.val();
-            $('#resultcount').html(sprintf(restext, start, end, total, ''))
-                .find('strong').text(term).end() // no html() for user input!
-                .show();
-            $('#cse').show();
-            window.scroll(0, 0);
+                total = parseInt(cur.estimatedResultCount);
+            if (total > sc.maxResultCount) {
+                sc.maxResultCount = total;
+                    var restext = '<?=addslashes(___('Showing %1$s - %2$s of %3$s results for <strong>%4$s</strong>'))?>',
+                    start = parseInt(cur.pages[cur.currentPageIndex].start) + 1,
+                    end = start + searcher.results.length - 1,
+                    term = qry.val();
+                $('#resultcount').html(sprintf(restext, start, end, total, ''))
+                    .find('strong').text(term).end() // no html() for user input!
+                    .show();
+                $('#cse').show();
+                window.scroll(0, 0);
+            }
         } else {
             $('#resultcount').hide();
         }
