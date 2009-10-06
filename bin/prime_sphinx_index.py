@@ -179,7 +179,7 @@ class SphinxIndexPrimer:
         WHERE au.user_id = u.id AND listed =1 GROUP BY addon_id
         """
 
-        self.add_data(query=gq, msg=msg, field='authors')
+        self.add_data(query=gq, msg=msg, field='authors', max_len=255)
 
     def add_tags(self):
         msg = "Adding tag information."
