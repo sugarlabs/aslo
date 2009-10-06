@@ -406,7 +406,7 @@ class HubComponent extends Object {
      * @param string $filter 'collections', 'reviews', 'approvals', 'updates', or '' (none)
      * @param array $pagination_options
      * @param bool $absolute_links if true, makes all links absolute rather than relative
-     * @return array of stories
+     * @return array of stories 'story' may contain markup, 'title' contains unescaped text
      */
     function getNewsForAddons($ids, $filter='', $pagination_options=array(), $absolute_links=false) {
         $filter_groups = array(
@@ -499,7 +499,7 @@ class HubComponent extends Object {
 
             // default title (for rss) is the add-on's name
             if (!empty($addons[$addon_id]['text'])) {
-                $story_title = $addons[$addon_id]['text'];
+                $story_title = html_entity_decode($addons[$addon_id]['text'], ENT_QUOTES, 'UTF-8');
             } else {
                 $story_title = '';
             }
@@ -778,7 +778,7 @@ class HubComponent extends Object {
                 $story = $log['Addonlog']['notes'];
                 $story_class = 'custom';
                 $story_link = $this->url("/", $absolute_links);
-                $story_title = htmlspecialchars_decode(strip_tags($story));
+                $story_title = html_entity_decode(strip_tags($story), ENT_QUOTES, 'UTF-8');
                 break;
 
             default:

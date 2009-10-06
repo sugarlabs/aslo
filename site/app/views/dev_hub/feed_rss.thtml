@@ -40,9 +40,9 @@
 foreach ($feed as $item) {
     // render rss feed item
     echo $this->renderElement('rss_listitem', array(
-            'title'       => htmlspecialchars($item['title']),
+            'title'       => htmlspecialchars($item['title'], ENT_COMPAT, 'UTF-8'),
             'url'         => $item['link'],
-            'description' => htmlspecialchars($item['story']),
+            'description' => htmlspecialchars($item['story'], ENT_COMPAT, 'UTF-8'),
             'author'      => 'nobody@mozilla.com',
             'pubDate'     => $time->toRss($item['created']),
     ));
