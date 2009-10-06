@@ -84,6 +84,8 @@ if (!empty($group)) {
     $flags[] = $group;
 }
 
+$src = isset($src) ? $src : '';
+
 // is addon experimental?
 global $experimental_status;
 if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
@@ -93,7 +95,8 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
 <div class="<?=join(' ', $flags)?> item">
     <?=$installButton->button(array(
         'flags' => $flags,
-        'addon' => $addon
+        'addon' => $addon,
+        'src'   => $src
     ))?>
     <h3>
         <a title="<?=___('Learn more about this add-on') ?>" href="<?=$html->url("/addon/{$addonId}")?>"><?=$addonName?></a>

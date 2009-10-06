@@ -39,7 +39,13 @@
 /**
  * Required parameters:
  *   $addons
+ * 
+ * Optional parameters:
+ *   $src (for download button links)
  */
+
+  
+
 ?>
 
 <?php foreach ($addons as $addon): ?>
@@ -61,6 +67,11 @@
       $element_params = array_merge($element_params, $extra);
       $addon_link .= '?'.$this->controller->Httplib->urlify($extra);
   }
+
+  if (isset($src)) {
+      $element_params['src'] = $src;
+  }
+
   ?>
   <div class="item <?=join(' ', $flags)?>">
     <!-- TODO: a11y ordering -->
