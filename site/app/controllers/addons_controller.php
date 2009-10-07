@@ -273,6 +273,11 @@ class AddonsController extends AppController
             || $addon_data['Addon']['inactive'] == 1
             || !in_array($addon_data['Addon']['addontype_id'], array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_LPAPP, ADDON_PLUGIN))
             || !in_array($addon_data['Addon']['status'], $valid_status)) {
+                if ($loggedIn && !empty($user) && in_array($addon_data['Addon']['id'], $this->Addon->getAddonsForAuthors($user['id']))) {
+                    header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0, private');
+                    header('Pragma: no-cache');
+                    $this->redirect("/developers/addon/status/{$id}?src=404", null, true, false);
+                }
 
             $this->flash(___('Add-on not found!'), '/', 3);
             return;

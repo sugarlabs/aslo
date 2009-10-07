@@ -805,6 +805,9 @@ class Addon extends AppModel
      * Return the ids of addons authored by any of the User ids.
      */
     function getAddonsForAuthors($author_ids) {
+        if (!is_array($author_ids)) {
+            $author_ids = array($author_ids);
+        }
         $addon_id_sql = "SELECT DISTINCT addons.id
                          FROM addons
                          INNER JOIN addons_users
