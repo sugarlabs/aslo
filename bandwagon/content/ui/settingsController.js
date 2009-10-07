@@ -167,8 +167,8 @@ Bandwagon.Controller.Settings.invalidate = function()
 
 Bandwagon.Controller.Settings.invalidatePaginationSettings = function()
 {
-    document.getElementById("pagination-box").collapsed = (Bandwagon.ENABLE_PAGINATION?false:true);
-    document.getElementById("global-pagination-box").collapsed = (Bandwagon.ENABLE_PAGINATION?false:true);
+    document.getElementById("pagination-box").collapsed = Bandwagon.ENABLE_PAGINATION ? false : true;
+    document.getElementById("global-pagination-box").collapsed = Bandwagon.ENABLE_PAGINATION ? false : true;
 }
 
 Bandwagon.Controller.Settings.invalidateCustomizeCollectionUI = function()
@@ -293,7 +293,7 @@ Bandwagon.Controller.Settings.doShowCollection = function()
         document.getElementById("updates-group").selectedIndex = 1;
         
         var interval = Bandwagon.Util.intervalMillisecondsToUnits(collection.updateInterval*1000);
-        document.getElementById("textbox-updateinterval-quantity-percollection").valueNumber = interval.interval;
+        document.getElementById("textbox-updateinterval-quantity-percollection").value = interval.interval;
         document.getElementById("menulist-updateinterval-units-percollection").selectedIndex = interval.units-1;
     }
 
@@ -353,18 +353,20 @@ Bandwagon.Controller.Settings.doSaveCollection = function()
     }
     else
     {
-        collection.updateInterval = Bandwagon.Util.intervalUnitsToMilliseconds(document.getElementById("textbox-updateinterval-quantity-percollection").valueNumber, document.getElementById("menulist-updateinterval-units-percollection").selectedIndex+1) / 1000;
+        var a = parseInt(document.getElementById("textbox-updateinterval-quantity-percollection").value);
+        var b = document.getElementById("menulist-updateinterval-units-percollection").selectedIndex+1;
+        collection.updateInterval = Bandwagon.Util.intervalUnitsToMilliseconds(a, b) / 1000;
     }
-    
+
     // save notifications setting
-    
+
     if (document.getElementById("notifications-group").selectedIndex == 0)
     {
         collection.showNotifications = -1;
     }
     else
     {
-        collection.showNotifications = (document.getElementById("checkbox-shownotifications-percollection").selectedIndex==0?1:0);
+        collection.showNotifications = (document.getElementById("checkbox-shownotifications-percollection").selectedIndex == 0) ? 1 : 0;
     }
 
     // save addons per page
@@ -806,7 +808,7 @@ Bandwagon.Controller.Settings.doUpdateIntervalScopeChange = function(event)
 {
     if (document.getElementById("updates-group").selectedIndex == 0) // Use default
     {
-        document.getElementById("extensions.bandwagon.global.update.interval").value = document.getElementById("textbox-updateinterval-quantity").valueNumber;
+        document.getElementById("extensions.bandwagon.global.update.interval").value = document.getElementById("textbox-updateinterval-quantity").value;
         document.getElementById("extensions.bandwagon.global.update.units").value = document.getElementById("menulist-updateinterval-units").selectedIndex + 1;
     }
     else
