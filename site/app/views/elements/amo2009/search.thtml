@@ -372,13 +372,6 @@ if ($collectionSearch) {
         var q = $("#query");
         var l = $("#search-query label[for=query]");
         var c = $("#cat");
-        l.show();
-        if ( q.val() == "<?=___('search for add-ons')?>"){ //initially q is set to search add-ons text for javascriptless browsing
-		  q.val('');
-		}
-        if ( q.val() != "") { // if field has any value...
-            l.hide(); // hide the label
-        };
         l.click(function() { // for browsers with unclickable labels
             q.focus();
         });
@@ -405,6 +398,15 @@ if ($collectionSearch) {
             }
         });
         c.change();
+
+        if (q.val() == "<?=___('search for add-ons')?>") { //initially q is set to search add-ons text for javascriptless browsing
+            q.val('');
+        }
+        if (q.val() != "") { // if field has any value...
+            l.hide(); // hide the label
+        } else {
+            q.blur();
+        };
     });
   // ]]>
 </script>
