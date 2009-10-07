@@ -255,12 +255,12 @@ if (!empty($mimetype) &&
         if (preg_match('/^Windows NT 6\.0/', $clientOS)) {
             $guid = '{fbe640ef-4375-4f45-8d79-767d60bf75b8}';
             $InstallerLocation = 'http://java.com/firefoxjre_exe';
-            $InstallerHash = 'sha1:89a78d34a36d7e25cc32b1a507a2cd6fb87dd40a';
+            $InstallerHash = 'sha1:68562b56253c934a2cbd59ffa1f4690d6b39e2b7';
             $needsRestart = 'false';
         } elseif (preg_match('/^Win/', $clientOS)) {
             $guid = '{92a550f2-dfd2-4d2f-a35d-a98cfda73595}';
             $InstallerLocation = 'http://java.com/firefoxjre_exe';
-            $InstallerHash = 'sha1:89a78d34a36d7e25cc32b1a507a2cd6fb87dd40a';
+            $InstallerHash = 'sha1:68562b56253c934a2cbd59ffa1f4690d6b39e2b7';
             $XPILocation = 'http://java.com/jre-install.xpi';
         } else {
             $guid = '{fbe640ef-4375-4f45-8d79-767d60bf75b8}';
