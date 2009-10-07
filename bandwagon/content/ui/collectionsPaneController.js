@@ -55,6 +55,11 @@ Bandwagon.Controller.CollectionsPane = new function()
     this.stringBundle = null;
     this.loginInProcess = false;
 
+    this.firefoxUpgradeUrl = "http://www.mozilla.com/en-US/firefox/all.html";
+    this.firefoxUpgradeBetaUrl = "http://www.mozilla.com/en-US/firefox/all-beta.html";
+    this.thunderbirdUpgradeUrl = "http://www.mozillamessaging.com/en-US/thunderbird/all.html";
+    this.thunderbirdUpgradeBetaUrl = "http://www.mozillamessaging.com/en-US/thunderbird/early_releases/";
+
     //this.previewNotificationVal = "bandwagon-collection-preview";
 }
 
@@ -662,7 +667,6 @@ Bandwagon.Controller.CollectionsPane.doAddToFirefox = function()
         var callback = function(url, status)
         {
             Bandwagon.Logger.info("Finished installing '" + url + "'; status = " + status);
-
             // TODO some user feedback here?
         }
 
@@ -673,15 +677,17 @@ Bandwagon.Controller.CollectionsPane.doAddToFirefox = function()
 Bandwagon.Controller.CollectionsPane.doUpgradeToFirefoxN = function(version)
 {
     Bandwagon.Logger.info("in Bandwagon.Controller.CollectionsPane.doUpgradeToFirefoxN() with version = " + version);
-
-    Bandwagon.Controller.CollectionsPane._openURL("http://www.mozilla.com/en-US/firefox/all.html");
+    var appname = Bandwagon.Util.getHostEnvironmentInfo().appName;
+    var upUrl = (appname == "Firefox") ? Bandwagon.Controller.CollectionsPane.firefoxUpgradeUrl : Bandwagon.Controller.CollectionsPane.thunderbirdUpgradeUrl;
+    Bandwagon.Controller.CollectionsPane._openURL(upUrl);
 }
 
 Bandwagon.Controller.CollectionsPane.doDownloadFirefoxNBeta = function(version)
 {
     Bandwagon.Logger.info("in Bandwagon.Controller.CollectionsPane.doDownloadFirefoxNBeta() with version = " + version);
-
-    Bandwagon.Controller.CollectionsPane._openURL("http://www.mozilla.com/en-US/firefox/all-beta.html");
+    var appname = Bandwagon.Util.getHostEnvironmentInfo().appName;
+    var upUrl = (appname == "Firefox") ? Bandwagon.Controller.CollectionsPane.firefoxUpgradeBetaUrl : Bandwagon.Controller.CollectionsPane.thunderbirdUpgradeBetaUrl;
+    Bandwagon.Controller.CollectionsPane._openURL(upUrl);
 }
 
 /**
