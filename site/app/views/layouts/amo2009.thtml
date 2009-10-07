@@ -73,7 +73,9 @@ if ($developer_layout) {
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="MSSmartTagsPreventParsing" content="true"/>
-    <meta name="Copyright" content="(c) 2005-<?php echo date('Y'); ?> Mozilla. All rights reserved."/>
+    <meta name="keywords" content="<?php echo ___(/* site keywords meta tag */ 'add-ons,addons,extensions,themes,firefox,thunderbird,sunbird,seamonkey,fennec,plugins,customization,mozilla,browser'); ?>"/>
+    <meta name="description" content="<?php echo ___(/* site description meta tag */ 'Customize Firefox, Thunderbird, and other Mozilla products with thousands of free extensions and themes.'); ?>"/>
+    <meta name="Copyright" content="<?php echo ___(/* site copyright meta tag */ 'Creative Commons Attribution Share-Alike License v3.0, except where otherwise noted.'); ?>"/>
     <meta http-equiv="imagetoolbar" content="no"/>
     <meta name="Rating" content="General"/>
 
@@ -235,7 +237,10 @@ if ($developer_layout) {
             </form>
         <?php endif; ?>
 
-        <p><strong><?=___('Copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla.</strong> <?=___('All rights reserved.')?></p>
+        <p><?=sprintf(___(/* L10n: both replacements are URLs */ 'Except where otherwise <a href="%1$s">noted</a>, content on this site is licensed under the<br /><strong><a href="%2$s">Creative Commons Attribution Share-Alike License v3.0</a></strong> or any later version'),
+                'http://www.mozilla.com/en-US/about/legal.html#site',
+                'http://creativecommons.org/licenses/by-sa/3.0/')?><span title="<?=php_uname('n')?>">.</span>
+        </p>
         <ul>
             <li><?=$html->link(___('Privacy Policy', 'footer_privacy_policy'), '/pages/privacy');?></li>
             <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=___('Legal Notices')?></a></li>
