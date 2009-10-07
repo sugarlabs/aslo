@@ -276,9 +276,10 @@ class EditorsController extends AppController
         $this->User->bindFully();
         $this->Addontype->bindFully();
         $this->Version->bindFully();
-        $this->Addon->bindFully();
         $this->Versioncomment->bindFully();
 
+        $this->Addon->bindOnly('User', 'Category');
+        $this->Addon->bindModel(array('hasMany' => $this->Addon->hasMany_full));
         if (!$version = $this->Version->findById($id, null, null, 1)) {
             $this->flash(___('Version not found!'), '/editors/queue');
             return;
