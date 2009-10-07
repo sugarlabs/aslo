@@ -100,7 +100,11 @@
             <li<?=($page == 'variables') ? ' class="selected"' : ''?>><?=$html->link('Site Variables', '/admin/variables')?></li>
         <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->controller->Session->read('User'))): ?>
-            <li><?=$html->link('Statistics Dashboard', '/statistics')?></li>
+            <li<?=($page == 'statistics' && empty($subpage)) ? ' class="selected"' : ''?>><?=$html->link('Statistics', '/admin/statistics')?></li>
+            <?php if ($page == 'statistics'): ?>
+            <li class="indented<?=($subpage == 'contributions') ? ' selected' : ''?>"><?=$html->link('Contributions', '/admin/statistics/contributions')?></li>
+            <li class="indented"><?=$html->link('Statistics Dashboard', '/statistics')?></li>
+            <?php endif; ?>
         <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'users', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'users') ? ' class="selected"' : ''?>><?=$html->link('User Manager', '/admin/users')?></li>

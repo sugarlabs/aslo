@@ -15,6 +15,8 @@ var Plots = {
     },
     plotInfoCommonConfig: {
         showValues: true,
+        roundValues: false,
+        valueFormatter: numberFormat,
         dotRadius: 2.0,
         lineWidth: 2.0
     },

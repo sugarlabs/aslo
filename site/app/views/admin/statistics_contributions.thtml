@@ -1,0 +1,164 @@
+<?php
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is addons.mozilla.org site.
+ *
+ * The Initial Developer of the Original Code is
+ * Scott McCammon <smccammon@mozilla.com>
+ * Portions created by the Initial Developer are Copyright (C) 2007
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+// All the pretty stats and pagination styles are in the clear-left layout,
+// so we'll turn it on here even though the admin navigation doesn't
+// display well. Maybe this will provide incentive to migrate the entire
+// admin CP to the new layout?
+$this->layout = 'amo2009';
+
+?>
+<div class="secondary" role="complementary">
+  <?=$this->renderElement('developers/adminmenu');?>
+</div>
+
+<div class="primary" role="main">
+  <div id="content-main" class="featured"><div class="featured-inner">
+    <div id="statistics-header">
+      <h3>Contribution Statistics</h3>
+    </div>
+
+    <div id="timeplot-container">
+      <div id="not-enough-data" class="warning" style="display: none;"><div>
+        <?=___('There is not yet enough data to display this graph. Please check back later.')?>
+      </div></div>
+
+      <noscript>
+        <div class="warning"><div>
+          <?=___('JavaScript is required to view the Statistics Dashboard graphs.')?>
+        </div></div>
+      </noscript>
+    </div>
+  </div></div>
+    
+  <div id="stats-table-container" class="article">
+    <table width="100%" cellpadding="5" id="stats_overview">
+    <tr>
+      <th class="biglabel" colspan="2" style="width: 49%;text-align:center;">All Time</th>
+      <th class="spacer" style="width: 2%;"></th>
+      <th class="biglabel" colspan="2" style="width: 49%;text-align:center;">This Week</th>
+    </tr>
+    <tr>
+      <td class="label" valign="middle" style="width: 30%;">Contributions</td>
+      <td class="value" style="width: 19%;"><?=$statistics->dollar_format($summary['alltime'], 'total')?></td>
+      <td class="spacer" style="width: 2%;"></td>
+      <td class="label" valign="middle" style="width: 30%;">Contributions</td>
+      <td class="value" style="width: 19%;"><?=$statistics->dollar_format($summary['thisweek'], 'total')?></td>
+    </tr>
+    <tr>
+      <td class="label" valign="middle">Number of Contributions</td>
+      <td class="value"><?=$statistics->number_format($summary['alltime'], 'count')?></td>
+      <td class="spacer"></td>
+      <td class="label" valign="middle">Number of Contributions</td>
+      <td class="value"><?=$statistics->number_format($summary['thisweek'], 'count')?></td>
+    </tr>
+    <tr>
+      <td class="label" valign="middle">Average Amount</td>
+      <td class="value"><?=$statistics->dollar_format($summary['alltime'], 'average')?></td>
+      <td class="spacer"></td>
+      <td class="label" valign="middle">Average Amount</td>
+      <td class="value"><?=$statistics->dollar_format($summary['thisweek'], 'average')?></td>
+    </tr>
+    <tr>
+      <th class="biglabel" colspan="2" style="text-align:center;">Top Add-ons</th>
+      <th class="spacer"></th>
+      <th class="biglabel" colspan="2" style="text-align:center;">Top Weekly Add-ons</th>
+    </tr>
+  <?php for ($i = 0; $i < 3; $i++): ?>
+    <tr>
+    <?php if (!empty($top_addons['alltime'][$i])): ?>
+      <td class="label"><?=$html->link(
+          $top_addons['alltime'][$i]['addon'],
+          '/statistics/addon/'.$top_addons['alltime'][$i]['addon_id'])?></td>
+      <td class="value"><?=$statistics->dollar_format($top_addons['alltime'][$i], 'total')?></td>
+    <?php else: ?>
+      <td class="label">&nbsp;</td>
+      <td class="value">&nbsp;</td>
+    <?php endif; ?>
+      <td class="spacer"></td>
+    <?php if (!empty($top_addons['thisweek'][$i])): ?>
+      <td class="label"><?=$html->link(
+          $top_addons['thisweek'][$i]['addon'],
+          '/statistics/addon/'.$top_addons['thisweek'][$i]['addon_id'])?></td>
+      <td class="value"><?=$statistics->dollar_format($top_addons['thisweek'][$i], 'total')?></td>
+    <?php else: ?>
+      <td class="label">&nbsp;</td>
+      <td class="value">&nbsp;</td>
+    <?php endif; ?>
+    </tr>
+  <?php endfor; ?>
+    </table>
+  </div><!-- #stats-table-container -->
+
+  <div id="stats-table-listing" class="featured listing results">
+    <div class="featured-inner">
+      <div class="listing-header">
+        <select id="contributions-group-by">
+          <option value="addon">Group by: Add-on</option>
+          <option value="date" selected="selected">Group by: Day</option>
+        </select>
+      </div>
+      <table id="stats-table-instance">
+        <thead></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="listing-footer">
+      <img src="<?=$html->urlImage('ajax_loading.gif')?>" id="stats-table-loading" style="display:none;float:left;padding:5px 2px;" width="15" height="15" alt="<?=___('Loading data...')?>" />
+      <ol id="stats-table-pagination" class="pagination"></ol>
+      <a href="#" id="stats-csv-download"><? echo ___('View this table in CSV format') ?></a>
+    </div>
+  </div><!-- #stats-table-listing -->
+</div><!-- .primary -->
+
+<script type="text/javascript">
+// <![CDATA[
+    var statsURL = '<?=$html->url('/statistics/')?>';
+    var adminURL = '<?=$html->url('/admin/')?>';
+
+    $(document).ready(function() {
+        Plots.dataTable = new PlotDataTable({
+            tableId: 'stats-table-instance',
+            paginationId: 'stats-table-pagination',
+            downloadLinkId: 'stats-csv-download',
+            loadingId: 'stats-table-loading',
+            rowsPerPage: 10
+        });
+        Plots.initialize();
+    });
+// ]]>
+</script>

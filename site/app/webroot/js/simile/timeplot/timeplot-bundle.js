@@ -41,6 +41,7 @@ dotColor:("dotColor"in params)?params.dotColor:null,
 eventLineWidth:("eventLineWidth"in params)?params.eventLineWidth:1.0,
 showValues:("showValues"in params)?params.showValues:false,
 roundValues:("roundValues"in params)?params.roundValues:true,
+valueFormatter:("valueFormatter"in params)?params.valueFormatter:null,
 valuesOpacity:("valuesOpacity"in params)?params.valuesOpacity:75,
 bubbleWidth:("bubbleWidth"in params)?params.bubbleWidth:300,
 bubbleHeight:("bubbleHeight"in params)?params.bubbleHeight:200
@@ -526,9 +527,9 @@ return;
 var v=plot._dataSource.getValue(t);
 if(plot._plotInfo.roundValues)v=Math.round(v);
 //plot._valueFlag.innerHTML = new String(v);
-/* AMO Change: localized number formating */
-if(typeof number_format=='function'){
-plot._valueFlag.innerHTML=number_format(v);
+/* AMO Change: custom number formatting */
+if(typeof plot._plotInfo.valueFormatter=='function'){
+plot._valueFlag.innerHTML=plot._plotInfo.valueFormatter(v);
 }else{
 plot._valueFlag.innerHTML=new String(v);
 }

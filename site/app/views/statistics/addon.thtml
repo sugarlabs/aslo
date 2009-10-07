@@ -254,23 +254,24 @@ echo '<div id="content">';
 </div></div>
 <?php endif; ?>
 
-<div id="stats-table">
-
-    <a href="#" class="download"><? echo ___('View this table in CSV format') ?></a>
-
-    <table class="template">
-        <thead>
-            <tr class="header">
-                <th>--</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="row">
-                <td class="col"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div id="stats-table-listing" class="featured listing results" style="display:none">
+      <div class="featured-inner">
+        <div class="listing-header">
+          <select id="contributions-group-by">
+            <option value="date" selected="selected"><?=___('Group by: Day')?></option>
+            <option value="transaction"><?=___('Group by: Transaction')?></option>
+          </select>
+        </div>
+        <table id="stats-table-instance">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="listing-footer">
+        <ol id="stats-table-pagination" class="pagination"></ol>
+        <a href="#" id="stats-csv-download"><?=___('View this table in CSV format')?></a>
+      </div>
+    </div>
 
     <div id="settings">
     <?php
@@ -307,6 +308,14 @@ echo '<div id="content">';
     $(document).ready(function() {
         $('#stats_contributions_overview').hide();
         $('#plot-options').show();
+        Plots.dataTable = new PlotDataTable({
+            tableId: 'stats-table-instance',
+            paginationId: 'stats-table-pagination',
+            downloadLinkId: 'stats-csv-download',
+            rowsPerPage: 10,
+            maxRows: 100
+        });
+        Plots.initialize();
         plotSelection.showContributions = <?=($show_contributions ? 'true' : 'false')?>;
         plotSelection.loadSummary();
         plotSelection.addPlotSelector();

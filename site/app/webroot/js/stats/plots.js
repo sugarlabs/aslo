@@ -4,6 +4,12 @@ var Plots = {
     timeplot: null,
     availableFields: [],
     currentCSV: '',
+    dataTable: null,
+
+    initialize: function() {
+        // setup handler for contributions data table grouping
+        $('#contributions-group-by').change(this.contributionsGroupByChange);
+    },
     
     determinePlot: function() {
         var selected = plotSelection.dropdowns['plot-selector'].selectedItem.value;
@@ -32,6 +38,11 @@ var Plots = {
         
         $('#not-enough-data').hide();
         $('#no-contributions').hide();
+
+        if (this.dataTable) {
+            $('#stats-table-listing').hide();
+            this.dataTable.clearTable();
+        }
         
         this.timeplot_id = 'timeplot' + this.timeplotCount;
         $('#timeplot-container').append('<div id="' + this.timeplot_id + '" class="timeplot"></div>');
@@ -50,8 +61,6 @@ var Plots = {
                 'updatepings': new Timeplot.DefaultEventSource()
             };
 
-            PlotsTables.addListeners('summary', this.dataSources);
-            
             this.valueGeometry = {
                 'downloads': {
                     'gridColor': '#000000',
@@ -75,6 +84,8 @@ var Plots = {
                     'dataSource': new Timeplot.ColumnSource(this.dataSources['downloads'], 1),
                     'valueGeometry': new Timeplot.DefaultValueGeometry(this.valueGeometry['downloads']),
                     'showValues': true,
+                    'roundValues': false,
+                    'valueFormatter': numberFormat,
                     'dotColor': '#33AAFF',
                     'dotRadius': 3.0,
                     'lineColor': '#33AAFF',
@@ -85,6 +96,8 @@ var Plots = {
                     'dataSource': new Timeplot.ColumnSource(this.dataSources['updatepings'], 1),
                     'valueGeometry': new Timeplot.DefaultValueGeometry(this.valueGeometry['updatepings']),
                     'showValues': true,
+                    'roundValues': false,
+                    'valueFormatter': numberFormat,
                     'dotColor': '#EE3322',
                     'dotRadius': 3.0,
                     'lineColor': '#EE3322',
@@ -158,6 +171,7 @@ var Plots = {
                 $('#summary-options').show();
                 $('#group-by-selector').hide();
                 $('#stats_contributions_overview').hide();
+                $('#stats-table-listing .listing-header').hide();
                 $('#stats_overview').show();
             }
             else if (plotType == 'contributions') {
@@ -166,6 +180,7 @@ var Plots = {
                 $('#summary-options').hide();
                 $('#group-by-selector').hide();
                 $('#stats_contributions_overview').show();
+                $('#stats-table-listing .listing-header').show();
                 $('#stats_overview').hide();
             }
             else {
@@ -174,6 +189,7 @@ var Plots = {
                 $('#summary-options').hide();
                 $('#group-by-selector').show();
                 $('#stats_contributions_overview').hide();
+                $('#stats-table-listing .listing-header').hide();
                 $('#stats_overview').show();
             }
         },
@@ -264,8 +280,6 @@ var Plots = {
                 'events-addon': new Timeplot.DefaultEventSource()
             };
 
-            PlotsTables.addListeners('defined', this.dataSources);
-            
             this.valueGeometry = {
                 'gridColor': '#000000',
                 'axisLabelsPlacement': 'left',
@@ -291,6 +305,8 @@ var Plots = {
                     'id': 'count',
                     'dataSource': new Timeplot.ColumnSource(this.dataSources['count'], 1),
                     'showValues': true,
+                    'roundValues': false,
+                    'valueFormatter': numberFormat,
                     'dotColor': '#000000',
                     'lineColor': '#000000',
                     'fillColor': '#000000'
@@ -306,7 +322,9 @@ var Plots = {
                     'lineColor': '#000000'
                 },
                 'default': {
-                    'showValues': true
+                    'showValues': true,
+                    'roundValues': false,
+                    'valueFormatter': numberFormat
                 }
             };
 
@@ -314,20 +332,29 @@ var Plots = {
                 if (type == 'downloads') {
                     var dark = '#3366CC';
                     var light = '#3399CC';
+                    this.plotInfo['count'].dotColor = null;
+                    this.plotInfo['count'].fillGradient = false;
                 }
                 else if (type == 'updatepings') {
                     var dark = '#9966CC';
                     var light = '#CC99CC';
+                    this.plotInfo['count'].dotColor = null;
+                    this.plotInfo['count'].fillGradient = false;
                 }
                 else if (type == 'contributions') {
                     var dark = '#009933';
                     var light = '#339933';
+                    this.plotInfo['count'].valueFormatter = dollarFormat;
+                    this.plotInfo['count'].lineColor = dark;
+                    this.plotInfo['count'].dotColor = dark;
+                    this.plotInfo['count'].fillGradient = true;
+
+                    // reset group-by dropdown
+                    $('#contributions-group-by option:selected').removeAttr('selected');
+                    $("#contributions-group-by option[value='date']").attr('selected', 'selected');
                 }
                 
                 this.plotInfo['count'].fillColor = dark;
-                this.plotInfo['count'].dotColor = null;
-                this.plotInfo['count'].fillGradient = false;
-                
                 this.plotInfo['events-firefox'].lineColor = light;
                 this.plotInfo['events-addon'].lineColor = light;
             }
@@ -351,10 +378,17 @@ var Plots = {
                 Timeplot.createPlotInfo(this.plotInfo['events-firefox']),
                 Timeplot.createPlotInfo(this.plotInfo['events-addon'])
             ];
-            
+
             Plots.newTimeplot();
+            if (Plots.dataTable) {
+                $('#stats-table-listing').show();
+                Plots.dataTable.listenTo(this.dataSources['count']);
+                Plots.dataTable.config['valueFormatters'] = [null, this.plotInfo['count'].valueFormatter];
+                Plots.dataTable.setDownloadLink(Plots.currentCSV);
+            }
+
             Plots.timeplot = Timeplot.create(document.getElementById(Plots.timeplot_id), plotInfo);
-            Plots.timeplot.loadText(Plots.currentCSV, ",", this.dataSources['count'], parseFields);
+            Plots.timeplot.loadText(Plots.currentCSV, ",", this.dataSources['count'], Plots.parseFields);
             Plots.timeplot.loadXML(statsURL + 'xml/events/firefox', this.dataSources['events-firefox']);
             Plots.timeplot.loadXML(statsURL + 'xml/events/addon/' + addonID, this.dataSources['events-addon']);
         },
@@ -372,8 +406,6 @@ var Plots = {
                 'count': new Timeplot.DefaultEventSource()
             };
 
-            PlotsTables.addListeners('week_over_week', this.dataSources);
-            
             var date_parser = Timeline.NativeDateUnit.getParser('iso8601');
 
             // Collect Mondays from the set of available dates.
@@ -492,6 +524,8 @@ var Plots = {
                     'valueGeometry': 
                         new Timeplot.DefaultValueGeometry(this.valueGeometry),
                     'showValues': true,
+                    'roundValues': false,
+                    'valueFormatter': numberFormat,
                     'dotColor':   '#CC6666',
                     'dotRadius':  3.0,
                     'lineColor':  '#CC6666',
@@ -507,6 +541,8 @@ var Plots = {
                     'valueGeometry': 
                         new Timeplot.DefaultValueGeometry(this.valueGeometry),
                     'showValues': true,
+                    'roundValues': false,
+                    'valueFormatter': numberFormat,
                     'dotColor':   '#6666CC',
                     'dotRadius':  3.0,
                     'lineColor':  '#6666CC',
@@ -520,7 +556,7 @@ var Plots = {
                 Plots.currentCSV, 
                 ",", 
                 this.dataSources['count'], 
-                parseFields
+                Plots.parseFields
             );
 
         },
@@ -556,48 +592,84 @@ var Plots = {
     resizePlot: function(newHeight) {
         $('#' + Plots.timeplot_id).height(newHeight);
         Plots.timeplot.repaint();
+    },
+
+    parseFields: function(data) {
+        if (data != '') {
+            var rawFields = parseRawFields(data);
+
+            if (rawFields.length > 0) {
+                // Enough data
+                $('#not-enough-data').hide();
+                $('#no-contributions').hide();
+                
+                Plots.availableFields = rawFields;
+                plotSelection.addDefinedDropdowns();
+
+                if (Plots.dataTable) {
+                    var headers = Plots.availableFields;
+                    $.each(headers, function (i, val) {
+                        // Try to pretty up headers that look like app GUIDs
+                        if (val.substr(0,1) == '{') {
+                            headers[i] = plotSelection.getApplicationName(val)['itemName'];
+                        }
+                    });
+                    Plots.dataTable.setHeaders(headers);
+                }
+            }
+            else {
+                // Not enough data
+
+                var plotType = plotSelection.dropdowns['plot-selector'].selectedItem.value;
+                if (plotType == 'contributions') {
+                    $('#no-contributions').show();
+                } else {
+                    $('#not-enough-data').show();
+                }
+                
+                if (Plots.timeplot_id != '') {
+                    $('#' + Plots.timeplot_id).remove();
+                    Plots.timeplot = null;
+                }
+            }
+        }
+        
+        return data;
+    },
+
+    contributionsGroupByChange: function() {
+        // this = select node
+        var groupBy = $('option:selected', this).val();
+        var url = statsURL+'csv/'+addonID+'/contributions?group_by='+groupBy;
+        var eventSource = new Timeplot.DefaultEventSource();
+
+        Plots.dataTable.clearTable();
+        Plots.dataTable.listenTo(eventSource);
+        Plots.dataTable.setDownloadLink(url);
+        if (groupBy == 'transaction') {
+            Plots.dataTable.config['valueFormatters'] = [null, dollarFormat, dollarFormat];
+        } else {
+            Plots.dataTable.config['valueFormatters'] = [null, dollarFormat];
+        }
+
+        $.ajax({
+            url: url,
+            dataType: 'text',
+            success: function(data, textStatus) {
+                // this = ajax options for this request
+                try {
+                    eventSource.loadText(data, ',', this.url, function(text){
+                        Plots.dataTable.setHeaders(parseRawFields(text));
+                        return text;
+                    });
+                } catch (e) {
+                    SimileAjax.Debug.exception(e);
+                }
+            },
+            error: function(request, textStatus, errorThrown) {
+                // this = ajax options for this request
+            }
+        });
     }
 };
     
-function parseFields(data) {
-    if (data != '') {
-        var lineCount = (data.split("\n").length - 9);
-        
-        if (lineCount > 1) {
-            // Enough data
-            $('#not-enough-data').hide();
-            $('#no-contributions').hide();
-            
-            var start = data.indexOf('Fields: [');
-            var end = data.indexOf(']', start);
-            var fields = data.substring(start + 9, end);
-            
-            var fieldArray = fields.split(';');
-            
-            Plots.availableFields = [];
-            
-            for (var i = 0; i < fieldArray.length; i++) {
-                Plots.availableFields[i] = fieldArray[i];
-            }
-            
-            plotSelection.addDefinedDropdowns();
-        }
-        else {
-            // Not enough data
-
-            var plotType = plotSelection.dropdowns['plot-selector'].selectedItem.value;
-            if (plotType == 'contributions') {
-                $('#no-contributions').show();
-            } else {
-                $('#not-enough-data').show();
-            }
-            
-            if (Plots.timeplot_id != '') {
-                $('#' + Plots.timeplot_id).remove();
-                Plots.timeplot = null;
-            }
-        }
-    }
-    
-    return data;
-}

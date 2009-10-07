@@ -335,22 +335,6 @@ class StatsComponent extends Object {
 
                 }
                 break;
-
-            // Contribution $USD per day
-            case 'contributions':
-                if ($data = $model->query("
-                    SELECT DATE(`created`) AS `date`, SUM(`amount`) AS `count` 
-                    FROM `stats_contributions` 
-                    WHERE `addon_id`={$addon_id} AND `transaction_id` IS NOT NULL AND `amount` > 0
-                    GROUP BY `date`
-                    HAVING `date` != '0000-00-00'
-                ", true)) {
-                    foreach ($data as $download) {
-                        $csv[] = array('date' => $download['0']['date'],
-                                       'count' => $download['0']['count']);
-                    }
-                }
-                break;
         }
 
         // we have two varieties above: csv pre-built
@@ -398,6 +382,59 @@ class StatsComponent extends Object {
 
         // numeric keys please for csv
         return array_values($dates);
+    }
+
+    /**
+     * Generate contributions report for a single addon
+     * @param int $addon_id
+     * @param string $group_by one of 'transaction' or 'date' (default)
+     * @return array
+     */
+    function getContributionsByAddon($addon_id, $group_by='date') {
+        $csv = array();
+        $model =& $this->controller->Addon;
+
+        switch ($group_by) {
+        // Contribution transaction details
+        case 'transaction':
+            if ($data = $model->query("
+                SELECT DATE(`created`) AS `date`, `amount`, `suggested_amount`, `post_data`
+                FROM `stats_contributions` AS `sc`
+                WHERE `addon_id`={$addon_id} AND `transaction_id` IS NOT NULL AND `amount` > 0
+                ORDER BY `date`
+            ", true)) {
+                foreach ($data as $download) {
+                    $_post_data = unserialize($download['sc']['post_data']);
+                    $contributor = isset($_post_data['payer_email']) ? $_post_data['payer_email'] : '';
+                    $csv[] = array('date' => $download['0']['date'],
+                                   'amount' => $download['sc']['amount'],
+                                   'requested' => $download['sc']['suggested_amount'],
+                                   'contributor' => $contributor,
+                                   );
+                }
+            }
+            break;
+
+        // Contribution $USD per day
+        case 'date':
+        default:
+            if ($data = $model->query("
+                SELECT DATE(`created`) AS `date`, COUNT(`transaction_id`) AS `count`, SUM(`amount`) AS `total` 
+                FROM `stats_contributions` 
+                WHERE `addon_id`={$addon_id} AND `transaction_id` IS NOT NULL AND `amount` > 0
+                GROUP BY `date`
+                HAVING `date` != '0000-00-00'
+            ", true)) {
+                foreach ($data as $download) {
+                    $csv[] = array('date' => $download['0']['date'],
+                                   'total' => $download['0']['total'],
+                                   'count' => $download['0']['count']);
+                }
+            }
+            break;
+        }
+
+        return $csv;
     }
 
     /**
@@ -771,6 +808,203 @@ class StatsComponent extends Object {
         $results = array_reverse($results);
 
         return $results;
+    }
+
+
+    /**
+     * Generate contributions stats site-wide overview
+     *
+     * @return array
+     */
+    function getSiteContributionsOverview() {
+        $model =& $this->controller->Addon;
+
+        $ret = array(
+            'alltime' => array(
+                'total' => 0,
+                'count' => 0,
+                'average' => 0,
+            ),
+            'thisweek' => array(
+                'total' => 0,
+                'count' => 0,
+                'average' => 0,
+            ),
+        );
+
+        // alltime totals
+        $rows = $model->query("
+            SELECT
+                IFNULL(SUM(`amount`), 0) AS `total`,
+                COUNT(`transaction_id`) AS `count`
+            FROM `stats_contributions` 
+            WHERE `transaction_id` IS NOT NULL AND `amount` > 0
+        ", true);
+
+        if ($rows) {
+            $ret['alltime']['total'] = $rows[0][0]['total'];
+            $ret['alltime']['count'] = $rows[0][0]['count'];
+            if ($ret['alltime']['count'] > 0) {
+                $ret['alltime']['average'] = $ret['alltime']['total']/$ret['alltime']['count'];
+            }
+        }
+
+        // totals for this week
+        if (date('w') == 0) {
+            $startDate = date('Y-m-d'); // today is sunday
+        } else {
+            $startDate = date('Y-m-d', strtotime('last sunday'));
+        }
+
+        $rows = $model->query("
+            SELECT
+                IFNULL(SUM(`amount`), 0) AS `total`,
+                COUNT(`transaction_id`) AS `count`
+            FROM `stats_contributions` 
+            WHERE `transaction_id` IS NOT NULL AND `amount` > 0 AND `created` >= '{$startDate}'
+        ", true);
+
+        if ($rows) {
+            $ret['thisweek']['total'] = $rows[0][0]['total'];
+            $ret['thisweek']['count'] = $rows[0][0]['count'];
+            if ($ret['thisweek']['count'] > 0) {
+                $ret['thisweek']['average'] = $ret['thisweek']['total']/$ret['thisweek']['count'];
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Contributions stats for addons: top contributions totals of all-time and for this week
+     *
+     * @param int $limit max number of addons to include in each listing
+     * @return array
+     */
+    function getSiteContributionsTopAddons($limit=3) {
+        $model =& $this->controller->Addon;
+
+        $ret = array(
+            'alltime' => array(),
+            'thisweek' => array(),
+        );
+
+        // top addons of alltime 
+        $rows = $model->query("
+            SELECT
+                `addon_id`,
+                IFNULL(SUM(`amount`), 0) AS `total`
+            FROM `stats_contributions` AS `sc`
+            WHERE `transaction_id` IS NOT NULL AND `amount` > 0
+            GROUP BY `addon_id`
+            HAVING `total` > 0
+            ORDER BY `total` DESC
+            LIMIT {$limit}
+        ", true);
+
+        if ($rows) {
+            foreach ($rows as $row) {
+                $ret['alltime'][] = array(
+                    'addon_id' => $row['sc']['addon_id'],
+                    'total' => $row[0]['total'],
+                );
+            }
+        }
+
+        // top addons for this week
+        if (date('w') == 0) {
+            $startDate = date('Y-m-d'); // today is sunday
+        } else {
+            $startDate = date('Y-m-d', strtotime('last sunday'));
+        }
+        $rows = $model->query("
+            SELECT
+                `addon_id`,
+                IFNULL(SUM(`amount`), 0) AS `total`
+            FROM `stats_contributions` AS `sc`
+            WHERE `transaction_id` IS NOT NULL AND `amount` > 0 AND `created` >= '{$startDate}'
+            GROUP BY `addon_id`
+            HAVING `total` > 0
+            ORDER BY `total` DESC
+            LIMIT {$limit}
+        ", true);
+
+        if ($rows) {
+            foreach ($rows as $row) {
+                $ret['thisweek'][] = array(
+                    'addon_id' => $row['sc']['addon_id'],
+                    'total' => $row[0]['total'],
+                );
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Generate contributions stats (site-wide)
+     *
+     * @param string $groupBy 'date' or 'addon'
+     * @return array suitable for CSV rendering
+     */
+    function getSiteContributionsStats($groupBy='date') {
+        $addonModel =& $this->controller->Addon;
+        $csv = array();
+
+        switch ($groupBy) {
+        case 'date':
+            if ($rows = $addonModel->query("
+                SELECT
+                    DATE(`created`) AS `date`,
+                    SUM(`amount`) AS `total`,
+                    COUNT(`transaction_id`) AS `count`
+                FROM `stats_contributions` 
+                WHERE `transaction_id` IS NOT NULL AND `amount` > 0
+                GROUP BY `date` DESC
+                HAVING `date` != '0000-00-00'
+            ", true)) {
+                foreach ($rows as $row) {
+                    $csv[] = array('date' => $row['0']['date'],
+                                   'total' => $row['0']['total'],
+                                   'count' => $row['0']['count'],
+                                   );
+                }
+            }
+            break;
+
+        case 'addon':
+            $rows = $addonModel->query("
+                SELECT
+                    DATE(`created`) AS `date`,
+                    `addon_id`,
+                    SUM(`amount`) AS `total`,
+                    COUNT(`transaction_id`) AS `count`
+                FROM `stats_contributions` AS `sc`
+                WHERE `transaction_id` IS NOT NULL AND `amount` > 0
+                GROUP BY `addon_id`, `date`
+                HAVING `date` != '0000-00-00'
+                ORDER BY `date` DESC, `total` DESC
+            ", true);
+
+            if ($rows) {
+                foreach ($rows as $row) {
+                    $csv[] = array('date' => $row['0']['date'],
+                                   'addon' => json_encode(array(
+                                        'id' => $row['sc']['addon_id'],
+                                        'name' => $addonModel->getAddonName($row['sc']['addon_id']),
+                                   )),
+                                   'total' => $row['0']['total'],
+                                   'count' => $row['0']['count'],
+                                   );
+                }
+            }
+            break;
+
+        default:
+            return false;
+        }
+
+        return $csv;
     }
 
     /**

@@ -63,3 +63,42 @@ function sprintf()
         }
         return str;
 }
+
+// format a value into a localized number (if possible)
+function numberFormat(v) {
+    if (typeof number_format == 'function') {
+        return number_format(v);
+    } else {
+        return '' + Math.round(v);
+    }
+}
+
+// format a value into US Dollars
+function dollarFormat(v) {
+    if (typeof number_format == 'function') {
+        return '$' + number_format(v, 2);
+    } else {
+        return '$' + (Math.round(v*100)/100);
+    }
+}
+
+// format an addon id and name into a stat dashboard link
+function addonLinkFormat(addonId, addonName) {
+    return $('<a></a>').attr('href', statsURL + 'addon/' + addonId).text(addonName);
+}
+
+// parse raw field names from csv comments
+function parseRawFields(data) {
+    var fields = [];
+    if (data != '') {
+        var lineCount = (data.split("\n").length - 9);
+        
+        if (lineCount > 1) {
+            var start = data.indexOf('Fields: [');
+            var end = data.indexOf(']', start);
+            var fieldsString = data.substring(start + 9, end);
+            fields = fieldsString.split(';');
+        }
+    }
+    return fields;
+}

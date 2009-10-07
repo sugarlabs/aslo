@@ -221,7 +221,7 @@ class StatisticsController extends AppController
             'stats/dropdowns.js',
             'stats/colors.js',
             'stats/plot-selection.js',
-            'stats/plot-tables.js',
+            'stats/plot-data-table.js',
             'stats/plots.js'
             );
         $this->publish('jsAdd', $this->jsAdd);
@@ -253,8 +253,7 @@ class StatisticsController extends AppController
         $this->breadcrumbs[sprintf(___('%1$s Statistics'), $addon['Translation']['name']['string'])] = '/statistics/addon/'.$addon_id;
         $this->publish('breadcrumbs', $this->breadcrumbs);
 
-        $prescriptJS = "var Simile_urlPrefix = '".SITE_URL.$this->base.'/js/simile'."';";
-        $this->set('prescriptJS', $prescriptJS);
+        $this->set('prescriptJS', "var Simile_urlPrefix = '{$this->base}/js/simile';");
 
         $session = $this->Session->read('User');
         $this->publish('email', $session['email']);
@@ -622,8 +621,12 @@ class StatisticsController extends AppController
         }
 
         // Contribution stats might be disabled
-        if ($plot == 'contributions' && !$this->_checkContributionStatsEnabled()) {
-            $csv = array();
+        if ($plot == 'contributions') {
+            if ($this->_checkContributionStatsEnabled()) {
+                $csv = $this->Stats->getContributionsByAddon($addon_id, @$_GET['group_by']);
+            } else {
+                $csv = array();
+            }
         } else {
             $csv = $this->Stats->historicalPlot($addon_id, $plot, @$_GET['group_by']);
         }

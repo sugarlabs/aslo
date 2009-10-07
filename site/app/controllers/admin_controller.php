@@ -45,8 +45,8 @@ class AdminController extends AppController
     var $name = 'Admin';
 
     var $uses = array('Addon', 'Addonlog', 'Addontype', 'Application', 'Approval', 'Appversion', 'BlacklistedGuid', 'Category', 'Cannedresponse', 'Collection', 'CollectionFeatures', 'CollectionPromo', 'Eventlog', 'Feature', 'File', 'Group', 'HubEvent', 'HubPromo', 'Platform', 'Tag', 'Translation', 'User', 'Version', 'Memcaching');
-    var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Hub', 'Versioncompare', 'Pagination');
-    var $helpers = array('Html', 'Javascript', 'Pagination');
+    var $components = array('Amo', 'Audit', 'Developers', 'Error', 'Hub', 'Versioncompare', 'Pagination', 'Stats');
+    var $helpers = array('Html', 'Javascript', 'Localization', 'Pagination', 'Statistics');
 
     //These defer to their own access checks
     var $aclExceptions = array('index', 'summary',
@@ -2163,6 +2163,95 @@ class AdminController extends AppController
         } else {
             $this->flash('Memcache could NOT be flushed!', '/admin/serverstatus');
         }
+    }
+
+   /**
+    * Statistics
+    */
+    function statistics($action='') {
+        $this->breadcrumbs['Statistics'] = '/admin/statistics';
+        $this->set('breadcrumbs', $this->breadcrumbs);
+        $this->set('page', 'statistics');
+
+        switch($action) {
+            case 'contributions':
+                $this->set('subpage', 'contributions');
+                $this->_statsContributions();
+                break;
+            default:
+                $this->set('subpage', '');
+                $this->render('statistics');
+                break;
+        }
+    }
+
+    /**
+     * CSV data for admin only stats
+     */
+    function csv($plot=null) {
+        if (!$this->SimpleAcl->actionAllowed('Admin', 'ViewAnyStats', $this->Session->read('User'))) {
+            $this->Amo->accessDenied();
+            return;
+        }
+
+        switch ($plot) {
+        case 'contributions':
+            $group_by = isset($_GET['group_by']) ? $_GET['group_by'] : 'date';
+            $csv = $this->Stats->getSiteContributionsStats($group_by);
+            break;
+
+        default:
+            header('HTTP/1.1 404 Not Found');
+            $this->flash(___('CSV data not found'), "/admin/statistics/");
+            return;
+        }
+
+        $this->set('csv', $csv);
+        $this->set('description', "{$plot} Admin Statistics");
+        $this->set('url', SITE_URL . $this->url("/admin/csv/{$plot}"));
+        $this->render('csv', 'ajax', 'views/statistics/csv.thtml');
+    }
+
+    function _statsContributions() {
+        $this->jsAdd = array(
+            'jquery-compressed.js',
+            'json.js',
+            'strftime-min-1.3.js',
+            'number-format.js',
+            'simile/amo-bundle.js',
+            'stats/stats.js',
+            'stats/admin-stats.js',
+            'stats/plot-data-table.js',
+        );
+        $this->publish('jsAdd', $this->jsAdd);
+        $this->set('prescriptJS', "var Simile_urlPrefix = '{$this->base}/js/simile';");
+
+        $this->cssAdd = array(
+            'simile/bundle',
+            'stats/stats',
+        );
+        $this->publish('cssAdd', $this->cssAdd);
+
+        // fetch top addons and lookup names
+        $top_addons = $this->Stats->getSiteContributionsTopAddons();
+        foreach ($top_addons['alltime'] as $key => $addon) {
+            $top_addons['alltime'][$key]['addon'] = $this->Addon->getAddonName($addon['addon_id']);
+        }
+        foreach ($top_addons['thisweek'] as $key => $addon) {
+            $top_addons['thisweek'][$key]['addon'] = $this->Addon->getAddonName($addon['addon_id']);
+        }
+
+        $this->publish('summary', $this->Stats->getSiteContributionsOverview());
+        $this->publish('top_addons', $top_addons);
+
+        $localeconv = localeconv();
+        $this->publish('jsLocalization', array(
+            'date' => ___('%B %e, %Y'),
+            'decimal_point' => $localeconv['decimal_point'],
+            'thousands_sep' => $localeconv['thousands_sep'],
+        ));
+
+        $this->render('statistics_contributions');
     }
     
     function config() {

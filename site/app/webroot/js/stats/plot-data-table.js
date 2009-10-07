@@ -16,12 +16,65 @@ PlotDataTable.prototype = {
         tableId: '',
         paginationId: '',
         downloadLinkId: '',
+        loadingId: '',
         ignoreToday: '', // ignore the first row if it matches this date ('YYYY-MM-DD' format)
         rowsPerPage: 6,
-        maxRows: 0  // maximum number of rows to process regardless of pagination (0 == no max)
+        maxRows: 0,  // maximum number of rows to process regardless of pagination (0 == no max)
+        valueFormatters: [],
+        defaultValueFormatter: (typeof number_format == 'function' ? number_format : null)
     },
     config: {},
     currentPage: 0,
+
+    // hide our table
+    hide: function() {
+        $('#' + this.config.tableId).hide();
+    },
+
+    // hide loading indicator
+    hideLoading: function() {
+        if (this.config.loadingId) {
+            $('#' + this.config.loadingId).hide();
+        }
+    },
+
+    // show our table
+    show: function() {
+        $('#' + this.config.tableId).show();
+    },
+
+    // show loading indicator
+    showLoading: function() {
+        if (this.config.loadingId) {
+            $('#' + this.config.loadingId).show();
+        }
+    },
+
+    // Clear and hide the configured table
+    clearTable: function() {
+        var stats_table = $('#' + this.config.tableId);
+        $(stats_table).hide();
+        $('tbody tr', stats_table).remove();
+        if (this.config.paginationId) {
+            $('#' + this.config.paginationId).hide().empty();
+        }
+    },
+
+    // Rebuild table headers from array of fields
+    setHeaders: function(fields) {
+        var row = $('<tr class="header"></tr>'),
+            col = $('<th></th>');
+
+        $.each(fields, function(i, val) {
+            col.clone().html(val).appendTo(row);
+        });
+
+        // mark first/last columns.
+        row.find('th:first').addClass('first').end()
+            .find('th:last').addClass('last');
+
+        $('#' + this.config.tableId + ' thead').empty().append(row);
+    },
 
     // Attaches table to a timeplot datasource for automatic loading
     listenTo: function(eventSource) {
@@ -64,6 +117,8 @@ PlotDataTable.prototype = {
         // Clear existing data row
         var stats_table = $('#' + this.config.tableId);
         $('tbody tr', stats_table).remove();
+        $(stats_table).show();
+        this.showLoading();
 
         // Get localized date format and un-escape it.
         var date_fmt = localized.date.replace(/&#37;/g,'%');
@@ -88,6 +143,7 @@ PlotDataTable.prototype = {
                     .find('tr:first').addClass('first').end()
                     .find('tr:last').addClass('last').end();
                 that.repaginate();
+                that.hideLoading();
                 return;
             }
 
@@ -99,17 +155,43 @@ PlotDataTable.prototype = {
             // Clone a new row and populate it with the values.
             var row = tmpl_row.clone(),
                 col = row.find('td.col').remove();
-            for (var j=0,value; value=values[j]; j++) {
+            for (var j=0,value; j < values.length; j++) {
+                value = values[j];
+                // format values
                 if (valueRe.test(value)) {
-                    if (typeof number_format == 'function') {
-                        value = number_format(value);
+                    // custom value formatter
+                    if (j in that.config.valueFormatters && typeof that.config.valueFormatters[j] == 'function') {
+                        value = that.config.valueFormatters[j](value);
+
+                    // default value formatter
+                    } else if (typeof that.config.defaultValueFormatter == 'function') {
+                        value = that.config.defaultValueFormatter(value);
                     }
                     col.clone().text(value).addClass('value').appendTo(row);
+
+                // format json encoded addon into a link
+                } else if (typeof addonLinkFormat == 'function' && j in that.config.valueFormatters && that.config.valueFormatters[j] == addonLinkFormat) {
+                    // attempt to parse addon from JSON
+                    var addon = {};
+                    try {
+                        addon = JSON.parse(value);
+                    } catch(e) {
+                        // ignore errors - default will format value into a span
+                    }
+
+                    if (typeof addon == 'object' && 'id' in addon && 'name' in addon) {
+                        value = addonLinkFormat(addon.id, addon.name);
+                    } else {
+                        value = $('<span></span>').text(value);
+                    }
+
+                    col.clone().html(value).appendTo(row);
+
+                // format text
                 } else {
                     col.clone().text(value).appendTo(row);
                 }
             }
-
 
             // Set the even/odd row class and mark first/last columns.
             row.addClass( is_even_row ? 'even' : 'odd' )
@@ -175,7 +257,7 @@ PlotDataTable.prototype = {
         if (! this.config.paginationId) {
             return;
         }
-        var container = $('#' + this.config.paginationId).empty();
+        var container = $('#' + this.config.paginationId).hide().empty();
 
         // maybe show previous link
         if (this.currentPage > 0) {
@@ -228,6 +310,9 @@ PlotDataTable.prototype = {
         if (this.currentPage < totalPages-1) {
             container.append(this.paginationItemFactory(this.currentPage+1, 'Next', {next: true}));
         }
+
+        // show off all our hard work
+        container.show();
     },
 
     // Repaginate the table based on current page and rows per page

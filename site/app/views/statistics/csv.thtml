@@ -14,10 +14,12 @@ echo "#\n";
 
 if (!empty($csv)) {
     $heading = implode(array_keys($csv[0]), ';');
-    echo "# Fields: [{$heading}]";
-    foreach ($csv as $values) {
-        echo "\n".implode($values, ',');
+    echo "# Fields: [{$heading}]\n";
+    $fp = fopen('php://output', 'w');
+    foreach ($csv as $row) {
+        fputcsv($fp, $row);
     }
+    fclose($fp);
 }
 
 ?>
