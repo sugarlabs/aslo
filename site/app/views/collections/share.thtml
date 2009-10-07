@@ -12,7 +12,7 @@
         foreach ($link_data as $name => $value) {
             // replace &#42; with -
             $value = htmlspecialchars_decode($value);
-            $value = html_entity_decode($value);
+            $value = html_entity_decode($value, ENT_QUOTES);
             
             $service_url = str_replace(
                 '{'.strtoupper($name).'}', 
