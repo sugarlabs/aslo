@@ -76,6 +76,13 @@ class Database {
         $this->write_config = $write_config;
         $this->read_config = $read_config;
 
+        $this->personas_config = array(
+            'host' => PERSONAS_DB_HOST,
+            'user' => PERSONAS_DB_USER,
+            'pass' => PERSONAS_DB_PASS,
+            'name' => PERSONAS_DB_NAME
+        );
+
         $this->connectWrite($write_config['host'], $write_config['user'], $write_config['pass'], $write_config['name']);
         $this->connectRead($read_config['host'], $read_config['user'], $read_config['pass'], $read_config['name']);
 
