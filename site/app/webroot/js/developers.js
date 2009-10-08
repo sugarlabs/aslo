@@ -125,8 +125,6 @@ var upload = {
                 $('#test-results-message span').hide();
                 $('#test-results-action .action-button').hide();
 
-                // Sanitize response
-                response = response.replace(/'/g, '"');            
                 upload.response = JSON.parse($('<div>' + response + '</div>').find('#json').html());
            
                 $('.validation').slideUp('slow');
@@ -512,9 +510,6 @@ var versions_validate = {
         }
 
         var displayResults = function(response, status) {
-            // JSON parser chokes on ', since it uses eval().  
-            // Since the result is just a big tree, we can simply replace them.
-            response = response.replace(/'/g, '"');            
             var result = JSON.parse(response);
 
             if (result.validation_disabled) {
@@ -548,7 +543,6 @@ var versions_validate = {
                         type: 'GET',
                         url: verifyurl + '../teststats/' + counts[0] + '/' + counts[1] + '/' + counts[2],
                         success: function(response) {
-                            response = response.replace(/'/g, '"');
                             var result = JSON.parse(response);
                             that.html(result.stats).fadeIn('slow');
                         },
