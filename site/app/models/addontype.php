@@ -85,6 +85,8 @@ class Addontype extends AppModel
                 return ___('Language Pack (Add-on)');
             case ADDON_PLUGIN: 
                 return ___('Plugin');
+            case ADDON_PERSONA:
+                return ___('Persona');
         }
     }
                   
@@ -101,7 +103,8 @@ class Addontype extends AppModel
             ADDON_SEARCH => ___('Search Engines', 'general_addontype_search_plural'),
             ADDON_LPAPP => ___('Language Packs (Application)'),
             ADDON_LPADDON => ___('Language Packs (Add-on)'),
-            ADDON_PLUGIN => ___('Plugins', 'general_addontype_plugin_plural')
+            ADDON_PLUGIN => ___('Plugins', 'general_addontype_plugin_plural'),
+            ADDON_PERSONA => ___('Personas'),
         );
 
         return $addontypes;

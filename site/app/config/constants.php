@@ -186,6 +186,7 @@ define('ADDON_LPAPP', '5');
 define('ADDON_LPADDON', '6');
 define('ADDON_PLUGIN', '7');
 define('ADDON_API', '8'); // not actually a type but used to identify extensions + themes
+define('ADDON_PERSONA', '9');
 
 define('COUNT_ADDON_PLUGIN', 7); // Since the plugin page is static, define a static count here,
 
