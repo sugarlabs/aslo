@@ -426,9 +426,15 @@ class StatsComponent extends Object {
                 HAVING `date` != '0000-00-00'
             ", true)) {
                 foreach ($data as $download) {
-                    $csv[] = array('date' => $download['0']['date'],
-                                   'total' => $download['0']['total'],
-                                   'count' => $download['0']['count']);
+                    if ($download['0']['count'] > 0) {
+                        $average = round($download['0']['total'] / $download['0']['count'], 2);
+                    } else {
+                        $average = 0;
+                    }
+                    $csv[] = array('date'    => $download['0']['date'],
+                                   'total'   => $download['0']['total'],
+                                   'count'   => $download['0']['count'],
+                                   'average' => $average);
                 }
             }
             break;
@@ -964,9 +970,15 @@ class StatsComponent extends Object {
                 HAVING `date` != '0000-00-00'
             ", true)) {
                 foreach ($rows as $row) {
+                    if ($row['0']['count'] > 0) {
+                        $average = round($row['0']['total'] / $row['0']['count'], 2);
+                    } else {
+                        $average = 0;
+                    }
                     $csv[] = array('date' => $row['0']['date'],
                                    'total' => $row['0']['total'],
                                    'count' => $row['0']['count'],
+                                   'average' => $average,
                                    );
                 }
             }
@@ -988,6 +1000,11 @@ class StatsComponent extends Object {
 
             if ($rows) {
                 foreach ($rows as $row) {
+                    if ($row['0']['count'] > 0) {
+                        $average = round($row['0']['total'] / $row['0']['count'], 2);
+                    } else {
+                        $average = 0;
+                    }
                     $csv[] = array('date' => $row['0']['date'],
                                    'addon' => json_encode(array(
                                         'id' => $row['sc']['addon_id'],
@@ -995,6 +1012,7 @@ class StatsComponent extends Object {
                                    )),
                                    'total' => $row['0']['total'],
                                    'count' => $row['0']['count'],
+                                   'average' => $average,
                                    );
                 }
             }

@@ -78,7 +78,7 @@ var Plots = {
         if (this.dataTable) {
             this.dataTable.listenTo(eventSource);
             this.dataTable.setDownloadLink(this.currentCSV);
-            this.dataTable.config['valueFormatters'] = [null, dollarFormat];
+            this.dataTable.config['valueFormatters'] = [null, dollarFormat, null, dollarFormat];
             $('#stats-table-listing').show();
             this.dataTable.show();
             this.dataTable.showLoading();
@@ -111,9 +111,9 @@ var Plots = {
         Plots.dataTable.setDownloadLink(url);
 
         if (groupBy == 'addon') {
-            Plots.dataTable.config['valueFormatters'] = [null, addonLinkFormat, dollarFormat];
+            Plots.dataTable.config['valueFormatters'] = [null, addonLinkFormat, dollarFormat, null, dollarFormat];
         } else {
-            Plots.dataTable.config['valueFormatters'] = [null, dollarFormat];
+            Plots.dataTable.config['valueFormatters'] = [null, dollarFormat, null, dollarFormat];
         }
 
         $.ajax({

@@ -243,7 +243,11 @@ var plotSelection = {
         
         // If not clearing the plot, add the new selected plot
         if (dropdown.selectedItem.value != '') {
-            Plots.defined.addPlot(dropdown.config.id, Plots.availableFields.indexOf(dropdown.selectedItem.value), dropdown.config.color);
+            var formatter = null;
+            if (dropdown.config.type == 'contributions' && dropdown.selectedItem.value == 'average') {
+                formatter = dollarFormat;
+            }
+            Plots.defined.addPlot(dropdown.config.id, Plots.availableFields.indexOf(dropdown.selectedItem.value), dropdown.config.color, formatter);
         }
     },
     

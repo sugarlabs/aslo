@@ -381,9 +381,15 @@ var Plots = {
 
             Plots.newTimeplot();
             if (Plots.dataTable) {
+                var plotType = plotSelection.dropdowns['plot-selector'].selectedItem.value;
+                if (plotType == 'contributions') {
+                    Plots.dataTable.config['valueFormatters'] = [null, dollarFormat, null, dollarFormat];
+                } else {
+                    Plots.dataTable.config['valueFormatters'] = [null, this.plotInfo['count'].valueFormatter];
+                }
+
                 $('#stats-table-listing').show();
                 Plots.dataTable.listenTo(this.dataSources['count']);
-                Plots.dataTable.config['valueFormatters'] = [null, this.plotInfo['count'].valueFormatter];
                 Plots.dataTable.setDownloadLink(Plots.currentCSV);
             }
 
@@ -561,7 +567,7 @@ var Plots = {
 
         },
         
-        addPlot: function(plotName, column, color) {
+        addPlot: function(plotName, column, color, formatter) {
             if (plotName in this.plotInfo)
                 var plotInfo = this.plotInfo[plotName];
             else {
@@ -571,6 +577,7 @@ var Plots = {
                 plotInfo.dotColor = color;
                 plotInfo.lineColor = color;
                 plotInfo.fillColor = color;
+                plotInfo.valueFormatter = (typeof formatter == 'function' ? formatter : numberFormat);
             }
             
             return Plots.timeplot.addPlot(Timeplot.createPlotInfo(plotInfo), true);
@@ -649,7 +656,7 @@ var Plots = {
         if (groupBy == 'transaction') {
             Plots.dataTable.config['valueFormatters'] = [null, dollarFormat, dollarFormat];
         } else {
-            Plots.dataTable.config['valueFormatters'] = [null, dollarFormat];
+            Plots.dataTable.config['valueFormatters'] = [null, dollarFormat, null, dollarFormat];
         }
 
         $.ajax({
