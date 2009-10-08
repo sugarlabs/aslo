@@ -23,19 +23,4 @@ function connection_string($arr) {
 $db = new Database();
 $action = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
 
-switch ($action) {
-
-    case 'read':
-        echo connection_string($db->read_config);
-    break;
-
-    case 'write':
-        echo connection_string($db->write_config);
-    break;
-
-    default:
-        echo "Invalid command: '{$action}'\n";
-        exit(1);
-}
-
-echo "\n";
+echo connection_string($db->{$action.'_config'})."\n";
