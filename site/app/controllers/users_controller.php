@@ -43,7 +43,7 @@ class UsersController extends AppController
     var $name = 'Users';
     var $uses = array('User', 'Addon', 'Collection', 'Eventlog', 'File', 'Review', 'Version', 'Versioncomment');
     var $components = array('Amo', 'Developers', 'Email', 'Httplib', 'Image', 'Ldap', 'Session', 'Pagination', 'Recaptcha');
-    var $helpers = array('Html', 'Link', 'Javascript');
+    var $helpers = array('Html', 'Link', 'Javascript', 'InstallButton');
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox', 'checkAdvancedSearch');
     var $exceptionCSRF = array("/users/login", "/users/register", "/users/pwreset");	
     var $layout = 'amo2009';
