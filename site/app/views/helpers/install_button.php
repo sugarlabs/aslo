@@ -777,11 +777,9 @@ class InstallButtonHelper extends Helper {
     }
 
     function addonFiles() {
-        return isset($this->options['addonFiles']) ?
+        return (isset($this->options['addonFiles'])) ?
             $this->options['addonFiles'] :
-            isset($this->addon['File']) ?
-                $this->addon['File'] :
-                null;
+            $this->addon['File'];
     }
 
     function addonEULA() {

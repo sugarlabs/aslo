@@ -939,7 +939,6 @@ class AddonsController extends AppController
         $featureAddons = $this->Addon->getAddonList($_feat_ids, $associations);
 
         $this->publish('featured_addons', $featureAddons);
-
         $list_num = 10;
 
         $pop_addon_ids = $this->Addon->getAddonsFromCategory(
