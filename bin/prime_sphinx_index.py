@@ -209,7 +209,10 @@ class SphinxIndexPrimer:
         print msg
         if pre_query:
             c.execute(pre_query)
+            
+        warnings.simplefilter('ignore')
         c.execute(query)
+        warnings.resetwarnings()
         rows = c.fetchall()
         c2 = self.db.cursor()
         for row in rows:
