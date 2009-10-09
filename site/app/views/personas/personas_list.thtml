@@ -24,7 +24,8 @@
           <?php $p = $persona['Persona'] ?>
           <li>
             <a href="<?=$html->url('/persona/'.$p['addon_id'])?>">
-              <img src=<?=$p['thumb']?> alt="" />
+              <img class="persona" src=<?=$p['thumb']?> alt=""
+                   persona="<?=$p['json']?>"/>
             </a>
             <h4><?=$persona['Translation']['name']['string']?></h4>
             <em><?=sprintf(___('%1$s active daily users'), $persona['Addon']['average_daily_users'])?></em>
@@ -57,3 +58,6 @@
     </ul>
   </div>
 </div> <!-- secondary -->
+<script type="text/javascript">
+    $(document).ready(function($){ $('img.persona').previewPersona(); });
+</script>

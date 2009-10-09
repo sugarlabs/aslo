@@ -23,22 +23,18 @@ class Persona extends AppModel {
 
         $bindings = array();
 
-        if (in_array('addon', $associations)) {
-            $bindings[] = 'Addon';
-        }
-
         $this->bindOnly($bindings);
         $persona = $this->findById($id);
 
         $p =& $persona['Persona'];
         $p['prefix'] = $prefix = $this->urlPrefix($p['persona_id']);
 
-        $p['thumb'] = join('/', array(PERSONAS_IMAGE_ROOT, $prefix, 'preview.jpg'));
+        $p['thumb'] = join('/', array(PERSONAS_IMAGE_ROOT_SSL, $prefix, 'preview.jpg'));
 
-        // XXX: I don't know why cake isn't pulling anything from the Addons
-        // model here, so we'll do it manually.  Oh joy.
-        $addon = $this->Addon->getAddon($p['addon_id'], array('default_fields'));
-        $persona['Addon'] = $addon['Addon'];
+        $addon = $this->Addon->getAddon($p['addon_id'], array('all_categories', 'default_fields'));
+        $persona['Addon'] = array_merge($addon, $addon['Addon']);
+        unset($persona['Addon']['Addon']);
+        $p['json'] = json_encode($this->jsonData($persona));
 
         return $this->endCache($persona);
     }
@@ -58,4 +54,33 @@ class Persona extends AppModel {
         $b = ($id / 10) % 10;
         return join('/', array($b, $a, $id));
     }
+
+    /* Get an array of all the pieces that go into the Personas JSON element. */
+    function jsonData($persona) {
+        $p = $persona['Persona'];
+        $prefix = $this->urlPrefix($p['persona_id']);
+        return array(
+            'id' => $p['id'],
+            'name' => $persona['Translation']['name']['string'],
+            'accentcolor' => hex_color($p['accentcolor']),
+            'textcolor' => hex_color($p['textcolor']),
+            'category' => $persona['Addon']['Category'][0]['Translation']['name']['string'],
+            'author' => nullable($p['author']),
+            'description' => nullable($persona['Translation']['description']['string']),
+            'header' => join('/', array(PERSONAS_IMAGE_ROOT, $prefix, $p['header'])),
+            'footer' => join('/', array(PERSONAS_IMAGE_ROOT, $prefix, $p['footer'])),
+            'headerURL' => join('/', array(PERSONAS_IMAGE_ROOT, $prefix, $p['header'])),
+            'footerURL' => join('/', array(PERSONAS_IMAGE_ROOT, $prefix, $p['footer'])),
+            'previewURL' => join('/', array(PERSONAS_IMAGE_ROOT, $prefix, 'preview.jpg')),
+            'iconURL' => join('/', array(PERSONAS_IMAGE_ROOT, $prefix, 'preview_small.jpg')),
+        );
+    }
+}
+
+function nullable($thing) {
+    return $thing ? $thing : null;
+}
+
+function hex_color($color) {
+    return $color ? '#'.$color : null;
 }

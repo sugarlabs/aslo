@@ -13,6 +13,7 @@ class PersonasController extends AppController {
         $this->pageTitle = sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
 
         $this->layout = 'amo2009';
+        $this->publish('jsAdd', array('amo2009/personas.js'), false);
 
         $this->forceShadowDb();
     }
