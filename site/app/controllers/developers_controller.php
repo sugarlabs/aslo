@@ -142,6 +142,7 @@ class DevelopersController extends AppController
                 }
 
                 $addon['Addon']['updatepings'] = $this->Addon->getMostRecentUpdatePingCount($addon_id);
+                $addon['Addon']['addontype_name'] = $this->Addontype->getName($addon['Addon']['addontype_id']);
 
                 $addons[] = $addon;
             }
@@ -149,7 +150,6 @@ class DevelopersController extends AppController
 
         $this->publish('addons', $addons);
         $this->publish('statuses', $this->Amo->getStatusNames());
-        $this->publish('addontypes', $this->Addontype->getNames());
 
         $this->set('bodyclass', 'inverse');
         $this->render('dashboard');

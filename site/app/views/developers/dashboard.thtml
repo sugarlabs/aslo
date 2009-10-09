@@ -71,7 +71,7 @@
                 // Change Status
                 echo '<li class="action status"><a href="'.$html->url('/developers/addon/status/'.$addon_id).'" class="view">'.___('Change Status', 'devcp_dashboard_change_status').'</a>';
                 $active = $addon['Addon']['inactive'] == 1 ? ___('Inactive') : ___('Active');
-                echo '<span class="action-details">'.sprintf(___('%1$s currently %2$s and %3$s'), $addontypes[$addon['Addon']['addontype_id']],
+                echo '<span class="action-details">'.sprintf(___('%1$s currently %2$s and %3$s'), $addon['Addon']['addontype_name'],
                                                              '<span class="inactive-'.$addon['Addon']['inactive'].'">'.$active.'</span>',
                                                              '<span class="status-'.$addon['Addon']['status'].'">'.$statuses[$addon['Addon']['status']].'</span>').'</span></li>';
                 // Statistics Dashboard
