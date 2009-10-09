@@ -3,7 +3,7 @@
 		this.itemTotal = 0;
 		this.currentItem = 1;
 		this.itemWidth = 0;
-		
+
 		//  Set these properties when you instantiate an instance of this object.
 		this.speed = 300; // the speed in milliseconds of the animation
 
@@ -48,24 +48,24 @@
 			self.scroll = false;
 			return false;
 		});
-        
+
         $(self.container).mouseenter(function() {
             clearInterval(self.interval);
         });
-        
+
         $(self.container).mouseleave(function() {
             self.autoRotate();
         })
-        
+
         self.autoRotate();
-        
+
 		$(window).resize(function() {
 			self.itemWidth = self.getItemWidth();
 			$(self.itemContainer+'>li').width(self.itemWidth+'px');
 			self.popToItem(self.currentItem);
 		});
 	};
-	
+
 	Slideshow.prototype.autoRotate = function() {
 	    if(this.scroll) {
 	        var that = this; //closure due to setInterval's 'this' refers to window, not the current 'this'
@@ -78,7 +78,7 @@
     	    }, 8000);
 	    }
 	};
-	
+
 	Slideshow.prototype.getItemWidth = function() {
 		return $(this.itemContainer).parents('.'+this.wrapperClass).width();
 	};
@@ -110,8 +110,8 @@
 			$(this.rightController).addClass(this.activeClass);
 		}
 	};
-	
-	// slidey dropdown area 
+
+	// slidey dropdown area
 	window.DropdownArea = function() {
 		this.trigger = null;
 		this.target = '';
@@ -131,7 +131,7 @@
 			) {
 			    this.hide();
 			}
-			
+
 		}
 	}
 	DropdownArea.prototype.hide = function() {
@@ -150,11 +150,11 @@
 		});
 	}
 	DropdownArea.prototype.init = function() {
-		// advanced dropdown 
+		// advanced dropdown
 		$(this.target).hide();
 		var self = this;
 		if (this.trigger) {
-			this.trigger.click( 
+			this.trigger.click(
 				function(e) {
 					if(! $(self.target+':animated').length) {
 						if ($(self.target+':visible').length){
@@ -287,46 +287,46 @@ jQuery(function($) {
 	if (document.getElementById('review-rating')) {
 		selectReplacement(document.getElementById('review-rating'));
 	}
-	
+
 	// Categories dropdown only on pages where it is not in secondary
-	if($('.categories').parents('.secondary').length == 0) {
+	if($('#categories').parents('.secondary').length == 0) {
 		var categories = new DropdownArea();
 		// add class to style differently
-		$('.categories').addClass('dropdown-categories');
-	
+		$('#categories').addClass('dropdown-categories');
+
 		// set up images for dropdown
-        var categoryContainer = $('.categories :first-child')[0];
+        var categoryContainer = $('#categories :first-child')[0];
         if (categoryContainer) {
             var clickableCategories = $(categoryContainer);
             clickableCategories.prepend('<img src="/img/amo2009/icons/category-dropdown-down.gif" alt="" /> ');
-            
+
             // stop the accidental selection during double click
             clickableCategories.each(function(){
                 this.onselectstart = function () { return false; }
                 this.onmousedown = function () { return false; }
             });
-        
+
             // set up variables for object
             categories.trigger = clickableCategories; // node
-            categories.target = '.categories>ul'; // reference
-            categories.targetParent = '.categories'; // reference
+            categories.target = '#categories>ul'; // reference
+            categories.targetParent = '#categories'; // reference
             categories.callbackFunction = function() {
-                if($('.categories>ul:visible').length){
-                    $('.categories img').attr('src', '/img/amo2009/icons/category-dropdown-down.gif');
+                if($('#categories>ul:visible').length){
+                    $('#categories img').attr('src', '/img/amo2009/icons/category-dropdown-down.gif');
                 } else {
-                    $('.categories img').attr('src', '/img/amo2009/icons/category-dropdown-up.gif');
+                    $('#categories img').attr('src', '/img/amo2009/icons/category-dropdown-up.gif');
                 }
             };
-            
-            // initialise dropdown area 
+
+            // initialise dropdown area
             categories.init();
         }
 	} else {
         // Turn the link into a span so it's not deceptively clickable.
-        var e = $('.categories h3');
+        var e = $('#categories h3');
         e.html('<span>' + e.text() + '</span>');
     }
-	
+
 
 	// advanced form dropdown
 	var advancedForm = new DropdownArea();
@@ -336,7 +336,7 @@ jQuery(function($) {
 	advancedForm.targetParent = ('.search-form'); // reference
 	advancedForm.hideOnBodyClick = false;
 	advancedForm.init();
-	
+
 	// tools dropdown in auxillary menu
 	var toolsDropdown = new DropdownArea();
 	// set up variables for object
@@ -344,7 +344,7 @@ jQuery(function($) {
 	toolsDropdown.target = ('ul.tools ul'); // reference
 	toolsDropdown.targetParent = ('ul.tools'); // reference
 	toolsDropdown.init();
-	
+
 	// change dropdown in auxillary menu
 	var changeDropdown = new DropdownArea();
 	// set up variables for object
@@ -360,7 +360,7 @@ jQuery(function($) {
 	shareDropdown.target = ('.share-this .share-networks'); // reference
 	shareDropdown.targetParent = ('.share-this'); // reference
 	shareDropdown.init();
-	
+
 	// notification dropdown
 	var notificationHelpDropdown = new DropdownArea();
 	// set up variables for object
@@ -378,10 +378,10 @@ jQuery(function($) {
 	contributionDropdown.target = '#contribute-links';
 	contributionDropdown.targetParent = '.notification';
 	contributionDropdown.init();
-	
+
 	// listing where interaction is inline
 	$('.home .listing div:first').addClass('interactive');
-	
+
 	function tabClickFactory(className) {
 		return function(){
 			$(this).parents('ul').find('li').removeClass('selected');
@@ -398,7 +398,7 @@ jQuery(function($) {
 });
 
 jQuery(window).load(function() {
-	// Crazyweird fix lets us style abbr using CSS in IE 
+	// Crazyweird fix lets us style abbr using CSS in IE
 	// - do NOT run onDomReady, must be onload
 	document.createElement('abbr');
 });
