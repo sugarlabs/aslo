@@ -107,6 +107,16 @@ if (!defined('TEST_DB_NAME'))
 if (!defined('TEST_DB_PORT'))
     define('TEST_DB_PORT', DB_PORT);
 
+// some defaults for the personas DB
+if (!defined('PERSONAS_DB_HOST'))
+    define('PERSONAS_DB_HOST', DB_HOST);
+if (!defined('PERSONAS_DB_USER'))
+    define('PERSONAS_DB_USER', DB_USER);
+if (!defined('PERSONAS_DB_PASS'))
+    define('PERSONAS_DB_PASS', DB_PASS);
+if (!defined('PERSONAS_DB_NAME'))
+    define('PERSONAS_DB_NAME', 'personas');
+
 // Settings for query caching
 if (!defined('QUERY_CACHE'))
     define('QUERY_CACHE', true); // are we caching queries?
