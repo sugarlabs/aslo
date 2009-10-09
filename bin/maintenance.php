@@ -650,6 +650,30 @@ switch ($action) {
                 t.count = j.ct
         ";
         $db->write($tag_counts_sql);
+
+        $persona_type = ADDON_PERSONA;
+        /* Personas don't have any files so the above query  won't count them. */
+        $db->write("
+            UPDATE categories as C
+            INNER JOIN (
+                SELECT
+                    ac.category_id,
+                    COUNT(DISTINCT Addon.id) AS count
+                FROM
+                    addons as Addon
+                INNER JOIN addons_categories as ac
+                    ON (ac.addon_id = Addon.id)
+                WHERE
+                    Addon.addontype_id = {$persona_type} AND
+                    Addon.status IN ({$valid_status}) AND
+                    Addon.inactive = 0
+                GROUP BY
+                    ac.category_id
+            ) AS J ON C.id = J.category_id
+            SET
+                C.count = J.count
+        ");
+
         $affected_rows = mysql_affected_rows();
     break;
 
