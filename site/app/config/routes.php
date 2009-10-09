@@ -152,6 +152,9 @@
 		// Top Tags
 		$Route->connect("/{$prefix}/top-tags", array('controller' => 'tags', 'action' => 'top'));
 
+        /* Personas */
+        $Route->connect("/{$prefix}/personas/*", array('controller' => 'personas', 'action' => 'persona_list'));
+
         // Magical undocumented routing syntax - if nothing has matched up till now, it'll hit this
         $Route->connect("/{$prefix}/:controller/:action/*", array('controller' => 'pages', 'action' => 'index'));
 

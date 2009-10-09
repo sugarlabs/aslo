@@ -1676,8 +1676,8 @@ dl.faq dt:target, dl.validation dt:target { color: #df731b; }
 .vcard:after,
 #addon-install:after,
 .stand-alone-options:after,
-.stars:after, .notification:after, 
-.featured-inner:after, 
+.stars:after, .notification:after,
+.featured-inner:after,
 .addon-info:after {
     content: ".";
     clear: both;
@@ -2692,3 +2692,40 @@ ul.tag-cloud:after {
 .highlight .error-message {
     color: #C63717;
 }
+
+/* Thumbnails (like the personas browser) */
+.thumbnails li {
+    display: inline-block;
+    border: 2px solid #ecf2f5;
+    -moz-border-radius: 6px;
+    margin: 1.2em;
+    padding: 1em 0.5em;
+    background: #f9f9f9;
+    width: 200px;
+}
+
+.thumbnails {
+    background: -moz-linear-gradient(left top, left 20%, from(#cfeaf4), to(#fff));
+    background-repeat: no-repeat;
+}
+/* END Thumbnails (like the personas browser) */
+
+/* Personas categories */
+.categories.personas li {
+    padding-left: 0.5em;
+    -moz-border-radius: 4px;
+    margin: 0.2em;
+    margin-left: 0;
+}
+
+/* Override .categories h3 to make this look like a normal h3. */
+.categories.personas h3 {
+    font-family: georgia, serif;
+    background: none;
+    color: #011234;
+    border: none;
+    font-size: 1.385em;
+    font-weight: normal;
+    padding-bottom: 0;
+}
+/* END Personas categories */

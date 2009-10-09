@@ -1,0 +1,59 @@
+<div class="stand-alone-options">
+  <?=$this->renderElement('amo2009/categories')?>
+  <?=$this->renderElement('amo2009/search')?>
+</div>
+
+<div class="primary" role="main">
+  <h2><?=___('Browse Personas')?></h2>
+
+  <div class="featured">
+    <div class="featured-inner">
+      <div class="listing-header">
+        <ul>
+          <li><?=___('Sort by:')?></li>
+          <?php foreach ($sort_opts as $name => $val): ?>
+            <?php $_class = ($name === $sortby) ? 'selected' : ''; ?>
+            <li class="<?=$_class?>">
+              <a href="?sortby=<?=$name?>"><?=$val['text']?></a>
+            </li>
+          <?php endforeach ?>
+        </ul>
+      </div> <!-- listing-header -->
+      <ul class="thumbnails">
+        <?php foreach ($personas as $persona): ?>
+          <?php $p = $persona['Persona'] ?>
+          <li>
+            <a href="<?=$html->url('/persona/'.$p['addon_id'])?>">
+              <img src=<?=$p['thumb']?> alt="" />
+            </a>
+            <h4><?=$persona['Translation']['name']['string']?></h4>
+            <em><?=sprintf(___('%1$s active daily users'), $persona['Addon']['average_daily_users'])?></em>
+          </li>
+        <?php endforeach ?>
+      </ul>
+    </div> <!-- featured-inner -->
+    <div class="listing-footer">
+      <?=$this->renderElement('amo2009/pagination')?>
+    </div>
+  </div> <!-- featured -->
+</div> <!-- primary -->
+
+<div class="secondary" role="complementary">
+  <div class="categories personas">
+    <h3><?=___('Personas')?></h3>
+    <ul>
+      <?php foreach ($categories as $cat): ?>
+        <?php $key = $cat['Category']['key'];
+              $_class = ($key === $category || ($key === '' && $category === 'all'))
+                  ? 'selected' : '';
+        ?>
+        <li class="<?=$_class?>">
+          <a href="<?=$html->url('/personas/'.$cat['Category']['key'])?>">
+            <?=$cat['Translation']['name']['string']?>
+          </a>
+          <span class="items"><?=$cat['Category']['count']?></span>
+        </li>
+      <?php endforeach ?>
+    </ul>
+  </div>
+</div> <!-- secondary -->
