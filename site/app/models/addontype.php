@@ -89,7 +89,7 @@ class Addontype extends AppModel
                 return ___('Persona');
         }
     }
-                  
+
     /**
      * Returns an array of all addontype names and IDs in the form of:
      *         id => name
