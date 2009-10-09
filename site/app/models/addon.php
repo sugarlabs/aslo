@@ -61,9 +61,9 @@ class Addon extends AppModel
                                        'joinTable' => 'addons_collections',
                                        'foreignKey' => 'addon_id',
                                        'associationForeignKey' => 'collection_id'),
-                                       
-                                       'Tag' => 
-                                        array('className' => 'Tag', 
+
+                                       'Tag' =>
+                                        array('className' => 'Tag',
                                         'joinTable'  => 'users_tags_addons',
                                         'foreignKey' => 'addon_id',
                                         'associationForeignKey' => 'tag_id'
@@ -103,7 +103,7 @@ class Addon extends AppModel
                          ),
                          'UserTagAddon' =>
                          	array('className' => 'UserTagAddon'
-                         		
+
                          )
                   );
 
@@ -295,7 +295,7 @@ class Addon extends AppModel
                 $fields = array_merge($fields, array('the_reason', 'the_future',
                     'annoying', 'wants_contributions', 'paypal_id', 'suggested_amount'));
                 break;
-                
+
             default:
                 debug("Association $association not declared!");
                 break;
@@ -315,7 +315,7 @@ class Addon extends AppModel
                 'Version.id' => $this->Version->getVersionByAddonId($id,
                     ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $valid_status))),
                 array('Version.id', 'Version.version', 'Version.created'));
-                
+
             if (!empty($buf[0]['Version'])) {
                 $addon['Version'][0] = $buf[0]['Version'];
 
@@ -412,7 +412,8 @@ class Addon extends AppModel
      */
     function getAddonsFromCategory($status = array(STATUS_PUBLIC),
         $addontypes = ADDON_EXTENSION, $category = 'all', $sort_by = 'name',
-        $direction = 'ASC', $limit = '5', $page = '1', $friends = '') {
+        $direction = 'ASC', $limit = '5', $page = '1', $friends = '',
+        $personas = false) {
 
         $this->unbindFully();
 
@@ -429,8 +430,11 @@ class Addon extends AppModel
             // if cat == all, don't worry about the category. Otherwise only select the chosen one.
             $add_joins .= "INNER JOIN addons_categories AS at ON (at.category_id = '{$category}' AND at.addon_id = Addon.id) ";
         }
-        // only select add-ons that have any files to offer
-        $add_joins .= "INNER JOIN files AS File ON (Version.id = File.version_id AND File.status IN (".implode(',',$status).")) ";
+
+        if (!$personas) {
+            // only select add-ons that have any files to offer
+            $add_joins .= "INNER JOIN files AS File ON (Version.id = File.version_id AND File.status IN (".implode(',',$status).")) ";
+        }
 
         // Facebook friends
         if (!empty($friends)) {
@@ -470,6 +474,9 @@ class Addon extends AppModel
             case 'newest':
                 $orderby .= 'Addon.created';
                 break;
+            case 'adu':
+                $orderby .= 'Addon.average_daily_users';
+                break;
             case 'name':
             default:
                 $orderby .= 'IFNULL(tr_l.localized_string, tr_en.localized_string)'; break;
@@ -497,9 +504,13 @@ class Addon extends AppModel
                 ."AND Addon.inactive = 0 "
                 ."{$where} {$groupby} {$orderby} {$limitclause}";
         } else {
+            if (!$personas) {
+                $add_joins =
+                    "INNER JOIN versions AS Version ON (Addon.id = Version.addon_id) "
+                    ."INNER JOIN applications_versions AS av ON (av.version_id = Version.id AND av.application_id = ".APP_ID.") "
+                    .$add_joins;
+            }
             $sql = "SELECT {$select_field} FROM addons AS Addon "
-                ."INNER JOIN versions AS Version ON (Addon.id = Version.addon_id) "
-                ."INNER JOIN applications_versions AS av ON (av.version_id = Version.id AND av.application_id = ".APP_ID.") "
                 .$add_joins
                 ."WHERE Addon.addontype_id IN(".implode(',',$addontypes).") "
                 ."AND Addon.status IN(".implode(',',$status).") "
@@ -782,7 +793,7 @@ class Addon extends AppModel
      */
     function getCollectionPublishDetails($addon_id, $collectionId) {
         $this->unbindFully();
-        
+
         // comments are en-US only
         $sql = "SELECT addons_collections.added, translations.localized_string as comment, users.id, users.firstname, users.lastname, users.nickname
                 FROM addons_collections
@@ -792,7 +803,7 @@ class Addon extends AppModel
                 ON users.id = addons_collections.user_id
                 WHERE collection_id = {$collectionId} AND addon_id = {$addon_id}";
         $data = $this->query($sql);
-        
+
         $details = array(
             'dateadded' => $data[0]['addons_collections']['added'],
             'publisher' => $data[0]['users'],
@@ -829,7 +840,7 @@ class Addon extends AppModel
         $sql = "UPDATE addons SET sharecount = sharecount + {$number} WHERE id = {$addonid};";
         return $this->execute($sql);
     }
-    
+
     /**
      * adds a tag to an addon
      * -using saveAuthor() as an example
@@ -842,7 +853,7 @@ class Addon extends AppModel
 		$sql = "INSERT IGNORE INTO users_tags_addons set user_id = {$userId}, tag_id = {$tagId}, addon_id = {$addonId}, created = now()";
 		$ret = $this->execute($sql);
 	}
-	
+
 	/**
 	 * -trigger trg_tag_stat_dec will update tag_stat
 	 */
@@ -850,10 +861,10 @@ class Addon extends AppModel
         if (!(is_numeric($user_id) && is_numeric($tag_id) && is_numeric($addon_id))) {
             return false;
         }
-	
+
 		$this->execute("DELETE FROM users_tags_addons where user_id={$user_id} AND tag_id={$tag_id} AND addon_id ={$addon_id}");
 	}
-	
+
 	/**
 	 * -trigger trg_tag_stat_dec will update tag_stat
 	 */
@@ -863,7 +874,7 @@ class Addon extends AppModel
         }
 		$this->execute("DELETE FROM users_tags_addons where tag_id={$tag_id} AND addon_id = {$addon_id}");
 	}
-		
+
 	/**
 	 * Gets all the tags for this addon
 	 */
@@ -873,10 +884,10 @@ class Addon extends AppModel
 		foreach ($userTagAddons as $uta) {
 			$tagIds[] = $uta['UserTagAddon']['tag_id'];
 		}
-		
+
 		return $this->Tag->findAllById($tagIds,null,"Tag.tag_text asc");
-	} 
-	
+	}
+
     /**
      * use bindOnly() before you use this function!
      */
@@ -885,15 +896,15 @@ class Addon extends AppModel
 		foreach ($users_tags_addons as $uta) {
 			$tagIds[] = $uta['UserTagAddon']['tag_id'];
 		}
-		
+
 		if( count($tagIds) > 0)
 			return $this->Tag->findAllById($tagIds);
 		else {
 			return array();
 		}
-		
+
 	}
-	
+
     /**
      * use Addon->bindOnly() before you call this function!
      */
@@ -902,13 +913,13 @@ class Addon extends AppModel
 		foreach ($users_tags_addons as $uta) {
 			$addonIds[] = $uta['UserTagAddon']['addon_id'];
 		}
-		
+
 		if( count($addonIds) > 0)
 			return $this->findAllById($addonIds);
 		else {
 			return array();
 		}
-		
+
 	}
 
     /**
@@ -918,7 +929,7 @@ class Addon extends AppModel
 		$userTagAddons = $this->UserTagAddon->findAll(array('user_id' => $user_id));
 		return $this->getTagsByUserTagAddon($userTagAddons);
 	}
-	
+
     /**
      * use Addon->bindOnly() before you call this function!
      */
@@ -926,7 +937,7 @@ class Addon extends AppModel
     	$userTagAddons = $this->UserTagAddon->findAll(array('tag_id' => $tag_id));
     	return $this->getAddonsByUserTagAddon($userTagAddons);
     }
-    
+
     function acceptContributions($addon) {
         $a = $addon['Addon'];
         $this->Config =& new Config();
