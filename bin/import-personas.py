@@ -302,6 +302,7 @@ def _main():
         lock.acquire(0)
     except lockfile.LockError:
         utils.debug('Aborting personas import; could not acquire lock.')
+        return
 
     try:
         main()
