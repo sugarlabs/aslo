@@ -180,6 +180,10 @@ BandwagonService.prototype = {
 
             bandwagonService.autoinstallExtensions();
 
+            // do any browser overlay initialization that depends on collections in place
+
+            Bandwagon.Controller.BrowserOverlay.postInit();
+
             bandwagonService._initialized = true;
 
             Bandwagon.Logger.info("Bandwagon has been initialized");
@@ -262,6 +266,11 @@ BandwagonService.prototype = {
         this._collectionFactory = null;
         Bandwagon = null;
         bandwagonService = null;
+    },
+
+    getEmGUID: function()
+    {
+        return gEmGUID;
     },
     
     getLocalAutoInstaller: function()

@@ -40,6 +40,20 @@ Bandwagon.Controller.BrowserOverlay = new function() {}
 
 Bandwagon.Controller.BrowserOverlay.initBandwagon = function()
 {
+    /*
+    if (Bandwagon.Util.getHostEnvironmentInfo().appName == "Fennec")
+    {
+        setTimeout(Bandwagon.Controller.BrowserOverlay._delayedInitBandwagon, 2000);
+    }
+    else
+    */
+    {
+        Bandwagon.Controller.BrowserOverlay._delayedInitBandwagon();
+    }
+}
+
+Bandwagon.Controller.BrowserOverlay._delayedInitBandwagon = function()
+{
     Bandwagon.Controller.BrowserOverlay._removeLoadListener();
 
     try
@@ -66,6 +80,23 @@ Bandwagon.Controller.BrowserOverlay.initBandwagon = function()
 
     if (Bandwagon.Util.getHostEnvironmentInfo().appName == "Firefox")
         gBrowser.addEventListener("DOMContentLoaded", Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument, true);
+}
+
+Bandwagon.Controller.BrowserOverlay.postInit = function()
+{
+    Bandwagon.Logger.debug("In Bandwagon.Controller.BrowserOverlay.postInit()");
+
+    if (Bandwagon.Util.getHostEnvironmentInfo().appName == "Fennec")
+    {
+        var panels = document.getElementById("panel-items");
+
+        panels.addEventListener("select",
+            function(aEvent)
+            {
+                setTimeout(Bandwagon.Controller.BrowserOverlay.doFennecStuffSettingsCollectionsList, 500);
+            },
+            false);
+    }
 }
 
 Bandwagon.Controller.BrowserOverlay.addSubscriptionRefreshEventListenerToDocument = function(event)
@@ -293,7 +324,72 @@ Bandwagon.Controller.BrowserOverlay.doFennecLogin = function()
 
 Bandwagon.Controller.BrowserOverlay.doSetMobileCollection = function(event)
 {
+    Bandwagon.Logger.debug("In Bandwagon.Controller.BrowserOverlay.doSetMobileCollection()");
     Bandwagon.Preferences.setPreference("mobile_sync_collection", document.getElementById("bw-mobile-collection").selectedItem.value);
+}
+
+Bandwagon.Controller.BrowserOverlay.doFennecStuffSettingsCollectionsList = function()
+{
+    //Bandwagon.Logger.debug("In Bandwagon.Controller.BrowserOverlay.doFennecStuffSettingsCollectionsList()");
+
+    var addonsList = document.getElementById("addons-list");
+    var addonBinding = null;
+
+    for (var i=0; i<addonsList.itemCount; i++)
+    {
+        addonBinding = addonsList.getItemAtIndex(i);
+
+        if (addonBinding.getAttribute("addonID") == bandwagonService.getEmGUID())
+        {
+            break;
+        }
+        else
+        {
+            addonBinding = null;
+        }
+    }
+
+    if (addonBinding == null)
+    {
+        //Bandwagon.Logger.debug("Bandwagon.Controller.BrowserOverlay.doFennecStuffSettingsCollectionsList: no binding found");
+        return;
+    }
+
+    //Bandwagon.Logger.debug("have addonBinding = " + addonBinding.getAttribute("addonID"));
+
+    document.getAnonymousElementByAttribute(addonBinding, 'anonid', 'options-box').addEventListener('DOMNodeInserted', function(event)
+    {
+        if (event.target.getAttribute("class") != "bw-settings-last")
+            return;
+
+        var settingsCollectionsList = document.getAnonymousElementByAttribute(addonBinding, 'anonid', 'bw-settings-collections-list');
+
+        if (!settingsCollectionsList)
+        {
+            //Bandwagon.Logger.debug("no settings collections list element found");
+            return;
+        }
+
+        //Bandwagon.Logger.debug("SETTINGS COLLECTIONS LIST ELEMENT FOUND");
+
+        while (settingsCollectionsList.hasChildNodes())
+        {
+            settingsCollectionsList.removeChild(settingsCollectionsList.lastChild);
+        }
+
+        for (var id in bandwagonService.collections)
+        {
+            //Bandwagon.Logger.debug("Adding collection '" + bandwagonService.collections[id] + " to menulist");
+
+            var menuitem = document.createElement("menuitem");
+
+            menuitem.setAttribute("label", bandwagonService.collections[id].name);
+            menuitem.setAttribute("value", bandwagonService.collections[id].resourceURL);
+
+            settingsCollectionsList.appendChild(menuitem);
+        }    
+    }
+    , true);
 }
 
 Bandwagon.Controller.BrowserOverlay.doFennecInitAutoInstallDialog = function(addons)

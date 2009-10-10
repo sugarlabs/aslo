@@ -6,14 +6,11 @@
   <setting pref="extensions.bandwagon.login" type="string" title="&username.label;"/>
   <setting pref="extensions.bandwagon.password" type="string" inputtype="password" title="&password.label;"/>
   <setting type="control" title="&collection.to.sync.label;">
-    <menulist id="bw-mobile-collection" onchange="Bandwagon.Controller.BrowserOverlay.doSetMobileCollection()">
-      <menupopup>
-        <menuitem value="red" label="Red"/>
-        <menuitem value="blue" label="Blue"/>
-      </menupopup>
+    <menulist id="bw-mobile-collection" oncommand="Bandwagon.Controller.BrowserOverlay.doSetMobileCollection()">
+      <menupopup anonid="bw-settings-collections-list"/>
     </menulist>
   </setting>
-  <setting type="control" title="&login.label;">
+  <setting type="control" title="&login.label;" class="bw-settings-last">
     <button label="&login.button;" oncommand="Bandwagon.Controller.BrowserOverlay.doFennecLogin()"/>
   </setting>
 </vbox>

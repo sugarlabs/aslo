@@ -181,10 +181,10 @@ Bandwagon.Model.Collection.prototype.isLocalAutoPublisher = function()
 
 Bandwagon.Model.Collection.prototype.isLocalAutoInstaller = function()
 {
-    if (this.name == "")
+    if (this.resourceURL == "")
         return false;
 
-    return (this.Bandwagon.Preferences.getPreference("mobile_sync_collection") == this.name);
+    return (this.Bandwagon.Preferences.getPreference("mobile_sync_collection") == this.resourceURL);
 }
 
 Bandwagon.Model.Collection.prototype.toString = function()
