@@ -326,7 +326,7 @@ class AddonsHtmlHelper extends HtmlHelper
         }
         $get_params = array();
         
-        if ($add_get_parameters) {
+        if ($add_get_parameters && isset($this->params['url'])) {
             // add GET parameters
             foreach($this->params['url'] as $_key => $_param)
                 if ($_key != 'url') $get_params[] = "{$_key}={$_param}";

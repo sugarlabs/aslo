@@ -62,7 +62,7 @@ $this->layout = 'amo2009';
     <?=$this->renderElement('noscript')?>
     <?=$this->renderElement('developers/rolecheck')?>
 
-    <div id="submission-area" class="rounded graybox">
+    <div id="submission-area">
 
     <?php if ($type == 'new'): ?>
         <div id="step-intro">
@@ -77,7 +77,6 @@ $this->layout = 'amo2009';
     <?php if ($showAgreement): ?>
         <div id="step-agreement" <?=($type != 'new' ? 'style="display:block"' : '')?>>
             <p><?=___('Please review and accept the following Developer Agreement before proceeding.')?></p>
-            <?=$localization->includeLocalPage('docs/policies/agreement',array($html->url('/pages/developer_faq')))?>
 
             <?php
             list($licenses, $trans) = $this->controller->Developers->getLicenses();
@@ -120,25 +119,69 @@ $this->layout = 'amo2009';
         </div> <!-- /#step-agreement -->
     <?php endif; ?>
 
-        <div id="file-upload"<?=($showAgreement ? ' style="display: none;"' : '')?>>
+    <div id="file-upload"<?=($showAgreement ? ' style="display: none;"' : '')?>>
+        <form id="upload-form" method="post" enctype="multipart/form-data" action="<?=$html->url('/developers/json/fileupload/'.$type)?>" target="upload-frame" onsubmit="return upload.uploadFile();">
+
+        <div class="graybox rounded spaced field">
+            <h3><?=___('Compatible Applications')?></h4>
+            <table id="edit-versions-targetapps-table"><tbody>
+            <?php
+                echo '<td class="appname">'.$app_name.'</td>';
+                echo '<td><select name="data[appversion_min]">';
+                $max = 0;
+                foreach ($app_versions as $i) {
+                    echo '<option value="'.$i['Appversion']['id'].'"'.($max == 0 ? ' selected="selected"' : '').'>'.$i['Appversion']['version'].'</option>';
+                    $max = $i['Appversion']['id'];
+                }
+                echo '</select>';
+                echo '&nbsp;&mdash;&nbsp;';
+                echo '<select name="data[appversion_max]">';
+                foreach ($app_versions as $i) {
+                    echo '<option value="'.$i['Appversion']['id'].'"'.($max == $i['Appversion']['id'] ? ' selected="selected"' : '').'>'.$i['Appversion']['version'].'</option>';
+                }
+                echo '</select></td>';
+            ?>
+            </tbody></table>
+        </div>
+
+        <div>
+            <?php
+                // Retrieve language arrays from bootstrap.
+                global $valid_languages, $native_languages;
+                foreach (array_keys($valid_languages) as $key) {
+                    $languages[$key] = $native_languages[$key]['native'];
+                }
+                ksort($languages);
+
+                $this->translationBox = array(
+                                    'defaultLocale' => LANG,
+                                    'languages' => $languages,
+                                    'table' => 'Version',
+                                    'loaded' => false
+                                );
+
+                echo $this->renderElement('translationbox', array(
+                            'type' => 'textarea',
+                            'field' => 'releasenotes',
+                            'translations' => array(LANG => ''),
+                            'height' => '130',
+                            'width' => 'inherit',
+                            'displayName' => ___('devcp_versions_edit_transbox_releasenotes_name'),
+                            'description' => ___('devcp_versions_edit_transbox_releasenotes_description'),
+                        ));
+            ?>
+        </div>
+
+        <div class="graybox rounded spaced field">
             <h3><?=___('Upload Your File')?></h3>
             <p><?=___('Upload your add-on file using the form below. If you have multiple, platform-specific files to upload, choose a single file and then upload the others using the Versions and Files Manager.')?>
             <br />
-            <form id="upload-form" method="post" enctype="multipart/form-data" action="<?=$html->url('/developers/json/fileupload/'.$type)?>" target="upload-frame" onsubmit="return upload.uploadFile();">
             <?=$html->hiddenSession();?>
             <input type="hidden" name="data[Addon][id]" id="addon-id" value="<?= (!empty($addon_id) ? $addon_id : '') ?>" />
             <input type="hidden" name="data[Version][id]" id="version-id" value="<?= (!empty($version_id) ? $version_id : '') ?>" />            
             <input type="hidden" name="data[File][id]" id="file-id" value="<?= (!empty($file_id) ? $file_id : '') ?>" />
             <label><?=___('Add-on File: ')?><input id="upload-field" type="file" name="file" /></label><br />
-        <?=___('Supported Platforms:')?>&nbsp;&nbsp;<label><input type="radio" name="platformtype" onclick="upload.platformAll();" checked />&nbsp;<?=___('All', 'devcp_uploader_platformtype_all')?></label>&nbsp;&nbsp;
-            <label><input type="radio" name="platformtype" onclick="upload.platformSpecific();" />&nbsp;<?=___('Specific:')?></label>
-            <?php
-            $platforms = $this->controller->Platform->getNames();
-            foreach ($platforms as $platform_id => $platform_name) {
-                if ($platform_id == PLATFORM_ALL) continue;
-                echo '&nbsp;&nbsp;<label class="specific-platforms disabled"><input type="checkbox" name="data[File][platform_id][]" value="'.$platform_id.'" disabled="disabled" />'.$platform_name.'</label>';
-            }
-            ?>
+        </div>
             <div class="submit">
                 <button type="submit" class="require-privs button prominent"><?=___('Upload File')?></button>
             </div>
@@ -171,7 +214,7 @@ $this->layout = 'amo2009';
             <h3><?=sprintf(___('Version %s Created'), '<span id="new-version-number"></span>')?></h3>
             <div id="created-results">
                 <p><?=sprintf(___('Your new version has been created and is currently marked as %s.'), '<span id="new-file-status"></span>')?></p>
-                <p id="pending-message"><?=sprintf(___('The new version will be available to the public as soon as an editor is able to review it. There are currently %1$s other add-ons in the queue. Want to be reviewed faster? Consider <a %2$s>becoming an editor</a>.'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
+                <p id="pending-message"><?=sprintf(___('The new version will be available to the public as soon as an editor is able to review it. There are currently %1$s other add-ons in the queue. Want to be reviewed faster? Consider <a %2$s>becoming an editor</a>.'), '<span id="queue-count"></span>', 'href="'.SITE_EDITOR_WIKI.'"')?></p>
                 <p><?=sprintf(___('View your new version in the <a href="%1$s">Versions and Files page</a>, check out your add-on\'s <a href="%2$s">current status</a>, or <b>add release notes</b> by clicking the button below (highly recommended).'), '/developers/versions/edit/', '/developers/addon/status/'.$addon_id)?>
                 <div class="action-button-container centered"><a id="complete-link" href="<?=$html->url('/developers/versions/edit/')?>" class="action-button rounded"><?=___('Add Release Notes')?></a></div>
             </div>
@@ -181,7 +224,7 @@ $this->layout = 'amo2009';
             <h3><?=___('File Added!')?></h3>
             <div id="created-results">
                 <p><?=sprintf(___('Your new file has been added to version %1$s and is currently marked as %2$s.'), $version, '<span id="new-file-status"></span>')?></p>
-                <p id="pending-message"><?=sprintf(___('The new file will be available to the public as soon as an editor is able to review it. There are currently %1$s other add-ons in the queue. Want to be reviewed faster? Consider <a %2$s>becoming an editor</a>.'), '<span id="queue-count"></span>', 'href="https://wiki.mozilla.org/Update:Editors"')?></p>
+                <p id="pending-message"><?=sprintf(___('The new file will be available to the public as soon as an editor is able to review it. There are currently %1$s other add-ons in the queue. Want to be reviewed faster? Consider <a %2$s>becoming an editor</a>.'), '<span id="queue-count"></span>', 'href="'.SITE_EDITOR_WIKI.'"')?></p>
                 <p><?=sprintf(___('View your new file on the <a href="%1$s">Versions and Files page</a>, or check out your add-on\'s <a href="%2$s">current status</a>.'),
                     $html->url("/developers/versions/edit/{$version_id}"),
                     $html->url("/developers/addon/status/{$addon_id}"))?>

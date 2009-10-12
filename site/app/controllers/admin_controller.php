@@ -66,7 +66,7 @@ class AdminController extends AppController
         $this->Amo->clean($this->data, false); 
 
         $this->layout = 'mozilla';
-        $this->pageTitle = 'Mozilla Add-ons :: Admin Control Panel';
+        $this->pageTitle = SITE_NAME.' :: Admin Control Panel';
 	
         $this->cssAdd = array('admin', 'developers');
         $this->set('cssAdd', $this->cssAdd);

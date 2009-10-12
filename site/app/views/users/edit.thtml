@@ -167,11 +167,12 @@ $this->translationBox = array(
 
     <div id="profile-notifications">
         <h3 class="hidden"><?=___('Notifications');?></h3>
+        <li><label for="UserNotifybroadcast"><?=$html->checkbox('User/notifybroadcast')?>&nbsp;<?=___('user_notifications_item_broadcast', 'Broadcast events')?></li>
         <?php if (empty($userAddons) && empty($userVersionThreads)): ?>
-            <p><?=___('There are currently no notifications available for you to configure.')?></p>
+            <p><?=___('user_notifications_none_available', 'There are currently no notifications available for you to configure.')?></p>
         <?php endif; ?>
         <?php if (!empty($userAddons)): ?>
-            <p><?=___('From time to time, Mozilla may send you email about upcoming releases and add-on events. Please select the topics you are interested in below:')?></p>
+            <p><?=___('user_notifications_select_topics', 'From time to time, Mozilla may send you email about upcoming releases and add-on events. Please select the topics you are interested in below:')?></p>
             <ul>
                 <li><label for="UserNotifycompat"><?=$html->checkbox('User/notifycompat')?>&nbsp;<?=___('Add-on Compatibility (strongly recommended)')?></label></li>
                 <li><label for="UserNotifyevents"><?=$html->checkbox('User/notifyevents')?>&nbsp;<?=___('Upcoming events and contests')?></label></li>

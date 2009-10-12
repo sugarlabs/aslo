@@ -203,6 +203,10 @@ if (array_key_exists($buf[0],$valid_languages)) {
 
 // Now make sure that there's a known app/layout in the second position.
 if (count($buf) < 2 || !array_key_exists($buf[1], $valid_layouts)) {
+    // we are sugar
+    if (true)
+        array_splice($buf, 1, 0, "sugar");
+    else
     // No app or unknown app, so we see if this is seamonkey, otherwise stick
     // firefox in the place of honour and redirect.
     if (array_key_exists('HTTP_USER_AGENT', $_SERVER) && 
@@ -258,6 +262,7 @@ if (in_array(LANG, $rtl_languages)) {
 
 global $app_prettynames;
 $app_prettynames = array(
+    'sugar' => ___('main_prettyname_sugar'),
     'firefox' => ___('Firefox'),
     'thunderbird' => ___('Thunderbird'),
     'sunbird' => ___('Sunbird'),

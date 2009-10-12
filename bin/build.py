@@ -81,7 +81,8 @@ MINIFY_PRODUCTS = {
             { 'file':'css/amo2009/main.css' },
             { 'file':'css/amo2009/slimbox2.css' },
             { 'file':'css/amo2009/main-mozilla.css' },
-            { 'file':'css/amo2009/legacy.css' }
+            { 'file':'css/amo2009/legacy.css' },
+            { 'file':'css/sugar.css' }
         ]
     }
 }
@@ -281,9 +282,7 @@ def main(argv = None):
         print "Usage: %s path_to_jre" % argv[0]
         sys.exit(1)
     
-    updateRevisions()
     concatAndMinify()
-    compilePo()
     print 'Done.'
 
 

@@ -43,6 +43,9 @@ class Eventlog extends AppModel
     
     function log(&$controller, $type = '', $action = '', $field = '', $changed_id = '', $added = '', $removed = '', $notes = '') {
         $session = $controller->Session->read('User');
+
+        if (!isset($changed_id))
+            $changed_id = 0;
         
         $auditData = array(
                            'id' => null,

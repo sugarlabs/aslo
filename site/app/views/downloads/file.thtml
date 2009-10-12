@@ -35,7 +35,7 @@
  * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
-header("Content-type: application/x-xpinstall");
+header("Content-type: " . SITE_MIME);
     
 if (!empty($attachment) && $attachment)
     header("Content-Disposition: attachment; filename=\"{$fileName}\"");

@@ -137,6 +137,18 @@ class Version extends AppModel
         if (!is_array($status)) $status = array($status);
         $status_sql = implode(',',$status);
 
+        if (preg_match('/OLPC\/0\.([^-]*)-/', $_SERVER['HTTP_USER_AGENT'], $matches)) {
+            if (floatval($matches[1]) <= 4.6)
+                $sp = '0.82';
+            else
+                $sp = '0.84';
+        } else {
+            if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', $_SERVER['HTTP_USER_AGENT'], $matches))
+                $sp = $matches[1].'.'.$matches[2];
+            else
+                $sp = '0.84';
+        }
+
         $sql = "
             SELECT 
                 Version.id
@@ -144,10 +156,16 @@ class Version extends AppModel
                 versions AS Version
             INNER JOIN
                 files AS File ON File.status IN ({$status_sql}) AND File.version_id = Version.id 
+            INNER JOIN
+                applications_versions A ON A.version_id = Version.id
+            INNER JOIN
+                appversions as B ON B.id = A.min
+            INNER JOIN
+                appversions as C ON C.id = A.max
             WHERE
                 Version.addon_id = {$id}
             ORDER BY
-                Version.created DESC
+                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
             LIMIT 1
         ";
 
@@ -301,5 +319,25 @@ class Version extends AppModel
         return $file_ids;
     }
 
+    function getReleaseNotesLocales($version_id) {
+        $sql = "   
+            SELECT 
+                Translations.locale,
+                Translations.localized_string
+            FROM
+                versions AS Version
+            INNER JOIN
+                translations AS Translations ON Translations.id = Version.releasenotes
+            WHERE
+                Version.id = {$version_id}
+        ";
+
+        $out = array();
+
+        foreach ($this->query($sql) as $i)
+            $out[$i['Translations']['locale']] = $i['Translations']['localized_string'];
+
+        return $out;
+    }
 }
 ?>

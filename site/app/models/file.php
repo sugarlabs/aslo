@@ -86,6 +86,18 @@ class File extends AppModel
         // Platform WHERE if necessary
         $platform = !empty($platform_id) ? " AND (File.platform_id = ".PLATFORM_ALL." OR File.platform_id = {$platform_id})" : '';
         
+        if (preg_match('/OLPC\/0\.([^-]*)-/', $_SERVER['HTTP_USER_AGENT'], $matches)) {
+            if (floatval($matches[1]) <= 4.6)
+                $sp = '0.82';
+            else
+                $sp = '0.84';
+        } else {
+            if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', $_SERVER['HTTP_USER_AGENT'], $matches))
+                $sp = $matches[1].'.'.$matches[2];
+            else
+                $sp = '0.84';
+        }
+
         $sql = "
             SELECT
                 File.id
@@ -93,11 +105,17 @@ class File extends AppModel
                 files AS File
             INNER JOIN versions AS Version
                 ON File.version_id = Version.id AND Version.addon_id = {$addon_id}
+            INNER JOIN
+                applications_versions A ON A.version_id = Version.id
+            INNER JOIN
+                appversions as B ON B.id = A.min
+            INNER JOIN
+                appversions as C ON C.id = A.max
             WHERE
                 File.status = ".STATUS_PUBLIC."
                 {$platform}
             ORDER BY
-                Version.created DESC
+                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
             LIMIT 1
         ";
         

@@ -42,6 +42,11 @@ class LinkHelper extends Helper
         $email = addslashes($this->Html->unsanitize($email));
         $emailparts = explode('@', $email, 2);
 
+        if (!isset($emailparts[0]))
+            $emailparts[0] = '';
+        if (!isset($emailparts[1]))
+            $emailparts[1] = '';
+        
         $o = '<span id="'.$js_id.'" class="'.$spanclass.'">'.$noscriptemail."</span>\n"
         . "<script language=\"JavaScript\">"
         . "emailLink('{$js_id}', '{$emailparts[0]}', '{$emailparts[1]}');"

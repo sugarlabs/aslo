@@ -10,8 +10,8 @@ class EmailComponent
 /**
  * Send email using SMTP Auth by default.
  */
-    var $from         = 'nobody@mozilla.org'; 
-    var $fromName     = 'Mozilla Add-ons';
+    var $from         = NOBODY_EMAIL; 
+    var $fromName     = SITE_NAME;
     var $sender       = null;
     //var $smtpUserName = 'username';  // SMTP username
     //var $smtpPassword = 'password'; // SMTP password
@@ -58,7 +58,7 @@ class EmailComponent
     }
  
  
-    function send($html = false)
+    function send($html = false, $reply = null)
     {
         vendor('phpmailer'.DS.'class.phpmailer');
  
@@ -81,7 +81,10 @@ class EmailComponent
         }
         $mail->FromName = $this->fromName;
         $mail->AddAddress($this->to, $this->toName );
-        $mail->AddReplyTo($this->from, $this->fromName );
+        if ($reply)
+            $mail->AddReplyTo($reply);
+        else
+            $mail->AddReplyTo($this->from, $this->fromName );
  
         $mail->CharSet  = 'UTF-8';
         //$mail->WordWrap = 50;               // set word wrap to 50 characters

@@ -129,7 +129,7 @@ class ImageComponent extends Object {
             }
         }
         else {
-            return "{$this->controller->base}/en-US/firefox/images/addon_icon/{$addon_id}/".strtotime($addon['Addon']['modified']);
+            return "{$this->controller->base}/en-US/".APP_SHORTNAME."/images/addon_icon/{$addon_id}/".strtotime($addon['Addon']['modified']);
         }
     }
     
@@ -148,7 +148,7 @@ class ImageComponent extends Object {
         if (empty($collection['Collection']['icontype'])) {
             return "{$this->controller->base}/img/collection.png";
         } else {
-            return "{$this->controller->base}/en-US/firefox/images/collection_icon/{$collection_id}/".strtotime($collection['Collection']['modified']);
+            return "{$this->controller->base}/en-US/".APP_SHORTNAME."/images/collection_icon/{$collection_id}/".strtotime($collection['Collection']['modified']);
         }
     }
     
@@ -200,7 +200,7 @@ class ImageComponent extends Object {
         else {
             // Always use en-US and firefox and append modified timestamp for
             // best caching results. Serves 150-200 million. Refrigerate after serving.
-            return "{$this->controller->base}/en-US/firefox/images/{$type['url']}/{$preview_id}/".strtotime($preview['Preview']['modified']);
+            return "{$this->controller->base}/en-US/".APP_SHORTNAME."/images/{$type['url']}/{$preview_id}/".strtotime($preview['Preview']['modified']);
         }
     }
     

@@ -205,6 +205,8 @@ var upload = {
     },
 
     checkFileName : function(filename) {
+        // we are sugar
+        return filename.match(/\.(xo)$/i) != null;
         return filename.match(/\.(xml|xpi|jar)$/i) != null;
     },
 

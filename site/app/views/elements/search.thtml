@@ -104,8 +104,6 @@ if (isset($this->params['url']['pid'])
 // AmoAddonTypes is from controller->beforeRender()
 // for now we want to get rid of Plugin and Language packs since the former
 // goes to a static page and the latter is empty
-array_pop($AmoAddonTypes);
-array_pop($AmoAddonTypes);
 $addon_types = array_merge(array(ADDON_ANY => ___('Any', 'advanced_search_form_any_type')), $AmoAddonTypes);
 if (!isset($atype)) {    
     $atype = ADDON_ANY;
@@ -221,7 +219,6 @@ if (!isset($category)) $category = array(0, 0);
         <fieldset id="search-platform">
             <table>
             <tr><td><?=___('Type', 'advanced_search_form_type'); ?>:</td><td><?php $html->simpleSelectTag('atype', $addon_types, $atype, array(), array(), false); ?></td></tr>
-            <tr><td><?=___('Platform', 'advanced_search_form_platform'); ?>:</td><td><?php $html->simpleSelectTag('pid', $platforms, $pid, array(), array(), false); ?></td></tr>
             <tr><td><?=___('Last Updated'); ?>:</td><td><?php $html->simpleSelectTag('lup', $updates, $lup, array(), array(), false); ?></td></tr>
             </table>
         </fieldset>
@@ -246,12 +243,13 @@ if (!isset($category)) $category = array(0, 0);
     echo "versions = new Array();\n";
     foreach($versions as $application_id => $ver_array) {
         echo "versions[{$application_id}] = {";
+        echo "'".___('advanced_search_form_any_version')."' : 'any',\n";
         foreach ($ver_array as $version) {
             if($version !="") {
                 echo "\"{$version}\": \"{$version}\", ";
             }
         }
-        echo "'".___('Any', 'advanced_search_form_any_type')."' : 'any' };\n";
+        echo "};\n";
     }
 
    // to get default version value set up correctly needed to do after $appid, $lver and $hver set-up above in this element 

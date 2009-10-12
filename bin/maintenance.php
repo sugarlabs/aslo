@@ -618,8 +618,7 @@ switch ($action) {
     case 'category_totals':
         debug("Starting category counts update...");
 
-        global $valid_status;
-        $valid_status = join(',', $valid_status);
+        $valid_status = join(',', array(4));
 
         // Modified query inspired by countAddonsInAllCategories()
         // in site/app/models/addon.php
@@ -731,14 +730,14 @@ switch ($action) {
         foreach ($stats as $stat => $query) {
             debug("Updating {$stat}...");
 
-            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), '{$date}')");
+            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', IFNULL(({$query}),0), '{$date}')");
 
             $affected_rows += mysql_affected_rows();
         }
 
         // These stats are specific to the latest available metrics data import
 
-        $date = 'SELECT MAX(date) FROM update_counts';
+        $date = 'SELECT IFNULL(MAX(date),NOW()) FROM update_counts';
 
         $variable_date_stats = array(
             'addon_total_updatepings'           => "SELECT SUM(count) FROM update_counts WHERE date = ({$date})",
@@ -748,7 +747,7 @@ switch ($action) {
         foreach ($variable_date_stats as $stat => $query) {
             debug("Updating {$stat}...");
 
-            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', ({$query}), ({$date}))");
+            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', IFNULL(({$query}),0), ({$date}))");
 
             $affected_rows += mysql_affected_rows();
         }

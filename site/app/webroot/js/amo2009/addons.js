@@ -231,7 +231,22 @@ function initDownloadPopup(triggerID, popupID)
  * @param bool showVersionLink offer a link to the user which will remove the compatibility hint (and allow them to download the add-on)
  */
 function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLink) {
-    if (!gIsFirefox) return true;
+    var uapattern_olpc = /OLPC\/0\.([^-]*)-/;
+    var uamatch_olpc = uapattern_olpc.exec(navigator.userAgent);
+    if (uamatch_olpc) {
+        if (vc.compareVersions(uamatch[1], "4.6") <= 0)
+            var version = "0.82";
+        else
+            var version = "0.84";
+    } else {
+        var uapattern = /Sugar Labs\/([^\s]*).*$/;
+        var uamatch = uapattern.exec(navigator.userAgent);
+        if (!uamatch || uamatch.length < 2) {
+            var version = "0.84";
+        } else {
+            var version = uamatch[1];
+        }
+    }
 
     var outer = $("#install-"+ versionID);
 
@@ -279,7 +294,7 @@ function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLi
     if (needUpgrade && showVersionLink) {
         l_parent.after(
             '<strong class="compatmsg">'+
-            sprintf(app_compat_older_version_or_ignore_check, url, "removeCompatibilityHint("+versionID+");return false;")+
+            sprintf(app_compat_older_version_or_ignore_check, url, "removeCompatibilityHint('"+versionID+"');return false;")+
             '</strong>'
         );
     } else if (!needUpgrade && showVersionLink) {
@@ -302,6 +317,10 @@ function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLi
         );
     }
 
+    // we are sugar
+    if (true) {
+        // pass
+    } else
     if (needUpgrade) {
         if (vc.compareVersions(fromVer, LATEST_FIREFOX_DEVEL_VERSION)>=0) {
             l_parent.after(sprintf('<strong class="compatmsg">' + app_compat_unreleased_version + "</strong>", 'http://www.mozilla.com/' + LANG + '/firefox/all-beta.html#' + LANG, LATEST_FIREFOX_DEVEL_VERSION));

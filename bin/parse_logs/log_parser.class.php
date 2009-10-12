@@ -111,7 +111,7 @@ class Log_Parser {
     */
     function start() {
         echo "\n---------- [ BEGIN ACCESS LOG PARSING FOR {$this->geo}] ----------\n";
-        exec("find {$this->logDir} -name \"access_{$this->date}*.gz\" -type f", $loglist);
+        exec("find {$this->logDir} -name \"access-{$this->date}*.gz\" -type f", $loglist);
         
         if (!empty($loglist)) {
             foreach ($loglist as $logfile) {

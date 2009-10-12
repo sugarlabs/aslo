@@ -64,13 +64,13 @@ $this->layout = 'amo2009';
                 if (!empty($categories)) {
                     echo '<p>'.sprintf(___('Select up to three %s categories for your add-on'), $applications[$application_id]).':</p>';
                     echo '<fieldset id="addon-categories">';
-                    for ($i = 1; $i <= 3; $i++) {
+                    for ($i = 1; $i <= 5; $i++) {
                         $selected = false;
                         echo '<p><label>'.sprintf(___('Category %s'), $i).':&nbsp;';
                         echo '<select name="data[Category]['.$application_id.'][]"'.($otherSelected ? ' disabled="disabled"' : '').'>';
                         echo '<option value="" style="color: gray;">'.___('----------------').'</option>';
                         foreach ($categories as $category_id => $category_name) {
-                            if ($otherCategories[$application_id] == $category_id)
+                            if (!empty($otherCategories[$application_id]) && $otherCategories[$application_id] == $category_id)
                                 continue;
 
                             echo '<option value="'.$category_id.'"';

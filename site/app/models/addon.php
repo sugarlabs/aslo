@@ -707,6 +707,9 @@ class Addon extends AppModel
     * @param string $order SQL order by clause
     */
     function getRecommendedAddons($limit=null, $order='RAND()') {
+        // we are sugar
+        return $this->AddonCategory->getRandomAddons(array(), true,  $limit, $order);
+
         $this->Feature->unbindFully();
         $criteria = "Feature.start < NOW() AND Feature.end > NOW() "
             ."AND Feature.application_id ='" . APP_ID . "' AND "

@@ -1,0 +1,17 @@
+Updating branches
+
+#svn
+##location
+[svn-remote "svn"]
+        url = http://svn.mozilla.org/addons/trunk
+        fetch = :refs/remotes/git-svn
+##rebase command
+git svn rebase
+
+
+#devel
+##location
+[remote "origin"]
+        url = gitorious@git.sugarlabs.org:slo-activities/mainline.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+##rebase.sh

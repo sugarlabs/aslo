@@ -262,7 +262,7 @@ class DevelopersController extends AppController
         $this->publish('type', 'new');
         $this->publish('hasAgreement', false);
 
-        $this->render('uploader');
+        $this->_uploader();
     }
 
     /**
@@ -305,9 +305,9 @@ class DevelopersController extends AppController
 
         // Save License
         $license_id = $this->Developers->saveLicense(
-             $this->data['License'],
-             getitem($this->data, 'License.text'),
-             getitem($this->params, 'form.data.License'));
+             $data['License'],
+             $data['License.text'],
+             $data['form.data.License']);
         $this->Addon->saveField('dev_agreement', 1);
 
         // Add Version
@@ -316,6 +316,8 @@ class DevelopersController extends AppController
         $data['Version']['license_id'] = $license_id;
         $this->Version->save($data['Version']);
         $data['Version']['id'] = $this->Version->getLastInsertId();
+        
+        $this->Version->addCompatibleApp($data['Version']['id'], SITE_APP, $data['appversion_min'], $data['appversion_max']);
 
         // Save appversions
         if (!empty($data['appversions'])) {
@@ -324,6 +326,9 @@ class DevelopersController extends AppController
             }
         }
 
+        // Save translated fields (only releasenotes)
+        $this->Version->saveTranslations($data['Version']['id'], $data['form.data.Version'], $data['localizedFields']);
+        
         // Add Files
         $data['File']['db']['version_id'] = $data['Version']['id'];
         $platforms = $data['File']['db']['platform_id'];
@@ -420,7 +425,7 @@ class DevelopersController extends AppController
             }
 
             // notify subscribed editors of update (if any)
-            $this->Editors->updateNotify($addon['Addon']['id'], $version_id);
+            $this->Editors->updateNotify($addon['Addon']['id'], $version_id, true);
         }
 
         // Add Files
@@ -465,6 +470,9 @@ class DevelopersController extends AppController
 
         $pending = $this->Addon->query("SELECT COUNT(*) AS pending FROM files WHERE status=".STATUS_PENDING." GROUP BY status");
         $pendingCount = (!empty($pending[0][0]['pending']) ? ($pending[0][0]['pending'] - 1) : 0);
+        
+        if ($data['File']['db']['status'] == STATUS_PENDING)
+            $this->Editors->pendingNotify($addon_id, $version_id);
 
         return array(
             'error' => 0,
@@ -506,6 +514,63 @@ class DevelopersController extends AppController
             $query .= implode(', ', $sql);
             $this->Addon->execute($query);
         }
+    }
+    
+    function _rmtree($dir) {
+        $dir = "$dir";
+
+        if ($dh = opendir($dir)) {
+            while (FALSE !== ($item = readdir($dh))) {
+                if ($item != '.' && $item != '..') {
+                    $subdir = $dir . '/' . "$item";
+                    if (is_dir($subdir))
+                        $this->_rmtree($subdir);
+                    else
+                        @unlink($subdir);
+                }
+            }
+            closedir($dh);
+            @rmdir($dir);
+        }
+    }
+
+    function _unbundle($bundle, $manifest) {
+        // Extract activity.info from .xo
+        $zip = new Archive_Zip($bundle);
+        $files = $zip->listContent();
+        $first_file = $files[0]['stored_filename'];
+        $paths = split("/", $first_file, 2);
+        $activity_info_path = $paths[0].'/'.$manifest;
+        $out = array();
+
+        $tmpdir = getenv("TMPDIR");
+        if (empty($tmpdir)) $tmpdir = "/tmp";
+
+        $tmpdir = tempnam($tmpdir, 'aslo.'.getmypid().'.');
+        if (file_exists($tmpdir))
+            unlink($tmpdir);
+        if (!mkdir($tmpdir)) {
+            $out['error'] = _('devcp_error_mktmp_failed');
+            return $out;
+        }
+
+        $activity_info = $zip->extract(array('add_path' => $tmpdir, 'by_name' => array($activity_info_path)));
+        if (empty($activity_info))
+            $out['error'] = sprintf(_('devcp_error_activity_info_not_found'), $manifest);
+        else
+            $info = parse_ini_file($activity_info[0]['filename']);
+        $this->_rmtree($tmpdir);
+
+        if (!isset($out['error'])) {
+            if (!is_array($info))
+                $out['error'] = sprintf(_('devcp_error_activity_info_parse'), $manifest);
+            elseif (!isset($info['name']))
+                $out['error'] = _('devcp_error_activity_info_missing_name');
+            else
+                $out['manifest'] = $info;
+        }
+
+        return $out;
     }
 
     /**
@@ -567,6 +632,31 @@ class DevelopersController extends AppController
             $this->Addon->execute("DELETE FROM `test_results_cache` WHERE `key` = '{$filename}'");
         }
 
+        // we are sugar
+        if (true) {
+            $bundle = $addon['File']['details']['path'];
+            $pathinfo = pathinfo($bundle);
+
+            $info = $this->_unbundle($bundle, 'activity/activity.info');
+            if (isset($info['error']))
+                return $this->Error->getJSONforError($info['error']);
+
+            $manifest = $info['manifest'];
+
+            if (!isset($manifest['activity_version']))
+                return $this->Error->getJSONforError(_('devcp_error_activity_info_missing_activity_version'));
+
+            if (isset($manifest['bundle_id']))
+                $addon['Addon']['guid'] = $manifest['bundle_id'];
+            else if (isset($manifest['service_name']))
+                $addon['Addon']['guid'] = $manifest['service_name'];
+            else
+                return $this->Error->getJSONforError(_('devcp_error_activity_info_missing_bundle_id'));
+
+            $addon['Addon']['name'] = $manifest['name'];
+            $addon['Addon']['summary'] = $manifest['name'];
+            $addon['Version']['version'] = $manifest['activity_version'];
+        } else
         // Parse install.rdf file if not a search plugin
         if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {
             // Extract install.rdf from xpi or jar
@@ -694,8 +784,13 @@ class DevelopersController extends AppController
         $addon['Addon']['id'] = $this->data['Addon']['id'];
         $addon['Version']['id'] = $this->data['Version']['id'];
         $addon['License'] = $this->data['License'];
-        $addon['Version.License.text'] = getitem($this->data, 'Version.License.text');
-        $addon['form.data.Version.License'] = getitem($this->params, 'form.data.Version.License');
+        $addon['License.text'] = getitem($this->data, 'License.text');
+        $addon['form.data.License'] = getitem($this->params, 'form.data.License');
+        $addon['appversion_min'] = $this->data['appversion_min'];
+        $addon['appversion_max'] = $this->data['appversion_max'];
+        list($localizedFields, $unlocalizedFields) = $this->Version->splitLocalizedFields($this->data['Version']);
+        $addon['localizedFields'] = $localizedFields;
+        $addon['form.data.Version'] = getitem($this->params, 'form.data.Version');
 
         // Save this data for insertion if/when things pass
         $data = serialize($addon);
@@ -865,6 +960,8 @@ class DevelopersController extends AppController
     function _editAddonProperties($addon_id) {
         // Save translations if POST data
         if (!empty($this->data['Addon']) && $this->viewVars['author_role'] >= AUTHOR_ROLE_DEV) {
+            $errors = array();
+
             // Split localized fields from other fields
             list($localizedFields, $unlocalizedFields) = $this->Addon->splitLocalizedFields($this->data['Addon']);
 
@@ -909,8 +1006,16 @@ class DevelopersController extends AppController
 
             $this->Addon->id = $addon_id;
             $this->Addon->saveTranslations($addon_id, $this->params['form']['data']['Addon'], $localizedFields);
-            $this->Addon->save($unlocalizedFields);
-
+            if (!$this->Addon->save($unlocalizedFields)) {
+                foreach ($this->Addon->validationErrors as $efield => $error) {
+                    switch ($efield) {
+                        case 'guid':
+                            $errors[$efield] = sprintf(___('devcp_error_invalid_guid'), $unlocalizedFields[$efield]);
+                            break;
+                    }
+                }
+            }
+            
             if (empty($errors)) {
                 // log addon action
                 $this->Addonlog->logEditProperties($this, $addon_id);
@@ -976,6 +1081,16 @@ class DevelopersController extends AppController
 
         $addon = $this->Addon->findById($addon_id);
 
+        // we are sugar
+        if (true) {
+            $supportedApps = array(
+                0 => array(
+                        'Application' => array(
+                            'id' => APP_FIREFOX
+                        )
+                    )
+            );
+        } else
         if ($addon['Addon']['addontype_id'] == ADDON_SEARCH) {
             // Search engines don't have supported applications
             $supportedApps = array(
@@ -1025,6 +1140,11 @@ class DevelopersController extends AppController
 
         $this->publish('applications', $this->Application->getIDList());
 
+        // we are sugar
+        if (true) {
+            // since we have only one application_id
+            $otherCategories = array();
+        } else
         // The "Other" category for each application that has one
         if ($addon['Addon']['addontype_id'] == ADDON_SEARCH) {
             $otherCategories = array(
@@ -1282,7 +1402,8 @@ class DevelopersController extends AppController
                     // notify subscribed editors of update
                     global $valid_status;
                     $version_id = $this->Version->getVersionByAddonId($addon['Addon']['id'], $valid_status);
-                    $this->Editors->updateNotify($addon['Addon']['id'], $version_id);
+                    $this->Editors->updateNotify($addon['Addon']['id'], $version_id, false);
+                    $this->Editors->nominateNotify($addon['Addon']['id'], $version_id);
                 }
             }
 
@@ -1382,6 +1503,16 @@ class DevelopersController extends AppController
 
         $this->render('versions');
     }
+    
+    function _uploader() {
+        $app_versions = $this->Appversion->findAllByApplication_id(SITE_APP,
+                array('Appversion.id', 'Appversion.version'), 'Appversion.version ASC');
+        $this->publish('app_versions', $app_versions);
+        $app_names = $this->Application->getNames();
+        $this->publish('app_name', $app_names[SITE_APP]);
+
+        $this->render('uploader');
+    }
 
     /**
      * Add a Version
@@ -1400,7 +1531,7 @@ class DevelopersController extends AppController
         $addon = $this->Addon->getAddon($addon_id, array('default_fields'));
         $this->publish('hasAgreement', $addon['Addon']['dev_agreement']);
 
-        $this->render('uploader');
+        $this->_uploader();
     }
 
     /**
@@ -1520,7 +1651,7 @@ class DevelopersController extends AppController
                     else {
                         $this->File->id = $file_id;
                         $this->File->save(array(
-                            'platform_id' => $fields['platform_id']
+                            'platform_id' => 1
                         ));
                     }
                 }
@@ -1966,6 +2097,8 @@ class DevelopersController extends AppController
 
                     $return['success'][] = sprintf(___('File %s was uploaded successfully. You can add a caption below.'), $name);
                 }
+
+                $this->data['Preview']['highlight'] = $previewData['highlight'];
             }
             else
                 $return['errors'][] = sprintf(___('File %s could not be saved to the database. Please try again.'), $name);

@@ -800,6 +800,9 @@ class AmoComponent extends Object {
             );
         }
 
+        // we are sugar
+        $catlist = array();
+        
         // create two sort arrays that we can use with array_multisort later
         $_weights = array();
         $_names = array();

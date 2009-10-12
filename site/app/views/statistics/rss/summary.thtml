@@ -68,7 +68,7 @@ echo $this->renderElement('rss_listitem', array(
     'title' => sprintf(___('Statistics for %1$s'), strftime(___('%A, %B %e, %Y'))),
     'url' => SITE_URL.$html->url('/statistics/addon/'.$addon['Addon']['id']),
     'description' => "<![CDATA[{$summary}]]>",
-    'author' => 'Mozilla Add-ons',
+    'author' => SITE_NAME,
     'pubDate' => $time->toRss($today),
     'permalink' => SITE_URL.$html->url('/statistics/addon/'.$addon['Addon']['id']).'/'.date('Ymd', $today)
     ));

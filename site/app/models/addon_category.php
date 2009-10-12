@@ -63,6 +63,7 @@ class AddonCategory extends AppModel
     function getRandomAddons($category, $recommended=false, $limit=null, $order='RAND()', $addontype=null) {
         global $valid_status;
         
+        if ($category == 'all') $category = array();
         if (!is_array($category)) $category = array($category);
         if (!is_null($addontype) && !is_array($addontype)) $addontype = array($addontype);
         
@@ -71,7 +72,7 @@ class AddonCategory extends AppModel
             ."FROM addons_categories AS AddonCategory "
             ."INNER JOIN addons AS Addon ON (AddonCategory.addon_id = Addon.id)"
             ."WHERE "
-                ."AddonCategory.category_id IN (".implode(',', $category).') AND '
+                .(!empty($category) ? "AddonCategory.category_id IN (".implode(',', $category).') AND ' : '')
                 ."AddonCategory.feature = ".($recommended ? '1' : '0')." AND "
                 ."Addon.status IN (".implode(',', $valid_status).') AND '
                 .'Addon.inactive = 0 '

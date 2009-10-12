@@ -165,7 +165,7 @@ if ($action == 'results') {
     <div class="frame">
         <h1>Detect Installed Add-ons</h1>
         <p>Select the add-ons below that you'd like to add to your list of favorite add-ons.<br><a href="#" onClick="document.getElementById('missing-addons').style.display=''; this.style.display='none';">Why are some of my add-ons missing?</a></p>
-        <p id="missing-addons" style="display: none;">If some of your installed add-ons aren't detected, it's probably because they are not hosted on <a href="http://addons.mozilla.org">Mozilla Add-ons</a>. Only add-ons hosted on <a href="http://addons.mozilla.org">Mozilla Add-ons</a> can be detected and listed in Rock Your Firefox.</p>
+        <p id="missing-addons" style="display: none;">If some of your installed add-ons aren't detected, it's probably because they are not hosted on <a href="<?=SITE_URL?>"><?=SITE_NAME?></a>. Only add-ons hosted on <a href="<?=SITE_URL?>"><?=SITE_NAME?></a> can be detected and listed in Rock Your Sugar.</p>
         <form action="<?=SITE_URL.$html->url('/facebookinstall/import/'.$fbUserSession.'/favorites')?>" method="post" id="form">
         <table id="addons" width="100%">
         <tr><td width="50%" valign="top">

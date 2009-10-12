@@ -132,7 +132,7 @@
             echo $sortimg;
         ?></td>
     <?php
-        $apps = array('Firefox', 'Thunderbird', 'Mozilla', 'SeaMonkey', 'Sunbird');
+        $apps = array();
         foreach ($apps as $app) {
             echo '<td>'.$html->image('developers/'.strtolower($app).'.png', array('title' => sprintf(___('%s Compatibility'), $app))).'</td>';
         }
@@ -191,7 +191,7 @@
     }
 ?>
 <div id="helpfulLinks">
-<?=___('Helpful Links').': '.$html->link(___('Add-on Policy'), '/pages/policy').' | '.$html->link(___('Editors\' Guide'), 'http://wiki.mozilla.org/Update:Editors')?>
+<?=___('Helpful Links').': '.$html->link(___('Add-on Policy'), '/pages/policy').' | '.$html->link(___('Editors\' Guide'), SITE_EDITOR_WIKI)?>
 </div>
 </div>
 <script type="text/javascript">

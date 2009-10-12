@@ -137,6 +137,12 @@ class FilesController extends AppController
             $this->Filebrowser->buildContentsArray($startfile, false, false, $files);
         } else {
             $this->_unwrap($path, $files);
+
+            // we are sugar
+            $zip = new Archive_Zip($path);
+            $contents = $zip->listContent();
+            $paths = split("/", $content['filename'], 2);
+            $startfile = $paths[0].'/activity/activity.info';
         }
 
 		//If a specific start file is requested, override it

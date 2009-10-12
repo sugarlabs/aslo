@@ -241,6 +241,10 @@ class DevelopersComponent extends Object {
     function detectAddontype($file) {
         $extension = substr($file['name'], strrpos($file['name'], '.'));
         switch ($extension) {
+            case '.xo':
+                return ADDON_EXTENSION;
+                break;
+
             case '.xpi':
                 // Dictionaries have a .dic file in the dictionaries directory
                 $zip = new Archive_Zip($file['tmp_name']);
@@ -499,6 +503,8 @@ class DevelopersComponent extends Object {
     */
     function getAllowedExtensions($addontype) {
         switch ($addontype) {
+            case ADDON_EXTENSION: $allowed = array('.xo');
+                                  break;
             case ADDON_EXTENSION: $allowed = array('.xpi');
                                   break;
             case ADDON_THEME:     $allowed = array('.jar', '.xpi');
@@ -531,6 +537,8 @@ class DevelopersComponent extends Object {
 
         $filename .= '-'.$data['Version']['version'];
 
+        // we are sugar
+        if (false)
         if ($data['Addon']['addontype_id'] != ADDON_SEARCH) {
             $filename .= '-';
             $appString = '';

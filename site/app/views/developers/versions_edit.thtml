@@ -50,6 +50,8 @@ $this->layout = 'amo2009';
             echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
         }
         if (!empty($errors)) {
+            foreach ($errors as $i => $j)
+                echo $i."=".$j." ";
             echo '<div class="notice-error rounded">'.___('<span>One or more of your changes couldn\'t be saved.</span><br />Please look for the errors below. The rest of your changes were successfully saved.').'</div>';
         }
         ?>
@@ -80,7 +82,7 @@ $this->layout = 'amo2009';
             echo '<table id="files-table" class="pretty-table">';
             echo '<thead><tr>';
             echo '<th>'.___('File').'</th>';
-            echo '<th>'.___('Platform', 'devcp_versions_edit_th_platform').'</th>';
+            echo '<th>'.'</th>';
             echo '<th>'.___('Size').'</th>';
             echo '<th>'.___('Status', 'devcp_versions_edit_th_status').'</th>';
             echo '<th style="width: 25px;"></th>';
@@ -91,11 +93,7 @@ $this->layout = 'amo2009';
                 echo '<td>';
                 echo '<input type="hidden" name="data[File]['.$file['id'].'][delete]" value="0" class="delete"/>';
                 echo '<a href="'.$html->urlFile($file['id'], $file['filename']).'"  class="filelink">'.$file['filename'].'</a></td>';
-                echo '<td><select name="data[File]['.$file['id'].'][platform_id]">';
-                foreach ($platforms as $platform_id => $platform_name) {
-                    echo '<option value="'.$platform_id.'"'.($file['platform_id'] == $platform_id ? ' selected="selected"' : '').'>'.$platform_name.'</option>';
-                }
-                echo '</select></td>';
+                echo '<td/>';
                 echo '<td>'.sprintf(___('%1$s KB'), $file['size']).'</td>';
                 echo '<td>'.$statuses[$file['status']].'</td>';
                 echo '<td><div class="inline-delete-button uses-image">';

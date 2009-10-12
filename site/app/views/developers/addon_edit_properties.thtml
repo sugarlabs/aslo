@@ -50,6 +50,11 @@ $this->layout = 'amo2009';
             echo '<div class="notice-success rounded">'.___('<span>Your changes have been saved.</span><br />Please note that some changes may take several hours to appear in all areas of the website.').'</div>';
         }
         if (!empty($errors)) {
+
+            foreach ($errors as $i => $j)
+                echo $i."=".$j." ";
+
+
             echo '<div class="notice-error rounded">'.___('<span>One or more of your changes couldn\'t be saved.</span><br />Please look for the errors below. The rest of your changes were successfully saved.').'</div>';
         }
         ?>
@@ -187,8 +192,10 @@ $this->layout = 'amo2009';
         </div>
 
         <?php if ($this->controller->SimpleAcl->actionAllowed('Admin', 'ConfigureAnyAddon', $this->controller->Session->read('User'))): ?>
+        <div class="field graybox rounded spaced<?=(!empty($errors['guid']) ? ' errors' : '')?>">
         <div class="field graybox rounded spaced">
             <h4><?=___('Admin Settings')?></h4>
+            <?=(!empty($errors['guid']) ? '<div class="error-message">'.$errors['guid'].'</div>' : '')?>
             <h5><?=___('Trusted Add-on?')?></h5>
             <p class="smallmargin"><?=___('Trusted add-ons can become public without Editor review.')?></p>
             <ul>

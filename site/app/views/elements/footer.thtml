@@ -64,14 +64,14 @@
 <?php endif; ?>
 
 <div id="footer-legal">
-    <p id="copyright"><?=___('Copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla. <?=___('All rights reserved.')?></p>
+    <p id="copyright"><?=___('Copyright')?> <span title="<?=php_uname('n')?>">&#169;</span> 2005&#8211;<?=date('Y')?> Mozilla, <?=date('Y')?> <?=SITE_ORG?>. <?=___('All rights reserved.')?></p>
     <ul id="nav-legal">
         <li><?=$html->link(___('Privacy Policy', 'footer_privacy_policy'), '/pages/privacy');?></li>
         <li><a href="http://www.mozilla.com/<?=LANG?>/about/legal.html"><?=___('Legal Notices')?></a></li>
         <?php if (!isset($suppressCredits) || !$suppressCredits): ?><li><?=$html->link(___('Credits', 'footer_credits'), '/pages/credits')?></li><?php endif; ?>
-        <li><?=$html->link(___('About', 'footer_a_about'), '/pages/about')?></li>
-        <li><?=$html->link('<abbr title="'.___('Frequently Asked Questions', 'footer_abbr_faq').'">'.___('FAQ').'</abbr>', '/pages/faq')?></li>
-        <li><a href="http://blog.mozilla.com/addons"><?=___('Blog')?></a></li>
+        <li><?=$html->link(___('About', 'footer_a_about'), SITE_ABOUT)?></li>
+        <li><?=$html->link('<abbr title="'.___('Frequently Asked Questions', 'footer_abbr_faq').'">'.___('FAQ').'</abbr>', SITE_FAQ)?></li>
+        <li><a href="<?=SITE_BLOG?>"><?=___('Blog')?></a></li>
     </ul>
     <p id="footer-disclaimer"><?=___('Mozilla is providing links to these applications as a courtesy, and makes no representations regarding the applications or any information related there to. Any questions, complaints or claims regarding the applications must be directed to the appropriate software vendor.')?></p>
 </div>

@@ -70,6 +70,9 @@ $new_versions = array();
 foreach ($app_shortnames as $n => $k) {
 // AmoVersions is from controller->beforeRender()
     if (!empty($AmoVersions[$k])) foreach ($AmoVersions[$k] as $version) {
+        // we are sugar
+        $new_versions[$k][] = $version;
+        continue;
         $versions_parts = explode(".", $version);
         $second_part = (isset($versions_parts[1])) ? ".".intval($versions_parts[1]) : "";
         if (!isset($min_display_version_by_app[$k])
@@ -224,10 +227,6 @@ if ($collectionSearch) {
             <?php endif; ?>
                 <input type="hidden" name="as" value="1" />
 
-                <div class="container application">
-                    <label for="appid"><?=___('Application', 'advanced_search_form_application'); ?></label>
-                    <?php $html->simpleSelectTag('appid', $applications, $appid, array(), array(), false)?>
-                </div>
 
                 <div class="container">
                     <label for="lver"><?=___('version'); ?></label>
@@ -245,10 +244,6 @@ if ($collectionSearch) {
                 <div class="container">
                     <label for="pp"><?=___('Per Page'); ?></label>
                     <?php $html->simpleSelectTag('pp', $pages, $pp, array(), array(), false); ?>
-                </div>
-                <div class="container">
-                    <label for="pid"><?=___('Platform', 'advanced_search_form_platform'); ?></label>
-                    <?php $html->simpleSelectTag('pid', $platforms, $pid, array(), array(), false); ?>
                 </div>
                 <div class="container">
                     <label for="sort"><?=___('Sort By'); ?></label>
@@ -274,12 +269,13 @@ if ($collectionSearch) {
     echo "versions = new Array();\n";
     foreach($versions as $application_id => $ver_array) {
         echo "versions[{$application_id}] = {";
+        echo "'".___('advanced_search_form_any_version')."' : 'any',\n";
         foreach ($ver_array as $version) {
             if($version !="") {
                 echo "\"{$version}\": \"{$version}\", ";
             }
         }
-        echo "'".___('Any', 'advanced_search_form_any_type')."' : 'any' };\n";
+        echo "};\n";
     }
 
    // to get default version value set up correctly needed to do after $appid, $lver set-up above in this element

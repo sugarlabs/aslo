@@ -299,6 +299,7 @@ class AddonsController extends AppController
             $addon_data['compatible_apps'] = $compat_apps;
         } else {
             $this->publish('hasversion', false);
+            $this->publish('compatible_apps', array());
         }
 
         // if the latest version is incompatible with the current app, redirect
@@ -800,6 +801,8 @@ class AddonsController extends AppController
         }
         $type = $this->namedArgs['type'];
 
+        // we are sugar
+        if (false)
         // allow addontype pages only for applicable types
         if (!in_array($type, $app_listedtypes[APP_ID])) {
             // @TODO throw some error
@@ -1430,6 +1433,11 @@ class AddonsController extends AppController
         $_addon_ids = array();
 
 
+        // we are sugar
+        if (true) {
+            $tag = isset($this->namedArgs['cat']) ? $this->namedArgs['cat'] : array();
+            $_addon_ids = $this->AddonCategory->getRandomAddons($tag, true, null, $order);
+        } else
         if (isset($this->namedArgs['cat'])) {
            $category = $this->namedArgs['cat'];
            $this->Amo->clean($category);

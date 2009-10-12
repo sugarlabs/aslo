@@ -75,6 +75,7 @@
   echo '<!--[if IE]>'.$html->css('ie', 'stylesheet', array('media'=>'screen,projection'))."<![endif]-->\n";
     echo '<!--[if lte IE 6]>'.$html->css('ie6', 'stylesheet', array('media'=>'screen,projection'))."<![endif]-->\n";
     echo $html->css('remora', 'stylesheet', array('media'=>'screen,projection'))."\n";
+    echo $html->css('sugar', 'stylesheet', array('media'=>'screen,projection'))."\n";
     if (!empty($cssAdd)) {
         foreach ($cssAdd as $css) {
             $url = $html->css($css);
@@ -83,7 +84,7 @@
     }
 ?>
     
-    <link rel="search" type="application/opensearchdescription+xml" href="<?=$html->url('/AMOSearch.xml', null, false, false)?>" title="Mozilla Add-ons"/>
+    <link rel="search" type="application/opensearchdescription+xml" href="<?=$html->url('/AMOSearch.xml', null, false, false)?>" title="<?=SITE_NAME?>"/>
     <?php if (isset($addon) && ($addon['Addon']['addontype_id'] == ADDON_SEARCH)) : ?>
         <link rel="search" type="application/opensearchdescription+xml" href="<?=$html->urlFile($addon['Version'][0]['File'][0]['id'], $addon['Version'][0]['File'][0]['filename'])?>" locale="<?=$addon['Translation']['name']['locale']?>" title="<?=$addon['Translation']['name']['string']?>"/>
     <?php endif; ?>

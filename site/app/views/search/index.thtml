@@ -148,10 +148,10 @@ $params = array(
             <ul class="refinements">
                 <?php
                     $selected = "";
-                    if ($lver == "any") {
+                    if ($hver == "any" && $lver == "any") {
                         $selected = " class='selected'";
                     }
-                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.___('All Versions').'</a></li>';
+                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=any&pp=".$pp).'">'.___('All Versions').'</a></li>';
                 ?>
                 <?php
                     $min_display_version_by_app = array(
@@ -164,15 +164,7 @@ $params = array(
                     $new_versions = array();
                     foreach ($app_shortnames as $n => $k) {
                         if (!empty($AmoVersions[$k])) foreach ($AmoVersions[$k] as $version) {
-                            $versions_parts = explode(".", $version);
-                            $second_part = (isset($versions_parts[1])) ? ".".intval($versions_parts[1]) : "";
-                            if (!isset($min_display_version_by_app[$k])
-                                || $min_display_version_by_app[$k] <= $versions_parts[0].$second_part ) {
-
-                                if ($k != APP_FIREFOX || !in_array($versions_parts[0].$second_part, array('1.4','3.1'))) {
-                                    $new_versions[$k][] = $versions_parts[0].$second_part;  
-                                }
-                            }
+                            $new_versions[$k][] = $version;
                         }
                         if (!empty($new_versions[$k]))
                             $new_versions[$k] = array_unique($new_versions[$k]);
@@ -180,10 +172,10 @@ $params = array(
                     $versions = $new_versions;
                     foreach (array_reverse($versions[$appid]) as $app_version){
                         $selected = "";
-                        if ($app_version == $lver) {
+                        if ($app_version == $hver && $lver == $app_version) {
                             $selected = " class='selected'";
                         }
-                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$app_version."&pp=".$pp).'">'.$app_version.'</a></li>';
+                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$app_version."&lver=".$app_version."&pp=".$pp).'">'.$app_version.'</a></li>';
                     }
                 ?>
             </ul>
@@ -197,21 +189,26 @@ $params = array(
                     } else {
                         $selected = "";
                     }
-                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
+                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."lver=".$lver."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
                     $results_categories = array();
+                    $results_categories_values = array();
                     foreach ($search_results as $addon) {
                         if (!empty($addon['Category'])) {
-                            array_push($results_categories, $addon['Category'][0]);
+                            foreach ($addon['Category'] as $i => $j) {
+                                $results_categories_values[$j['Category']['id']] = $j;
+                                array_push($results_categories, $j['Category']['id']);
+                            }
                         }
                     }
                     $results_categories = array_unique($results_categories);
-                    foreach ($results_categories as $_categories) {
+                    foreach ($results_categories as $i) {
+                        $_categories = $results_categories_values[$i];
                         if ($category == array($_categories['Category']['addontype_id'], $_categories['Category']['id'])) {
                             $selected = ' class="selected"';
                         } else {
                             $selected = "";
                         }
-                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
+                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
                     }
                 ?>
             </ul>

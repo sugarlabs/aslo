@@ -1,0 +1,61 @@
+Initial clone
+-------------
+
+Checkout svn branch:
+$ git svn init http://svn.mozilla.org/addons/trunk
+$ git config --add remote.origin.fetch :refs/remotes/git-svn
+$ git fetch
+$ git checkout -b upstream origin/upstream
+
+*Apache VH
+**/etc/apache2/sites-available/activities.sugarlabs.org
+The only interesting part of the VH setup is the the format of the log
+file and the location of the access log files.  The format is required
+by /bin/log_parser.
+
+The log files are renamed and compressed daily by logrotate
+<VirtualHost *:80>
+        ServerName activities.sugarlabs.org
+        ServerAdmin webmaster@sugarlabs.org
+        DocumentRoot /srv/www-sugarlabs/activities/site/app/webroot
+
+        LogFormat "%h %V %u %t \"%r\" %>s %b \"%{Referer}i\"
+\"%{User-agent}i\" \"%{HTTP_COOKIE}i\"" addo\
+ns
+        CustomLog /srv/www-sugarlabs/activities/data/access addons
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName activities-testing.sugarlabs.org
+        ServerAdmin webmaster@sugarlabs.org
+        DocumentRoot /srv/www-sugarlabs/activities-testing/site/app/webroot
+
+        LogFormat "%h %V %u %t \"%r\" %>s %b \"%{Referer}i\"
+\"%{User-agent}i\" \"%{HTTP_COOKIE}i\"" addo\
+ns
+        CustomLog /srv/www-sugarlabs/activities-testing/data/access addons
+</VirtualHost>
+<VirtualHost *:80>
+        ServerName activities-devel.sugarlabs.org
+        ServerAdmin webmaster@sugarlabs.org
+        DocumentRoot /srv/www-sugarlabs/activities-devel/site/app/webroot
+
+        LogFormat "%h %V %u %t \"%r\" %>s %b \"%{Referer}i\"
+\"%{User-agent}i\" \"%{HTTP_COOKIE}i\"" addo\
+ns
+        CustomLog /srv/www-sugarlabs/activities-devel/data/access addons
+</VirtualHost>
+
+*downloads
+**Currently, downloads are served from the files/ directory.  This
+works fine for our currently loads, as the loads increase we will want
+to start serving the files from a download farm.
+
+*updates
+**AMO is the primary update mechanism for Mozilla.  It would be rather
+straight forward to use also to automatically udate sugar activities
+depending on the packaging method the developers chose.
+
+*CSS/Javascript
+**bin/build.py
+Currently build.py pulls from the mozilla svn repo rather than
+git.sl.o when rubuilding and mimizing the css and java script

@@ -80,8 +80,8 @@ $sql_commands[] = "INSERT INTO `text_search_summary`
                        a.inactive AS inactive, 
                        a.averagerating AS averagerating, 
                        a.weeklydownloads AS weeklydownloads,
-                       `tr_name`.localized_string AS name, 
-                       `tr_summary`.localized_string AS summary, 
+                       CONCAT(REPLACE(`tr_name`.localized_string, ' ', '_ '), '_') AS name, 
+                       CONCAT(REPLACE(`tr_summary`.localized_string, ' ', '_ '), '_') AS summary, 
                        `tr_description`.localized_string AS description,
                        tags
                    FROM addons AS a 

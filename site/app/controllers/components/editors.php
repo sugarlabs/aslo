@@ -138,20 +138,26 @@ class EditorsComponent extends Object {
                            );
         
         $this->controller->set('info', $emailInfo);
+
+        if ($data['Approval']['ActionField'] == 'public')
+            $this->_sendReleaseNotes('', $version['Version']['id'], $emailInfo);
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/nominated/'.$data['Approval']['ActionField'];
             $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->subject = sprintf('Mozilla Add-ons: %s Nomination', $emailInfo['name']);
+            $this->controller->Email->subject = sprintf(___('editor_review_nomination_subject', 'Mozilla Add-ons: %s Nomination'), $emailInfo['name']);
         }
         else {
             $this->controller->Email->template = 'email/superreview';
-            $this->controller->Email->to = 'amo-senior-editors@mozilla.org';
+            $this->controller->Email->to = ADMIN_EMAIL;
             //Doesn't need to be localized
             $this->controller->Email->subject = "Super-review requested: {$emailInfo['name']}";  
         }
         $result = $this->controller->Email->send();
         
+        if ($data['Approval']['ActionField'] == 'superreview')
+            $this->superNotify($emailInfo['id'], $emailInfo['version']);
+
         return true;
     }
 
@@ -287,19 +293,25 @@ class EditorsComponent extends Object {
                            'files' => $files
                            );
         $this->controller->set('info', $emailInfo);
+
+        if ($data['Approval']['ActionField'] == 'public')
+            $this->_sendReleaseNotes('', $version['Version']['id'], $emailInfo);
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/pending/'.$data['Approval']['ActionField'];
             $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->subject = sprintf('Mozilla Add-ons: %s %s', $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->subject = sprintf(___('editor_review_superreview_subject', 'Mozilla Add-ons: %s %s'), $emailInfo['name'], $emailInfo['version']);
         }
         else {
             $this->controller->Email->template = 'email/superreview';
-            $this->controller->Email->to = 'amo-senior-editors@mozilla.org';
+            $this->controller->Email->to = ADMIN_EMAIL;
             //Doesn't need to be localized
             $this->controller->Email->subject = "Super-review requested: {$emailInfo['name']}";  
         }
         $result = $this->controller->Email->send();
+
+        if ($data['Approval']['ActionField'] == 'superreview')
+            $this->superNotify($emailInfo['id'], $emailInfo['version']);
         
         return true;
     }
@@ -349,7 +361,7 @@ class EditorsComponent extends Object {
         $this->controller->publish('info', $emailInfo, false);
         $this->controller->Email->template = 'email/inforequest';
         $this->controller->Email->to = implode(', ', $authors);
-        $this->controller->Email->subject = sprintf('Mozilla Add-ons: %s %s', $emailInfo['name'], $emailInfo['version']);
+        $this->controller->Email->subject = sprintf(SITE_NAME.': %s %s', $emailInfo['name'], $emailInfo['version']);
         $this->controller->Email->send();
     }
 
@@ -473,16 +485,19 @@ class EditorsComponent extends Object {
         $this->controller->redirect("/editors/queue/{$listtype}");
     }
     
-    /**
-     * Notify subscribed editors of an add-on's update
-     * @param int $addonid ID of add-on that was updated
-     * @param int $versionid ID of the add-on's new version
-     */
-    function updateNotify($addonid, $versionid) {
-        $_ids = $this->controller->EditorSubscription->getSubscribers($addonid);
-        if (empty($_ids)) return;
-        $subscribers = $this->controller->User->findAllById($_ids, null, null, null, null, -1);
-        
+    function broadcastNotify($group, $addonid, $versionid, $exclude, $subject, $template) {
+        $session = $this->controller->Session->read('User');
+        $subscribers = array();
+
+        foreach ($this->controller->User->findAll() as $user) {
+            if ($session['id'] != $user['User']['id'] && !in_array($user, $exclude)
+                    && $user['User']['notifybroadcast'] 
+                    && $this->controller->SimpleAcl->actionAllowed($group, '*', $user))
+                $subscribers[] = $user;
+        }
+
+        if (empty($subscribers)) return;
+
         $addon = $this->controller->Addon->getAddon($addonid);
         $version = $this->controller->Version->findById($versionid, null, null, null, null, -1);
         
@@ -495,16 +510,73 @@ class EditorsComponent extends Object {
         );
         $this->controller->publish('info', $emailInfo, false);
         
-        $this->controller->Email->template = '../editors/email/notify_update';
-        $this->controller->Email->subject = sprintf('Mozilla Add-ons: %s Updated', $emailInfo['name']);
-        
+        $this->controller->Email->template = $template;
+        $this->controller->Email->subject =  sprintf($subject, $emailInfo['name'].'-'.$emailInfo['version']);
+
         foreach ($subscribers as &$subscriber) {
             $this->controller->Email->to = $subscriber['User']['email'];
             $result = $this->controller->Email->send();
-            // unsubscribe user from further updates
-            $this->controller->EditorSubscription->cancelUpdates($subscriber['User']['id'], $addonid);
         }
+    }
+    
+    function nominateNotify($addonid, $versionid) {
+        $_ids = $this->controller->EditorSubscription->getSubscribers($addonid);
+        if (empty($_ids))
+            $exclude = array();
+        else
+            $exclude = $this->controller->User->findAllById($_ids, null, null, null, null, -1);
+
+        $this->broadcastNotify('Editors', $addonid, $versionid, $exclude,
+                SITE_NAME.': %s Nomination', '../editors/email/notify_nominate');
+    }
+
+    function pendingNotify($addonid, $versionid) {
+        $this->broadcastNotify('Editors', $addonid, $versionid, array(),
+                SITE_NAME.': %s Pending update', '../editors/email/notify_pending');
+    }
+
+    function superNotify($addonid, $versionid) {
+        $this->broadcastNotify('Admin', $addonid, $versionid, array(),
+                SITE_NAME.': %s Super-review requested', '../editors/email/notify_super');
+    }
+
+    /**
+     * Notify subscribed editors of an add-on's update
+     * @param int $addonid ID of add-on that was updated
+     * @param int $versionid ID of the add-on's new version
+     */
+    function updateNotify($addonid, $versionid, $release_notify) {
+        $_ids = $this->controller->EditorSubscription->getSubscribers($addonid);
         
+        $addon = $this->controller->Addon->findById($addonid);
+        $version = $this->controller->Version->findById($versionid, null, null, null, null, -1);
+        
+        // send out notification email(s)
+        $emailInfo = array(
+            'id' => $addonid,
+            'name' => $addon['Translation']['name']['string'],
+            'versionid' => $versionid,
+            'version' => $version['Version']['version'],
+            'comments' => 'Trusted activity'
+        );
+        $this->controller->publish('info', $emailInfo, false);
+        
+        $this->controller->Email->template = '../editors/email/notify_update';
+        $this->controller->Email->subject = sprintf(SITE_NAME.': %s Updated', $emailInfo['name']);
+        
+        if (!empty($_ids)) {
+            $subscribers = $this->controller->User->findAllById($_ids, null, null, null, null, -1);
+
+            foreach ($subscribers as &$subscriber) {
+                $this->controller->Email->to = $subscriber['User']['email'];
+                $result = $this->controller->Email->send();
+                // unsubscribe user from further updates
+                $this->controller->EditorSubscription->cancelUpdates($subscriber['User']['id'], $addonid);
+            }
+        }
+
+        if ($addon['Addon']['trusted'] == 1 && $release_notify)
+            $this->_sendReleaseNotes('../editors/', $version['Version']['id'], $emailInfo);
     }
 
     /**
@@ -864,6 +936,23 @@ class EditorsComponent extends Object {
         }
 
         return true;
+    }
+
+    function _sendReleaseNotes($prefix, $version_id, $emailInfo) {
+        global $SITE_RELEASE_EMAIL;
+
+        $releasenotes = $this->controller->Version->getReleaseNotesLocales($version_id);
+        $en = isset($releasenotes['en-US']) ? $releasenotes['en-US'] : '';
+        
+        foreach ($SITE_RELEASE_EMAIL as $locale => $props) {
+            $emailInfo['releasenotes'] = isset($releasenotes[$locale]) ? $releasenotes[$locale] : $en;
+            $this->controller->set('info', $emailInfo);
+
+            $this->controller->Email->template = $prefix.'email/aslo/'.$props['template'];
+            $this->controller->Email->to = $props['email'];
+            $this->controller->Email->subject = sprintf($props['subject'], $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->send(false, $props['email']);
+        }
     }
 }
 ?>

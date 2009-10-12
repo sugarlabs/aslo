@@ -103,15 +103,8 @@ class DownloadsController extends AppController
             return;
         }
         
-        // force local delivery for non-browser apps
-        global $browser_apps;
-        if (!in_array(APP_ID, $browser_apps) || $type == 'attachment') {
-            $forceLocal = true;
-            $this->set('attachment', true);
-        } else {
             $forceLocal = false;
             $this->set('attachment', false);
-        }
         
         $this->set('fileName', $file_data['File']['filename']);
         

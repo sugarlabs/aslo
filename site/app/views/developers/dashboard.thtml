@@ -94,13 +94,15 @@
                     echo '<li><a href="'.$html->url('/developers/versions/add/'.$addon_id).'">'.___('Upload a new version').'</a></li>';
                 }
                 echo '</ul></li>';
+                // Previews
+                echo '<li class="previews"><a href="'.$html->url('/developers/previews/'.$addon_id).'" class="view">'._('devcp_actionbar_link_previews').'</a></li>';
 
             echo '</ul>';
         }
         else {
             // Admin Disabled Add-on
             echo '<p>'.sprintf(___('Add-on Status: %s', 'devcp_dashboard_disabled_status'), '<span class ="'.STATUS_DISABLED.'">'.$statuses[STATUS_DISABLED].'</span>').'</p>';
-            echo '<p>'.sprintf(___('Your add-on was disabled by an administrator and cannot be used.  If you have any questions, please email %s.'), 'amo-admins@mozilla.org').'</p>';
+            echo '<p>'.sprintf(___('Your add-on was disabled by an administrator and cannot be used.  If you have any questions, please email %s.'), ADMIN_EMAIL).'</p>';
         }
         ?>
         </div>
