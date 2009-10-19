@@ -51,7 +51,7 @@ class AdminController extends AppController
     //These defer to their own access checks
     var $aclExceptions = array('index', 'summary',
                                'addonLookup', 'userLookup',
-                               'addontypes', 'categories', 'platforms', 'responses', 'collections', 'collectionLookup');
+                               'addontypes', 'categories', 'platforms', 'responses', 'collections', 'collectionLookup', 'tags');
 
    /**
     * Require login for all actions
@@ -1327,7 +1327,7 @@ class AdminController extends AppController
     */
     function tags($action = '', $id = 0) {
         //Part of the Lists permission
-        if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
+        if (!$this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User'))) {
             $this->Amo->accessDenied();
         }
         
