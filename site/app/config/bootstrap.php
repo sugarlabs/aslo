@@ -262,7 +262,7 @@ if (in_array(LANG, $rtl_languages)) {
 
 global $app_prettynames;
 $app_prettynames = array(
-    'sugar' => ___('main_prettyname_sugar'),
+    'sugar' => ___('Sugar'),
     'firefox' => ___('Firefox'),
     'thunderbird' => ___('Thunderbird'),
     'sunbird' => ___('Sunbird'),

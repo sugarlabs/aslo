@@ -1,31 +1,35 @@
 #!/bin/sh
 
 root=$(cd $(dirname $0)/..; pwd)
+cd $root/site/app/locale
 
-parse() {
-    cat $1 | awk "/^$/{if(out) print msg\"\n\"; msg=\"\"; out=0} /$2/{out=1} {if(\$0) msg=msg\"\n\"\$0}"
-}
+for i in $(ls); do
+    [ -d $i ] || continue
 
-merge() {
-    local in_po=$root/aslo/po/aslo.pot
-    local out_po=$root/aslo/po/$1.po
+    if [ $i == "en_US" ]; then
+        lang=en
+    else
+        lang=$i
+    fi
 
-    [ -f $in_po ] || continue
-    echo -n "Update $1 "
+    echo $lang
 
-    local tmp=`mktemp /tmp/po-update.XXXXXX` || exit 1
+    tmp=`mktemp /tmp/po-update.XXXXXX` || exit 1
 
-    parse $in_po 'msgid ""' > $tmp
+    cat $i/LC_MESSAGES/messages.po \
+    | awk "BEGIN{IGNORECASE=1; first=1}
+               /^$/{if(out==2 || first==1) print msg\"\"; first=0; msg=\"\"; out=0}
+               /^msgid/{out=1}
+               /(add-on|mozilla|firefox)/{if(out==1) out=2}
+               {msg=msg\$0\"\n\"}" \
+        > $tmp
 
-    for i in `cat $root/aslo/po/msgid`; do
-        parse $in_po "\"$i\"" >> $tmp
-    done
-
-    touch $out_po
-    msgmerge --update --backup=none --no-fuzzy-matching $out_po $tmp
-    rm $tmp
-}
-
-for i in `ls $root/aslo/po/*.po`; do
-    merge `basename $i .po`
+    out_po=$root/aslo/po/$lang.po
+    if [ -e $out_po ]; then
+        msgcat --use-first $out_po $tmp > $tmp~
+        mv $tmp~ $out_po
+        rm $tmp
+    else
+        mv $tmp $out_po
+    fi
 done

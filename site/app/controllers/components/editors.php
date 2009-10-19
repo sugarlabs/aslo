@@ -145,7 +145,7 @@ class EditorsComponent extends Object {
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/nominated/'.$data['Approval']['ActionField'];
             $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->subject = sprintf(___('editor_review_nomination_subject', 'Mozilla Add-ons: %s Nomination'), $emailInfo['name']);
+            $this->controller->Email->subject = sprintf('Mozilla Add-ons: %s Nomination', $emailInfo['name']);
         }
         else {
             $this->controller->Email->template = 'email/superreview';
@@ -300,7 +300,7 @@ class EditorsComponent extends Object {
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/pending/'.$data['Approval']['ActionField'];
             $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->subject = sprintf(___('editor_review_superreview_subject', 'Mozilla Add-ons: %s %s'), $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->subject = sprintf('%s: %s %s', SITE_NAME, $emailInfo['name'], $emailInfo['version']);
         }
         else {
             $this->controller->Email->template = 'email/superreview';

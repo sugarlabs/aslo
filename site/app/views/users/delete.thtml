@@ -61,8 +61,7 @@
                 array('type' => 'error',
                 'description' => sprintf(___('You cannot delete your account if you are listed as an <a href="%1$s"> author of any add-ons</a>. To delete your account, please have another person in your development group delete you from the list of authors for your add-ons. Afterwards you will be able to delete your account here.'), $html->url("/user/{$userid}"))));
             echo '</p>';
-            echo sprintf(___('user_del_error_addons_more_questions', 'If you '
-                .'have additional questions, please contact %1$s for assistance.'),
+            echo sprintf(___('If you have additional questions, please contact %1$s for assistance.'),
                 $link->email(EDITOR_EMAIL));
             break;
         case 'checkbox':
@@ -77,26 +76,21 @@
             break;
         case 'unknown':
         default:
-            echo $this->renderElement('notification', 
-                array('type' => 'error', 
-                'description' => sprintf(___('user_del_error_unknown', 'An unknown error occured '
-                .'deleting your account. Please contact %1$s with the issue and '
-                .'we will delete it for you. We apologize for the inconvenience.'),
+            echo $this->renderElement('notification',
+                array('type' => 'error',
+                'description' => sprintf(___('An unknown error occured deleting your account. Please contact %1$s with the issue and we will delete it for you. We apologize for the inconvenience.'),
                 $link->email(ADMIN_EMAIL));
             break;
         }
     }
     ?>
 
-    <h1><?php echo sprintf(___('user_del_header_delete_account', 'Delete User Account %s'), $useremail)?></h1>
-    
-    <p><?=___('user_del_community_sad', 'The '.SITE_NAME.' community is sad to see you go.')?></p>
-    
-    <p><?php sprintf(___('user_del_specific_problem_editors', 'If you have a '
-    .'specific problem we may help you with, please do not delete your account '
-    .'now, but contact us at %1$s and we will do our best to assist you in '
-    .'solving it.'), $link->email(EDITOR_EMAIL))?></p>
-    
+    <h1><?php echo sprintf(___('Delete User Account %1$s'), $useremail)?></h1>
+
+    <p><?=___('The Mozilla Add-ons community is sad to see you go.')?></p>
+
+    <p><?php sprintf(___('If you have a specific problem we may help you with, please do not delete your account now, but contact us at %1$s and we will do our best to assist you in solving it.'), $link->email(EDITOR_EMAIL))?></p>
+
     <div class="highlight">
     <h2><?=___('Confirm account deletion')?></h2>
 

@@ -1,1366 +1,215 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: svn: Mozilla Addons\n"
+"Project-Id-Version: addons-trunk // addons.mozilla.org\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-16 11:45-0800\n"
-"PO-Revision-Date: 2009-02-15 16:05+0800\n"
-"Last-Translator: timdream <timdream+narro@gmail.com>\n"
-"Language-Team: Chinese Traditional, Taiwan <LL@li.org>\n"
+"PO-Revision-Date: 2009-08-27 11:01-0700\n"
+"Last-Translator: littlebtc <sst.dreams@gmail.com>\n"
+"Language-Team: Traditional Chinese (Taiwan) <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Narro 0.9.2 on http://translate.moztw.org\n"
+"X-Generator: Narro 0.9.4 on http://translate.moztw.org/narro\n"
 
-#: controllers/developers_controller.php:493
-#, fuzzy
-msgid "devcp_error_mktmp_failed"
-msgstr "Internal problem while unpackaging bundle"
 
-# %1 is the add-on count, %2 the category name
-#. %1 is the add-on count, %2 the category name
-#: views/addons/browse_thumbs.thtml:91 views/addons/browse.thtml:60
+# The title of the page for viewing an add-on's source.
+# %1$s is the name of the add-on
+# %2$s is the name of the current application (e.g. Firefox or Thunderbird)
+#: views/files/browse.thtml:46
 #, php-format
-msgid "addon_list_category_totalcount"
-msgid_plural "addon_list_category_totalcount"
+msgid "%1$s :: File Browser :: %2$s Add-ons"
+msgstr "%1$s :: 檔案瀏覽器 :: %2$s 附加元件"
+
+
+# %1 is a number.
+#: views/elements/amo2009/users/vcard.thtml:103
+#, php-format
+msgid "%1$s Add-on"
+msgid_plural "%1$s Add-ons"
 msgstr[0] "%1$s 個元件"
 
-# %1 is the review count, %2 is the nickname or full name of the user.
-#. %1 is the review count, %2 is the nickname or full name of the user.
-#: views/reviews/display.thtml:131
+
+# %1$s is a number.
+#: views/collections/detail.thtml:155
 #, php-format
-msgid "addon_review_others_by_user"
-msgid_plural "addon_review_others_by_user"
-msgstr[0] "顯示由 %2$s 對此附加元件發出的 %1$s 篇意見。"
+msgid "%1$s Add-on in this Collection"
+msgid_plural "%1$s Add-ons in this Collection"
+msgstr[0] "這個收藏集有 %1$s 個元件"
 
-# %1 is the name of the Application (eg. Firefox)
-#. %1 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:1298
-msgid "addons_browse_all_themes_title"
-msgstr "瀏覽所有佈景主題 :: %1$s 附加元件"
 
-# %1 is the name of the theme category (eg. Modern)
-# %2 is the name of the Application (eg. Firefox)
-#. %1 is the name of the theme category (eg. Modern)
-#. %2 is the name of the Application (eg. Firefox)
-#: controllers/addons_controller.php:682
-msgid "addons_browse_categories_header_theme"
-msgstr "瀏覽%1$s佈景主題 :: %2$s 附加元件"
-
-#: views/addons/display.thtml:132
-msgid "addons_display_has_privacy"
-msgstr "本元件有自己的隱私政策。"
-
-# %1$s is either an author's name or a comma separated list of authors. Using
-# the list doesn't make sense in the English plural form so we ignore the
-# variable.
-#. %1$s is either an author's name or a comma separated list of authors. Using
-#. the list doesn't make sense in the English plural form so we ignore the
-#. variable.
-#: views/addons/display.thtml:436
-msgid "addons_display_other_addons_by"
-msgid_plural "addons_display_other_addons_by"
-msgstr[0] "%1$s 的其他作品"
-
-#. %s is an email address
-#: views/addons/display.thtml:286
+# %1 is the add-on count, %2 the category name
+#: views/addons/browse_thumbs.thtml:92 views/addons/browse.thtml:60
 #, php-format
-msgid "addons_display_paragraph_supportinfoemail"
-msgstr "此套件由作者於 %s 提供 Email 技術支援"
+msgid "%1$s add-on"
+msgid_plural "%1$s add-ons"
+msgstr[0] "%1$s 個元件"
 
-#. %$1s is a URL
-#. %$2s is an email address
-#: views/addons/display.thtml:269
+
+# This is the password reset email
+# %1 is the pw reset URL, %2 is the application
+#: views/users/email/pwreset_plain.thtml:5
 #, php-format
-msgid "addons_display_paragraph_supportinfoemailurl"
-msgstr "此套件由作者於 %s 與 %s 提供技術支援"
-
-#. %s is a URL
-#: views/addons/display.thtml:278
-#, php-format
-msgid "addons_display_paragraph_supportinfourl"
-msgstr "此套件由作者於 %s 提供技術支援"
-
-#: views/addons/display.thtml:410
-msgid "addons_display_review_etiquette"
+msgid ""
+"%2$s Add-ons Password Reset\\n\\nA request was received to reset the "
+"password for this account on addons.mozilla.org. To change this password "
+"please click on the following link, or paste it into your browser's location "
+"bar:\\n\\n%1$s\\n\\nIf you did not request this email there is no need for "
+"further action.\\n\\nThanks,\\n-- %2$s Add-ons Staff"
 msgstr ""
-"請勿在此回報程式錯誤。因為我們並不會記錄您的 Email 地址，若開發者想得知進一步"
-"的細節以解決問題時就無法與您聯絡了。"
+"%2$s 附加元件密碼重設\\n\\n我們已收到您要求重設 addons.mozilla.org 上的密碼。"
+"請按下面的鏈結或複製整串網址到瀏覽器的位址列後貼上以變更密碼：\\n\\n%1$s\\n"
+"\\n如果您從來沒有要求重設密碼請不要理會這封信。\\n\\n非常感謝。\\n-- %2$s 附"
+"加元件工作人員"
 
-# %1 is the support section link
-#. %1 is the support section link
-#: views/addons/display.thtml:414
-msgid "addons_display_review_see_support"
-msgstr ""
-"請見 <a href=\"%1$s\">技術支援</a> 一節了解如何取得此元件的進一步協助。"
 
-#: views/addons/display.thtml:430
+#: views/users/register_complete.thtml:51
 #, php-format
-msgid "addons_display_see_all_addons"
-msgstr "查看所有 %1$s 類元件"
+msgid "%s Add-ons"
+msgstr "%s 附加元件"
 
-#: controllers/search_controller.php:218 controllers/addons_controller.php:176
-#: controllers/addons_controller.php:396 controllers/addons_controller.php:689
-#: controllers/addons_controller.php:893
-#: controllers/addons_controller.php:1115
-#: controllers/addons_controller.php:1254
-#: controllers/addons_controller.php:1300
+
+# %1 is the login URL for the link tag
+# %2 is the link to an explanatory page.
+#: views/helpers/install_button.php:410 views/elements/install.thtml:254
 #, php-format
-msgid "addons_home_header_details"
+msgid ""
+"<a href=\"%1$s\">Log in</a> to install this experimental add-on. <a href=\"%2"
+"$s\">Why</a>?"
 msgstr ""
-"附加元件能擴充 %1$s 功能，打造您獨樹一格的瀏覽體驗。在這網站四處看看，來親手"
-"打造您專屬的 %1$s 吧！"
+"<a href=\"%1$s\">登入</a> 才能安裝此元件。<a href=\"%2$s\">為什麼</a>？"
 
-#. %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
-#. Sunbird
-#: views/pages/collector_faq.thtml:49 views/pages/collector.thtml:46
-#: views/pages/collector_features.thtml:54
-#: views/pages/collector_firstrun.thtml:42 controllers/components/amo.php:607
-#: controllers/components/simple_acl.php:81
-#: controllers/compatibility_controller.php:72
-#: controllers/users_controller.php:90 controllers/users_controller.php:223
-#: controllers/users_controller.php:330 controllers/users_controller.php:414
-#: controllers/users_controller.php:709 controllers/users_controller.php:724
-#: controllers/editors_controller.php:67 controllers/search_controller.php:185
-#: controllers/search_controller.php:280 controllers/search_controller.php:284
-#: controllers/localizers_controller.php:72
-#: controllers/pages_controller.php:136 controllers/addons_controller.php:147
-#: controllers/addons_controller.php:283 controllers/addons_controller.php:371
-#: controllers/addons_controller.php:685 controllers/addons_controller.php:896
-#: controllers/addons_controller.php:1041
-#: controllers/addons_controller.php:1056
-#: controllers/addons_controller.php:1113
-#: controllers/addons_controller.php:1133
-#: controllers/addons_controller.php:1252
-#: controllers/addons_controller.php:1363
-#: controllers/addons_controller.php:1370
-#: controllers/addons_controller.php:1448
-#: controllers/addons_controller.php:1483
-#: controllers/addons_controller.php:1544
-#: controllers/addons_controller.php:1549
-#: controllers/statistics_controller.php:60
-#: controllers/statistics_controller.php:240
-#: controllers/previews_controller.php:67
-#: controllers/developers_controller.php:87
-#: controllers/collections_controller.php:57
-#: controllers/collections_controller.php:94
-#: controllers/collections_controller.php:180
-#: controllers/collections_controller.php:344
-#: controllers/collections_controller.php:383
-#: controllers/collections_controller.php:445
-#: controllers/collections_controller.php:517
-#: controllers/collections_controller.php:809
-#: controllers/versions_controller.php:63 controllers/groups_controller.php:65
-#: controllers/groups_controller.php:71 controllers/groups_controller.php:89
-#: controllers/groups_controller.php:111
-#: controllers/reviews_controller.php:204
-#: controllers/reviews_controller.php:251
-#: controllers/reviews_controller.php:346
-#: controllers/reviews_controller.php:425
-#: controllers/addons_controller.php:1367
-#: controllers/addons_controller.php:1374
-#: controllers/addons_controller.php:1452
-#: controllers/addons_controller.php:1487
-#: controllers/addons_controller.php:1548
-#: controllers/addons_controller.php:1553
-#: controllers/collections_controller.php:810
-#, php-format
-msgid "addons_home_pagetitle"
-msgstr "%1$s 附加元件"
 
-#: views/elements/amo2009/homepage_addon_listing.thtml:58
-msgid "addons_home_view_all_newest_title"
-msgstr "檢視所有最新上傳元件"
-
-#: views/elements/amo2009/homepage_addon_listing.thtml:51
-msgid "addons_home_view_all_popular_title"
-msgstr "檢視所有熱門元件"
-
-#: views/elements/amo2009/homepage_addon_listing.thtml:72
-msgid "addons_home_view_all_recommended_title"
-msgstr "檢視所有推薦元件"
-
-#: views/elements/amo2009/homepage_addon_listing.thtml:65
-msgid "addons_home_view_all_updated_title"
-msgstr "檢視所有最近更新元件"
-
-msgid "addon_slider_tooltip_next"
-msgstr "下一個附加元件"
-
-msgid "addon_slider_tooltip_previous"
-msgstr "上一個附加元件"
-
-#: views/elements/addon_list_options.thtml:105
-#: views/elements/amo2009/addon_list_options.thtml:108
-msgid "addons_options_show_experimental"
-msgstr "顯示實驗中元件"
-
-#. %1$s is a URL
-#: views/addons/plugins.thtml:139
-#, php-format
-msgid "addons_plugins_looking_for_more"
-msgstr ""
-"本頁面只列出最常見和最流行的外掛程式。若您想找其他 Mozilla 系列瀏覽器可用的外"
-"掛程式，請前往 %1$s"
-
-#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1371
-#: controllers/addons_controller.php:1375
-msgid "addons_recommended_introduction"
-msgstr ""
-"這裡有成堆的附加元件，其中有些大家都該試試。您可以從下列我們推薦的附加元件開"
-"始玩玩看！"
-
-#: controllers/addons_controller.php:1363
-#: controllers/addons_controller.php:1370
-#: controllers/addons_controller.php:1367
-#: controllers/addons_controller.php:1374
-msgid "addons_recommended_pagetitle"
-msgstr "推薦附加元件"
-
-#: controllers/addons_controller.php:1366
-#: controllers/addons_controller.php:1370
-msgid "addons_recommended_title"
-msgstr "推薦附加元件"
-
-# link text devmo
-#. link text devmo
-#: views/addons/searchengines.thtml:91
-msgid "addons_searchengines_devmo_link"
-msgstr "Mozilla 開發者中心網站"
-
-#: views/elements/amo2009/teaser_collections.thtml:92
-#: views/elements/amo2009/homepage_addon.thtml:99
-#: views/elements/feature.thtml:94
-msgid "addons_title_tooltip"
-msgstr "了解關於此元件的更多資訊"
-
-#: views/addons/versions.thtml:63
-msgid "addons_versions_careful_introduction"
-msgstr ""
-"這裡列出的舊版本僅供參考及測試之用。若無特別需求，請安裝最新版的附加元件。"
-
-#: views/pages/js_constants.js.thtml:72
-msgid "app_compat_older_firefox_only"
-msgstr "此元件僅適用於舊版的 Firefox"
-
-#. %1$s is a URL
-#. %2$s is a version number.  Example: 3.1
-#: views/pages/js_constants.js.thtml:73
-msgid "app_compat_unreleased_version"
-msgstr "這個附加元件需要尚未發行的 <a href=\"%1$s\">Firefox %2$s</a>"
-
-#: views/pages/js_constants.js.thtml:70
-msgid "app_compat_update_firefox"
+#: views/pages/js_constants.js.thtml:81
+msgid ""
+"<a href=\"http://getfirefox.com\">Upgrade Firefox</a> to use this add-on"
 msgstr "<a href=\"http://getfirefox.com\">升級 Firefox</a> 才能使用此元件"
 
-#: controllers/addons_controller.php:1034
-msgid "browse_addons_name"
-msgstr "依名稱排序"
 
-#: controllers/addons_controller.php:1032
-msgid "browse_addons_newest"
-msgstr "最新元件"
-
-#: controllers/addons_controller.php:1030
-msgid "browse_addons_popular"
-msgstr "熱門元件"
-
-#: controllers/addons_controller.php:1033
-msgid "browse_addons_rated"
-msgstr "依評分排序"
-
-#: controllers/addons_controller.php:1031
-msgid "browse_addons_updated"
-msgstr "最近更新元件"
-
-msgid "category_extra_allrecommended"
-msgstr "看看所有推薦元件"
-
-#: views/compatibility/dashboard.thtml:49
-#: controllers/compatibility_controller.php:72
-msgid "compatibility_dashboard_center_header"
-msgstr "附加元件相容性中心"
-
-#. %1$s is the name of an application and a version.  Example: Firefox 3.0
-#. %2$s is the name of an application.  Example: Firefox
-#: views/compatibility/dashboard.thtml:50
-msgid "compatibility_dashboard_intro"
+#: views/helpers/install_button.php:308 views/elements/install.thtml:111
+msgid ""
+"<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla "
+"Sunbird, open Add-ons from the Tools menu.</li><li>Click the Install button, "
+"and locate/select the file you downloaded and click \"OK\".</li></ol>"
 msgstr ""
-"使用以下提供於 %2$ 附加元件開發社群的工具與資訊，預先準備版本 %1$s 的推出。"
+"<ol><li>下載並儲存檔案到您的硬碟裡。</li><li>於 Mozilla Sunbird 中選擇「工具"
+"＞附加元件」。</li><li>按「安裝」鈕，找到您剛剛下載回來的檔案後按「確定」即"
+"可。</li></ol>"
 
-#: views/compatibility/dashboard.thtml:100 views/compatibility/report.thtml:43
-msgid "compatibility_dashboard_report"
-msgstr "附加元件相容性報告"
 
-#: views/compatibility/dashboard.thtml:53
-#: views/compatibility/dashboard.thtml:110
-#: views/compatibility/developers.thtml:43
-msgid "compatibility_developer_info"
-msgstr "给附加元件開發者的資訊"
-
-#: views/compatibility/dashboard.thtml:124
-msgid "compatibility_developers_check_status"
-msgstr "檢查我的附加元件的狀態"
-
-#. %1$s is a URL
-#. %2$s is an application and version.  Example:  Firefox 3.0
-#: views/compatibility/dashboard.thtml:126
-msgid "compatibility_developers_login_first"
+#: views/helpers/install_button.php:305 views/elements/install.thtml:105
+msgid ""
+"<ol><li>Download and save the file to your hard disk.</li><li>In Mozilla "
+"Thunderbird, open Add-ons from the Tools menu.</li><li>Click the Install "
+"button, and locate/select the file you downloaded and click \"OK\".</li></ol>"
 msgstr ""
-"若您有放在 Mozilla 附加元件網站的附加元件，請<a href=\"%1$s\">登入</a>已分析"
-"您的附加元件與版本 %2$s 的相容性。"
+"<ol><li>下載並儲存檔案到您的硬碟裡。</li><li>於 Mozilla Thunderbird 中選擇"
+"「工具＞附加元件」。</li><li>按「安裝」鈕，找到您剛剛下載回來的檔案後按「確"
+"定」即可。</li></ol>"
 
-#: views/compatibility/dashboard.thtml:114
-msgid "compatibility_developers_mdclogo_alt"
-msgstr "Mozilla Developer Center Logo"
-
-#: views/compatibility/developers.thtml:73
-msgid "compatibility_developers_no_addons"
-msgstr "您沒有任何放在 Mozilla 附加元件網站的附加元件。"
-
-#: views/compatibility/dashboard.thtml:133
-#: views/compatibility/developers.thtml:55
-msgid "compatibility_developers_results"
-msgstr "附加元件狀態檢查結果"
-
-#: views/compatibility/dashboard.thtml:137
-msgid "compatibility_developers_retrieving"
-msgstr "接收您的附加元件的狀態..."
-
-#: views/compatibility/report.thtml:45
-msgid "compatibility_report_detail_intro"
-msgstr ""
-"以下的附加元件代表 Mozilla 知道的附加元件使用的 95%，以他們的使用大小排列。"
-
-#. %1$s and %2$s are numbers
-#. %3$s is an application name and version.  Example: Firefox 3.1
-#: views/compatibility/dashboard.thtml:65
-msgid "compatibility_report_intro"
-msgstr ""
-"%1$s 個附加元件，代表 95&#37; Mozilla 已知附加元件使用量，目前共有 <b>%2"
-"$s&#37;</b> 與 %3$s 最新版本相容。"
-
-#. %1$s is an application name and version.  Example: Firefox 3.1
-#: views/compatibility/dashboard.thtml:81
-msgid "compatibility_report_legend_alpha_description"
-msgstr "和 %1$s 的 Alpha 版本相容的附加元件"
-
-#. %1$s is an application name and version.  Example: Firefox 3.1
-#: views/compatibility/dashboard.thtml:85
-msgid "compatibility_report_legend_beta_description"
-msgstr "與 %1$s 的測試版或是 RC 版相容的附加元件"
-
-#. %1$s is an application name and version.  Example: Firefox 3.1
-#: views/compatibility/dashboard.thtml:89
-msgid "compatibility_report_legend_latest_description"
-msgstr "已經更新到與 %1$s 最新版相容的附加元件"
-
-#. %1$s is an application name and version.  Example: Firefox 3.1
-#: views/compatibility/dashboard.thtml:77
-msgid "compatibility_report_legend_other_description"
-msgstr "與任何版本的 %1$s 皆不相容的附加元件"
-
-#: views/compatibility/dashboard.thtml:62
-msgid "compatibility_report_title"
-msgstr "附加元件相容性報告"
-
-#: views/compatibility/dashboard.thtml:54
-#: views/compatibility/dashboard.thtml:144 views/compatibility/users.thtml:42
-msgid "compatibility_user_info"
-msgstr "給附加元件使用者的資訊"
-
-#: views/pages/credits.thtml:99
-msgid "credits_intro"
-msgstr "Mozilla 謹此感謝以下長期來為 addons.mozilla.org 貢獻良多的人："
-
-#: views/developers/dashboard.thtml:64
-#: views/elements/developers/actionbar.thtml:42
-#: views/elements/developers/actionbar.thtml:50
-msgid "devcp_actionbar_link_edit"
-msgstr "編輯附加元件"
-
-#: views/developers/dashboard.thtml:98
-#, fuzzy
-msgid "devcp_actionbar_link_previews"
-msgstr "Edit Previews"
-
-#: views/elements/developers/additem.thtml:41
-msgid "devcp_additem_sidebar_title"
-msgstr "上傳附加元件"
-
-#: views/elements/developers/additem.thtml:47
-msgid "devcp_additem_step2_link"
-msgstr "步驟 2：元件詳細資訊"
-
-msgid "devcp_addon_disabled_successfully"
-msgstr "停用附加元件成功"
-
-msgid "devcp_addon_edit_pagetitle"
-msgstr "編輯附加元件"
-
-msgid "devcp_addon_enabled_successfully"
-msgstr "啟用附加元件成功"
-
-msgid "devcp_addon_field_description_displaytitle"
-msgstr "附加元件敘述"
-
-msgid "devcp_addon_field_homepage_displaytitle"
-msgstr "附加元件首頁"
-
-msgid "devcp_addon_field_name_displaytitle"
-msgstr "附加元件名稱"
-
-msgid "devcp_addon_field_summary_displaytitle"
-msgstr "附加元件摘要"
-
-msgid "devcp_addon_nominated_successfully"
-msgstr "附加元件送交批准成功！"
-
-msgid "devcp_addon_nominate_pagetitle"
-msgstr "送交批准附加元件"
-
-#: views/developers/addon_status.thtml:179
-#, fuzzy
-msgid "devcp_addon_status_action_activate_description"
-msgstr ""
-"Make your add-on active for it to show up in public listings and enable the "
-"update check service."
-
-#: views/developers/addon_status.thtml:136
-#, fuzzy
-msgid "devcp_addon_status_action_complete"
-msgstr "Complete Add-on"
-
-#: views/developers/addon_status.thtml:137
-#, fuzzy
-msgid "devcp_addon_status_action_complete_description"
-msgstr "Complete your add-on and move to the Sandbox"
-
-#: views/developers/addon_status.thtml:183
-#, fuzzy
-msgid "devcp_addon_status_action_deactivate_description"
-msgstr ""
-"Make your add-on inactive to hide it from all public listings and disable "
-"the update check service."
-
-#: views/developers/addon_status.thtml:145
-#, fuzzy
-msgid "devcp_addon_status_action_move_description"
-msgstr "Move your add-on back to the Sandbox. This is reversible."
-
-#: views/developers/addon_status.thtml:141
-#, fuzzy
-msgid "devcp_addon_status_action_nominate_description"
-msgstr "Nominate your add-on to become Public"
-
-#: views/developers/addon_status.thtml:149
-#, fuzzy
-msgid "devcp_addon_status_action_public_description"
-msgstr "Make your add-on Public again."
-
-#: views/developers/addon_status.thtml:170
-#, fuzzy
-msgid "devcp_addon_status_active"
-msgstr ""
-"Your add-on is <span class=\"inactive-0\">Active</span>. This means your add-"
-"on is showing up in all available listings appropriate for its status above."
-
-#: views/developers/addon_status.thtml:112
-#, fuzzy
-msgid "devcp_addon_status_completion_disabled"
-msgstr ""
-"Please fulfill the criteria above before you can complete your add-on and "
-"move it to the <span class=\"status-1\">Sandbox</span>."
-
-#: views/developers/addon_status.thtml:109
-#, fuzzy
-msgid "devcp_addon_status_completion_enabled"
-msgstr ""
-"You may now complete your add-on and move it to the <span class=\"status-1"
-"\">Sandbox</span> by clicking the button below."
-
-#: views/developers/addon_status.thtml:103
-#, fuzzy
-msgid "devcp_addon_status_criteria_application"
-msgstr "At least one application selected"
-
-#: views/developers/addon_status.thtml:101
-#, fuzzy
-msgid "devcp_addon_status_criteria_description"
-msgstr "Add-on Description required"
-
-#: views/developers/addon_status.thtml:99
-#, fuzzy
-msgid "devcp_addon_status_criteria_name"
-msgstr "Add-on Name required"
-
-#: views/developers/addon_status.thtml:121
-#, fuzzy
-msgid "devcp_addon_status_criteria_prerelease"
-msgstr "Add-on is not marked as pre-release."
-
-#, fuzzy
-msgid "devcp_addon_status_criteria_review"
-msgstr "Several user reviews of the add-on (may be external reviews)."
-
-#: views/developers/addon_status.thtml:100
-#, fuzzy
-msgid "devcp_addon_status_criteria_summary"
-msgstr "Add-on Summary required"
-
-#. %s is the status in a span, e.g. "<span>_('Public')</span>".
-#: views/developers/addon_status.thtml:58
-#, fuzzy
-msgid "devcp_addon_status_header"
-msgstr "Add-on Status: %s"
-
-#: views/developers/addon_status.thtml:97
-#, fuzzy
-msgid "devcp_addon_status_header_criteria"
-msgstr "Add-on Completion Criteria"
-
-#: views/developers/addon_status.thtml:166
-#, fuzzy
-msgid "devcp_addon_status_inactive"
-msgstr ""
-"Your add-on is <span class=\"inactive-1\">Inactive</span>. This means your "
-"add-on will not show up in any listing, regardless of its status above. "
-"Updates are <b>not</b> being provided to your add-on through the update "
-"check service."
-
-#: views/developers/addon_status.thtml:129
-#, fuzzy
-msgid "devcp_addon_status_nominate_disabled"
-msgstr ""
-"Please fulfill the criteria above before nominating your add-on to become "
-"<span class=\"status-4\">Public</span>."
-
-#: views/developers/addon_status.thtml:126
-#, fuzzy
-msgid "devcp_addon_status_nominate_enabled"
-msgstr ""
-"You may now nominate your add-on for <span class=\"status-4\">Public</span> "
-"by clicking the button below."
-
-#. %s is an email address.
-#: views/developers/addon_status.thtml:89
-#, fuzzy
-msgid "devcp_addon_status_switch_disabled"
-msgstr ""
-"Your add-on was <span class=\"status-5\">Disabled</span> by an administrator "
-"and cannot be used. If you have any questions, please e-mail %s."
-
-#: views/developers/addon_status.thtml:67
-#, fuzzy
-msgid "devcp_addon_status_switch_incomplete"
-msgstr ""
-"Your add-on is currently <span class=\"status-0\">Incomplete</span>. This "
-"means your add-on is not showing up on any portion of the site or update "
-"check service. You may come to this page to complete your add-on after it "
-"meets the criteria below for completion and transfer to the <span class="
-"\"status-1\">Sandbox</span>."
-
-#. %s is a number, perhaps 42.
-#: views/developers/addon_status.thtml:77
-#, fuzzy
-msgid "devcp_addon_status_switch_nominated"
-msgstr ""
-"Your add-on is currently nominated to become <span class=\"status-4"
-"\">Public</span> and is awaiting editor review. There are currently %s other "
-"add-ons in the nomination queue."
-
-#. %s is an email address.
-#: views/developers/addon_status.thtml:81
-#, fuzzy
-msgid "devcp_addon_status_switch_pending"
-msgstr ""
-"Your add-on is pending. This shouldn't have happened. Please e-mail %s with "
-"your add-on ID and state this error."
-
-#: views/developers/addon_status.thtml:85
-#, fuzzy
-msgid "devcp_addon_status_switch_public"
-msgstr ""
-"Your add-on is <span class=\"status-4\">Public</span>, which means it will "
-"show up in all listings and searches and can be downloaded without "
-"restriction. Updates are being provided to your add-on through the update "
-"check service."
-
-#: views/developers/addon_status.thtml:71
-#: views/developers/addon_status.thtml:75
-#, fuzzy
-msgid "devcp_addon_status_switch_sandbox"
-msgstr ""
-"Your add-on is in the <span class=\"status-1\">Sandbox</span>, which means "
-"it will show up in listings and searches, but users must log in to download "
-"it. Updates are <b>not</b> being provided to your add-on through the update "
-"check service."
-
-#: views/developers/addon_status.thtml:192
-#, fuzzy
-msgid "devcp_addon_status_trusted"
-msgstr ""
-"Your add-on is <span class=\"status-4\">Trusted</span>. This means you can "
-"submit updates to your add-on without editor review."
-
-msgid "devcp_addon_submission_makechanges_link"
-msgstr "編輯附加元件"
-
-msgid "devcp_addon_submission_pending"
-msgstr ""
-"這個版本會暫時放在「沙箱」區等待測試者及 Mozilla 附加元件的審核者審核，當審核"
-"通過時您會收到 Email 通知。"
-
-# %1 is the "nominate" link
-msgid "devcp_addon_submission_sandboxed"
-msgstr ""
-"這個版本會放在「沙箱」區供進階使用者使用，如果您要將它放上「公開」區則必須先 "
-"%s 以通過審核流程。"
-
-msgid "devcp_addon_submission_success"
-msgstr "您的附加元件上傳已完成。"
-
-msgid "devcp_addon_submission_trusted_public"
-msgstr "因為您的附加元件已受信任，此版本將自動同意並送到「公開」區。"
-
-msgid "devcp_addon_submit_pagetitle"
-msgstr "上傳附加元件"
-
-msgid "devcp_addon_updated_successfully"
-msgstr "附加元件更新成功"
-
-# %1 is the link to the preview upload page
-msgid "devcp_addon_upload_preview"
-msgstr "%s 能讓使用者對此附加元件更有興趣。"
-
-msgid "devcp_change_addontype"
-msgstr "變更附加元件種類："
-
-#. %s is the addons email address.
-#: views/developers/dashboard.thtml:104
-#, fuzzy
-msgid "devcp_dashboard_disabled_questions"
-msgstr ""
-"Your add-on was disabled by an administrator and cannot be used.  If you "
-"have any questions, please email %s."
-
-#. %s is the (localized) add-on status string in a span, e.g. "Disabled"
-#: views/developers/dashboard.thtml:103
-#, fuzzy
-msgid "devcp_dashboard_disabled_status"
-msgstr "Add-on Status: %s"
-
-#: views/developers/dashboard.thtml:116
-#, fuzzy
-msgid "devcp_dashboard_learn"
-msgstr ""
-"You don't currently have any add-ons hosted on Mozilla Add-ons. To learn how "
-"the process works and submit your first add-on, click Get Started below."
-
-msgid "devcp_disable_disable_confirm"
-msgstr "您確定要停用此附加元件嗎？"
-
-msgid "devcp_disable_disable_description"
-msgstr ""
-"此元件被停用後，就無法被搜尋或列在元件清單中，也無法被使用者下載或更新。事實"
-"上停用元件很像被刪除，但是您可以隨時回到這一頁重新啟用此元件。"
-
-msgid "devcp_disable_enable_confirm"
-msgstr "您確定要啟用此附加元件嗎？"
-
-msgid "devcp_disable_enable_description"
-msgstr "啟用此元件就能再次被搜尋或列在元件清單中，也能被使用者下載或更新。"
-
-#. %1 is the add-on name, %2 is the add-on's version number currently being reviewed by an editor
-#: views/developers/discuss.thtml:46
-#, fuzzy
-msgid "devcp_discuss_intro"
-msgstr ""
-"A Mozilla Add-ons Editor requested further information from you regarding "
-"version %2$s of your add-on %1$s."
-
-#. %1 is the add-on name
-#: views/developers/discuss.thtml:43
-#, fuzzy
-msgid "devcp_discuss_pagetitle"
-msgstr "Provide More Information For the Add-on Review of %1$s"
-
-#: views/developers/addon_edit_authors.thtml:50
-#, fuzzy
-msgid "devcp_edit_authors_header_manage"
-msgstr "Manage Add-on Authors"
-
-#: views/developers/addon_edit_authors.thtml:89
-#, fuzzy
-msgid "devcp_edit_authors_label_developer"
-msgstr ""
-"<strong>Developer</strong> - Can manage all aspects of the add-on listing, "
-"except for adding and removing other authors."
-
-#: views/developers/addon_edit_authors.thtml:88
-#, fuzzy
-msgid "devcp_edit_authors_label_owner"
-msgstr ""
-"<strong>Owner</strong> - Can manage all aspects of the add-on listing, "
-"including adding and removing other authors."
-
-#: views/developers/addon_edit_authors.thtml:90
-#, fuzzy
-msgid "devcp_edit_authors_label_viewer"
-msgstr ""
-"<strong>Viewer</strong> - Can view add-on developer listing and statistics, "
-"but can't make any changes."
-
-#: views/elements/developers/editbox.thtml:43
-#, fuzzy
-msgid "devcp_editbox_edit_addon"
-msgstr "Edit Add-on"
-
-#: views/developers/addon_edit_categories.thtml:88
-#, fuzzy
-msgid "devcp_edit_categories_does_not_fit"
-msgstr "My add-on doesn't fit into any available categories."
-
-#: views/developers/addon_edit_categories.thtml:49
-#, fuzzy
-msgid "devcp_edit_categories_header_manage"
-msgstr "Manage Add-on Categories"
-
-#: views/developers/addon_edit_categories.thtml:94
-#: views/developers/addon_edit_categories.thtml:103
-#, fuzzy
-msgid "devcp_edit_categories_none_available"
-msgstr "No categories are available for this add-on type and application."
-
-#: views/developers/addon_edit_categories.thtml:86
-#, fuzzy
-msgid "devcp_edit_categories_other"
-msgstr ""
-"Place your add-on into this category only if it does not fit into any other "
-"available categories."
-
-#. %s is the application name (Firefox, Thunderbird).
-#: views/developers/addon_edit_categories.thtml:63
-#, fuzzy
-msgid "devcp_edit_categories_select_application_categories"
-msgstr "Select up to three %s categories for your add-on"
-
-#: views/developers/addon_edit.thtml:47
-#, fuzzy
-msgid "devcp_edit_dd_manage_authors"
-msgstr "Add or remove users that can manage this add-on."
-
-#: views/developers/addon_edit.thtml:49
-#, fuzzy
-msgid "devcp_edit_dd_manage_categories"
-msgstr ""
-"Select the relevant categories for each application your add-on supports."
-
-#: views/developers/addon_edit.thtml:51
-#, fuzzy
-msgid "devcp_edit_dd_manage_description"
-msgstr ""
-"Add and modify translations for your add-on's summary, description, end-user "
-"license, and privacy policy."
-
-#: views/developers/addon_edit.thtml:53
-#, fuzzy
-msgid "devcp_edit_dd_manage_properties"
-msgstr "Change your add-on's name, homepage, icon, and other flags."
-
-#: views/developers/addon_edit_descriptions.thtml:51
-#, fuzzy
-msgid "devcp_edit_descriptions_header"
-msgstr "Edit Add-on Descriptions"
-
-#: views/developers/addon_edit_descriptions.thtml:94
-#, fuzzy
-msgid "devcp_edit_descriptions_transbox_comments_description"
-msgstr ""
-"Any information end users may want to know that isn't necessarily applicable "
-"to the add-on summary or description. Common uses include listing known "
-"major bugs, information on how to report bugs, anticipated release date of a "
-"new version, etc."
-
-#: views/developers/addon_edit_descriptions.thtml:86
-#, fuzzy
-msgid "devcp_edit_descriptions_transbox_description_description"
-msgstr ""
-"The description of your add-on is a longer explanation of features, "
-"functionality, and other relevant information. It is displayed under the "
-"summary on the add-on's display page."
-
-#: views/developers/addon_edit_descriptions.thtml:85
-#, fuzzy
-msgid "devcp_edit_descriptions_transbox_description_name"
-msgstr "Add-on Description"
-
-#: views/developers/addon_edit_descriptions.thtml:103
-#, fuzzy
-msgid "devcp_edit_descriptions_transbox_eula_description"
-msgstr ""
-"If your add-on has an End-User License Agreement (EULA), please enter its "
-"text below. If set below, users will be required to agree to this before "
-"installing your add-on. Please note that a EULA is not the same as a code "
-"license such as GPL or MPL."
-
-#: views/developers/addon_edit_descriptions.thtml:112
-#, fuzzy
-msgid "devcp_edit_descriptions_transbox_privacy_description"
-msgstr ""
-"If your add-on has a privacy policy, enter its text here. Your add-on's "
-"display page will display a link to the policy."
-
-#: views/developers/addon_edit_descriptions.thtml:78
-#, fuzzy
-msgid "devcp_edit_descriptions_transbox_summary_description"
-msgstr ""
-"The summary is a short explanation of your add-on's basic functionality that "
-"is displayed in search and browse listings, as well as at the top of your "
-"add-on's display page. <strong>Limit of 250 characters.</strong>"
-
-#: views/developers/addon_edit_descriptions.thtml:77
-#, fuzzy
-msgid "devcp_edit_descriptions_transbox_summary_name"
-msgstr "Add-on Summary"
-
-#: views/developers/addon_edit.thtml:46
-#, fuzzy
-msgid "devcp_edit_dt_manage_authors"
-msgstr "Manage Add-on Authors"
-
-#: views/developers/addon_edit.thtml:48
-#, fuzzy
-msgid "devcp_edit_dt_manage_categories"
-msgstr "Manage Add-on Categories"
-
-#: views/developers/addon_edit.thtml:50
-#, fuzzy
-msgid "devcp_edit_dt_manage_descriptions"
-msgstr "Manage Add-on Descriptions"
-
-#: views/developers/addon_edit.thtml:52
-#, fuzzy
-msgid "devcp_edit_dt_manage_properties"
-msgstr "Manage Add-on Properties"
-
-msgid "devcp_edit_error_categories_unavailable"
-msgstr "沒有此種類能用的分類。"
-
-#: views/developers/addon_edit_properties.thtml:170
-msgid "devcp_edit_label_externalsoftware"
-msgstr "需要外部軟體支援"
-
-#: views/developers/addon_edit_properties.thtml:169
-msgid "devcp_edit_label_sitespecific"
-msgstr "專為特定網站設計"
-
-#: views/elements/developers/editorsmenu.thtml:59
-msgid "devcp_editorsqueue_featured"
-msgstr "精選元件"
-
-# %1 is the nominated addons count
-#. %1 is the nominated addons count
-#: views/elements/developers/editorsmenu.thtml:58
-#: views/elements/developers/editorsqueue.thtml:44
-#, php-format
-msgid "devcp_editorsqueue_nominated"
-msgid_plural "devcp_editorsqueue_nominated"
-msgstr[0] "待批准元件 (%s)"
-
-#: views/developers/addon_edit_properties.thtml:85
-#, fuzzy
-msgid "devcp_edit_properties_default_locale"
-msgstr ""
-"An add-on's default locale is the main locale in which translations must be "
-"present. If translations for your add-on's descriptions are unavailable in a "
-"user's selected language, they will fall back to this default locale."
-
-#: views/developers/addon_edit_properties.thtml:167
-#, fuzzy
-msgid "devcp_edit_properties_flags"
-msgstr "These flags are used to filter and classify add-ons."
-
-#: views/developers/addon_edit_properties.thtml:174
-#, fuzzy
-msgid "devcp_edit_properties_guid"
-msgstr ""
-"The GUID of your add-on is specified in its install.rdf and uniquely "
-"identifies it. You cannot change your GUID once it is listed on Mozilla Add-"
-"ons."
-
-#: views/developers/addon_edit_properties.thtml:53
-#, fuzzy
-msgid "devcp_edit_properties_header"
-msgstr "Edit Add-on Properties"
-
-#: views/developers/addon_edit_properties.thtml:187
-#, fuzzy
-msgid "devcp_edit_properties_header_addon_type"
-msgstr "Add-on Type"
-
-#: views/developers/addon_edit_properties.thtml:166
-#, fuzzy
-msgid "devcp_edit_properties_header_flags"
-msgstr "Add-on Flags"
-
-#: views/developers/addon_edit_properties.thtml:173
-#: views/developers/addon_edit_properties.thtml:198
-#, fuzzy
-msgid "devcp_edit_properties_header_guid"
-msgstr "Add-on GUID"
-
-#: views/developers/addon_edit_properties.thtml:104
-#, fuzzy
-msgid "devcp_edit_properties_header_icon"
-msgstr "Add-on Icon"
-
-#. A header on the admin page to toggle trusted status.
-#: views/developers/addon_edit_properties.thtml:183
-#, fuzzy
-msgid "devcp_edit_properties_header_trusted"
-msgstr "Trusted Add-on?"
-
-#. %s is a comma-separated list of image extensions ".png, .jpg"
-#: views/developers/addon_edit_properties.thtml:106
-#, fuzzy
-msgid "devcp_edit_properties_icon"
-msgstr ""
-"The add-on icon is a small image that is displayed next to your add-on's "
-"name in browse and search results, display pages, and in the add-on "
-"installation dialog. The image will automatically be resized to 32 x 32 "
-"pixels.  Please use one of the following image types: %s"
-
-#: views/developers/addon_edit_properties.thtml:171
-#, fuzzy
-msgid "devcp_edit_properties_label_binary"
-msgstr "This add-on contains binary components"
-
-#: views/developers/addon_edit_properties.thtml:136
-#, fuzzy
-msgid "devcp_edit_properties_transbox_homepage_description"
-msgstr ""
-"If your add-on has another homepage, enter its address here. Adding other "
-"translations is not necessary unless your website is localized into other "
-"languages."
-
-#: views/developers/addon_edit_properties.thtml:135
-#, fuzzy
-msgid "devcp_edit_properties_transbox_homepage_name"
-msgstr "Add-on Homepage"
-
-#: views/developers/addon_edit_properties.thtml:79
-#, fuzzy
-msgid "devcp_edit_properties_transbox_name_description"
-msgstr "The name of your add-on is displayed everywhere your add-on is listed."
-
-#: views/developers/addon_edit_properties.thtml:78
-#, fuzzy
-msgid "devcp_edit_properties_transbox_name_name"
-msgstr "Add-on Name"
-
-#: views/developers/addon_edit_properties.thtml:154
-#, fuzzy
-msgid "devcp_edit_properties_transbox_supporturl_description"
-msgstr ""
-"If your add-on has a support website or forum, enter its address here. "
-"Adding other translations is not necessary unless your website is localized "
-"into other languages."
-
-#: views/developers/addon_edit_properties.thtml:184
-#, fuzzy
-msgid "devcp_edit_properties_trusted"
-msgstr "Trusted add-ons can become public without Editor review."
-
-#: views/developers/addon_edit_properties.thtml:161
-#, fuzzy
-msgid "devcp_edit_properties_view_source"
-msgstr ""
-"The source of your add-on files can be viewed online by any logged in user "
-"if you wish."
-
-msgid "devcp_edit_target_locale_explanation"
-msgstr ""
-"<a href=\"http://wiki.mozilla.org/L10n:Simple_locale_names\">簡短語言名稱</"
-"a>，例如「en-US」"
-
-#: controllers/developers_controller.php:568
-#, fuzzy
-msgid "devcp_error_activity_info_missing_activity_version"
-msgstr ""
-"The file activity/activity.info must contain a value for activity_version"
-
-#: controllers/developers_controller.php:575
-#: controllers/developers_controller.php:591
-#, fuzzy
-msgid "devcp_error_activity_info_missing_bundle_id"
-msgstr "The file activity/activity.info must contain a value for bundle_id"
-
-#: controllers/developers_controller.php:508
-#, fuzzy
-msgid "devcp_error_activity_info_missing_name"
-msgstr "The file activity/activity.info must contain a value for name"
-
-#: controllers/developers_controller.php:589
-#, fuzzy
-msgid "devcp_error_activity_info_missing_summary"
-msgstr "The file activity/activity.info must contain a value for summary"
-
-#: controllers/developers_controller.php:499
-#, fuzzy, php-format
-msgid "devcp_error_activity_info_not_found"
-msgstr "The activity bundle must contain a file named %s"
-
-#: controllers/statistics_controller.php:147
-#: controllers/statistics_controller.php:361
-#: controllers/previews_controller.php:108
-#: controllers/previews_controller.php:211
-#: controllers/previews_controller.php:312
-msgid "devcp_error_addon_access_denied"
-msgstr "您並無此附加元件的權限。"
-
-msgid "devcp_error_addonname_not_unique"
-msgstr ""
-"這個附加元件名稱已在我們的資料庫中，請確定：<br /><li>您的 GUID 正確，最常見"
-"的錯誤就是 GUID 不小心寫錯。</li><li>您沒有在資料庫中上傳了重複的項目。如果重"
-"複了，您應該更新舊的項目或刪除該項目重新上傳。</li>"
-
-msgid "devcp_error_describe_changes"
-msgstr "請輸入此附加元件的變更敘述。"
-
-#: controllers/developers_controller.php:1299
-#, fuzzy
-msgid "devcp_error_empty_application_list"
-msgstr "Please select at least one Application."
-
-#. %1$s is the name of the file
-#: controllers/components/developers.php:666
-#, fuzzy
-msgid "devcp_error_file_exists"
-msgstr ""
-"A version of that addon already exists. To replace it, you must delete the "
-"file %1$s first."
-
-#. %1$s is a file extension.  Example:  .exe
-#. %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
-#: controllers/components/developers.php:360
-#, php-format
-msgid "devcp_error_file_extension"
-msgstr ""
-"所選的元件類型不接受此類副檔名 (%s) 上傳。只有下面列出的副檔名才允許上傳: %s"
-
-#: controllers/components/developers.php:533
-msgid "devcp_error_guid_application"
-msgstr "此附加元件的 ID 已被應用程式所使用。"
-
-msgid "devcp_error_identical_version_exists"
-msgstr "此元件及作業系統已存在相同的版本 (%s)。"
-
-#: controllers/developers_controller.php:1643
-msgid "devcp_error_invalid_addontype"
-msgstr "請選擇有效的附加元件種類。"
-
-#. %s is a string
-#: controllers/components/developers.php:528
-#: controllers/developers_controller.php:803
-#, php-format
-msgid "devcp_error_invalid_guid"
-msgstr "此附加元件的 ID 無效：%s"
-
-#: controllers/components/developers.php:543
-msgid "devcp_error_invalid_version"
-msgstr ""
-"此附加元件版本號無效：請見 <a href=\"http://developer.mozilla.org/en/docs/"
-"Toolkit_version_format\">規格說明</a>"
-
-#: controllers/components/developers.php:538
-msgid "devcp_error_invalid_version_spaces"
-msgstr "此附加元件的版本號無效：版本號不能有空白。"
-
-#: controllers/components/developers.php:602
-msgid "devcp_error_mozilla_application"
-msgstr "您至少要選一個有效的 Mozilla 目標應用程式。"
-
-#: controllers/components/developers.php:523
-msgid "devcp_error_no_guid"
-msgstr "此附加元件的 install.rdf 中找不到 ID。"
-
-msgid "devcp_error_nominate_no_prerelease"
-msgstr "您無法將發行前版本 (Pre-release) 的附加元件送交批准。"
-
-msgid "devcp_error_nominate_sandbox_only"
-msgstr "您只能將「沙箱」區的附加元件送交批准。"
-
-#: controllers/components/developers.php:92
-msgid "devcp_error_one_user"
-msgstr "此附加元件至少要有一位作者。"
-
-msgid "devcp_error_update_access_denied"
-msgstr "您沒有權限更新此附加元件。"
-
-#: controllers/components/developers.php:518
-msgid "devcp_error_updatekey"
-msgstr "附加元件不能使用 updateKey，請將其從 install.rdf 中移除後再試一次。"
-
-#: controllers/components/developers.php:513
-msgid "devcp_error_updateurl"
-msgstr ""
-"附加元件不能使用外部的 updateURL，請將其從 install.rdf 中移除後再試一次。"
-
-msgid "devcp_form_categories_nextstep"
-msgstr "請於下個步驟為您的新附加元件選一個合適的分類。"
-
-msgid "devcp_form_error_categories_unavailable"
-msgstr "沒有此種類能用的分類。"
-
-msgid "devcp_form_error_description_notempty"
-msgstr "請為附加元件輸入合適的敘述。"
-
-msgid "devcp_form_error_name_required"
-msgstr "請為附加元件輸入名稱。"
-
-msgid "devcp_form_error_select_addontype"
-msgstr "請為您上傳的附加元件選一種類別。"
-
-msgid "devcp_form_error_summary_notempty"
-msgstr "請為附加元件輸入摘要。"
-
-msgid "devcp_form_label_addonfile"
-msgstr "附加元件檔案"
-
-msgid "devcp_form_label_addonfile2"
-msgstr "附加元件檔案 2"
-
-msgid "devcp_form_label_addonfile3"
-msgstr "附加元件檔案 3"
-
-msgid "devcp_form_label_addontype"
-msgstr "附加元件種類"
-
-msgid "devcp_form_label_externalsoftware"
-msgstr "需要外部軟體支援"
-
-msgid "devcp_form_label_sitespecific"
-msgstr "專為特定網站設計"
-
-msgid "devcp_form_trustedaddon_destination"
-msgstr "因為您的附加元件已受信任，請直接選擇要發佈於："
-
-msgid "devcp_header_step2_addondetails"
-msgstr "元件詳細資訊"
-
-msgid "devcp_index_header_myaddons"
-msgstr "我的附加元件"
-
-# %1 is the default locale
-#. %1 is the default locale
-#: views/elements/developers/localebox.thtml:48
-#, php-format
-msgid "devcp_localebox_intro"
-msgstr ""
-"本頁的某些欄位可用使用者熟悉的語言顯示。請從下面的語言中選擇您要編輯的元件詳"
-"細資訊，如果使用者選的語言沒有內容就會用預設語言 (%s) 顯示。"
-
-#: views/elements/developers/myaddons.thtml:52
-msgid "devcp_myaddons_link"
-msgstr "我的附加元件"
-
-#: views/elements/developers/myaddons.thtml:69
-#: views/elements/developers/sidebar.thtml:62
-msgid "devcp_myaddons_submitaddon_link"
-msgstr "上傳附加元件"
-
-#. %1$s is an add-on ID, perhaps 167.
-#. %2$s is a URL.
-#: controllers/developers_controller.php:256
-#, fuzzy
-msgid "devcp_new_addon_error"
-msgstr ""
-"This add-on ID (%1$s) already exists in the database. If this is your add-"
-"on, you can <a href=\"%2$s\">upload a new version</a>."
-
-msgid "devcp_nominate_link_returnto_details"
-msgstr "回到元件詳細資訊"
-
-# %1 is the autodetected addon type
-msgid "devcp_notice_autodetected_addontype"
-msgstr "自動偵測附加元件種類為：%s。"
-
-# %1 is the default locale name (English (US))
-# %2 is the default locale code (en-US)
-# %3 is the current page locale name (Deutsch)
-# %4 is the current page locale code (de)
-msgid "devcp_notice_different_defaultlocale"
-msgstr ""
-"此附加元件的預設語言 (%1$s [%2$s]) 和您目前所選的語言 (%3$s [%4$s]) 不同。下"
-"面的欄位將會填入 %1$s 的欄位中。"
-
-#: views/previews/add.thtml:45
-msgid "devcp_previews_filetype_info"
-msgstr ""
-"請用下面的表單上傳格式為 PNG, JPG 或 GIF 的附加元件預覽圖片。大於 700 x 525 "
-"像素的圖片會自動縮小。"
-
-#: views/developers/previews.thtml:59
-#, fuzzy
-msgid "devcp_previews_p_screenshots"
-msgstr ""
-"The preview screenshots for your add-on are shown below. You can make "
-"changes to captions or images below. The Default Preview is the preview that "
-"is displayed next to your add-on in search and browse listings."
 
 #: views/elements/developers/rolecheck.thtml:42
-#, fuzzy
-msgid "devcp_rolecheck_no_privs"
+msgid ""
+"<p><strong>You do not have sufficient privileges to make changes on this "
+"page.</strong></p><p>Contact the Add-on Owner if you need to make changes.</"
+"p>"
 msgstr ""
-"<span>You do not have sufficient privileges to make changes on this page.</"
-"span><br />Contact the Add-on Owner if you need to make changes."
 
-msgid "devcp_skip_reviewing_addon_info"
-msgstr "略過更新已存的附加元件資訊"
 
-#: views/developers/addon_status_confirm.thtml:59
-#, fuzzy
-msgid "devcp_status_confirm_active"
+# %1$s is a URL.
+#: controllers/collections_controller.php:171
+#, php-format
+msgid ""
+"<p><strong>You don't have any favorite collections yet.</strong></p> "
+"<p>Collections you mark as favorites can be quickly accessed from this page, "
+"and will appear in the <a href='%1$s'>Add-on Collector</a> if you've "
+"installed it.</p>"
 msgstr ""
-"Marking this add-on active will cause it to show up in public areas "
-"appropriate for its status, including search and browse listings. It will be "
-"downloadable from the website and could be returned in client update checks, "
-"depending on its status. You will be able to return here and disable it "
-"again at your convenience."
+"<p><strong>您還沒有最愛的收藏集。</strong></p> <p>這個頁面可以快速存取您標記"
+"為最愛的收藏集，若您安裝了 <a href='%1$s'>Add-on Collector</a>，它們也會出現"
+"在那裡。</p>"
 
-#: views/developers/addon_status_confirm.thtml:59
-#, fuzzy
-msgid "devcp_status_confirm_active_sure"
-msgstr "Are you sure you wish to mark this add-on active?"
 
-#: views/developers/addon_status_confirm.thtml:55
-#, fuzzy
-msgid "devcp_status_confirm_inactive"
+#: views/developers/addon_edit_contributions.thtml:65
+msgid ""
+"<p>Contributions provide a way for users to support your add-on financially. "
+"With contributions, you can:</p><ul><li>Ask users for donations on your add-"
+"on's listing.</li><li>Offer users the ability to contribute using a credit "
+"card or PayPal account.</li><li>Deposit contributions in a <a href='https://"
+"www.paypal.com/' target='_blank'>PayPal account</a> of your choice.</li></"
+"ul><p>Ready to get started? Click below to start asking for contributions.</"
+"p>"
 msgstr ""
-"Marking this add-on inactive will prevent it from showing up in any public "
-"areas, including search and browse listings. It will not be downloadable "
-"from the website and will not be returned in client update checks. You will "
-"be able to return here and re-enable it at your convenience."
+"<p>捐助功能提供使用者以資金贊助您附加元件的管道。透過捐助功能，您可以：</"
+"p><ul><li>在您附加元件的列表中請求使用者捐款。</li><li>讓使用者可以透過信用卡"
+"或 PayPal 帳戶捐助。</li><li>根據您的選擇在 <a href='https://www.paypal."
+"com/' target='_blank'>PayPal 帳戶</a>中儲值捐助金額。</li></ul><p>準備好了"
+"嗎？按一下下面的按鈕來開始請求捐助。</p>"
 
-#: views/developers/addon_status_confirm.thtml:55
-#, fuzzy
-msgid "devcp_status_confirm_inactive_sure"
-msgstr "Are you sure you wish to mark this add-on inactive?'"
 
-#: views/developers/addon_status_confirm.thtml:67
-#, fuzzy
-msgid "devcp_status_confirm_public"
+#: views/developers/addon_edit_profile.thtml:80
+msgid ""
+"<p>Introduce yourself to your users with a Developer Profile.</"
+"p><ul><li>Explain why you created this add-on.</li><li>Tell your users "
+"what's next.</li><li>Build more awareness of your efforts.</li></ul><p>Ready "
+"to create your Developer Profile? Click the button below to begin.</p>"
 msgstr ""
-"Making this add-on public will make it available for anyone to download and "
-"will begin offering updates to existing users."
+"<p>在「開發者檔案」中介紹您自己。</p><ul><li>說明這個元件的誕生由來。</"
+"li><li>告訴使用者您的下一步。</li><li>進一步闡明您付出的努力。</li></ul><p>準"
+"備好建立使用者檔案了嗎？請按下面的按鈕開始。</p>"
 
-#: views/developers/addon_status_confirm.thtml:67
-#, fuzzy
-msgid "devcp_status_confirm_public_sure"
-msgstr "Are you sure you wish to make this add-on public?"
 
-#: views/developers/addon_status_confirm.thtml:63
-#, fuzzy
-msgid "devcp_status_confirm_sandbox"
+# %1 is the URL of the support section, %2 for the review guidelines
+#: views/reviews/add.thtml:53
+#, php-format
+msgid ""
+"<p>Keep these tips in mind:</p><ul><li>Write like you're telling a friend "
+"about your experience with the add-on.  Give specifics and helpful details, "
+"such as what features you liked and/or disliked, how easy to use it is, and "
+"any disadvantages it has.  Avoid generic language such as calling it \"Great"
+"\" or \"Bad\" unless you can give reasons why you believe this is so.</"
+"li><li>Please do not post bug reports in reviews. We do not make your email "
+"address available to add-on developers and they may need to contact you to "
+"help resolve your issue. See the <a href=\"%1$s\">support section</a> to "
+"find out where to get assistance for this add-on.</li><li>Please keep "
+"reviews clean, avoid the use of improper language and do not post any "
+"personal information.</li></ul><p>Please read the <a href=\"%2$s\">Review "
+"Guidelines</a> for more detail about user add-on reviews.</p>"
 msgstr ""
-"Moving this add-on back to the sandbox will require users to login before "
-"downloading and updates will no longer be offered to existing users. Because "
-"your add-on is currently public, you will be able to return here at any time "
-"to make it public again."
+"<p>請將這些話記在心裡：</p><ul><li>用寫給朋友的方式告訴大家您對此附加元件的使"
+"用經驗。請寫出特定且有幫助的細節，像是您喜歡或是不喜歡的功能，此附加元件是否"
+"容易使用，和它的缺點在哪等等。避免一般的形容像是「好棒」或是「真難用」，除非"
+"您解釋了為何您這樣認為。</li><li>請勿在意見處回報程式臭蟲。我們不會將您的 e-"
+"mail 顯示給擴充套件作者，而他們或許需要和您聯絡才能解決該問題。請至<a href="
+"\"%1$s\">技術支援小節</a>參考如何尋求使用上的協助。</li><li>請勿使用髒話，或"
+"是洩漏個人資訊。</li></ul><p>更多關於使用者意見的資訊，請參考<a href=\"%2$s"
+"\">意見撰寫指南</a>。</p>"
 
-#: views/developers/addon_status_confirm.thtml:63
-#, fuzzy
-msgid "devcp_status_confirm_sandbox_sure"
-msgstr "Are you sure you wish to move this add-on to the sandbox?"
 
-#: views/developers/addon_status_nominate.thtml:55
-#, fuzzy
-msgid "devcp_status_nominate_header"
-msgstr "Add-on Nomination"
-
-msgid "devcp_submissions_disabled"
-msgstr "附加元件的上傳已暫時停用，請稍後再試試看。"
-
-msgid "devcp_summary_admin_disabled"
-msgstr "此附加元件已被管理員停用。"
-
-# %1 is a link to the addon submit page
-msgid "devcp_summary_noaddons_submit_one"
-msgstr "您還沒有上傳任何附加元件，請按 %s 開始上傳。"
-
-#: views/elements/translationbox.thtml:146
-#, fuzzy
-msgid "devcp_transbox_help_if"
+#: views/users/register.thtml:50
+#, php-format
+msgid ""
+"<p>Registration on AMO is <strong>not required</strong> if you simply want "
+"to download and install public add-ons.</p><p>You only need to register if:</"
+"p><ul><li>You want to submit reviews for add-ons</li><li>You want to keep "
+"track of your favorite add-on collections or create one yourself</li><li>You "
+"are an add-on developer and want to upload your add-on for hosting on AMO</"
+"li></ul><p>Upon successful registration, you will be sent a confirmation "
+"email to the address you provided. Please follow the instructions there to "
+"confirm your account.</p><p>If you like, you can read our <a href='%1$s' "
+"title='Legal Notices'>Legal Notices</a> and <a href='%2$s' title='Privacy "
+"Policy'>Privacy Policy</a>.</p>"
 msgstr ""
-"If a user browses the site and a translation isn't available in their own "
-"language, it will fall back to your add-on's Default Locale, specified in "
-"the Edit Add-on Properties area. If you don't have any translations, just "
-"enter what you can into your Default Locale, which should be a language you "
-"speak."
+"<p>如果您只是要下載並安裝公開的附加元件，您<strong>不需要</strong>在 AMO 註"
+"冊。</p><p>您什麼時候需要註冊：</p><ul><li>您要發表對附加元件的意見</li><li>"
+"您是附加元件的開發者，想要上傳您的附加元件並放在 AMO</li></ul><p>註冊成功後，"
+"您將在所提供的 email 地址中收到一封確認信。請遵照信中指示的步驟確認您的帳號。"
+"</p><p>如果您有興趣，可以閱讀我們的<a href='%1$s' title='法律聲明'>法律聲明</"
+"a>和<a href='%2$s' title='隱私政策'>隱私政策</a>。</p>"
 
-#. %1$s and %2$s are GUIDs.
-#: controllers/developers_controller.php:343
-#, fuzzy
-msgid "devcp_update_addon_guid_error"
-msgstr ""
-"The add-on GUID used in this file (%1$s) does not match the existing GUID "
-"for this add-on (%2$s)."
 
-#: controllers/developers_controller.php:334
-#, fuzzy
-msgid "devcp_update_addon_priv_error"
-msgstr "You do not have sufficient privileges to update this add-on."
-
-#. %1$s is a version number, %2$s is an add-on ID.
-#: controllers/developers_controller.php:399
-#, fuzzy
-msgid "devcp_update_addon_version_belong_error"
-msgstr "The specified version (%1$s) does not belong to this add-on (%2$s)."
-
-#. %1$s is a version number, maybe 1.1.
-#. %2$s is a URL.
-#: controllers/developers_controller.php:351
-#, fuzzy
-msgid "devcp_update_addon_version_exists_error"
-msgstr ""
-"The version number uploaded (%1$s) already exists for this add-on. If you "
-"are trying to add another file to this version, <a href=\"%2$s\">click here</"
-"a>."
-
-#: views/developers/uploader.thtml:157
-#, fuzzy
-msgid "devcp_uploader_button_edit"
-msgstr "Edit My Add-on"
-
-#: views/developers/uploader.thtml:158
-#, fuzzy
-msgid "devcp_uploader_button_later"
-msgstr "I'll complete my add-on later."
-
-#. %s is href=... and should stay in the <a> tag.
-#: views/developers/uploader.thtml:156
-#, fuzzy
-msgid "devcp_uploader_created_results"
-msgstr ""
-"<p>Your add-on listing has been successfully created. The basic information "
-"obtained from your uploaded file has been stored, but there's a lot more to "
-"your listing that can be customized.</p><p>Your add-on is currently marked "
-"as <strong>Incomplete</strong>. In order to complete your add-on, you'll "
-"need to make sure it has an accurate name, summary, and description, as well "
-"as at least one selected category. You can edit your add-on's information "
-"using the link below and check the status of your add-on at any time on the "
-"<a %s>status page</a>."
-
-#: views/developers/uploader.thtml:154
-#, fuzzy
-msgid "devcp_uploader_header_created"
-msgstr "Add-on Created!"
-
-#: views/developers/uploader.thtml:67
-#, fuzzy
-msgid "devcp_uploader_how"
-msgstr ""
+#: views/developers/uploader.thtml:70
+msgid ""
 "<p>Thanks for your interest in submitting your add-on to Mozilla Add-ons. "
 "Hosting your add-on on Mozilla Add-ons is the easiest way to handle "
 "distribution of your add-on. Here's what you'll get:</p><ul><li>Each add-on "
@@ -1375,762 +224,3569 @@ msgstr ""
 "must be reviewed by a Mozilla Add-ons Editor before they will have all of "
 "the features listed above. If you're ready to start the process and have "
 "your add-on package ready for upload, just click on Get Started below!</p>"
-
-#: views/developers/uploader.thtml:124
-#, fuzzy
-msgid "devcp_uploader_label_upload_field"
-msgstr "Add-on File: "
-
-#. %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:176
-#, fuzzy
-msgid "devcp_uploader_p_pending_file"
 msgstr ""
-"The new file will be available to the public as soon as an editor is able to "
-"review it. There are currently %1$s other add-ons in the queue. Want to be "
-"reviewed faster? Consider <a %2$s>becoming an editor</a>."
+"<p>感謝您希望將上傳元件到 Mozilla 附加元件網站。將元件放在 Mozilla 附加元件是"
+"發佈元件最簡單的方式。您將得到以下的功能：</p><ul><li>每個元件將有各自的公開"
+"顯示頁面，內容包含元件功能的簡短摘要、可選用的較長敘述、預覽擷圖的展示等您提"
+"供的資訊。</li><li>您的元件會出現在網站的搜尋與瀏覽清單，甚至於 Firefox 3 的"
+"附加元件管理員。</li><li>我們會用心地提供下載服務，並在您上傳新版本時提供自動"
+"更新。</li><li>您可以存取統計資訊顯示板，瞭解關於使用者的詳細資訊。</li></"
+"ul><p>放在網站的元件必須經過 Mozilla 附加元件網站審核者的批准，才能擁有上述全"
+"部功能。如果您已經準備好進行這個流程，並且已經準備好了要上傳的元件檔案，就按"
+"下面的「開始」吧！</p>"
 
-#. %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
-#: views/developers/uploader.thtml:166
-#, fuzzy
-msgid "devcp_uploader_p_pending_version"
+
+# %1$s is a URL.
+#: controllers/collections_controller.php:156
+#, php-format
+msgid ""
+"<p>You haven't created any collections yet. Collections are easy to create "
+"and fill with your favorite add-ons.  <a href='%1$s'>Try it out</a>!</p>"
 msgstr ""
-"The new version will be available to the public as soon as an editor is able "
-"to review it. There are currently %1$s other add-ons in the queue. Want to "
-"be reviewed faster? Consider <a %2$s>becoming an editor</a>."
+"<p>您尚未建立任何收藏集。簡單地將喜愛的附加元件新增並加入收藏集即可，<a "
+"href='%1$s'>試試看吧</a>！</p>"
 
-#. %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
-#. %2$s is href="..." and should stay in the 'current status' <a> tag.
-#: views/developers/uploader.thtml:177
-#, fuzzy
-msgid "devcp_uploader_p_update_file"
+
+#: views/developers/addon_status.thtml:172
+msgid ""
+"<p>Your add-on is <span class=\"inactive-0\">Active</span>. This means your "
+"add-on is showing up in all available listings appropriate for its status "
+"above.</p>"
 msgstr ""
-"View your new file in the <a %1$s>Versions and Files page</a>, check out "
-"your add-on's <a %2$s>current status</a>, or <b>add release notes</b> by "
-"clicking the button below (highly recommended)."
 
-#. %1$s is href="..." and should stay in the 'Versions and Files' <a> tag.
-#. %2$s is href="..." and should stay in the 'current status' <a> tag.
-#: views/developers/uploader.thtml:167
-#, fuzzy
-msgid "devcp_uploader_p_update_version"
+
+#: views/developers/addon_status.thtml:168
+msgid ""
+"<p>Your add-on is <span class=\"inactive-1\">Inactive</span>. This means "
+"your add-on will not show up in any listing, regardless of its status above. "
+"Updates are <strong>not</strong> being provided to your add-on through the "
+"update check service.</p>"
 msgstr ""
-"View your new version in the <a %1$s>Versions and Files page</a>, check out "
-"your add-on's <a %2$s>current status</a>, or <b>add release notes</b> by "
-"clicking the button below (highly recommended)."
 
-#: views/developers/uploader.thtml:118
-#, fuzzy
-msgid "devcp_uploader_p_upload"
+
+# %s is href=... and should stay in the <a> tag.
+#: views/developers/uploader.thtml:164
+#, php-format
+msgid ""
+"<p>Your add-on listing has been successfully created. The basic information "
+"obtained from your uploaded file has been stored, but there's a lot more to "
+"your listing that can be customized.</p><p>Your add-on is currently marked "
+"as <strong>Incomplete</strong>. In order to complete your add-on, you'll "
+"need to make sure it has an accurate name, summary, and description, as well "
+"as at least one selected category. You can edit your add-on's information "
+"using the link below and check the status of your add-on at any time on the "
+"<a %s>status page</a>."
 msgstr ""
-"Upload your add-on file using the form below. If you have multiple, platform-"
-"specific files to upload, choose a single file and then upload the others "
-"using the Versions and Files Manager."
+"<p>已成功建立您元件的清單。由您的上傳檔案中取得的基本資訊已被儲存，但仍有許多"
+"資訊是可自訂的。</p><p>元件目前被標記為「<strong>未完成</strong>」，要完成您"
+"的元件，您需要確認它有明確的名稱、摘要、敘述，且至少選擇一個分類。您可以用以"
+"下鏈結編輯元件資訊，且隨時都可以在<a %s>狀態頁面</a>檢查元件狀態。"
 
-#: views/developers/uploader.thtml:50
-#, fuzzy
-msgid "devcp_uploader_title_submit"
-msgstr "Submit New Add-on"
 
-#. %s is href=... and should stay in the <a> tag.
-#: views/developers/versions_edit.thtml:123
-#, fuzzy
-msgid "devcp_versions_edit_adjust"
+# %1$s is the number of addons downloaded
+#: views/addons/home.thtml:56
+#, php-format
+msgid "<strong>%1$s</strong> <span>add-on downloaded</span>"
+msgid_plural "<strong>%1$s</strong> <span>add-ons downloaded</span>"
+msgstr[0] "<strong>%1$s</strong> <span>份元件已被下載</span>"
+
+
+# %1$s is the number of addons in use
+#: views/addons/home.thtml:59
+#, php-format
+msgid "<strong>%1$s</strong> <span>add-on in use</span>"
+msgid_plural "<strong>%1$s</strong> <span>add-ons in use</span>"
+msgstr[0] "<strong>%1$s</strong> <span>份元件使用中</span>"
+
+
+# %1$s is the count of addons in a collection
+#: views/elements/amo2009/collection_listing_item.thtml:51
+#: views/addons/home.thtml:154
+#, php-format
+msgid "<strong>%1$s</strong> add-on"
+msgid_plural "<strong>%1$s</strong> add-ons"
+msgstr[0] "<strong>%1$s</strong> 個附加元件"
+
+
+#: views/developers/addon_edit_authors.thtml:89
+msgid ""
+"<strong>Developer</strong> - Can manage all aspects of the add-on listing, "
+"except for adding and removing other authors."
 msgstr ""
+"<strong>開發者</strong> - 可以全面管理元件清單，新增和刪除其他作者除外。"
+
+
+#: views/elements/amo2009/teaser_collections.thtml:60
+msgid ""
+"<strong>Over 5000 free extras</strong> that let you customize and extend "
+"Firefox to meet your needs."
+msgstr ""
+"<strong>超過五千個免費的小工具</strong>，讓您自訂並擴充 Firefox 來滿足您的需"
+"求。"
+
+
+#: views/developers/addon_edit_authors.thtml:88
+msgid ""
+"<strong>Owner</strong> - Can manage all aspects of the add-on listing, "
+"including adding and removing other authors."
+msgstr ""
+"<strong>擁有者</strong> - 可以全面管理元件清單，包括新增和刪除其他作者。"
+
+
+#: views/developers/addon_edit_authors.thtml:90
+msgid ""
+"<strong>Viewer</strong> - Can view add-on developer listing and statistics, "
+"but can't make any changes."
+msgstr ""
+"<strong>檢視者</strong> - 可以檢視元件的開發者清單和統計資訊，但不能做任何更"
+"動。"
+
+
+# %1 is the add-on name, %2 is the add-on's version number currently being reviewed by an editor
+#: views/developers/discuss.thtml:48
+#, php-format
+msgid ""
+"A Mozilla Add-ons Editor requested further information from you regarding "
+"version %2$s of your add-on %1$s."
+msgstr "一位 Mozilla 元件審核者請求您的元件 %1$s 之 %2$s 版本的更多資訊。"
+
+
+# %1 is the user's email address, %2 is the current app
+#: views/users/activatefirst.thtml:49
+#, php-format
+msgid ""
+"A link to activate your user account was sent by email to your address %1$s. "
+"You have to click it before you can log into %2$s Add-ons."
+msgstr ""
+"啟動您帳號的鏈結已寄到您的 Email 地址 %1$s，在您登入 %2$s 附加元件之前必須先"
+"按下該鏈結以啟動帳號。"
+
+
+#: controllers/developers_controller.php:2103
+msgid ""
+"A new section is added to your add-on's page and Developer Profile "
+"requesting a contribution from your users."
+msgstr "已在您的元件頁面與「開發者檔案」中加入請求使用者捐助的片段。"
+
+
+# %1$s is the name of the file
+#: controllers/components/developers.php:571
+#, php-format
+msgid ""
+"A version of that add-on already exists. To replace it, you must delete the "
+"file %1$s first."
+msgstr "元件的這個版本已經存在，若要取代它，您必須先刪除檔案 %1$s。"
+
+
+#: views/developers/addon_edit.thtml:56
+msgid ""
+"Add and modify translations for your add-on's summary, description, end-user "
+"license, and privacy policy."
+msgstr "新增與修改您元件的摘要、敘述、使用者授權合約與隱私政策之翻譯。"
+
+
+#: views/developers/addon_edit.thtml:50
+msgid "Add or remove users that can manage this add-on."
+msgstr "新增或移除可以管理這個元件的使用者。"
+
+
+#: views/developers/addon_edit.thtml:54
+msgid "Add tags to your add-on."
+msgstr "為您的元件加上標籤。"
+
+
+#: views/users/edit.thtml:192
+msgctxt "user_notifications_th_addon"
+msgid "Add-on"
+msgstr "附加元件"
+
+
+#: views/editors/performance_table.thtml:69 views/editors/reviewlog.thtml:56
+msgctxt "editorcp_reviewlog_column_addon"
+msgid "Add-on"
+msgstr "附加元件"
+
+
+#: views/editors/featured.thtml:63 views/editors/queue.thtml:115
+#: views/admin/flagged_queue.thtml:53
+msgctxt "editors_th_addon"
+msgid "Add-on"
+msgstr "附加元件"
+
+
+#: views/elements/headers/page_header_devhub.thtml:48
+msgid "Add-on <strong>Developer Hub</strong>"
+msgstr ""
+
+
+#. L10n: This is a title.  The "Add-on Builder" is a script that will create a simple outline of an add-on for someone.
+#: views/elements/amo2009/hub/navbar.thtml:87
+#: views/elements/amo2009/hub/directory_info.thtml:36
+#: views/dev_hub/builder.thtml:10 views/dev_hub/builder_success.thtml:5
+#: controllers/devhub_controller.php:571
+msgid "Add-on Builder"
+msgstr ""
+
+
+#: views/statistics/index.thtml:58
+msgid "Add-on Collections"
+msgstr "附加元件收藏集數"
+
+
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:60
+msgctxt "collections_index_header_collector"
+msgid "Add-on Collector"
+msgstr "Add-on Collector"
+
+
+#: controllers/pages_controller.php:122
+msgctxt "page_title_collector"
+msgid "Add-on Collector"
+msgstr "Add-on Collector"
+
+
+#: controllers/pages_controller.php:125
+msgid "Add-on Collector FAQ"
+msgstr "Add-on Collector 常見問題集"
+
+
+#: controllers/pages_controller.php:128
+msgid "Add-on Collector Features"
+msgstr "Add-on Collector 功能"
+
+
+#: views/pages/collector_faq.thtml:61 views/pages/collector_features.thtml:67
+msgid "Add-on Collector Home"
+msgstr "Add-on Collector 首頁"
+
+
+#: views/elements/amo2009/collections/collector_sidebar_download.thtml:45
+#: views/pages/collector_firstrun.thtml:116 views/pages/collector.thtml:69
+msgid "Add-on Collector Logo"
+msgstr "Add-on Collector Logo"
+
+
+#: views/users/edit.thtml:176
+msgid "Add-on Compatibility (strongly recommended)"
+msgstr "附加元件相容性 (強烈建議開啟)"
+
+
+#: views/compatibility/dashboard.thtml:49
+#: controllers/compatibility_controller.php:72
+msgid "Add-on Compatibility Center"
+msgstr "附加元件相容性中心"
+
+
+#: views/compatibility/dashboard.thtml:62
+#: views/compatibility/dashboard.thtml:100 views/compatibility/report.thtml:43
+msgctxt "compatibility_dashboard_report"
+msgid "Add-on Compatibility Report"
+msgstr "附加元件相容性報告"
+
+
+#: views/developers/addon_status.thtml:100
+msgid "Add-on Completion Criteria"
+msgstr "元件完成標準"
+
+
+#: views/developers/uploader.thtml:162
+msgid "Add-on Created!"
+msgstr "元件已建立！"
+
+
+#: views/developers/addon_edit_descriptions.thtml:90
+msgid "Add-on Description"
+msgstr "附加元件敘述"
+
+
+#: views/developers/addon_status.thtml:104
+msgid "Add-on Description required"
+msgstr "需要附加元件敘述"
+
+
+#: controllers/devhub_controller.php:22
+#: controllers/developers_controller.php:95
+msgid "Add-on Developer Hub"
+msgstr ""
+
+
+#: views/developers/uploader.thtml:132
+msgid "Add-on File: "
+msgstr "元件檔案："
+
+
+#: views/developers/addon_edit_properties.thtml:175
+msgid "Add-on Flags"
+msgstr "元件註記"
+
+
+#: views/developers/addon_edit_properties.thtml:183
+#: views/developers/addon_edit_properties.thtml:209
+msgid "Add-on GUID"
+msgstr "元件 GUID"
+
+
+#: views/developers/addon_edit_properties.thtml:140
+msgid "Add-on Homepage"
+msgstr "元件首頁"
+
+
+#: views/developers/addon_edit_properties.thtml:108
+msgid "Add-on Icon"
+msgstr "元件圖示"
+
+
+#: views/addons/display.thtml:143
+msgid "Add-on Information"
+msgstr "元件資訊"
+
+
+#: views/elements/amo2009/addons/list_options.thtml:45
+#: views/elements/addon_list_options.thtml:45
+msgctxt "list_sortby_name"
+msgid "Add-on Name"
+msgstr "元件名稱"
+
+
+#: views/developers/addon_edit_properties.thtml:82
+msgctxt "devcp_edit_properties_transbox_name_name"
+msgid "Add-on Name"
+msgstr "元件名稱"
+
+
+#: controllers/devhub_controller.php:717
+msgid "Add-on Name"
+msgstr ""
+
+
+#: views/developers/addon_status.thtml:102
+msgid "Add-on Name required"
+msgstr "需要元件名稱"
+
+
+#: views/developers/addon_status_nominate.thtml:58
+msgid "Add-on Nomination"
+msgstr "元件批准"
+
+
+#: views/elements/amo2009/hub/navbar.thtml:77
+#: views/dev_hub/policy_list.thtml:43 controllers/devhub_controller.php:405
+#: controllers/devhub_controller.php:426 controllers/devhub_controller.php:431
+msgid "Add-on Policies"
+msgstr ""
+
+
+#: views/editors/queue.thtml:194
+msgid "Add-on Policy"
+msgstr "附加元件政策"
+
+
+#: views/statistics/index.thtml:55
+msgid "Add-on Reviews"
+msgstr "附加元件意見篇數"
+
+
+#: controllers/components/stats.php:460
+msgctxt "statistics_longnames_status"
+msgid "Add-on Status"
+msgstr "元件狀態"
+
+
+#: controllers/statistics_controller.php:355
+msgctxt "statistics_js_plotselection_selector_status"
+msgid "Add-on Status"
+msgstr "元件狀態"
+
+
+#: views/compatibility/dashboard.thtml:133
+#: views/compatibility/developers.thtml:55
+msgid "Add-on Status Check Results"
+msgstr "附加元件狀態檢查結果"
+
+
+# %s is the (localized) add-on status string in a span, e.g. "Disabled"
+#: views/developers/dashboard.thtml:102
+#, php-format
+msgctxt "devcp_dashboard_disabled_status"
+msgid "Add-on Status: %s"
+msgstr "元件狀態： %s"
+
+
+# %s is the status in a span, e.g. "<span>_('Public')</span>".
+#: views/developers/addon_status.thtml:61
+#, php-format
+msgctxt "devcp_addon_status_header"
+msgid "Add-on Status: %s"
+msgstr "元件狀態： %s"
+
+
+#: controllers/components/hub.php:295
+msgid "Add-on Submission"
+msgstr ""
+
+
+#: views/developers/addon_edit_descriptions.thtml:81
+msgid "Add-on Summary"
+msgstr "附加元件摘要"
+
+
+#: views/developers/addon_status.thtml:103
+msgid "Add-on Summary required"
+msgstr "需要附加元件摘要"
+
+
+#: views/developers/addon_edit_properties.thtml:198
+msgid "Add-on Type"
+msgstr "附加元件種類"
+
+
+#: views/editors/queue.thtml:72
+msgid "Add-on Types"
+msgstr "附加元件種類"
+
+
+#: views/elements/amo2009/hub/navbar.thtml:88
+#: views/elements/amo2009/hub/directory_info.thtml:42
+#: views/developers/validator.thtml:49
+msgid "Add-on Validator"
+msgstr ""
+
+
+#: controllers/devhub_controller.php:721
+msgid "Add-on Version"
+msgstr ""
+
+
+#: controllers/components/stats.php:458
+msgctxt "statistics_longnames_version"
+msgid "Add-on Version"
+msgstr "元件版本"
+
+
+#: controllers/statistics_controller.php:353
+msgctxt "statistics_js_plotselection_selector_version"
+msgid "Add-on Version"
+msgstr "元件版本"
+
+
+#: controllers/collections_controller.php:1212
+msgid "Add-on already exists!"
+msgstr "附加元件已經存在！"
+
+
+#: controllers/api_controller.php:399
+msgid "Add-on feed not found."
+msgstr "沒有找到附加元件的消息來源。"
+
+
+#: views/developers/addon_status.thtml:123
+msgid "Add-on is not marked as pre-release."
+msgstr "元件不得被標示為發行前版本（Pre-release）。"
+
+
+#: views/collections/add.thtml:94 views/collections/edit.thtml:249
+msgid "Add-on name:"
+msgstr "元件名稱："
+
+
+#: controllers/devhub_controller.php:127
+#: controllers/developers_controller.php:221
+#: controllers/developers_controller.php:739
+#: controllers/developers_controller.php:1339
+#: controllers/developers_controller.php:2010
+#: controllers/downloads_controller.php:95
+#: controllers/downloads_controller.php:102
+#: controllers/downloads_controller.php:164
+#: controllers/statistics_controller.php:197
+#: controllers/previews_controller.php:115
+#: controllers/previews_controller.php:206
+#: controllers/previews_controller.php:307
+#: controllers/reviews_controller.php:78
+#: controllers/reviews_controller.php:255
+#: controllers/reviews_controller.php:366
+#: controllers/reviews_controller.php:374 controllers/api_controller.php:125
+#: controllers/api_controller.php:734 controllers/addons_controller.php:84
+#: controllers/addons_controller.php:208 controllers/addons_controller.php:277
+#: controllers/addons_controller.php:1493
+#: controllers/addons_controller.php:1559
+#: controllers/editors_controller.php:288
+#: controllers/collections_controller.php:1215
+#: controllers/collections_controller.php:1258
+msgid "Add-on not found!"
+msgstr "找不到附加元件！"
+
+
+#: views/editors/queue.thtml:51
+msgid "Add-on or Author Email"
+msgstr "附加元件或作者 Email"
+
+
+#: views/statistics/index.thtml:130
+msgctxt "addons_statistics_header"
+msgid "Add-on statistics"
+msgstr ""
+
+
+#: views/statistics/addon.thtml:41
+msgid ""
+"Add-on statistics are currently in the process of being updated. Recent data "
+"may be incomplete as our scripts work to update this information. Please "
+"check back in a few minutes."
+msgstr ""
+"附加元件統計資訊正在更新中，因程式碼正在更新相關資訊的緣故，最近的資料可能會"
+"不完整。請過幾分鐘後再回來檢查。"
+
+
+#: controllers/components/hub.php:307
+msgid ""
+"Add-on updates, transferring ownership, user reviews, and what to expect "
+"once your add-on is approved."
+msgstr ""
+
+
+#: views/elements/header.thtml:65 views/elements/header.thtml:102
+msgctxt "header_main_header"
+msgid "Add-ons"
+msgstr "附加元件"
+
+
+#: views/collections/edit.thtml:111
+msgctxt "collections_edit_tabheader_addons"
+msgid "Add-ons"
+msgstr "附加元件"
+
+
+# %1$s is the URL to the logo image
+#: views/elements/headers/page_header_full.thtml:49
+#, php-format
+msgid ""
+"Add-ons <em>for</em> <img alt=\"Firefox\" src=\"%1$s\" /> <strong>Firefox</"
+"strong>"
+msgstr "<img alt=\"Firefox\" src=\"%1$s\" /> <strong>Firefox</strong> 附加元件"
+
+
+# %1$s is the URL to the logo image
+#: views/elements/headers/page_header_full.thtml:55
+#, php-format
+msgid ""
+"Add-ons <em>for</em> <img alt=\"seamonkey\" src=\"%1$s\" /> "
+"<strong>SeaMonkey</strong>"
+msgstr ""
+"<img alt=\"seamonkey\" src=\"%1$s\" /> <strong>SeaMonkey</strong> 附加元件"
+
+
+# %1$s is the URL to the logo image
+#: views/elements/headers/page_header_full.thtml:61
+#, php-format
+msgid ""
+"Add-ons <em>for</em> <img alt=\"sunbird\" src=\"%1$s\" /> <strong>Sunbird</"
+"strong>"
+msgstr "<img alt=\"sunbird\" src=\"%1$s\" /> <strong>Sunbird</strong> 附加元件"
+
+
+# %1$s is the URL to the logo image
+#: views/elements/headers/page_header_full.thtml:67
+#, php-format
+msgid ""
+"Add-ons <em>for</em> <img alt=\"thunderbird\" src=\"%1$s\" /> "
+"<strong>Thunderbird</strong>"
+msgstr ""
+"<img alt=\"thunderbird\" src=\"%1$s\" /> <strong>Thunderbird</strong> 附加元"
+"件"
+
+
+# %1$s is the URL to the logo image
+#: views/elements/headers/page_header_full.thtml:79
+#, php-format
+msgid "Add-ons <img alt=\"Add-ons\" src=\"%1$s\" />"
+msgstr "附加元件 <img alt=\"附加元件\" src=\"%1$s\" />"
+
+
+#: views/elements/amo2009/hub/navbar.thtml:96
+msgid "Add-ons Blog"
+msgstr ""
+
+
+#: views/statistics/index.thtml:93 controllers/statistics_controller.php:129
+msgid "Add-ons Created"
+msgstr "元件建立數"
+
+
+# The title for a user if they are a developer
+#: views/users/info.thtml:66
+msgid "Add-ons Developer"
+msgstr "附加元件開發者"
+
+
+#: views/statistics/index.thtml:46 views/statistics/index.thtml:91
+#: controllers/statistics_controller.php:127
+msgctxt "statistics_addons_downloaded"
+msgid "Add-ons Downloaded"
+msgstr "元件下載數"
+
+
+#: views/statistics/collections.thtml:108
+msgid "Add-ons Downloaded from this Collection"
+msgstr "透過此收藏集被下載的附加元件"
+
+
+#: views/elements/amo2009/hub/navbar.thtml:97
+msgid "Add-ons Forum"
+msgstr ""
+
+
+#: views/statistics/index.thtml:49 views/statistics/index.thtml:92
+#: controllers/statistics_controller.php:128
+msgid "Add-ons In Use"
+msgstr "元件使用數"
+
+
+#: views/statistics/index.thtml:94 controllers/statistics_controller.php:130
+msgid "Add-ons Updated"
+msgstr "元件更新數"
+
+
+#: controllers/components/hub.php:190
+msgid ""
+"Add-ons aren't just for Firefox. Learn how to extend other Mozilla "
+"applications, such as the Thunderbird mail client and Firefox for mobile "
+"devices."
+msgstr ""
+
+
+#: controllers/addons_controller.php:1122
+msgid "Add-ons by Name"
+msgstr "依名稱排序"
+
+
+#: controllers/addons_controller.php:1121
+msgid "Add-ons by Rating"
+msgstr "依評分排序"
+
+
+#. L10n: %1$s is an application name (example: Firefox), %2$s is a version number
+#: controllers/components/hub.php:763
+#, php-format
+msgid "Add-ons can now be compatible with %1$s %2$s."
+msgstr ""
+
+
+#: controllers/components/validation.php:299
+msgid ""
+"Add-ons cannot use an external updateURL. Please remove this from install."
+"rdf and try again."
+msgstr ""
+"附加元件不能使用外部的 updateURL，請將其從 install.rdf 中移除後再試一次。"
+
+
+#: controllers/components/validation.php:304
+msgid ""
+"Add-ons cannot use an updateKey. Please remove this from install.rdf and try "
+"again."
+msgstr "附加元件不能使用 updateKey，請將其從 install.rdf 中移除後再試一次。"
+
+
+# %1$s is an application name and version.  Example: Firefox 3.1
+#: views/compatibility/dashboard.thtml:85
+#, php-format
+msgid "Add-ons compatible with a beta version or release candidate of %1$s"
+msgstr "與 %1$s 的測試版或是 RC 版相容的附加元件"
+
+
+# %1$s is an application name and version.  Example: Firefox 3.1
+#: views/compatibility/dashboard.thtml:81
+#, php-format
+msgid "Add-ons compatible with an alpha version of %1$s"
+msgstr "和 %1$s 的 Alpha 版本相容的附加元件"
+
+
+#: views/elements/amo2009/hub/promo_anon.thtml:45
+msgid ""
+"Add-ons empower millions of Firefox users to personalize their browser's "
+"form and function. Why not show off your smarts by creating an add-on the "
+"whole world can use? Tools and tutorials you find here make it simple. So "
+"take a look and put your ingenuity in motion."
+msgstr ""
+
+
+#: controllers/tags_controller.php:394 controllers/search_controller.php:276
+#: controllers/addons_controller.php:253 controllers/addons_controller.php:480
+#: controllers/addons_controller.php:777 controllers/addons_controller.php:981
+#: controllers/addons_controller.php:1207
+#: controllers/addons_controller.php:1350
+#: controllers/addons_controller.php:1399
+#, php-format
+msgid ""
+"Add-ons extend %1$s, letting you personalize your browsing experience.  Take "
+"a look around and make %1$s your own."
+msgstr ""
+"附加元件能擴充 %1$s 功能，打造您獨樹一格的瀏覽體驗。在這網站四處看看，來親手"
+"打造您專屬的 %1$s 吧！"
+
+
+# %1$s is the application the user is browsing.  Examples:  Thunderbird, Firefox,
+# Sunbird
+#: views/users/info.thtml:50 views/pages/collector_faq.thtml:49
+#: views/pages/collector_firstrun.thtml:42 views/pages/collector.thtml:46
+#: views/pages/collector_features.thtml:54
+#: views/dev_hub/api_reference.thtml:44 controllers/devhub_controller.php:22
+#: controllers/devhub_controller.php:170 controllers/devhub_controller.php:173
+#: controllers/devhub_controller.php:320 controllers/devhub_controller.php:322
+#: controllers/devhub_controller.php:337 controllers/devhub_controller.php:340
+#: controllers/devhub_controller.php:405 controllers/devhub_controller.php:407
+#: controllers/devhub_controller.php:427 controllers/devhub_controller.php:429
+#: controllers/devhub_controller.php:450 controllers/devhub_controller.php:452
+#: controllers/devhub_controller.php:475 controllers/devhub_controller.php:477
+#: controllers/devhub_controller.php:493 controllers/devhub_controller.php:496
+#: controllers/devhub_controller.php:504 controllers/devhub_controller.php:506
+#: controllers/devhub_controller.php:562 controllers/devhub_controller.php:564
+#: controllers/devhub_controller.php:572 controllers/devhub_controller.php:575
+#: controllers/developers_controller.php:95
+#: controllers/tags_controller.php:403
+#: controllers/compatibility_controller.php:72
+#: controllers/components/simple_acl.php:81 controllers/components/amo.php:703
+#: controllers/versions_controller.php:70
+#: controllers/statistics_controller.php:67
+#: controllers/statistics_controller.php:337
+#: controllers/statistics_controller.php:517
+#: controllers/previews_controller.php:67 controllers/users_controller.php:96
+#: controllers/users_controller.php:229 controllers/users_controller.php:336
+#: controllers/users_controller.php:422 controllers/users_controller.php:788
+#: controllers/users_controller.php:791 controllers/users_controller.php:804
+#: controllers/reviews_controller.php:219
+#: controllers/reviews_controller.php:280
+#: controllers/reviews_controller.php:380
+#: controllers/reviews_controller.php:459
+#: controllers/search_controller.php:240 controllers/search_controller.php:339
+#: controllers/search_controller.php:343 controllers/addons_controller.php:172
+#: controllers/addons_controller.php:224 controllers/addons_controller.php:353
+#: controllers/addons_controller.php:444 controllers/addons_controller.php:455
+#: controllers/addons_controller.php:773 controllers/addons_controller.php:984
+#: controllers/addons_controller.php:1129
+#: controllers/addons_controller.php:1144
+#: controllers/addons_controller.php:1205
+#: controllers/addons_controller.php:1225
+#: controllers/addons_controller.php:1348
+#: controllers/addons_controller.php:1461
+#: controllers/addons_controller.php:1468
+#: controllers/addons_controller.php:1538
+#: controllers/addons_controller.php:1603
+#: controllers/addons_controller.php:1608
+#: controllers/editors_controller.php:64 controllers/pages_controller.php:147
+#: controllers/groups_controller.php:65 controllers/groups_controller.php:71
+#: controllers/groups_controller.php:89 controllers/groups_controller.php:111
+#: controllers/collections_controller.php:57
+#: controllers/collections_controller.php:107
+#: controllers/collections_controller.php:196
+#: controllers/collections_controller.php:215
+#: controllers/collections_controller.php:368
+#: controllers/collections_controller.php:456
+#: controllers/collections_controller.php:497
+#: controllers/collections_controller.php:617
+#: controllers/collections_controller.php:689
+#: controllers/collections_controller.php:995
+#: controllers/localizers_controller.php:73
+#, php-format
+msgid "Add-ons for %1$s"
+msgstr "%1$s 附加元件"
+
+
+#: views/elements/header.thtml:90
+msgid "Add-ons for Firefox"
+msgstr "Firefox 附加元件"
+
+
+# %1$s is an application name and version.  Example: Firefox 3.1
+#: views/compatibility/dashboard.thtml:77
+#, php-format
+msgid "Add-ons not compatible with any version of %1$s"
+msgstr "與任何版本的 %1$s 皆不相容的附加元件"
+
+
+#: views/pages/appversions.thtml:80
+msgid ""
+"Add-ons submitted to Mozilla Add-ons must have an install.rdf file with at "
+"least one of the below applications supported. Only the versions listed "
+"below are allowed for these applications."
+msgstr ""
+"上傳到 Mozilla 附加元件的元件必須含有 install.rdf 檔案，並至少支援下面其中之"
+"一的應用程式。只有下面列出的應用程式版本允許上傳。"
+
+
+# %1$s is an application name and version.  Example: Firefox 3.1
+#: views/compatibility/dashboard.thtml:89
+#, php-format
+msgid "Add-ons up-to-date with the latest builds of %1$s"
+msgstr "已經更新到與 %1$s 最新版相容的附加元件"
+
+
+# %s is href=... and should stay in the <a> tag.
+#: views/developers/versions_edit.thtml:126
+#, php-format
+msgid ""
 "Adjusting application information here will allow users to install your add-"
 "on even if the install.rdf in the package indicates that the add-on is "
 "incompatible. <a %s>List of supported applications</a>"
-
-#: views/developers/versions_edit.thtml:185
-#, fuzzy
-msgid "devcp_versions_edit_transbox_releasenotes_description"
 msgstr ""
-"Information about changes in this release, new features, known bugs, and "
-"other useful information specific to this release/version. This information "
-"will also be available to users updating the add-on in the Firefox 3 Add-ons "
-"Manager interface."
+"調整這裡的應用程式資訊會允許使用者安裝您的元件，即使檔案中的 install.rdf 指出"
+"元件是不相容的。 <a %s>支援的應用程式列表</a>"
 
-#: controllers/downloads_controller.php:91
-msgid "downloads_disable_warning"
-msgstr "此附加元件已停用"
 
-#: views/editors/reviewlog.thtml:56 views/editors/performance_table.thtml:69
-msgid "editorcp_reviewlog_column_addon"
-msgstr "附加元件"
+#: views/elements/amo2009/hub/promo_developer.thtml:46
+#: views/dev_hub/feed.thtml:112
+msgid "All Add-ons"
+msgstr ""
 
-#: controllers/components/editors.php:57
-#, fuzzy
-msgid "editor_review_error_addon_not_nominated"
-msgstr "This add-on has not been nominated."
 
-#: controllers/components/editors.php:152
-#, fuzzy
-msgid "editor_review_nomination_subject"
-msgstr "Sugar Labs Activities: %s Nomination"
+#: views/developers/uploader.thtml:195
+msgid ""
+"All tests passed.  Your add-on is now complete, click Continue to customize "
+"details."
+msgstr "已通過所有測試。您的附加元件已經完成，請按「繼續」來自訂細節。"
 
-#: controllers/components/editors.php:297
-#, fuzzy
-msgid "editor_review_superreview_subject"
-msgstr "Sugar Labs Activities: %s %s"
 
-#: controllers/editors_controller.php:254
-#: controllers/editors_controller.php:255
-msgid "editors_addon_review_pagetitle"
-msgstr "審核附加元件"
+#: views/developers/addon_edit_descriptions.thtml:100
+msgid ""
+"Any information end users may want to know that isn't necessarily applicable "
+"to the add-on summary or description. Common uses include listing known "
+"major bugs, information on how to report bugs, anticipated release date of a "
+"new version, etc."
+msgstr ""
+"任何並不適合在元件摘要或敘述中提及，但可能使用者會想知道的資訊。一般而言會包"
+"含已知的主要臭蟲清單、關於如何回報臭蟲的資訊、新版本預定釋出的日期等等。"
 
-#: controllers/editors_controller.php:1340
-#: controllers/editors_controller.php:1342
-msgid "editors_featured_addons_pagetitle"
+
+#: views/statistics/settings.thtml:53
+msgid "Anyone can view this add-on's statistics"
+msgstr "任何人都可以看到統計資訊"
+
+
+#: views/developers/addon_status_confirm.thtml:70
+msgid "Are you sure you wish to make this add-on public?"
+msgstr "您確定要「公開」這個元件嗎？"
+
+
+#: views/developers/addon_status_confirm.thtml:62
+msgid "Are you sure you wish to mark this add-on active?"
+msgstr "您確定要將這個元件設為「活動中」嗎？"
+
+
+#: views/developers/addon_status_confirm.thtml:58
+msgid "Are you sure you wish to mark this add-on inactive?"
+msgstr "您確定要將這個元件設為「非活動中」嗎？"
+
+
+#: views/developers/addon_status_confirm.thtml:66
+msgid "Are you sure you wish to move this add-on to the sandbox?"
+msgstr "您確定要將這個元件移至「沙箱」區嗎？"
+
+
+# %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:145
+#, php-format
+msgid ""
+"Ask after users start downloading this add-on (<a href=\"%1$s\">example</a>)"
+msgstr "在開始下載元件時詢問使用者（<a href=\"%1$s\">範例</a>）"
+
+
+# %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:146
+#, php-format
+msgid ""
+"Ask before users can download this add-on (<a href=\"%1$s\">example</a>)"
+msgstr "先詢問，再讓使用者下載元件（<a href=\"%1$s\">範例</a>）"
+
+
+#: views/elements/amo2009/hub/directory_info.thtml:37
+msgid ""
+"Auto-generate add-on packaging by entering basic info and picking <abbr "
+"title=\"User Interface\">UI</abbr> parts. Get working without setup."
+msgstr ""
+
+
+#: views/elements/amo2009/users/vcard.thtml:108
+msgid "Average rating for their Add-ons"
+msgstr "所製附加元件的平均評分"
+
+
+#: views/elements/headers/page_header_devhub.thtml:57
+msgctxt "devhub"
+msgid "Back to Add-ons"
+msgstr ""
+
+
+# This appears on a page that views the source of an add-on.  This link will return
+# the user to the add-on's main page
+#: views/files/browse.thtml:65
+msgid "Back to add-on"
+msgstr "回到附加元件"
+
+
+# %1$s is the name of an application and a version.  Example: Firefox 3.0
+# %2$s is the name of an application.  Example: Firefox
+#: views/compatibility/dashboard.thtml:50
+#, php-format
+msgid ""
+"Be prepared for the release of %1$s with the tools and information available "
+"for the %2$s Add-ons community found below."
+msgstr ""
+"使用以下提供給 %2$s 附加元件開發社群的工具與資訊，預先準備版本 %1$s 的推出。"
+
+
+#: views/addons/developers.thtml:29
+msgid ""
+"Before downloading this add-on, please consider supporting the development "
+"of this add-on by making a small contribution."
+msgstr "在下載這個附加元件以前，請考慮透過小小的捐獻來協助這個元件的開發。"
+
+
+#: controllers/devhub_controller.php:720
+msgid ""
+"Briefly describe your add-on in one sentence. This appears in the Add-ons "
+"Manager."
+msgstr ""
+
+
+#: views/collections/add.thtml:74 views/collections/edit.thtml:141
+msgid "Briefly describe your collection and the kind of add-ons in it"
+msgstr "簡短描述您的收藏集，以及它收藏哪種類型的元件"
+
+
+# %1 is the name of the theme category (eg. Modern)
+# %2 is the name of the Application (eg. Firefox)
+#: controllers/addons_controller.php:769
+#, php-format
+msgid "Browse %1$s Themes :: %2$s Add-ons"
+msgstr "瀏覽%1$s佈景主題 :: %2$s 附加元件"
+
+
+#: views/addons/home.thtml:89
+msgid "Browse Add-ons"
+msgstr "瀏覽附加元件"
+
+
+#: views/addons/home.thtml:87
+msgid "Browse Mobile Add-ons"
+msgstr ""
+
+
+# %1 is the name of the Application (eg. Firefox)
+#: controllers/addons_controller.php:767
+#: controllers/addons_controller.php:1397
+#, php-format
+msgid "Browse all Themes :: %1$s Add-ons"
+msgstr "瀏覽所有佈景主題 :: %1$s 附加元件"
+
+
+#: controllers/components/hub.php:112
+msgctxt "devhub-external-english"
+msgid "Build Your Own Firefox Extension E-book"
+msgstr ""
+
+
+#: views/addons/home.thtml:68
+#, php-format
+msgid "Build a %1$s Add-on"
+msgstr ""
+
+
+#: views/statistics/settings.thtml:49
+msgid ""
+"By default, only you and Mozilla can access the information in your "
+"dashboard. You can open this up to the public so that anyone can view your "
+"add-on's data."
+msgstr ""
+"在預設情況下，只有您自己及 Mozilla 能看到您元件的統計資訊。但您可以公開統計資"
+"訊，讓所有人看到您的元件統計資訊。"
+
+
+#: views/developers/addon_edit.thtml:58
+msgid "Change your add-on's name, homepage, icon, and other flags."
+msgstr "變更您元件的名稱、首頁、圖示與其他註記。"
+
+
+#: views/compatibility/dashboard.thtml:124
+msgid "Check Status of My Add-ons"
+msgstr "檢查我的附加元件的狀態"
+
+
+#: views/developers/validator.thtml:65
+msgid "Check my hosted add-on: "
+msgstr ""
+
+
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:70
+msgid "Check out Add-on Collector"
+msgstr "試試 Add-on Collector"
+
+
+#: views/elements/amo2009/hub/directory_info.thtml:43
+msgid ""
+"Check your add-on for common problems and errors. Open to anyone, not just "
+"add-ons hosted here."
+msgstr ""
+
+
+#: views/collections/add.thtml:91
+msgid "Choose your first add-ons"
+msgstr "選擇您的第一個元件"
+
+
+#: views/addons/home.thtml:132
+msgid ""
+"Collections are a way for you to categorize, mix, match and mingle add-ons.  "
+"Subscribe to collections created by other users or create your own."
+msgstr ""
+"收藏集是讓您分類、組合、配對與攪和附加元件的方式。您可以訂閱其他使用者建立的"
+"收藏集，或自己建立一個。"
+
+
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:48
+msgid "Collections are groups of related add-ons assembled for easy sharing."
+msgstr "收藏集是將相關的附加元件集結起來，以方便分享的群集。"
+
+
+#: views/developers/addon_status.thtml:138
+msgid "Complete Add-on"
+msgstr "完成元件"
+
+
+#: views/developers/addon_status.thtml:139
+msgid "Complete your add-on and move to the Sandbox"
+msgstr "完成您的元件並移到「沙箱」區"
+
+
+#: views/elements/developers/validation.thtml:63
+msgid "Completing your add-on..."
+msgstr "完成您的元件…"
+
+
+#: views/statistics/settings.thtml:50
+msgid ""
+"Contribution information is only viewable by you and Mozilla even if your "
+"dashboard is public."
+msgstr ""
+
+
+#: views/dev_hub/builder.thtml:68
+msgid "Create My Add-on"
+msgstr ""
+
+
+#: views/developers/addon_edit.thtml:64
+msgid ""
+"Create or update a profile of yourself and your work in making this add-on."
+msgstr "建立或更新關於您個人與您如何製作此元件的檔案。"
+
+
+#: controllers/components/hub.php:176
+msgid "Creating Custom Firefox Extensions with the Mozilla Build System"
+msgstr ""
+
+
+#: controllers/components/hub.php:280
+msgid "Creating OpenSearch Plug-ins for Firefox"
+msgstr ""
+
+
+#: controllers/components/hub.php:234
+msgid "Creating a Skin for Firefox"
+msgstr ""
+
+
+#: views/collections/edit.thtml:253 views/collections/edit.thtml:258
+msgid "Current Add-ons:"
+msgstr "目前的附加元件："
+
+
+# %1$s is an addon id, like 32.
+# %2$s is a version number, like 3.5.
+#: controllers/components/developers.php:1122
+#, php-format
+msgid "Custom license for add-on %1$s v%2$s"
+msgstr "附加元件 %1$s 版本 %2$s 使用的自訂授權條款"
+
+
+#: views/dev_hub/builder.thtml:15
+msgid "Describe your add-on"
+msgstr ""
+
+
+#: controllers/components/hub.php:209
+msgid "Developing Add-ons for Mobile"
+msgstr ""
+
+
+#: controllers/components/hub.php:191
+msgid "Developing Add-ons for Thunderbird"
+msgstr ""
+
+
+#: views/elements/amo2009/hub/navbar.thtml:89
+msgid "Development Add-ons"
+msgstr ""
+
+
+#: views/elements/amo2009/hub/directory_info.thtml:32
+msgid ""
+"Discuss development, ideas, and make key connection in the world of add-ons."
+msgstr ""
+
+
+#: views/elements/amo2009/collections/collector_sidebar_download.thtml:49
+msgid "Download the Add-on Collector:"
+msgstr "下載 Add-on Collector："
+
+
+#: views/dev_hub/case_studies_detail.thtml:57
+msgid "Downloads from Mozilla Add-ons"
+msgstr ""
+
+
+#: views/statistics/collections.thtml:130
+msgid "Downloads relative to most downloaded add-on in collection"
+msgstr "與收藏集中被下載最多次元件相比的下載數量"
+
+
+#: controllers/devhub_controller.php:724
+msgid ""
+"Each add-on requires a unique ID in the form of a UUID or an email address, "
+"such as addon-name@developer.com. The email address does not have to be "
+"valid."
+msgstr ""
+
+
+#: views/elements/amo2009/hub/promo_feed.thtml:103
+msgid "Edit Add-on"
+msgstr ""
+
+
+#: views/elements/developers/actionbar.thtml:42
+#: views/elements/developers/actionbar.thtml:50
+#: views/developers/dashboard.thtml:65
+msgctxt "devcp_actionbar_link_edit"
+msgid "Edit Add-on"
+msgstr "編輯附加元件"
+
+
+#: views/elements/developers/editbox.thtml:44
+msgctxt "devcp_editbox_edit_addon"
+msgid "Edit Add-on"
+msgstr "編輯附加元件"
+
+
+#: views/developers/addon_edit_descriptions.thtml:54
+msgid "Edit Add-on Descriptions"
+msgstr "編輯元件敘述"
+
+
+#: views/developers/addon_edit_properties.thtml:56
+msgid "Edit Add-on Properties"
+msgstr "編輯元件屬性"
+
+
+#: views/developers/uploader.thtml:165
+msgid "Edit My Add-on"
+msgstr "編輯我的元件"
+
+
+#: controllers/developers_controller.php:632
+msgid ""
+"Either the XML is invalid or required fields are missing.  Please <a href="
+"\"https://developer.mozilla.org/en/Creating_OpenSearch_plugins_for_Firefox"
+"\">read the documentation</a>, verify your add-on, and try again."
+msgstr ""
+
+
+#: views/collections/edit.thtml:215 views/collections/edit.thtml:237
+msgid ""
+"Enter a comma-separated list of e-mail addresses of Firefox Add-ons accounts"
+msgstr "輸入 Firefox 附加元件網站帳號的 Email 地址，以逗號分隔各個項目"
+
+
+#: views/collections/edit.thtml:210 views/collections/edit.thtml:232
+msgid "Enter the e-mail address of a Firefox Add-ons account:"
+msgstr "輸入 Firefox 附加元件網站帳號的 Email 地址："
+
+
+#: controllers/devhub_controller.php:729
+msgid ""
+"Enter the name of the person or entity to be listed as the author of this "
+"add-on."
+msgstr ""
+
+
+#: controllers/collections_controller.php:1249
+msgid "Error deleting add-on!"
+msgstr "元件刪除失敗！"
+
+
+#: controllers/collections_controller.php:1230
+msgid "Error saving add-on!"
+msgstr "元件儲存失敗！"
+
+
+#: controllers/components/hub.php:96
+msgctxt "devhub-external-english"
+msgid "Extend Firefox!"
+msgstr ""
+
+
+#: controllers/pages_controller.php:101
+msgid "Fashion your Firefox FAQ"
+msgstr "Fashion your Firefox FAQ"
+
+
+#: views/elements/pitch.thtml:72
+msgctxt "sidebar_pitch_featured_addons"
+msgid "Featured Add-ons"
+msgstr "推薦元件"
+
+
+#: views/elements/developers/editorsmenu.thtml:59
+msgctxt "devcp_editorsqueue_featured"
+msgid "Featured Add-ons"
+msgstr "精選元件"
+
+
+#: controllers/addons_controller.php:487
+msgctxt "rss_featuredaddons"
+msgid "Featured Add-ons"
+msgstr "推薦附加元件"
+
+
+#: controllers/editors_controller.php:1683
+#: controllers/editors_controller.php:1685
+msgctxt "editors_featured_addons_pagetitle"
+msgid "Featured Add-ons"
 msgstr "精選附加元件"
 
-#: views/editors/queue.thtml:182
-msgid "editors_link_policy"
-msgstr "附加元件政策"
 
-# %1 is the queue mode
-#. %1 is the queue mode
-#: views/editors/queue.thtml:177 views/admin/flagged_queue.thtml:89
-msgid "editors_notice_none_found"
-msgstr "目前沒有 %s 附加元件待審核。"
+#: views/elements/app_chooser.thtml:46
+#: views/elements/headers/page_header_full.thtml:91
+msgid "Find add-ons for other applications"
+msgstr "尋找其他應用程式使用的附加元件"
 
-#: views/editors/review.thtml:174
-msgid "editors_review_details_nominated_public"
+
+#: views/addons/home.thtml:69
+msgid "Find all the tools and resources you need to make your first add-on."
 msgstr ""
-"這個選項會讓附加元件最新版本和其檔案放上「公開」區，但後續更新版本還是會先送"
-"到「沙箱」區等待審核者批准。"
 
-#: views/editors/review.thtml:177
-msgid "editors_review_details_nominated_sandbox"
-msgstr "這個選項會將附加元件留在「沙箱」區。"
 
-#: views/editors/review.thtml:166
-msgid "editors_review_details_pending_public"
-msgstr "這個選項會附加元件在「沙箱」區的待審核版本放上「公開」區。"
+#: controllers/components/hub.php:262
+msgid ""
+"Find information on Search Plug-ins, Jetpack, Personas, and other types of "
+"add-ons here."
+msgstr ""
 
-#: views/editors/review.thtml:169
-msgid "editors_review_details_pending_sandbox"
-msgstr "這個選項會讓附加元件在「沙箱」區的待審核版本留在「沙箱」區。"
 
-#: views/editors/review.thtml:185
-msgid "editors_review_details_superreview"
+#: controllers/components/hub.php:296
+msgid ""
+"Find out what is expected of add-ons we host and our policies on specific "
+"add-on practices."
+msgstr ""
+
+
+#: config/bootstrap.php:261
+msgid "Firefox"
+msgstr "Firefox"
+
+
+#: controllers/components/hub.php:58
+msgid "Firefox Add-ons Developer Guide"
+msgstr ""
+
+
+#: controllers/components/hub.php:94
+msgctxt "devhub-external-english"
+msgid "Firefox Extension Development Tutorial"
+msgstr ""
+
+
+#: views/dev_hub/builder.thtml:16
+msgid ""
+"First, we'll need some basic information about your add-on. This will be "
+"displayed in the Add-ons Manager when your extension is installed."
+msgstr ""
+
+
+# %s is a URL
+#: views/pages/credits.thtml:142
+#, php-format
+msgid "For information on contributing, please see our %s."
+msgstr "想瞭解他們的貢獻，您可以參考 Mozilla 上的 %s。"
+
+
+#: views/users/edit.thtml:174
+msgid ""
+"From time to time, Mozilla may send you email about upcoming releases and "
+"add-on events. Please select the topics you are interested in below:"
+msgstr ""
+"Mozilla 將不時寄送 E-mail 向您通知最新活動與新版本發行。請在下面選擇您有興趣"
+"的主題："
+
+
+#: views/elements/amo2009/hub/directory_info.thtml:8
+msgid ""
+"Get add-on development guidance in a top-notch collection of tutorials, "
+"articles, and more."
+msgstr ""
+
+
+#: views/dev_hub/builder.thtml:57
+msgid ""
+"Get started quickly by selecting user interface components to include in "
+"your add-on package. We'll include documented code for each item you select "
+"so your extension will work out of the box."
+msgstr ""
+
+
+#: controllers/devhub_controller.php:718
+msgid ""
+"Give your add-on a name. The most successful add-ons give some indication of "
+"their function in their name."
+msgstr ""
+
+
+#: views/collections/add.thtml:67 views/collections/edit.thtml:127
+msgid ""
+"Give your collection a descriptive name, such as \"Dave's Favorite Travel "
+"Add-ons\""
+msgstr "請替您的收藏集取一個敘述性的名稱，例如「小明最愛的旅行相關元件」。"
+
+
+#: controllers/statistics_controller.php:363
+msgid "Hide Firefox Events"
+msgstr "隱藏 Firefox 事件"
+
+
+#: controllers/components/hub.php:90
+msgctxt "devhub-external-english"
+msgid "How to Build a Firefox Extension"
+msgstr ""
+
+
+#: controllers/components/hub.php:238
+msgctxt "devhub-external-english"
+msgid "How to Create a Firefox Theme"
+msgstr ""
+
+
+#: controllers/components/hub.php:86
+msgctxt "devhub-external-english"
+msgid "How to Develop a Firefox Extension"
+msgstr ""
+
+
+#: controllers/components/hub.php:321
+msgid "How to get in touch with us regarding these policies or your add-on."
+msgstr ""
+
+
+#: controllers/components/hub.php:312
+msgid ""
+"How up-and-coming add-ons become recommended and what's involved in the "
+"process."
+msgstr ""
+
+
+#: views/developers/uploader.thtml:166
+msgid "I'll complete my add-on later."
+msgstr "我會稍後完成我的元件。"
+
+
+#: views/elements/translationbox.thtml:146
+msgid ""
+"If a user browses the site and a translation isn't available in their own "
+"language, it will fall back to your add-on's Default Locale, specified in "
+"the Edit Add-on Properties area. If you don't have any translations, just "
+"enter what you can into your Default Locale, which should be a language you "
+"speak."
+msgstr ""
+"如果使用者瀏覽網站時沒有可用的翻譯，就會變回您在「編輯元件屬性」區指定的預設"
+"語言。如果您沒有任何翻譯，就輸入您會的預設語言即可，它應該是您平時說的語言。"
+
+
+# %1$s is the text on the "create collection" button
+#: views/collections/add.thtml:92
+#, php-format
+msgid ""
+"If you already know which add-ons you want to add to your collection, just "
+"start typing their names below. If you'd rather wait and do this later, just "
+"click %1$s now."
+msgstr ""
+"如果您已經有一些想加入收藏集的元件，請在下面輸入它們的名稱。如果您想稍後進"
+"行，現在請按 %1$s。"
+
+
+#: controllers/components/hub.php:187
+msgid ""
+"If you can't find what you're looking for in the above articles, try the "
+"Mozilla Developer Center's Extensions landing page."
+msgstr ""
+
+
+#: controllers/components/hub.php:207
+msgid ""
+"If you can't find what you're looking for in the above articles, try the "
+"Mozilla Developer Center's Thunderbird extensions landing page."
+msgstr ""
+
+
+# %1$s is a URL
+# %2$s is an application and version.  Example:  Firefox 3.0
+#: views/compatibility/dashboard.thtml:126
+#, php-format
+msgid ""
+"If you have add-ons hosted on Mozilla Add-ons, <a href=\"%1$s\">please log "
+"in</a> to analyze the status of your add-ons for %2$s."
+msgstr ""
+"如果您有放在 Mozilla 附加元件網站上的元件，<a href=\"%1$s\">請登入</a>以分析"
+"元件在 %2$s 上的狀態。"
+
+
+#: views/editors/review.thtml:205
+msgid ""
+"If you have concerns about this add-on's security, copyright issues, or "
+"other concerns that an administrator should look into, enter your comments "
+"in the area below. They will be sent to administrators, not the author."
 msgstr ""
 "如果您覺得此附加元件有安全上、版權上的疑慮或其他需要管理員處理的問題，請在下"
 "面輸入您的留言。這會直接送交給管理員處理。"
 
-#: views/editors/review.thtml:217
-#, fuzzy
-msgid "editors_review_update_notify_once"
+
+#: controllers/components/hub.php:259
+msgid ""
+"If you haven't found what you're looking for yet, try the Mozilla Developer "
+"Center's Themes section."
 msgstr ""
-"Notify me the next time this add-on is updated. (Subsequent updates will not "
-"generate an email)"
 
-#: views/editors/featured.thtml:63 views/editors/queue.thtml:109
-#: views/admin/flagged_queue.thtml:53
-msgid "editors_th_addon"
-msgstr "附加元件"
 
-msgid "editors_th_addontypes"
-msgstr "附加元件種類"
+#: views/developers/addon_edit_descriptions.thtml:120
+msgid ""
+"If your add-on has a privacy policy, enter its text here. Your add-on's "
+"display page will display a link to the policy."
+msgstr ""
+"如果您的元件有自己的隱私權保護政策，請在此輸入其文字。您元件的顯示頁面將顯示"
+"該政策的鏈結。"
 
-#: controllers/editors_controller.php:271
-#: controllers/addons_controller.php:131 controllers/addons_controller.php:197
-#: controllers/addons_controller.php:1413
-#: controllers/addons_controller.php:1471
-#: controllers/addons_controller.php:1475
-#: controllers/addons_controller.php:1509
-#: controllers/statistics_controller.php:135
-#: controllers/api_controller.php:123 controllers/api_controller.php:759
-#: controllers/previews_controller.php:115
-#: controllers/previews_controller.php:206
-#: controllers/previews_controller.php:307
-#: controllers/downloads_controller.php:95
-#: controllers/downloads_controller.php:102
-#: controllers/downloads_controller.php:164
-#: controllers/developers_controller.php:200
-#: controllers/developers_controller.php:714
-#: controllers/developers_controller.php:1175
-#: controllers/developers_controller.php:1609
-#: controllers/collections_controller.php:1025
-#: controllers/collections_controller.php:1058
-#: controllers/reviews_controller.php:77
-#: controllers/reviews_controller.php:240
-#: controllers/reviews_controller.php:332
-#: controllers/reviews_controller.php:340
-#: controllers/addons_controller.php:1417
-#: controllers/addons_controller.php:1479
-#: controllers/addons_controller.php:1513
-#: controllers/collections_controller.php:1026
-#: controllers/collections_controller.php:1059
-msgid "error_addon_notfound"
-msgstr "找不到附加元件！"
 
-#: controllers/files_controller.php:83 controllers/files_controller.php:205
-msgid "error_addon_notviewable"
-msgstr "此附加元件無法在此瀏覽。"
+#: views/developers/addon_edit_properties.thtml:161
+msgid ""
+"If your add-on has a support website or forum, enter its address here. "
+"Adding other translations is not necessary unless your website is localized "
+"into other languages."
+msgstr ""
+"如果您的元件有技術支援網站或論壇，請在此輸入其網址。除非您的網站提供了其他語"
+"言，否則您不需要增加其他翻譯。"
 
-#: controllers/reviews_controller.php:246
-msgid "error_addon_selfreview"
-msgstr "您無法對您自己的附加元件發表意見。"
 
-#: controllers/addons_controller.php:992
-msgid "error_browse_no_addons"
-msgstr "此分類無附加元件！"
+#: views/developers/addon_edit_descriptions.thtml:110
+msgid ""
+"If your add-on has an End-User License Agreement (EULA), please enter its "
+"text below. If set below, users will be required to agree to this before "
+"installing your add-on. Please note that a EULA is not the same as a code "
+"license such as GPL or MPL."
+msgstr ""
+"如果您的元件具有「使用者授權合約」（EULA），請將其內文輸入於下方。如此一來，"
+"使用者必須同意該內容後才能安裝您的元件。請注意 EULA 和 GPL 或 MPL 等程式碼授"
+"權是不一樣的。"
 
-#: controllers/api_controller.php:424
-msgid "error_collection_feed_notfound"
-msgstr "沒有找到附加元件的消息來源。"
 
-#. This appears on a page that views the source of an add-on.  This link will return
-#. the user to the add-on's main page
-#: views/files/browse.thtml:65
-#, fuzzy
-msgid "file_browser_link_addon"
-msgstr "Back to add-on"
+#: views/developers/addon_edit_properties.thtml:141
+msgid ""
+"If your add-on has another homepage, enter its address here. Adding other "
+"translations is not necessary unless your website is localized into other "
+"languages."
+msgstr ""
+"如果您的元件有另外的首頁，請在此輸入網址。除非您的網站提供了其他語言，否則您"
+"不需要增加其他翻譯。"
 
-#. The title of the page for viewing an add-on's source.
-#. %1$s is the name of the add-on
-#. %2$s is the name of the current application (e.g. Firefox or Thunderbird)
-#: views/files/browse.thtml:46
-#, fuzzy
-msgid "file_browser_title"
-msgstr "%1$s :: File Browser :: %2$s Add-ons"
 
-#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:357
-msgid "footer_disclaimer"
+#: controllers/components/hub.php:70
+msgctxt "devhub-external-english"
+msgid ""
+"In this video tutorial, Myk Melez explains how extensions integrate into "
+"Firefox, what they can do, and shows you how to set up an environment to "
+"ease their development. He'll then walk you through the making of a simple "
+"\"Hello World!\" extension. By the end of this session, you'll be an "
+"extension developer."
+msgstr ""
+
+
+#: controllers/components/hub.php:170
+msgctxt "devhub-external-english"
+msgid ""
+"In this video, Jono Xia explains how to go further in extension development "
+"using XPCOM, overlays, XHRs, DOM manipulation, etc. in order to make Firefox "
+"do things you might have never thought possible."
+msgstr ""
+
+
+#: controllers/components/hub.php:89
+msgctxt "devhub-external-english"
+msgid ""
+"In this walk-through, Robert Nyman explains how to develop a Firefox "
+"extension from scratch."
+msgstr ""
+
+
+#: views/developers/versions_edit.thtml:188
+msgid ""
+"Information about changes in this release, new features, known bugs, and "
+"other useful information specific to this release/version. This information "
+"will also be available to users updating the add-on in the Firefox 3 Add-ons "
+"Manager interface."
+msgstr ""
+"關於這個版本的新功能、已知問題及其他有用資訊。使用 Firefox 3 附加元件管理員更"
+"新的使用者也能看到這個資訊。"
+
+
+#: views/developers/addon_edit_properties.thtml:89
+msgid ""
+"Information about your add-on is displayed on this website in the default "
+"locale unless you override it with a locale-specific translation."
+msgstr ""
+"元件的預設語言是各個翻譯中必須提供的主要語言。如果您的元件未提供使用者當前選"
+"擇語言的敘述，便會自動使用預設語言。"
+
+
+#: views/compatibility/dashboard.thtml:53
+#: views/compatibility/dashboard.thtml:110
+#: views/compatibility/developers.thtml:43
+msgid "Information for Add-on Developers"
+msgstr "给附加元件開發者的資訊"
+
+
+#: views/compatibility/dashboard.thtml:54
+#: views/compatibility/dashboard.thtml:144 views/compatibility/users.thtml:42
+msgid "Information for Add-on Users"
+msgstr "給附加元件使用者的資訊"
+
+
+#: controllers/developers_controller.php:2044
+msgid "Invalid add-on type"
+msgstr "無效的元件類型"
+
+
+#: views/collections/add.thtml:50
+msgid ""
+"It's easy to create your own collection of add-ons by filling in a few "
+"fields below."
+msgstr "填寫下列欄位，即可簡單地建立屬於您的收藏集。"
+
+
+#: controllers/components/hub.php:175
+msgid ""
+"JavaScript code modules let multiple privileged JavaScript scopes share "
+"code. For example, a module could be used by Firefox itself as well as by "
+"extensions, in order to avoid code duplication."
+msgstr ""
+
+
+#: models/addontype.php:85
+msgid "Language Pack (Add-on)"
+msgstr "語言套件 (附加元件)"
+
+
+# Plural in this context means many of the add-on type
+#: models/addontype.php:103
+msgid "Language Packs (Add-on)"
+msgstr "語言套件 (附加元件)"
+
+
+#: controllers/components/hub.php:338
+msgid "Learn how StumbleUpon got its start with Firefox"
+msgstr ""
+
+
+#: controllers/components/hub.php:267
+msgctxt "devhub-external-english"
+msgid "Learn how easy it is to extend Firefox with Jetpack in this tutorial."
+msgstr ""
+
+
+#: views/addons/searchengines.thtml:88
+#, php-format
+msgid ""
+"Learn how to <a href=\"%1$s\">make your own</a> at the <a href=\"%2$s"
+"\">Mozilla Developer Center</a>."
+msgstr ""
+"到 <a href=\"%2$s\">Mozilla 開發者中心</a>學習如何<a href=\"%1$s\">製作搜尋引"
+"擎</a>。"
+
+
+#: views/elements/amo2009/teaser_collections.thtml:86
+#: views/elements/amo2009/teaser_collections.thtml:92
+#: views/elements/amo2009/results_addon.thtml:90
+#: views/elements/amo2009/results_addon.thtml:92
+#: views/elements/amo2009/homepage_addon.thtml:99
+#: views/elements/amo2009/homepage_addon.thtml:102
+#: views/elements/feature.thtml:94
+msgid "Learn more about this add-on"
+msgstr "了解關於此元件的更多資訊"
+
+
+#: controllers/components/hub.php:56
+msgid ""
+"Learn the basics of developing an extension on the Mozilla platform with "
+"this section full of beginner's guides."
+msgstr ""
+
+
+# %1$s is an add-on name.
+#: views/addons/display.thtml:426
+#, php-format
+msgid "Learn why %1$s was created and find out what's next for this add-on."
+msgstr "了解 %1$s 的誕生由來，以及這個附加元件的未來發展。"
+
+
+# %1 is the URL for the Experimental Add-ons section of the FAQ page
+#: views/helpers/install_button.php:386 views/elements/install.thtml:231
+#, php-format
+msgid ""
+"Let me install this experimental add-on. <a href=\"%1$s\">What's this?</a>"
+msgstr "讓我安裝此實驗中附加元件。<a href=\"%1$s\">這是什麼？</a>"
+
+
+#: views/developers/addon_edit_profile.thtml:112
+msgid ""
+"Let your users know why you created an add-on.  Whether it was an idea while "
+"in line at the grocery store or the solution to one of life's great "
+"problems, share your story."
+msgstr ""
+"告訴使用者您為何創造此元件。無論是在雜貨店排隊時想到的點子，或為了解答生命中"
+"的偉大問題，分享您的故事吧。"
+
+
+#: controllers/components/hub.php:93
+msgctxt "devhub-external-english"
+msgid ""
+"Lifehacker gives tips and helpful hints on developing your first Firefox "
+"extension."
+msgstr ""
+
+
+# %1$s is the HTML collection name link.
+#: views/elements/amo2009/teaser_collections.thtml:110
+#, php-format
+msgid "Like these? Find more add-ons in the %1$s collection."
+msgstr "喜歡嗎？在 %1$s 收藏集尋找更多相關的附加元件吧。"
+
+
+#: controllers/components/hub.php:306
+msgid "Maintaining Your Add-on"
+msgstr ""
+
+
+#: views/developers/addon_status.thtml:151
+msgid "Make your add-on Public again."
+msgstr "再次公開您的元件。"
+
+
+#: views/developers/addon_status.thtml:181
+msgid ""
+"Make your add-on active for it to show up in public listings and enable the "
+"update check service."
+msgstr "將您的附加元件設為活動中，以顯示在公開列表，並啟動更新檢查服務。"
+
+
+#: views/developers/addon_status.thtml:185
+msgid ""
+"Make your add-on inactive to hide it from all public listings and disable "
+"the update check service."
+msgstr "將您的附加元件設為非活動中，以從公開列表裡隱藏，並取消更新檢查服務。"
+
+
+#: views/developers/addon_status_confirm.thtml:70
+msgid ""
+"Making this add-on public will make it available for anyone to download and "
+"will begin offering updates to existing users."
+msgstr "公開這個元件將讓所有人都能下載，並對既有的使用者提供更新。"
+
+
+#: views/developers/addon_edit.thtml:49
+msgctxt "devcp_edit_dt_manage_authors"
+msgid "Manage Add-on Authors"
+msgstr "管理元件作者"
+
+
+#: views/developers/addon_edit_authors.thtml:53
+msgctxt "devcp_edit_authors_header_manage"
+msgid "Manage Add-on Authors"
+msgstr "管理元件作者"
+
+
+#: views/developers/addon_edit.thtml:51
+msgctxt "devcp_edit_dt_manage_categories"
+msgid "Manage Add-on Categories"
+msgstr "管理元件分類"
+
+
+#: views/developers/addon_edit_categories.thtml:51
+msgctxt "devcp_edit_categories_header_manage"
+msgid "Manage Add-on Categories"
+msgstr "管理元件分類"
+
+
+#: views/developers/addon_edit.thtml:55
+msgid "Manage Add-on Descriptions"
+msgstr "管理元件敘述"
+
+
+#: views/developers/addon_edit.thtml:57
+msgid "Manage Add-on Properties"
+msgstr "管理元件屬性"
+
+
+#: views/developers/addon_edit.thtml:53
+msgid "Manage Add-on Tags"
+msgstr "管理元件標籤"
+
+
+#: views/developers/addon_status_confirm.thtml:62
+msgid ""
+"Marking this add-on active will cause it to show up in public areas "
+"appropriate for its status, including search and browse listings. It will be "
+"downloadable from the website and could be returned in client update checks, "
+"depending on its status. You will be able to return here and disable it "
+"again at your convenience."
+msgstr ""
+"將這個元件設為「活動中」會使它出現在狀態相符的公開區域，包括搜尋與瀏覽清單。"
+"根據元件的狀態，網站將提供下載，並在客戶端檢查更新時傳送元件。您需要的時候，"
+"也可以再回到這裡停用它。"
+
+
+#: views/developers/addon_status_confirm.thtml:58
+msgid ""
+"Marking this add-on inactive will prevent it from showing up in any public "
+"areas, including search and browse listings. It will not be downloadable "
+"from the website and will not be returned in client update checks. You will "
+"be able to return here and re-enable it at your convenience."
+msgstr ""
+"將這個元件設為「非活動中」會讓它不再出現於任何公開區域，包括搜尋與瀏覽清單。"
+"網站將不提供下載，也不會在客戶端檢查更新時傳送元件。您需要的時候，也可以再回"
+"到這裡啟用它。"
+
+
+#: views/elements/headers/page_header_full.thtml:73
+#, php-format
+msgid ""
+"Mobile Add-ons <em>for</em> <img alt=\"mobile\" src=\"%1$s\" /> "
+"<strong>Firefox</strong>"
+msgstr ""
+
+
+#: views/elements/amo2009/hub/promo_developer.thtml:63
+msgid "More Add-ons"
+msgstr ""
+
+
+#: views/addons/display.thtml:240
+msgid "More about this add-on"
+msgstr "更多資訊"
+
+
+#: views/developers/addon_status.thtml:147
+msgid "Move your add-on back to the Sandbox. This is reversible."
+msgstr "將您的元件移回「沙箱」區。這個動作是可以撤銷的。"
+
+
+#: views/developers/addon_status_confirm.thtml:66
+msgid ""
+"Moving this add-on back to the sandbox will require users to log in before "
+"downloading and updates will no longer be offered to existing users. Because "
+"your add-on is currently public, you will be able to return here at any time "
+"to make it public again."
+msgstr ""
+"將這個元件移回「沙箱」區會要求使用者先登入才能下載，也將停止提供對既有使用者"
+"的更新。由於您的元件目前是公開的，您可以隨時回來這裡再度公開它。"
+
+
+#: views/elements/headers/page_header_devhub.thtml:51
+#: views/elements/headers/page_header_full.thtml:86
+msgid "Mozilla"
+msgstr "Mozilla"
+
+
+#: controllers/components/hub.php:46
+msgid "Mozilla Developer Center"
+msgstr ""
+
+
+#: views/compatibility/dashboard.thtml:114
+msgid "Mozilla Developer Center Logo"
+msgstr "Mozilla Developer Center Logo"
+
+
+#: views/dev_hub/api_reference.thtml:106
+msgid ""
+"Mozilla Developer Center's CSS documentation, listing all available "
+"properties, values, and selectors."
+msgstr ""
+
+
+#: views/dev_hub/api_reference.thtml:158
+msgid "Mozilla Developer Center's DOM API documentation"
+msgstr ""
+
+
+#: views/dev_hub/api_reference.thtml:87
+msgid ""
+"Mozilla Developer Center's JavaScript documentation, including functions, "
+"statements, properties, and more."
+msgstr ""
+
+
+#: views/dev_hub/api_reference.thtml:144
+msgid ""
+"Mozilla Developer Center's XPCOM API documentation, listing frozen "
+"interfaces and functions."
+msgstr ""
+
+
+#: controllers/components/hub.php:48
+msgid "Mozilla Labs - Jetpack"
+msgstr ""
+
+
+#: controllers/components/hub.php:49
+msgid "Mozilla Labs Design Challenge"
+msgstr ""
+
+
+#: controllers/pages_controller.php:108
+msgid "Mozilla Privacy Policy"
+msgstr "Mozilla 隱私權保護政策"
+
+
+#: config/bootstrap.php:284
+msgid "Mozilla Public License, version 1.1"
+msgstr "Mozilla Public License，版本 1.1"
+
+
+#: controllers/components/hub.php:47
+msgid "Mozilla Wiki"
+msgstr ""
+
+
+#: views/elements/amo2009/contribution.thtml:121
+msgid ""
+"Mozilla is committed to supporting a vibrant and healthy developer "
+"ecosystem. Your optional contribution helps sustain further development of "
+"this add-on."
+msgstr ""
+"Mozilla 致力於支持活躍、健全的開發者生態系，您選擇性的捐獻將有助於維持此元件"
+"的後續發展。"
+
+
+#: views/elements/footer.thtml:76 views/layouts/amo2009.thtml:248
+msgid ""
+"Mozilla is providing links to these applications as a courtesy, and makes no "
+"representations regarding the applications or any information related there "
+"to. Any questions, complaints or claims regarding the applications must be "
+"directed to the appropriate software vendor."
 msgstr ""
 "Mozilla 出於善意提供以上程式鏈結，然而我們並不代表以上程式或相關資訊的作者。"
 "使用以上程式時若有任何疑問或不滿，或需要進一步的服務，還請直接與軟體供應者聯"
 "繫。"
 
-#: models/addontype.php:85
-msgid "general_addontype_lpaddon"
-msgstr "語言套件 (附加元件)"
 
-# Plural in this context means many of the add-on type
-#. Plural in this context means many of the add-on type
-#: models/addontype.php:103
-msgid "general_addontype_lpaddon_plural"
-msgstr "語言套件 (附加元件)"
-
-#. %1$s is the application name.  Example:  Firefox
-#: views/elements/header.thtml:111 views/elements/header.thtml:122
-#: views/layouts/amo2009.thtml:249
-#, php-format
-msgid "header_home_tooltip"
-msgstr "回到 %1$s 附加元件首頁"
-
-#: views/elements/header.thtml:87
-msgid "header_main_firefox_header"
-msgstr "Firefox 附加元件"
-
-#: views/elements/header.thtml:99
-msgid "header_main_header"
-msgstr "附加元件"
-
-#: views/elements/header.thtml:62
-msgid "header_navlink_addons"
-msgstr "附加元件"
-
-# %1 is the login URL for the link tag
-# %2 is the link to an explanatory page.
-#. %1 is the login URL for the link tag
-#. %2 is the link to an explanatory page.
-#: views/elements/install.thtml:258 views/elements/amo2009/install.thtml:310
-msgid "install_a_login_to_install"
+#: views/users/edit.thtml:180
+msgid ""
+"Mozilla reserves the right to contact you individually about specific "
+"concerns with your hosted add-ons."
 msgstr ""
-"<a href=\"%1$s\">登入</a> 才能安裝此元件。<a href=\"%2$s\">為什麼</a>？"
+"Mozilla 保留使用此資訊與您聯絡，詢問關於您放上網的附加元件相關問題的權利。"
 
-#: views/elements/install.thtml:94 views/elements/amo2009/install.thtml:147
-msgid "install_error_addon_not_found"
-msgstr "找不到此附加元件。"
 
-#: views/elements/addon_list_options.thtml:45
-#: views/elements/amo2009/addon_list_options.thtml:45
-msgid "list_sortby_name"
-msgstr "元件名稱"
+#: views/pages/credits.thtml:99
+msgid ""
+"Mozilla would like to thank the following people for their contributions to "
+"the addons.mozilla.org project over the years:"
+msgstr "Mozilla 謹此感謝以下長期來為 addons.mozilla.org 貢獻良多的人："
 
-# : config/bootstrap.php:279
-#: config/bootstrap.php:278
-#, fuzzy
-msgid "main_prettyname_sugar"
-msgstr "Sugar"
 
-#: views/elements/app_chooser.thtml:47 views/layouts/amo2009.thtml:256
-msgid "other_apps_tooltip"
-msgstr "尋找其他應用程式使用的附加元件"
-
-#: views/pages/appversions.thtml:80
-msgid "pages_appversions_intro"
+#: views/dev_hub/api_reference.thtml:92
+msgid "Mozilla's JavaScript coding standards."
 msgstr ""
-"上傳到 Mozilla 附加元件的元件必須含有 install.rdf 檔案，並至少支援下面其中之"
-"一的應用程式。只有下面列出的應用程式版本允許上傳。"
 
-#: controllers/pages_controller.php:101
-msgid "page_title_policy"
-msgstr "附加元件使用條款"
 
-#: controllers/pages_controller.php:103
-msgid "page_title_privacy"
-msgstr "Mozilla 隱私權保護政策"
-
-# %1 is the URL of the support section, %2 for the review guidelines
-#. %1 is the URL of the support section, %2 for the review guidelines
-#: views/reviews/add.thtml:53
-msgid "review_guidelines_short"
+#: views/dev_hub/api_reference.thtml:73
+msgid "Mozilla's XUL coding standards."
 msgstr ""
-"<p>請將這些話記在心裡：</p><ul><li>用寫給朋友的方式告訴大家您對此附加元件的使"
-"用經驗。請寫出特定且有幫助的細節，像是您喜歡或是不喜歡的功能，此附加元件是否"
-"容易使用，和它的缺點在哪等等。避免一般的形容像是「好棒」或是「真難用」，除非"
-"您解釋了為何您這樣認為。</li><li>請勿在意見處回報程式臭蟲。我們不會將您的 e-"
-"mail 顯示給擴充套件作者，而他們或許需要和您聯絡才能解決該問題。請至<a href="
-"\"%1$s\">技術支援小節</a>參考如何尋求使用上的協助。</li><li>請勿使用髒話，或"
-"是洩漏個人資訊。</li></ul><p>更多關於使用者意見的資訊，請參考<a href=\"%2$s"
-"\">意見撰寫指南</a>。</p>"
 
-#: controllers/addons_controller.php:403
-msgid "rss_featuredaddons"
-msgstr "推薦附加元件"
 
-#: controllers/addons_controller.php:400
-msgid "rss_newestaddons"
-msgstr "最新附加元件"
+#: views/elements/amo2009/hub/navbar.thtml:47
+#: views/elements/amo2009/hub/promo_developer.thtml:42
+#: views/elements/developers/myaddons.thtml:52
+#: views/developers/dashboard.thtml:44 views/dev_hub/feed.thtml:108
+msgid "My Add-ons"
+msgstr "我的附加元件"
 
-#: controllers/addons_controller.php:401
-msgid "rss_updatedaddons"
-msgstr "最近更新元件"
 
-#: views/elements/search.thtml:185 views/elements/amo2009/search.thtml:188
-#: views/elements/search_mini.thtml:54 views/elements/amo2009/search.thtml:195
-msgid "search_form_all_addons"
-msgstr "所有元件"
+#: views/developers/addon_edit_categories.thtml:90
+msgid "My add-on doesn't fit into any available categories."
+msgstr "沒有適合我的元件的分類。"
 
-#: views/elements/search.thtml:169 views/elements/search.thtml:181
-#: views/elements/amo2009/search.thtml:184
-#: views/elements/amo2009/search.thtml:385
-#: views/elements/amo2009/search.thtml:408 views/elements/search_mini.thtml:43
-#: views/elements/search_mini.thtml:49 views/layouts/mozilla.thtml:189
-#: views/elements/amo2009/search.thtml:191
-#: views/elements/amo2009/search.thtml:380
-#: views/elements/amo2009/search.thtml:403
-#: views/elements/amo2009/search.thtml:379
-#: views/elements/amo2009/search.thtml:402
-msgid "search_form_default_text"
-msgstr "搜尋附加元件"
-
-#: views/elements/search.thtml:200 views/elements/amo2009/search.thtml:206
-#: views/elements/amo2009/search.thtml:213
-msgid "search_form_submit_tooltip"
-msgstr "搜尋附加元件"
-
-msgid "search_matching_addons_number"
-msgid_plural "search_matching_addons_number"
-msgstr[0] "%s 個符合的元件"
-
-#: controllers/search_controller.php:185
-msgid "search_pagetitle"
-msgstr "搜尋附加元件"
-
-#, fuzzy
-msgid "sidebar_pitch_activity"
-msgstr "Activity"
-
-#, fuzzy
-msgid "sidebar_pitch_content"
-msgstr "Content"
-
-#: views/elements/pitch.thtml:72
-msgid "sidebar_pitch_featured_addons"
-msgstr "推薦元件"
 
 #: views/elements/pitch.thtml:70
-msgid "sidebar_pitch_newest_addons"
+msgctxt "sidebar_pitch_newest_addons"
+msgid "Newest Add-ons"
 msgstr "最新元件"
 
-#: views/elements/pitch.thtml:71
-msgid "sidebar_pitch_updated_addons"
-msgstr "最近更新元件"
 
-#: views/statistics/addon.thtml:53
-msgid "statistics_addon_switch"
-msgstr "切換元件"
+#: controllers/addons_controller.php:484
+#: controllers/addons_controller.php:1120
+msgctxt "browse_addons_newest"
+msgid "Newest Add-ons"
+msgstr "最新元件"
 
-#: views/statistics/index.thtml:83
-msgid "statistics_index_anotheraddon"
-msgstr "或選擇其他元件"
 
-#: views/statistics/index.thtml:85
-msgid "statistics_index_anotheraddon_public"
-msgstr "或選擇元件的公開資訊"
+#: controllers/components/validation.php:309
+msgid "No ID could be found for this add-on in install.rdf."
+msgstr "此附加元件的 install.rdf 中找不到 ID。"
 
-#: views/statistics/index.thtml:71
-msgid "statistics_index_myaddons"
-msgstr "請選擇任一元件檢視其統計資訊"
 
-#: views/statistics/index.thtml:89
-msgid "statistics_index_selectaddon"
-msgstr "請選擇元件檢視其統計資訊"
+#: controllers/addons_controller.php:1080
+msgid "No add-ons in this category!"
+msgstr "此分類無附加元件！"
 
-#: views/statistics/index.thtml:91
-msgid "statistics_index_selectaddon_public"
-msgstr "請選擇元件檢視其公開資訊"
 
-#: controllers/statistics_controller.php:269
-msgid "statistics_js_plotselection_options_events_addon_tooltip"
-msgstr "於座標點上顯示元件發行日期"
+#: views/developers/addon_edit_categories.thtml:96
+#: views/developers/addon_edit_categories.thtml:105
+msgid "No categories are available for this add-on type and application."
+msgstr "沒有適用於此元件類型與應用程式的分類。"
 
-#: controllers/statistics_controller.php:257
-msgid "statistics_js_plotselection_selector_status"
-msgstr "元件狀態"
 
-#: controllers/statistics_controller.php:255
-msgid "statistics_js_plotselection_selector_version"
-msgstr "元件版本"
+#: views/search/index.thtml:224
+msgid "No tags for these add-ons"
+msgstr "這些附加元件沒有標籤"
 
-#: controllers/components/stats.php:399
-msgid "statistics_longnames_status"
-msgstr "元件狀態"
 
-#: controllers/components/stats.php:397
-msgid "statistics_longnames_version"
-msgstr "元件版本"
+#: views/developers/addon_status.thtml:143
+msgid "Nominate your add-on to become Public"
+msgstr "將你的元件送交批准至「公開」區"
 
-#: views/statistics/addon.thtml:130
-msgid "statistics_notice_data_none"
-msgstr "我們還沒有任何關於此附加元件的資料，請過幾天後再回來檢查。"
 
-#: views/statistics/addon.thtml:41
-msgid "statistics_notice_data_updating"
+# %1 is the nominated addons count
+#: views/elements/developers/editorsqueue.thtml:44
+#: views/elements/developers/editorsmenu.thtml:58
+#, php-format
+msgid "Nominated Add-ons (%s)"
+msgid_plural "Nominated Add-ons (%s)"
+msgstr[0] "待批准元件 (%s)"
+
+
+#: views/editors/review.thtml:237
+msgid ""
+"Notify me the next time this add-on is updated. (Subsequent updates will not "
+"generate an email)"
+msgstr "這個元件下次更新時通知我。（之後的更新將不會寄送 Email）"
+
+
+#: views/elements/developers/validation.thtml:45
+msgid "Now validating your add-on ..."
+msgstr "正在驗證您的元件…"
+
+
+#: views/elements/amo2009/users/vcard.thtml:100
+msgid "Number of Add-ons Developed"
+msgstr "開發的附加元件數"
+
+
+# %1$s and %2$s are numbers
+# %3$s is an application name and version.  Example: Firefox 3.1
+#: views/compatibility/dashboard.thtml:65
+#, php-format
+msgid ""
+"Of the %1$s add-ons that make up 95&#37; of add-on usage known to Mozilla, "
+"<b>%2$s&#37;</b> are currently considered compatible with the latest builds "
+"of %3$s."
 msgstr ""
-"附加元件統計資訊正在更新中，因程式碼正在更新相關資訊的緣故，最近的資料可能會"
-"不完整。請過幾分鐘後再回來檢查。"
+"Mozilla 所知總計達到 95&#37; 使用率的 %1$s 個元件中，目前共有 <b>%2$s&#37;</"
+"b> 與 %3$s 最新版本相容。"
 
-#: views/statistics/settings.thtml:49
-msgid "statistics_settings_access_description"
+
+#: views/elements/amo2009/hub/promo_feed.thtml:92
+msgid "Older activity for all add-ons"
 msgstr ""
-"在預設情況下，只有您自己及 Mozilla 能看到您元件的統計資訊。但您可以公開統計資"
-"訊，讓所有人看到您的元件統計資訊。"
 
-#: views/statistics/settings.thtml:51
-msgid "statistics_settings_access_private_description"
-msgstr "只有您自己和 Mozilla 看得到統計資訊"
+
+# %1$s is a URL where the user can see an example
+#: views/developers/addon_edit_contributions.thtml:144
+#, php-format
+msgid ""
+"Only ask on this add-on's page and developer profile (<a href=\"%1$s"
+"\">example</a>)"
+msgstr "僅在元件頁面及開發者檔案詢問（<a href=\"%1$s\">範例</a>）"
+
 
 #: views/statistics/settings.thtml:52
-msgid "statistics_settings_access_public_description"
-msgstr "任何人都可以看到統計資訊"
+msgid "Only you and Mozilla can view this add-on's statistics"
+msgstr "只有您自己和 Mozilla 看得到統計資訊"
 
-#: views/users/delete.thtml:102
-msgid "user_del_community_sad"
+
+#: controllers/components/hub.php:262
+msgid "Other Types of Add-ons"
+msgstr ""
+
+
+# %1$s is either an author's name or a comma separated list of authors. Using
+# the list doesn't make sense in the English plural form so we ignore the
+# variable.
+#: views/addons/display.thtml:456
+#, php-format
+msgid "Other add-ons by %1$s"
+msgid_plural "Other add-ons by these authors"
+msgstr[0] "%1$s 的其他作品"
+
+
+#: views/elements/amo2009/addons/developers/other_addons.thtml:50
+msgid "Other add-ons by this developer"
+msgid_plural "Other add-ons by these developers"
+msgstr[0] "這位開發者的其他附加元件"
+
+
+#: controllers/statistics_controller.php:365
+msgid "Overlay Firefox release dates on the plots"
+msgstr "於座標點上顯示 Firefox 發行日期"
+
+
+#: controllers/statistics_controller.php:368
+msgid "Overlay add-on release dates on the plots"
+msgstr "於座標點上顯示元件發行日期"
+
+
+#: controllers/components/hub.php:276
+msgctxt "devhub-external-english"
+msgid "Personas for Firefox"
+msgstr ""
+
+
+#: views/developers/addon_edit_categories.thtml:88
+msgid ""
+"Place your add-on into this category only if it does not fit into any other "
+"available categories."
+msgstr "只有當您的元件不符合任何其他分類時，才將它放在這個分類。"
+
+
+#. L10n: %1$s is a URL
+#: views/elements/amo2009/hub/promo_feed.thtml:56
+#, php-format
+msgid "Please <a href=\"%1$s\">log in</a> to view add-on news feeds."
+msgstr ""
+
+
+# %1 is the application name
+#: controllers/users_controller.php:609
+#, php-format
+msgid "Please confirm your email address change at %1$s Add-ons"
+msgstr "請確認您在 %1$s 附加元件網站變更的 Email 地址"
+
+
+#: views/addons/display.thtml:356
+msgid ""
+"Please do not post bug reports in reviews. We do not make your email address "
+"available to add-on developers and they may need to contact you to help "
+"resolve your issue."
+msgstr ""
+"請勿在此回報程式錯誤。因為我們並不會記錄您的 Email 地址，若開發者想得知進一步"
+"的細節以解決問題時就無法與您聯絡了。"
+
+
+#: views/developers/addon_status.thtml:131
+msgid ""
+"Please fulfill the criteria above before nominating your add-on to become "
+"<span class=\"status-4\">Public</span>."
+msgstr ""
+"在將您的附加元件提名至「<span class=\"status-4\">公開</span>」前，請先達成上"
+"述標準。"
+
+
+#: views/developers/addon_status.thtml:114
+msgid ""
+"Please fulfill the criteria above before you can complete your add-on and "
+"move it to the <span class=\"status-1\">Sandbox</span>."
+msgstr ""
+"在完成您的附加元件並將其移至「<span class=\"status-1\">沙箱</span>」區前，請"
+"先達成上述標準。"
+
+
+#: views/developers/versions_edit.thtml:195
+msgid ""
+"Please select the appropriate license for your add-on. This license "
+"specifies the rights you grant on your source code."
+msgstr ""
+"請為您的附加元件選擇一個適當的授權條款。該授權條款規定了您在原始碼方面所給予"
+"的權利。"
+
+
+#: controllers/components/hub.php:289
+msgid ""
+"Plug-ins to Mozilla-based applications are binary components that can "
+"display content that the application itself can't display natively. Explore "
+"the Mozilla Developer Center's plug-in documentation index to learn more."
+msgstr ""
+
+
+#: controllers/addons_controller.php:486
+#: controllers/addons_controller.php:1118
+msgctxt "browse_addons_popular"
+msgid "Popular Add-ons"
+msgstr "熱門元件"
+
+
+# %1 is the add-on name
+#: views/developers/discuss.thtml:46
+#, php-format
+msgid "Provide More Information For the Add-on Review of %1$s"
+msgstr "提供對元件 %1$s 之意見的更多資訊"
+
+
+#: controllers/components/hub.php:354
+msgid ""
+"Read about how someone new to software development made one of the most "
+"popular Firefox add-ons"
+msgstr ""
+
+
+#. L10n: %1$s is a URL
+#: views/elements/amo2009/hub/promo_feed.thtml:70
+#, php-format
+msgid "Recent Activity for <a href=\"%1$s\">All Add-ons</a>"
+msgstr ""
+
+
+#: controllers/devhub_controller.php:60 controllers/devhub_controller.php:162
+#: controllers/devhub_controller.php:205 controllers/devhub_controller.php:298
+msgid "Recent Activity for My Add-ons"
+msgstr ""
+
+
+#: controllers/addons_controller.php:1119
+msgid "Recently Updated Add-ons"
+msgstr "最近更新元件"
+
+
+#: controllers/components/hub.php:311
+msgid "Recommended Add-ons"
+msgstr ""
+
+
+#: controllers/addons_controller.php:1461
+#: controllers/addons_controller.php:1464
+#: controllers/addons_controller.php:1468
+msgctxt "addons_recommended_pagetitle"
+msgid "Recommended Add-ons"
+msgstr "推薦附加元件"
+
+
+#: views/collections/edit.thtml:261
+msgid "Remove this add-on"
+msgstr "移除這個元件"
+
+
+#: controllers/users_controller.php:251
+#, php-format
+msgid "Reset your %s Add-ons password"
+msgstr "重設 %s 附加元件密碼"
+
+
+# %1$s is a number
+#: views/editors/queue.thtml:96
+#, php-format
+msgid "Results of your filtered search: <strong>%1$s</strong> Add-on"
+msgid_plural "Results of your filtered search: <strong>%1$s</strong> Add-ons"
+msgstr[0] "過濾後的搜尋結果： <strong>%1$s</strong> 個附加元件"
+
+
+#: views/compatibility/dashboard.thtml:137
+msgid "Retrieving status of hosted add-ons..."
+msgstr "正在接收您的附加元件狀態…"
+
+
+# %1$s is the application name.  Example:  Firefox
+#: views/elements/headers/page_header_full.thtml:85
+#: views/elements/header.thtml:114 views/elements/header.thtml:125
+#, php-format
+msgid "Return to the %1$s Add-ons homepage"
+msgstr "回到 %1$s 附加元件首頁"
+
+
+#: views/elements/headers/page_header_devhub.thtml:47
+msgid "Return to the Add-on Developer Hub"
+msgstr ""
+
+
+#: controllers/editors_controller.php:254
+#: controllers/editors_controller.php:255
+msgid "Review Add-on"
+msgstr "審核附加元件"
+
+
+#: views/elements/header.thtml:93
+msgid "SeaMonkey Add-ons"
+msgstr "SeaMonkey 附加元件"
+
+
+#: controllers/search_controller.php:240
+msgid "Search Add-ons"
+msgstr "搜尋附加元件"
+
+
+#: views/elements/amo2009/search.thtml:212 views/elements/search.thtml:202
+msgid "Search for add-ons"
+msgstr "搜尋附加元件"
+
+
+# %1 is the review count, %2 is the nickname or full name of the user.
+#: views/reviews/display.thtml:146
+#, php-format
+msgid "See %1$s previous review submitted by %2$s for this add-on."
+msgid_plural "See %1$s previous reviews submitted by %2$s for this add-on."
+msgstr[0] "顯示由 %2$s 對此附加元件發出的 %1$s 篇意見。"
+
+
+#: views/addons/display.thtml:448
+#, php-format
+msgid "See All %1$s Add-ons"
+msgstr "查看所有 %1$s 類元件"
+
+
+# %1 is a number.
+#: views/addons/display.thtml:316
+#, php-format
+msgid "See all %1$s reviews of this add-on"
+msgstr "查看此元件的全部 %1$s 個意見"
+
+
+# %1 is the support section link
+#: views/addons/display.thtml:358
+#, php-format
+msgid ""
+"See the <a href=\"%1$s\">support section</a> to find out where to get "
+"assistance for this add-on."
+msgstr ""
+"請見 <a href=\"%1$s\">技術支援</a> 一節了解如何取得此元件的進一步協助。"
+
+
+#: views/statistics/index.thtml:152
+msgid "Select an add-on to view its statistics"
+msgstr "請選擇元件檢視其統計資訊"
+
+
+#: views/statistics/index.thtml:154
+msgid "Select an add-on with public statistics"
+msgstr "請選擇元件檢視其公開資訊"
+
+
+#: views/statistics/index.thtml:134
+msgid "Select one of your add-ons to view its statistics"
+msgstr "請選擇任一元件檢視其統計資訊"
+
+
+#: views/dev_hub/builder.thtml:33
+msgid ""
+"Select the applications and versions that your add-on will support below. "
+"For example, if your add-on is compatible with Firefox 3.5, the versions "
+"should be 3.5 - 3.5.*. Make sure you only select applications you intend to "
+"test with."
+msgstr ""
+
+
+#: views/developers/addon_edit.thtml:52
+msgid ""
+"Select the relevant categories for each application your add-on supports."
+msgstr "為元件支援的各個應用程式選擇相關分類。"
+
+
+# %s is the application name (Firefox, Thunderbird).
+#: views/developers/addon_edit_categories.thtml:65
+#, php-format
+msgid "Select up to three %s categories for your add-on"
+msgstr "為您的元件選擇至多三個 %s 分類"
+
+
+#: views/collections/add.thtml:98
+msgid "Selected Add-ons"
+msgstr "選擇附加元件"
+
+
+#: views/collections/edit.thtml:255
+msgid "Selected add-ons will be removed upon Save"
+msgstr "選擇的元件將在儲存時被移除"
+
+
+#: views/addons/display.thtml:221
+msgid "Share this Add-on"
+msgstr "分享此元件"
+
+
+#: controllers/statistics_controller.php:364
+msgid "Show Firefox Events"
+msgstr "顯示 Firefox 事件"
+
+
+#: views/dev_hub/builder.thtml:11
+msgid ""
+"Simply enter some basic information about your add-on below and select which "
+"interface components to start with, and your custom-built add-on will be "
+"ready for download."
+msgstr ""
+
+
+# %1 is the default locale
+#: views/elements/developers/localebox.thtml:48
+#, php-format
+msgid ""
+"Some of the fields on this page are localized to appear in the end-user's "
+"native language. Select a locale below to edit your add-on's details in that "
+"language. If a translation for a locale is not available, it will fall back "
+"to the selected default locale (%s)."
+msgstr ""
+"本頁的某些欄位可用使用者熟悉的語言顯示。請從下面的語言中選擇您要編輯的元件詳"
+"細資訊，如果使用者選的語言沒有內容就會用預設語言 (%s) 顯示。"
+
+
+#: views/pages/js_constants.js.thtml:79
+msgid ""
+"Sorry, you need a Mozilla-based browser (such as Firefox) to install a "
+"search plugin."
+msgstr "抱歉，您需要 Mozilla 系列的瀏覽器（像 Firefox）才能安裝此搜尋引擎。"
+
+
+#: views/addons/searchengines.thtml:91
+msgid ""
+"Special thanks to the Mycroft Project for their work on Firefox search "
+"engines."
+msgstr "特別感謝 Mycroft 專案於 Firefox 搜尋引擎所努力的成果。"
+
+
+#: views/elements/amo2009/hub/promo_anon.thtml:50
+msgid "Start Making Add-ons"
+msgstr ""
+
+
+#: views/elements/amo2009/hub/directory_info.thtml:20
+#: views/dev_hub/case_studies_list.thtml:48
+msgid ""
+"Start-to-finish success stories. See how add-on developers made magic with "
+"Mozilla."
+msgstr ""
+
+
+#: views/elements/developers/additem.thtml:47
+msgid "Step 2: Add-on Details"
+msgstr "步驟 2：元件詳細資訊"
+
+
+#: controllers/components/hub.php:232
+msgid "Style Mozilla applications the way you want with pixel-perfect themes."
+msgstr ""
+
+
+#: views/elements/developers/additem.thtml:41
+msgctxt "devcp_additem_sidebar_title"
+msgid "Submit Add-on"
+msgstr "上傳附加元件"
+
+
+#: views/elements/developers/sidebar.thtml:59
+#: views/elements/developers/myaddons.thtml:69
+msgctxt "devcp_myaddons_submitaddon_link"
+msgid "Submit Add-on"
+msgstr "上傳附加元件"
+
+
+#: views/developers/uploader.thtml:51
+msgid "Submit New Add-on"
+msgstr "送出新元件"
+
+
+#: views/elements/amo2009/hub/navbar.thtml:68
+msgid "Submit a New Add-on"
+msgstr ""
+
+
+#: views/elements/header.thtml:96
+msgid "Sunbird Add-ons"
+msgstr "Sunbird 附加元件"
+
+
+# %$1s is a URL
+# %$2s is an email address
+#: views/addons/display.thtml:270
+#, php-format
+msgid ""
+"Support for this add-on is provided by the developer at %1$s or by sending "
+"an e-mail to %2$s"
+msgstr "此元件的技術支援透過開發者在 %1$s ，或寄送 Email 至 %2$s 提供"
+
+
+# %s is an email address
+#: views/addons/display.thtml:274 views/addons/display.thtml:277
+#, php-format
+msgctxt "addons_display_paragraph_supportinfoemail"
+msgid "Support for this add-on is provided by the developer at %s"
+msgstr "此套件由作者於 %s 提供 Email 技術支援"
+
+
+#: views/addons/about.thtml:23
+msgid "Support the developer of this add-on by making a small contribution."
+msgstr "透過小小的捐獻來支持這個元件的開發者。"
+
+
+#: views/elements/amo2009/support_addon_in_listing.thtml:54
+msgid "Support this add-on"
+msgstr "支持此元件"
+
+
+#: views/elements/amo2009/support_addon_in_listing.thtml:50
+#, php-format
+msgid "Support this add-on: <a href=\"%1$s\">Contribute $%2$s</a>"
+msgstr "支持此元件：<a href=\"%1$s\">捐贈 $%2$s</a>"
+
+
+#: views/statistics/addon.thtml:53
+msgid "Switch Add-on"
+msgstr "切換元件"
+
+
+#: views/dev_hub/builder.thtml:26
+msgid ""
+"Tell us about the people or companies behind this add-on. This information "
+"appears in the add-on's About dialog."
+msgstr ""
+
+
+#: controllers/users_controller.php:174
+#, php-format
+msgid "Thanks for joining %s Add-ons"
+msgstr "感謝您加入 %s 附加元件"
+
+
+# %1$s is a file extension.  Example:  .exe
+# %2$s is a comma separated list of extensions.  Example:  .xpi, .jar
+#: controllers/components/developers.php:362
+#, php-format
+msgid ""
+"That file extension (%1$s) is not allowed for the selected add-on type. "
+"Please use one of the following: %2$s"
+msgstr "選擇的元件類型不接受這個副檔名（%1$s）。請使用下列中的一個：%2$s"
+
+
+#: views/developers/validator.thtml:59
+msgid ""
+"The Add-on Validator can check your add-on for common packaging and security "
+"problems, even if it's not hosted here."
+msgstr ""
+
+
+#: views/developers/addon_edit_properties.thtml:184
+msgid ""
+"The GUID of your add-on is specified in its install.rdf and uniquely "
+"identifies it. You cannot change your GUID once it is listed on Mozilla Add-"
+"ons."
+msgstr ""
+"您元件的 GUID 是由其 install.rdf 指定的唯一識別。您的元件加入 Mozilla 附加元"
+"件網站後便無法變更其 GUID。"
+
+
+#: controllers/components/validation.php:319
+msgid "The ID of this add-on is already used by an application."
+msgstr "此附加元件的 ID 已被應用程式所使用。"
+
+
+# %s is a string
+#: controllers/components/validation.php:314
+#, php-format
+msgid "The ID of this add-on is invalid: %s"
+msgstr "此附加元件的 ID 無效：%s"
+
+
+#: views/users/delete.thtml:90
+msgid "The Mozilla Add-ons community is sad to see you go."
 msgstr "Mozilla 附加網站社群很遺憾您的離開。"
 
+
+# %1$s and %2$s are GUIDs.
+#: controllers/developers_controller.php:661
+#, php-format
+msgid ""
+"The add-on GUID used in this file (%1$s) does not match the existing GUID "
+"for this add-on (%2$s)."
+msgstr "這個檔案（%1$s）的元件 GUID 與既有元件（%2$s）的 GUID 不符。"
+
+
+#: controllers/components/validation.php:820
+msgid ""
+"The add-on appears to be a conduit toolbar due to its updateURL element."
+msgstr "由於其 updateURL 元素，這個元件可能是 Conduit 工具列。"
+
+
+# %s is a filename.  Example:  windows.com
+#: controllers/components/validation.php:829
+#, php-format
+msgid "The add-on appears to be a conduit toolbar due to the file '%s'"
+msgstr "由於「%s」檔案的存在，這個元件可能是 Conduit 工具列。"
+
+
+# %s is a filename.  Example:  windows.com
+#: controllers/components/validation.php:542
+#, php-format
+msgid "The add-on contains a file '%s', which failed a library checksum"
+msgstr "這個元件的「%s」檔案其函式庫 Checksum 驗證失敗"
+
+
+# %s is a filename.  Example:  windows.com
+#: controllers/components/validation.php:419
+#, php-format
+msgid "The add-on contains a file '%s', which is a flagged type."
+msgstr "這個元件的「%s」檔案因為其檔案類型而被標註。"
+
+
+#: controllers/components/validation.php:226
+msgid "The add-on could not be found on the server."
+msgstr "這個元件無法在伺服器上找到。"
+
+
+#: controllers/addons_controller.php:88
+msgid "The add-on developers have not enabled contributions."
+msgstr "這個元件的開發者並未啟用捐助功能。"
+
+
+#: controllers/developers_controller.php:559
+#, php-format
+msgid "The add-on failed a validation test: %s"
+msgstr "元件未通過一項驗證測試：%s"
+
+
+# %s is a comma-separated list of image extensions ".png, .jpg"
+#: views/developers/addon_edit_properties.thtml:110
+#, php-format
+msgid ""
+"The add-on icon is a small image that is displayed next to your add-on's "
+"name in browse and search results, display pages, and in the add-on "
+"installation dialog. The image will automatically be resized to 32 x 32 "
+"pixels.  Please use one of the following image types: %s"
+msgstr ""
+"元件圖示是顯示於元件名稱旁的小圖片，會出現在瀏覽搜尋結果、顯示頁面，與安裝元"
+"件的對話框中。圖片會自動縮放為 32 x 32 像素，請使用下列圖片類型：%s"
+
+
+# %1$s is a filename.  Example: windows.com
+#: controllers/components/validation.php:1064
+#, php-format
+msgid "The add-on was missing a required file: %1$s"
+msgstr "元件缺少必須的檔案：%1$s"
+
+
+# %1 is the link to the sandbox/policy explanation page
+# This message is for a specific add-on not found
+#: views/users/login.thtml:55
+#, php-format
+msgid ""
+"The add-on you're looking for is currently in the sandbox. If you already "
+"have an account on Mozilla Add-ons, please log in, or <a href=\"%1$s\">learn "
+"more about the sandbox.</a>"
+msgstr ""
+"您正在瀏覽的附加元件放在「沙箱」區中，如果您有 Mozilla 附加元件的帳號，請先登"
+"入或<a href=\"%1$s\">了解什麼是「沙箱」區</a>。"
+
+
+#: views/compatibility/report.thtml:45
+#, php-format
+msgid ""
+"The add-ons below make up 95% of add-on usage known to Mozilla and are "
+"ordered by their usage size."
+msgstr "以下是 Mozilla 在以使用率大小排序後，所知總計達到 95% 使用率的元件。"
+
+
+#: views/developers/addon_edit_descriptions.thtml:91
+msgid ""
+"The description of your add-on is a longer explanation of features, "
+"functionality, and other relevant information. It is displayed under the "
+"summary on the add-on's display page."
+msgstr ""
+"您元件的敘述是對其特色、功能與其他相關資訊的較長說明。這會在元件頁面中摘要的"
+"下方顯示。"
+
+
+#: views/addons/developers.thtml:30 views/addons/display.thtml:138
+msgid ""
+"The developer of this add-on asks that you help support its continued "
+"development by making a small contribution."
+msgstr "這個元件的開發者希望您透過小小的捐獻協助其後續開發。"
+
+
+#: controllers/components/validation.php:221
+msgid "The extension does not match the type of the add-on."
+msgstr "這個擴充套件不符合其元件的形式。"
+
+
+# %s is a filename.  Example:  windows.exe
+#: controllers/components/validation.php:1045
+#, php-format
+msgid "The file %s does not appear to belong in this add-on"
+msgstr "「%s」檔案似乎不屬於這個元件"
+
+
+#: views/developers/addon_edit_properties.thtml:83
+msgid "The name of your add-on is displayed everywhere your add-on is listed."
+msgstr "您的元件名稱會在所有列出您元件的地方出現。"
+
+
+# %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
+#: views/developers/uploader.thtml:184
+#, php-format
+msgid ""
+"The new file will be available to the public as soon as an editor is able to "
+"review it. There are currently %1$s other add-ons in the queue. Want to be "
+"reviewed faster? Consider <a %2$s>becoming an editor</a>."
+msgstr ""
+"一當審核者可以進行審核時，就會公開這個新檔案。目前有 %1$s 個其他元件正在排"
+"隊。希望審核快一點嗎？不如<a %2$s>成為審核者</a>吧。"
+
+
+# %1$s is a number, %2$s is href="..." and should stay in the <a> tag.
+#: views/developers/uploader.thtml:174
+#, php-format
+msgid ""
+"The new version will be available to the public as soon as an editor is able "
+"to review it. There are currently %1$s other add-ons in the queue. Want to "
+"be reviewed faster? Consider <a %2$s>becoming an editor</a>."
+msgstr ""
+"一當審核者可以進行審核時，就會公開這個新版本。目前有 %1$s 個其他元件正在排"
+"隊。希望審核快一點嗎？不如<a %2$s>成為審核者</a>吧。"
+
+
+#: controllers/devhub_controller.php:726
+msgid ""
+"The package name of your add-on used within the browser. This should be a "
+"short form of its name, for example, Test Extension might be testextension."
+msgstr ""
+
+
+# %1 is the link to the sandbox/policy explanation page
+# This message is for any given sandbox-related page not found
+#: views/users/login.thtml:58
+#, php-format
+msgid ""
+"The page you're looking for is part of the sandbox. If you already have an "
+"account on Mozilla Add-ons, please log in, or <a href=\"%1$s\">learn more "
+"about the sandbox.</a>"
+msgstr ""
+"您正在瀏覽的頁面是「沙箱」區的一部分。如果您有 Mozilla 附加元件的帳號，請先登"
+"入或<a href=\"%1$s\">了解什麼是「沙箱」區</a>。"
+
+
+#: views/developers/previews.thtml:76
+msgid ""
+"The preview screenshots for your add-on are shown below. You can make "
+"changes to captions or images below. The Default Preview is the preview that "
+"is displayed next to your add-on in search and browse listings."
+msgstr ""
+"下面顯示的是您元件的預覽擷圖，您可以對說明或圖片進行修改。搜尋和瀏覽清單時，"
+"「預設預覽圖片」會出現在您的元件旁邊。"
+
+
+#: views/developers/addon_edit_properties.thtml:168
+msgid ""
+"The source of your add-on files can be viewed online by any logged in user "
+"if you wish."
+msgstr "如果您願意，任何已登入的使用者都能在線上檢視您元件的原始碼。"
+
+
+# %1$s is a version number, %2$s is an add-on ID.
+#: controllers/developers_controller.php:680
+#, php-format
+msgid "The specified version (%1$s) does not belong to this add-on (%2$s)."
+msgstr "指定的版本（%1$s）不屬於這個元件（%2$s）。"
+
+
+#: views/developers/addon_edit_descriptions.thtml:82
+msgid ""
+"The summary is a short explanation of your add-on's basic functionality that "
+"is displayed in search and browse listings, as well as at the top of your "
+"add-on's display page. <strong>Limit of 250 characters.</strong>"
+msgstr ""
+"摘要是對您元件基本功能的簡短說明，會顯示於搜尋與瀏覽的清單，以及元件顯示頁面"
+"的頂端。 <strong>長度以 250 個字元為限。</strong>"
+
+
+# %1$s is a version number, maybe 1.1.
+# %2$s is a URL.
+#: controllers/developers_controller.php:670
+#, php-format
+msgid ""
+"The version number uploaded (%1$s) already exists for this add-on. If you "
+"are trying to add another file to this version, <a href=\"%2$s\">click here</"
+"a>."
+msgstr ""
+"元件的這個版本（%1$s）已經存在了，如果您要為這個版本新增另一個檔案，<a href="
+"\"%2$s\">按一下這裡</a>。"
+
+
+#: controllers/components/validation.php:334
+msgid ""
+"The version of this add-on is invalid: please see the <a href=\"http://"
+"developer.mozilla.org/en/docs/Toolkit_version_format\">specification</a>"
+msgstr ""
+"此附加元件版本號無效：請見 <a href=\"http://developer.mozilla.org/en/docs/"
+"Toolkit_version_format\">規格說明</a>"
+
+
+#: controllers/components/validation.php:329
+msgid "The version of this add-on is invalid: versions cannot contain spaces."
+msgstr "此附加元件的版本號無效：版本號不能有空白。"
+
+
+# %1 is the queue mode
+#: views/editors/queue.thtml:189 views/admin/flagged_queue.thtml:89
+msgid "There are currently no add-ons of this type to review."
+msgstr "目前沒有 %s 附加元件待審核。"
+
+
+#: controllers/components/developers.php:102
+msgid "There must be at least one author for this add-on."
+msgstr "此附加元件至少要有一位作者。"
+
+
+#: views/developers/validator.thtml:94 views/developers/uploader.thtml:197
+msgid ""
+"There were problems with your add-on that prohibit it from being added.  See "
+"below for more details."
+msgstr "您的元件有一些問題，以致於被禁止新增。在下方查看相關細節。"
+
+
+#: views/elements/amo2009/collections/collector_info_secondary.thtml:67
+msgid ""
+"There's a new way to manage and find favorite add-ons. Comment, share and "
+"sync collections, all from your browser"
+msgstr ""
+"現在有全新的方式可以管理和尋找您喜愛的附加元件：在您的瀏覽器裡頭直接評論、分"
+"享和同步收藏集"
+
+
+#: views/developers/addon_edit_properties.thtml:176
+msgid "These flags are used to filter and classify add-ons."
+msgstr "這些註記是用來過濾和分類元件的。"
+
+
+#: views/collections/edit.thtml:202
+msgid ""
+"These users can publish add-ons to your collection and remove add-ons that "
+"they publish."
+msgstr "這些使用者可以發表附加元件至您的收藏集，或移除他們所發表的元件。"
+
+
+#: views/collections/edit.thtml:224
+msgid ""
+"These users can publish add-ons to your collection, manage all add-ons and "
+"settings, and grant other users permission."
+msgstr ""
+"這些使用者可以發表附加元件至您的收藏集、管理所有元件和設定、以及給予其他使用"
+"者權限。"
+
+
+#: views/addons/versions.thtml:63
+msgid ""
+"These versions are displayed for reference and testing purposes. You should "
+"always use the latest version of an add-on."
+msgstr ""
+"這裡列出的舊版本僅供參考及測試之用。若無特別需求，請安裝最新版的附加元件。"
+
+
+# %1$s is an add-on ID, perhaps 167.
+# %2$s is a URL.
+#: controllers/developers_controller.php:651
+#, php-format
+msgid ""
+"This add-on ID (%1$s) already exists in the database. If this is your add-"
+"on, you can <a href=\"%2$s\">upload a new version</a>."
+msgstr ""
+"資料庫中已經有這個元件 ID（%1$s）了。如果這是您的元件，您可以<a href=\"%2$s"
+"\">上傳新版本</a>。"
+
+
+#: views/developers/addon_edit_properties.thtml:181
+msgid "This add-on contains binary components"
+msgstr "這個元件包含二元碼元件（Binary component）"
+
+
+#: controllers/components/editors.php:57
+msgid "This add-on has not been nominated."
+msgstr "這個元件還沒有被送交批准。"
+
+
+#: controllers/downloads_controller.php:91
+msgid "This add-on is disabled"
+msgstr "此附加元件已停用"
+
+
+#: views/pages/js_constants.js.thtml:83
+msgid "This add-on is for older versions of Firefox"
+msgstr "此元件僅適用於舊版的 Firefox"
+
+
+# %1$s is an application name and version.  Example: Firefox 3.1
+#: views/pages/js_constants.js.thtml:87
+#, php-format
+msgid "This add-on is incompatible with your version of %1$s"
+msgstr "這個元件和您的 %1$s 版本不相容"
+
+
+#: views/helpers/install_button.php:137 views/elements/install.thtml:93
+msgid "This add-on is not available."
+msgstr "找不到此附加元件。"
+
+
+#: controllers/files_controller.php:108 controllers/files_controller.php:286
+msgid "This add-on is not viewable here."
+msgstr "此附加元件無法在此瀏覽。"
+
+
+#: views/addons/display.thtml:527
+msgid "This add-on is not yet in any collections."
+msgstr "這個元件尚不屬於任何收藏集。"
+
+
+#: views/developers/addon_edit_properties.thtml:180
+msgid "This add-on requires external software"
+msgstr "需要外部軟體支援"
+
+
+# %1$s is a URL
+# %2$s is a version number.  Example: 3.1
+#: views/pages/js_constants.js.thtml:84
+#, php-format
+msgid ""
+"This add-on requires the not-yet released <a href=\"%1$s\">Firefox %2$s</a>"
+msgstr "這個附加元件需要尚未發行的 <a href=\"%1$s\">Firefox %2$s</a>"
+
+
+#: controllers/components/hub.php:179
+msgid ""
+"This article describes how to set up the development environment for a "
+"large, complex Firefox extension with a need for high-performance, use of "
+"third-party libraries in C/C++, or interfaces not exposed via XPCOM."
+msgstr ""
+
+
+#: controllers/components/hub.php:283
+msgid ""
+"This article explains the structure and requirements of search plug-ins in "
+"Firefox."
+msgstr ""
+
+
+#: controllers/components/hub.php:66
+msgid ""
+"This article gives suggestions on how to set up your Mozilla application for "
+"extension development, including setting up a profile, changing preferences, "
+"and helpful development tools."
+msgstr ""
+
+
+#: controllers/components/hub.php:213
+msgctxt "devhub-external-english"
+msgid ""
+"This document describes the architecture of Firefox on mobile and includes "
+"performance tips for mobile code."
+msgstr ""
+
+
+#: controllers/components/hub.php:83
+msgid ""
+"This document explains install manifests (install.rdf) and all of properties "
+"available for use in your add-on."
+msgstr ""
+
+
+#: views/developers/addon_edit_properties.thtml:179
+msgid "This is a site-specific add-on"
+msgstr "專為特定網站設計"
+
+
+# %1$s is a URL
+#: views/addons/plugins.thtml:139
+#, php-format
+msgid ""
+"This page only lists some of the most common and most popular plugins. For "
+"more information about other plugins available for Mozilla-based Browsers, "
+"visit %1$s"
+msgstr ""
+"本頁面只列出最常見和最流行的外掛程式。若您想找其他 Mozilla 系列瀏覽器可用的外"
+"掛程式，請前往 %1$s"
+
+
+#: controllers/components/hub.php:75
+msgid ""
+"This tutorial will take you through the steps required to build a very basic "
+"extension - one which adds a status bar panel to the Firefox browser "
+"containing the text \"Hello, World!\""
+msgstr ""
+
+
+#: views/editors/review.thtml:186
+msgid ""
+"This will approve a sandboxed version of a public add-on to appear on the "
+"public side."
+msgstr "這個選項會附加元件在「沙箱」區的待審核版本放上「公開」區。"
+
+
+#: views/editors/review.thtml:189
+msgid ""
+"This will cause a sandboxed version of a public add-on to remain in the "
+"sandbox."
+msgstr "這個選項會讓附加元件在「沙箱」區的待審核版本留在「沙箱」區。"
+
+
+#: views/editors/review.thtml:194
+msgid ""
+"This will mark the add-on and its most recent version and files as public. "
+"Future versions will go into the sandbox until they are reviewed by an "
+"editor."
+msgstr ""
+"這個選項會讓附加元件最新版本和其檔案放上「公開」區，但後續更新版本還是會先送"
+"到「沙箱」區等待審核者批准。"
+
+
+#: views/editors/review.thtml:197
+msgid "This will retain the add-on in the sandbox."
+msgstr "這個選項會將附加元件留在「沙箱」區。"
+
+
+#. L10n: %1$s is a URL
+#: views/dev_hub/hub.thtml:44
+#, php-format
+msgid ""
+"This will soon be the home of great add-on development resources like "
+"tutorials, documentation, and tools. Our content isn't available in all "
+"locales during our beta period, but you can still access the localized <a "
+"href=\"%1$s\">Developer Tools</a> to manage any add-ons already hosted here."
+msgstr ""
+
+
+#: controllers/components/hub.php:241
+msgctxt "devhub-external-english"
+msgid ""
+"Thomas McMahon explains how to create a Firefox theme from start-to-finish "
+"in this tutorial."
+msgstr ""
+
+
+#: controllers/components/hub.php:190
+msgid "Thunderbird & Mobile Add-ons"
+msgstr ""
+
+
+#: views/elements/header.thtml:99
+msgid "Thunderbird Add-ons"
+msgstr "Thunderbird 附加元件"
+
+
+#: views/collections/edit.thtml:248
+msgid ""
+"To publish new add-ons to this collection, enter a comma-separated list of "
+"Add-on IDs below."
+msgstr ""
+"要在收藏集發表新的元件，請在下面輸入它們的元件 ID，以逗號分隔每個項目。"
+
+
+#: views/collections/edit.thtml:247
+msgid ""
+"To publish new add-ons to this collection, start typing their names below."
+msgstr "要在收藏集發表新的元件，請在下面輸入它們的名稱。"
+
+
+# A header on the admin page to toggle trusted status.
+#: views/developers/addon_edit_properties.thtml:192
+msgid "Trusted Add-on?"
+msgstr "受信任的元件？"
+
+
+#: views/developers/addon_edit_properties.thtml:193
+msgid "Trusted add-ons can become public without Editor review."
+msgstr "受信任的元件可以不經審核者批准就公開。"
+
+
+#: views/elements/pitch.thtml:71
+msgctxt "sidebar_pitch_updated_addons"
+msgid "Updated Add-ons"
+msgstr "最近更新元件"
+
+
+#: controllers/addons_controller.php:485
+msgctxt "rss_updatedaddons"
+msgid "Updated Add-ons"
+msgstr "最近更新元件"
+
+
+#: views/developers/validator.thtml:75
+msgid "Upload an add-on to check: "
+msgstr ""
+
+
+#: views/developers/uploader.thtml:125
+msgid ""
+"Upload your add-on file using the form below. If you have multiple, platform-"
+"specific files to upload, choose a single file and then upload the others "
+"using the Versions and Files Manager."
+msgstr ""
+"使用下面的表單上傳您的元件。如果您有多個、為特定作業系統設計的檔案，先選擇其"
+"中之一，再使用「版本與檔案管理員」上傳其他的。"
+
+
+#: views/dev_hub/builder_success.thtml:7
+msgid ""
+"Use the download link below to save a copy of your extension's compressed "
+"source. To install as an extension in Firefox or another compatible "
+"application, simply rename the .zip extension to .xpi."
+msgstr ""
+
+
+#: views/previews/add.thtml:45
+msgid ""
+"Use the form below to upload a PNG, JPG, or GIF screenshot of your add-on. "
+"Images larger than 700 pixels wide and 525 pixels high will automatically be "
+"resized."
+msgstr ""
+"請用下面的表單上傳格式為 PNG, JPG 或 GIF 的附加元件預覽圖片。大於 700 x 525 "
+"像素的圖片會自動縮小。"
+
+
+#: views/elements/developers/sidebar.thtml:60
+msgid "Validate Add-on"
+msgstr ""
+
+
+#: views/developers/validator.thtml:58
+msgid "Validate Your Add-on"
+msgstr ""
+
+
+#: views/developers/validator.thtml:95
+msgid "Validate another Add-on"
+msgstr ""
+
+
+#: views/elements/amo2009/homepage_addon_listing.thtml:58
+msgid "View all newly created add-ons"
+msgstr "檢視所有最新上傳元件"
+
+
+#: views/elements/amo2009/homepage_addon_listing.thtml:51
+msgid "View all popular add-ons"
+msgstr "檢視所有熱門元件"
+
+
+#: views/elements/amo2009/homepage_addon_listing.thtml:65
+msgid "View all recently updated add-ons"
+msgstr "檢視所有最近更新元件"
+
+
+#: views/elements/amo2009/homepage_addon_listing.thtml:72
+msgid "View all recommended add-ons"
+msgstr "檢視所有推薦元件"
+
+
+# %1$s is the 'Versions and Files' link target URL.
+# %2$s is 'current status' link target URL.
+#: views/developers/uploader.thtml:185
+#, php-format
+msgid ""
+"View your new file on the <a href=\"%1$s\">Versions and Files page</a>, or "
+"check out your add-on's <a href=\"%2$s\">current status</a>."
+msgstr ""
+"在<a href=\"%1$s\">版本與檔案</a>檢視您的新檔案，或檢查您附加元件<a href=\"%2"
+"$s\">目前的狀態</a>。"
+
+
+#: views/developers/uploader.thtml:175
+#, php-format
+msgid ""
+"View your new version in the <a href=\"%1$s\">Versions and Files page</a>, "
+"check out your add-on's <a href=\"%2$s\">current status</a>, or <b>add "
+"release notes</b> by clicking the button below (highly recommended)."
+msgstr ""
+
+
+#. L10n: %1$s is a URL
+#: views/dev_hub/builder_success.thtml:16
+#, php-format
+msgid ""
+"Want to make some changes? <a href=\"%1$s\">Return to the Add-on Builder</a>."
+msgstr ""
+
+
+#: views/statistics/addon.thtml:137
+msgid ""
+"We don't have any data for your add-on yet. Please check back in a few days."
+msgstr "我們還沒有任何關於此附加元件的資料，請過幾天後再回來檢查。"
+
+
+#: views/developers/validator.thtml:93
+#, php-format
+msgid ""
+"We've detected potential issues with your add-on.  Please review the list "
+"and upload a new version if the issues are valid.  For more about our add-on "
+"validator, see our <a href=\"%s\">validation help page</a>."
+msgstr ""
+
+
+#: views/developers/uploader.thtml:196
+#, php-format
+msgid ""
+"We've detected potential issues with your add-on.  Please review the list "
+"and upload a new version if the issues are valid.  If not, click Continue to "
+"submit your add-on for final review.  For more about our add-on validator, "
+"see our <a href=\"%s\">validation help page</a>."
+msgstr ""
+"我們已在您的元件中偵測到可能的問題。請檢閱以下的清單，如果該問題確實存在，請"
+"上傳修正問題後的新版本；否則請按「繼續」將您的元件提交並作最終審核。欲了解有"
+"關元件驗證器的更多資訊，請參閱<a href=\"%s\">元件驗證說明頁</a>。"
+
+
+# This contains the email sent to users when they signed up for a new
+# account:
+# %1 is the confirmation URL, %2 is the current app
+#: views/users/email/confirm_plain.thtml:6
+#, php-format
+msgid ""
+"Welcome to %2$s Add-ons.\\n\\nBefore you can use your new account you must "
+"activate it - this ensures the e-mail address you used is valid and belongs "
+"to you.\\nTo activate your account, click the link below or copy and paste "
+"the whole thing into your browser's location bar:\\n\\n%1$s\\n\\nOnce you've "
+"successfully activated your account, you can throw away this e-mail.\\n"
+"\\nThanks for joining %2$s Add-ons\\n-- %2$s Add-ons Staff"
+msgstr ""
+"歡迎來到 %2$s 附加元件網站。\\n\\n您需要在使用新的帳號之前先啟動它——這能確保"
+"您使用的 Email 地址是有效且確實為您所有。\\n若要啟動您的帳號，請點選以下的鏈"
+"結，或將以下內容複製到您瀏覽器的位址列：\\n\\n%1$s\\n\\n當您成功地啟動您的帳"
+"號後，您可以將這封 Email 束之高閣。\\n\\n感謝您加入 %2$s 附加元件網站\\n-- %2"
+"$s 附加元件網站工作人員"
+
+
+#: views/users/register.thtml:49
+msgid "Welcome to addons.mozilla.org (AMO)!"
+msgstr "歡迎來到 addons.mozilla.org（AMO）！"
+
+
+#: controllers/pages_controller.php:132
+msgid "Welcome to the Add-on Collector"
+msgstr "歡迎來到 Add-on Collector"
+
+
+#: views/elements/amo2009/teaser_collections.thtml:55
+msgid "What are Add-ons?"
+msgstr "什麼是附加元件？"
+
+
+#: controllers/components/hub.php:300
+msgid ""
+"What happens after your add-on is submitted? Learn about how our Editors "
+"review submissions."
+msgstr ""
+
+
+#: views/developers/addon_edit_profile.thtml:121
+msgid "What's Next for this Add-on"
+msgstr "這個元件的下一步"
+
+
+#: controllers/developers_controller.php:2106
+msgid ""
+"When users begin downloading this add-on they are taken to your Developer "
+"Profile, where they are asked to make a contribution."
+msgstr "使用者下載元件時，會被帶往您的「開發者檔案」並收到捐助請求。"
+
+
+#: controllers/developers_controller.php:2109
+msgid ""
+"When users try to install this add-on they are taken to your Developer "
+"Profile first, where they will be asked to make a contribution. Users must "
+"click the install button again to complete the installation."
+msgstr ""
+"使用者安裝元件之前，會先被帶往您的「開發者檔案」並收到捐助請求。使用者必須再"
+"次按下安裝鈕才能完成安裝。"
+
+
+#: views/collections/edit.thtml:201
+msgid "Who can publish add-ons to your collection?"
+msgstr "誰可以發表附加元件至您的收藏集？"
+
+
+#: views/dev_hub/builder.thtml:25
+msgid "Who is working on this add-on?"
+msgstr ""
+
+
+#: views/developers/addon_edit_profile.thtml:111
+msgid "Why I Made this Add-on"
+msgstr "我為什麼製作此元件"
+
+
+#: controllers/components/hub.php:115
+msgctxt "devhub-external-english"
+msgid ""
+"With a little JavaScript know-how, author James Edwards will show you just "
+"how straightforward it is to build your own Firefox extensions."
+msgstr ""
+
+
+#: views/addons/recommended.thtml:51 controllers/addons_controller.php:1469
+msgid ""
+"With so many great add-ons available, there's something for everyone. To get "
+"you started, here's a list of some of the most popular. Enjoy!"
+msgstr ""
+"這裡有成堆的附加元件，其中有些大家都該試試。您可以從下列我們推薦的附加元件開"
+"始玩玩看！"
+
+
+#: views/dev_hub/api_reference.thtml:58
+msgid ""
+"XUL (XML User Interface Language) is Mozilla's XML-based language that lets "
+"you build feature-rich cross platform applications that can run connected or "
+"disconnected from the Internet."
+msgstr ""
+
+
+#: views/developers/addon_edit_contributions.thtml:94
+msgid ""
+"You are <strong>not currently asking for contributions</strong> from users "
+"of this add-on."
+msgstr ""
+
+
+#: views/developers/addon_edit_contributions.thtml:91
+msgid ""
+"You are currently <strong>asking for contributions</strong> from users of "
+"this add-on."
+msgstr "您現在已向這個元件的使用者<strong>請求捐助</strong>。"
+
+
+#: views/collections/edit.thtml:247 views/collections/edit.thtml:248
+msgid "You can also publish an add-on from its normal listing page."
+msgstr "您也可以在各元件的顯示頁面發表它們。"
+
+
+# %1$s is the link to the "My Favorites" tab on the main collections page
+# %2$s is the localized title of the "My Favorites" tab
+# %3$s is the link URL to the collector add-on
+#: views/collections/subscribe.thtml:62
+#, php-format
+msgid ""
+"You can now quickly find this collection from the <a href=\"%1$s\">%2$s</a> "
+"tab in the directory. For an even easier way to keep track of your favorite "
+"collections, try out our <a href=\"%3$s\">Add-on Collector</a> extension for "
+"Firefox."
+msgstr ""
+"您現在可以從目錄下的<a href=\"%1$s\">%2$s</a>頁籤快速找到這個收藏集。透過我們"
+"用於 Firefox 的擴充套件 <a href=\"%3$s\">Add-on Collector</a>，以更簡單的方式"
+"追蹤您最愛的收藏集。"
+
+
 # %1 is the URL of the user's info page
-#. %1 is the URL of the user's info page
-#: views/users/delete.thtml:64
-msgid "user_del_error_addons"
+#: views/users/delete.thtml:62
+#, php-format
+msgid ""
+"You cannot delete your account if you are listed as an <a href=\"%1$s\"> "
+"author of any add-ons</a>. To delete your account, please have another "
+"person in your development group delete you from the list of authors for "
+"your add-ons. Afterwards you will be able to delete your account here."
 msgstr ""
 "您不能刪除您的帳號，因為您目前的角色是<a href=\"%1$s\">附加元件作者</a>。要刪"
 "除您的帳號，請通知其他附加元件共同作者請他們將您從作者清單中移除。之後您就能"
 "刪除帳號了。"
 
-#: views/users/delete.thtml:115
-msgid "user_del_nologin"
-msgstr "您以後將無法登入 Mozilla 附加元件網站。"
 
-# %1 is the application name
-#. %1 is the application name
-#: controllers/users_controller.php:534
-msgid "user_emailchange_subject"
-msgstr "請確認您在 %1$s 附加元件網站變更的 Email 地址"
+#: controllers/reviews_controller.php:275
+msgid "You cannot review your own add-on."
+msgstr "您無法對您自己的附加元件發表意見。"
 
-# This contains the email sent to users when they signed up for a new
-# account:
-# %1 is the confirmation URL, %2 is the current app
-#. This contains the email sent to users when they signed up for a new
-#. account:
-#. %1 is the confirmation URL, %2 is the current app
-#: views/users/email/confirm_plain.thtml:6
-#, php-format
-msgid "user_email_confirm_account_nopass"
+
+#: controllers/devhub_controller.php:135
+#: controllers/statistics_controller.php:209
+#: controllers/statistics_controller.php:729
+#: controllers/previews_controller.php:108
+#: controllers/previews_controller.php:211
+#: controllers/previews_controller.php:312
+msgid "You do not have access to that add-on."
+msgstr "您並無此附加元件的權限。"
+
+
+#: views/compatibility/developers.thtml:73 views/dev_hub/feed.thtml:50
+msgid "You do not have any add-ons hosted on Mozilla Add-ons."
+msgstr "您沒有任何放在 Mozilla 附加元件網站的附加元件。"
+
+
+#: controllers/developers_controller.php:376
+msgid "You do not have sufficient privileges to update this add-on."
+msgstr "您沒有足夠的權限更新這個元件。"
+
+
+#: views/developers/dashboard.thtml:113
+msgid ""
+"You don't currently have any add-ons hosted on Mozilla Add-ons. To learn how "
+"the process works and submit your first add-on, click Get Started below."
 msgstr ""
-"歡迎來到 %2$s 附加元件。\n"
-"\n"
-"在您使用新帳號登入之前必須先啟用帳號 – 這能確定您寫的 Email 地址屬於您並真的"
-"有在用。\n"
-"請按下面的鏈結或複製整串網址到瀏覽器的位址列後貼上以啟用您的帳號：\n"
-"\n"
-"%1$s\n"
-"\n"
-"一旦您成功啟用帳號就能丟掉這封信。\n"
-"\n"
-"感謝您加入 %2$s 附加元件\n"
-"-- %2$s 附加元件開發小組"
+"您目前沒有任何放在 Mozilla 附加元件網站的元件。按下面的「開始」以瞭解這個過程"
+"並送出您的第一個元件。"
+
+
+#: views/developers/addon_status.thtml:111
+msgid ""
+"You may now complete your add-on and move it to the <span class=\"status-1"
+"\">Sandbox</span> by clicking the button below."
+msgstr ""
+"您現在可以按下面的按鈕，完成您的元件並將其送至「<span class=\"status-1\">沙箱"
+"</span>」區。"
+
+
+#: views/developers/addon_status.thtml:128
+msgid ""
+"You may now nominate your add-on for <span class=\"status-4\">Public</span> "
+"by clicking the button below."
+msgstr ""
+"您現在可以按下面的按鈕，將元件送交批准至「<span class=\"status-4\">公開</"
+"span>」區。"
+
+
+#: views/developers/validator.thtml:51
+#, php-format
+msgid "You must <a href=\"%1$s\">log in</a> to validate an add-on."
+msgstr ""
+
+
+#: controllers/components/validation.php:393
+msgid "You must have at least one valid Mozilla target application."
+msgstr "您至少要選一個有效的 Mozilla 目標應用程式。"
+
 
 # %1 is the confirmation url, %2 is the application name
-#. %1 is the confirmation url, %2 is the application name
 #: views/users/email/emailchange_plain.thtml:5
-msgid "user_email_confirm_emailchange"
-msgstr ""
-"您已要求變更 %2$s 附加元件網站上的 Email 地址。\n"
-"\n"
-"為了確認您的新 Email 地址，請按下面的鏈結或複製整串網址到瀏覽器的位址列後貼上"
-"以啟用您的帳號：\n"
-"\n"
-"%1$s\n"
-"\n"
-"您有 48 小時的時間可確認新 Email 地址。若您中途反悔，不想變更 Email 地址的"
-"話，請不要理會這封信即可。\n"
-"\n"
-"感謝您！\n"
-"-- %2$s 附加元件開發小組"
-
-#: controllers/users_controller.php:168
 #, php-format
-msgid "user_email_confirm_subject"
-msgstr "感謝您加入 %s 附加元件"
-
-# This is the password reset email
-# %1 is the pw reset URL, %2 is the application
-#. This is the password reset email
-#. %1 is the pw reset URL, %2 is the application
-#: views/users/email/pwreset_plain.thtml:5
-#, php-format
-msgid "user_email_pwreset"
+msgid ""
+"You requested a change to your email address at %2$s Add-ons.\\n\\nIn order "
+"to confirm the new address, please click the link below or copy and paste "
+"the whole thing into your browser's location bar:\\n\\n%1$s\\n\\nYou have 48 "
+"hours to confirm the new address. If you do not want to change the address "
+"anymore, you can just ignore this email.\\n\\nThanks!\\n-- %2$s Add-ons Staff"
 msgstr ""
-"%2$s 附加元件密碼重設\n"
-"\n"
-"我們已收到您要求重設 addons.mozilla.org 上的密碼。請按下面的鏈結或複製整串網"
-"址到瀏覽器的位址列後貼上以變更密碼：\n"
-"\n"
-"%1$s\n"
-"\n"
-"如果您從來沒有要求重設密碼請不要理會這封信。\n"
-"\n"
-"非常感謝。\n"
-"-- %2$s 附加元件開發小組"
+"您已要求變更 %2$s 附加元件網站上的 Email 地址。\\n\\n為了確認您的新 Email 地"
+"址，請按下面的鏈結或複製整串網址到瀏覽器的位址列後貼上以啟用您的帳號：\\n\\n%"
+"1$s\\n\\n您有 48 小時的時間可確認新 Email 地址。若您中途反悔，不想變更 Email "
+"地址的話，請不要理會這封信即可。\\n\\n感謝您！\\n-- %2$s 附加元件工作人員"
 
-#: controllers/users_controller.php:245
-#, php-format
-msgid "user_email_pwreset_subject"
-msgstr "重設 %s 附加元件密碼"
 
-#: views/users/info.thtml:75
-#, php-format
-msgid "user_info_usersince"
-msgstr "%s 附加元件註冊日期"
+#: views/users/delete.thtml:99
+msgid "You will not be able to log into Mozilla Add-ons anymore."
+msgstr "您以後將無法登入 Mozilla 附加元件網站。"
 
-#: views/users/edit.thtml:160
-msgid "user_notifications_item_compat"
-msgstr "附加元件相容性 (強烈建議開啟)"
 
-#: views/users/edit.thtml:158
-msgid "user_notifications_select_topics"
+#: views/dev_hub/builder_success.thtml:6
+msgid "Your add-on has been created and is ready for download."
 msgstr ""
-"Mozilla 將不時寄送 E-mail 向您通知最新活動與新版本發行。請在下面選擇您有興趣"
-"的主題："
 
-#: views/users/edit.thtml:165
-msgid "user_notifications_specific_contact"
+
+#: views/developers/addon_status.thtml:88
+msgid ""
+"Your add-on is <span class=\"status-4\">Public</span>, which means it will "
+"show up in all listings and searches and can be downloaded without "
+"restriction. Updates are being provided to your add-on through the update "
+"check service."
 msgstr ""
-"Mozilla 保留使用此資訊與您聯絡，詢問關於您放上網的附加元件相關問題的權利。"
+"您的元件目前為「<span class=\"status-4\">公開</span>」。這表示元件會出現在所"
+"有列表和搜尋中，且可以不受限制地被下載。更新檢查服務會對您的元件提供更新。"
 
-#: views/users/register_complete.thtml:51
+
+#: views/developers/addon_status.thtml:194
+msgid ""
+"Your add-on is <span class=\"status-4\">Trusted</span>. This means you can "
+"submit updates to your add-on without editor review."
+msgstr ""
+"您的附加元件目前為「<span class=\"status-4\">受信任的</span>」。這表示您不需"
+"要編輯者的審核就可以上傳更新。"
+
+
+# %1$s is a URL
+#: controllers/components/validation.php:324
 #, php-format
-msgid "user_register_amo_link"
-msgstr "%s 附加元件"
+msgid ""
+"Your add-on is attempting to use a GUID that has been blocked.  Please <a "
+"href=\"%1$s\">contact the AMO staff</a>."
+msgstr ""
+"您的元件試圖使用已被封鎖的 GUID。請<a href=\"%1$s\">聯絡 AMO 工作人員</a>。"
 
-# %1 is the user's email address, %2 is the current app
-#. %1 is the user's email address, %2 is the current app
-#: views/users/activatefirst.thtml:49
+
+#: views/developers/addon_status.thtml:70
+msgid ""
+"Your add-on is currently <span class=\"status-0\">Incomplete</span>. This "
+"means your add-on is not showing up on any portion of the site or update "
+"check service. You may come to this page to complete your add-on after it "
+"meets the criteria below for completion and transfer to the <span class="
+"\"status-1\">Sandbox</span>."
+msgstr ""
+"您的元件目前為「<span class=\"status-0\">未完成</span>」。這表示元件將不會出"
+"現於網站的任何位置或更新檢查服務中。當您的元件達成以下標準，而可以完成並移至"
+"「<span class=\"status-1\">沙箱</span>」區時，您可以再造訪這個頁面以完成元"
+"件。"
+
+
+# %s is a number, perhaps 42.
+#: views/developers/addon_status.thtml:80
 #, php-format
-msgid "user_register_click_confirm_link"
+msgid ""
+"Your add-on is currently nominated to become <span class=\"status-4"
+"\">Public</span> and is awaiting editor review. There are currently %s other "
+"add-ons in the nomination queue."
 msgstr ""
-"啟動您帳號的鏈結已寄到您的 Email 地址 %1$s，在您登入 %2$s 附加元件之前必須先"
-"按下該鏈結以啟動帳號。"
+"您的元件目前已送交批准以前往「<span class=\"status-4\">公開</span>」區，正在"
+"等待審核者批准。目前有 %s 個其他元件正在排隊。"
 
-#: views/users/info.thtml:96
+
+#: views/developers/addon_status.thtml:74
+#: views/developers/addon_status.thtml:78
+msgid ""
+"Your add-on is in the <span class=\"status-1\">Sandbox</span>, which means "
+"it will show up in listings and searches, but users must log in to download "
+"it. Updates are <b>not</b> being provided to your add-on through the update "
+"check service."
+msgstr ""
+"您的元件在「<span class=\"status-1\">沙箱</span>」區，這表示它會出現在列表和"
+"搜尋中，但使用者必須先登入才能下載。更新檢查服務將<b>不會</b>對您的元件提供更"
+"新。"
+
+
+# %s is an email address.
+#: views/developers/addon_status.thtml:84
 #, php-format
-msgid "users_info_addons_by_user"
-msgstr "%1$s 的附加元件"
+msgid ""
+"Your add-on is pending. This shouldn't have happened. Please e-mail %s with "
+"your add-on ID and state this error."
+msgstr ""
+"您的附加元件目前被擱置，這不是正常現象。請寄送 Email 到 %s ，附上您的元件 ID "
+"並提及這個錯誤。"
 
-# %1 is the link to the sandbox/policy explanation page
-# This message is for a specific add-on not found
-#. %1 is the link to the sandbox/policy explanation page
-#. This message is for a specific add-on not found
-#: views/users/login.thtml:53
+
+#: views/developers/addon_edit_authors.thtml:79
+msgid "Your add-on must have at least one owner."
+msgstr "您的元件至少要有一位擁有者。"
+
+
+# %s is an email address.
+#: views/developers/addon_status.thtml:92
 #, php-format
-msgid "users_login_sandbox_display_warning"
+msgid ""
+"Your add-on was <span class=\"status-5\">Disabled</span> by an administrator "
+"and cannot be used. If you have any questions, please e-mail %s."
 msgstr ""
-"您正在瀏覽的附加元件放在「沙箱」區中，如果您有 Mozilla 附加元件的帳號，請先登"
-"入或<a href=\"%1$s\">了解什麼是「沙箱」區</a>。"
+"您的附加元件被管理員<span class=\"status-5\">停用</span>而無法使用。如果您有"
+"任何問題，請寄送 Email 到 %s。"
 
-# %1 is the link to the sandbox/policy explanation page
-# This message is for any given sandbox-related page not found
-#. %1 is the link to the sandbox/policy explanation page
-#. This message is for any given sandbox-related page not found
-#: views/users/login.thtml:56
+
+# %s is the addons email address.
+#: views/developers/dashboard.thtml:103
 #, php-format
-msgid "users_login_sandbox_page_warning"
+msgid ""
+"Your add-on was disabled by an administrator and cannot be used.  If you "
+"have any questions, please email %s."
 msgstr ""
-"您正在瀏覽的頁面是「沙箱」區的一部分。如果您有 Mozilla 附加元件的帳號，請先登"
-"入或<a href=\"%1$s\">了解什麼是「沙箱」區</a>。"
+"您的附加元件被管理員停用而無法使用。如果您有任何問題，請寄送 Email 到 %s。"
 
-#. %1$s is a number.
-#: views/collections/detail.thtml:126
-msgid "collections_detail_header_count"
-msgid_plural "collections_detail_header_count"
-msgstr[0] "這個收藏集有 %1$s 個元件"
 
-#: views/elements/amo2009/collector_info_secondary.thtml:48
-msgid "collections_index_p_what_are"
-msgstr "收藏集是將相關的附加元件集結起來，以方便分享的群集。"
-
-#: views/addons/home.thtml:144
-msgid "addons_home_collections_intro"
+#: views/dev_hub/newsletter.thtml:55
+msgid ""
+"about:addons is our monthly newsletter highlighting noteworthy information "
+"and events in the world of add-ons. Take a look through our archives below "
+"and sign up!"
 msgstr ""
-"收藏集是讓您分類、組合、配對與攪和附加元件的方式。您可以訂閱其他使用者建立的"
-"收藏集，或自己建立一個。"
 
-#. %1$s is the HTML collection name link.
-#: views/elements/amo2009/teaser_collections.thtml:108
-msgid "addons_home_introduction_collection_link"
-msgstr "喜歡嗎？在 %1$s 收藏集尋找更多相關的附加元件吧。"
 
-#. %1$s is the count of addons in a collection
-#: views/elements/amo2009/collection_listing_item.thtml:51
-#: views/addons/home.thtml:167
-msgid "addons_home_collections_addon_count"
-msgid_plural "addons_home_collections_addon_count"
-msgstr[0] "<strong>%1$s</strong> 個附加元件"
+#: views/elements/amo2009/search.thtml:194 views/elements/search.thtml:187
+#: views/elements/search_mini.thtml:54
+msgid "all add-ons"
+msgstr "所有元件"
 
-#: views/addons/home.thtml:101
-msgid "addons_home_browse_title"
-msgstr "瀏覽附加元件"
 
-#: views/elements/amo2009/teaser_collections.thtml:55
-msgid "addons_home_introduction_header"
-msgstr "什麼是附加元件？"
-
-#: views/elements/amo2009/teaser_collections.thtml:60
-msgid "addons_home_introduction_extras"
+# link path to search plugins instructions, relative to devmo
+#: views/addons/searchengines.thtml:88
+msgid ""
+"http://developer.mozilla.org/en/docs/Creating_OpenSearch_plugins_for_Firefox"
 msgstr ""
-"<strong>超過五千個免費的小工具</strong>，讓您自訂並擴充 Firefox 來滿足您的需"
-"求。"
 
-#: views/elements/amo2009/teaser_collections.thtml:66
-msgid "addons_home_introduction_themes"
-msgstr "<strong>協助您進行常見工作</strong>的工具列、佈景主題和搜尋提供者。"
 
-#: views/elements/amo2009/teaser_collections.thtml:72
-msgid "addons_home_introduction_install"
-msgstr "<strong>安裝十分簡單</strong>並隨時保持最新狀態。"
+#: views/pages/appversions.thtml:93
+msgid "http://developer.mozilla.org/en/docs/Install_Manifests"
+msgstr ""
 
-#: models/collection_promo.php:57
-#, fuzzy
-msgid "collections_educators_title"
-msgstr "Educators"
 
-#: models/collection_promo.php:57
-#, fuzzy
-msgid "collections_educators_tagline"
-msgstr "Teacher tools"
+#: views/elements/amo2009/hub/navbar.thtml:65
+msgid "more add-ons..."
+msgstr ""
 
-#: models/collection_promo.php:58
-#, fuzzy
-msgid "collections_students_title"
-msgstr "Students"
 
-#: models/collection_promo.php:58
-#, fuzzy
-msgid "collections_students_tagline"
-msgstr "Student tools"
+#: views/statistics/index.thtml:148
+msgid "or, select an add-on with public statistics"
+msgstr "或選擇元件的公開資訊"
 
-#: models/collection_promo.php:59
-#, fuzzy
-msgid "collections_creative_title"
-msgstr "Creative"
 
-#: models/collection_promo.php:59
-#, fuzzy
-msgid "collections_creative_tagline"
-msgstr "Create your own activity"
+#: views/statistics/index.thtml:146
+msgid "or, select another add-on"
+msgstr "或選擇其他元件"
 
-#: controllers/developers_controller.php:506
+
+#: views/elements/amo2009/search.thtml:184
+#: views/elements/amo2009/search.thtml:376
+#: views/elements/amo2009/search.thtml:402 views/elements/search.thtml:171
+#: views/elements/search.thtml:183 views/elements/search_mini.thtml:43
+#: views/elements/search_mini.thtml:49 views/layouts/mozilla.thtml:188
+msgid "search for add-ons"
+msgstr "搜尋附加元件"
+
+
+#: views/elements/amo2009/search.thtml:182
+#: views/elements/amo2009/search.thtml:400
+msgid "search for mobile add-ons"
+msgstr ""
+
+
+#: views/elements/amo2009/addons/list_options.thtml:108
+#: views/elements/addon_list_options.thtml:105
+msgid "show experimental add-ons"
+msgstr "顯示實驗中元件"
+
+
+#. L10n: %1$s is the contents of an <a> tag
+#: views/dev_hub/api_reference.thtml:56 views/dev_hub/api_reference.thtml:61
+#: views/dev_hub/api_reference.thtml:66 views/dev_hub/api_reference.thtml:71
+#: views/dev_hub/api_reference.thtml:80 views/dev_hub/api_reference.thtml:85
+#: views/dev_hub/api_reference.thtml:90 views/dev_hub/api_reference.thtml:99
+#: views/dev_hub/api_reference.thtml:104 views/dev_hub/api_reference.thtml:118
+#: views/dev_hub/api_reference.thtml:123 views/dev_hub/api_reference.thtml:128
+#: views/dev_hub/api_reference.thtml:137 views/dev_hub/api_reference.thtml:142
+#: views/dev_hub/api_reference.thtml:151 views/dev_hub/api_reference.thtml:156
 #, php-format
-msgid "devcp_error_activity_info_parse"
-msgstr "Can not parse manifest file"
-
-#: views/elements/search.thtml:212 views/elements/amo2009/search.thtml:222
-#: views/elements/amo2009/search.thtml:224
-msgid "advanced_search_form_version"
-msgstr "版本從"
-
-#. Plural in this context means many of the add-on type
-#: models/addontype.php:98
-msgid "general_addontype_extension_plural"
-msgstr "擴充套件"
-
-msgid "devcp_uploader_licence"
-msgstr "Source Code License"
-
-#. %1$s is the number of addons downloaded
-#: views/addons/home.thtml:57
-#, fuzzy, php-format
-msgid "addons_home_stats_downloaded"
-msgid_plural "addons_home_stats_downloaded"
-msgstr[0] "<strong>%1$s</strong> <span>個元件已被下載</span>"
-
-#: views/users/register.thtml:49
-msgid "user_register_welcome_header"
-msgstr "Welcome to %1$s!"
-
-msgid "user_register_details"
+msgid "via <a %1$s>Mozilla Developer Center</a>"
 msgstr ""
-"<p>Registration on %3$s is <strong>not required</strong> if you simply want "
-"to download and install public activity.</p><p>You only need to register if:"
-"</p><ul><li>You want to submit reviews for activities</li><li>You want to "
-"keep track of your favorite activity collections or create one yourself</"
-"li><li>You are an activity developer and want to upload your activity for "
-"hosting on %3$s</li></ul><p>Upon successful registration, you will be sent a "
-"confirmation email to the address you provided. Please follow the "
-"instructions there to confirm your account.</p><p>If you like, you can read "
-"our <a href='%1$s' title='Legal Notices'>Legal Notices</a> and <a href='%2"
-"$s' title='Privacy Policy'>Privacy Policy</a>.</p>"
 
-msgid "addons_display_more_about"
-msgstr "More about this activity"
 
-msgid "addons_share_button_a_text"
-msgstr "Share this Activity"
+msgid "Internal problem while unpackaging bundle"
+msgstr ""
 
-#. %1 is a number.
-msgid "addons_display_see_reviews"
-msgstr "See all %1$s reviews of this activity"
+msgid "The activity bundle must contain a file named %s"
+msgstr ""
 
-msgid "addons_display_th_workswith"
-msgstr "Works with"
+msgid "Can not parse manifest file"
+msgstr ""
 
-msgid "addons_home_summary_developer"
-msgid_plural "addons_home_summary_developer"
-msgstr[0] "Developer"
-msgstr[1] "Developers"
+msgid "The file activity/activity.info must contain a value for name"
+msgstr ""
 
-msgid "addons_display_image_gallery"
-msgstr "Image Gallery"
+msgid "The file activity/activity.info must contain a value for activity_version'"
+msgstr ""
 
-msgid "addons_display_please_login"
-msgstr "Please <a href=\"%1$s\">log in</a> to submit a review"
-
-msgid "addons_display_label_review"
-msgstr "Review"
-
-msgid "addons_display_release_notes"
-msgstr "Release Notes"
-
-msgid "addons_display_view_older"
-msgstr "View Older Versions"
-
-msgid "addons_display_post_review"
-msgstr "Post Review"
-
-#, fuzzy
-#~ msgid "general_addontype_activity"
-#~ msgstr "Activity"
+msgid "The file activity/activity.info must contain a value for bundle_id"
+msgstr ""
