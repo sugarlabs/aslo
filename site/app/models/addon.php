@@ -945,7 +945,7 @@ class Addon extends AppModel
         $a = $addon['Addon'];
         $this->Config =& new Config();
         $config = $this->Config->getConfig();
-        return (!$config['paypal_disabled'] && $a['wants_contributions'] &&
+        return (!$config['paypal_disabled'] && !empty($a['wants_contributions']) && $a['wants_contributions'] &&
                 !empty($a['paypal_id']));
     }
 

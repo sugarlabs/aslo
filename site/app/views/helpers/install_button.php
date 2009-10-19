@@ -237,7 +237,7 @@ class InstallButtonHelper extends Helper {
                         ."'{$fromVer}', '{$toVer}', '{$_loggedin}');";
                         } else {
                         // allow determining latest compatible version for version history page
-                        $hintsJs .= "addons_history.addVersion('{$versionId}','{$fromVer}','{$toVer}');";
+                        $hintsJs .= "addons_history.addVersion('{$this->versionId()}','{$fromVer}','{$toVer}');";
                         }
                         $hintsJs .= "}, 0);
                         </script>";

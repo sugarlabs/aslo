@@ -49,7 +49,7 @@ class TagsController extends AppController
     var $layout = 'mozilla';
     var $uses = array('Addon', 'Addonlog', 'Eventlog', 'Review', 'Tag', 'Translation', 'Version', 'ReviewsModerationFlag', 'UserTagAddon', 'File', 'Platform');
     var $components = array('Amo', 'Pagination', 'Session', 'Search', 'Image');
-    var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time');
+    var $helpers = array('Html', 'Link', 'Localization', 'Pagination', 'Time', 'InstallButton');
     var $namedArgs = true;
     var $beforeFilter = array('checkCSRF', 'getNamedArgs', '_checkSandbox');
 

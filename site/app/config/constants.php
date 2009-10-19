@@ -154,11 +154,6 @@ define('APP_MOBILE', 60);
 global $app_shortnames; // shortnames are used in URLs
 $app_shortnames = array(
     'sugar'         => APP_FIREFOX,
-    'firefox'       => APP_FIREFOX,
-    'thunderbird'   => APP_THUNDERBIRD,
-    'seamonkey'     => APP_SEAMONKEY,
-    'sunbird'       => APP_SUNBIRD,
-    'mobile'        => APP_MOBILE
     );
 global $app_prettynames;
 $app_prettynames = array( // Overridden with L10n in bootstrap.php
