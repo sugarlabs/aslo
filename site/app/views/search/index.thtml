@@ -148,10 +148,10 @@ $params = array(
             <ul class="refinements">
                 <?php
                     $selected = "";
-                    if ($hver == "any" && $lver == "any") {
+                    if ($lver == "any") {
                         $selected = " class='selected'";
                     }
-                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=any&lver=any&pp=".$pp).'">'.___('All Versions').'</a></li>';
+                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=any&pp=".$pp).'">'.___('All Versions').'</a></li>';
                 ?>
                 <?php
                     $min_display_version_by_app = array(
@@ -172,10 +172,10 @@ $params = array(
                     $versions = $new_versions;
                     foreach (array_reverse($versions[$appid]) as $app_version){
                         $selected = "";
-                        if ($app_version == $hver && $lver == $app_version) {
+                        if ($app_version == $lver) {
                             $selected = " class='selected'";
                         }
-                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$app_version."&lver=".$app_version."&pp=".$pp).'">'.$app_version.'</a></li>';
+                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$category[0].",".$category[1]."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$app_version."&pp=".$pp).'">'.$app_version.'</a></li>';
                     }
                 ?>
             </ul>
@@ -189,7 +189,7 @@ $params = array(
                     } else {
                         $selected = "";
                     }
-                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."lver=".$lver."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
+                    echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=all&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.___('All', 'search_refine_all_categories_link').'</a></li>';
                     $results_categories = array();
                     $results_categories_values = array();
                     foreach ($search_results as $addon) {
@@ -208,7 +208,7 @@ $params = array(
                         } else {
                             $selected = "";
                         }
-                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&hver=".$hver."&lver=".$lver."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
+                        echo '<li'.$selected.'><a href="'.$html->url("/search?q=".$search_terms."&appid=".$appid."&cat=".$_categories['Category']['addontype_id'].",".$_categories['Category']['id']."&tag=".$tag."&atype=".$atype."&pid=".$pid."&lup=".$lup."&sort=".$sort."&lver=".$lver."&pp=".$pp).'">'.$_categories['Translation']['name']['string'].'</a></li>';
                     }
                 ?>
             </ul>

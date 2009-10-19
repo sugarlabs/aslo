@@ -41,7 +41,6 @@
  * ***** END LICENSE BLOCK ***** */
 
 uses('sanitize');
-vendor('sphinx/addonsSearch');
 
 class SearchController extends AppController
 {
@@ -105,11 +104,8 @@ class SearchController extends AppController
         }
     }
 
-    public function index() {
+    function index() {
         global $valid_status, $app_shortnames;
-
-        $search_options = array();
-
         $associations = array(
             'all_categories', 'all_tags', 'authors', 'compatible_apps',
             'contrib_details', 'files', 'latest_version', 'list_details'
@@ -122,7 +118,16 @@ class SearchController extends AppController
         }
         $this->publish('search_terms', $_terms);
 
-        // category
+        //if advanced search appid set, use it
+        $appname = "";
+        if (isset( $this->params['url']['appid']) && 
+            in_array($this->params['url']['appid'], array_values($app_shortnames) ) ) {
+            $appname = array_search($this->params['url']['appid'], $app_shortnames);
+            $redirect = str_replace(APP_SHORTNAME, $appname, $_SERVER['REQUEST_URI']);
+            
+            if($this->params['url']['appid'] != APP_ID) { $this->redirect("http://".$_SERVER["HTTP_HOST"].$redirect, null, true); }
+        }
+        $this->publish('appid', APP_ID); //publish for element caching
 
         // collection search is a special case
         if (!empty($this->params['url']['cat']) && ($this->params['url']['cat'] == 'collections')) {
@@ -133,113 +138,63 @@ class SearchController extends AppController
         if (!empty($this->params['url']['cat'])) {
             $category = explode(',', $this->params['url']['cat']);
             if (count($category) != 2 || !is_numeric($category[0]) ||
-            !is_numeric($category[1])) {
+                !is_numeric($category[1]))
                 $category = array(0,0);
-            }
-        } else {
+        } else
             $category = array(0,0);
-        }
         $this->publish('category', $category);
-
-        if ($category[0]) {
-            $search_options['type'] = $category[0];
-            $search_options['category'] = $category[1];
-        }
-
-        //if advanced search lver set (for version range), use the
-        $lver = -1;
-        if (isset($this->params['url']['lver'])) {
-            $lver = $this->params['url']['lver'];
-            $search_options['version'] = $lver;
-        }
-        $this->publish('lver', $lver);
-
+		
+		if (!empty($this->params['url']['tag'])) {
+			$_tag = $this->params['url']['tag'];
+		} else {
+			$_tag = null;
+		}
+		$this->publish('tag', $_tag);
+		
         //if advanced search atype set, use it.
         $atype = -1;
         $addon_types = $this->Addontype->getNames();
-
-        if (isset($this->params['url']['atype']) &&
-            in_array($this->params['url']['atype'], array_keys($addon_types))) {
-
-            $atype = $this->params['url']['atype'];
-            $search_options['type'] = $atype;
-        }
+        if (isset($this->params['url']['atype']) && 
+            in_array($this->params['url']['atype'], array_keys($addon_types))) { $atype = $this->params['url']['atype']; }
         $this->publish('atype', $atype); //publish for element caching
 
         //if advanced search pid (platform id) set, use it.
         $pid = -1;
         $platforms = $this->Amo->getPlatformName();
         if (isset( $this->params['url']['pid']) &&
-            in_array($this->params['url']['pid'], array_keys($platforms)))
-        {
-            $pid = $this->params['url']['pid'];
-            $search_options['platform'] = $pid;
-        }
-
+            in_array($this->params['url']['pid'], array_keys($platforms))) { $pid = $this->params['url']['pid']; }
         $this->publish('pid', $pid); //publish for element caching
-
+        
         //if advanced search last update requirement set, use it
         $lup = "";
-        $updates = array("1 day ago","1 week ago","1 month ago","3 months ago","6 months ago","1 year ago");
-        if (isset( $this->params['url']['lup']) &&
-            in_array($this->params['url']['lup'], $updates) )
-        {
-            $lup = $this->params['url']['lup'];
-            $search_options['after'] = strtotime($lup);
-        }
+        $updates = array('- INTERVAL 1 DAY', '- INTERVAL 1 WEEK', '- INTERVAL 1 MONTH', '- INTERVAL 3 MONTH', '- INTERVAL 6 MONTH', '- INTERVAL 1 YEAR');
+
+        if (isset( $this->params['url']['lup']) && 
+            in_array($this->params['url']['lup'], $updates) ) { $lup = $this->params['url']['lup']; }
         $this->publish('lup', $lup); //publish for element caching
-
-        // old code below
-
-        //if advanced search appid set, use it
-        $appname = "";
-        if (isset( $this->params['url']['appid']) &&
-        in_array($this->params['url']['appid'], array_values($app_shortnames) ) ) {
-            $appname = array_search($this->params['url']['appid'], $app_shortnames);
-            $redirect = str_replace(APP_SHORTNAME, $appname, $_SERVER['REQUEST_URI']);
-
-            if($this->params['url']['appid'] != APP_ID) { $this->redirect("http://".$_SERVER["HTTP_HOST"].$redirect, null, true); }
-        }
-        $this->publish('appid', APP_ID); //publish for element caching
-
-
-        if (!empty($this->params['url']['tag'])) {
-            $_tag = $this->params['url']['tag'];
-            $search_options['tag'] = $_tag;
-        } else {
-            $_tag = null;
-        }
-        $this->publish('tag', $_tag);
-
 
         //if advanced search sort_order set, use it
         $sort = "";
         $sort_orders = array('newest', 'name', 'averagerating', 'weeklydownloads');
-        if (isset( $this->params['url']['sort']) &&
-        in_array($this->params['url']['sort'], $sort_orders) ) {
-            $sort = $this->params['url']['sort'];
-            $search_options['sort'] = $sort;
-        }
+        if (isset( $this->params['url']['sort']) && 
+            in_array($this->params['url']['sort'], $sort_orders) ) { $sort = $this->params['url']['sort']; }
         $this->publish('sort', $sort); //publish for element caching
 
+        $lver = 'any';
+        $vfuz = false;
+        if (isset($this->params['url']['lver'])) {
+            $lver = $this->params['url']['lver'];
+        }
+        $this->publish('lver', $lver);
+        $this->publish('vfuz', $vfuz); 
+        
         // execute this search
-        $as          = new AddonsSearch($this->Addon);
-        $_result_ids = array();
-        $total       = 0;
-
-        try {
-            list($_result_ids, $total) = $as->query($_terms, $search_options);
-        }
-        catch (AddonsSearchException $e) {
-            header("HTTP/1.1 503 Service Unavailable", true, 503);
-            $this->publish('error', "Search is temporarily unavailable.");
-        }
-        //, $_tag, false, $category[0], $category[1], NULL, $lver, $atype, $pid, $lup, $sort);
-
+        $_result_ids = $this->Search->search($_terms, $_tag, false, $category[0], $category[1], NULL, $lver, $lver, $vfuz, $atype, $pid, $lup, $sort);
+        
         if ($this->params['action'] != 'rss') {
             $this->pageTitle = ___('Search Add-ons').' :: '.sprintf(___('Add-ons for %1$s'), APP_PRETTYNAME);
             $this->publish('cssAdd', array('forms'));
-            $this->params['url']['q'] = urlencode($_terms);
+            $this->params['url']['q'] = urlencode( $this->params['url']['q']);
             $this->Pagination->total = count($_result_ids);
             $this->publish("total_count",$this->Pagination->total);
             //if advanced search pagination set, use it.

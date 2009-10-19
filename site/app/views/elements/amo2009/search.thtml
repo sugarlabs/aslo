@@ -229,7 +229,7 @@ if ($collectionSearch) {
 
 
                 <div class="container">
-                    <label for="lver"><?=___('version'); ?></label>
+                    <label for="lver"><?=SITE_NAME.' '.___('version'); ?></label>
                     <span id="lver-td"><input name="lver" type="text" size="5" maxlength="10" value="<?=$lver ?>" /></span>
                 </div>
 
@@ -237,10 +237,6 @@ if ($collectionSearch) {
             </fieldset>
 
             <fieldset class="subsidiary">
-                <div class="container">
-                    <label for="atype"><?=___('Type', 'advanced_search_form_type'); ?></label>
-                    <?php $html->simpleSelectTag('atype', $addon_types, $atype, array(), array(), false); ?>
-                </div>
                 <div class="container">
                     <label for="pp"><?=___('Per Page'); ?></label>
                     <?php $html->simpleSelectTag('pp', $pages, $pp, array(), array(), false); ?>
@@ -269,7 +265,7 @@ if ($collectionSearch) {
     echo "versions = new Array();\n";
     foreach($versions as $application_id => $ver_array) {
         echo "versions[{$application_id}] = {";
-        echo "'".___('advanced_search_form_any_version')."' : 'any',\n";
+        echo "'".___('Any', 'advanced_search_form_any_type')."' : 'any',\n";
         foreach ($ver_array as $version) {
             if($version !="") {
                 echo "\"{$version}\": \"{$version}\", ";
