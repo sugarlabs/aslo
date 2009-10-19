@@ -749,3 +749,31 @@ alter table addons_users add key(listed);
 -- ****************************************************************************
 
 UPDATE `config` SET value = 1 WHERE `key` = 'validation_disabled';
+
+DROP TABLE IF EXISTS `stats_share_counts_totals`;
+CREATE TABLE `stats_share_counts_totals` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `addon_id` int(10) unsigned NOT NULL default '0',
+  `service` varchar(255) not null default '',
+  `count` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `addon_id` (`addon_id`),
+  KEY `count` (`count`),
+  UNIQUE KEY (`addon_id`,`service`),
+  CONSTRAINT `stats_share_counts_totals_ibfk_1` FOREIGN KEY (`addon_id`) REFERENCES `addons` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `stats_share_counts`;
+CREATE TABLE `stats_share_counts` (
+  `id` int(11) unsigned NOT NULL auto_increment,
+  `addon_id` int(11) unsigned NOT NULL default '0',
+  `count` int(11) unsigned NOT NULL default '0',
+  `service` varchar(128),
+  `date` date NOT NULL default '0000-00-00',
+  PRIMARY KEY  (`id`),
+  KEY `addon_id` (`addon_id`),
+  KEY `count` (`count`),
+  KEY `date` (`date`),
+  UNIQUE KEY `one_count_per_addon_service_and_date` (`addon_id`,`service`,`date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -455,6 +455,7 @@ switch ($action) {
         ");
         $row = mysql_fetch_array($rows);
         $avg_num_votes = $row['avg_cnt'];
+        if (!$avg_num_votes) $avg_num_votes = 0;
 
         $rows = $db->read("
             SELECT AVG(a.addon_rating) AS avg_rating
@@ -469,6 +470,7 @@ switch ($action) {
         ");
         $row = mysql_fetch_array($rows);
         $avg_rating = $row['avg_rating'];
+        if (!$avg_rating) $avg_rating = 0;
 
         // calculate and store bayesian rating
         $rating_sql = "
