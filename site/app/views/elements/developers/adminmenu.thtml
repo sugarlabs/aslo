@@ -52,6 +52,7 @@
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'collections', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'collections') ? ' class="selected"' : ''?>><?=$html->link('Collections Manager', '/admin/collections')?></li>
             <li<?=(isset($subpage) && $subpage == 'tags') ? ' class="selected"' : ''?>><?=$html->link('Tags', '/admin/tags')?></li>
+            <li<?=(isset($subpage) && $subpage == 'categories') ? ' class="selected"' : ''?>><?=$html->link('Categories', '/admin/categories')?></li>
         <?php endif;
             if ($this->controller->SimpleAcl->actionAllowed('Admin', 'developershub', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'developershub' && empty($subpage)) ? ' class="selected"' : ''?>><?=$html->link('Developers Hub', '/admin/developershub')?></li>

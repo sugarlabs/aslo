@@ -1106,14 +1106,14 @@ class AdminController extends AppController
     */
     function categories($action = '', $id = 0) {
         //Part of the Lists permission
-        if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
+        if (!$this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User'))) {
             $this->Amo->accessDenied();
         }
         
         $this->breadcrumbs['Category Manager'] = '/admin/categories';
         $this->set('breadcrumbs', $this->breadcrumbs);
         
-        $applications = array('All');
+        $applications = array();
         $_applications = $this->Amo->getApplicationName();
         if (!empty($_applications)) {
             foreach ($_applications as $app_id => $app_name) {
