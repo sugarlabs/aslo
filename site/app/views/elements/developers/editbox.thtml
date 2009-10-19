@@ -54,10 +54,6 @@
             <?=$html->link(___('Developer Profile'), "/developers/addon/edit/{$addon_id}/profile")?>
             <?=$this->renderElement('amo2009/new_indicator')?>
         </li>
-        <li class="edit-contributions<?=($subaction == 'contributions' ? ' selected' : '')?>">
-            <?=$html->link(___('Contributions'), "/developers/addon/edit/{$addon_id}/contributions")?>
-            <?=$this->renderElement('amo2009/new_indicator')?>
-        </li>
         </ul></li>
         <?php endif; ?>
         <li class="status<?=($action == 'status' ? ' selected' : '')?>"><?=$html->link(___('Change Status', 'devcp_editbox_change_status'), "/developers/addon/status/{$addon_id}/")?></li>

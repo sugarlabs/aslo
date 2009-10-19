@@ -140,8 +140,8 @@ class FilesController extends AppController
 
             // we are sugar
             $zip = new Archive_Zip($path);
-            $contents = $zip->listContent();
-            $paths = split("/", $content['filename'], 2);
+            $content = $zip->listContent();
+            $paths = split("/", $content[0]['filename'], 2);
             $startfile = $paths[0].'/activity/activity.info';
         }
 
@@ -449,7 +449,7 @@ class FilesController extends AppController
             if (substr($path, -(strlen($file))) == $file) {
                 return file_get_contents($path);
             } else {
-                return false;
+                return null;
             }
         }
 
@@ -465,7 +465,8 @@ class FilesController extends AppController
             $contents = (string)$extraction[0]['content'];
         }
         else {
-            return false;
+            $contents = '';
+            return $contents;
         }
 
         if (!empty($jarfile)) {

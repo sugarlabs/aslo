@@ -83,7 +83,8 @@ VALUES ('site_notice', ''),
 ('firefox_notice_url', ''),
 ('stats_disabled', '0'),
 ('validation_disabled', '1'),
-('cron_debug_enabled', '0');
+('cron_debug_enabled', '0'),
+('paypal_disabled', 0);
 
 DELETE FROM `addontypes`;
 INSERT INTO `addontypes` (`id`, `created`, `modified`) VALUES

@@ -152,6 +152,9 @@ class EditorsController extends AppController
         $this->publish('mode', $mode);
 
         // Setup queue filter
+        if (!array_key_exists('form', $this->params))
+            $filter = null;
+        else
         if (array_key_exists('filter', $this->params['form'])) {
             // set a new filter on this queue
             $filter = $this->Editors->setQueueFilter($mode, $this->data['Filter']);

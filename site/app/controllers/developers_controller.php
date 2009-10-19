@@ -424,6 +424,9 @@ class DevelopersController extends AppController
                 }
             }
 
+            $this->Version->addCompatibleApp($version_id, SITE_APP, $data['appversion_min'], $data['appversion_max']);
+            $this->Version->saveTranslations($version_id, $data['form.data.Version'], $data['localizedFields']);
+
             // notify subscribed editors of update (if any)
             $this->Editors->updateNotify($addon['Addon']['id'], $version_id, true);
         }
@@ -550,22 +553,22 @@ class DevelopersController extends AppController
         if (file_exists($tmpdir))
             unlink($tmpdir);
         if (!mkdir($tmpdir)) {
-            $out['error'] = _('devcp_error_mktmp_failed');
+            $out['error'] = _('Internal problem while unpackaging bundle');
             return $out;
         }
 
         $activity_info = $zip->extract(array('add_path' => $tmpdir, 'by_name' => array($activity_info_path)));
         if (empty($activity_info))
-            $out['error'] = sprintf(_('devcp_error_activity_info_not_found'), $manifest);
+            $out['error'] = sprintf(_('The activity bundle must contain a file named %s'), $manifest);
         else
             $info = parse_ini_file($activity_info[0]['filename']);
         $this->_rmtree($tmpdir);
 
         if (!isset($out['error'])) {
             if (!is_array($info))
-                $out['error'] = sprintf(_('devcp_error_activity_info_parse'), $manifest);
+                $out['error'] = sprintf(_('Can not parse manifest file'), $manifest);
             elseif (!isset($info['name']))
-                $out['error'] = _('devcp_error_activity_info_missing_name');
+                $out['error'] = _('The file activity/activity.info must contain a value for name');
             else
                 $out['manifest'] = $info;
         }
@@ -625,7 +628,7 @@ class DevelopersController extends AppController
                     }
                 }
             }
-
+        } {
             // Clear duplicates
             $filename = $validate['filename'];
             $this->Amo->clean($filename);
@@ -644,14 +647,14 @@ class DevelopersController extends AppController
             $manifest = $info['manifest'];
 
             if (!isset($manifest['activity_version']))
-                return $this->Error->getJSONforError(_('devcp_error_activity_info_missing_activity_version'));
+                return $this->Error->getJSONforError(_('The file activity/activity.info must contain a value for activity_version'));
 
             if (isset($manifest['bundle_id']))
                 $addon['Addon']['guid'] = $manifest['bundle_id'];
             else if (isset($manifest['service_name']))
                 $addon['Addon']['guid'] = $manifest['service_name'];
             else
-                return $this->Error->getJSONforError(_('devcp_error_activity_info_missing_bundle_id'));
+                return $this->Error->getJSONforError(_('The file activity/activity.info must contain a value for bundle_id'));
 
             $addon['Addon']['name'] = $manifest['name'];
             $addon['Addon']['summary'] = $manifest['name'];
@@ -1010,7 +1013,7 @@ class DevelopersController extends AppController
                 foreach ($this->Addon->validationErrors as $efield => $error) {
                     switch ($efield) {
                         case 'guid':
-                            $errors[$efield] = sprintf(___('devcp_error_invalid_guid'), $unlocalizedFields[$efield]);
+                            $errors[$efield] = sprintf(___('The ID of this activity is invalid: %s'), $unlocalizedFields[$efield]);
                             break;
                     }
                 }

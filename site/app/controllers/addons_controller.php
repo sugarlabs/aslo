@@ -152,6 +152,7 @@ class AddonsController extends AppController
             $authors[] = $this->User->getUser($a['User']['id'], array('addons',));
         }
 
+        $other_addons = array();
         foreach ($authors as $a) {
             foreach ($a['Addon'] as $_addon) {
                 if ($_addon['Addon']['inactive'] != 1 && in_array($_addon['Addon']['status'], $valid_status)) {

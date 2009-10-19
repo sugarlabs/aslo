@@ -95,7 +95,7 @@ class User extends AppModel
         'homepage', 'display_collections', 'display_collections_fav',
         'confirmationcode', 'resetcode', 'resetcode_expires',
         'deleted', 'created', 'modified', 'notes', 'location',
-        'averagerating', 'occupation');
+        'averagerating', 'occupation', 'notifybroadcast');
 
     var $validate = array(
         'email'     => VALID_EMAIL,
