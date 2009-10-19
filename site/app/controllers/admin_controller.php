@@ -51,7 +51,7 @@ class AdminController extends AppController
     //These defer to their own access checks
     var $aclExceptions = array('index', 'summary',
                                'addonLookup', 'userLookup',
-                               'addontypes', 'categories', 'platforms', 'responses');
+                               'addontypes', 'categories', 'platforms', 'responses', 'collections', 'collectionLookup');
 
    /**
     * Require login for all actions
@@ -560,6 +560,9 @@ class AdminController extends AppController
     }
 
     function _collectionsPromoBox() {
+        if (!$this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User'))) {
+            $this->Amo->accessDenied();
+        }
         if (!empty($_POST)) {
             switch ($_POST['action']) {
                 case 'add':
@@ -616,7 +619,7 @@ class AdminController extends AppController
 
     function _collectionsPromoBoxStructure($action = '', $id = 0) {
         //Part of the Lists permission
-        if (!$this->SimpleAcl->actionAllowed('Admin', 'lists', $this->Session->read('User'))) {
+        if (!$this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User'))) {
             $this->Amo->accessDenied();
         }
 
@@ -2539,7 +2542,7 @@ class AdminController extends AppController
     */
     function addonLookup() {
         if (!($this->SimpleAcl->actionAllowed('Admin', '%', $this->Session->read('User')) ||
-                $this->SimpleAcl->actionAllowed('Editor', '*', $this->Session->read('User'))) ) {
+                $this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User'))) ) {
             $this->Amo->accessDenied();
         }
 
@@ -2575,8 +2578,7 @@ class AdminController extends AppController
     * AJAX Collection lookup.  Matches either name or nickname
     */
     function collectionLookup() {
-        if (!$this->SimpleAcl->actionAllowed('Admin', '%', $this->Session->read('User')) ||
-            !$this->SimpleAcl->actionAllowed('Editor', '*', $this->Session->read('User')) ) {
+        if (!$this->SimpleAcl->actionAllowed('Editors', '*', $this->Session->read('User')) ) {
             $this->Amo->accessDenied();
         }
         global $app_shortnames;

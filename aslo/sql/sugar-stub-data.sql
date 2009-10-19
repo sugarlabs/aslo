@@ -49,6 +49,7 @@ INSERT INTO `platforms` (`id`, `name`, `shortname`, `icondata`, `icontype`, `cre
 
 DELETE FROM `translations`;
 INSERT INTO `translations` (`id`, `locale`, `localized_string`, `created`, `modified`) VALUES
+(0, 'en-US', 'NONE', now(), now()),
 (114, 'en-US', 'ALL', now(), now()),
 (115, 'en-US', '', now(), now()),
 (116, 'en-US', 'x86', now(), now()),

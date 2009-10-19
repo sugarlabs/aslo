@@ -40,7 +40,9 @@
         <h3><span>Admin Tools</span></h3>
         
         <ul id="cat-list">
+        <?php if ($this->controller->SimpleAcl->actionAllowed('Admin', 'addons', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'summary') ? ' class="selected"' : ''?>><?=$html->link('Admin Summary', '/admin/summary')?></li>
+        <?php endif;?>
         <?php if ($this->controller->SimpleAcl->actionAllowed('Admin', 'addons', $this->controller->Session->read('User'))): ?>
             <li<?=($page == 'addons') ? ' class="selected"' : ''?>><?=$html->link('Add-on Manager', '/admin/addons')?></li>
         <?php endif;

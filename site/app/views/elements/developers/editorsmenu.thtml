@@ -57,6 +57,8 @@ if (empty($mode)) {
             <li<?=($mode == 'pending') ? ' class="selected"' : ''?>><?=$html->link(sprintf(n___('Pending Updates (%s)', 'Pending Updates (%s)', $count['pending']), $count['pending']), '/editors/queue/pending')?></li>
             <li<?=($mode == 'nominated') ? ' class="selected"' : ''?>><?=$html->link(sprintf(n___('Nominated Add-ons (%s)', 'Nominated Add-ons (%s)', $count['nominated']), $count['nominated']), '/editors/queue/nominated')?></li>
             <li<?=($mode == 'featured') ? ' class="selected"' : ''?>><?=$html->link(___('Featured Add-ons', 'devcp_editorsqueue_featured'), '/editors/featured')?></li>
+            <li<?=($page == 'collections') ? ' class="selected"' : ''?>><?=$html->link('Collections Manager', '/admin/collections')?></li>
+            <li<?=($page == 'tags') ? ' class="selected"' : ''?>><?=$html->link('Tags', '/admin/tags')?></li>
             <li<?=($page == 'logs') ? ' class="selected"' : ''?>><?=$html->link(___('Event Log', 'editorcp_menu_eventlog_link'), '/editors/logs')?></li>
             <li<?=($page == 'reviewlog') ? ' class="selected"' : ''?>><?=$html->link(___('Review Log', 'editorcp_menu_reviewlog_link'), '/editors/reviewlog')?></li>
             <li<?=($page == 'performance') ? ' class="selected"' : ''?>><?=$html->link(___('Performance'), '/editors/performance')?></li>
