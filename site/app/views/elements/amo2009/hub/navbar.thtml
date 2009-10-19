@@ -46,6 +46,8 @@
         <li class="top"><a href="<?=$html->url('/developers/addons', null, true,
             false)?>" class="controller"><?=___('My Add-ons')?></a>
             <ul>
+                <li><a href="<?=$html->url('/developers/addon/submit', null,
+                    true, false)?>"><?=___('Submit a New Add-on')?></a></li>
                 <?php
                 $show_more = false;
                 if (count($all_addons) > 7) {
@@ -64,38 +66,21 @@
                 <li><a href="<?=$html->url('/developers/addons', null, true,
                     false)?>"><?=___('more add-ons...')?></a></li>
                 <?php endif; ?>
-                <li><a href="<?=$html->url('/developers/addon/submit', null,
-                    true, false)?>"><?=___('Submit a New Add-on')?></a></li>
             </ul>
         </li>
         <?php endif; // is add-on author? ?>
 
-        <?php /* docs */ ?>
-        <li class="top"><a href="#" class="controller"><?=___('Documentation')?></a>
-            <ul>
-                <li><a href="<?=$html->url('/developers/docs/getting-started')?>"><?=___('Getting Started')?></a></li>
-                <li><a href="<?=$html->url('/developers/docs/policies')?>"><?=___('Add-on Policies')?></a></li>
-                <li><a href="<?=$html->url('/developers/docs/case-studies', null, true, false)?>"><?=___('Case Studies')?></a></li>
-                <li><a href="<?=$html->url('/developers/docs/how-to')?>"><?=___('How-to Library')?></a></li>
-                <li><a href="<?=$html->url('/developers/docs/reference', null, true, false)?>"><?=___('API &amp; Language Reference')?></a></li>
-            </ul>
-        </li>
-
-        <?php /* tools */ ?>
-        <li class="top"><a href="#" class="controller"><?=___('Tools')?></a>
-            <ul>
-                <li><a href="<?=$html->url('/developers/tools/builder')?>"><?=___('Add-on Builder')?></a></li>
-                <li><a href="<?=$html->url('/developers/addon/validate')?>"><?=___('Add-on Validator')?></a></li>
-                <li><a href="<?=$html->url('/collection/devel-tools')?>"><?=___('Development Add-ons')?></a></li>
-            </ul>
-        </li>
-
         <?php /* community */ ?>
-        <li class="top"><a href="#" class="controller"><?=___('Community')?></a>
+        <li class="top"><a href="#" class="controller">Activity Team</a>
             <ul>
-                <li><a href="http://blog.mozilla.com/addons/"><?=___('Add-ons Blog')?></a></li>
-                <li><a href="https://forums.addons.mozilla.org"><?=___('Add-ons Forum')?></a></li>
-                <li><a href="<?=$html->url('/developers/community/newsletter')?>"><?=___('about:addons Newsletter')?></a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team">Home</a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team/Getting_Involved">Join</a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team/Contacts">Contacts</a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team/Resources">Resources</a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ">FAQ</a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team/Roadmap">Roadmap</a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team/TODO">TODO</a></li>
+                <li><a href="http://wiki.sugarlabs.org/go/Activity_Team/Meetings">Meetings</a></li>
             </ul>
         </li>
 
@@ -107,10 +92,6 @@
                 $query = '';
             ?>
 
-            <form id="searchbox" method="get" action="<?=$html->url("/developers/search", null, true, false)?>">
-                <input type="text" id="query" name="q" accesskey="f" value="<?=$query?>" title="<?=___('Search Developer Resources')?>"/>
-                <button type="submit" id="search-submit"><?=$html->image('amo2009/blank.gif', array('alt'=>___('Search')))?></button>
-            </form>
         </li>
     </ul>
 </div>
