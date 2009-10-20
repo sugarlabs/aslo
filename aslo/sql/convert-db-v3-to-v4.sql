@@ -16,6 +16,8 @@ ALTER TABLE addons
 
 -- ** 28989-paypal-stats.sql
 
+DROP TABLE IF EXISTS `stats_contributions`;
+
 CREATE TABLE `stats_contributions` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `addon_id` int(11) unsigned NOT NULL default '0',
@@ -49,7 +51,10 @@ INSERT IGNORE INTO config VALUES
 
 -- ** 29960-validation-framework.sql
 
+DROP TABLE IF EXISTS `test_results`;
+DROP TABLE IF EXISTS `test_cases`;
 DROP TABLE IF EXISTS `test_groups`;
+
 CREATE TABLE `test_groups` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `category` varchar(255) NOT NULL,
@@ -61,7 +66,6 @@ CREATE TABLE `test_groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `test_cases`;
 CREATE TABLE `test_cases` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `test_group_id` int(11) unsigned NOT NULL default '0',
@@ -74,7 +78,6 @@ CREATE TABLE `test_cases` (
   CONSTRAINT `test_cases_ibfk_1` FOREIGN KEY (`test_group_id`) REFERENCES `test_groups` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `test_results`;
 CREATE TABLE `test_results` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `file_id` int(11) unsigned NOT NULL default '0',
@@ -151,6 +154,7 @@ ALTER TABLE stats_contributions
 
 -- ** 30310-guid-blacklist.sql
 
+DROP TABLE IF EXISTS `blacklisted_guids`;
 CREATE TABLE `blacklisted_guids` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `guid` varchar(255) NOT NULL,
@@ -211,6 +215,7 @@ INSERT INTO `download_sources` VALUES
 -- to the maintenance scripts 5 months ago and adding it at the proper revision
 -- (22770) now will make it out of order.  So...
 
+DROP TABLE IF EXISTS `stats_addons_collections_counts`;
 CREATE TABLE `stats_addons_collections_counts` (
       `id` int(10) unsigned NOT NULL auto_increment,
       `addon_id` int(10) unsigned NOT NULL default '0',
@@ -229,6 +234,7 @@ CREATE TABLE `stats_addons_collections_counts` (
 
 -- ** 49280-share-count-totals.sql
 
+DROP TABLE IF EXISTS `stats_share_counts_totals`;
 CREATE TABLE `stats_share_counts_totals` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `addon_id` int(10) unsigned NOT NULL default '0',
@@ -243,6 +249,7 @@ CREATE TABLE `stats_share_counts_totals` (
 
 -- ** 49385-addon-recommendations.sql
 
+DROP TABLE IF EXISTS `addon_recommendations`;
 CREATE TABLE `addon_recommendations` (
   `addon_id` int(11) unsigned NOT NULL default '0',
   `other_addon_id` int(11) unsigned NOT NULL default '0',
@@ -275,6 +282,7 @@ CREATE TABLE `collections_votes` (
 
 -- ** 49665-verification-on-upload.sql
 
+DROP TABLE IF EXISTS `test_results_cache`;
 CREATE TABLE `test_results_cache` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `date` datetime NOT NULL,
@@ -444,6 +452,7 @@ CREATE TABLE `stats_share_counts_totals` (
 -- Content blocks! All webapps sooner or later turn into a CMS.
 -- 
 
+DROP TABLE IF EXISTS `hubpromos`;
 CREATE TABLE `hubpromos` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `heading` int(11) unsigned NOT NULL default '0',
@@ -469,6 +478,7 @@ alter table download_counts add column `src` text default null after `count`;
 -- ** 51335-blogposts.sql
 
 -- Cache for blog posts
+DROP TABLE IF EXISTS `blogposts`;
 CREATE TABLE `blogposts` (
     `title` varchar(255) NOT NULL default '',
     `date_posted` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -496,6 +506,7 @@ CREATE TABLE `howto_votes` (
 -- Simple upcoming events for developers hub
 -- 
 
+DROP TABLE IF EXISTS `hubevents`;
 CREATE TABLE `hubevents` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(255) NOT NULL default '',
@@ -512,6 +523,7 @@ CREATE TABLE `hubevents` (
 
 -- ** 51698-addonlogs.sql
 
+DROP TABLE IF EXISTS `addonlogs`;
 CREATE TABLE `addonlogs` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `addon_id` int(11) unsigned default NULL,      -- applies to all add-ons if null
@@ -551,6 +563,7 @@ UPDATE users SET nickname=null WHERE nickname="";
 --
 -- a top secret uuid is required for add-on news feed RSS
 --
+DROP TABLE IF EXISTS `hubrsskeys`;
 CREATE TABLE `hubrsskeys` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `rsskey` char(36) NOT NULL default '',    -- simply a uuid
@@ -606,7 +619,6 @@ ALTER TABLE groups_users ADD FOREIGN KEY groups_users_ibfk_4 (user_id) REFERENCE
 
 UPDATE users SET id=((SELECT blah FROM (SELECT max(id) as blah from users) as blah2)+1) WHERE id=1;
 
-INSERT INTO users (id,email,nickname,deleted,notes) VALUES (1,'nobody@mozilla.org','nobody',1,'Just a placeholder.  See bug 518158');
 
 -- Fix the now broken AUTO_INCREMENT var
 ALTER TABLE users AUTO_INCREMENT=1;

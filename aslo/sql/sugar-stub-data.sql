@@ -18,6 +18,8 @@ INSERT INTO `users` (`id`, `email`, `password`, `firstname`, `lastname`, `nickna
 (2, 'admin@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'root', 'root', 'root', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL),
 (3, 'editor@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'editor', 'editor', 'editor', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL),
 (4, 'developer@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'developer', 'developer', 'developer', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL);
+-- (1000, 'full', '098f6bcd4621d373cade4e832627b4f6', 'full', 'full', 'full', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL);
+-- (1001, 'less', '098f6bcd4621d373cade4e832627b4f6', 'less', 'less', 'less', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL);
 
 -- Create Sugar application, 1
 DELETE from applications;
