@@ -8,3 +8,10 @@ UPDATE tag_stat set num_addons = (select count(*) from users_tags_addons as NEW 
 
 UPDATE collections SET upvotes = (select count(*) from collections_votes as NEW WHERE collections.id=NEW.collection_id and NEW.vote = 1);
 UPDATE collections SET downvotes = (select count(*) from collections_votes as NEW WHERE collections.id=NEW.collection_id and NEW.vote = -1);
+
+INSERT INTO `config` ( `key` , `value` )
+VALUES
+('api_disabled', '0'),
+('validation_disabled', '1'),
+('cron_debug_enabled', '0'),
+('paypal_disabled', 0);
