@@ -232,7 +232,7 @@ if (array_key_exists(SITE_LAYOUT, $other_layouts)) {
     }
     else {
         // App wasn't set, so default to Firefox
-        define('APP_SHORTNAME', 'firefox');
+        define('APP_SHORTNAME', 'sugar');
     }
     define('LAYOUT_NAME', $other_layouts[SITE_LAYOUT]);
 }
