@@ -539,6 +539,7 @@ class CollectionsController extends AppController
             $this->User->purge($user['id']);
 
             if ($this->isAjax()) {
+                if (isset($this->Config->Cache))
                 // We need to flush everything now so the user sees their
                 // updated vote.
                 $this->Config->Cache->flushMarkedLists();
