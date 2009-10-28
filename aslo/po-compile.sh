@@ -3,10 +3,10 @@
 root=$(cd $(dirname $0)/..; pwd)
 
 backmerge() {
-    echo "Back merge $1"
+    echo "Back merge $2"
 
-    local in_po=$root/aslo/po/$1.po
-    local out_po=$root/site/app/locale/$1/LC_MESSAGES/messages.po
+    local in_po=$1
+    local out_po=$root/site/app/locale/$2/LC_MESSAGES/messages.po
 
     local tmp=`mktemp /tmp/po-update.XXXXXX` || exit 1
 
@@ -19,5 +19,7 @@ backmerge() {
 }
 
 for i in `ls $root/aslo/po/*.po`; do
-    backmerge $(basename $i .po)
+    lang=$(basename $i .po)
+    [ $lang == "en" ] && lang=en_US
+    backmerge $i $lang
 done
