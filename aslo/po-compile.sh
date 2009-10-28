@@ -20,6 +20,6 @@ backmerge() {
 
 for i in `ls $root/aslo/po/*.po`; do
     lang=$(basename $i .po)
-    [ $lang == "en" ] && lang=en_US
+    [ $lang = "en" ] && lang=en_US
     backmerge $i $lang
 done
