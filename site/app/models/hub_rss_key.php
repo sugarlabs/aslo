@@ -58,7 +58,6 @@ class HubRssKey extends AppModel
 
             } else if ($create) {
                 $rsskey = array('HubRssKey' => array(
-                    'id' => 0,
                     'addon_id' => $addon_id,
                     'rsskey' => $this->uuid()
                 ));
@@ -89,7 +88,6 @@ class HubRssKey extends AppModel
 
             } else if ($create) {
                 $rsskey = array('HubRssKey' => array(
-                    'id' => 0,
                     'user_id' => $user_id,
                     'rsskey' => $this->uuid()
                 ));
