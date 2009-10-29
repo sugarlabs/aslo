@@ -905,12 +905,14 @@ class CollectionsController extends AppController
     function _getUserRights($user, $collection_id) {
         $can_write = $this->Collection->isWritableByUser($collection_id, $user['id']);
         $isadmin = $this->SimpleAcl->actionAllowed('Admin', 'EditAnyCollection', $user);
+        $iseditor = $this->SimpleAcl->actionAllowed('Editors', '*', $user);
         $role = $this->Collection->getUserRole($collection_id, $user['id']);
         $writable = ($isadmin || $can_write);
         $atleast_manager = ($isadmin || $role == COLLECTION_ROLE_ADMIN);
 
         $this->publish('writable', $writable, false);
         $this->publish('isadmin', $isadmin, false);
+        $this->publish('iseditor', $iseditor, false);
         $this->publish('atleast_manager', $atleast_manager, false);
         $this->publish('role', $role, false);
 
