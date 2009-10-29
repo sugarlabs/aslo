@@ -205,7 +205,7 @@ class Review extends AppModel
                v.addon_id=$addon_id
             GROUP BY r.user_id 
             ORDER BY latest_created DESC 
-            LIMIT $limit OFFSET " . ( $limit * ($page - 1) )
+            LIMIT $limit OFFSET " . ( $limit * max(0, $page - 1) )
         );
 
         // Simplify the DB rows for easier use in the controller.
