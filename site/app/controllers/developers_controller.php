@@ -386,18 +386,17 @@ class DevelopersController extends AppController
         if ($type == 'update') {
 
             // Save License
-            if ($addon['Addon']['dev_agreement'] == true) {
                 // If we already have an agreement, we didn't show the license
                 // picker, so use the previously selected license.
                 global $valid_status;
                 $old_id = $this->Version->getVersionByAddonId($addon_id, $valid_status);
                 $oldVersion = $this->Version->findById($old_id);
                 $license_id = $oldVersion['Version']['license_id'];
-            } else {
+            if (!$license_id) {
                 $license_id = $this->Developers->saveLicense(
-                    $this->data['License'],
-                    getitem($this->data, 'License.text'),
-                    getitem($this->params, 'form.data.License'));
+                    $data['License'],
+                    $data['License.text'],
+                    $data['form.data.License']);
             }
             $this->Addon->save(array('Addon' => array('id' => $addon_id,
                                                       'dev_agreement' => 1)));
@@ -1531,8 +1530,9 @@ class DevelopersController extends AppController
             $this->publish('version', $version['Version']['version']);
         }
 
-        $addon = $this->Addon->getAddon($addon_id, array('default_fields'));
-        $this->publish('hasAgreement', $addon['Addon']['dev_agreement']);
+        global $valid_status;
+        $existed_version = $this->Version->getVersionByAddonId($addon_id, $valid_status);
+        $this->publish('hasAgreement', $existed_version ? 1 : 0);
 
         $this->_uploader();
     }
