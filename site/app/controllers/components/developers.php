@@ -777,6 +777,7 @@ class DevelopersComponent extends Object {
         }
 
         // Delete version
+        $this->controller->Version->execute("DELETE FROM versioncomments WHERE version_id={$version_id}");
         $this->controller->Version->execute("DELETE FROM versions WHERE id={$version_id}");
 
         // Delete translations
