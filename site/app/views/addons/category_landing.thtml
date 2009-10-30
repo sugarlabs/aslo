@@ -133,6 +133,20 @@ $summaryLimit = 70;
         </ul>        
     </div>
 
+    <div id="updated_addons" class="addons_column last clearfix">
+        <h3><span><?=___('Top Rated') ?></span></h3>
+        <ul>
+            <?php foreach ($updated_addons as $idx=>$addon): ?>
+                <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
+                    <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
+                    <span class="name" title="<?php echo $addon['name'] ?>"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
+                    <span class="meta rating"><?=$this->renderElement('amo2009/stars',array('rating' => $addon['averagerating']))?></span>
+                </a></li>
+            <?php endforeach ?>
+        </ul>
+        <p class="view-all"><?=$html->link(___('View all top rated').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=rated")?></p>
+    </div>
+
     <div id="new_addons" class="addons_column clearfix">
         <h3><span><?= ___('Recently Added') ?></span></h3>
         <ul>
@@ -161,20 +175,6 @@ $summaryLimit = 70;
             <?php endforeach ?>
         </ul>
         <p class="view-all"><?=$html->link(___('View all top downloads').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=popular")?></p>       
-    </div>
-
-    <div id="updated_addons" class="addons_column last clearfix">
-        <h3><span><?=___('Top Rated') ?></span></h3>
-        <ul>
-            <?php foreach ($updated_addons as $idx=>$addon): ?>
-                <li class="<?= (0 == ($idx % 2)) ? 'odd' : 'even' ?>"><a href="<?=$html->url("/addon/{$addon['id']}")?>">
-                    <img class="icon" src="<?php echo $addon['icon_url']?>" width="32" height="32" alt="" />
-                    <span class="name" title="<?php echo $addon['name'] ?>"><?php echo $html->truncateChars($nameLimit, $addon['name'], true) ?></span>
-                    <span class="meta rating"><?=$this->renderElement('amo2009/stars',array('rating' => $addon['averagerating']))?></span>
-                </a></li>
-            <?php endforeach ?>
-        </ul>
-        <p class="view-all"><?=$html->link(___('View all top rated').' »',"/browse/type:{$type_id}/cat:{$cat_id}?sort=rated")?></p>
     </div>
 
 </div>
