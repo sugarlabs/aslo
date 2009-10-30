@@ -368,6 +368,11 @@ ul.refinements li a:hover {
 .ui-tabs-panel {
 	list-style:none;
 	}
+	
+ol {
+list-style-type:decimal;
+margin-left:2em;
+}	
 
 #aux-nav .tools {
 	float:right;
@@ -1813,12 +1818,22 @@ width:70%;
 
 /* Translation Box Element */
 .graybox {
-    background-color: #FAFDFE;
-    border: 1px solid #C8E8F3;
+    background-color: #fff;
+    border: 3px solid #c8e8f3;
     padding: 15px;
+    float:left;
 }
+
+.preview-box {
+	font-size:90%;
+	}
+
+.submit {
+	float:left;
+	}
+
 .graybox.errors {
-    background-color: #FFA5A5;
+    background-color: #fff1eb;
 }
 .graybox.spaced {
     margin-bottom: 10px;
@@ -1829,7 +1844,7 @@ width:70%;
     border-radius: 6px;
 }
 .translation-box h4 {
-    border-bottom: 1px solid #2D3B58;
+    border-bottom: 1px solid #2E5186;
 }
 .translation-box h4 img {
     float: right;
@@ -1886,8 +1901,8 @@ width:70%;
     margin-left: 2px;
 }
 .translation-box .translation-tab.selected {
-    border: 1px solid #1D587F;
-    background-color: #DDDDFF;
+    border: 1px solid #2E5186;
+    background-color: #C8E8F3;
     border-bottom: none;
     color: #1D587F;
 }
@@ -1922,7 +1937,7 @@ width:70%;
     font-weight: bold;
 }
 .translation-box .input {
-    border: 1px solid #1D587F;
+    border: 1px solid #2E5186;
     margin: 0;
     -moz-border-radius-bottomleft: 6px;
     -moz-border-radius-bottomright: 6px;
@@ -1971,10 +1986,12 @@ width:70%;
     margin: 10px;
 }
 .translation-help {
-    background-color: #FFFFFF;
+    background-color: #def1f8;
     margin-bottom: 10px;
-    width: 630px;
     display: none;
+    border: 1px solid #c8e8f3;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 }
 .graybox .error-message {
     background: transparent url('../../img/developers/exclamation.png') no-repeat 5px 50%;
@@ -1985,7 +2002,6 @@ width:70%;
     background-position: 100% 50%;
     padding: 5px 25px 5px 0;
 }
-
 /** Ratings barometer **/
 
 .barometer {
