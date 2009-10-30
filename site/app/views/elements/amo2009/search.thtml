@@ -112,9 +112,9 @@ if (!isset($atype)) {
     $atype = ADDON_ANY;
 }
 
+$pages = array();
 if (isset($this->controller->Pagination)) {
 $page_arr = $this->controller->Pagination->resultsPerPage;
-$pages = array();
 foreach ($page_arr as $page) {
     $pages[$page] = $page;
 }
