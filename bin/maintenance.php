@@ -89,6 +89,7 @@ $db = new Database();
 
 // Get our action.
 $action = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
+$date = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : date('Y-m-d');
 
 // Used to count stats.  This should be a global but was moved inside the add-ons controller
 // temporarily apparently.  Also see comment in the add-ons controller above the assignment of
@@ -689,8 +690,6 @@ switch ($action) {
 
         $affected_rows = 0;
 
-        $date = date('Y-m-d');
-
         $stats = array(
             // Add-on downloads
             'addon_total_downloads'             => 'SELECT SUM(count) FROM download_counts',
@@ -765,7 +764,6 @@ switch ($action) {
         debug("Starting collection stats update...");
 
         $affected_rows = 0;
-        $date = date('Y-m-d');
 
         $collection_stats = array(
             'new_subscribers' => "
