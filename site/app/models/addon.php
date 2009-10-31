@@ -420,7 +420,11 @@ class Addon extends AppModel
         $select_field = 'DISTINCT Addon.id';
 
         // make input data uniform
-        if (!is_array($addontypes)) $addontypes = array($addontypes);
+        if (!is_array($addontypes)) {
+            if ($addontypes == 'all')
+                $addontypes = SITE_APP;
+            $addontypes = array($addontypes);
+        }
         if (!is_array($status)) $status = array($status);
         if ($page <= 0) $page = 1;
 
@@ -645,8 +649,11 @@ class Addon extends AppModel
 
         if (!is_array($status))
             $status = array($status);
-        if (!is_array($addontypes))
+        if (!is_array($addontypes)) {
+            if ($addontypes == 'all')
+                $addontypes = SITE_APP;
             $addontypes = array($addontypes);
+        }
 
         // Construct the SQL query, stolen from getAddonsByCategory
         $sql = 'SELECT at.category_id, COUNT(DISTINCT Addon.id) AS co '
