@@ -193,7 +193,7 @@ class Minifier(object):
         source -- path of source file
         destination -- path of destination file
         """
-        compressor = Popen([java, '-jar', os.path.join(script_dir, 'yuicompressor-2.3.4', 'build', 'yuicompressor-2.3.4.jar'),
+        compressor = Popen([java, '-jar', os.path.join(script_dir, '..', 'lib', 'yuicompressor', 'build', 'yuicompressor.jar'),
             '--type', type, source], stdout=PIPE)
         destFile = open(destination, 'w')
         # Fix media queries to look like "(..) and (..)", NOT "(..) and(..)".
@@ -282,7 +282,9 @@ def main(argv = None):
         print "Usage: %s path_to_jre" % argv[0]
         sys.exit(1)
     
+    #updateRevisions()
     concatAndMinify()
+    #compilePo()
     print 'Done.'
 
 

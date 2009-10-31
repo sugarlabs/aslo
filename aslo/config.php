@@ -90,7 +90,7 @@ define('SITE_STATE', 'dev');
  * Host, including http://.  Should be everything leading up to addon ids.
  * Example: http://releases.mozilla.org/addons
   */
-define('FILES_HOST', 'http://download.sugarlabs.org/sources/activities');       
+define('FILES_HOST', 'http://download.sugarlabs.org/activities');       
 
 /**
  * Relative web path of the files directory.  Tacking this on to FILES_HOST should get you
