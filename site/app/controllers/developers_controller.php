@@ -558,7 +558,7 @@ class DevelopersController extends AppController
 
         $activity_info = $zip->extract(array('add_path' => $tmpdir, 'by_name' => array($activity_info_path)));
         if (empty($activity_info))
-            $out['error'] = sprintf(_('The activity bundle must contain a file named */%s. See http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity? for details.'), $manifest);
+            $out['error'] = sprintf(_('The activity bundle must contain a file named */%s. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'), $manifest);
         else
             $info = parse_ini_file($activity_info[0]['filename']);
         $this->_rmtree($tmpdir);
@@ -567,7 +567,7 @@ class DevelopersController extends AppController
             if (!is_array($info))
                 $out['error'] = sprintf(_('Can not parse manifest file'), $manifest);
             elseif (!isset($info['name']))
-                $out['error'] = _('The file */activity/activity.info must contain a value for name. See http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity? for details.');
+                $out['error'] = _('The file */activity/activity.info must contain a value for name. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.');
             else
                 $out['manifest'] = $info;
         }
@@ -646,14 +646,14 @@ class DevelopersController extends AppController
             $manifest = $info['manifest'];
 
             if (!isset($manifest['activity_version']))
-                return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for activity_version. See http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity? for details.'));
+                return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for activity_version. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'));
 
             if (isset($manifest['bundle_id']))
                 $addon['Addon']['guid'] = $manifest['bundle_id'];
             else if (isset($manifest['service_name']))
                 $addon['Addon']['guid'] = $manifest['service_name'];
             else
-                return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for bundle_id. See http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity? for details.'));
+                return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for bundle_id. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'));
 
             $addon['Addon']['name'] = $manifest['name'];
             $addon['Addon']['summary'] = $manifest['name'];
