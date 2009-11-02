@@ -558,7 +558,7 @@ class DevelopersController extends AppController
 
         $activity_info = $zip->extract(array('add_path' => $tmpdir, 'by_name' => array($activity_info_path)));
         if (empty($activity_info))
-            $out['error'] = sprintf(_('The activity bundle must contain a file named %s'), $manifest);
+            $out['error'] = sprintf(_('The activity bundle must contain a file named */%s. See http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity? for details.'), $manifest);
         else
             $info = parse_ini_file($activity_info[0]['filename']);
         $this->_rmtree($tmpdir);
