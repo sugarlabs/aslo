@@ -567,7 +567,7 @@ class DevelopersController extends AppController
             if (!is_array($info))
                 $out['error'] = sprintf(_('Can not parse manifest file'), $manifest);
             elseif (!isset($info['name']))
-                $out['error'] = _('The file <activity-name>/activity/activity.info must contain a value for name. See http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity? for details.');
+                $out['error'] = _('The file */activity/activity.info must contain a value for name. See http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity? for details.');
             else
                 $out['manifest'] = $info;
         }
