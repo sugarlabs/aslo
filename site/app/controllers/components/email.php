@@ -24,6 +24,8 @@ class EmailComponent
     var $cc = null;
     var $bcc = null;
     var $template = null; // rendering template for email
+    var $in_reply_to = null;
+    var $reply_to = null;
  
     var $controller;
  
@@ -81,6 +83,8 @@ class EmailComponent
         }
         $mail->FromName = $this->fromName;
         $mail->AddAddress($this->to, $this->toName );
+        if (!$reply)
+            $reply = $this->reply_to;
         if ($reply)
             $mail->AddReplyTo($reply);
         else
@@ -99,8 +103,12 @@ class EmailComponent
         } else {
             $mail->Body    = $this->bodyText();
         }
+
+        if ($this->cc)
+            foreach($this->cc as $i)
+                $mail->AddCC($i);
         
-        $success = $mail->Send();
+        $success = $mail->Send($this->in_reply_to);
         return $success;
     }
 }

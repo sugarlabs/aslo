@@ -367,7 +367,7 @@ class PHPMailer {
    * variable to view description of the error.
    * @return bool
    */
-  function Send() {
+  function Send($in_reply_to = '') {
     $header = '';
     $body = '';
     $result = true;
@@ -382,9 +382,12 @@ class PHPMailer {
       $this->ContentType = 'multipart/alternative';
     }
 
+    $uniq_id = md5(uniqid(time()));
+    $message_id = sprintf("%s@%s", $uniq_id, $this->ServerHostname());
+
     $this->error_count = 0; // reset errors
     $this->SetMessageType();
-    $header .= $this->CreateHeader();
+    $header .= $this->CreateHeader($uniq_id, $in_reply_to);
     $body = $this->CreateBody();
 
     if($body == '') {
@@ -409,8 +412,11 @@ class PHPMailer {
         //$result = false;
         //break;
     }
-
-    return $result;
+    
+    if ($result)
+        return $message_id;
+    else
+        return false;
   }
 
   /**
@@ -849,11 +855,12 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  function CreateHeader() {
+  function CreateHeader($uniq_id = '', $in_reply_to = '') {
     $result = '';
 
     /* Set the boundaries */
-    $uniq_id = md5(uniqid(time()));
+    if (!$uniq_id)
+        $uniq_id = md5(uniqid(time()));
     $this->boundary[1] = 'b1_' . $uniq_id;
     $this->boundary[2] = 'b2_' . $uniq_id;
 
@@ -901,6 +908,8 @@ class PHPMailer {
     }
 
     $result .= sprintf("Message-ID: <%s@%s>%s", $uniq_id, $this->ServerHostname(), $this->LE);
+    if ($in_reply_to)
+        $result .= sprintf("In-Reply-To: <%s>%s", $in_reply_to, $this->LE);
     $result .= $this->HeaderLine('X-Priority', $this->Priority);
     $result .= $this->HeaderLine('X-Mailer', 'PHPMailer (phpmailer.sourceforge.net) [version ' . $this->Version . ']');
 

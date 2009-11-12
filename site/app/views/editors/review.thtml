@@ -177,7 +177,7 @@
         <span id="public" class="action_color" onClick="selectAction('public');"><?=$html->image('developers/public-bw.png', array('id' => 'publicIcon')).' '.___('Push to Public')?></span>
         <span id="sandbox" class="action_color" onClick="selectAction('sandbox');"><?=$html->image('developers/sandbox-bw.png', array('id' => 'sandboxIcon')).' '.___('Retain in Sandbox')?></span>
         <span id="info" class="action_color" onClick="selectAction('info');"><?=$html->image('developers/info-bw.png', array('id' => 'infoIcon')).' '.___('Request More Information')?></span>
-        <span id="superreview" class="action_color" onClick="selectAction('superreview');"><?=$html->image('developers/superreview-bw.png', array('id' => 'superreviewIcon')).' '.___('Request Super-Review')?></span>
+        <span id="superreview" class="action_color"><img id="superreviewIcon"></span>
     </div>
     <div id="actiondetails">
     <?php
@@ -219,16 +219,6 @@
             }
             if ($reviewType == 'pending') {
         ?>
-        <div id="testing">
-            <div id="os">
-                <?=___('Operating Systems:')?>
-                <?=$html->input('Approval/os', array('class' => 'input', 'size' => '30'))?>
-            </div>
-            <div id="apps">
-                <?=___('Applications:')?>
-                <?=$html->input('Approval/applications', array('class' => 'input', 'size' => '30'))?>
-            </div>
-        </div>
         <?
             }
         ?>

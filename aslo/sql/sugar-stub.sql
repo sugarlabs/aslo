@@ -1,0 +1,6 @@
+SET FOREIGN_KEY_CHECKS=0;
+
+ALTER TABLE versions
+  ADD COLUMN `in_reply_to` varchar(255) NOT NULL default '';
+
+SET FOREIGN_KEY_CHECKS=1;

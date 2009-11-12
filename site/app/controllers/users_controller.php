@@ -536,7 +536,6 @@ class UsersController extends AppController
         // notifications
         $changed['notifycompat'] = array_key_exists('notifycompat', $this->data['User']) ? $this->data['User']['notifycompat'] : '';
         $changed['notifyevents'] = array_key_exists('notifyevents', $this->data['User']) ? $this->data['User']['notifyevents'] : '';
-        $changed['notifybroadcast'] = $this->data['User']['notifybroadcast'];
         
         // save it
         $this->User->id = $_current_user['User']['id'];

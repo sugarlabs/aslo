@@ -140,12 +140,15 @@ class EditorsComponent extends Object {
         $this->controller->set('info', $emailInfo);
 
         if ($data['Approval']['ActionField'] == 'public')
-            $this->_sendReleaseNotes('', $version['Version']['id'], $emailInfo);
+            $this->_sendReleaseNotes('', $this->controller->Addon->id, $version['Version']['id'], $emailInfo);
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/nominated/'.$data['Approval']['ActionField'];
             $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->subject = sprintf('Mozilla Add-ons: %s Nomination', $emailInfo['name']);
+            $this->controller->Email->subject = sprintf('%s: %s Nomination', SITE_NAME, $emailInfo['name']);
+            $this->controller->Email->cc = array(EDITOR_EMAIL);
+            $this->controller->Email->reply_to = EDITOR_EMAIL;
+            $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         }
         else {
             $this->controller->Email->template = 'email/superreview';
@@ -155,9 +158,6 @@ class EditorsComponent extends Object {
         }
         $result = $this->controller->Email->send();
         
-        if ($data['Approval']['ActionField'] == 'superreview')
-            $this->superNotify($emailInfo['id'], $emailInfo['version']);
-
         return true;
     }
 
@@ -198,6 +198,10 @@ class EditorsComponent extends Object {
             $this->controller->Error->addError(___('Please enter review comments.'));
             return false;
         }
+
+        // we are sugar
+        $data['Approval']['applications'] = 'sugar';
+        $data['Approval']['os'] = 'GNU/Linux';
 
         if (empty($data['Approval']['applications'])) {
             $this->controller->Error->addError(___('Please enter the applications you tested.'));
@@ -295,12 +299,15 @@ class EditorsComponent extends Object {
         $this->controller->set('info', $emailInfo);
 
         if ($data['Approval']['ActionField'] == 'public')
-            $this->_sendReleaseNotes('', $version['Version']['id'], $emailInfo);
+            $this->_sendReleaseNotes('', $this->controller->Addon->id, $version['Version']['id'], $emailInfo);
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/pending/'.$data['Approval']['ActionField'];
             $this->controller->Email->to = $emailInfo['email'];
             $this->controller->Email->subject = sprintf('%s: %s %s', SITE_NAME, $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->cc = array(EDITOR_EMAIL);
+            $this->controller->Email->reply_to = EDITOR_EMAIL;
+            $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         }
         else {
             $this->controller->Email->template = 'email/superreview';
@@ -309,9 +316,6 @@ class EditorsComponent extends Object {
             $this->controller->Email->subject = "Super-review requested: {$emailInfo['name']}";  
         }
         $result = $this->controller->Email->send();
-
-        if ($data['Approval']['ActionField'] == 'superreview')
-            $this->superNotify($emailInfo['id'], $emailInfo['version']);
         
         return true;
     }
@@ -322,6 +326,8 @@ class EditorsComponent extends Object {
      */
     function requestInformation($addon, $data) {
         global $valid_status;
+
+	$file_id = 0;
         
         // store information request
         $session = $this->controller->Session->read('User');
@@ -331,15 +337,21 @@ class EditorsComponent extends Object {
                 break;
             }
         }
-        $approvalData = array(
-            'user_id' => $session['id'],
-            'reviewtype' => 'info',
-            'action' => 0,
-            'addon_id' => $addon['Addon']['id'],
-            'comments' => $data['Approval']['comments']
-        );
-        $this->controller->Approval->save($approvalData);
-        $infoid = $this->controller->Approval->getLastInsertID();
+
+	if ($file_id) {
+		$approvalData = array(
+		    'file_id' => $file_id,
+		    'user_id' => $session['id'],
+		    'reviewtype' => 'info',
+		    'action' => 0,
+		    'addon_id' => $addon['Addon']['id'],
+		    'comments' => $data['Approval']['comments']
+		);
+		$this->controller->Approval->save($approvalData);
+		$infoid = $this->controller->Approval->getLastInsertID();
+	} else {
+		$infoid = 0;
+	}
         
         // send email to all authors
         $authors = array();
@@ -362,6 +374,9 @@ class EditorsComponent extends Object {
         $this->controller->Email->template = 'email/inforequest';
         $this->controller->Email->to = implode(', ', $authors);
         $this->controller->Email->subject = sprintf(SITE_NAME.': %s %s', $emailInfo['name'], $emailInfo['version']);
+        $this->controller->Email->cc = array(EDITOR_EMAIL);
+        $this->controller->Email->reply_to = EDITOR_EMAIL;
+        $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         $this->controller->Email->send();
     }
 
@@ -485,59 +500,14 @@ class EditorsComponent extends Object {
         $this->controller->redirect("/editors/queue/{$listtype}");
     }
     
-    function broadcastNotify($group, $addonid, $versionid, $exclude, $subject, $template) {
-        $session = $this->controller->Session->read('User');
-        $subscribers = array();
-
-        foreach ($this->controller->User->findAll() as $user) {
-            if ($session['id'] != $user['User']['id'] && !in_array($user, $exclude)
-                    && $user['User']['notifybroadcast'] 
-                    && $this->controller->SimpleAcl->actionAllowed($group, '*', $user))
-                $subscribers[] = $user;
-        }
-
-        if (empty($subscribers)) return;
-
-        $addon = $this->controller->Addon->getAddon($addonid);
-        $version = $this->controller->Version->findById($versionid, null, null, null, null, -1);
-        
-        // send out notification email(s)
-        $emailInfo = array(
-            'id' => $addonid,
-            'name' => $addon['Translation']['name']['string'],
-            'versionid' => $versionid,
-            'version' => $version['Version']['version']
-        );
-        $this->controller->publish('info', $emailInfo, false);
-        
-        $this->controller->Email->template = $template;
-        $this->controller->Email->subject =  sprintf($subject, $emailInfo['name'].'-'.$emailInfo['version']);
-
-        foreach ($subscribers as &$subscriber) {
-            $this->controller->Email->to = $subscriber['User']['email'];
-            $result = $this->controller->Email->send();
-        }
-    }
-    
     function nominateNotify($addonid, $versionid) {
-        $_ids = $this->controller->EditorSubscription->getSubscribers($addonid);
-        if (empty($_ids))
-            $exclude = array();
-        else
-            $exclude = $this->controller->User->findAllById($_ids, null, null, null, null, -1);
-
-        $this->broadcastNotify('Editors', $addonid, $versionid, $exclude,
-                SITE_NAME.': %s Nomination', '../editors/email/notify_nominate');
+        $this->_broadcastNotify($addonid, $versionid,
+                '[NOMINATION] %s', '../editors/email/notify_nominate', true);
     }
 
     function pendingNotify($addonid, $versionid) {
-        $this->broadcastNotify('Editors', $addonid, $versionid, array(),
-                SITE_NAME.': %s Pending update', '../editors/email/notify_pending');
-    }
-
-    function superNotify($addonid, $versionid) {
-        $this->broadcastNotify('Admin', $addonid, $versionid, array(),
-                SITE_NAME.': %s Super-review requested', '../editors/email/notify_super');
+        $this->_broadcastNotify($addonid, $versionid,
+                '[UPDATE] %s', '../editors/email/notify_pending', true);
     }
 
     /**
@@ -563,7 +533,7 @@ class EditorsComponent extends Object {
         
         $this->controller->Email->template = '../editors/email/notify_update';
         $this->controller->Email->subject = sprintf(SITE_NAME.': %s Updated', $emailInfo['name']);
-        
+
         if (!empty($_ids)) {
             $subscribers = $this->controller->User->findAllById($_ids, null, null, null, null, -1);
 
@@ -576,7 +546,7 @@ class EditorsComponent extends Object {
         }
 
         if ($addon['Addon']['trusted'] == 1 && $release_notify)
-            $this->_sendReleaseNotes('../editors/', $version['Version']['id'], $emailInfo);
+            $this->_sendReleaseNotes('../editors/', $addonid, $version['Version']['id'], $emailInfo);
     }
 
     /**
@@ -938,7 +908,7 @@ class EditorsComponent extends Object {
         return true;
     }
 
-    function _sendReleaseNotes($prefix, $version_id, $emailInfo) {
+    function _sendReleaseNotes($prefix, $addon_id, $version_id, $emailInfo) {
         global $SITE_RELEASE_EMAIL;
 
         $releasenotes = $this->controller->Version->getReleaseNotesLocales($version_id);
@@ -953,6 +923,31 @@ class EditorsComponent extends Object {
             $this->controller->Email->subject = sprintf($props['subject'], $emailInfo['name'], $emailInfo['version']);
             $this->controller->Email->send(false, $props['email']);
         }
+    }
+
+    function _broadcastNotify($addonid, $versionid, $subject, $template, $update_ml_thread=false) {
+        $addon = $this->controller->Addon->getAddon($addonid);
+        $version = $this->controller->Version->findById($versionid, null, null, null, null, -1);
+        
+        // send out notification email(s)
+        $emailInfo = array(
+            'id' => $addonid,
+            'name' => $addon['Translation']['name']['string'],
+            'versionid' => $versionid,
+            'version' => $version['Version']['version']
+        );
+        $this->controller->publish('info', $emailInfo, false);
+        
+        $this->controller->Email->template = $template;
+        $this->controller->Email->subject =  sprintf($subject, $emailInfo['name'].'-'.$emailInfo['version']);
+        $this->controller->Email->to = EDITOR_EMAIL;
+        $this->controller->Email->reply_to = EDITOR_EMAIL;
+        $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
+
+        $result = $this->controller->Email->send();
+
+        if ($update_ml_thread && $result)
+            $this->controller->Version->execute("UPDATE versions SET in_reply_to='{$result}' WHERE id='{$versionid}'");
     }
 }
 ?>

@@ -252,9 +252,9 @@ $SITE_RELEASE_EMAIL = array(
                      'subject' => '[PUBLICACION] %s-%s',
                      'template' => 'release_es'));
 
-define('ADMIN_EMAIL', 'aslo-admins@sugarlabs.org');
-define('EDITOR_EMAIL', 'aslo-editors@sugarlabs.org');
-define('NOBODY_EMAIL', 'addons@sugarlabs.org');
+define('ADMIN_EMAIL', 'activities@sugarlabs.org');
+define('EDITOR_EMAIL', 'aslo@lists.sugarlabs.org');
+define('NOBODY_EMAIL', 'activities@sugarlabs.org');
 define('SITE_NAME', 'SL');
 define('SITE_MIME', 'application/vnd.olpc-sugar'); // application/x-xpinstall
 define('SITE_ORG', 'SugarLabs'); // Mozilla
