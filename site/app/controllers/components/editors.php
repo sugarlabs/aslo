@@ -913,7 +913,16 @@ class EditorsComponent extends Object {
 
         $releasenotes = $this->controller->Version->getReleaseNotesLocales($version_id);
         $en = isset($releasenotes['en-US']) ? $releasenotes['en-US'] : '';
-        
+        $version = $this->controller->Version->findById($version_id, null, null, null, null, -1);
+        $compat = $this->controller->Version->getCompatibleApps($version_id);
+        $compat = $compat[0];
+
+        $emailInfo['min'] = $compat['Min_Version']['version'];
+        $emailInfo['max'] = $compat['Max_Version']['version'];
+        $emailInfo['version_id'] = $version_id;
+        $emailInfo['file_id'] = $version['File'][0]['id'];
+        $emailInfo['filename'] = $version['File'][0]['filename'];
+
         foreach ($SITE_RELEASE_EMAIL as $locale => $props) {
             $emailInfo['releasenotes'] = isset($releasenotes[$locale]) ? $releasenotes[$locale] : $en;
             $this->controller->set('info', $emailInfo);
