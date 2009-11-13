@@ -25,7 +25,7 @@ class EmailComponent
     var $bcc = null;
     var $template = null; // rendering template for email
     var $in_reply_to = null;
-    var $reply_to = null;
+    var $reply_to = array();
  
     var $controller;
  
@@ -83,10 +83,16 @@ class EmailComponent
         }
         $mail->FromName = $this->fromName;
         $mail->AddAddress($this->to, $this->toName );
+
         if (!$reply)
-            $reply = $this->reply_to;
+            $reply = array();
+        else if (!is_array($reply))
+            $reply = array($reply);
+        $reply = array_merge($reply, $this->reply_to);
+
         if ($reply)
-            $mail->AddReplyTo($reply);
+            foreach($reply as $i)
+                $mail->AddReplyTo($i);
         else
             $mail->AddReplyTo($this->from, $this->fromName );
  
