@@ -16,7 +16,14 @@ for type in downloads updatepings; do
         geo=US v=v >> $logfile
 done
 
-php -f maintenance.php weekly >> $logfile
+for time in now yesterday; do
+    date=$(date +%F -d $time)
+    php -f maintenance.php weekly $date >> $logfile
+    php -f maintenance.php global_stats $date >> $logfile
+    php -f maintenance.php collection_stats $date >> $logfile
+    php -f maintenance.php collection_subscribers $date >> $logfile
+done
+
 php -f maintenance.php total >> $logfile
 php -f maintenance.php ADU >> $logfile
 php -f maintenance.php gc >> $logfile
@@ -31,6 +38,3 @@ php -f maintenance.php addons_collections_total >> $logfile
 php -f maintenance.php collections_ratings >> $logfile
 php -f maintenance.php share_count_totals >> $logfile
 php -f maintenance.php category_totals >> $logfile
-php -f maintenance.php global_stats >> $logfile
-php -f maintenance.php collection_stats >> $logfile
-php -f maintenance.php collection_subscribers >> $logfile

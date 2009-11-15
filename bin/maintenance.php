@@ -128,7 +128,7 @@ switch ($action) {
             FROM
                 `download_counts`
             WHERE
-                `date` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                `date` >= DATE_SUB('{$date}', INTERVAL 7 DAY)
             GROUP BY
                 download_counts.addon_id
             ORDER BY
@@ -812,7 +812,7 @@ switch ($action) {
                     COUNT(collection_id) AS count,
                     collection_id
                 FROM collection_subscriptions
-                WHERE created >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+                WHERE created >= DATE_SUB('{$date}', INTERVAL 7 DAY)
                 GROUP BY collection_id
             ) AS weekly ON (c.id = weekly.collection_id)
             INNER JOIN (
@@ -820,7 +820,7 @@ switch ($action) {
                     COUNT(collection_id) AS count,
                     collection_id
                 FROM collection_subscriptions
-                WHERE created >= DATE_SUB(CURDATE(), INTERVAL 31 DAY)
+                WHERE created >= DATE_SUB('{$date}', INTERVAL 31 DAY)
                 GROUP BY collection_id
             ) AS monthly ON (c.id = monthly.collection_id)
             SET c.weekly_subscribers = weekly.count,
