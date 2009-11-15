@@ -1,0 +1,7 @@
+#!/bin/sh
+
+root=$(dirname $(dirname $(dirname $(readlink --canonicalize-missing $0))))
+
+cd $root/bin
+
+php -f update-search-views.php
