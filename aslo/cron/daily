@@ -1,0 +1,37 @@
+#!/bin/sh
+
+root=$(dirname $(dirname $(dirname $(readlink --canonicalize-missing $0))))
+
+cd $root/bin
+
+for time in now yesterday; do
+    for type in downloads updatepings; do
+        php -f parse_logs/parse_logs.php \
+            logs=$root/data/ \
+            temp=/tmp \
+            type=$type \
+            date=$(date --date=$time +%Y%m%d) \
+            geo=US v=v
+    done
+
+    date=$(date +%F -d $time)
+    php -f maintenance.php weekly $date
+    php -f maintenance.php global_stats $date
+    php -f maintenance.php collection_stats $date
+    php -f maintenance.php collection_subscribers $date
+done
+
+php -f maintenance.php total
+php -f maintenance.php ADU
+php -f maintenance.php gc
+#php -f maintenance.php publish_files
+php -f maintenance.php reviews
+php -f maintenance.php user_ratings
+php -f maintenance.php ratings
+php -f maintenance.php unconfirmed
+php -f maintenance.php expired_resetcode
+php -f maintenance.php addons_collections_total
+#php -f maintenance.php collections_total
+php -f maintenance.php collections_ratings
+php -f maintenance.php share_count_totals
+php -f maintenance.php category_totals
