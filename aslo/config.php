@@ -1,4 +1,5 @@
 <?php
+/* bernie: this file must not be world readable! */
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
@@ -100,7 +101,7 @@ define('FILES_HOST', 'http://download.sugarlabs.org/activities');
  *
  * Example: downloads/file
  */
-define('FILES_URL', 'downloads/file');
+#define('FILES_URL', 'downloads');
 
 /**
  * File path for storing XPI/JAR files (or any files associated with an add-on).
@@ -112,7 +113,7 @@ define('REPO_PATH', '/var/www/files');
  * File path for storing public files to be rsynced for updates
  * If left commented out, files will not be copied there and will use only REPO_PATH
  */
-//define('PUBLIC_STAGING_PATH', '');
+//define('PUBLIC_STAGING_PATH', '/srv/download/activities');
 
 /**
  * The path to the gnu diff program (or any diff program able to create a unified diff).
@@ -130,7 +131,7 @@ define('DL_COUNT_DELAY', '10');
  * Path to directory where detailed logfiles are kept. Files will be created in
  * this directory in the format: {DETAILED_LOG_PATH}/Y-M-D.txt
  */
-define('DETAILED_LOG_PATH', '/var/www/log');
+//define('DETAILED_LOG_PATH', '');
 
 /**
  * Path to directory for misc. AMO storage accessible by all webheads.
@@ -167,6 +168,8 @@ define('FB_INSTALL_SITE', 'https://addons.mozilla.org');
  * DB_USER, DB_PASS, DB_NAME, DB_HOST, DB_PORT
  * This database has read/write capabilities.  Host and port default to localhost and 3306.
  */
+define('DB_HOST', '127.0.0.1');
+define('DB_PORT', '3306');
 define('DB_USER','remora');
 define('DB_PASS','remora');
 define('DB_NAME','remora');
@@ -205,7 +208,7 @@ $shadow_databases = array(
  */
 global $memcache_config;
 $memcache_config = array(
-    'localhost' => array(
+    '127.0.0.1' => array(
        'port' => '11211',
        'persistent' => true,
        'weight' => '1',
@@ -246,19 +249,21 @@ define('SITE_IRC', '#sugar on chat.freenode.net');
 global $SITE_RELEASE_EMAIL;
 $SITE_RELEASE_EMAIL = array(
     'en_US' => array('email'    => 'sugar-devel@lists.sugarlabs.org',
-                     'subject'  => '[RELEASE] %s-%s',
+                     'subject'  => '[ASLO] Release %s-%s',
                      'template' => 'release_en'),
     'es_ES' => array('email'   => 'olpc-sur@lists.laptop.org',
-                     'subject' => '[PUBLICACION] %s-%s',
+                     'subject' => '[ASLO] Nueva version %s-%s',
                      'template' => 'release_es'));
 
 define('ADMIN_EMAIL', 'activities@sugarlabs.org');
 define('EDITOR_EMAIL', 'aslo@lists.sugarlabs.org');
 define('NOBODY_EMAIL', 'activities@sugarlabs.org');
-define('SITE_NAME', 'SL');
+define('SITE_NAME', 'Sugar Labs Activities');
 define('SITE_MIME', 'application/vnd.olpc-sugar'); // application/x-xpinstall
-define('SITE_ORG', 'SugarLabs'); // Mozilla
+define('SITE_ORG', 'Sugar Labs'); // Mozilla
 define('SSITE_URL', 'https://activities.sugarlabs.org');
+define('HELP_IRC', '#Sugar on irc.freenode.nt');
+
 define('SITE_APP', 1); // 1
 
 define('ADDON_ACTIVITY', '1');

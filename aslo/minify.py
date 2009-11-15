@@ -79,9 +79,7 @@ MINIFY_PRODUCTS = {
         ],
         'css/amo2009/style.min.css': [
             { 'file':'css/amo2009/main.css' },
-            { 'file':'css/amo2009/slimbox2.css' },
-            { 'file':'css/amo2009/main-mozilla.css' },
-            { 'file':'css/amo2009/legacy.css' }
+            { 'file':'css/amo2009/slimbox2.css' }
         ]
     }
 }
