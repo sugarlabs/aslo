@@ -425,9 +425,6 @@ class DevelopersController extends AppController
 
             $this->Version->addCompatibleApp($version_id, SITE_APP, $data['appversion_min'], $data['appversion_max']);
             $this->Version->saveTranslations($version_id, $data['form.data.Version'], $data['localizedFields']);
-
-            // notify subscribed editors of update (if any)
-            $this->Editors->updateNotify($addon['Addon']['id'], $version_id, true);
         }
 
         // Add Files
@@ -457,6 +454,7 @@ class DevelopersController extends AppController
 
             $this->File->save($data['File']['db']);
             $file_id = $this->File->id;
+            $file_name = $validate['filename'];
 
             // only log file creation if separate from version creation
             if (!empty($data['Version']['id'])) {
@@ -475,6 +473,11 @@ class DevelopersController extends AppController
         
         if ($data['File']['db']['status'] == STATUS_PENDING)
             $this->Editors->pendingNotify($addon_id, $version_id);
+
+        if ($type == 'update') {
+            // notify subscribed editors of update (if any)
+            $this->Editors->updateNotify($addon_id, $version_id, $file_id, $file_name);
+        }
 
         return array(
             'error' => 0,
@@ -1404,7 +1407,7 @@ class DevelopersController extends AppController
                     // notify subscribed editors of update
                     global $valid_status;
                     $version_id = $this->Version->getVersionByAddonId($addon['Addon']['id'], $valid_status);
-                    $this->Editors->updateNotify($addon['Addon']['id'], $version_id, false);
+                    $this->Editors->updateNotify($addon['Addon']['id'], $version_id);
                     $this->Editors->nominateNotify($addon['Addon']['id'], $version_id);
                 }
             }

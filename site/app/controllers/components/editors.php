@@ -150,8 +150,12 @@ class EditorsComponent extends Object {
         
         $this->controller->set('info', $emailInfo);
 
-        if ($data['Approval']['ActionField'] == 'public')
-            $this->_sendReleaseNotes('', $this->controller->Addon->id, $version['Version']['id'], $emailInfo);
+        if ($data['Approval']['ActionField'] == 'public') {
+            $emailInfo['file_id'] = $version['File'][0]['id'];
+            $emailInfo['filename'] = $version['File'][0]['filename'];
+            $emailInfo['version_id'] = $version['Version']['id'];
+            $this->_sendReleaseNotes('', $emailInfo);
+        }
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/nominated/'.$data['Approval']['ActionField'];
@@ -317,8 +321,12 @@ class EditorsComponent extends Object {
         }
         $this->controller->set('info', $emailInfo);
 
-        if ($data['Approval']['ActionField'] == 'public')
-            $this->_sendReleaseNotes('', $this->controller->Addon->id, $version['Version']['id'], $emailInfo);
+        if ($data['Approval']['ActionField'] == 'public') {
+            $emailInfo['file_id'] = $version['File'][0]['id'];
+            $emailInfo['filename'] = $version['File'][0]['filename'];
+            $emailInfo['version_id'] = $version['Version']['id'];
+            $this->_sendReleaseNotes('', $emailInfo);
+        }
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/pending/'.$data['Approval']['ActionField'];
@@ -543,7 +551,7 @@ class EditorsComponent extends Object {
      * @param int $addonid ID of add-on that was updated
      * @param int $versionid ID of the add-on's new version
      */
-    function updateNotify($addonid, $versionid, $release_notify) {
+    function updateNotify($addonid, $versionid, $file_id=null, $file_name=null) {
         $_ids = $this->controller->EditorSubscription->getSubscribers($addonid);
         
         $addon = $this->controller->Addon->findById($addonid);
@@ -562,9 +570,12 @@ class EditorsComponent extends Object {
         $this->controller->Email->template = '../editors/email/notify_update';
 
         // we are sugar
-        if ($addon['Addon']['trusted'] == 1 && $release_notify) {
-            $this->_sendReleaseNotes('../editors/', $addonid, $version['Version']['id'], $emailInfo);
-            $this->_broadcastNotify($addonid, $versionid, '[PUBLIC] %s', '../editors/email/notify_update', false);
+        if ($addon['Addon']['trusted'] == 1 && $file_id && $file_name) {
+            $emailInfo['file_id'] = $file_id;
+            $emailInfo['filename'] = $file_name;
+            $emailInfo['version_id'] = $version['Version']['id'];
+            $this->_sendReleaseNotes('../editors/', $emailInfo);
+            $this->_broadcastNotify($addonid, $versionid, '[PUBLIC] %s', '../editors/email/pending/public', false);
         }
         return
 
@@ -938,9 +949,10 @@ class EditorsComponent extends Object {
         return true;
     }
 
-    function _sendReleaseNotes($prefix, $addon_id, $version_id, $emailInfo) {
+    function _sendReleaseNotes($prefix, $emailInfo) {
         global $SITE_RELEASE_EMAIL;
 
+        $version_id = $emailInfo['version_id'];
         $releasenotes = $this->controller->Version->getReleaseNotesLocales($version_id);
         $en = isset($releasenotes['en-US']) ? $releasenotes['en-US'] : '';
         $version = $this->controller->Version->findById($version_id, null, null, null, null, -1);
@@ -949,9 +961,6 @@ class EditorsComponent extends Object {
 
         $emailInfo['min'] = $compat['Min_Version']['version'];
         $emailInfo['max'] = $compat['Max_Version']['version'];
-        $emailInfo['version_id'] = $version_id;
-        $emailInfo['file_id'] = $version['File'][0]['id'];
-        $emailInfo['filename'] = $version['File'][0]['filename'];
 
         foreach ($SITE_RELEASE_EMAIL as $locale => $props) {
             $emailInfo['releasenotes'] = isset($releasenotes[$locale]) ? $releasenotes[$locale] : $en;
@@ -980,7 +989,10 @@ class EditorsComponent extends Object {
             'id' => $addonid,
             'name' => $addon['Translation']['name']['string'],
             'versionid' => $versionid,
-            'version' => $version['Version']['version']
+            'version' => $version['Version']['version'],
+            'files' => array(),
+            'reviewer' => '',
+            'comments' => 'Trusted activity'
         );
         $this->controller->publish('info', $emailInfo, false);
         
