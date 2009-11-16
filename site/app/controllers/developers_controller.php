@@ -405,6 +405,8 @@ class DevelopersController extends AppController
             $this->Version->id = 0;
             $data['Version']['addon_id'] = $addon_id;
             $data['Version']['license_id'] = $license_id;
+            $session_user = $this->Session->read('User');
+            $data['Version']['uploader'] = $session_user['id'];
             $this->Version->save($data['Version']);
             $version_id = $this->Version->getLastInsertId();
 

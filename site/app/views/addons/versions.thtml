@@ -91,7 +91,7 @@ $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']
                         'is_latest' => false
                     ))?>
                     <h3><?=$this->renderElement('amo2009/addons/version_detail', $_version_data)?></h3>
-
+                    <?=$this->renderElement('uploader', array('version' => $version)); ?>
                     <?=$this->renderElement('app_compatibility', array('compatible_apps' => $version['Compatibility'])); ?>
 
                     <p<?=$version['Translation']['releasenotes']['locale_html']?>>

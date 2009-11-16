@@ -1599,6 +1599,8 @@ class AddonsController extends AppController
 
             for($i =0 ; $i < count($versions); $i++) {
                 $versions[$i]['Compatibility'] = $comp_apps_by_id[$versions[$i]['Version']['id'] ];
+                $user = $this->User->findById($versions[$i]['Version']['uploader']);
+                $versions[$i]['User'] = $user['User'];
 	        }
         }
         else

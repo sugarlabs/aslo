@@ -15,7 +15,7 @@ INSERT INTO `groups_users` (`group_id`, `user_id`) VALUES
 -- Add root@sugarlabs.org user with password "test" 
 DELETE from `users`;
 INSERT INTO `users` (`id`, `email`, `password`, `firstname`, `lastname`, `nickname`, `emailhidden`, `sandboxshown`, `homepage`, `confirmationcode`, `created`, `modified`, `notes`) VALUES 
-(1, 'nobody@addons.mozilla.org', '098f6bcd4621d373cade4e832627b4f6', 'nobody', 'nobody', 'nobody', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL),
+(1, 'nobody@addons.mozilla.org', '098f6bcd4621d373cade4e832627b4f6', 'no', 'no', 'no', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL),
 (2, 'admin@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'root', 'root', 'root', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL),
 (3, 'editor@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'editor', 'editor', 'editor', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL),
 (4, 'developer@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'developer', 'developer', 'developer', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL),
@@ -105,5 +105,8 @@ INSERT INTO `facebook_data` (trait) VALUES
 
 DELETE FROM `translations_seq`;
 INSERT INTO `translations_seq` (id) values (1000);
+
+INSERT INTO `users` (`id`, `email`, `password`, `firstname`, `lastname`, `nickname`, `emailhidden`, `sandboxshown`, `homepage`, `confirmationcode`, `created`, `modified`, `notes`) VALUES 
+(0, 'nobody@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'nobody', 'nobody', 'nobody', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL);
 
 SET FOREIGN_KEY_CHECKS=1;
