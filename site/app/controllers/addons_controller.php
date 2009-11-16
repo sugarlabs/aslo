@@ -270,7 +270,7 @@ class AddonsController extends AppController
         $addon_data = $this->Addon->getAddon($id, $_associations);
 
         // Only show valid, active add-ons.  Not doing this in SQL because we want to use the cache invalidation framework. more in bug 501187
-        if (empty($addon_data)
+        if (empty($addon_data) || empty($addon_data['Addon'])
             || $addon_data['Addon']['inactive'] == 1
             || !in_array($addon_data['Addon']['addontype_id'], array(ADDON_EXTENSION, ADDON_THEME, ADDON_DICT, ADDON_SEARCH, ADDON_LPAPP, ADDON_PLUGIN))
             || !in_array($addon_data['Addon']['status'], $valid_status)) {

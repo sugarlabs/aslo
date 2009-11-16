@@ -222,13 +222,6 @@
         <?
             }
         ?>
-        <div id="subscribe">
-            <?php
-            $_subscribetext = ___('Notify me the next time this add-on is updated. (Subsequent updates will not generate an email)');
-            echo $html->checkbox('Approval/subscribe', $_subscribetext);
-            ?>
-            <label for="ApprovalSubscribe"><?=$_subscribetext?></label>
-        </div>
         <div id="finish">
             <?=$html->submit(___('Process Action'), array('id' => 'process', 'onClick' => 'return validateReview(\''.$reviewType.'\');'))?>
         </div>

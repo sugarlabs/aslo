@@ -785,7 +785,7 @@ class DevelopersController extends AppController
         // Save some additional data for later
         $addon['Addon']['id'] = $this->data['Addon']['id'];
         $addon['Version']['id'] = $this->data['Version']['id'];
-        $addon['License'] = $this->data['License'];
+        $addon['License'] = isset($this->data['License']) ? $this->data['License'] : '';
         $addon['License.text'] = getitem($this->data, 'License.text');
         $addon['form.data.License'] = getitem($this->params, 'form.data.License');
         $addon['appversion_min'] = $this->data['appversion_min'];

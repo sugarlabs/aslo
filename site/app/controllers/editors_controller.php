@@ -312,7 +312,7 @@ class EditorsController extends AppController
             }
             elseif ($this->data['Approval']['ActionField'] == 'info') {
                 // request more information
-                $this->Editors->requestInformation($addon, $this->data);
+                $this->Editors->requestInformation($addon, $version['Version']['id'], $this->data);
             }
             elseif ($this->data['Approval']['Type'] == 'nominated') {
                 $this->Editors->reviewNominatedAddon($addon, $this->data);
@@ -342,10 +342,6 @@ class EditorsController extends AppController
                     $this->flash(___('Comment successfully posted'), $redirectUrl);
                     return;
                 }
-
-                // if editor chose to be reminded of the next upcoming update, save this
-                if ($this->data['Approval']['subscribe'])
-                    $this->EditorSubscription->subscribeToUpdates($session['id'], $addon['Addon']['id']);
 
                 $this->flash(___('Review successfully processed.'), '/editors/queue/'.$this->data['Approval']['Type']);
                 return;

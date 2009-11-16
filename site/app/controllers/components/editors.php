@@ -123,9 +123,12 @@ class EditorsComponent extends Object {
             return false;
         }
         
+        $authors = array();
         if (!empty($addon['User'])) {
             foreach ($addon['User'] as $user) {
-                $authors[] = $user['email'];
+                $user_full = $this->controller->User->findById($user['id']);
+                if (!$this->controller->SimpleAcl->actionAllowed('Editors', '*', $user_full))
+                    $authors[] = $user['email'];
             }
         }
         
@@ -136,6 +139,14 @@ class EditorsComponent extends Object {
                            'comments' => $data['Approval']['comments'],
                            'version' => !empty($version) ? $version['Version']['version'] : ''
                            );
+
+        if (empty($authors)) {
+            $emailInfo['email'] = EDITOR_EMAIL;
+            $this->controller->Email->to = EDITOR_EMAIL;
+        } else {
+            $this->controller->Email->to = $emailInfo['email'];
+            $this->controller->Email->cc = array(EDITOR_EMAIL);
+        }
         
         $this->controller->set('info', $emailInfo);
 
@@ -144,10 +155,8 @@ class EditorsComponent extends Object {
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/nominated/'.$data['Approval']['ActionField'];
-            $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->subject = sprintf('[RELEASE] %s-%s', $emailInfo['name'], $emailInfo['version']);
-            $this->controller->Email->cc = array(EDITOR_EMAIL);
-            $this->controller->Email->reply_to = array(EDITOR_EMAIL, $this->controller->Email->to);
+            $this->controller->Email->subject = sprintf('[%s] %s-%s', strtoupper($data['Approval']['ActionField']), $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->reply_to = array_merge(array(EDITOR_EMAIL), $authors);
             $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         }
         else {
@@ -280,9 +289,12 @@ class EditorsComponent extends Object {
             }
         }
         
+        $authors = array();
         if (!empty($addon['User'])) {
             foreach ($addon['User'] as $user) {
-                $authors[] = $user['email'];
+                $user_full = $this->controller->User->findById($user['id']);
+                if (!$this->controller->SimpleAcl->actionAllowed('Editors', '*', $user_full))
+                    $authors[] = $user['email'];
             }
         }
         
@@ -296,6 +308,13 @@ class EditorsComponent extends Object {
                            'version' => !empty($version) ? $version['Version']['version'] : '',
                            'files' => $files
                            );
+        if (empty($authors)) {
+            $emailInfo['email'] = EDITOR_EMAIL;
+            $this->controller->Email->to = EDITOR_EMAIL;
+        } else {
+            $this->controller->Email->to = $emailInfo['email'];
+            $this->controller->Email->cc = array(EDITOR_EMAIL);
+        }
         $this->controller->set('info', $emailInfo);
 
         if ($data['Approval']['ActionField'] == 'public')
@@ -303,10 +322,8 @@ class EditorsComponent extends Object {
         
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/pending/'.$data['Approval']['ActionField'];
-            $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->subject = sprintf('[RELEASE] %s-%s', $emailInfo['name'], $emailInfo['version']);
-            $this->controller->Email->cc = array(EDITOR_EMAIL);
-            $this->controller->Email->reply_to = array(EDITOR_EMAIL, $this->controller->Email->to);
+            $this->controller->Email->subject = sprintf('[%s] %s-%s', strtoupper($data['Approval']['ActionField']), $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->reply_to = array_merge(array(EDITOR_EMAIL), $authors);
             $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         }
         else {
@@ -324,7 +341,7 @@ class EditorsComponent extends Object {
      * Request more information from an author regarding an update/nomination
      * request
      */
-    function requestInformation($addon, $data) {
+    function requestInformation($addon, $versionid, $data) {
         global $valid_status;
 
         $file_id = 0;
@@ -355,27 +372,38 @@ class EditorsComponent extends Object {
 
         // send email to all authors
         $authors = array();
-        foreach ($addon['User'] as &$user) $authors[] = $user['email'];
+        if (!empty($addon['User'])) {
+            foreach ($addon['User'] as $user) {
+                $user_full = $this->controller->User->findById($user['id']);
+                if (!$this->controller->SimpleAcl->actionAllowed('Editors', '*', $user_full))
+                    $authors[] = $user['email'];
+            }
+        }
         
-        $versionid = $this->controller->Version->getVersionByAddonId($addon['Addon']['id'], $valid_status);
         $version = $this->controller->Version->findById($versionid, null, null, -1);
 
         // log addon action
         $this->controller->Addonlog->logRequestVersion($this->controller, $addon['Addon']['id'], $versionid, $version['Version']['version']);
         
         $emailInfo = array(
+            'email' => implode(', ', $authors),
             'name' => $addon['Translation']['name']['string'],
             'infoid' => $infoid,
             'reviewer' => $session['firstname'].' '.$session['lastname'],
             'comments' => $data['Approval']['comments'],
             'version' => !empty($version) ? $version['Version']['version'] : ''
         );
+        if (empty($authors)) {
+            $emailInfo['email'] = EDITOR_EMAIL;
+            $this->controller->Email->to = EDITOR_EMAIL;
+        } else {
+            $this->controller->Email->to = $emailInfo['email'];
+            $this->controller->Email->cc = array(EDITOR_EMAIL);
+        }
         $this->controller->publish('info', $emailInfo, false);
         $this->controller->Email->template = 'email/inforequest';
-        $this->controller->Email->to = implode(', ', $authors);
         $this->controller->Email->subject = sprintf('[REQUEST] %s-%s', $emailInfo['name'], $emailInfo['version']);
-        $this->controller->Email->cc = array(EDITOR_EMAIL);
-        $this->controller->Email->reply_to = array(EDITOR_EMAIL, $this->controller->Email->to);
+        $this->controller->Email->reply_to = array_merge(array(EDITOR_EMAIL), $authors);
         $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         $this->controller->Email->send();
     }
@@ -536,7 +564,7 @@ class EditorsComponent extends Object {
         // we are sugar
         if ($addon['Addon']['trusted'] == 1 && $release_notify) {
             $this->_sendReleaseNotes('../editors/', $addonid, $version['Version']['id'], $emailInfo);
-            $this->_broadcastNotify($addonid, $versionid, '[RELEASE] %s', '../editors/email/notify_update', false);
+            $this->_broadcastNotify($addonid, $versionid, '[PUBLIC] %s', '../editors/email/notify_update', false);
         }
         return
 
@@ -936,14 +964,16 @@ class EditorsComponent extends Object {
         }
     }
 
-    function _broadcastNotify($addonid, $versionid, $subject, $template, $update_reply_id=false) {
+    function _broadcastNotify($addonid, $versionid, $subject, $template, $update_reply_id=true) {
         $addon = $this->controller->Addon->findById($addonid);
         $version = $this->controller->Version->findById($versionid, null, null, null, null, -1);
         
         $authors = array();
         if (!empty($addon['User']))
             foreach ($addon['User'] as $user)
-                $authors[] = $user['email'];
+                $user_full = $this->controller->User->findById($user['id']);
+                if (!$this->controller->SimpleAcl->actionAllowed('Editors', '*', $user_full))
+                    $authors[] = $user['email'];
 
         // send out notification email(s)
         $emailInfo = array(
