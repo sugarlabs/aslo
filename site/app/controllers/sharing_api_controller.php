@@ -794,6 +794,7 @@ class SharingApiController extends AppController
 
         foreach ($emails as $em) {
             $this->Email->to = $em;
+            $this->Email->reply_to = array(EDITOR_EMAIL);
             $result = $this->Email->send();
         }
 

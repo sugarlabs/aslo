@@ -172,6 +172,7 @@ class UsersController extends AppController
         $this->Email->template = 'email/confirm';
         $this->Email->to = $data['User']['email'];
         $this->Email->subject = sprintf(___('Thanks for joining %s Add-ons'), APP_PRETTYNAME);
+        $this->Email->reply_to = array(EDITOR_EMAIL);
         $result = $this->Email->send();
         return true;
     }
@@ -249,6 +250,7 @@ class UsersController extends AppController
                     $this->Email->template = 'email/pwreset';
                     $this->Email->to = $this->data['User']['email'];
                     $this->Email->subject = sprintf(___('Reset your %s Add-ons password'), APP_PRETTYNAME);
+                    $this->Email->reply_to = array(EDITOR_EMAIL);
                     $result = $this->Email->send();
 
                     $this->flash(___('The password reset link was sent to your email address.'), '/', 3);
@@ -607,6 +609,7 @@ class UsersController extends AppController
             $this->Email->template = 'email/emailchange';
             $this->Email->to = $newemail;
             $this->Email->subject = sprintf(___('Please confirm your email address change at %1$s Add-ons'), APP_PRETTYNAME);
+            $this->Email->reply_to = array(EDITOR_EMAIL);
             $result = $this->Email->send();
         }
         

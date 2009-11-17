@@ -496,6 +496,7 @@ class EditorsComponent extends Object {
                 continue;
             }
             $this->controller->Email->to = $subscriber['User']['email'];
+            $this->controller->Email->reply_to = array(EDITOR_EMAIL);
             $result = $this->controller->Email->send();
         }
     }
