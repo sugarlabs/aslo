@@ -115,6 +115,11 @@ class EmailComponent
                 $mail->AddCC($i);
         
         $success = $mail->Send($this->in_reply_to);
+
+        $this->cc = null;
+        $this->in_reply_to = null;
+        $this->reply_to = array();
+
         return $success;
     }
 }
