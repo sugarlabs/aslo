@@ -204,7 +204,7 @@ if (empty($errors) && !$detect_installed) {
         }
 
         if (isset($sql['appVersion'])) {
-            $where .= " AND CAST('{$sql['appVersion']}' AS DECIMAL(3,3)) >= CAST(appmax.version AS DECIMAL(3,3))";
+            $where .= " AND CAST('{$sql['appVersion']}' AS DECIMAL(3,3)) >= CAST(appmin.version AS DECIMAL(3,3)) AND CAST('{$sql['appVersion']}' AS DECIMAL(3,3)) <= CAST(appmax.version AS DECIMAL(3,3))";
         }
                
         $os_query = ($sql['os_id']) ? " OR files.platform_id = {$sql['os_id']}" : '';  // Set up os_id.
