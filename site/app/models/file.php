@@ -86,16 +86,16 @@ class File extends AppModel
         // Platform WHERE if necessary
         $platform = !empty($platform_id) ? " AND (File.platform_id = ".PLATFORM_ALL." OR File.platform_id = {$platform_id})" : '';
         
-        if (preg_match('/OLPC\/0\.([^-]*)-/', $_SERVER['HTTP_USER_AGENT'], $matches)) {
+        if (preg_match('/OLPC\/0\.([^-]*)-/', env('HTTP_USER_AGENT'), $matches)) {
             if (floatval($matches[1]) <= 4.6)
                 $sp = '0.82';
             else
                 $sp = '0.84';
         } else {
-            if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', $_SERVER['HTTP_USER_AGENT'], $matches))
+            if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', env('HTTP_USER_AGENT'), $matches))
                 $sp = $matches[1].'.'.$matches[2];
             else
-                $sp = '0.84';
+                $sp = SITE_SUGAR_STABLE;
         }
 
         $sql = "

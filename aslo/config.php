@@ -263,6 +263,7 @@ define('SITE_MIME', 'application/vnd.olpc-sugar'); // application/x-xpinstall
 define('SITE_ORG', 'Sugar Labs'); // Mozilla
 define('SSITE_URL', 'https://activities.sugarlabs.org');
 define('HELP_IRC', '#Sugar on irc.freenode.nt');
+define('SITE_SUGAR_STABLE', '0.86');
 
 define('SITE_APP', 1); // 1
 
