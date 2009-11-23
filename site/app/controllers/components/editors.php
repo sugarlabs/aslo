@@ -142,10 +142,9 @@ class EditorsComponent extends Object {
 
         if (empty($authors)) {
             $emailInfo['email'] = EDITOR_EMAIL;
-            $this->controller->Email->to = EDITOR_EMAIL;
+            $emailInfo['cc'] = null;
         } else {
-            $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->cc = array(EDITOR_EMAIL);
+            $emailInfo['cc'] = array(EDITOR_EMAIL);
         }
         
         $this->controller->set('info', $emailInfo);
@@ -160,6 +159,8 @@ class EditorsComponent extends Object {
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/nominated/'.$data['Approval']['ActionField'];
             $this->controller->Email->subject = sprintf('[%s] %s-%s', strtoupper($data['Approval']['ActionField']), $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->to = $emailInfo['email'];
+            $this->controller->Email->cc = $emailInfo['cc'];
             $this->controller->Email->reply_to = array_merge(array(EDITOR_EMAIL), $authors);
             $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         }
@@ -314,10 +315,9 @@ class EditorsComponent extends Object {
                            );
         if (empty($authors)) {
             $emailInfo['email'] = EDITOR_EMAIL;
-            $this->controller->Email->to = EDITOR_EMAIL;
+            $emailInfo['cc'] = null;
         } else {
-            $this->controller->Email->to = $emailInfo['email'];
-            $this->controller->Email->cc = array(EDITOR_EMAIL);
+            $emailInfo['cc'] = array(EDITOR_EMAIL);
         }
         $this->controller->set('info', $emailInfo);
 
@@ -331,6 +331,8 @@ class EditorsComponent extends Object {
         if ($data['Approval']['ActionField'] != 'superreview') {
             $this->controller->Email->template = 'email/pending/'.$data['Approval']['ActionField'];
             $this->controller->Email->subject = sprintf('[%s] %s-%s', strtoupper($data['Approval']['ActionField']), $emailInfo['name'], $emailInfo['version']);
+            $this->controller->Email->to = $emailInfo['email'];
+            $this->controller->Email->cc = $emailInfo['cc'];
             $this->controller->Email->reply_to = array_merge(array(EDITOR_EMAIL), $authors);
             $this->controller->Email->in_reply_to = $version['Version']['in_reply_to'];
         }
