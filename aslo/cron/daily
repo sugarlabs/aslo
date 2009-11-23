@@ -4,16 +4,16 @@ root=$(dirname $(dirname $(dirname $(readlink --canonicalize-missing $0))))
 
 cd $root/bin
 
-for time in now yesterday; do
-    for type in downloads updatepings; do
-        php -f parse_logs/parse_logs.php \
-            logs=$root/data/ \
-            temp=/tmp \
-            type=$type \
-            date=$(date --date=$time +%Y%m%d) \
-            geo=US v=v
-    done
+for type in downloads updatepings; do
+    php -f parse_logs/parse_logs.php \
+        logs=$root/data/ \
+        temp=/tmp \
+        type=$type \
+        date=$(date --date=yesterday +%Y%m%d) \
+        geo=US v=v
+done
 
+for time in -2day -1day now; do
     date=$(date +%F -d $time)
     php -f maintenance.php weekly $date
     php -f maintenance.php global_stats $date
@@ -24,7 +24,7 @@ done
 php -f maintenance.php total
 php -f maintenance.php ADU
 php -f maintenance.php gc
-#php -f maintenance.php publish_files
+php -f maintenance.php publish_files
 php -f maintenance.php reviews
 php -f maintenance.php user_ratings
 php -f maintenance.php ratings
