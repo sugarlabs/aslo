@@ -107,6 +107,6 @@ DELETE FROM `translations_seq`;
 INSERT INTO `translations_seq` (id) values (1000);
 
 INSERT INTO `users` (`id`, `email`, `password`, `firstname`, `lastname`, `nickname`, `emailhidden`, `sandboxshown`, `homepage`, `confirmationcode`, `created`, `modified`, `notes`) VALUES 
-(0, 'nobody@sugarlabs.org', '098f6bcd4621d373cade4e832627b4f6', 'nobody', 'nobody', 'nobody', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL);
+(1, 'nobody', '098f6bcd4621d373cade4e832627b4f6', 'firstname', 'lastname', 'nickname', 0, 1, 'http://wiki.sugarlabs.org', '', now(), now(), NULL);
 
 SET FOREIGN_KEY_CHECKS=1;
