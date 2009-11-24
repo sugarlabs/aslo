@@ -741,8 +741,8 @@ switch ($action) {
         $last_date = "SELECT IFNULL(MAX(date),'{$date}') FROM update_counts WHERE date <= '{$date}'";
 
         $variable_date_stats = array(
-            'addon_total_updatepings'           => "SELECT SUM(count) FROM update_counts WHERE date = '{$last_date}'",
-            'collector_updatepings'             => "SELECT count FROM update_counts WHERE addon_id = 11950 AND date = '{$last_date}'"
+            'addon_total_updatepings'           => "SELECT SUM(count) FROM update_counts WHERE date = ({$last_date})",
+            'collector_updatepings'             => "SELECT count FROM update_counts WHERE addon_id = 11950 AND date = ({$last_date})"
         );
 
         foreach ($variable_date_stats as $stat => $query) {
