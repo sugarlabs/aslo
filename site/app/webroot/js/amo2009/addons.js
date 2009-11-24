@@ -242,7 +242,7 @@ function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLi
         var uapattern = /Sugar Labs\/([^\s]*).*$/;
         var uamatch = uapattern.exec(navigator.userAgent);
         if (!uamatch || uamatch.length < 2) {
-            var version = "0.84";
+            var version = SITE_SUGAR_STABLE;
         } else {
             var version = uamatch[1];
         }
@@ -251,9 +251,9 @@ function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLi
     var outer = $("#install-"+ versionID);
 
     var vc = new VersionCompare();
-    if (vc.compareVersions(gBrowserVersion, fromVer)<0)
+    if (vc.compareVersions(version, fromVer)<0)
         var needUpgrade = true;
-    else if(vc.compareVersions(gBrowserVersion, toVer)>0)
+    else if(vc.compareVersions(version, toVer)>0)
         var needUpgrade = false;
     else {
         return true;
