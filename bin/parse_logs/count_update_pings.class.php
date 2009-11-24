@@ -83,13 +83,12 @@ class Count_Update_Pings {
         }
         else {
             $addon_id = $this->guids[$details['addon']['guid']];
-            $date = date('Y-m-d', $details['unixtime']);
-
+            $date = date('Ymd', $details['unixtime']);
             // Bug 468570
             if ($date != $this->date) {
-                $this->totalSkipped['incorrect_date']++;
-                outputIfVerbose("[UpdatePingCounter] Skipping out of range date {$date} for add-on id {$addon_id}");
-                return;
+                #$this->totalSkipped['incorrect_date']++;
+                #outputIfVerbose("[UpdatePingCounter] Skipping out of range date {$date} for add-on id {$addon_id}");
+                #return;
             }
             
             if (empty($this->counts[$date]))

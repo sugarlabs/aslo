@@ -152,7 +152,7 @@ class Log_Parser {
         if ($this->type == 'downloads')
             $pattern = 'downloads/file/';
         elseif ($this->type == 'updatepings')
-            $pattern = 'VersionCheck.php';
+            $pattern = 'services/update-aslo.php';
         elseif ($this->type == 'collections')
             $pattern = 'GET [A-Za-z/-]*collections';
             
@@ -243,6 +243,23 @@ class Log_Parser {
         // Break up URL into pieces we need for download counts or update pings
         preg_match("/(file|VersionCheck\.php)(\/([0-9]*))?(\?reqVersion=([^&]+)&id=([^&]+)(&version=([^&]+))?(&maxAppVersion=([^&]+))?(&status=([^&]+))?(&appID=([^&]+))?(&appVersion=([^&]+))?(&appOS=([^&]+))?(&appABI=(\S*))?)?/", $log_data['path'], $matches);
         
+        if (empty($matches)) {
+            preg_match("/\/services\/update-aslo.php\?id=([^&]+)&appVersion=([^&]+)/", $log_data['path'], $matches);
+            if (!empty($matches)) {
+                $log_data['type'] = 'updatepings';
+                $log_data['addon']['reqVersion'] = null;
+                $log_data['addon']['guid'] = $matches[1];
+                $log_data['addon']['version'] = null;
+                $log_data['addon']['maxAppVersion'] = null;
+                $log_data['addon']['status'] = null;
+                $log_data['addon']['appID'] = null;
+                $log_data['addon']['appVersion'] = $matches[2];
+                $log_data['addon']['appOS'] = null;
+                $log_data['addon']['appABI'] = null;
+                return $log_data;
+            }
+        }
+
         if (empty($matches)) {
             // If that first crazy regex fails, let's see if it's a collection
             preg_match("/(collections)\/success\?i=([0-9,].+)/", $log_data['path'], $matches);

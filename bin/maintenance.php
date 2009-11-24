@@ -738,17 +738,18 @@ switch ($action) {
 
         // These stats are specific to the latest available metrics data import
 
-        $date = 'SELECT IFNULL(MAX(date),NOW()) FROM update_counts';
+        $last_date = "SELECT IFNULL(MAX(date),'{$date}') FROM update_counts WHERE date <= '{$date}'";
 
         $variable_date_stats = array(
-            'addon_total_updatepings'           => "SELECT SUM(count) FROM update_counts WHERE date = ({$date})",
-            'collector_updatepings'             => "SELECT count FROM update_counts WHERE addon_id = 11950 AND date = ({$date})"
+            'addon_total_updatepings'           => "SELECT SUM(count) FROM update_counts WHERE date = '{$last_date}'",
+            'collector_updatepings'             => "SELECT count FROM update_counts WHERE addon_id = 11950 AND date = '{$last_date}'"
         );
 
         foreach ($variable_date_stats as $stat => $query) {
             debug("Updating {$stat}...");
 
-            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', IFNULL(({$query}),0), ({$date}))");
+            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', IFNULL(({$query}),0), '{$date}')");
+            $db->write("REPLACE INTO global_stats (name, count, date) VALUES ('{$stat}', IFNULL(({$query}),0), NOW())");
 
             $affected_rows += mysql_affected_rows();
         }
