@@ -338,7 +338,7 @@ class InstallButtonHelper extends Helper {
         $flags = '';
         if (in_array('recommended', $this->flags())) {
             $flags = '<strong>'.___('recommended').'</strong>';
-        } else if (in_array('experimental', $this->flags()) && $this->loggedIn()) { 
+        } else if (in_array('experimental', $this->flags())) { 
             $flags = '<strong>'.___('experimental').'</strong>';
         }
         return $flags;

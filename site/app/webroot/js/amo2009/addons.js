@@ -231,6 +231,9 @@ function initDownloadPopup(triggerID, popupID)
  * @param bool showVersionLink offer a link to the user which will remove the compatibility hint (and allow them to download the add-on)
  */
 function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLink) {
+    // we are sugar, do not be so strong for anon users
+    showVersionLink = true;
+
     var uapattern_olpc = /OLPC\/0\.([^-]*)-/;
     var uamatch_olpc = uapattern_olpc.exec(navigator.userAgent);
     if (uamatch_olpc) {
