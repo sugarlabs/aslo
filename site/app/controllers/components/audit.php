@@ -189,10 +189,14 @@ class AuditComponent extends Object {
                                 }
                                 elseif ($log['Eventlog']['action'] == 'group_removemember') {
                                     $memberInfo = $this->controller->User->getUser($log['Eventlog']['removed']);
+                                    if (!isset($memberInfo['User']))
+                                        $member = $log['Eventlog']['removed'];
+                                    else {
                                     $name = trim($memberInfo['User']['display_name']);
                                     if(empty($name)) $name = $memberInfo['User']['email'];
 
                                     $member = $this->link($name, '/admin/users/'.$log['Eventlog']['removed']);
+                                    }
 
                                     $entry = sprintf(___('%1$s removed %2$s from group %3$s'), $user, $member, $group);
                                 }
