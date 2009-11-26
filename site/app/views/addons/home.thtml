@@ -55,9 +55,6 @@ $this->viewVars['bodyclass'] = 'home';
         <?php if (!empty($stats_downloaded)): ?>
             <li><a href="<?=$html->url('/statistics')?>"><?=sprintf(n___('<strong>%1$s</strong> <span>add-on downloaded</span>', '<strong>%1$s</strong> <span>add-ons downloaded</span>', $stats_downloaded), $html->number_format($stats_downloaded, 0))?></a></li>
         <?php endif ?>
-        <?php if (!empty($stats_inuse)): ?>
-            <li><a href="<?=$html->url('/statistics')?>"><?=sprintf(n___('<strong>%1$s</strong> <span>add-on in use</span>', '<strong>%1$s</strong> <span>add-ons in use</span>', $stats_inuse), $html->number_format($stats_inuse, 0))?></a></li>
-        <?php endif ?>
     </ul>
 <?php $this->viewVars['header_extra'] = ob_get_clean() ?>
 
