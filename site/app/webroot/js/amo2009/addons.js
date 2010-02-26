@@ -234,10 +234,12 @@ function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLi
     // we are sugar, do not be so strong for anon users
     showVersionLink = true;
 
+    var vc = new VersionCompare();
+
     var uapattern_olpc = /OLPC\/0\.([^-]*)-/;
     var uamatch_olpc = uapattern_olpc.exec(navigator.userAgent);
     if (uamatch_olpc) {
-        if (vc.compareVersions(uamatch[1], "4.6") <= 0)
+        if (vc.compareVersions(uamatch_olpc[1], "4.6") <= 0)
             var version = "0.82";
         else
             var version = "0.84";
@@ -253,7 +255,6 @@ function addCompatibilityHints(addonID, versionID, fromVer, toVer, showVersionLi
 
     var outer = $("#install-"+ versionID);
 
-    var vc = new VersionCompare();
     if (vc.compareVersions(version, fromVer)<0)
         var needUpgrade = true;
     else if(vc.compareVersions(version, toVer)>0)
