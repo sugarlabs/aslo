@@ -137,21 +137,8 @@ class Version extends AppModel
         if (!is_array($status)) $status = array($status);
         $status_sql = implode(',',$status);
 
-        if (isset($app_ver) && $app_ver != 'any')
-            $sp = $app_ver;
-        else {
-            if (preg_match('/OLPC\/0\.([^-]*)-/', env('HTTP_USER_AGENT'), $matches)) {
-                if (floatval($matches[1]) <= 4.6)
-                    $sp = '0.82';
-                else
-                    $sp = '0.84';
-            } else {
-                if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', env('HTTP_USER_AGENT'), $matches))
-                    $sp = $matches[1].'.'.$matches[2];
-                else
-                    $sp = SITE_SUGAR_STABLE;
-            }
-        }
+        if (!isset($app_ver) || $app_ver == 'any')
+            $app_ver = parse_sp();
 
         $sql = "
             SELECT 
@@ -169,7 +156,7 @@ class Version extends AppModel
             WHERE
                 Version.addon_id = {$id}
             ORDER BY
-                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
+                IF({$app_ver} AND ({$app_ver} < CAST(B.version AS DECIMAL(3,3)) OR {$app_ver} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
             LIMIT 1
         ";
 

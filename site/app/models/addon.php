@@ -180,8 +180,11 @@ class Addon extends AppModel
     function getAddon($id, $associations = array(), $app_ver = null) {
         global $valid_status;
 
+        if (!isset($app_ver) || $app_ver == 'any')
+            $app_ver = parse_sp();
+
         // if this object is cached, grab it from memcache
-        $identifier = array("addon:$id", $associations);
+        $identifier = array("addon:$id", $associations, $app_ver);
         if (QUERY_CACHE && $cached = $this->Cache->readCacheObject($identifier)) {
             if (DEBUG >= 2) debug("addon $id was cached");
             return $cached;
@@ -377,7 +380,7 @@ class Addon extends AppModel
                                        ORDER BY score DESC LIMIT 5");
             $addon['Recommendations'] = array();
             foreach ($rec_ids as $r) {
-                $addon['Recommendations'][] = $this->getAddon($r['recs']['id']);
+                $addon['Recommendations'][] = $this->getAddon($r['recs']['id'], $app_ver);
             }
         }
 

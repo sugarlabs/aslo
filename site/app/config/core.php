@@ -219,4 +219,20 @@ function n___($message, $message_plural, $num, $context ="") {
         return ngettext($message, $message_plural, $num);
     }
 }
+
+if (!function_exists('parse_sp')) {
+    function parse_sp() {
+        if (preg_match('/OLPC\/0\.([^-]*)-/', env('HTTP_USER_AGENT'), $matches)) {
+            if (floatval($matches[1]) <= 4.6)
+                return '0.82';
+            else
+                return '0.84';
+        } else {
+            if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', env('HTTP_USER_AGENT'), $matches))
+                return $matches[1].'.'.$matches[2];
+            else
+                return SITE_SUGAR_STABLE;
+        }
+    }
+}
 ?>
