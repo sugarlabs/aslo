@@ -137,10 +137,8 @@ class Version extends AppModel
         if (!is_array($status)) $status = array($status);
         $status_sql = implode(',',$status);
 
-        $sp = null;
-        if (isset($app_ver))
-            if ($app_ver != 'any')
-                $sp = $app_ver;
+        if (isset($app_ver) && $app_ver != 'any')
+            $sp = $app_ver;
         else {
             if (preg_match('/OLPC\/0\.([^-]*)-/', env('HTTP_USER_AGENT'), $matches)) {
                 if (floatval($matches[1]) <= 4.6)
@@ -170,14 +168,8 @@ class Version extends AppModel
                 appversions as C ON C.id = A.max
             WHERE
                 Version.addon_id = {$id}
-            ORDER BY";
-        if (isset($sp))
-            $sql .= "
-                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC";
-        else
-            $sql .= "
-                Version.created DESC";
-        $sql .= "
+            ORDER BY
+                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
             LIMIT 1
         ";
 
