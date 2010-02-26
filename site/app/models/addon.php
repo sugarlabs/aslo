@@ -177,7 +177,7 @@ class Addon extends AppModel
      * By convention, the associations array should be all lower case and sorted
      * alphabetically, to promote cache hits across pages.
      */
-    function getAddon($id, $associations = array()) {
+    function getAddon($id, $associations = array(), $app_ver = null) {
         global $valid_status;
 
         // if this object is cached, grab it from memcache
@@ -313,7 +313,7 @@ class Addon extends AppModel
             $this->Version->useDbConfig = 'shadow';
             $buf = $this->Version->findAll(array(
                 'Version.id' => $this->Version->getVersionByAddonId($id,
-                    ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $valid_status))),
+                    ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $valid_status), $app_ver)),
                 array('Version.id', 'Version.version', 'Version.created'));
 
             if (!empty($buf[0]['Version'])) {
@@ -396,10 +396,10 @@ class Addon extends AppModel
      * Get a list of add-ons by id, each with the given associations
      * uses the object invalidation framework
      */
-    function getAddonList($ids, $associations = array()) {
+    function getAddonList($ids, $associations = array(), $app_ver = null) {
         $result = array();
         foreach ($ids as $id) {
-            $result[] = $this->getAddon($id, $associations);
+            $result[] = $this->getAddon($id, $associations, $app_ver);
         }
         return $result;
     }

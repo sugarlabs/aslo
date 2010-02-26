@@ -102,11 +102,17 @@ if (isset($addonStatus) && in_array($addonStatus, $experimental_status)) {
             echo sprintf($_update_string, strftime(___('%B %e, %Y'), strtotime($_version_date)));
             ?>
         </p>
-	    <?=$installButton->button(array(
+        <?php
+
+	    $install_options =array(
 	        'flags' => $flags,
 	        'addon' => $addon,
-          'src'   => 'search'
-	    ))?>
+            'src'   => 'search');
+        if (isset($addon['is_latest']))
+            $install_options['is_latest'] = $addon['is_latest'];
+        ?>
+	    <?=$installButton->button($install_options)
+	    ?>
     </div>
 
     <blockquote cite="#"><p><?=$addonSummary?></p></blockquote>

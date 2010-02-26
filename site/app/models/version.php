@@ -133,20 +133,26 @@ class Version extends AppModel
      * @param array $status non-empty array
      * @return int $id of the latest version or 0
      */
-    function getVersionByAddonId($id, $status = array(STATUS_PUBLIC)) {
+    function getVersionByAddonId($id, $status = array(STATUS_PUBLIC), $app_ver = null) {
         if (!is_array($status)) $status = array($status);
         $status_sql = implode(',',$status);
 
-        if (preg_match('/OLPC\/0\.([^-]*)-/', env('HTTP_USER_AGENT'), $matches)) {
-            if (floatval($matches[1]) <= 4.6)
-                $sp = '0.82';
-            else
-                $sp = '0.84';
-        } else {
-            if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', env('HTTP_USER_AGENT'), $matches))
-                $sp = $matches[1].'.'.$matches[2];
-            else
-                $sp = SITE_SUGAR_STABLE;
+        $sp = null;
+        if (isset($app_ver))
+            if ($app_ver != 'any')
+                $sp = $app_ver;
+        else {
+            if (preg_match('/OLPC\/0\.([^-]*)-/', env('HTTP_USER_AGENT'), $matches)) {
+                if (floatval($matches[1]) <= 4.6)
+                    $sp = '0.82';
+                else
+                    $sp = '0.84';
+            } else {
+                if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', env('HTTP_USER_AGENT'), $matches))
+                    $sp = $matches[1].'.'.$matches[2];
+                else
+                    $sp = SITE_SUGAR_STABLE;
+            }
         }
 
         $sql = "
@@ -164,8 +170,14 @@ class Version extends AppModel
                 appversions as C ON C.id = A.max
             WHERE
                 Version.addon_id = {$id}
-            ORDER BY
-                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
+            ORDER BY";
+        if (isset($sp))
+            $sql .= "
+                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC";
+        else
+            $sql .= "
+                Version.created DESC";
+        $sql .= "
             LIMIT 1
         ";
 

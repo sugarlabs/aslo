@@ -132,6 +132,7 @@ $params = array(
             <?php endif; ?>
         </div> <!-- listing-header -->
             <?php foreach ($search_results as $var => $val): ?>
+               <?php $val['is_latest'] = false;?>
                <?=$this->renderElement('amo2009/results_addon', array('addon' => $val));?>
             <?php endforeach; ?>
       </div> <!-- featured-inner -->

@@ -219,7 +219,7 @@ class SearchController extends AppController
             }
 
             if (!empty($_result_ids)) {
-                $results = $this->Addon->getAddonList($_result_ids, $associations);
+                $results = $this->Addon->getAddonList($_result_ids, $associations, $lver);
                 // Show top 10 tags
                 $topTags = $this->Tag->getTopForAddons(10, $_result_ids);
             } else {

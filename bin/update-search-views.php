@@ -105,10 +105,10 @@ $sql_commands[] = "DELETE FROM `versions_summary`";
 
 $sql_commands[] = "INSERT INTO `versions_summary`
                        SELECT DISTINCT v.addon_id, v.id, av.application_id, v.created, v.modified, av.min, av.max
-                       FROM (SELECT DISTINCT v.addon_id AS addon_id, MAX(v.created) AS created
+                       FROM (SELECT DISTINCT v.addon_id AS addon_id, v.created AS created
                              FROM versions AS v
                              INNER JOIN files AS f ON (f.version_id = v.id AND f.status IN (".implode(',',$valid_status)."))
-                             GROUP BY v.addon_id) AS mrv
+                             ) AS mrv
                             NATURAL JOIN versions AS v
                             LEFT JOIN applications_versions AS av
                        ON (av.version_id = v.id )";

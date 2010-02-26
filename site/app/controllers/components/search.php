@@ -132,7 +132,7 @@ class SearchComponent extends Object {
      * @return array of information about results (modified cake results)
      */
     function search($terms, $tagFilter=null, $searchTagsOnly = false, $searchtype=NULL, $category=0, $status=NULL, 
-                    $lver = -1, $hver = -1, $vfuz =false, $atype = ADDON_ANY,
+                    $ver = -1, $hver = -1, $vfuz =false, $atype = ADDON_ANY,
                     $platform= PLATFORM_ANY, $lup = "", $sort = "", $locale=false ) {
         global $valid_status, $hybrid_categories, $app_listedtypes;
         
@@ -293,40 +293,9 @@ class SearchComponent extends Object {
            one of v.min or v.max is in $range_wanted. Each of the three array is used in SQL in clauses which are probably implemented
            by mysql with in-memory hash tables so should be fast checks.
         */
-        if ($lver != -1 && $hver != -1 ) {
-            $range_wanted = array();
-            $below_wanted = array();
-            $above_wanted = array();
-            $all_appversions =  $this->controller->Amo->getVersionIdsByApp(APP_ID);
-            
-            $lver = $this->controller->Sanitize->sql($lver);
-            $hver = $this->controller->Sanitize->sql($hver);
-            
-            $fuz = "";
-            if (isset($this->params['url']['vfuz']) && $this->params['url']['vfuz'] == true)
-                $fuz = "*";
-            
-            $vcompare = $this->controller->Versioncompare;
-
-            foreach($all_appversions as $appversion => $appvid) {
-                // because of version fuzziness may be used, the three cases below are not necessarily disjoint
-                if ($vcompare->compareVersions($appversion, $lver) < 0) { 
-                    $below_wanted[] = $appvid;
-                }
-                if (($vcompare->compareVersions($lver, $appversion) <= 0 || $vcompare->compareVersions($lver.$fuz, $appversion) <= 0 || $lver == 'any') &&
-                   ($vcompare->compareVersions($appversion, $hver) <= 0 || $vcompare->compareVersions($appversion, $hver.$fuz) <= 0 || $hver == 'any')) {
-                    $range_wanted[] = $appvid; //note we want the version id's not the version numbers
-                }
-                if ($vcompare->compareVersions($appversion, $lver) > 0) { 
-                    $above_wanted[] = $appvid;
-                }
-            }
-            
-            $_ver_string = "('".implode("', '", $range_wanted) ."') ";
-            $vcheck = " v.min IN ".$_ver_string." OR v.max IN ".$_ver_string;
-            $_ver_string = "('".implode("', '", $below_wanted) ."') ";
-            $_ver_string2 = "('".implode("', '", $above_wanted) ."') ";
-            $vcheck .= " OR (v.min IN ".$_ver_string." AND v.max IN ".$_ver_string2.")";
+        if ($ver != -1 && $ver != 'any') {
+            $ver = $this->controller->Sanitize->sql($ver);
+            $vcheck = " CAST(appmin.version AS DECIMAL(3,3)) <= CAST('".$ver."' AS DECIMAL(3,3)) AND CAST(appmax.version AS DECIMAL(3,3)) >= CAST('".$ver."' AS DECIMAL(3,3))";
             
             if (in_array(ADDON_SEARCH, $_addon_types) ) {
                $vcheck = "(a.addontype = ".ADDON_SEARCH." OR ".$vcheck.")";
@@ -360,12 +329,15 @@ class SearchComponent extends Object {
             $_where[] = '(a.addontype = '.ADDON_SEARCH." OR {$_app_compat})";
         // else: only search engines => do not restrict by application
 
-        $sql = "SELECT DISTINCT a.id, " . implode(', ', $_selects)
+        $sql = "SELECT DISTINCT a.id, " . implode(', ', $_selects). ", MAX(v.created)"
             ." FROM text_search_summary AS a " . implode(' ', $_joins)
+            ." INNER JOIN appversions appmin ON appmin.id = v.min "
+            ." INNER JOIN appversions appmax ON appmax.id = v.max "
             ." WHERE $_matches "
                 ."AND a.addontype IN (" . implode(',', $_addon_types) . ") "
                 ."AND a.status IN(".$sql_status.") AND a.inactive = 0 "
                 .(empty($_where) ? '' : 'AND ('.implode(' AND ', $_where).') ')
+            ."GROUP BY v.addon_id "
             ."ORDER BY ".implode(', ', $_orderby);
 
         // query the db and return the ids found
