@@ -337,6 +337,11 @@ class DevelopersController extends AppController
             $data['File']['db']['platform_id'] = $platform_id;
             $validate = $this->Developers->moveFile($data);
             if (is_string($validate)) {
+        // Remove temp file
+        $tempFile = $data['File']['details']['path'];
+        if (file_exists($tempFile)) {
+            unlink($tempFile);
+        }
                 // If a string is returned, there was an error
                 return $this->Error->getJSONforError($validate);
             }
@@ -449,6 +454,11 @@ class DevelopersController extends AppController
             $data['File']['db']['platform_id'] = $platform_id;
             $validate = $this->Developers->moveFile($data);
             if (is_string($validate)) {
+        // Remove temp file
+        $tempFile = $data['File']['details']['path'];
+        if (file_exists($tempFile)) {
+            unlink($tempFile);
+        }
                 // If a string is returned, there was an error
                 return $this->Error->getJSONforError($validate);
             }
