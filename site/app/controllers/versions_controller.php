@@ -63,6 +63,12 @@ class VersionsController extends AppController
         $this->publish('addon', $addon);
         $this->publish('license_text', $license_text);
 
+	// XXX supress errors
+	if (!isset($addon['Translation']['name'])) {
+		$this->redirect('/');
+		return;
+	}
+
         // set up view, then render
         $this->layout = 'amo2009';
         $this->pageTitle = sprintf(___('Source code license for %1$s %2$s'),
