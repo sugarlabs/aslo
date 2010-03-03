@@ -443,15 +443,15 @@ class CakeSession extends Object {
 		switch($this->security) {
 			case 'high':
 				$this->cookieLifeTime = 0;
-				if (function_exists('ini_set')) {
-					ini_set('session.referer_check', $this->host);
-				}
+				#if (function_exists('ini_set')) {
+				#	ini_set('session.referer_check', $this->host);
+				#}
 			break;
 			case 'medium':
 				$this->cookieLifeTime = 7 * 86400;
-				if (function_exists('ini_set')) {
-					ini_set('session.referer_check', $this->host);
-				}
+				#if (function_exists('ini_set')) {
+				#	ini_set('session.referer_check', $this->host);
+				#}
 			break;
 			case 'low':
 			default:
