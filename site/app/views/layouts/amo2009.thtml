@@ -188,7 +188,18 @@ if ($developer_layout) {
     <?php endif; ?>
 </head>
 
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+	var pageTracker = _gat._getTracker("UA-6267583-4");
+	pageTracker._trackPageview();
+} catch(err) {}</script>
+
 <body id="mozilla-com" class="html-<?=TEXTDIR?> <?=APP_SHORTNAME?> <?= ($this->controller->Session->check('User')) ? 'user-login' : 'user-anon' ?><?= isset($bodyclass) ? ' ' . $bodyclass : '' ?>">
+
     <?php if ($fullPage): ?>
     <ul id="nav-access" role="navigation">
         <li><a href="#content"><?=___('Skip to main content')?></a></li>
@@ -273,13 +284,6 @@ if(defined('REVISION')) {
 <?php if (isset($debug)): ?>
   <?php echo $this->renderElement('debug', array('debug' => $debug)) ?>
 <?php endif ?>
-
-<script type="text/javascript">
-    try {
-        var pageTracker = _gat._getTracker("UA-6267583-4");
-        pageTracker._trackPageview();
-    } catch(err) {}
-</script>
 
     </body>
 </html>
