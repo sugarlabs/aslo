@@ -580,7 +580,7 @@ class DevelopersComponent extends Object {
             }
             // We must copy instead of rename now in case there are other platforms
             if (!copy($currentPath, $newPath)) {
-                return sprintf(___('An error occurred moving %s.'), $data['File']['db']['filename']);
+                return sprintf(___('An error occurred moving %s: %s %s.'), $data['File']['db']['filename'], $currentPath, $newPath);
             }
             $fileUpdates['filename'] = $filename;
         }
@@ -656,7 +656,7 @@ class DevelopersComponent extends Object {
                     unlink($newPath);
                 }
                 if (!rename($currentPath, $newPath)) {
-                    $errors->addError(sprintf(___('An error occurred moving %s.'), $file['filename']));
+                    $errors->addError(sprintf(___('An error occurred moving %s: %s %s.'), $file['filename'], $currentPath, $newPath));
                 }
                 $fileUpdates[$file['id']]['filename'] = $newFilename;
             }
