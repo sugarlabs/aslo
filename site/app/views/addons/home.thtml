@@ -62,6 +62,10 @@ $this->viewVars['bodyclass'] = 'home';
     <?=$this->renderElement('amo2009/categories')?>
 
     <div class="highlight">
+        <h3><?php echo sprintf(_('Poll')); ?></h3>
+        <p><?php echo sprintf(_('Should users be logged in to download experimental activities.')); ?></p>
+        <p><strong><a href="http://idea.sugarlabs.org/drupal5/ideatorrent/idea/37/"><?php echo _('Leave a vote'); ?></a></strong><?=$this->renderElement('amo2009/new_indicator')?></p>
+
         <h3><?php echo sprintf(___('Build a %1$s Add-on'), APP_PRETTYNAME); ?></h3>
         <p><?php echo ___('Find all the tools and resources you need to make your first add-on.'); ?></p>
         <p><strong><a href="<?php echo $html->url('/developers'); ?>"><?php echo ___('Visit the Developer Hub'); ?></a></strong><?=$this->renderElement('amo2009/new_indicator')?></p>
