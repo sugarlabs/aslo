@@ -7,7 +7,7 @@ require_once('./functions.php');
 
 $errors = array();
 
-foreach (array('name') as $var) {
+foreach (array('collection_nickname') as $var) {
     if (empty($_GET[$var]))
         $errors[] = 'Required variable '.$var.' not set.';
 }
@@ -36,7 +36,7 @@ if (empty($errors)) {
             INNER JOIN versions ON versions.addon_id = addons.id AND (addons_collections.addon_version IS NULL OR versions.version = addons_collections.addon_version)
             INNER JOIN files ON files.version_id = versions.id
         WHERE
-            collections.nickname = '{$_GET['name']}'
+            collections.nickname = '{$_GET['collection_nickname']}'
         GROUP BY
             addons.id
         ";
@@ -66,7 +66,7 @@ if (!empty($errors)) {
         if (defined(FILES_HOST))
             $url = FILES_HOST . '/' . $row['id'] . '/' . $row['filename'];
         else
-            $url = '/downloads/file/' . $row['file_id'] . '/' . $row['filename'];
+            $url = SITE_URL . '/downloads/file/' . $row['file_id'] . '/' . $row['filename'];
         echo "<tr>\n";
         echo "<td class=\"olpc-activity-info\">\n";
         echo "<span class=\"olpc-activity-id\">{$row['guid']}</span>\n";
