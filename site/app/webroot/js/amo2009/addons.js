@@ -1720,7 +1720,7 @@ var collections_edit = {
     /**
      * show an add-on in the UI
      */
-    addon_show: function(id, name, iconurl, date, publisher, comment, editable, ontop) {
+    addon_show: function(id, name, iconurl, date, publisher, comment, editable, ontop, addon_version) {
         var div = $('<div class="coll-addon" id="addon-'+id+'"/>');
         var tpl = $('#addon-new'); // template
 
@@ -1728,9 +1728,17 @@ var collections_edit = {
         idfield.val(id);
         div.append(idfield);
 
+        var addon_name_value = tpl.find('.addon_name_value').clone(true);
+        addon_name_value.text(name);
+        div.append(addon_name_value);
+
+        var addon_version_value = tpl.find('.addon_version_value').clone(true);
+        addon_version_value.text(addon_version);
+        div.append(addon_version_value);
+
         var p = tpl.children('p').clone();
         p.find('img').attr('src', iconurl);
-        p.find('.name').text(name);
+        p.find('.name').text(name + (addon_version ? "-" + addon_version : ""));
         p.find('.added').html(sprintf(p.find('.added').text(), date, publisher));
         div.append(p);
         if (editable) div.append(tpl.children('.removeaddon').clone(true));
@@ -1740,6 +1748,10 @@ var collections_edit = {
             $('#currentaddons #addon-new').after(div);
         }
         collections_edit.addon_comment_show(id, comment, editable);
+        if (editable) {
+            div.append(tpl.children('.version_sep').clone(true));
+            div.append(tpl.children('.set_version').clone(true));
+        }
         $('#currentaddons').show();
     },
     /**
@@ -1758,7 +1770,7 @@ var collections_edit = {
                     $('#addonname').select();
                 } else {
                     collections_edit.addon_show(data.id, data.name, data.iconURL,
-                        data.date, data.publisher, '', 1, 1);
+                        data.date, data.publisher, '', 1, 1, '');
                     $('#addonname').val('');
                 }
                 return true;
@@ -1793,6 +1805,7 @@ var collections_edit = {
         var tpl = $('#addon-new');
         tpl.children('a.removeaddon').click(this.addon_delete);
         tpl.children('a.addlink').click(this.addon_comment_add);
+        tpl.children('a.set_version').click(this.addon_set_version);
         tpl.find('a.editlink').click(this.addon_comment_edit);
         tpl.find('a.deletelink').click(function() {
             var container = $(this).parent().parent();
@@ -1807,6 +1820,39 @@ var collections_edit = {
             var idstring = container.attr('id');
             var addonid = idstring.substr(idstring.lastIndexOf('-')+1);
             collections_edit.addon_comment_save(addonid, comment);
+            return false;
+        });
+
+        tpl.find('.version_box>input:button').click(function() {
+            var addon_version = $(this).parent().children('input:text').attr('value');
+            var container = $(this).parent().parent();
+            var idstring = container.attr('id');
+            var addonid = idstring.substr(idstring.lastIndexOf('-')+1);
+
+            $.post(jsonURL+'/addon/save_addon_version', {
+                sessionCheck: $('#collections>div.hsession>input[name=sessionCheck]').val(),
+                collection_id: collection_id,
+                addon_id: addonid,
+                addon_version: addon_version
+                }, function(data) {
+                    var addonid = /addon_id=(\d+)/.exec(this.data)[1];
+                    var container = $('#addon-'+addonid);
+                    if (data.error) {
+                        var msg = $('<div class="error">'+data.error_message+'</div>');
+                        container.append(msg);
+                        msg.delay(2000, function(){ $(this).fadeRemove(); });
+                    } else {
+                        var name = container.children('.addon_name_value').text();
+                        container.children('.addon_version_value').text(addon_version);
+                        container.find('p>.name').text(name + (addon_version ? "-" + addon_version : ""));
+
+                        container.children('.version_box').remove();
+                        var tpl = $('#addon-new');
+                        container.append(tpl.children('.set_version').clone(true));
+                    }
+                    return true;
+                }, 'json');
+
             return false;
         });
     },
@@ -1831,6 +1877,15 @@ var collections_edit = {
         $(this).parent().append(editbox);
         $(this).remove();
         editbox.children('textarea').focus();
+        return false;
+    },
+    addon_set_version: function() {
+        var addon_version = $(this).parent().find('.addon_version_value').text();
+        var version_box = $('#addon-new>.version_box').clone(true);
+        $(this).parent().append(version_box);
+        $(this).remove();
+        version_box.children('input:text').attr('value', addon_version);
+        version_box.children('input:text').focus();
         return false;
     },
     /**

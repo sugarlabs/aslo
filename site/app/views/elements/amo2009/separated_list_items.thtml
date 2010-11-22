@@ -77,7 +77,7 @@
     <!-- TODO: a11y ordering -->
     <h4>
       <a href="<?=$addon_link?>">
-        <?=$addon['Translation']['name']['string']?>
+        <?=$addon['Translation']['name']['string']?><?= $a['addon_version'] ? "-" . $a['addon_version'] : "" ?>
       </a>
       <span>
         <?=sprintf(___('created by %1$s'),

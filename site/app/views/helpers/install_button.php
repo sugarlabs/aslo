@@ -795,9 +795,9 @@ class InstallButtonHelper extends Helper {
     }
 
     function isLatest() {
-        return isset($this->options['is_latest']) ?
+        return !$this->addon['Addon']['addon_version'] && (isset($this->options['is_latest']) ?
             $this->options['is_latest'] :
-            ($this->addonStatus() == STATUS_PUBLIC);
+            ($this->addonStatus() == STATUS_PUBLIC));
     }
 
     function compatibleApps() {

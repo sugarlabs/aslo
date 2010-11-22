@@ -177,7 +177,7 @@ class Addon extends AppModel
      * By convention, the associations array should be all lower case and sorted
      * alphabetically, to promote cache hits across pages.
      */
-    function getAddon($id, $associations = array(), $app_ver = null) {
+    function getAddon($id, $associations = array(), $app_ver = null, $collection_id = null) {
         global $valid_status;
 
         if (!isset($app_ver) || $app_ver == 'any')
@@ -308,15 +308,38 @@ class Addon extends AppModel
         // get desired add-on from DB
         $addon = $this->findById($id, array_unique($fields));
 
+        if ($collection_id) {
+            // comments are en-US only
+            $sql = "SELECT addons_collections.added, translations.localized_string as comment, users.id, users.firstname, users.lastname, users.nickname, addons_collections.addon_version
+                    FROM addons_collections
+                    LEFT JOIN translations
+                    ON translations.id = addons_collections.comments AND translations.locale='en-US'
+                    INNER JOIN users
+                    ON users.id = addons_collections.user_id
+                    WHERE collection_id = {$collection_id} AND addon_id = {$id}";
+            $data = $this->query($sql);
+
+            $addon['Addon']['dateadded'] = $data[0]['addons_collections']['added'];
+            $addon['Addon']['publisher'] = $data[0]['users'];
+            $addon['Addon']['comment'] = $data[0]['translations']['comment'];
+            $addon['Addon']['addon_version'] = (string)$data[0]['addons_collections']['addon_version'];
+        }
+
         // add additional data
         if (in_array('latest_version', $associations)) {
             // pull in last version
             $this->Version->unbindFully();
             $this->Version->caching = false;
             $this->Version->useDbConfig = 'shadow';
-            $buf = $this->Version->findAll(array(
-                'Version.id' => $this->Version->getVersionByAddonId($id,
-                    ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $valid_status), $app_ver)),
+
+            $version_status = ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $valid_status);
+            if ($addon['Addon']['addon_version'])
+                $version_id = $this->Version->getVersionByAddonIdAndVersion($id, $addon['Addon']['addon_version'], $version_status, $app_ver);
+            else
+                $version_id = $this->Version->getVersionByAddonId($id, $version_status, $app_ver);
+
+            $buf = $this->Version->findAll(
+                array('Version.id' => $version_id),
                 array('Version.id', 'Version.version', 'Version.created'));
 
             if (!empty($buf[0]['Version'])) {
@@ -399,10 +422,10 @@ class Addon extends AppModel
      * Get a list of add-ons by id, each with the given associations
      * uses the object invalidation framework
      */
-    function getAddonList($ids, $associations = array(), $app_ver = null) {
+    function getAddonList($ids, $associations = array(), $app_ver = null, $collection_id = null) {
         $result = array();
         foreach ($ids as $id) {
-            $result[] = $this->getAddon($id, $associations, $app_ver);
+            $result[] = $this->getAddon($id, $associations, $app_ver, $collection_id);
         }
         return $result;
     }
@@ -808,7 +831,7 @@ class Addon extends AppModel
         $this->unbindFully();
 
         // comments are en-US only
-        $sql = "SELECT addons_collections.added, translations.localized_string as comment, users.id, users.firstname, users.lastname, users.nickname
+        $sql = "SELECT addons_collections.added, translations.localized_string as comment, users.id, users.firstname, users.lastname, users.nickname, addons_collections.addon_version
                 FROM addons_collections
                 LEFT JOIN translations
                 ON translations.id = addons_collections.comments AND translations.locale='en-US'
@@ -820,7 +843,8 @@ class Addon extends AppModel
         $details = array(
             'dateadded' => $data[0]['addons_collections']['added'],
             'publisher' => $data[0]['users'],
-            'comment' => $data[0]['translations']['comment']
+            'comment' => $data[0]['translations']['comment'],
+            'addon_version' => (string)$data[0]['addons_collections']['addon_version'],
         );
         return $details;
     }

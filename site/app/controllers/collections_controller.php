@@ -417,14 +417,7 @@ class CollectionsController extends AppController
         // Fetch #3!  Pull useful addon data this time.
         $addons = $this->Addon->getAddonList($pagedIds,array(
             'all_categories', 'authors', 'compatible_apps', 'files', 'latest_version',
-            'list_details'));
-
-        foreach($addons as &$addon) {
-            $a = &$addon['Addon'];
-            // Get publish details for each add-on
-            $publishDetails = $this->Addon->getCollectionPublishDetails($a['id'], $collection_id);
-            $a = array_merge($a, $publishDetails);
-        }
+            'list_details'), null, $collection_id);
 
         return array($addons, $sort_options, $sortby);
     }
@@ -1269,6 +1262,24 @@ class CollectionsController extends AppController
                 return array(
                     'addon_id' => $addon_id,
                     'comment'  => $comment
+                );
+            }
+            break;
+
+        case 'save_addon_version':
+            $addon_version = strip_tags(trim($this->params['form']['addon_version']));
+            $addon = $this->AddonCollection->find(array('addon_id'=>$addon_id, 'collection_id'=>$collection_id), array('user_id'));
+            if (empty($addon)) return $this->Error->getJSONforError(___('Add-on not found!'));
+            if (!$rights['isadmin'] && !$rights['atleast_manager']) {
+                // publisher's own add-on?
+                if ($addon['AddonCollection']['user_id'] != $user['id']) return $this->Error->getJSONforError(___('Access Denied'));
+            }
+            if (!$this->AddonCollection->setAddonVersion($collection_id, $addon_id, $addon_version)) {
+                return $this->Error->getJSONforError(___('Error saving addon version!'));
+            } else {
+                return array(
+                    'addon_id' => $addon_id,
+                    'addon_version'  => $addon_version
                 );
             }
             break;

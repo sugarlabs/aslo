@@ -257,8 +257,12 @@ JS;
             <div id="currentaddons"  class="jsonly">
                 <h3><?=___('Current Add-ons:')?></h3>
                 <div class="coll-addon" id="addon-new" style="display:none">
+                    <span class="addon_name_value" style="display:none"></span>
+                    <span class="addon_version_value" style="display:none"></span>
                     <p><img src="" alt=""/><span class="name"></span><span class="added"><?=___('Added %1$s by %2$s')?></span></p>
                     <a href="#" class="removeaddon"><?=___('Remove this add-on')?></a>
+                    <span class="version_sep">&nbsp;&nbsp;</span>
+                    <a href="#" class="set_version"><?=___('Version')?></a>
                     <blockquote title="publishercomment"></blockquote>
                     <a href="#" class="addlink"><?=___('Add publisher comment')?></a>
                     <div class="editdelete">
@@ -269,6 +273,11 @@ JS;
                         <textarea cols="50" rows="5"></textarea>
                         <input type="button" value="<?=___('Save Comment')?>"/>
                         <p><?=___('Note: Comment will appear as though written by original publisher on the original publication date')?></p>
+                    </div>
+                    <div class="version_box">
+                        <label for="addon_version"><?=___('Version')?></label>
+                        <input id="addon_version" type="text" size="5" class="addon_version" value=""/>
+                        <input type="button" value="<?=___('Save')?>"/>
                     </div>
                 </div>
             </div>
@@ -317,7 +326,7 @@ JS;
                 collections_edit.init();
                 <?php
                 foreach ($addons as &$addon) {
-                    echo sprintf("collections_edit.addon_show('%s','%s','%s','%s','%s','%s', %s, %s);\n",
+                    echo sprintf("collections_edit.addon_show('%s','%s','%s','%s','%s','%s', %s, %s, '%s');\n",
                         $addon['AddonCollection']['addon_id'], // id
                         addslashes($html->unsanitize($addon['Addon']['Translation']['name']['string'])), // name
                         $this->controller->Image->getAddonIconURL($addon['AddonCollection']['addon_id']), // iconurl
@@ -325,7 +334,8 @@ JS;
                         $html->linkUserFromModel($addon['User']), // publisher
                         preg_replace('/\n/', '<br/>', $addon['Translation']['comments']['string']), // comment
                         (($atleast_manager || $addon['User']['id'] == $user['id']) ? 1 : 0), // editable
-                        0 // insert at the end
+                        0, // insert at the end
+                        $addon['AddonCollection']['addon_version']
                         );
                 }
                 foreach (array('publishers', 'managers') as $role) {

@@ -77,7 +77,7 @@ class AddonCollection extends AppModel
         $db =& ConnectionManager::getDataSource($this->useDbConfig);
         $collection_id = $db->value($collection_id);
         $this->unbindFully();
-        $res = $this->findAll(array('collection_id' => $collection_id));
+        $res = $this->query("SELECT * FROM addons_collections as AddonCollection WHERE collection_id = {$collection_id}");
         if (!empty($res)) {
             loadModel('Addon');
             loadModel('User');
@@ -145,6 +145,20 @@ class AddonCollection extends AppModel
             $this->rollback();
             return false;
         }
+    }
+
+    function setAddonVersion($collection_id, $addon_id, $addon_version) {
+        $db =& ConnectionManager::getDataSource($this->useDbConfig);
+        $collection_id = $db->value($collection_id);
+        $addon_id = $db->value($addon_id);
+
+        if (empty($addon_version))
+            $addon_version = 'null';
+
+        $res = $db->execute("UPDATE addons_collections SET addon_version = {$addon_version} "
+            ."WHERE collection_id = {$collection_id} AND addon_id = {$addon_id}");
+
+        return false !== $res;
     }
 
     /**

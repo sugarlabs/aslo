@@ -168,6 +168,42 @@ class Version extends AppModel
 
         return 0;
     }
+
+    function getVersionByAddonIdAndVersion($id, $version, $status = array(STATUS_PUBLIC), $app_ver = null) {
+        if (!is_array($status)) $status = array($status);
+        $status_sql = implode(',',$status);
+
+        if (!isset($app_ver) || $app_ver == 'any')
+            $app_ver = parse_sp();
+
+        $sql = "
+            SELECT 
+                Version.id
+            FROM
+                versions AS Version
+            INNER JOIN
+                files AS File ON File.status IN ({$status_sql}) AND File.version_id = Version.id 
+            INNER JOIN
+                applications_versions A ON A.version_id = Version.id
+            INNER JOIN
+                appversions as B ON B.id = A.min
+            INNER JOIN
+                appversions as C ON C.id = A.max
+            WHERE
+                Version.addon_id = {$id} AND Version.version = {$version}
+            ORDER BY
+                IF({$app_ver} AND ({$app_ver} < CAST(B.version AS DECIMAL(3,3)) OR {$app_ver} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
+            LIMIT 1
+        ";
+
+        $buf = $this->query($sql);
+
+        if (!empty($buf[0]['Version']['id'])) {
+            return $buf[0]['Version']['id'];
+        }
+
+        return 0;
+    }
     
     /**
      * Get the apps compatible with a given addon version
