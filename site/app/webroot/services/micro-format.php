@@ -61,6 +61,8 @@ else {
 	}
 }
 
+$sugar = $_GET["sugar"];
+
 $dbh = @mysql_connect(DB_HOST.':'.DB_PORT,DB_USER,DB_PASS);
 
 if (!is_resource($dbh)) {
@@ -76,20 +78,26 @@ if (empty($errors)) {
             addons.guid,
             default_lang.localized_string as default_name,
             requested_lang.localized_string as name,
-            max(versions.version) as version,
-            files.size,
-            files.filename,
-            files.id as file_id
+            max(versions.version) as version
         FROM
             collections
             INNER JOIN addons_collections ON collections.id = addons_collections.collection_id
             INNER JOIN addons ON addons.id = addons_collections.addon_id
             INNER JOIN versions ON versions.addon_id = addons.id AND (addons_collections.addon_version IS NULL OR versions.version = addons_collections.addon_version)
-            INNER JOIN files ON files.version_id = versions.id
+            INNER JOIN applications_versions ON applications_versions.version_id = versions.id 
+            INNER JOIN appversions appmin ON appmin.id = applications_versions.min
+            INNER JOIN appversions appmax ON appmax.id = applications_versions.max  
         LEFT JOIN translations AS default_lang ON default_lang.id = addons.name AND default_lang.locale = addons.defaultlocale
         LEFT JOIN translations AS requested_lang ON requested_lang.id = addons.name AND requested_lang.locale = '{$lang}'
         WHERE
             collections.nickname = '{$collection_nickname}'
+        ";
+
+    if ($sugar) {
+        $sql_query .= " AND (addons_collections.addon_version OR CAST('{$sugar}' AS DECIMAL(3,3)) >= CAST(appmin.version AS DECIMAL(3,3)) AND CAST('{$sugar}' AS DECIMAL(3,3)) <= CAST(appmax.version AS DECIMAL(3,3)))";
+    }
+
+    $sql_query .= "
         GROUP BY
             addons.id
         ";
@@ -116,15 +124,31 @@ if (!empty($errors)) {
 } else {
     echo "<table>\n";
     while ($row = mysql_fetch_array($query, MYSQL_ASSOC)) {
+        $sql_query = "
+            SELECT
+                files.size,
+                files.filename,
+                files.id as file_id
+            FROM
+                files
+                INNER JOIN versions ON versions.id = files.version_id
+            WHERE
+                versions.addon_id = {$row['id']} AND
+                versions.version = {$row['version']}
+            LIMIT 1
+            ";
+        $files = mysql_fetch_array(mysql_query($sql_query));
+
         if (defined(FILES_HOST))
-            $url = FILES_HOST . '/' . $row['id'] . '/' . $row['filename'];
+            $url = FILES_HOST . '/' . $row['id'] . '/' . $files['filename'];
         else
-            $url = SITE_URL . '/downloads/file/' . $row['file_id'] . '/' . $row['filename'];
-        $size = (int)$row['size'] * 1024;
+            $url = SITE_URL . '/downloads/file/' . $files['file_id'] . '/' . $files['filename'];
+        $size = (int)$files['size'] * 1024;
         if ($row['name'])
             $name = $row['name'];
         else
             $name = $row['default_name'];
+
         echo "<tr>\n";
         echo "<td class=\"olpc-activity-info\">\n";
         echo "<span class=\"olpc-activity-id\">{$row['guid']}</span>\n";
