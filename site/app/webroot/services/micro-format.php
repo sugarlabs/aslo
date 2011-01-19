@@ -143,7 +143,13 @@ if (!empty($errors)) {
             $url = FILES_HOST . '/' . $row['id'] . '/' . $files['filename'];
         else
             $url = SITE_URL . '/downloads/file/' . $files['file_id'] . '/' . $files['filename'];
-        $size = (int)$files['size'] * 1024;
+
+        $size = filesize(PUBLIC_STAGING_PATH . "/{$row['id']}/{$files['filename']}");
+        if (!$size)
+            $size = filesize(REPO_PATH . "/{$row['id']}/{$files['filename']}");
+        if (!$size)
+            $size = (int)$files['size'] * 1024;
+
         if ($row['name'])
             $name = $row['name'];
         else
