@@ -78,7 +78,7 @@ if (empty($errors)) {
             addons.guid,
             default_lang.localized_string as default_name,
             requested_lang.localized_string as name,
-            max(versions.version) as version
+            MAX(CAST(versions.version AS UNSIGNED)) as version
         FROM
             collections
             INNER JOIN addons_collections ON collections.id = addons_collections.collection_id
