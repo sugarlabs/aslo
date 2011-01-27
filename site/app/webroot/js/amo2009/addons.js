@@ -520,7 +520,7 @@ var translation_box = {
                 var maxLength = $(item).find('.input').attr('maxLength');
                 if (maxLength) {
                     fieldHTML += ' maxLength="' + maxLength + '" onkeyup="translation_box.checkLength(this, ' + maxLength + ');" onchange="translation_box.checkLength(this, ' + maxLength + ');"';
-                    var afterHTML = '<div class="translation-maxlength ' + locale + ' selected">' + $(item).find('.translation-maxlength').html() + '</div>';
+                    var afterHTML = ''; //'<div class="translation-maxlength ' + locale + ' selected">' + $(item).find('.translation-maxlength').html() + '</div>';
                 }
                 fieldHTML += '></textarea>';
             }
