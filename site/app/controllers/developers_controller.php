@@ -574,13 +574,19 @@ class DevelopersController extends AppController
         $activity_info = $zip->extract(array('add_path' => $tmpdir, 'by_name' => array($activity_info_path)));
         if (empty($activity_info))
             $out['error'] = sprintf(_('The activity bundle must contain a file named */%s. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'), $manifest);
-        else
-            $info = parse_ini_file($activity_info[0]['filename']);
+        else {
+            $info_file = $activity_info[0]['filename'];
+            $info_text = str_replace("!", "", file_get_contents($info_file));
+            $info_text = str_replace("%", "", $info_text);
+            $info_text = preg_replace("/(^|\\n)[\t ][^\\n]*/", "", $info_text);
+            file_put_contents($info_file, $info_text);
+            $info = parse_ini_file($info_file);
+        }
         $this->_rmtree($tmpdir);
 
         if (!isset($out['error'])) {
             if (!is_array($info))
-                $out['error'] = sprintf(_('Can not parse manifest file'), $manifest);
+                $out['error'] = _('Can not parse manifest file');
             elseif (!isset($info['name']))
                 $out['error'] = _('The file */activity/activity.info must contain a value for name. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.');
             else
