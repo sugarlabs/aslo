@@ -28,6 +28,9 @@ while ($row = mysql_fetch_array($rows)) {
     debug("Missed name for default locale id={$row['id']}", true);
 }
 
+// No need in aslo, but if it is beeing set (from the code), it breaks uploader's workflow
+$db->read('UPDATE addons SET prerelease=0');
+
 /**
  * Give this function your output.  If the debug flag (in the database) is set or if the error is serious it will get printed
  *
