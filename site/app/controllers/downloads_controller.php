@@ -108,8 +108,8 @@ class DownloadsController extends AppController
         
         $this->set('fileName', $file_data['File']['filename']);
         
-        if (!DEV && !$forceLocal && $addon_data['Addon']['status'] == STATUS_PUBLIC
-            && $file_data['File']['status'] == STATUS_PUBLIC
+        if (!DEV && !$forceLocal && $addon_data['Addon']['status'] != STATUS_DISABLED
+            && $file_data['File']['status'] != STATUS_DISABLED
             && (strtotime($file_data['File']['datestatuschanged']) <= strtotime('-'.MIRROR_DELAY.' minutes'))) {
             // serve file from releases mirror only if we are not in dev mode
             // and if the file is public and sufficient time has passed to allow
