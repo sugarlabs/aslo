@@ -253,7 +253,7 @@ class AdminController extends AppController
                             ));
                     
                         // If public, move to public rsync area
-                        if ($this->data['File']['status'][$k] == STATUS_PUBLIC) {
+                        if ($this->data['File']['status'][$k] != STATUS_DISABLED) {
                             $this->Amo->copyFileToPublic($id, $file['File']['filename']);
                         }
                     }

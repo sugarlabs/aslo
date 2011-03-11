@@ -278,7 +278,7 @@ class EditorsComponent extends Object {
                     }
                     
                     // Move to public rsync repo
-                    if ($fileData['status'] == STATUS_PUBLIC) {
+                    if ($fileData['status'] != STATUS_DISABLED) {
                         $this->controller->Amo->copyFileToPublic($approvalData['addon_id'], $file['File']['filename']);
                     }
                     

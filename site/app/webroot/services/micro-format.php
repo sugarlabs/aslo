@@ -139,7 +139,7 @@ if (!empty($errors)) {
             ";
         $files = mysql_fetch_array(mysql_query($sql_query));
 
-        if (defined(FILES_HOST))
+        if (defined('FILES_HOST'))
             $url = FILES_HOST . '/' . $row['id'] . '/' . $files['filename'];
         else
             $url = SITE_URL . '/downloads/file/' . $files['file_id'] . '/' . $files['filename'];

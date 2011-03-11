@@ -339,8 +339,8 @@ switch ($action) {
                 files.filename as filename
             FROM
                 versions
-            INNER JOIN addons ON versions.addon_id = addons.id AND addons.status = 4 AND addons.inactive = 0
-            INNER JOIN files ON files.version_id = versions.id AND files.status = 4
+            INNER JOIN addons ON versions.addon_id = addons.id AND addons.status != 5 AND addons.inactive = 0
+            INNER JOIN files ON files.version_id = versions.id AND files.status != 5
             ORDER BY
                 addons.id DESC
         ";

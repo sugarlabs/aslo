@@ -589,7 +589,7 @@ class DevelopersComponent extends Object {
         }
 
         // Copy file to rsync area if public
-        if ($data['File']['db']['status'] == STATUS_PUBLIC) {
+        if ($data['File']['db']['status'] != STATUS_DISABLED) {
             $this->controller->Amo->copyFileToPublic($data['Addon']['id'], $filename);
         }
 
