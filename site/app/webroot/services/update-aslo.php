@@ -262,7 +262,7 @@ if (empty($errors) && !$detect_installed) {
                  *
                  * If you want to test updates, change your config and set up a web dir with public files in it.
                  */
-                if (defined(FILES_HOST))
+                if (defined('FILES_HOST'))
                     $data['uri'] = FILES_HOST . '/' . $data['id'] . '/' . $data['filename'];
                 else
                     $data['uri'] = SITE_URL . '/downloads/file/' . $data['file_id'] . '/' . $data['filename'];
