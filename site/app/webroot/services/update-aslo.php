@@ -70,7 +70,7 @@ require_once('./functions.php');
 
 // Required variables that we need to run the script.
 $required_vars = array('id');
-$optional_vars = array('appVersion');
+$optional_vars = array('appVersion', 'experimental');
 
 // Mapping of addontypes to addontype_id.
 // These are used in the urn, and should not be localized.
@@ -175,6 +175,11 @@ if (empty($errors) && !$detect_installed) {
      * or in the sandbox.
      */
     
+    $where = '';
+    if (!isset($sql['experimental']) || $sql['experimental'] == '0' || $sql['experimental'] == '') {
+        $where .= ' AND status = '.STATUS_PUBLIC;
+    }   
+
     $id_query = "
         SELECT
             id,
@@ -182,7 +187,7 @@ if (empty($errors) && !$detect_installed) {
         FROM
             addons
         WHERE
-            guid = '{$sql['id']}' AND
+            guid = '{$sql['id']}' {$where} AND
             inactive = 0
         LIMIT 1
     ";
@@ -198,7 +203,7 @@ if (empty($errors) && !$detect_installed) {
 
         $where = 'WHERE TRUE';
         
-        if ($addon['status'] == STATUS_PUBLIC) {
+        if (!isset($sql['experimental']) || $sql['experimental'] == '0' || $sql['experimental'] == '') {
             // If public, we only pull public files
             $where .= ' AND files.status = '.STATUS_PUBLIC;
         }
