@@ -333,7 +333,7 @@ class Addon extends AppModel
             $this->Version->useDbConfig = 'shadow';
 
             $version_status = ($addon['Addon']['status']==STATUS_PUBLIC ? STATUS_PUBLIC : $valid_status);
-            if ($addon['Addon']['addon_version'])
+            if (isset($addon['Addon']['addon_version']))
                 $version_id = $this->Version->getVersionByAddonIdAndVersion($id, $addon['Addon']['addon_version'], $version_status, $app_ver);
             else
                 $version_id = $this->Version->getVersionByAddonId($id, $version_status, $app_ver);
