@@ -245,6 +245,7 @@ define('SITE_ABOUT', 'http://wiki.sugarlabs.org/go/Activity_Library/About');
 define('SITE_FAQ', 'http://wiki.sugarlabs.org/go/Activity_Library/FAQ');
 define('SITE_BLOG', 'http://planet.sugarlabs.org/');
 define('SITE_IRC', '#sugar on chat.freenode.net');
+define('SITE_CONTACT', 'http://wiki.sugarlabs.org/go/Service/activities#Administrative_contact');
 
 global $SITE_RELEASE_EMAIL;
 $SITE_RELEASE_EMAIL = array(
