@@ -98,19 +98,9 @@ $addonIconPath = $this->controller->Image->getAddonIconURL($addon['Addon']['id']
                         <?=nl2br($version['Translation']['releasenotes']['string'])?></p>
 
                     <?php
-                    $show_license = isset($_version_data['license_id']);
                     $show_source = $addon['Addon']['viewsource'] == 1 && $this->controller->Session->check('User');
-                    if ($show_license || $show_source) {
+                    if ($show_source) {
                         echo '<ul class="legal">';
-
-                        if ($show_license) {
-                            $license_name = $this->controller->License->getName($_version_data['license_id']);
-                            $license_link = $html->link($license_name, '/versions/license/'.$version['Version']['id']);
-                            echo '<li class="license">'
-                                .___('Source Code License').' '
-                                .$license_link
-                                .'</li>';
-                        }
 
                         if ($show_source) {
                             echo '<li class="source">'

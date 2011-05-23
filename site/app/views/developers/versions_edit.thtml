@@ -187,21 +187,6 @@ $this->layout = 'amo2009';
                 ));
         ?>
 
-        <!-- Source Code License -->
-        <div class="graybox rounded spaced">
-            <h4><?=___('License')?></h4>
-            <p><?=___('Please select the appropriate license for your add-on. This license specifies the rights you grant on your source code.')?></p>
-            <?php
-            list($licenses, $trans) = $this->controller->Developers->getLicenses($version['Version']['id']);
-            echo $this->renderElement('developers/license_picker',
-                                      array('licenses' => $licenses));
-            echo $this->renderElement('developers/license_translationbox',
-                                      array('translations' => $trans,
-                                            // The transbox wraps fieldname with []
-                                            'fieldname' => 'License][text'));
-            ?>
-        </div>
-
         <div class="graybox rounded spaced field">
         <h4><?=___('Approval Information')?></h4>
         <?php

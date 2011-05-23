@@ -172,6 +172,7 @@ if (!empty($coll_addon_added)) {
                   </th>
                   <td><?=$html->linkUsersFromModel($addon['User'], 40)?></td>
                 </tr>
+
                 <?php if (!empty($addon['Translation']['homepage']['string'])): ?>
                   <tr>
                     <th><?=___('Homepage', 'addons_display_header_homepage')?></th>
@@ -180,6 +181,16 @@ if (!empty($coll_addon_added)) {
                     </strong></td>
                   </tr>
                 <?php endif ?>
+
+                <?php if (!empty($addon['Addon']['suggested_amount'])): ?>
+                  <tr>
+                    <th><?=___('License')?></th>
+                    <td><strong>
+                      <?=$html->link($addon['Addon']['suggested_amount'], 'http://wiki.sugarlabs.org/go/Activity_Library/Editors/Policy/Licensing')?>
+                    </strong></td>
+                  </tr>
+                <?php endif ?>
+
                 <tr>
                   <th><?=___('Rating', 'advanced_search_form_rating')?></th>
                   <td><?=$this->renderElement('amo2009/reviews', array('addon' => $addon))?></td>
@@ -375,23 +386,6 @@ if (!empty($coll_addon_added)) {
         <p id="release-notes" <?=$addon['Version'][0]['Translation']['releasenotes']['locale_html']?>>
           <?=nl2br($addon['Version'][0]['Translation']['releasenotes']['string'])?>
         </p>
-
-        <?php  /* License */
-        if (isset($addon['Version'][0]['Version']['license_id'])):
-            $license_id = $addon['Version'][0]['Version']['license_id'];
-            $version_id = $addon['Version'][0]['Version']['id'];
-            $license_name = $this->controller->License->getName($license_id);
-            $license_link = $html->link($license_name,
-                                        '/versions/license/'.$version_id);
-        ?>
-          <h5 id="license">
-            <?=___('Source Code License')?>
-            <a href="<?=$html->url('/pages/developer_faq#license')?>">
-              <?=___('What\'s this?', 'addons_display_a_license_what')?>
-            </a>
-          </h5>
-          <p><?=$license_link?></p>
-        <?php endif; ?>
 
         <ul class="further-navigation">
           <?php if ($addon['Addon']['viewsource'] == 1 &&

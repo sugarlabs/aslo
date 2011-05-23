@@ -144,8 +144,7 @@ class Addon extends AppModel
         'summary' => VALID_NOT_EMPTY,
         'supportemail' => VALID_EMAIL_OPT,
         'supporturl' => VALID_URL_OPT,
-        'homepage' => VALID_URL_OPT,
-        'suggested_amount' => VALID_MONEY
+        'homepage' => VALID_URL_OPT
     );
 
     var $default_fields = array('id', 'guid', 'name', 'defaultlocale', 'addontype_id', 'status',

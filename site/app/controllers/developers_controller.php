@@ -58,6 +58,278 @@ function getitem($object, $name, $default=null) {
     }
 }
 
+global $LICENSES;
+$LICENSES = array(
+    # Software
+    "Glide" => "3dfx Glide License",
+    "ASL 1.1" => "4Suite Copyright License",
+    "Abstyles" => "Abstyles License",
+    "AFL" => "Academic Free License",
+    "AMPAS BSD" => "Academy of Motion Picture Arts and Sciences BSD",
+    "Adobe" => "Adobe Systems Incorporated Source Code License Agreement",
+    "MIT" => "Adobe Glyph List License",
+    "AGPLv1" => "Affero General Public License 1.0",
+    "AGPLv3" => "Affero General Public License 3.0",
+    "AGPLv3+" => "Affero General Public License 3.0 or later",
+    "AGPLv3 with exceptions" => "Affero General Public License 3.0 with Zarafa trademark exceptions",
+    "ADSL" => "Amazon Digital Services License",
+    "AMDPLPA" => "AMD's plpa_map.c License",
+    "ASL 1.0" => "Apache Software License 1.0",
+    "ASL 1.1" => "Apache Software License 1.1",
+    "ASL 2.0" => "Apache Software License 2.0",
+    "AML" => "Apple MIT License",
+    "APSL 2.0" => "Apple Public Source License 2.0",
+    "Artistic clarified" => "Artistic (clarified)",
+    "Artistic 2.0" => "Artistic 2.0",
+    "ARL" => "Aspell-ru License",
+    "AAL" => "Attribution Assurance License",
+    "Barr" => "Barr License",
+    "Copyright only" => "Beerware License",
+    "BeOpen" => "BeOpen Open Source License Agreement Version 1",
+    "BitTorrent" => "BitTorrent License",
+    "Boost" => "Boost Software License",
+    "Borceux" => "Borceux license",
+    "BSD with advertising" => "BSD License (original)",
+    "BSD with attribution" => "BSD with attribution",
+    "BSD" => "BSD License (no advertising)",
+    "BSD" => "BSD License (two clause)",
+    "BSD Protection" => "BSD Protection License",
+    "CATOSL" => "Computer Associates Trusted Open Source License 1.1",
+    "CeCILL" => "CeCILL License v1.1",
+    "CeCILL" => "CeCILL License v2",
+    "CeCILL-B" => "CeCILL-B License",
+    "CeCILL-C" => "CeCILL-C License",
+    "Netscape" => "Celtx Public License (CePL)",
+    "MIT" => "CMU License (BSD like)",
+    "CNRI" => "CNRI License (Old Python)",
+    "CDDL" => "Common Development Distribution License",
+    "CPL" => "Common Public License",
+    "Condor" => "Condor Public License",
+    "Copyright only" => "Copyright Attribution Only",
+    "CPAL" => "CPAL License 1.0",
+    "BSD" => "Creative Commons BSD",
+    "GPLv2+" => "Creative Commons GNU GPL",
+    "LGPLv2+" => "Creative Commons GNU LGPL",
+    "CC0" => "Creative Commons Zero 1.0 Universal",
+    "Crossword" => "Crossword License",
+    "BSD" => "Cryptix General License",
+    "Crystal Stacker" => "Crystal Stacker License",
+    "MPLv1.1" => "CUA Office Public License Version 1.0",
+    "WTFPL" => "Do What The F*ck You Want To Public License",
+    "DOC" => "DOC License",
+    "Dotseqn" => "Dotseqn License",
+    "dvipdfm" => "dvipdfm License",
+    "BSD" => "Eclipse Distribution License 1.0",
+    "EPL" => "Eclipse Public License 1.0",
+    "eCos" => "eCos License v2.0",
+    "ECL 1.0" => "Educational Community License 1.0",
+    "ECL 2.0" => "Educational Community License 2.0",
+    "EFL 2.0" => "Eiffel Forum License 2.0",
+    "MIT" => "enna License",
+    "MIT with advertising" => "Enlightenment License (e16)",
+    "Entessa" => "Entessa Public License",
+    "ERPL" => "Erlang Public License 1.1",
+    "EU Datagrid" => "EU Datagrid Software License",
+    "EUPL 1.1" => "European Union Public License 1.1",
+    "Eurosym" => "Eurosym License",
+    "GPLv2 with exceptions" => "Fedora Directory Server License",
+    "Fair" => "Fair License",
+    "MIT" => "feh License",
+    "LGPLv2 with exceptions" => "FLTK License",
+    "MPLv1.0" => "FreeImage Public License",
+    "FTL" => "Freetype License",
+    "Giftware" => "Giftware License",
+    "GL2PS" => "GL2PS License",
+    "GPL+" => "GNU General Public License (no version)",
+    "GPL+ with exceptions" => "GNU General Public License (no version), with Classpath exception",
+    "GPL+ with exceptions" => "GNU General Public License (no version), with font embedding exception",
+    "GPLv1" => "GNU General Public License v1.0 only",
+    "GPL+" => "GNU General Public License v1.0 or later",
+    "GPLv2" => "GNU General Public License v2.0 only",
+    "GPLv2 with exceptions" => "GNU General Public License v2.0 only, with Classpath exception",
+    "GPLv2 with exceptions" => "GNU General Public License v2.0 only, with font embedding exception",
+    "GPLv2+" => "GNU General Public License v2.0 or later",
+    "GPLv2+ with exceptions" => "GNU General Public License v2.0 or later, with Classpath exception",
+    "GPLv2+ with exceptions" => "GNU General Public License v2.0 or later, with font embedding exception",
+    "GPLv3" => "GNU General Public License v3.0 only",
+    "GPLv3 with exceptions" => "GNU General Public License v3.0 only, with Classpath exception",
+    "GPLv3 with exceptions" => "GNU General Public License v3.0 only, with font embedding exception",
+    "GPLv3+" => "GNU General Public License v3.0 or later",
+    "GPLv3+ with exceptions" => "GNU General Public License v3.0 or later, with Classpath exception",
+    "GPLv3+ with exceptions" => "GNU General Public License v3.0 or later, with font embedding exception",
+    "LGPLv2+" => "GNU Lesser General Public License (no version)",
+    "LGPLv2" => "GNU Lesser General Public License v2 (or 2.1) only",
+    "LGPLv2 with exceptions" => "GNU Lesser General Public License v2 (or 2.1), with exceptions",
+    "LGPLv2+" => "GNU Lesser General Public License v2 (or 2.1) or later",
+    "LGPLv2+ with exceptions" => "GNU Lesser General Public License v2 (or 2.1) or later, with exceptions",
+    "LGPLv3" => "GNU Lesser General Public License v3.0 only",
+    "LGPLv3 with exceptions" => "GNU Lesser General Public License v3.0 only, with exceptions",
+    "LGPLv3+" => "GNU Lesser General Public License v3.0 or later",
+    "LGPLv3+ with exceptions" => "GNU Lesser General Public License v3.0 or later, with exceptions",
+    "gnuplot" => "gnuplot License",
+    "MIT" => "Historical Permission Notice and Disclaimer",
+    "IBM" => "IBM Public License",
+    "iMatix" => "iMatix Standard Function Library Agreement",
+    "ImageMagick" => "ImageMagick License",
+    "Imlib2" => "Imlib2 License",
+    "IJG" => "Independent JPEG Group License",
+    "Intel ACPI" => "Intel ACPI Software License Agreement",
+    "Interbase" => "Interbase Public License",
+    "ISC" => "ISC License (Bind, DHCP Server)",
+    "Jabber" => "Jabber Open Source License",
+    "JasPer" => "JasPer License",
+    "JPython" => "JPython License (old)",
+    "Knuth" => "Knuth License",
+    "LPPL" => "LaTeX Project Public License",
+    "Latex2e" => "Latex2e License",
+    "LBNL BSD" => "Lawrence Berkeley National Labs BSD variant license",
+    "Lhcyr" => "Lhcyr License",
+    "libtiff" => "libtiff License",
+    "LLGPL" => "Lisp Library General Public License",
+    "Logica" => "Logica Open Source License",
+    "LPL" => "Lucent Public License (Plan9)",
+    "mecab-ipadic" => "mecab-ipadic license",
+    "MS-PL" => "Microsoft Public License",
+    "MS-RL" => "Microsoft Reciprocal License",
+    "MirOS" => "MirOS License",
+    "MIT" => "MIT license (also X11)",
+    "mod_macro" => "mod_macro License",
+    "Motosoto" => "Motosoto License",
+    "MPLv1.0" => "Mozilla Public License v1.0",
+    "MPLv1.1" => "Mozilla Public License v1.1",
+    "MIT" => "mpich2 License",
+    "ASL 1.1" => "MX4J License",
+    "GPLv2 with exceptions" => "MySQL License",
+    "Naumen" => "Naumen Public License",
+    "NCSA" => "NCSA/University of Illinois Open Source License",
+    "ASL 1.1" => "Neotonic Clearsilver License",
+    "NetCDF" => "NetCDF license",
+    "NGPL" => "Nethack General Public License",
+    "NOSL" => "Netizen Open Source License",
+    "Netscape" => "Netscape Public License",
+    "Newmat" => "Newmat License",
+    "Newsletr" => "Newsletr License",
+    "Nokia" => "Nokia Open Source License",
+    "Noweb" => "Noweb License",
+    "BSD with advertising" => "NRL License",
+    "MIT with advertising" => "Nunit License",
+    "OpenLDAP" => "OpenLDAP License",
+    "OML" => "Open Market License",
+    "OpenPBS" => "OpenPBS License",
+    "OSL 1.0" => "Open Software License 1.0",
+    "OSL 1.1" => "Open Software License 1.1",
+    "OSL 2.0" => "Open Software License 2.0",
+    "OSL 2.1" => "Open Software License 2.1",
+    "OSL 3.0" => "Open Software License 3.0",
+    "OpenSSL" => "OpenSSL License",
+    "OReilly" => "OReilly License",
+    "GPL+ or Artistic" => "Perl License",
+    "GPLv2 or Artistic" => "Perl License (variant)",
+    "GPLv2+ or Artistic" => "Perl License (variant)",
+    "LGPLv2+ or Artistic" => "Perl License (variant)",
+    "Phorum" => "Phorum License",
+    "PHP" => "PHP License v3.0",
+    "PlainTeX" => "PlainTeX License",
+    "Plexus" => "Plexus Classworlds License",
+    "PostgreSQL" => "PostgreSQL License",
+    "psutils" => "psutils License",
+    "Public Domain" => "Public Domain",
+    "Python" => "Python License",
+    "Qhull" => "Qhull License",
+    "QPL" => "Q Public License",
+    "ASL 1.1" => "QuickFix License",
+    "Rdisc" => "Rdisc License",
+    "RPSL" => "RealNetworks Public Source License V1.0",
+    "RiceBSD" => "Rice BSD",
+    "Romio" => "Romio License",
+    "Rsfs" => "Rsfs License",
+    "Ruby" => "Ruby License",
+    "Saxpath" => "Saxpath License",
+    "SCEA" => "SCEA Shared Source License",
+    "SCRIP" => "SCRIP License",
+    "Sendmail" => "Sendmail License",
+    "MIT" => "SGI Free Software License B 2.0",
+    "Sleepycat" => "Sleepycat Software Product License",
+    "SLIB" => "SLIB License",
+    "SNIA" => "SNIA Public License 1.1",
+    "MIT" => "Standard ML of New Jersey License",
+    "SISSL" => "Sun Industry Standards Source License",
+    "SPL" => "Sun Public License",
+    "TCL" => "TCL/TK License",
+    "Teeworlds" => "Teeworlds License",
+    "TPL" => "Thor Public License",
+    "Threeparttable" => "Threeparttable License",
+    "TMate" => "TMate Open Source License",
+    "TORQUEv1.1" => "TORQUE v2.5+ Software License v1.1",
+    "TOSL" => "Trusster Open Source License",
+    "UCD" => "Unicode Character Database Terms Of Use",
+    "Vim" => "Vim License",
+    "VNLSL" => "Vita Nuova Liberal Source License",
+    "VOSTROM" => "VOSTROM Public License for Open Source",
+    "VSL" => "Vovida Software License v. 1.0",
+    "W3C" => "W3C Software Notice and License",
+    "Webmin" => "Webmin License",
+    "Wsuipa" => "Wsuipa License",
+    "wxWidgets" => "wxWidgets Library License",
+    "xinetd" => "xinetd License",
+    "Xerox" => "Xerox License",
+    "XSkat" => "XSkat License",
+    "YPLv1.1" => "Yahoo Public License v 1.1",
+    "Zed" => "Zed License",
+    "Zend" => "Zend License v2.0",
+    "ZPLv1.0" => "Zope Public License v 1.0",
+    "ZPLv2.0" => "Zope Public License v 2.0",
+    "ZPLv2.1" => "Zope Public License v 2.1",
+    "zlib" => "zlib/libpng License",
+    "zlib with acknowledgement" => "zlib/libpng License with Acknowledgement",
+    # Documentation
+    "CDL" => "Apple's Common Documentation License, Version 1.0",
+    "CC-BY" => "Creative Commons Attribution license",
+    "CC-BY-SA" => "Creative Commons Attribution-ShareAlike",
+    "FBSDDL" => "FreeBSD Documentation License",
+    "GFDL" => "GNU Free Documentation License",
+    "IEEE" => "IEEE and Open Group Documentation License",
+    "LDPL" => "Linux Documentation Project License",
+    "OFSFDL" => "Old FSF Documentation License",
+    "Open Publication" => "Open Publication License, v1.0",
+    "Public Use" => "Public Use License, v1.0",
+    # Content
+    "CC-BY" => "Creative Commons Attribution license",
+    "CC-BY-SA" => "Creative Commons Attribution-ShareAlike",
+    "CC-BY-ND" => "Creative Commons Attribution-NoDerivs",
+    "CC0" => "Creative Commons Zero 1.0 Universal",
+    "DSL" => "Design Science License",
+    "DMTF" => "Distributed Management Task Force License",
+    "OAL" => "EFF Open Audio License v1",
+    "EFML" => "Ethymonics Free Music License",
+    "Free Art" => "Free Art License",
+    "GeoGratis" => "GeoGratis Licence Agreement",
+    "Green OpenMusic" => "LinuxTag Green OpenMusic License",
+    # Fonts
+    "OFL" => "SIL Open Font License 1.1",
+    "Utopia" => "Adobe/TUG Utopia license agreement",
+    "AMS" => "AMS Bluesky Font License",
+    "Arphic" => "Arphic Public License",
+    "Baekmuk" => "Baekmuk License",
+    "Bitstream Vera" => "Bitstream Vera Font License",
+    "Charter" => "Charter License",
+    "CC-BY" => "Creative Commons Attribution license",
+    "DoubleStroke" => "DoubleStroke Font License",
+    "Elvish" => "Elvish Font License",
+    "LPPL" => "GUST Font License",
+    "Hershey" => "Hershey Font License",
+    "IPA" => "IPA Font License",
+    "Liberation" => "Liberation Font License",
+    "LPPL" => "LaTeX Project Public License",
+    "Lucida" => "Lucida Legal Notice",
+    "MgOpen" => "MgOpen Font License",
+    "mplus" => "mplus Font License",
+    "PTFL" => "ParaType Font License",
+    "STIX" => "STIX Fonts User License",
+    "Wadalab" => "Wadalab Font License",
+    "XANO" => "XANO Mincho Font License",
+);
+
 class DevelopersController extends AppController
 {
     var $name = 'Developers';
@@ -551,6 +823,30 @@ class DevelopersController extends AppController
         }
     }
 
+    function _parse_license($license_text) {
+        global $LICENSES;
+
+        $good_licenses = array();
+        $bad_licenses = array();
+
+        foreach (preg_split("/,+/", $license_text) as $license) {
+            $license = trim($license);
+            if (empty($license))
+                continue;
+            if (isset($LICENSES[$license]))
+                array_push($good_licenses, $license);
+            else
+                array_push($bad_licenses, $license);
+        }
+
+        $out = array();
+        if (!empty($good_licenses))
+            $out['good_licenses'] = $good_licenses;
+        if (!empty($bad_licenses))
+            $out['bad_licenses'] = $bad_licenses;
+        return $out;
+    }
+
     function _unbundle($bundle, $manifest) {
         // Extract activity.info from .xo
         $zip = new Archive_Zip($bundle);
@@ -578,6 +874,7 @@ class DevelopersController extends AppController
             $info_file = $activity_info[0]['filename'];
             $info_text = str_replace("!", "", file_get_contents($info_file));
             $info_text = str_replace("%", "", $info_text);
+            $info_text = str_replace(";", ",", $info_text);
             $info_text = preg_replace("/(^|\\n)[\t ][^\\n]*/", "", $info_text);
             file_put_contents($info_file, $info_text);
             $info = parse_ini_file($info_file);
@@ -587,8 +884,6 @@ class DevelopersController extends AppController
         if (!isset($out['error'])) {
             if (!is_array($info))
                 $out['error'] = _('Can not parse manifest file');
-            elseif (!isset($info['name']))
-                $out['error'] = _('The file */activity/activity.info must contain a value for name. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.');
             else
                 $out['manifest'] = $info;
         }
@@ -666,9 +961,10 @@ class DevelopersController extends AppController
 
             $manifest = $info['manifest'];
 
-            if (!isset($manifest['activity_version']))
-                return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for activity_version. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'));
-
+            foreach (array('name', 'license', 'activity_version') as $key) {
+                if (!isset($manifest[$key]))
+                    return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for $key attribute. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'));
+            }
             if (isset($manifest['bundle_id']))
                 $addon['Addon']['guid'] = $manifest['bundle_id'];
             else if (isset($manifest['service_name']))
@@ -679,6 +975,18 @@ class DevelopersController extends AppController
             $addon['Addon']['name'] = $manifest['name'];
             $addon['Addon']['summary'] = $manifest['name'];
             $addon['Version']['version'] = $manifest['activity_version'];
+
+            $licenses = $this->_parse_license($manifest['license']);
+            if (isset($licenses['bad_licenses']))
+                return $this->Error->getJSONforError(_('The activity is covered by not approved licenses: '.join(', ', $licenses['bad_licenses']).'. See <a href="http://wiki.sugarlabs.org/go/Activity_Library/Editors/Policy/Licensing">Licensing Policy</a> for details.'));
+            elseif (!isset($licenses['good_licenses']))
+                return $this->Error->getJSONforError(_('The activity needs to mention its license. See <a href="http://wiki.sugarlabs.org/go/Activity_Library/Editors/Policy/Licensing">Licensing Policy</a> for details.'));
+
+            $license = join(', ', $licenses['good_licenses']);
+            if ($additional == 'new')
+                $addon['Addon']['suggested_amount'] = $license;
+            else
+                $this->Addon->save(array('Addon' => array('id' => $this->data['Addon']['id'], 'suggested_amount' => $license)));
         } else
         // Parse install.rdf file if not a search plugin
         if ($addon['Addon']['addontype_id'] != ADDON_SEARCH) {

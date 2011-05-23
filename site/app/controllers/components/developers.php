@@ -1163,7 +1163,7 @@ class DevelopersComponent extends Object {
                 $localized['text'] = $text;
                 $License->saveTranslations($license_id, $params, $localized);
             }
-            return $license_id;
+            return 1;
         }
     }
 }
