@@ -76,17 +76,17 @@
             break;
         default:
             $main_header = sprintf(
-                '<img alt="Add-ons" src="%1$s" />%2$s',
-                $html->url('/img/amo2009/app-icons/generic.png', null, false, false),
-                ___('Activities')
-            );
+                '<img alt="Add-ons" src="%1$s" />',
+                $html->url('/img/amo2009/app-icons/generic.png', null, false, false)
+            ); 
             break;
     }
     ?>
     <ul id="sugarnav">
     <li><a href="http://sugarlabs.org/">Home</a></li>
     <li><a href="http://wiki.sugarlabs.org/">Wiki</a></li>
-    <li><a href="http://wiki.sugarlabs.org/go/Downloads">Download</a></li>
+    <li><a href="http://activities.sugarlabs.org/"><i>Activities</i></a></li>
+    <li><a href="http://wiki.sugarlabs.org/go/Sugar_Labs/Donate"><b>Donate</b></a></li>
     </ul>
     <p id="title"><a href="<?=$html->url('/')?>" title="<?=sprintf(___('Return to the %1$s Add-ons homepage'), APP_PRETTYNAME)?>"><?= $main_header ?></a></p>
     <p id="brand"><a href="http://www.mozilla.com/<?=LANG?>/" title="<?=___('Mozilla')?>" accesskey="1"><?=___('Mozilla')?></a></p>
