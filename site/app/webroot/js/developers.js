@@ -90,9 +90,10 @@ var upload = {
             if (!this.checkFileName(uploadField.val())) {
                 alert(devcp_js_upload_badfilename);
                 return false;
-            } else if (!this.checkFileSize(uploadField.get(0))) {
-                alert(devcp_js_upload_toolarge);
-                return false;
+            // TODO it stopped working in Firefox-7
+            //} else if (!this.checkFileSize(uploadField.get(0))) {
+            //    alert(devcp_js_upload_toolarge);
+            //    return false;
             }
             $('#file-upload input[type=submit]').attr('disabled', 'disabled');
             $('#upload-loading').show();

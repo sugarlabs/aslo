@@ -883,7 +883,7 @@ class DevelopersController extends AppController
 
         if (!isset($out['error'])) {
             if (!is_array($info))
-                $out['error'] = _('Can not parse manifest file');
+                $out['error'] = _('Cannot parse activity.info file');
             else
                 $out['manifest'] = $info;
         }
