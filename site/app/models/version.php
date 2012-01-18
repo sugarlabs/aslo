@@ -155,9 +155,8 @@ class Version extends AppModel
                 appversions as C ON C.id = A.max
             WHERE
                 Version.addon_id = {$id}
-                AND {$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3))
             ORDER BY
-                Version.id DESC
+                Version.id + IF({$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3)), 1000000, 0) DESC
             LIMIT 1
         ";
 
@@ -194,9 +193,8 @@ class Version extends AppModel
                 appversions as C ON C.id = A.max
             WHERE
                 Version.addon_id = {$id} AND ({$version} = 0 OR Version.version = {$version})
-                AND {$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3))
             ORDER BY
-                Version.id DESC
+                Version.id + IF({$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3)), 1000000, 0) DESC
             LIMIT 1
         ";
 
