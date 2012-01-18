@@ -102,9 +102,10 @@ class File extends AppModel
                 appversions as C ON C.id = A.max
             WHERE
                 File.status = ".STATUS_PUBLIC."
+                {$sp} >= CAST(B.version AS DECIMAL(3,3)) AND {$sp} <= CAST(C.version AS DECIMAL(3,3))
                 {$platform}
             ORDER BY
-                IF({$sp} AND ({$sp} < CAST(B.version AS DECIMAL(3,3)) OR {$sp} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
+                Version.version DESC
             LIMIT 1
         ";
         

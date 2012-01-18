@@ -155,8 +155,9 @@ class Version extends AppModel
                 appversions as C ON C.id = A.max
             WHERE
                 Version.addon_id = {$id}
+                AND {$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3))
             ORDER BY
-                IF({$app_ver} AND ({$app_ver} < CAST(B.version AS DECIMAL(3,3)) OR {$app_ver} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
+                Version.id DESC
             LIMIT 1
         ";
 
@@ -175,6 +176,8 @@ class Version extends AppModel
 
         if (!isset($app_ver) || $app_ver == 'any')
             $app_ver = parse_sp();
+        if (!isset($version) || $version == '')
+            $version = '0';
 
         $sql = "
             SELECT 
@@ -190,9 +193,10 @@ class Version extends AppModel
             INNER JOIN
                 appversions as C ON C.id = A.max
             WHERE
-                Version.addon_id = {$id} AND Version.version = {$version}
+                Version.addon_id = {$id} AND ({$version} = 0 OR Version.version = {$version})
+                AND {$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3))
             ORDER BY
-                IF({$app_ver} AND ({$app_ver} < CAST(B.version AS DECIMAL(3,3)) OR {$app_ver} > CAST(C.version AS DECIMAL(3,3))), 1, 1000000) + CAST(Version.version AS DECIMAL) DESC
+                Version.id DESC
             LIMIT 1
         ";
 
