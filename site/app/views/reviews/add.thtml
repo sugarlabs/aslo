@@ -75,47 +75,13 @@ if (!empty($reply_to)) {
     <?=$html->hiddenSession() ?>
     <?=$html->hidden('Review/id'); ?>
     <div>
-        <label class="amo-label-large" for="ReviewTitle"><?=___('Title/Summary:')?></label>
-        <?=$html->input('Review/title');?>
         <?=$html->tagErrorMsg('Review/title', ___('This field must not be empty.'))?>
     </div>
     <? if (empty($reply_to)): ?>
     <div>
-
-        <label class="amo-label-large rating" for="ReviewRating"><?=___('Rating:')?></label>
-		<div class="stars degrade">
-            <p><input class="star" type="radio" name="data[Review][rating]" value="1" title="<?=___('Hate it')?>"
-            <?php if($reviewRating == 1) { ?> checked="checked"<?php } ?>/> <?=___('Hate it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="2" title="<?=___('Don\'t like it')?>"
-            <?php if($reviewRating == 2) { ?> checked="checked"<?php } ?>/> <?=___('Don\'t like it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="3" title="<?=___('Like it')?>"
-            <?php if($reviewRating == 3) { ?> checked="checked"<?php } ?>/> <?=___('Like it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="4" title="<?=___('Really like it')?>"
-            <?php if($reviewRating == 4) { ?> checked="checked"<?php } ?>/> <?=___('Really like it')?></p>
-            <p><input class="star" type="radio" name="data[Review][rating]" value="5" title="<?=___('Love it')?>"
-            <?php if($reviewRating == 5) { ?> checked="checked"<?php } ?>/> <?=___('Love it')?></p>
-		</div>
         <?=$html->tagErrorMsg('Review/rating', ___('You must select a rating.'))?>
     </div>
     <? endif; ?>
-    <div>
-        <label class="amo-label-large" for="ReviewBody"><?=___('Review:')?></label>
-        <?=$html->textarea('Review/body', array('cols'=>50, 'rows'=>5));?>
-        <?=$html->tagErrorMsg('Review/body', ___('This field must not be empty.'))?>
-    </div>
-    <p></p>
-    <?=$html->submit(___('Submit your review'), array('class'=>'amo-submit'))?>
 </form>
 
-<div class="divider"><hr></div>
-
-<ul>
-    <li><?= $html->link(sprintf(___('Back to the reviews...'), $addon['Translation']['name']['string']), '/reviews/display/'.$addon['Addon']['id']); ?></li>
-    <li><?= $html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
-</ul>
-
-     </div>
  </div>
- <script type="text/javascript" charset="utf-8">
- 	$(function(){ $('.stars').rating(); });
- </script>
