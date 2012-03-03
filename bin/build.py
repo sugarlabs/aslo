@@ -193,8 +193,7 @@ class Minifier(object):
         source -- path of source file
         destination -- path of destination file
         """
-        compressor = Popen([java, '-jar', os.path.join(script_dir, '..', 'lib', 'yuicompressor', 'build', 'yuicompressor.jar'),
-            '--type', type, source], stdout=PIPE)
+        compressor = Popen(['yui-compressor', '--type', type, source], stdout=PIPE)
         destFile = open(destination, 'w')
         # Fix media queries to look like "(..) and (..)", NOT "(..) and(..)".
         out = re.sub('and\(', 'and (', compressor.stdout.read())
