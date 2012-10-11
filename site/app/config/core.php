@@ -230,7 +230,7 @@ if (!function_exists('parse_sp')) {
             else
                 return SITE_SUGAR_STABLE;
         } else {
-            if (preg_match('/Sugar Labs\/([0-9]+)\.([0-9]+)/', env('HTTP_USER_AGENT'), $matches))
+            if (preg_match('/Sugar *Labs\/([0-9]+)\.([0-9]+)/', env('HTTP_USER_AGENT'), $matches))
                 return $matches[1].'.'.$matches[2];
             else
                 return SITE_SUGAR_STABLE;
