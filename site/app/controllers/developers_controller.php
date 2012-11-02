@@ -877,7 +877,7 @@ class DevelopersController extends AppController
             $info_text = str_replace(";", ",", $info_text);
             $info_text = preg_replace("/(^|\\n)[\t ][^\\n]*/", "", $info_text);
             file_put_contents($info_file, $info_text);
-            $info = parse_ini_file($info_file);
+            $info = parse_ini_file($info_file, false, INI_SCANNER_RAW);
         }
         $this->_rmtree($tmpdir);
 
