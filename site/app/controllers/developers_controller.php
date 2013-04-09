@@ -1837,7 +1837,7 @@ class DevelopersController extends AppController
     
     function _uploader() {
         $app_versions = $this->Appversion->findAllByApplication_id(SITE_APP,
-                array('Appversion.id', 'Appversion.version'), 'Appversion.version ASC');
+                array('Appversion.id', 'Appversion.version'), 'Appversion.version_int ASC');
         $this->publish('app_versions', $app_versions);
         $app_names = $this->Application->getNames();
         $this->publish('app_name', $app_names[SITE_APP]);

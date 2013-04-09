@@ -209,7 +209,7 @@ class EditorsController extends AppController
         $maxVersions = array();
         if (!empty($filter['Application'])) {
             $app_versions = $this->Appversion->findAllByApplicationId($filter['Application'],
-                                array('Appversion.id', 'Appversion.version'), 'Appversion.version DESC');
+                                array('Appversion.id', 'Appversion.version'), 'Appversion.version_int DESC');
             foreach ($app_versions as $av) {
                 $maxVersions[$av['Appversion']['id']] = $av['Appversion']['version'];
             }
@@ -1190,7 +1190,7 @@ class EditorsController extends AppController
     function appversionLookup($app_id) {
         $this->Amo->clean($app_id);
         $results = $this->Appversion->findAllByApplicationId($app_id,
-                            array('Appversion.id', 'Appversion.version'), 'Appversion.version DESC');
+                            array('Appversion.id', 'Appversion.version'), 'Appversion.version_int DESC');
         $appversions = array();
         foreach ($results as $av) {
             $appversions[] = $av['Appversion'];
