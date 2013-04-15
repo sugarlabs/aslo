@@ -59,8 +59,7 @@ require_once('../../config/config.php');
 require_once('../../config/config-local.php');
 require_once('../../config/constants.php');
 require_once('./functions.php');
-
-
+require_once('../../../vendors/sphinx/addonsSearch.php');
 
 /**
  *  VARIABLES
@@ -209,7 +208,8 @@ if (empty($errors) && !$detect_installed) {
         }
 
         if (isset($sql['appVersion'])) {
-            $where .= " AND CAST('{$sql['appVersion']}' AS DECIMAL(3,3)) >= CAST(appmin.version AS DECIMAL(3,3)) AND CAST('{$sql['appVersion']}' AS DECIMAL(3,3)) <= CAST(appmax.version AS DECIMAL(3,3))";
+            $version_int = AddonsSearch::convert_version($sql['appVersion']);
+            $where .= " AND {$version_int} >= appmin.version_int AND {$version_int} <= appmax.version_int";
         }
                
         $os_query = ($sql['os_id']) ? " OR files.platform_id = {$sql['os_id']}" : '';  // Set up os_id.
