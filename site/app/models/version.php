@@ -39,6 +39,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+vendor('sphinx/addonsSearch');
+
 class Version extends AppModel
 {
     var $name = 'Version';
@@ -139,6 +141,7 @@ class Version extends AppModel
 
         if (!isset($app_ver) || $app_ver == 'any')
             $app_ver = parse_sp();
+        $app_ver = AddonsSearch::convert_version($app_ver);
 
         $sql = "
             SELECT 
@@ -156,7 +159,7 @@ class Version extends AppModel
             WHERE
                 Version.addon_id = {$id}
             ORDER BY
-                Version.version + IF({$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3)), 1000000, 0) DESC
+                Version.version + IF({$app_ver} >= B.version_int AND {$app_ver} <= C.version_int, 1000000, 0) DESC
             LIMIT 1
         ";
 
@@ -175,6 +178,7 @@ class Version extends AppModel
 
         if (!isset($app_ver) || $app_ver == 'any')
             $app_ver = parse_sp();
+        $app_ver = AddonsSearch::convert_version($app_ver);
         if (!isset($version) || $version == '')
             $version = '0';
 
@@ -194,7 +198,7 @@ class Version extends AppModel
             WHERE
                 Version.addon_id = {$id} AND ({$version} = 0 OR Version.version = {$version})
             ORDER BY
-                Version.version + IF({$app_ver} >= CAST(B.version AS DECIMAL(3,3)) AND {$app_ver} <= CAST(C.version AS DECIMAL(3,3)), 1000000, 0) DESC
+                Version.version + IF({$app_ver} >= B.version_id AND {$app_ver} <= C.version_id, 1000000, 0) DESC
             LIMIT 1
         ";
 

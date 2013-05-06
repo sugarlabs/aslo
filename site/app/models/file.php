@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+vendor('sphinx/addonsSearch');
+
 class File extends AppModel
 {
     var $name = 'File';
@@ -85,7 +87,7 @@ class File extends AppModel
     function getLatestFileByAddonId($addon_id, $platform_id = null) {
         // Platform WHERE if necessary
         $platform = !empty($platform_id) ? " AND (File.platform_id = ".PLATFORM_ALL." OR File.platform_id = {$platform_id})" : '';
-        $sp = parse_sp();
+        $app_ver = AddonsSearch::convert_version(parse_sp());
 
         $sql = "
             SELECT
@@ -104,7 +106,7 @@ class File extends AppModel
                 File.status = ".STATUS_PUBLIC."
                 {$platform}
             ORDER BY
-                Version.version + IF({$sp} >= CAST(B.version AS DECIMAL(3,3)) AND {$sp} <= CAST(C.version AS DECIMAL(3,3)), 1000000, 0) DESC
+                Version.version + IF({$app_ver} >= B.version_int AND {$app_ver} <= C.version_int, 1000000, 0) DESC
             LIMIT 1
         ";
         
