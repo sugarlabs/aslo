@@ -876,14 +876,19 @@ class DevelopersController extends AppController
             $info_text = str_replace("%", "", $info_text);
             $info_text = str_replace(";", ",", $info_text);
             $info_text = preg_replace("/(^|\\n)[\t ][^\\n]*/", "", $info_text);
-            file_put_contents($info_file, $info_text);
+            file_put_contents($info_file, $info_text."\n");
             $info = parse_ini_file($info_file, false, INI_SCANNER_RAW);
         }
         $this->_rmtree($tmpdir);
 
         if (!isset($out['error'])) {
-            if (!is_array($info))
+            if (!is_array($info)) {
                 $out['error'] = _('Cannot parse activity.info file');
+                $last_error = error_get_last();
+                if (is_array($last_error))
+                    $out['error'] .= ': '.$last_error['message'];
+            } elseif (!isset($info['name']))
+                $out['error'] = _('The file */activity/activity.info must contain a value for name. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.');
             else
                 $out['manifest'] = $info;
         }
