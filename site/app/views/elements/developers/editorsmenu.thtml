@@ -63,9 +63,9 @@ if (empty($mode)) {
             <li<?=($page == 'logs') ? ' class="selected"' : ''?>><?=$html->link(___('Event Log', 'editorcp_menu_eventlog_link'), '/editors/logs')?></li>
             <li<?=($page == 'reviewlog') ? ' class="selected"' : ''?>><?=$html->link(___('Review Log', 'editorcp_menu_reviewlog_link'), '/editors/reviewlog')?></li>
             <li<?=($page == 'performance') ? ' class="selected"' : ''?>><?=$html->link(___('Performance'), '/editors/performance')?></li>
-            <? if($this->controller->SimpleAcl->actionAllowed('Admin', 'EditorsMOTD', $this->controller->Session->read('User'))): ?>
+            <?php if($this->controller->SimpleAcl->actionAllowed('Admin', 'EditorsMOTD', $this->controller->Session->read('User'))): ?>
               <li><?= $html->link(___('MOTD'), '/editors/motd') ?></li>
-            <? endif ?>
+            <?php endif ?>
 
             <li><?=$html->link(___('Back to Main', 'editorcp_menu_mainpage_link'), '/')?></li>
         </ul>

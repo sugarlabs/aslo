@@ -156,12 +156,12 @@ foreach ($reviews as $review):
 
     </div>
 
-    <? if ($other_count = @($reviews_others_counts[$review['Review']['id']])): ?>
+    <?php if ($other_count = @($reviews_others_counts[$review['Review']['id']])): ?>
         <div class="others-by-user-load" id="others-by-user-load-<?=$review['Review']['id']?>">
         </div>
-    <? endif ?>
+    <?php endif ?>
 
-    <? // developer reply?
+    <?php // developer reply?
     if (!empty($review['Review']['reply'])):
     $reply = $review['Review']['reply'];
     $reply['Translation'] = (array_key_exists(LANG, $reply['Translation']) ?
@@ -219,11 +219,11 @@ foreach ($reviews as $review):
         </div>
         <?=nl2br($reply['Translation']['body']['string'])?>
         </div>
-    <? endif; ?>
-<? endforeach; ?>
+    <?php endif; ?>
+<php? endforeach; ?>
 
 <?php if (!$bare): ?>
-<? if (!empty($reviews)) echo $this->renderElement('amo2009/pagination');?>
+<?php if (!empty($reviews)) echo $this->renderElement('amo2009/pagination');?>
 <div class="clearboth"> <hr /> </div>
 
 <ul>

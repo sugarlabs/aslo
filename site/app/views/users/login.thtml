@@ -74,7 +74,7 @@
 <form action="<?=$html->entities($html->url())?>" method="post" id="login" class="featured-inner object-lead">
     <?=$html->hiddenSession() ?>
     <div>
-        <?
+        <?php
         $redir = (isset($_GET['to'])) ? urldecode($_GET['to']) : urldecode(@$this->data['Login']['referer']);
         $redir = $html->entities($redir);
         echo $html->hidden('Login/referer', array('value' => $redir));

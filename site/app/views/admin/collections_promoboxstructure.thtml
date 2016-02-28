@@ -56,13 +56,13 @@
         <p>This page manages the names and the taglines of the categories in the promotion box.  Once they are 
             added to this page they will appear in the L10n.</p>
 
-        <? if (!empty($errors['main'])): ?>
-            <?echo $this->renderElement('notification', array('msg' => $errors['main'], 'type' => 'error')); ?>
-        <? endif; ?>
+        <?php if (!empty($errors['main'])): ?>
+            <?= $this->renderElement('notification', array('msg' => $errors['main'], 'type' => 'error')); ?>
+        <?php endif; ?>
 
-        <? if (isset($changeSuccess) && $changeSuccess): ?>
-            <?echo $this->renderElement('notification', array('msg' => 'Changes Saved', 'type' => 'success')); ?>
-        <? endif; ?>
+        <?php if (isset($changeSuccess) && $changeSuccess): ?>
+            <?= $this->renderElement('notification', array('msg' => 'Changes Saved', 'type' => 'success')); ?>
+        <?php endif; ?>
 
         <h4>Add a New Collection</h4>
         <?=$html->formTag('/admin/collections/promobox', 'post', array('id' => 'collection-promobox-add-form-all')); ?>
@@ -75,26 +75,26 @@
 
         <hr />
 
-        <? foreach ($locales as $locale => $english_name): ?>
-            <? if (array_key_exists($locale, $promoted_collections)): ?>
+        <?php foreach ($locales as $locale => $english_name): ?>
+            <?php if (array_key_exists($locale, $promoted_collections)): ?>
                 <h4><?=$english_name?> (<?=$locale?>)</h4>
                 <ul>
-                    <? foreach ($promoted_collections[$locale] as $tnt => $collections): ?>
-                        <? foreach ($collections as $collection_id => $collection): ?>
+                    <?php foreach ($promoted_collections[$locale] as $tnt => $collections): ?>
+                        <?php foreach ($collections as $collection_id => $collection): ?>
                             <li>
                                 <?=$html->formTag('/admin/collections/promobox', 'post', array('id' => 'collection-promobox-delete-form-all')); ?>
-                                    <?echo $html->submitImage('developers/delete.png', array('title'=> 'Remove', 'alt' => 'Remove')); ?>
+                                    <?= $html->submitImage('developers/delete.png', array('title'=> 'Remove', 'alt' => 'Remove')); ?>
                                     <?=$html->image("developers/".array_search($collection['application_id'], $app_shortnames).".png")?>
                                     (<?=$titles_and_taglines[$tnt]['title']?>) <?=$collection['name']?>
                                     <input type="hidden" name="target" value="<?=$collection_id?>--<?=$tnt?>--<?=$locale?>" />
                                     <input type="hidden" name="action" value="delete" />
                                 </form>
                             </li>
-                        <? endforeach; ?>
-                    <? endforeach; ?>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </ul>
-            <? endif; ?>
-        <? endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
 
         <script type="text/javascript">
             $(document).ready(function() {

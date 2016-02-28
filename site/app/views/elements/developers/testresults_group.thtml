@@ -52,14 +52,14 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
     <a href="#test-summary-<?=$file['File']['id']?>"><?=___('Back to Top')?></a>
 </div>
 <div id="test-details-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
-<? if (!empty($group['cases'])) : ?>
+<?php if (!empty($group['cases'])) : ?>
     <div class="results-list <?=$group_class?>">
-    <? foreach ($group['cases'] as $case) : ?>
+    <?php foreach ($group['cases'] as $case) : ?>
         <h5><?=$case['name']?> [<?=$html->link(___('help', 'devcp_validation_help'), '/pages/validation#help-'.$case['id'])?>]</h5>
         <ul class="test-results">
-        <? $resultNum = 0; ?>
-        <? if (!empty($case['results'])) : ?>
-            <? foreach ($case['results'] as $result) : ?>
+        <?php $resultNum = 0; ?>
+        <?php if (!empty($case['results'])) : ?>
+            <?php foreach ($case['results'] as $result) : ?>
                 <?
                 $resultNum++;
                 switch ($result['result']) {
@@ -77,46 +77,46 @@ if ($group['counts'][TEST_WARN] == 0 && $group['counts'][TEST_FAIL] == 0) {
                 }
                 ?>
                 <li class="<?=$class?>">
-                    <? if ($result['filename'] != '') : ?>
-                        <? if (is_numeric($file['File']['id'])) : ?>
+                    <?php if ($result['filename'] != '') : ?>
+                        <?php if (is_numeric($file['File']['id'])) : ?>
                             <a href="<?=SITE_URL . '/files/browse/' . $file['File']['id'] . '/0/?start=' . $result['filename']?>" target="_blank">
                                 <?=$result['filename']?><?=($result['line'] != 0 ? " ({$result['line']})" : '')?>
                             </a> :
-                        <? else: ?>
+                        <?php else: ?>
                             <?=$result['filename']?><?=($result['line'] != 0 ? " ({$result['line']})" : '')?> :
-                        <? endif; ?>
-                    <? endif; ?>
-                    <? if (!empty($result['message'])) : ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <?php if (!empty($result['message'])) : ?>
                         <?=$result['message']?>
-                    <? else: ?>
+                    <?php else: ?>
                         <?=$case['description']?>
-                    <? endif; ?>
-                    <? if (!empty($result['preview'])) : ?>
+                    <?php endif; ?>
+                    <?php if (!empty($result['preview'])) : ?>
                         <div class="code">
-                            <? foreach ($result['preview'] as $line => $code) : ?>
+                            <?php foreach ($result['preview'] as $line => $code) : ?>
                                 <div class="line<?=($line==$result['line'] ? ' target' : '')?>"><?=$code?>&nbsp;</div>
-                            <? endforeach; ?>
+                            <?php endforeach; ?>
                         </div>
-                    <? endif; ?>
+                    <?php endif; ?>
                 </li>
-                <? if ($resultNum == 3 && count($case['results']) > 3) : ?>
+                <?php if ($resultNum == 3 && count($case['results']) > 3) : ?>
                 <li class="more">
                     <a href="#" onclick="versions_validate.showMore($(this)); return false;" class="show-more-link"><?=sprintf(n___('Show %1$s more result', 'Show %1$s more results', count($case['results']) - 3), count($case['results']) - 3)?></a>
                 </li>
                 <div class="hidden-results">
-                <? endif; ?>
-            <? endforeach; ?>
-        <? endif; ?>
-        <? if ($resultNum > 3) : ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php if ($resultNum > 3) : ?>
             </div>
-        <? endif; ?>
+        <?php endif; ?>
         </ul>
-    <? endforeach; ?>
+    <?php endforeach; ?>
     </div>
-    <? if ($group_class =='passed') : ?>
+    <?php if ($group_class =='passed') : ?>
         <i><?= ___('All tests passed.') ?> <a href="#" onclick="versions_validate.showPasses($(this)); return false;"><?= n___('Show pass', 'Show passes', count($group['cases'])) ?></a></i>
-    <? endif; ?>
-<? else: ?>
+    <?php endif; ?>
+<?php else: ?>
     <i><?= ___('No test results found.', 'devcp_versions_validate_no_results') ?></i>
-<? endif; ?>
+<?php endif; ?>
 </div>

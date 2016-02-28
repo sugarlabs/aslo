@@ -41,24 +41,24 @@
         <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => false, 'multiline' => false)) ?>
     </div>
     <ul id="test-summary-<?=$file['File']['id']?>" class="test-summary">
-    <? if (!empty($all_groups)) : ?>
-        <? foreach ($all_groups as $group) : ?>
+    <?php if (!empty($all_groups)) : ?>
+        <?php foreach ($all_groups as $group) : ?>
         <li id="results-summary-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
-            <? 
+            <?php 
                 $href = ($external_link ? $html->url('/developers/versions/validate/' . $version['Version']['id']) : ''); ?>
             <a href="<?=$href?>#test-group-<?=$file['File']['id']?>-<?=$group['TestGroup']['id']?>">
                 <?=$group['TestGroup']['name']?>
             </a>
             <span class="results">
-                <? $counts = array(0,0,0); ?>
-                <? if (!empty($test_groups[$group['TestGroup']['id']])) : ?>
-                    <? $counts = $test_groups[$group['TestGroup']['id']]['counts']; ?>
-                <? endif; ?>
+                <?php $counts = array(0,0,0); ?>
+                <?php if (!empty($test_groups[$group['TestGroup']['id']])) : ?>
+                    <?php $counts = $test_groups[$group['TestGroup']['id']]['counts']; ?>
+                <?php endif; ?>
                 <?= $this->renderElement('developers/testresults_stats', array('counts' => $counts, 'short' => true, 'multiline' => false)) ?>
             </span>
         </li>
-        <? endforeach; ?>
-    <? else : ?>
+        <?php endforeach; ?>
+    <?php else : ?>
             <i><?=___('No test results found.', 'devcp_versions_validate_no_results')?></i>
-    <? endif; ?>
+    <?php endif; ?>
     </ul>

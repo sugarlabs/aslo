@@ -55,13 +55,13 @@
                 <a id="new-file-button" href="#" onclick="upload.uploadNewFile(); return false;" class="remove-button rounded">
                     <?= $new_file_message ?>
                 </a>
-                <? if ($allow_completion): ?>
+                <?php if ($allow_completion): ?>
                     <a id="continue-button" href="#" onclick="upload.completeUpload(); return false;" class="action-button rounded">
                         <?= ___('Continue') ?>
                     </a>
                     <br/><br/>
                     <div id="complete-loading"><?=$html->image('ajax_loading.gif')?>&nbsp;<?=___('Completing your add-on...')?></div>
-                <? endif ?>
+                <?php endif ?>
             </div>
         </div>
     </div>

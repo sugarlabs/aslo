@@ -39,7 +39,7 @@
       
 <div class="graybox rounded spaced field validation">
     <?= $this->renderElement('developers/testresults_header', array('test_groups' => $test_groups, 'all_groups' => $all_groups, 'file' => $file, 'external_link' => false, 'counts' => $counts)); ?>
-    <? if (!$validation_disabled) : ?>
+    <?php if (!$validation_disabled) : ?>
         <div class="action-button-container">
             <a href="#" onclick="versions_validate.runTest(<?=$file['File']['id']?>, <?=$addon['Addon']['addontype_id']?>); return false;" class="button prominent">
                 <?= ___('Validate') ?>
@@ -48,18 +48,18 @@
             <?= ___('Loading Results ...') ?>
         </span>
         </div>
-    <? else: ?> 
+    <?php else: ?> 
         <?= ___('Validation temporarily disabled, try again later.') ?>
-    <? endif; ?>
+    <?php endif; ?>
 
     <div id="test-details-<?=$file['File']['id']?>">
-        <? if(!empty($file['TestResult'])) : ?>
-            <? foreach($test_groups as $group) : ?>
+        <?php if(!empty($file['TestResult'])) : ?>
+            <?php foreach($test_groups as $group) : ?>
                 <?= $this->renderElement('developers/testresults_group', array('group' => $group, 'file' => $file)); ?>
-            <? endforeach; ?>
-        <? else : ?>
+            <?php endforeach; ?>
+        <?php else : ?>
             <i><?=___('No test results found.', 'devcp_versions_validate_no_results')?></i>
-        <? endif; ?>
+        <?php endif; ?>
     </div>
 </div>
 

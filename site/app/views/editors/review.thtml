@@ -289,10 +289,10 @@ if (!empty($addon['Translation']['developercomments']['string'])) {
         <div class="top"><a href="#top"><?=___('Top')?></a></div>
     </div>
     <br class="clear">
-    <? foreach($version['File'] as $file) : ?>
+    <?php foreach($version['File'] as $file) : ?>
         <h4><?= $html->link(sprintf(___('Validation results for %s'), $file['filename']), '/developers/versions/validate/' . $version['Version']['id'] . '#test-results-' . $file['id']) ?></h4>
         <?= $this->renderElement('developers/testresults_header', array('test_groups' => $file['groups'], 'all_groups' => $test_groups, 'file' => array('File' => $file), 'counts' => $file['counts'], 'external_link' => true)); ?>
-    <? endforeach; ?>
+    <?php endforeach; ?>
 </div>
 <br class="clear">
 <div id="history">

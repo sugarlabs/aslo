@@ -61,17 +61,17 @@ $this->layout = 'amo2009';
             <form id="upload-form" method="post" enctype="multipart/form-data" action="<?=$html->url('/developers/json/fileupload/temp')?>" target="upload-frame" onsubmit="return validate.validate();">
             <?=$html->hiddenSession();?>
 
-            <? if(!empty($all_addons)): ?>
+            <?php if(!empty($all_addons)): ?>
             <p><label><?=___('Check my hosted add-on: ')?>
                 <select id="addon-list" name="addon-list">
                     <option value=""></option>
-                    <? pr($all_addons);foreach ($all_addons as $id => $addon): ?>
+                    <?php pr($all_addons);foreach ($all_addons as $id => $addon): ?>
                         <option value="<?=$id?>"><?=$addon?></option>
-                    <? endforeach; ?>
+                    <?php endforeach; ?>
                 </select>
             </label></p>
             <p><strong><?=___(/* L10n: Used as a divider in the page.  One large option is above, one large option below. */ 'OR')?></strong></p>
-            <? endif; ?>
+            <?php endif; ?>
             <p><label><?=___('Upload an add-on to check: ')?><input id="upload-field" type="file" name="file" /></label></p>
             <div class="submit">
                 <button type="submit" class="require-privs button prominent"><?=___('Run Tests')?></button>

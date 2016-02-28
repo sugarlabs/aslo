@@ -93,7 +93,7 @@ else
 
 <h4 class="name" title="<?=___('Learn more about this add-on') ?>"><a href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonIconPath?>" width="32" height="32" alt="" class="icon"/><?=$addonName?></a></h4>
 <h5 class="author" title="<?=___('View Author\'s Profile') ?>"><?=___('by')?> <?=$html->linkUsersFromModel($addonAuthors, 0);?></h5>
-<? if (!empty($flag)) echo '<h6 class="flag">'.$flag.'</h6>'; ?>
+<?php if (!empty($flag)) echo '<h6 class="flag">'.$flag.'</h6>'; ?>
 <p class="preview-img"><a href="<?=$html->url("/addon/{$addonId}")?>"><img src="<?=$addonThumbPath?>" alt="<?=$_alt?>" title="<?=$_alt?>"/></a></p>
 <p class="desc"><?=$addonSummary?></p>
 <p class="rating"><?=$this->renderElement('stars',array('rating' => $addonRating))?><?php if ($addonReviews > 0) { ?> <a href="<?=$html->url('/addon/'.$addonId.'#reviews')?>"><?=sprintf(n___('%1$s review','%1$s reviews', $addonReviews), $addonReviews)?></a><?php } ?></p>

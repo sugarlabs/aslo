@@ -62,16 +62,16 @@ $this->translationBox = array(
 
 <?php if (isset($confirmation_page) && $confirmation_page): ?>
 
-    <?echo $this->renderElement('notification', array('type' => 'success', 'msg' => $confirmation_message))?>
+    <?= $this->renderElement('notification', array('type' => 'success', 'msg' => $confirmation_message))?>
 
     <?php if (isset($newemail) && $newemail): ?>
-        <?echo $this->renderElement('notification', array('type' => 'success', 'description' => sprintf(___('An email has been sent to %1$s to confirm your new email address. For the change to take effect, you need to click on the link provided in this email. Until then, you can keep logging in with your current email address.'), $newemail)));?>
+        <?= $this->renderElement('notification', array('type' => 'success', 'description' => sprintf(___('An email has been sent to %1$s to confirm your new email address. For the change to take effect, you need to click on the link provided in this email. Until then, you can keep logging in with your current email address.'), $newemail)));?>
     <?php endif; ?>
 
 <?php endif; ?>
 
 <?php if(isset($errorMessage)): ?>
-    <?echo $this->renderElement('notification', array('type' => 'error', 'msg' => ___('There are errors in this form. Please correct them and resubmit.')));?>
+    <?= $this->renderElement('notification', array('type' => 'error', 'msg' => ___('There are errors in this form. Please correct them and resubmit.')));?>
 <p></p>
 <?php endif; ?>
 
@@ -133,7 +133,7 @@ $this->translationBox = array(
                 <?php if(!empty($this->data['User']['picture_data'])): ?>
                     <label for="UserRemovepicture"><?=___('Remove this picture?')?></label>
                     <?=$html->checkBox('User/removepicture') ?><br />
-                <? endif; ?>
+                <?php endif; ?>
                 <label for="UserRemovepicture"><?=___('Upload a new picture?')?></label>
                 <?=$html->file('User/picture_data') ?>
                 <?=$html->tagErrorMsg('User/picture_data', @$picture_error)?>

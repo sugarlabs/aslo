@@ -253,7 +253,7 @@ if (!empty($coll_addon_added)) {
     <p <?=$addon['Translation']['description']['locale_html']?>>
       <?=nl2br($addon['Translation']['description']['string'])?>
     </p>
-    <? if (count($previews) > 1): // Only show this if there are 2 or more images. ?>
+    <?php if (count($previews) > 1): // Only show this if there are 2 or more images. ?>
       <h4><?=___('Image Gallery')?></h4>
       <?php
       foreach (array_slice($previews, 1) as $preview):
@@ -265,8 +265,8 @@ if (!empty($coll_addon_added)) {
            href="<?=$full?>" title="<?=$caption?>">
           <img src="<?=$thumb?>" alt="" />
         </a>
-      <? endforeach; ?>
-    <? endif; ?>
+      <?php endforeach; ?>
+    <?php endif; ?>
 
     <?php
     $support_email = $addon['Translation']['supportemail']['string'];
@@ -421,11 +421,11 @@ if (!empty($coll_addon_added)) {
                 $addon['Translation']['name']['string'])?></p>
   <p>
     <a class="more-info" href="<?=$html->url('/addon/'.$addon_id.'/developers')?>">
-        <? if (count($devs) > 1): ?>
+        <?php if (count($devs) > 1): ?>
           <?=n___('Meet the Developer', 'Meet the Developers', count($devs))?>
-        <? else: ?>
+        <?php else: ?>
           <?=sprintf(___('Meet %1$s'), $dev['User']['display_name'])?>
-        <? endif; ?>
+        <?php endif; ?>
     </a>
   </p>
 </div>
@@ -479,7 +479,7 @@ if (!empty($coll_addon_added)) {
         <?=$this->renderElement('addon_tags',array('userTags'=>$userTags, 'developerTags'=>$developerTags,'addon_id'=>$addon_id, 'origin'=>'users')); ?>
     </div>
 
-    <? if ($loggedIn): ?>
+    <?php if ($loggedIn): ?>
         <a href="#" id="addatag"><?=___('Add a tag');?></a>
         <div class="addtagform ">
             <form id='tagForm' action="<?=$html->url("/tags/add/")?>" method="POST">
@@ -490,11 +490,11 @@ if (!empty($coll_addon_added)) {
             </form>
             <span class="hint"><?=___('Comma-separated, minimum of 2 characters.  Example: <span class="example">ocean, sail boat, water</span>')?></span>
         </div>
-    <? else: ?>
-        <?echo sprintf(
+    <?php else: ?>
+        <?= sprintf(
             ___('<a href="%1$s">Register</a> or <a href="%2$s">Log in</a> to add tags'),
             $html->url('/users/register', false), $html->url($html->login_url())); ?>
-    <? endif; ?>
+    <?php endif; ?>
 
 </div>
 <!-- /.highlight-->

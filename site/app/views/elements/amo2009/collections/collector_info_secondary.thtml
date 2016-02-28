@@ -42,20 +42,20 @@ $showSecondBox = false;
 ?>
 
 <div class="secondary" role="complementary">
-  <? if ($showFirstBox): ?>
+  <?php if ($showFirstBox): ?>
       <div class="highlight">
         <h3><?=___('What are Collections?')?></h3>
         <p><?=___('Collections are groups of related add-ons assembled for easy sharing.')?></p>
-        <? if ($showCreateLink): ?>
+        <?php if ($showCreateLink): ?>
             <p>
               <a class="more-info" href="<?=$html->url('/collections/add')?>">
                 <?=___('Create a Collection', 'collections_index_a_create')?>
               </a>
             </p>
-        <? endif; ?>
+        <?php endif; ?>
       </div>
-  <? endif; ?>
-  <? if ($showSecondBox && (APP_ID == APP_FIREFOX)): ?>
+  <?php endif; ?>
+  <?php if ($showSecondBox && (APP_ID == APP_FIREFOX)): ?>
       <div class="highlight">
         <h3><?=___('Add-on Collector', 'collections_index_header_collector')?></h3>
         <p class="teaser-img">
@@ -71,6 +71,6 @@ $showSecondBox = false;
           </a>
         </p>
       </div>
-  <? endif; ?>
+  <?php endif; ?>
 </div> <!-- secondary -->
 

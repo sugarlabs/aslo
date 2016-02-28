@@ -52,7 +52,7 @@ $facebook->globalURLAdditional = "?q={$q}";
             <li<?=($current['type'] == 'none' ? ' class="current"' : '')?>><a href="<?=FB_URL."/search?q={$q}"?>">All results</a></li>
             <?=($count['extensions'] > 0 ? (($count['extensions'] == 1) ? '<li'.($current['type'] == ADDON_EXTENSION ? ' class="current"' : '').'><a href="'.FB_URL.'/search/type:'.ADDON_EXTENSION.'?q='.$q.'">1 extension</a></li>' : '<li'.($current['type'] == ADDON_EXTENSION ? ' class="current"' : '').'><a href="'.FB_URL.'/search/type:'.ADDON_EXTENSION.'?q='.$q.'">'.$count['extensions'].' extensions</a></li>') : '<li class="empty"><span>No extensions</span></li>')?>
             <?=($count['themes'] > 0 ? (($count['themes'] == 1) ? '<li'.($current['type'] == ADDON_THEME ? ' class="current"' : '').'><a href="'.FB_URL.'/search/type:'.ADDON_THEME.'?q='.$q.'">1 theme</a></li>' : '<li'.($current['type'] == ADDON_THEME ? ' class="current"' : '').'><a href="'.FB_URL.'/search/type:'.ADDON_THEME.'?q='.$q.'">'.$count['themes'].' themes</a></li>') : '<li class="empty"><span>No themes</span></li>')?>
-            <? /* ($count['friends'] > 0 ? '<li'.($current['type'] == 'friends' ? ' class="current"' : '').'><a href="'.FB_URL.'/search/type:friends?q='.$q.'">'.$count['friends'].' from friends</a></li>' : '<li class="empty"><span>None from friends</span></li>') */ ?>
+            <?php /* ($count['friends'] > 0 ? '<li'.($current['type'] == 'friends' ? ' class="current"' : '').'><a href="'.FB_URL.'/search/type:friends?q='.$q.'">'.$count['friends'].' from friends</a></li>' : '<li class="empty"><span>None from friends</span></li>') */ ?>
         </ul>
     </div>
     <?=$facebook->pageNumbers($current, $count, 'search')?>

@@ -80,7 +80,7 @@
 
                         <?php foreach ($teaser_collection_promos[$id] as $idx=>$addon): ?>
                             <?php if ($idx>=3) break; ?>
-                            <?  $flags = array($html->byStatus($addon, array('experimental' => 'experimental', 'recommended' => 'recommended', 'default' => 'default'))); ?>
+                            <?php  $flags = array($html->byStatus($addon, array('experimental' => 'experimental', 'recommended' => 'recommended', 'default' => 'default'))); ?>
                             <div class="<?=(0==$idx)?'first ':''?>column">
                                 <div class="column-inner item <?=join(' ', $flags)?>">
                                 <a title="<?=___('Learn more about this add-on') ?>"

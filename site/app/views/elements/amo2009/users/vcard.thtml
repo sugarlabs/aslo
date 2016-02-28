@@ -67,24 +67,24 @@ if (!isset($table_class)) {
         <th><?=___('Name', 'addon_developer_th_name')?></th>
         <td class="fn n"><?=$user['display_name']?></td>
       </tr>
-      <? if (!empty($user['location'])): ?>
+      <?php if (!empty($user['location'])): ?>
       <tr>
         <th><?=___('Location', 'addon_developer_th_location')?></th>
         <td class="adr"><?=$user['location']?></td>
       </tr>
-      <? endif; ?>
-      <? if (!empty($user['occupation'])): ?>
+      <?php endif; ?>
+      <?php if (!empty($user['occupation'])): ?>
       <tr>
         <th><?=___('Occupation', 'addon_developer_th_occupation')?></th>
         <td class="role"><?=$user['occupation']?></td>
       </tr>
-      <? endif; ?>
-      <? if (!empty($user['homepage'])): ?>
+      <?php endif; ?>
+      <?php if (!empty($user['homepage'])): ?>
       <tr>
         <th><?=___('Homepage', 'addon_developer_th_homepage')?></th>
         <td><a class="url" href="<?=$user['homepage']?>"><?=$user['homepage']?></a></td>
       </tr>
-      <? endif; ?>
+      <?php endif; ?>
       <?php if (!$user['emailhidden']): ?>
           <tr>
             <th><?=___('Email address', 'addon_developer_th_email')?></th>

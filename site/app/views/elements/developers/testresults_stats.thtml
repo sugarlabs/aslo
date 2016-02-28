@@ -37,42 +37,42 @@
  * ***** END LICENSE BLOCK ***** */
 ?>
 
-<? if ($counts[TEST_FAIL] > 0) : ?>
+<?php if ($counts[TEST_FAIL] > 0) : ?>
     <span class="error-count">
-        <? if ($short) : ?>
+        <?php if ($short) : ?>
             <?= $counts[TEST_FAIL] ?>
-        <? else: ?>
+        <?php else: ?>
             <?=sprintf(n___('%1$s error', '%1$s errors', $counts[TEST_FAIL]), $counts[TEST_FAIL]) ?>
-        <? endif; ?>
+        <?php endif; ?>
     </span>
-    <? if ($multiline) : ?>
+    <?php if ($multiline) : ?>
         <br/>
-    <? endif; ?>
-<? endif; ?>
-<? if ($counts[TEST_WARN] > 0) : ?>
+    <?php endif; ?>
+<?php endif; ?>
+<?php if ($counts[TEST_WARN] > 0) : ?>
     <span class="warning-count">
-        <? if ($short) : ?>
+        <?php if ($short) : ?>
             <?= $counts[TEST_WARN] ?>
-        <? else: ?>
+        <?php else: ?>
             <?=sprintf(n___('%1$s warning', '%1$s warnings', $counts[TEST_WARN]), $counts[TEST_WARN]) ?>
-        <? endif; ?>
+        <?php endif; ?>
     </span>
-    <? if ($multiline) : ?>
+    <?php if ($multiline) : ?>
         <br/>
-    <? endif; ?>
-<? endif; ?>
-<? if ($counts[TEST_PASS] > 0) : ?>
+    <?php endif; ?>
+<?php endif; ?>
+<?php if ($counts[TEST_PASS] > 0) : ?>
     <span class="pass-count">
-        <? if ($short) : ?>
+        <?php if ($short) : ?>
             <?= $counts[TEST_PASS] ?>
-        <? else: ?>
+        <?php else: ?>
             <?=sprintf(n___('%1$s pass', '%1$s pass', $counts[TEST_PASS]), $counts[TEST_PASS]) ?>
-        <? endif; ?>
+        <?php endif; ?>
     </span>
-<? endif; ?>
-<? if ($counts == array(0,0,0)) : ?>
+<?php endif; ?>
+<?php if ($counts == array(0,0,0)) : ?>
     <span><i><?=___('No test results found.', 'devcp_error_no_test_results')?></i></span>
-<? endif; ?>
-<? if ($short) : ?>
+<?php endif; ?>
+<?php if ($short) : ?>
     <span class="loading-count"><?=___('Running test...')?></span>
-<? endif; ?>
+<?php endif; ?>

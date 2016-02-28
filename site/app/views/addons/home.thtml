@@ -77,18 +77,18 @@ $this->viewVars['bodyclass'] = 'home';
 
     <?=$this->renderElement('amo2009/search')?>
 
-    <? if(APP_ID == APP_FIREFOX): ?>
+    <?php if(APP_ID == APP_FIREFOX): ?>
         <?=$this->renderElement('amo2009/teaser_collections', array(
             'teaser_collection_promos' => $teaser_collection_promos,
             'promoted_collections'  => $promoted_collections
         ))?>
-    <? endif; ?>
+    <?php endif; ?>
 
-    <? if(APP_ID == APP_MOBILE): ?>
+    <?php if(APP_ID == APP_MOBILE): ?>
         <h2><?=___('Browse Mobile Add-ons')?></h2>
-    <? else: ?>
+    <?php else: ?>
         <h2><?=___('Browse Add-ons')?></h2>
-    <? endif; ?>
+    <?php endif; ?>
     <div class="primary">
         <div class="featured show-<?=$featured_type?> listing" id="featured">
             <div class="featured-inner">

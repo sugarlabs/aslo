@@ -57,7 +57,7 @@
         <div class="reviewed-on"><?= sprintf(___('by %1$s on %2$s (rated %3$s)'), $html->linkUserFromModel($review['User']), strftime(___('%B %e, %Y'), strtotime($review['Review']['created'])), $review['Review']['rating'])?></div>
         <?=nl2br($review['Translation']['body']['string'])?>
 
-        <? /* Developer reply? */
+        <?php /* Developer reply? */
         if (!empty($review['Review']['reply_to'])):
             $replyto = $review['Review']['reply_to'];
             $replyto['Translation'] = (array_key_exists(LANG, $replyto['Translation']) ?
@@ -68,7 +68,7 @@
             <div class="reviewed-on"><?= sprintf(___('by %1$s on %2$s (rated %3$s)'), $html->linkUserFromModel($replyto['User']), strftime(___('%B %e, %Y'), strtotime($replyto['Review']['created'])), $replyto['Review']['rating'])?></div>
             <?=nl2br($replyto['Translation']['body']['string'])?>
         </div>
-        <? endif; ?>
+        <?php endif; ?>
 
         <?php /* List out the review flags selected by users */ ?>
         <?php if ($flags = @$reviews_flags[$review['Review']['id']]): ?>
@@ -93,7 +93,7 @@
                 <?php endif; ?>
 
             </ul>
-        <? endif; ?>
+        <?php endif; ?>
 
         </ul>
         <div class="reviewAction">
