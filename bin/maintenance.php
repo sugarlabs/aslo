@@ -592,7 +592,7 @@ switch ($action) {
             UPDATE collections
             SET rating=
               IFNULL(
-                CAST(upvotes - downvotes AS SIGNED) * LN(upvotes + downvotes),
+                (CAST(upvotes AS SIGNED) - CAST(downvotes AS SIGNED)) * LN(upvotes + downvotes),
                 0)
         ");
         $affected_rows = mysql_affected_rows();

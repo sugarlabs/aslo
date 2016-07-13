@@ -59,7 +59,7 @@ $bare = isset($_GET['bare']) ? ( $_GET['bare'] == 1 ) : FALSE;
 
 <ul>
     <li><?=$html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
-    <?
+    <?php
     if (empty($isAuthor)) {
         if (!empty($hasreview)) {
             $add_or_edit = ___('Edit your review');
@@ -228,7 +228,7 @@ foreach ($reviews as $review):
 
 <ul>
     <li><?=$html->link(sprintf(___('Back to %1$s...'), $addon['Translation']['name']['string']), '/addon/'.$addon['Addon']['id']); ?></li>
-    <?
+    <?php
     if (empty($isAuthor)) {
         if (!empty($hasreview)) {
             $add_or_edit = ___('Edit your review');
