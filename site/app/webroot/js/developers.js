@@ -216,7 +216,7 @@ var upload = {
     // exclusive to Gecko browsers because it exposes this data.
     checkFileSize : function(o) {
         if (o.files) {
-            return o.files[0].fileSize <= MAXFILESIZE;
+            return o.files[0].size <= MAXFILESIZE;
         }
 
         return true; // oh well
