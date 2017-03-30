@@ -45,7 +45,7 @@
 <div class="primary" role="main">
     <?=$this->renderElement('amo2009/search')?>
 
-	<h2><?=___('Log In')?></h2>
+    <h2><?=___('Log In')?></h2>
 
 <?php
     //banner warning messages for display
@@ -81,11 +81,11 @@
         ?>
     </div>
     <div class="container">
-        <label for="LoginEmail"><?=___('Email address', 'user_form_email')?></label>
+        <label for="LoginEmail"><?=___('Email address', 'user_form_email')?></label><br>
         <?=$html->input('Login/email') ?>
     </div>
     <div class="container">
-        <label for="LoginPassword"><?=___('Password')?></label>
+        <label for="LoginPassword"><?=___('Password')?></label><br>
         <?=$html->password('Login/password') ?>
     </div>
     <div class="container remember">
@@ -104,13 +104,13 @@
 </script>
 
 <div class="secondary">
-	<div id="login-help" class="article">
-		<h3><?=___('Login Problems?')?></h3>
-		<ul>
-		    <li><?= $html->link(___('I don\'t have an account.'), '/users/register'); ?></li>
-		    <li><?= $html->link(___('I forgot my password.'), '/users/pwreset'); ?></li>
-		</ul>
-	</div>
+    <div id="login-help" class="article">
+        <h3><?=___('Login Problems?')?></h3>
+        <ul>
+            <li><?= $html->link(___('I don\'t have an account.'), '/users/register'); ?></li>
+            <li><?= $html->link(___('I forgot my password.'), '/users/pwreset'); ?></li>
+        </ul>
+    </div>
 </div>
 
 </div><!-- /.primary -->
