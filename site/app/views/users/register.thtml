@@ -60,33 +60,33 @@ endif;
 <form action="<?=$html->entities($html->url())?>" method="post" class="amo-form">
     <?=$html->hiddenSession() ?>
     <div class="container">
-        <label class="amo-label-large" for="UserEmail"><?=___('Email address', 'user_form_email')?></label>
+        <label class="amo-label-large" for="UserEmail"><?=___('Email address', 'user_form_email')?></label><br>
         <?=$html->input('User/email') ?>
         <?=(isset($error_email_notunique)) ? '<div class="error_message">'.___('This email address is already taken by another user.').'</div>' : $html->tagErrorMsg('User/email', ___('This is not a valid email address.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserPassword"><?=___('Password')?></label>
+        <label class="amo-label-large" for="UserPassword"><?=___('Password')?></label><br>
         <?=$html->password('User/password') ?>
         <?=$html->tagErrorMsg('User/password', ___('This field must not be empty.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserConfirmpw"><?=___('Confirm password')?></label>
+        <label class="amo-label-large" for="UserConfirmpw"><?=___('Confirm password')?></label><br>
         <?=$html->password('User/confirmpw') ?>
         <?=$html->tagErrorMsg('User/confirmpw', ___('The passwords did not match.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserFirstname"><?=___('First name')?></label>
+        <label class="amo-label-large" for="UserFirstname"><?=___('First name')?></label><br>
         <?=$html->input('User/firstname') ?>
         <?=$html->tagErrorMsg('User/firstname', ___('This field must not be empty.'))?>
         <?=___('A first name, last name or nickname is required.')?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserLastname"><?=___('Last name')?></label>
+        <label class="amo-label-large" for="UserLastname"><?=___('Last name')?></label><br>
         <?=$html->input('User/lastname') ?>
         <?=$html->tagErrorMsg('User/lastname', ___('This field must not be empty.'))?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserNickname"><?=___('Nickname')?></label>
+        <label class="amo-label-large" for="UserNickname"><?=___('Nickname')?></label><br>
         <?=$html->input('User/nickname') ?>
         <?=$html->tagErrorMsg('User/nickname', ___('This nickname is already taken.'))?>
     </div>
@@ -95,7 +95,7 @@ endif;
         <?=$html->checkBox('User/emailhidden')?>
     </div>
     <div class="container">
-        <label class="amo-label-large" for="UserHomepage"><?=___('Website URL')?></label>
+        <label class="amo-label-large" for="UserHomepage"><?=___('Website URL')?></label><br>
         <?=$html->input('User/homepage') ?>
         <?=$html->tagErrorMsg('User/homepage', ___('This URL has an invalid format. Valid URLs look like http://example.com/my_page.'))?>
     </div>
