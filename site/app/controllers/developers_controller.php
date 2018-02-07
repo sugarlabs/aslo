@@ -968,7 +968,7 @@ class DevelopersController extends AppController
 
             foreach (array('name', 'license', 'activity_version') as $key) {
                 if (!isset($manifest[$key]))
-                    return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for $key attribute. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'));
+                    return $this->Error->getJSONforError(_('The file */activity/activity.info must contain a value for '.$key.'. See <a href="http://wiki.sugarlabs.org/go/Activity_Team/FAQ#How_to_package_activity.3F">How to package activity?</a> for details.'));
             }
             if (isset($manifest['bundle_id']))
                 $addon['Addon']['guid'] = $manifest['bundle_id'];
